@@ -4,6 +4,22 @@ const path = require('path');
 const rootDir = __dirname;
 const indexFile = path.join(rootDir, 'index.html');
 
+// Recursive function to find the first HTML file
+function findFirstHtml(dir, basePath) {
+  try {
+    const items = fs.readdirSync(dir, { withFileTypes: true });
+    for (const item of items) {
+      if (item.isDirectory()) {
+        const found = findFirstHtml(path.join(dir, item.name), basePath);
+        if (found) return found;
+      } else if (item.name.endsWith('.html')) {
+        return path.relative(basePath, path.join(dir, item.name)).replace(/\\/g, '/');
+      }
+    }
+  } catch (e) {}
+  return null;
+}
+
 // 1. Find all valid student directories
 const students = [];
 const items = fs.readdirSync(rootDir, { withFileTypes: true });
@@ -14,43 +30,55 @@ for (const item of items) {
   }
   
   const studentDir = path.join(rootDir, item.name);
-  const files = fs.readdirSync(studentDir);
+  let files = [];
+  try { files = fs.readdirSync(studentDir); } catch(e) {}
   
-  // Find the primary HTML file
+  let primaryHtml = null;
+
   // Heuristic 1: Matches name without spaces
   const expectedName = item.name.replace(/\s+/g, '') + '.html';
-  let primaryHtml = files.find(f => f.toLowerCase() === expectedName.toLowerCase());
+  primaryHtml = files.find(f => f.toLowerCase() === expectedName.toLowerCase());
   
-  // Heuristic 2: Matches any custom names used previously (like AaravKalia.html)
-  if (!primaryHtml) {
-    if (item.name === 'VidyaPrakash Kalia') primaryHtml = 'AaravKalia.html';
-  }
+  // Heuristic 2: Custom
+  if (!primaryHtml && item.name === 'VidyaPrakash Kalia') primaryHtml = 'AaravKalia.html';
   
-  // Heuristic 3: Any .html file at root
+  // Heuristic 3: Any .html at root (not worksheet)
   if (!primaryHtml) {
     primaryHtml = files.find(f => f.endsWith('.html') && !f.toLowerCase().includes('worksheet'));
   }
   
-  // Fallback to worksheet if nothing else
+  // Heuristic 4: Any .html at root
   if (!primaryHtml) {
     primaryHtml = files.find(f => f.endsWith('.html'));
   }
-  
-  if (primaryHtml) {
-    // Generate URL-friendly link
-    const link = `./${encodeURIComponent(item.name).replace(/%20/g, ' ')}/${encodeURIComponent(primaryHtml).replace(/%20/g, ' ')}`;
-    
-    // We can count subjects by looking at subdirectories
-    const subdirs = fs.readdirSync(studentDir, { withFileTypes: true })
-                      .filter(d => d.isDirectory() && !d.name.startsWith('.')).length;
-                      
-    students.push({
-      name: item.name,
-      link: link,
-      subjects: subdirs || 1,
-      chapters: (subdirs * 4) || 2 // rough estimate
-    });
+
+  // Heuristic 5: Recursive search for ANY html file inside subfolders!
+  if (!primaryHtml) {
+    primaryHtml = findFirstHtml(studentDir, studentDir);
   }
+  
+  // Generate URL-friendly link
+  let link = '#';
+  if (primaryHtml) {
+    // split by '/' because it might be a relative path like "Physics/ChapterNotes.html"
+    const parts = primaryHtml.split('/');
+    const encodedParts = parts.map(p => encodeURIComponent(p).replace(/%20/g, ' '));
+    link = `./${encodeURIComponent(item.name).replace(/%20/g, ' ')}/${encodedParts.join('/')}`;
+  }
+  
+  // Count subjects
+  let subdirs = 1;
+  try {
+    subdirs = fs.readdirSync(studentDir, { withFileTypes: true })
+                .filter(d => d.isDirectory() && !d.name.startsWith('.')).length || 1;
+  } catch(e) {}
+                
+  students.push({
+    name: item.name,
+    link: link,
+    subjects: subdirs,
+    chapters: (subdirs * 4) || 2
+  });
 }
 
 // Sort alphabetically
