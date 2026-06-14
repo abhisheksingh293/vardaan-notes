@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Matter - Chemistry - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+            clear: both;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            clear: both;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+            clear: both;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- IMAGE PLACEHOLDER & INVERSION UTILITY --- */
+        .ai-image-placeholder {
+            border: 2px dashed var(--blue-border);
+            padding: 20px;
+            margin: 25px 0;
+            background-color: var(--example-bg);
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .ai-image-placeholder p {
+            margin: 5px 0;
+        }
+
+        /* Add this class to your <img> tags when you replace the placeholder */
+        .invert-on-dark {
+            transition: filter 0.3s ease;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        html.dark-mode .invert-on-dark {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* --- NEWSPAPER LAYOUT UTILITIES --- */
+        .float-right {
+            float: right;
+            width: 280px;
+            margin: 10px 0 15px 25px;
+        }
+
+        .float-left {
+            float: left;
+            width: 280px;
+            margin: 10px 25px 15px 0;
+        }
+
+        @media screen and (max-width: 600px) {
+            .float-right, .float-left {
+                float: none;
+                width: 100%;
+                margin: 15px 0;
+            }
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Chemistry • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>1. MATTER</h1>
+
+        <h2>1. Introduction to Matter</h2>
+        <p>Chemistry is the branch of science that deals with the study of various kinds of matter, which includes their structure, composition, and physical and chemical properties. If we look around us, everything from stones, sand, water, plants, animals, to the air we breathe is considered matter.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Definition</span>
+            <p><strong>Matter</strong> is defined as anything which has <strong>mass</strong>, occupies <strong>space</strong> (volume), and can be perceived by our senses.</p>
+        </div>
+
+        <h3>Historical Perspective on Matter</h3>
+        <ul>
+            <li><strong>Greek Philosophers:</strong> Believed matter is made up of four elements: water, air, fire, and earth.</li>
+            <li><strong>Ancient Indian Philosophers:</strong> Believed matter is made up of five elements (Panch Tattva): air, fire, water, sky, and earth.</li>
+            <li><strong>Maharshi Kanad:</strong> An Indian philosopher who was the first to suggest that matter is made up of very tiny particles called <strong>parmanu</strong>.</li>
+            <li><strong>Democritus:</strong> A Greek thinker who named these tiny particles as <strong>atoms</strong>.</li>
+            <li><strong>John Dalton:</strong> Later suggested that all kinds of matter are made up of extremely small particles called atoms.</li>
+        </ul>
+
+        <h2>2. Composition of Matter</h2>
+        <img src="Images/atoms_molecules.png" alt="Atoms and Molecules" class="invert-on-dark float-right">
+        <p>Matter is composed of extremely small, discrete particles. These particles are incredibly small and cannot be seen with the naked eye or even with an ordinary microscope. For instance, a single drop of water contains roughly 10<sup>21</sup> particles of water.</p>
+
+        <h2>3. Kinetic Theory of Matter</h2>
+        <p>To understand the different states of matter, we study the <strong>Kinetic Theory of Matter</strong>. This theory explains the existence of the three states of matter, their characteristic properties, and the interconversions from one state to another.</p>
+        
+        <h3>Main Postulates of the Kinetic Theory:</h3>
+        <ul>
+            <li><strong>Composition:</strong> Matter is composed of very small particles called atoms and molecules. The constituent particles of a specific kind of matter are identical in all respects but differ from the particles of another kind of matter.</li>
+            <li><strong>Constant Motion:</strong> Particles of matter are always in a state of <strong>random motion</strong> and possess <strong>kinetic energy</strong>. This energy increases with an increase in temperature and vice-versa.</li>
+            <li><strong>Interparticle (Intermolecular) Space:</strong> The particles of matter have spaces or gaps between them. These spaces are known as interparticle or intermolecular spaces.</li>
+            <li><strong>Intermolecular Force of Attraction:</strong> There exists a force of attraction between the particles of matter which keeps them together. The magnitude of this force varies from one type of matter to another (e.g., chalk breaks easily, but iron does not).</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Brownian Motion:</strong> The continuous, zig-zag, random motion of suspended particles on the surface of a liquid or in air is called Brownian motion. It was first observed by scientist <strong>Robert Brown</strong> using pollen grains suspended in water.</p>
+            <p><strong>Diffusion:</strong> The intermixing of two or more substances due to the motion of their particles in order to get a uniform mixture is called diffusion. The rate of diffusion is <strong>fastest in gases</strong> and <strong>slowest in solids</strong>, and it increases with an increase in temperature.</p>
+        </div>
+
+        <h2>4. States of Matter</h2>
+        <img src="Images/states_of_matter.png" alt="States of Matter Particle Arrangement" class="invert-on-dark float-left">
+        <p>Based on the magnitude of intermolecular force of attraction, intermolecular space, and random motion, matter exists primarily in three states:</p>
+
+        <h3>1. Solid State</h3>
+        <p>In solids, particles are very closely packed. The intermolecular force of attraction is the <strong>strongest</strong>, making the intermolecular spaces almost <strong>negligible</strong>. The molecules are not free to move; they only vibrate about their mean positions.</p>
+        <ul>
+            <li>Have a definite shape, size, and volume.</li>
+            <li>Highly rigid and difficult to compress.</li>
+            <li>Possess the lowest kinetic energy.</li>
+        </ul>
+
+        <h3>2. Liquid State</h3>
+        <p>In liquids, particles are less closely packed. The intermolecular forces are weaker than in solids, resulting in <strong>larger intermolecular spaces</strong>. Particles can move freely and randomly.</p>
+        <ul>
+            <li>Have a definite volume but <strong>no fixed shape</strong> (they take the shape of the container).</li>
+            <li>More compressible than solids and possess higher kinetic energy.</li>
+            <li>Can flow downwards (fluids).</li>
+        </ul>
+
+        <h3>3. Gaseous State</h3>
+        <p>In gases, intermolecular forces of attraction are the <strong>weakest</strong> (almost negligible). The particles lie far apart, resulting in very large intermolecular spaces. Particles are completely free to move in the entire space available.</p>
+        <ul>
+            <li>Neither a definite shape nor a definite volume.</li>
+            <li>Highly compressible and have the <strong>highest kinetic energy</strong>.</li>
+            <li>Flow easily in all directions.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Did You Know?</span>
+            <p>Apart from solid, liquid, and gas, scientists have proven the existence of two more extreme states of matter: <strong>Plasma</strong> and <strong>Bose-Einstein Condensate</strong>.</p>
+        </div>
+
+
+        <h2>5. Interconversion of States of Matter</h2>
+        <p>The phenomenon of change of one state of matter into another and then back to the original state, without any change in its chemical composition, is called <strong>Interconversion of the states of matter</strong>.</p>
+        
+        <p>Changes in the state of matter are caused primarily by altering two factors: <strong>Temperature</strong> and <strong>Pressure</strong>.</p>
+
+        <h3>Important Terminology for Interconversion:</h3>
+        <ul>
+            <li><strong>Melting or Fusion:</strong> The process by which a substance changes from solid state to liquid state on heating. The fixed temperature at which this occurs is the <strong>Melting Point</strong> (e.g., Ice melts at 0°C).</li>
+            <li><strong>Evaporation or Vaporisation:</strong> The process by which a substance changes from liquid state to vapour (gas) state. When a liquid is heated to a fixed temperature where it starts rapidly changing into gas, that temperature is called the <strong>Boiling Point</strong> (e.g., pure water boils at 100°C).</li>
+            <li><strong>Condensation or Liquefaction:</strong> The process by which a gas changes into its liquid state upon cooling. The <strong>Condensation Point</strong> is the exact temperature at which this occurs. Liquefaction can also be achieved by applying high pressure and lowering temperature (e.g., LPG in cylinders).</li>
+            <li><strong>Freezing or Solidification:</strong> The process by which a liquid changes into a solid state. The fixed temperature at which this happens is the <strong>Freezing Point</strong> (e.g., water freezes at 0°C).</li>
+            <li><strong>Sublimation:</strong> The process by which certain solid substances change <strong>directly into the gaseous state</strong> on heating, without passing through the liquid state. Examples include Camphor, Iodine, Naphthalene, Ammonium Chloride, and Dry Ice.</li>
+            <li><strong>Deposition:</strong> The exact reverse of sublimation, where a gas changes directly into a solid state upon cooling without becoming a liquid. The resulting solid is called a <em>sublimate</em>.</li>
+        </ul>
+
+        <h2>6. Law of Conservation of Mass</h2>
+        <p>During physical changes (like melting) or chemical changes (like burning), you might wonder what happens to the total mass of the substance. This is explained by the <strong>Law of Conservation of Mass</strong>, proposed by the French chemist <strong>Antoine Lavoisier</strong>.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>The Law of Conservation of Mass states:</strong> "Matter can neither be created nor be destroyed in a chemical reaction. It may only change from one form to another."</p>
+            <p>In simpler terms: <strong>Total mass of Reactants = Total mass of Products</strong>.</p>
+        </div>
+
+        <h3>Experimental Verification</h3>
+        <img src="Images/conservation_of_mass.png" alt="Law of Conservation of Mass Experiment" class="invert-on-dark float-right">
+        <p>This law can be verified in a laboratory using a closed container (to prevent gases from escaping). </p>
+        <ul>
+            <li><strong>Reactants:</strong> Barium chloride solution (BaCl₂) + Sodium sulphate solution (Na₂SO₄)</li>
+            <li><strong>Products:</strong> Barium sulphate (White precipitate) + Sodium chloride (NaCl solution)</li>
+            <li><strong>Process:</strong> The solutions are kept in a sealed conical flask but separated using a suspended test tube. The entire apparatus is weighed before the reaction. The flask is then tilted to mix the solutions, causing a chemical reaction (white precipitate forms). The apparatus is weighed again.</li>
+            <li><strong>Result:</strong> The mass remains exactly the same before and after the reaction, proving the Law of Conservation of Mass.</li>
+        </ul>
+
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

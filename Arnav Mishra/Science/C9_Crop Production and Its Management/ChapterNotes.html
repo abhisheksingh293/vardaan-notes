@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Crop Production and Its Management - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- NEWSPAPER LAYOUT STYLES --- */
+        .img-float-left {
+            float: left;
+            max-width: 280px;
+            width: 100%;
+            margin: 10px 20px 15px 0;
+            border-radius: 8px;
+            background-color: #fff;
+            border: none !important;
+            box-shadow: none !important;
+            transition: filter 0.3s ease;
+        }
+
+        .img-float-right {
+            float: right;
+            max-width: 280px;
+            width: 100%;
+            margin: 10px 0 15px 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            border: none !important;
+            box-shadow: none !important;
+            transition: filter 0.3s ease;
+        }
+
+        /* Clear floats at section headers and boxes */
+        h2, h3, .blue-box, .green-box, .yellow-box {
+            clear: both;
+        }
+
+        html.dark-mode .img-float-left, 
+        html.dark-mode .img-float-right {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* Mobile optimization: make images full width on small screens */
+        @media screen and (max-width: 600px) {
+            .img-float-left, .img-float-right {
+                float: none;
+                display: block;
+                margin: 20px auto;
+                max-width: 100%;
+            }
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Crop Production and Its Management</h1>
+
+        <h2>1. Introduction to Agriculture</h2>
+        <img src="../images/human_history_gatherer_vs_farmer.webp" alt="Evolution of Agriculture: Food Gatherer to Producer" class="img-float-right">
+        <p>All living organisms need food for growth and sustenance. Plants can prepare their own food through photosynthesis (autotrophs), while humans and animals depend on plants (heterotrophs).</p>
+        <p>Around 10,000 years ago, prehistoric humans were nomads, wandering from place to place gathering raw fruits and hunting animals. Eventually, they discovered they could grow 'food-giving plants' by planting seeds near water sources. This monumental discovery changed humans from 'food gatherers' to 'food producers'.</p>
+        <p>The practice of cultivating land and raising crops and livestock is known as <strong>agriculture</strong>. When plants of the same kind are cultivated at one place on a large scale, it is called a <strong>crop</strong> (e.g., a crop of wheat means all plants grown in that field are wheat).</p>
+
+        <h2>2. Cropping Patterns in India</h2>
+        <img src="../images/cropping_patterns_kharif_vs_rabi.webp" alt="Cropping Patterns: Kharif and Rabi Season Crops" class="img-float-left">
+        <p>India is a vast country with rich diversity in climate, temperature, humidity, and rainfall. Despite this diversity, crops in India are broadly classified into two main cropping patterns based on the seasons:</p>
+        
+        <ul>
+            <li><strong>Kharif Crops:</strong> The crops which are sown in the rainy season. In India, the rainy season is generally from June to September. Since these crops require a lot of water, they cannot be grown in winter. <em>Examples: Paddy (Rice), Maize, Soyabean, Groundnut, and Cotton.</em></li>
+            <li><strong>Rabi Crops:</strong> The crops grown in the winter season, generally from October to March. These crops require a cool climate to grow and less water. <em>Examples: Wheat, Gram, Pea, Mustard, and Linseed.</em></li>
+        </ul>
+
+        <h2>3. Agricultural Practices</h2>
+        <img src="../images/agricultural_practices_lifecycle.webp" alt="General Agricultural Practices Lifecycle" class="img-float-right">
+        <p>To raise a successful crop, a farmer has to perform a series of systematic activities over a period of time. These activities are known as <strong>agricultural practices</strong>. They are:</p>
+        <ol>
+            <li>Preparation of Soil</li>
+            <li>Sowing</li>
+            <li>Adding Manure and Fertilisers</li>
+            <li>Irrigation</li>
+            <li>Protecting from Weeds</li>
+            <li>Harvesting</li>
+            <li>Storage</li>
+        </ol>
+
+        <h2>4. Preparation of Soil and Sowing</h2>
+        <img src="../images/soil_preparation_tractor_earthworm.webp" alt="Soil Preparation: Tractor and Friendly Earthworm" class="img-float-left">
+        
+        <h3>Preparation of Soil</h3>
+        <p>The first step before growing a crop is to turn the soil and loosen it. The process of loosening and turning the soil is called <strong>tilling</strong> or <strong>ploughing</strong>. This is done using tools like a plough, hoe, or modern tractor-driven cultivators.</p>
+        <p><strong>Benefits of loosening soil:</strong> It allows roots to penetrate deep and breathe easily. It brings nutrient-rich soil to the top. It also promotes the growth of earthworms and friendly microbes, which further turn the soil and add humus (acting as "friends of the farmer").</p>
+
+        <h3>Sowing</h3>
+        <p>Sowing is the process of putting seeds in the soil. Farmers must select good quality, clean, and healthy seeds of a high-yielding variety. Sowing can be done manually or using a tool called a <strong>seed drill</strong>, which sows the seeds uniformly at equal distance and depth, saving time and protecting seeds from being eaten by birds.</p>
+
+        <h2>5. Adding Manure and Fertilisers</h2>
+        <img src="../images/manure_vs_fertiliser_comparison.webp" alt="Comparison: Organic Manure vs Chemical Fertiliser" class="img-float-right">
+        <p>Continuous cultivation of crops makes the soil poor in nutrients. To replenish the soil, substances are added in the form of nutrients, called manure and fertilisers.</p>
+
+        <ul>
+            <li><strong>Manure:</strong> An organic substance obtained from the decomposition of plant or animal wastes. It enhances the water-holding capacity of the soil, makes the soil porous for gas exchange, and improves soil texture.</li>
+            <li><strong>Fertilisers:</strong> Man-made chemicals produced in factories that are very rich in specific plant nutrients like Nitrogen, Phosphorus, and Potassium (NPK). While they guarantee high yields, excessive use of fertilisers makes the soil less fertile over time and causes severe water pollution.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Organic Farming:</strong> A farming system that strictly avoids or largely excludes the use of synthetically compounded fertilizers, pesticides, and growth regulators. It relies heavily on crop rotation, animal manures, and biological pest control to maintain soil productivity.</p>
+        </div>
+
+        <h2>6. Irrigation</h2>
+        <img src="../images/drip_irrigation_system_detail.webp" alt="Modern Irrigation: Drip Irrigation System" class="img-float-left">
+        <p>Living beings need water to survive. In plants, water is essential for the germination of seeds and the absorption of dissolved nutrients from the soil. The supply of water to crops at regular intervals is called <strong>irrigation</strong>. Sources include wells, tube wells, ponds, lakes, rivers, dams, and canals.</p>
+
+        <h3>Modern Methods of Irrigation</h3>
+        <ul>
+            <li><strong>Sprinkler System:</strong> Useful for uneven land where sufficient water is not available. Water is sprayed on the crops through rotating nozzles, almost as if it is raining.</li>
+            <li><strong>Drip System:</strong> The best technique for watering fruit plants, gardens, and trees in regions with water scarcity. Water falls drop by drop directly near the roots, ensuring absolutely no water is wasted.</li>
+        </ul>
+
+        <h2>7. Protection from Weeds and Pests</h2>
+        <img src="../images/weed_removal_hand_trowel.webp" alt="Weeding: Removing Unwanted Plants Manually" class="img-float-right">
+        <p>In a field, many other undesirable plants may grow naturally along with the crop. These are called <strong>weeds</strong>. The removal of weeds is called weeding. Weeds compete with the main crop for water, nutrients, space, and light, thus affecting crop growth.</p>
+        <p>Farmers remove weeds manually or by using chemicals called <strong>weedicides</strong> (e.g., 2,4-D), which kill the weeds without damaging the crops.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Biological Control of Pests:</strong> Nature has its own pest control system! Animals like frogs, lizards, owls, and bats play a crucial role in agriculture by naturally eating large quantities of crop-destroying insects and pests, keeping their populations in check without the need for toxic chemicals.</p>
+        </div>
+
+        <h2>8. Harvesting and Storage</h2>
+        <img src="../images/harvest_storage_grains_silo.webp" alt="Harvesting and Safe Storage: Metallic Grain Silos" class="img-float-left">
+        <p>The cutting of crop after it is mature is called <strong>harvesting</strong>. In India, this is either done manually using a sickle or by a machine called a harvester. The process of separating the edible grain seeds from the chaff is called <strong>threshing</strong>.</p>
+        
+        <h3>Storage</h3>
+        <p>Proper storage of the harvested crop is crucial to protect it from moisture, insects, rats, and microorganisms. If freshly harvested grains (which contain more moisture) are stored without drying, they may get spoilt or attacked by fungi. Large scale storage of grains is done in <strong>silos</strong> and <strong>granaries</strong>. At home, dried neem leaves are often used to protect stored food grains from pests.</p>
+
+        <h2>9. Food from Animals (Animal Husbandry)</h2>
+        <p>Just like plants, animals also provide us with different kinds of food (like milk, eggs, meat, and honey). Animals reared at home or on large farms have to be provided with proper food, shelter, and care. When this is done on a large scale, it is called <strong>animal husbandry</strong>.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

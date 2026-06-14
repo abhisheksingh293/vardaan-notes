@@ -1,0 +1,571 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Linear Equations in One Variable - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+                /* --- NEWSPAPER STYLE IMAGES --- */
+        .image-float-right { float: right; width: 45%; max-width: 360px; margin: 8px 0 14px 18px; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        .image-float-left { float: left; width: 45%; max-width: 360px; margin: 8px 18px 14px 0; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        html.dark-mode .image-float-right, html.dark-mode .image-float-left { filter: invert(1); opacity: 1; }
+
+        @media (max-width: 768px) {
+            .diagram-container,
+            .diagram-container:nth-of-type(even),
+            .image-float-right,
+            .image-float-left {
+                float: none !important;
+                display: block !important;
+                width: 90% !important;
+                max-width: 500px !important;
+                min-width: 0 !important;
+                margin: 20px auto !important;
+                clear: both !important;
+            }
+        }
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+    <!-- MathJax added for consistent Math Rendering (Optional strictly standard, but essential for standard equation view) -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Mathematics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Linear Equations in One Variable</h1>
+        
+        <h2>1. Introduction to Linear Equations</h2>
+        <p>
+            <img src="../images/C9_LinearEquations.png" alt="Balancing Scale" class="image-float-right ai-image" style="width: 45%; max-width: 360px; margin-top: 5px;">
+            Before diving into complex problem-solving, let's brush up on the fundamentals of equations and linear equations.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Equation:</strong> An equation is a mathematical statement of equality between two algebraic expressions involving an unknown quantity called a variable.</p>
+            <p><strong>Linear Equation in One Variable:</strong> A linear equation in one variable is an equation in which the highest power (degree) of the variable is exactly one.</p>
+        </div>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>The standard form of a linear equation in one variable is given as:</p>
+            <p style="text-align: center; font-size: 1.2rem;">$$ px + q = 0 $$</p>
+            <p>where $p$ and $q$ are rational numbers, and $p \neq 0$. The solution (or root) of this equation is $$ x = -\frac{q}{p} $$</p>
+        </div>
+
+        <h3>Rules for Solving Linear Equations</h3>
+        <p>Remember that an equation behaves like a weighing scale. It remains balanced (does not change) when you apply the following operations to <strong>both sides</strong>:</p>
+        <ul>
+            <li><strong>Add</strong> the same number to both sides of the equation.</li>
+            <li><strong>Subtract</strong> the same number from both sides of the equation.</li>
+            <li><strong>Multiply or divide</strong> both sides of the equation by the same non-zero number.</li>
+            <li><strong>Transpose:</strong> You can shift any term from one side of the equality sign to the other, provided you change its sign ($+$ becomes $-$, and vice versa).</li>
+        </ul>
+
+        <h2>2. Equations Reducible to Linear Form</h2>
+        <p>Often, equations are not given in a simple linear form. In this chapter, we specifically focus on equations of the type:</p>
+        <p style="text-align: center; font-size: 1.2rem;">$$ \frac{ax + b}{cx + d} = k $$</p>
+        <p>Where $a$, $b$, $c$, $d$, and $k$ are given numbers, $x$ is the variable, and the denominator $cx + d \neq 0$. Such equations can be converted into standard linear equations using the <strong>Cross Multiplication Method</strong>.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The Cross Multiplication Method</strong></p>
+            <p>If you have an equation of the form $$ \frac{ax+b}{cx+d} = \frac{m}{n} $$ you can eliminate the fractions by cross-multiplying:</p>
+            <ol>
+                <li>Multiply the numerator of the L.H.S. by the denominator of the R.H.S.: $n(ax+b)$</li>
+                <li>Multiply the numerator of the R.H.S. by the denominator of the L.H.S.: $m(cx+d)$</li>
+                <li>Equate both expressions: $$ n(ax+b) = m(cx+d) $$</li>
+            </ol>
+            <p>This transforms the problem into a simple linear equation!</p>
+        </div>
+
+        <h3>Solved Example</h3>
+        <p><strong>Solve the equation:</strong> $$ \frac{2x - 1}{3x + 5} = 5 $$</p>
+        <p><strong>Solution:</strong><br>
+        1. Treat $5$ as $\frac{5}{1}$. By applying cross multiplication, we get:<br>
+        $$ 1(2x - 1) = 5(3x + 5) $$<br>
+        2. Expand the brackets:<br>
+        $$ 2x - 1 = 15x + 25 $$<br>
+        3. Transpose the variable terms to one side and constants to the other:<br>
+        $$ 2x - 15x = 25 + 1 $$<br>
+        $$ -13x = 26 $$<br>
+        4. Solve for $x$:<br>
+        $$ x = \frac{26}{-13} = -2 $$</p>
+
+        <h3>Practice Problems: Solving Equations</h3>
+        <ul>
+            <li><strong>Q1.</strong> Solve: $$ \frac{4z - 3}{2z + 1} = \frac{5}{7} $$</li>
+            <li><strong>Q2.</strong> Solve: $$ \frac{3x}{5x - 5} = -1 $$</li>
+            <li><strong>Q3.</strong> Find the positive value of $x$ for which: $$ \frac{x^2 - 9}{5 + x^2} = \frac{5}{9} $$ <em>(Hint: Substitute $x^2 = y$ temporarily to solve)</em></li>
+        </ul>
+
+        <h2>3. Applications of Linear Equations (Word Problems)</h2>
+        <p>Mathematical modeling is the process of translating real-world problems into mathematical equations. Linear equations are exceptionally useful for solving everyday problems related to numbers, ages, speed-distance-time, and geometry.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Steps to Solve Word Problems:</strong></p>
+            <ul>
+                <li><strong>Step I:</strong> Read the problem carefully. Identify the knowns and the unknown quantity required.</li>
+                <li><strong>Step II:</strong> Denote the unknown quantity by a variable like $x$, $y$, or $z$.</li>
+                <li><strong>Step III:</strong> Translate the English statements step-by-step into mathematical expressions.</li>
+                <li><strong>Step IV:</strong> Use the conditions given in the problem to formulate an equation.</li>
+                <li><strong>Step V:</strong> Solve the equation.</li>
+                <li><strong>Step VI (Crucial):</strong> Verify your answer by plugging it back into the original word problem's conditions.</li>
+            </ul>
+        </div>
+
+        <h3>Key Application Types</h3>
+
+        <h3>A. Age Problems</h3>
+        <p>If the ratio of present ages of A and B is $m:n$, assume their ages as $mx$ and $nx$. For future ages, <strong>add</strong> the years. For past ages, <strong>subtract</strong> the years.</p>
+
+        <h3>B. Two-Digit Number Problems</h3>
+        <p>This is a highly tested concept. Any two-digit number consists of a "tens digit" and a "ones digit".</p>
+        <p>If the ones digit is $x$ and the tens digit is $y$, then:<br>
+        <strong>Original Number</strong> = $$ 10 \times (\text{tens digit}) + (\text{ones digit}) = 10y + x $$<br>
+        <strong>Reversed Number</strong> (interchanging digits) = $$ 10x + y $$</p>
+
+        <h3>C. Consecutive Multiples</h3>
+        <p>If you need to find consecutive multiples of a number (say, 8), let the first multiple be $8x$. The next consecutive multiples will be $8(x+1)$ and $8(x+2)$.</p>
+        <p><em>Alternative approach:</em> Let the multiples be $y$, $y+8$, and $y+16$.</p>
+
+        <h3>D. Speed, Distance, and Time (Boats and Streams)</h3>
+        <p>When an object (like a steamer or boat) travels in water, the speed of the water current affects its total speed.</p>
+        <ul>
+            <li><strong>Downstream (Along the current):</strong> Speed = (Speed of Boat in still water) $+$ (Speed of Stream)</li>
+            <li><strong>Upstream (Against the current):</strong> Speed = (Speed of Boat in still water) $-$ (Speed of Stream)</li>
+            <li>Remember the formula: $$ \text{Distance} = \text{Speed} \times \text{Time} $$</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Example (Boats):</strong> A steamer goes downstream from one port to another in 6 hours. It covers the same distance upstream in 7 hours. If the speed of the stream is $2 \text{ km/hr}$, find the speed of the steamer in still water.</p>
+            <p><strong>Solution:</strong> Let speed of steamer be $x \text{ km/hr}$.<br>
+            Downstream Speed = $x + 2$. Distance covered = $6(x + 2)$<br>
+            Upstream Speed = $x - 2$. Distance covered = $7(x - 2)$<br>
+            Since the distance is identical:<br>
+            $$ 6(x + 2) = 7(x - 2) $$<br>
+            $$ 6x + 12 = 7x - 14 $$<br>
+            $$ -x = -26 \implies x = 26 \text{ km/hr} $$</p>
+        </div>
+
+        <h3>Practice Problems: Word Applications</h3>
+        <ul>
+            <li><strong>Q1 (Ages):</strong> Two years ago, a father was three times as old as his son and two years hence, twice his age will be equal to five times that of his son. Find their present ages.</li>
+            <li><strong>Q2 (Digits):</strong> The sum of the digits of a 2-digit number is 8. The number obtained by interchanging the digits exceeds the given number by 18. Find the given numbers.</li>
+            <li><strong>Q3 (Fractions):</strong> The denominator of a rational number is greater than its numerator by 7. If 3 is subtracted from the numerator and 2 is added to its denominator, the new number becomes $\frac{1}{5}$. Find the rational number.</li>
+            <li><strong>Q4 (Trains):</strong> The distance between 2 towns is 300 km. Two cars start simultaneously from these towns and move towards each other. The speed of one car is more than the other by $7 \text{ km/hr}$. If the distance between the cars after 2 hours is 34 km, find the speed of the cars.</li>
+            <li><strong>Q5 (Mensuration):</strong> The length of a rectangle is greater than the breadth by 18 cm. If both length and breadth are increased by 6 cm, then the area increases by $168 \text{ cm}^2$. Find the length and breadth of the rectangle.</li>
+        </ul>
+
+        <h2>4. Chapter Summary (You Must Know)</h2>
+        <ul>
+            <li>An equation is a statement of equality of two algebraic expressions involving an unknown quantity called a variable.</li>
+            <li>An equation in which the highest power of the variable is one is called a <strong>linear equation</strong>.</li>
+            <li>If an equation is in the format $\frac{ax+b}{cx+d} = k$, using the cross multiplication method yields $1 \times (ax+b) = k \times (cx+d)$, which converts it into a solvable linear form.</li>
+            <li>When forming word problem equations, read the text carefully to correctly identify the mathematical relationships (ratios, differences, sums) between the unknown variable and the given data.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

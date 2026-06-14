@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Porshiya - Study Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --orange:#f97315; --orange-soft:rgba(249,115,21,.12); }
+    [data-theme="dark"] {
+      --bg:#0c0c0e; --text:#f3f3f5; --muted:#9a9aad; --card:#151519; --line:rgba(255,255,255,.08);
+      --card-hover:#1b1b20; --nav:rgba(12,12,14,.86); --input:rgba(255,255,255,.04);
+      --orb1:rgba(249,115,21,.16); --orb2:rgba(249,115,21,.08);
+    }
+    [data-theme="light"] {
+      --bg:#f4f4f7; --text:#121217; --muted:#66667a; --card:#ffffff; --line:rgba(0,0,0,.09);
+      --card-hover:#fdfdfd; --nav:rgba(244,244,247,.9); --input:#ffffff;
+      --orb1:rgba(249,115,21,.12); --orb2:rgba(249,115,21,.07);
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+    .orb { position:fixed; border-radius:50%; filter:blur(72px); pointer-events:none; z-index:0; }
+    .orb.a { width:500px; height:500px; right:-120px; top:-140px; background:var(--orb1); }
+    .orb.b { width:340px; height:340px; left:-100px; bottom:-80px; background:var(--orb2); }
+    nav {
+      position:sticky; top:0; z-index:20; height:66px; padding:0 26px;
+      display:flex; align-items:center; justify-content:space-between;
+      background:var(--nav); border-bottom:1px solid var(--line); backdrop-filter:blur(14px);
+    }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text); }
+    .logo {
+      width:36px; height:36px; border-radius:11px; display:grid; place-items:center;
+      background:linear-gradient(135deg,#f97315,#d65b00); color:#fff; font-family:'Syne',sans-serif; font-weight:800;
+    }
+    .brand span { font-family:'Syne',sans-serif; font-weight:800; letter-spacing:-.02em; }
+    .brand em { color:var(--orange); font-style:normal; }
+    .toggle { width:52px; height:28px; border-radius:999px; border:1px solid var(--line); background:var(--input); position:relative; cursor:pointer; }
+    .knob {
+      position:absolute; width:20px; height:20px; border-radius:50%; top:3px; left:3px;
+      background:linear-gradient(135deg,#f97315,#e15f00); transition:transform .28s ease;
+    }
+    [data-theme="light"] .knob { transform:translateX(24px); }
+    .wrap { position:relative; z-index:1; max-width:980px; margin:0 auto; padding:32px 26px 80px; }
+    .toprow { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:8px; border-radius:999px;
+      padding:6px 14px; font-size:.74rem; font-weight:700; text-transform:uppercase;
+      color:var(--orange); background:var(--orange-soft); border:1px solid rgba(249,115,21,.25);
+    }
+    .pulse { width:6px; height:6px; border-radius:50%; background:var(--orange); }
+    .back {
+      text-decoration:none; color:var(--text); font-size:.86rem; border:1px solid var(--line);
+      border-radius:10px; padding:8px 12px; background:var(--input);
+    }
+    h1 {
+      margin-top:18px; font-family:'Syne',sans-serif; font-size:clamp(1.9rem,4.8vw,3rem);
+      line-height:1.06; letter-spacing:-.03em;
+    }
+    h1 .accent { color:var(--orange); }
+    .sub { margin-top:12px; color:var(--muted); max-width:620px; line-height:1.6; }
+    .stats { margin-top:26px; display:flex; gap:24px; flex-wrap:wrap; }
+    .num { font-family:'Syne',sans-serif; font-size:1.55rem; font-weight:800; }
+    .lab { font-size:.74rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+    .controls { margin-top:30px; }
+    .search {
+      width:100%; height:46px; border:1px solid var(--line); border-radius:12px;
+      background:var(--input); color:var(--text); font-size:.94rem; padding:0 14px; outline:none;
+    }
+    .search:focus { border-color:rgba(249,115,21,.55); box-shadow:0 0 0 3px rgba(249,115,21,.12); }
+    .head { margin-top:22px; display:flex; justify-content:space-between; align-items:center; }
+    .head h2 { font-family:'Syne',sans-serif; font-size:.8rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+    .count { font-size:.82rem; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:4px 10px; background:var(--input); }
+    .grid {
+      margin-top:14px; display:grid; gap:14px;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    }
+    .card {
+      display:block; text-decoration:none; color:var(--text);
+      background:var(--card); border:1px solid var(--line); border-radius:18px;
+      padding:18px; transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease;
+    }
+    .card:hover { transform:translateY(-5px); border-color:rgba(249,115,21,.4); box-shadow:0 16px 38px rgba(249,115,21,.14); background:var(--card-hover); }
+    .badge {
+      float:right; font-size:.64rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+      color:var(--orange); background:var(--orange-soft); border:1px solid rgba(249,115,21,.22);
+      border-radius:999px; padding:3px 8px;
+    }
+    .avatar {
+      width:48px; height:48px; border-radius:12px; margin:2px 0 12px;
+      display:grid; place-items:center; color:#fff; font-family:'Syne',sans-serif; font-weight:800;
+      background:linear-gradient(135deg,#f97315,#c84f00);
+    }
+    .name { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; }
+    .meta { margin-top:8px; color:var(--muted); font-size:.82rem; display:grid; gap:4px; }
+    .empty { display:none; margin-top:38px; text-align:center; color:var(--muted); }
+    footer {
+      margin-top:38px; padding-top:22px; border-top:1px solid var(--line);
+      display:flex; justify-content:center; flex-wrap:wrap; gap:10px; color:var(--muted); font-size:.82rem;
+    }
+    @media (max-width:520px) {
+      nav { padding:0 16px; }
+      .wrap { padding:24px 16px 64px; }
+      .grid { grid-template-columns:1fr 1fr; gap:10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <nav>
+    <a class="brand" href="#">
+      <div class="logo">VC</div>
+      <span>Vardaan <em>Comet</em></span>
+    </a>
+    <div id="themeToggle" class="toggle"><div class="knob"></div></div>
+  </nav>
+  <main class="wrap">
+    <div class="toprow">
+      <div class="eyebrow"><span class="pulse"></span>Student Portal</div>
+      <a class="back" href="../index.html">Back to Students</a>
+    </div>
+    <h1><span class="accent">Porshiya</span><br />Subjects Dashboard</h1>
+    <p class="sub">Choose a subject to open chapter dropdowns and chapter notes.</p>
+    <div class="stats">
+      <div><div class="num" id="statSubjects">0+</div><div class="lab">Subjects</div></div>
+      <div><div class="num" id="statChapters">0+</div><div class="lab">Chapters</div></div>
+    </div>
+    <div class="controls">
+      <input id="searchInput" class="search" type="search" placeholder="Search subject name..." autocomplete="off" />
+    </div>
+    <div class="head">
+      <h2>Subjects</h2>
+      <span id="countLabel" class="count">0 subjects</span>
+    </div>
+    <section id="subjectGrid" class="grid"></section>
+    <section id="emptyState" class="empty">
+      <h3>No subjects found</h3>
+      <p>Try typing a different subject name.</p>
+    </section>
+    <footer>
+      <span>Porshiya</span>
+      <span>|</span>
+      <span>Class 6 to 8</span>
+      <span>|</span>
+      <span>© 2026</span>
+    </footer>
+  </main>
+  <script>
+    const subjects = [
+      {"name":"History","link":"./History/History.html","chapters":10},
+      {"name":"Civics","link":"./Civics/Civics.html","chapters":2}
+    ];
+    const html = document.documentElement;
+    function setTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('vcTheme', theme);
+    }
+    setTheme(localStorage.getItem('vcTheme') || 'dark');
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+    function initials(name) {
+      return name.split(' ').map(part => part[0]).join('').slice(0, 2).toUpperCase();
+    }
+    function renderStats() {
+      const totalSubjects = subjects.length;
+      const totalChapters = subjects.reduce((sum, s) => sum + s.chapters, 0);
+      document.getElementById('statSubjects').textContent = totalSubjects + '+';
+      document.getElementById('statChapters').textContent = totalChapters + '+';
+    }
+    function renderCards(list) {
+      const grid = document.getElementById('subjectGrid');
+      const empty = document.getElementById('emptyState');
+      const count = document.getElementById('countLabel');
+      grid.innerHTML = '';
+      if (!list.length) {
+        grid.style.display = 'none';
+        empty.style.display = 'block';
+        count.textContent = '0 subjects';
+        return;
+      }
+      grid.style.display = 'grid';
+      empty.style.display = 'none';
+      count.textContent = list.length + ' subject' + (list.length === 1 ? '' : 's');
+      list.forEach(subject => {
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = subject.link;
+        card.innerHTML =
+          '<span class="badge">Subject</span>' +
+          '<div class="avatar">' + initials(subject.name) + '</div>' +
+          '<div class="name">' + subject.name + '</div>' +
+          '<div class="meta">' +
+            '<span>' + subject.chapters + ' chapter folders</span>' +
+            '<span>Click to open subject page</span>' +
+          '</div>';
+        grid.appendChild(card);
+      });
+    }
+    function filterSubjects() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const filtered = subjects.filter(subject => subject.name.toLowerCase().includes(q));
+      renderCards(filtered);
+    }
+    document.getElementById('searchInput').addEventListener('input', filterSubjects);
+    renderStats();
+    renderCards(subjects);
+  </script>
+</body>
+</html>

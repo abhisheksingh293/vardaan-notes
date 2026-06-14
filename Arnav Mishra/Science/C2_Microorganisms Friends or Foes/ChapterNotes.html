@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Microorganisms: Friends or Foes - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- IMAGE PLACEHOLDER --- */
+        .img-placeholder {
+            border: 2px dashed var(--meta-text);
+            background-color: var(--example-bg);
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            border-radius: 8px;
+            color: var(--example-text);
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        .img-placeholder strong {
+            color: var(--blue-border);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .img-placeholder em {
+            color: var(--pink-border);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Microorganisms: Friends or Foes</h1>
+        
+        <h2>1. Introduction to Microorganisms</h2>
+        <p>Besides the plants and animals we see around us, there are countless tiny living organisms that are invisible to the naked eye. These are called <strong>microorganisms</strong> or <strong>microbes</strong>. The branch of science that deals with the study of microorganisms is known as <strong>microbiology</strong>.</p>
+        <p>The discovery of microorganisms was only possible after the invention of the microscope. <strong>Anton von Leeuwenhoek</strong> was the first person to establish the existence of bacteria by observing them through his simple microscope.</p>
+
+        <h2>2. Major Groups of Microorganisms</h2>
+        <p>Microorganisms are broadly classified into four major groups based on their cell structure:</p>
+        <ul>
+            <li><strong>Bacteria:</strong> Simplest and oldest single-celled organisms. Examples: <em>Lactobacillus</em> (rod-shaped), <em>Streptococcus</em> (spherical).</li>
+            <li><strong>Fungi:</strong> Plant-like organisms that lack chlorophyll and cannot make their own food. They can be unicellular (Yeast) or multicellular (Bread mould, Mushrooms).</li>
+            <li><strong>Algae:</strong> Simple, plant-like organisms containing chlorophyll that can photosynthesise. Examples: <em>Spirogyra</em>, <em>Chlamydomonas</em>.</li>
+            <li><strong>Protozoa:</strong> Unicellular, animal-like organisms that can move and capture food. Examples: <em>Amoeba</em>, <em>Paramecium</em>, <em>Euglena</em>.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Are Viruses Microorganisms?</strong><br>
+            Viruses are also microscopic but are different from other microorganisms. They behave like non-living particles outside a body, but once they enter the cell of a living host (plant, animal, or bacterium), they hijack it to reproduce. Examples: Flu virus, Polio virus, HIV.</p>
+        </div>
+
+        <h2>3. Where do Microorganisms Live?</h2>
+        <p>Microorganisms are incredibly resilient and can survive in almost all types of environments, ranging from ice-cold climates to boiling hot springs, and from dry deserts to marshy lands. They are also found in the soil, in the air, in deep oceans, and even <strong>inside the bodies of animals and humans</strong>.</p>
+
+        <h2>4. Microorganisms as Our Friends (Useful Microbes)</h2>
+        <p>Many microorganisms play a highly beneficial role in our lives and the environment:</p>
+        
+        <ul>
+            <li><strong>Making Curd and Bread:</strong> <em>Lactobacillus</em> is a bacterium that multiplies in milk and converts it into curd. <strong>Yeast</strong> is widely used in the baking industry for making bread, pastries, and cakes. It reproduces rapidly and produces carbon dioxide gas, which makes the dough rise and become fluffy.</li>
+            <li><strong>Commercial Use:</strong> Yeast is used for the large-scale production of alcohol, wine, and acetic acid (vinegar).</li>
+            <li><strong>Medicinal Use (Antibiotics):</strong> Certain bacteria and fungi are used to produce medicines that kill or stop the growth of disease-causing microbes. These medicines are called <strong>antibiotics</strong> (e.g., Penicillin, discovered by Alexander Fleming).</li>
+            <li><strong>Vaccines:</strong> Dead or weakened microbes are introduced into a healthy body to trigger the immune system to produce antibodies. This protects the body from future infections. <strong>Edward Jenner</strong> discovered the vaccine for smallpox.</li>
+            <li><strong>Agriculture and Environment:</strong> Certain bacteria (like <em>Rhizobium</em>) and blue-green algae fix atmospheric nitrogen into the soil to increase fertility. Other microbes act as <strong>decomposers</strong>, breaking down dead plants and animals and cleaning the environment.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Fermentation:</strong> The process of conversion of sugar into alcohol by the action of yeast is known as fermentation. It was discovered by Louis Pasteur in 1857.</p>
+        </div>
+
+        <h2>5. Microorganisms as Our Foes (Harmful Microbes)</h2>
+        <p>Some microorganisms cause diseases in humans, plants, and animals. Such disease-causing microbes are called <strong>pathogens</strong>.</p>
+
+        <h3>Diseases in Humans</h3>
+        <p>Diseases that can spread from an infected person to a healthy person through air, water, food, or physical contact are called <strong>communicable diseases</strong> (e.g., Cholera, Common cold, Tuberculosis). Pathogens are often transmitted by insects and animals called <strong>carriers</strong> or vectors:</p>
+        <ul>
+            <li><strong>Housefly:</strong> Sits on garbage, picks up pathogens, and transfers them to uncovered food.</li>
+            <li><strong>Female <em>Anopheles</em> Mosquito:</strong> Acts as a carrier for the <em>Plasmodium</em> parasite, which causes <strong>Malaria</strong>.</li>
+            <li><strong>Female <em>Aedes</em> Mosquito:</strong> Acts as a carrier for the <strong>Dengue</strong> virus.</li>
+        </ul>
+
+        <h3>Diseases in Animals and Plants</h3>
+        <ul>
+            <li><strong>Animals:</strong> <em>Anthrax</em> is a dangerous human and cattle disease caused by a bacterium. Foot-and-mouth disease of cattle is caused by a virus.</li>
+            <li><strong>Plants:</strong> Microbes cause diseases like <strong>Citrus canker</strong> (bacteria) in citrus fruits, <strong>Rust of wheat</strong> (fungi) in wheat, and <strong>Yellow vein mosaic</strong> (virus) in okra (bhindi). This reduces crop yield.</li>
+        </ul>
+
+        <h2>6. Food Preservation</h2>
+        <p>Microorganisms that grow on our food sometimes produce toxic substances. This makes the food poisonous, causing serious illness known as <strong>food poisoning</strong>. To prevent this, we must preserve food properly.</p>
+        
+        <p><strong>Common Methods of Food Preservation:</strong></p>
+        <ul>
+            <li><strong>Chemical Method:</strong> Chemicals like sodium benzoate and sodium metabisulphite are used as preservatives in jams and squashes.</li>
+            <li><strong>Preservation by Salt and Sugar:</strong> High salt (used for fish, meat, tamarind, raw mangoes) and sugar (used for jams, jellies) draw out moisture, inhibiting microbial growth.</li>
+            <li><strong>Preservation by Oil and Vinegar:</strong> Bacteria cannot live in such an environment, so oil and vinegar are used to preserve pickles.</li>
+            <li><strong>Hot and Cold Treatments:</strong> Boiling kills many microbes. Keeping food in the refrigerator slows down their growth.</li>
+            <li><strong>Storage and Packing:</strong> Dry fruits and vegetables are sealed in airtight packets to prevent microbial attack.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Pasteurisation:</strong> Discovered by Louis Pasteur, this method involves heating milk to about 70°C for 15 to 30 seconds and then suddenly chilling and storing it. This prevents the growth of microbes, making the milk safe to consume without boiling.</p>
+        </div>
+
+        <h2>7. Nitrogen Fixation and the Nitrogen Cycle</h2>
+        <p>Our atmosphere contains 78% nitrogen gas, which is an essential part of proteins, chlorophyll, nucleic acids, and vitamins. However, plants and animals cannot take atmospheric nitrogen directly.</p>
+        
+        <ul>
+            <li><strong>Nitrogen Fixation:</strong> Certain bacteria (like <em>Rhizobium</em> living in the root nodules of leguminous plants) and blue-green algae convert atmospheric nitrogen into usable nitrogenous compounds in the soil.</li>
+            <li><strong>The Cycle:</strong> Plants absorb these compounds from the soil. Animals get nitrogen by eating plants. When plants and animals die, bacteria and fungi in the soil convert the nitrogenous wastes back into simple compounds to be used by plants again. Certain other bacteria convert some part of them back to nitrogen gas, which goes back into the atmosphere. As a result, the percentage of nitrogen in the atmosphere remains more or less constant.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

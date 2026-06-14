@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Trigonometry Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; font-size: 11pt;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- PROMPT VAULT STYLING --- */
+        .prompt-vault {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #2b2b2b;
+            color: #4ade80;
+            border-radius: 8px;
+            font-family: monospace;
+            page-break-before: always;
+        }
+        .prompt-vault h2 { color: #fff; margin-top: 0; }
+        .prompt-vault p { color: #aaa; font-size: 10pt; }
+        .prompt-block {
+            background-color: #1a1a1a;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4ade80;
+            font-size: 10pt;
+            white-space: pre-wrap;
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .prompt-vault { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Introduction to Trigonometry: Board Masterclass (Target 100/100)</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 10 CBSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Basic Trigonometric Ratios (1-2 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">If $\sin A = \frac{3}{4}$, calculate $\cos A$ and $\tan A$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Given $15 \cot A = 8$, find $\sin A$ and $\sec A$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">In $\triangle PQR$, right-angled at $Q$, $PR + QR = 25\text{ cm}$ and $PQ = 5\text{ cm}$. Determine the values of $\sin P$, $\cos P$ and $\tan P$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">If $\angle A$ and $\angle B$ are acute angles such that $\cos A = \cos B$, then show that $\angle A = \angle B$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">If $3 \cot A = 4$, check whether $\frac{1 - \tan^2 A}{1 + \tan^2 A} = \cos^2 A - \sin^2 A$ or not.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content"><strong>[Refer to Figure 1]</strong> In the given figure, find $\tan P - \cot R$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">If $\sec \theta = \frac{13}{12}$, calculate all other trigonometric ratios.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">If $\tan \theta = \frac{a}{b}$, prove that $\frac{a \sin \theta - b \cos \theta}{a \sin \theta + b \cos \theta} = \frac{a^2 - b^2}{a^2 + b^2}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">In a right triangle $ABC$, right-angled at $B$, if $\tan A = 1$, then verify that $2 \sin A \cos A = 1$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">If $\sin \theta = \frac{a}{\sqrt{a^2+b^2}}$, find the value of $\tan \theta$ and $\cos \theta$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section B: T-Ratios of Specific Angles ($0^\circ, 30^\circ, 45^\circ, 60^\circ, 90^\circ$) (2-3 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">Evaluate: $\sin 60^\circ \cos 30^\circ + \sin 30^\circ \cos 60^\circ$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">Evaluate: $2 \tan^2 45^\circ + \cos^2 30^\circ - \sin^2 60^\circ$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">Evaluate: $\frac{\cos 45^\circ}{\sec 30^\circ + \csc 30^\circ}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">Evaluate: $\frac{\sin 30^\circ + \tan 45^\circ - \csc 60^\circ}{\sec 30^\circ + \cos 60^\circ + \cot 45^\circ}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">Evaluate: $\frac{5 \cos^2 60^\circ + 4 \sec^2 30^\circ - \tan^2 45^\circ}{\sin^2 30^\circ + \cos^2 30^\circ}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">If $\tan(A + B) = \sqrt{3}$ and $\tan(A - B) = \frac{1}{\sqrt{3}}$; where $0^\circ < A + B \leq 90^\circ$ and $A > B$, find the values of $A$ and $B$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">If $\sin(A - B) = \frac{1}{2}$ and $\cos(A + B) = \frac{1}{2}$; where $0^\circ < A + B \leq 90^\circ$ and $A > B$, find the values of $A$ and $B$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">State whether the following is true or false. Justify your answer: $\sin(A + B) = \sin A + \sin B$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">Find the value of $x$ if $2 \csc^2 30^\circ + x \sin^2 60^\circ - \frac{3}{4} \tan^2 30^\circ = 10$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">If $\sqrt{3} \tan \theta = 3 \sin \theta$, find the value of $\sin^2 \theta - \cos^2 \theta$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section C: Trigonometric Identities (Standard Level) (3 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">Prove that: $(\csc \theta - \cot \theta)^2 = \frac{1 - \cos \theta}{1 + \cos \theta}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">Prove that: $\frac{\cos A}{1 + \sin A} + \frac{1 + \sin A}{\cos A} = 2 \sec A$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">Prove that: $\sqrt{\frac{1 + \sin A}{1 - \sin A}} = \sec A + \tan A$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">Prove that: $\frac{\sin \theta - 2 \sin^3 \theta}{2 \cos^3 \theta - \cos \theta} = \tan \theta$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">Prove that: $(\sin A + \csc A)^2 + (\cos A + \sec A)^2 = 7 + \tan^2 A + \cot^2 A$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">Express the trigonometric ratios $\sin A, \sec A$, and $\tan A$ in terms of $\cot A$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">Prove that: $\frac{\tan \theta}{1 - \cot \theta} + \frac{\cot \theta}{1 - \tan \theta} = 1 + \sec \theta \csc \theta$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">Prove that: $\frac{1 + \sec A}{\sec A} = \frac{\sin^2 A}{1 - \cos A}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">Prove that: $(\csc A - \sin A)(\sec A - \cos A) = \frac{1}{\tan A + \cot A}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">Prove that: $\left(\frac{1 + \tan^2 A}{1 + \cot^2 A}\right) = \left(\frac{1 - \tan A}{1 - \cot A}\right)^2 = \tan^2 A$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section D: Rigorous Proving & HOTS (Higher Order Thinking) (4-5 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">Prove that: $\frac{\tan \theta + \sec \theta - 1}{\tan \theta - \sec \theta + 1} = \frac{1 + \sin \theta}{\cos \theta}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">If $m = \sin \theta + \cos \theta$ and $n = \sec \theta + \csc \theta$, prove that $n(m^2 - 1) = 2m$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">If $x = a \sin \theta + b \cos \theta$ and $y = a \cos \theta - b \sin \theta$, prove that $x^2 + y^2 = a^2 + b^2$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">If $\cos \theta + \sin \theta = \sqrt{2} \cos \theta$, show that $\cos \theta - \sin \theta = \sqrt{2} \sin \theta$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">Prove that: $\frac{1}{\csc \theta - \cot \theta} - \frac{1}{\sin \theta} = \frac{1}{\sin \theta} - \frac{1}{\csc \theta + \cot \theta}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">If $\tan \theta + \sin \theta = m$ and $\tan \theta - \sin \theta = n$, show that $m^2 - n^2 = 4\sqrt{mn}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">37.</span>
+                <div class="q-content">If $a \cos \theta - b \sin \theta = c$, prove that $a \sin \theta + b \cos \theta = \pm \sqrt{a^2 + b^2 - c^2}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">38.</span>
+                <div class="q-content">Prove that: $\sec^4 \theta - \sec^2 \theta = \tan^4 \theta + \tan^2 \theta$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">39.</span>
+                <div class="q-content">If $\sec \theta + \tan \theta = p$, prove that $\frac{p^2 - 1}{p^2 + 1} = \sin \theta$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">40.</span>
+                <div class="q-content">Prove that: $\frac{\cot A + \csc A - 1}{\cot A - \csc A + 1} = \frac{1 + \cos A}{\sin A}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">41.</span>
+                <div class="q-content">If $x = r \sin A \cos C$, $y = r \sin A \sin C$, and $z = r \cos A$, prove that $r^2 = x^2 + y^2 + z^2$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">42.</span>
+                <div class="q-content">Prove that: $\frac{\tan^3 \theta}{1 + \tan^2 \theta} + \frac{\cot^3 \theta}{1 + \cot^2 \theta} = \sec \theta \csc \theta - 2 \sin \theta \cos \theta$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section E: Answer Key & Proof Hints</div>
+        <div class="questions-container">
+            <div class="solution-item"><span class="ans-label">Ans 1:</span> $\cos A = \frac{\sqrt{7}}{4}$, $\tan A = \frac{3}{\sqrt{7}}$. <em>Hint: Perpendicular=3x, Hypotenuse=4x. Base = $\sqrt{16x^2-9x^2} = \sqrt{7}x$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 2:</span> $\sin A = \frac{15}{17}$, $\sec A = \frac{17}{8}$. <em>Hint: $\cot A = \frac{8}{15}$. B=8, P=15. H=17.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 3:</span> $\sin P = \frac{12}{13}, \cos P = \frac{5}{13}, \tan P = \frac{12}{5}$. <em>Hint: Let $QR=x$, then $PR=25-x$. By Pythagoras: $(25-x)^2 = x^2 + 5^2 \implies x=12$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 4:</span> <em>Hint:</em> Let $\triangle ABC$ and $\triangle PQR$ be right triangles. If $\frac{AC}{AB} = \frac{PR}{PQ}$, let it be $k$. Show $\frac{BC}{QR} = k$ using Pythagoras theorem, making triangles similar.</div>
+            <div class="solution-item"><span class="ans-label">Ans 5:</span> Yes, both sides equal $\frac{7}{25}$. <em>Hint: $\cot A = \frac{4}{3}$, so $\tan A = \frac{3}{4}$, $\sin A = \frac{3}{5}$, $\cos A = \frac{4}{5}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 6:</span> $0$. <em>Hint: $QR = \sqrt{13^2 - 12^2} = 5$. $\tan P = \frac{5}{12}$, $\cot R = \frac{5}{12}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 7:</span> $\cos\theta=\frac{12}{13}, \sin\theta=\frac{5}{13}, \tan\theta=\frac{5}{12}, \cot\theta=\frac{12}{5}, \csc\theta=\frac{13}{5}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 8:</span> <em>Hint:</em> Divide numerator and denominator of LHS by $\cos \theta$. It becomes $\frac{a \tan \theta - b}{a \tan \theta + b}$. Substitute $\tan \theta = \frac{a}{b}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 9:</span> <em>Hint:</em> $\tan A = 1 \implies P=B$. Let $P=x, B=x$. $H = x\sqrt{2}$. $\sin A = \frac{1}{\sqrt{2}}, \cos A = \frac{1}{\sqrt{2}}$. $2(\frac{1}{\sqrt{2}})(\frac{1}{\sqrt{2}}) = 1$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 10:</span> $\cos \theta = \frac{b}{\sqrt{a^2+b^2}}$, $\tan \theta = \frac{a}{b}$.</div>
+            
+            <div class="solution-item"><span class="ans-label">Ans 11:</span> $1$. <em>Hint: $(\frac{\sqrt{3}}{2})(\frac{\sqrt{3}}{2}) + (\frac{1}{2})(\frac{1}{2}) = \frac{3}{4} + \frac{1}{4} = 1$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 12:</span> $2$. <em>Hint: $2(1)^2 + (\frac{\sqrt{3}}{2})^2 - (\frac{\sqrt{3}}{2})^2 = 2$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 13:</span> $\frac{3\sqrt{2} - \sqrt{6}}{8}$. <em>Hint: $\frac{1/\sqrt{2}}{2/\sqrt{3} + 2}$. Rationalize the denominator carefully.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 14:</span> $\frac{43 - 24\sqrt{3}}{11}$. <em>Hint: Substitute values and rationalize.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 15:</span> $\frac{67}{12}$. <em>Hint: Denominator becomes 1 ($\sin^2 30 + \cos^2 30 = 1$). Evaluate numerator.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 16:</span> $A = 45^\circ$, $B = 15^\circ$. <em>Hint: $A+B = 60^\circ$ and $A-B = 30^\circ$. Solve simultaneously.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 17:</span> $A = 45^\circ$, $B = 15^\circ$. <em>Hint: $A-B = 30^\circ$ and $A+B = 60^\circ$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 18:</span> False. <em>Hint: Let $A=30^\circ, B=60^\circ$. $\sin(90^\circ) = 1$. But $\sin 30^\circ + \sin 60^\circ = \frac{1}{2} + \frac{\sqrt{3}}{2} \neq 1$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 19:</span> $x = \frac{11}{3}$. <em>Hint: $2(2)^2 + x(\frac{\sqrt{3}}{2})^2 - \frac{3}{4}(\frac{1}{\sqrt{3}})^2 = 10 \implies 8 + \frac{3x}{4} - \frac{1}{4} = 10$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 20:</span> $\frac{1}{3}$. <em>Hint: $\sqrt{3} \frac{\sin \theta}{\cos \theta} = 3 \sin \theta \implies \cos \theta = \frac{\sqrt{3}}{3} = \frac{1}{\sqrt{3}}$. Thus $\sin \theta = \frac{\sqrt{2}}{\sqrt{3}}$.</em></div>
+            
+            <div class="solution-item"><span class="ans-label">Ans 21:</span> <em>Hint:</em> Convert LHS to $\sin, \cos$: $(\frac{1}{\sin\theta} - \frac{\cos\theta}{\sin\theta})^2 = \frac{(1-\cos\theta)^2}{\sin^2\theta}$. Replace $\sin^2\theta$ with $1-\cos^2\theta = (1-\cos\theta)(1+\cos\theta)$. Cancel terms.</div>
+            <div class="solution-item"><span class="ans-label">Ans 22:</span> <em>Hint:</em> Take LCM: $\frac{\cos^2 A + (1+\sin A)^2}{\cos A(1+\sin A)}$. Expand to get $\frac{\cos^2 A + 1 + \sin^2 A + 2\sin A}{\dots} = \frac{2 + 2\sin A}{\dots} = \frac{2(1+\sin A)}{\cos A(1+\sin A)}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 23:</span> <em>Hint:</em> Rationalize inside root: Multiply numerator and denominator by $(1+\sin A)$. Root becomes $\sqrt{\frac{(1+\sin A)^2}{1-\sin^2 A}} = \frac{1+\sin A}{\cos A} = \frac{1}{\cos A} + \frac{\sin A}{\cos A}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 24:</span> <em>Hint:</em> Factor out $\sin\theta$ from numerator and $\cos\theta$ from denominator. You get $\frac{\sin\theta(1-2\sin^2\theta)}{\cos\theta(2\cos^2\theta-1)}$. Show that $(1-2\sin^2\theta) = (2\cos^2\theta-1)$ by replacing 1 with $\sin^2+\cos^2$. Cancel them.</div>
+            <div class="solution-item"><span class="ans-label">Ans 25:</span> <em>Hint:</em> Expand brackets: $\sin^2 A + \csc^2 A + 2 + \cos^2 A + \sec^2 A + 2$. Group $\sin^2+\cos^2=1$. Replace $\csc^2 A$ with $1+\cot^2 A$ and $\sec^2 A$ with $1+\tan^2 A$. Sum constants to get 7.</div>
+            <div class="solution-item"><span class="ans-label">Ans 26:</span> $\sin A = \frac{1}{\sqrt{1+\cot^2 A}}$, $\sec A = \frac{\sqrt{1+\cot^2 A}}{\cot A}$, $\tan A = \frac{1}{\cot A}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 27:</span> <em>Hint:</em> Convert everything to $\sin$ and $\cos$. LCM gives $\frac{\sin^3\theta - \cos^3\theta}{\sin\theta\cos\theta(\sin\theta-\cos\theta)}$. Use $a^3-b^3 = (a-b)(a^2+ab+b^2)$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 28:</span> <em>Hint:</em> LHS $= \frac{1 + 1/\cos A}{1/\cos A} = \cos A + 1$. Multiply numerator and denominator by $(1-\cos A)$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 29:</span> <em>Hint:</em> Convert LHS to $\sin, \cos$: $(\frac{1}{\sin}-\sin)(\frac{1}{\cos}-\cos) = (\frac{1-\sin^2}{\sin})(\frac{1-\cos^2}{\cos}) = \cos\theta\sin\theta$. Take RHS, convert to $\sin, \cos$ and simplify to get $\cos\theta\sin\theta$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 30:</span> <em>Hint:</em> LHS1 $= \frac{\sec^2 A}{\csc^2 A} = \tan^2 A$. LHS2 $= (\frac{1-\tan A}{1-1/\tan A})^2 = (-\tan A)^2 = \tan^2 A$.</div>
+
+            <div class="solution-item"><span class="ans-label">Ans 31:</span> <em>Hint:</em> Replace '$1$' in the numerator with $\sec^2 \theta - \tan^2 \theta$. Factor it as $(\sec \theta - \tan \theta)(\sec \theta + \tan \theta)$. Factor out $(\sec \theta + \tan \theta)$ from the numerator. Cancel the remaining term with the denominator. Convert to $\sin/\cos$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 32:</span> <em>Hint:</em> $m^2 = \sin^2\theta + \cos^2\theta + 2\sin\theta\cos\theta = 1 + 2\sin\theta\cos\theta$. So $m^2-1 = 2\sin\theta\cos\theta$. Multiply by $n = \frac{1}{\cos} + \frac{1}{\sin} = \frac{\sin+\cos}{\sin\cos}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 33:</span> <em>Hint:</em> Square both equations and add. The $+2ab\sin\theta\cos\theta$ and $-2ab\sin\theta\cos\theta$ terms will cancel out. Factor out $a^2$ and $b^2$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 34:</span> <em>Hint:</em> Given $\sin \theta = (\sqrt{2}-1)\cos \theta$. Multiply both sides by $(\sqrt{2}+1)$. You get $(\sqrt{2}+1)\sin \theta = \cos \theta \implies \sqrt{2}\sin \theta + \sin \theta = \cos \theta$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 35:</span> <em>Hint:</em> Rationalize $\frac{1}{\csc\theta-\cot\theta}$ by multiplying with $\frac{\csc\theta+\cot\theta}{\csc\theta+\cot\theta}$. The denominator becomes $1$. It simplifies to $\csc\theta+\cot\theta$. Do the same for RHS.</div>
+            <div class="solution-item"><span class="ans-label">Ans 36:</span> <em>Hint:</em> $m+n = 2\tan\theta$, $m-n = 2\sin\theta$. $(m+n)(m-n) = m^2-n^2 = 4\tan\theta\sin\theta$. Also, $mn = \tan^2\theta - \sin^2\theta$. Factor out $\sin^2\theta$ to get $\sin^2\theta(\frac{1}{\cos^2}-1) = \sin^2\theta\tan^2\theta$. Root it.</div>
+            <div class="solution-item"><span class="ans-label">Ans 37:</span> <em>Hint:</em> Let $a \sin \theta + b \cos \theta = x$. Square both this and the given equation. Add them. $a^2(\sin^2+\cos^2) + b^2(\cos^2+\sin^2) = c^2 + x^2 \implies a^2+b^2 = c^2+x^2$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 38:</span> <em>Hint:</em> LHS $= \sec^2\theta(\sec^2\theta-1) = (1+\tan^2\theta)(\tan^2\theta) = \tan^2\theta + \tan^4\theta$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 39:</span> <em>Hint:</em> If $\sec \theta + \tan \theta = p$, then $\sec \theta - \tan \theta = 1/p$ (because $\sec^2-\tan^2=1$). Add the two equations to find $\sec \theta = \frac{p^2+1}{2p}$. Subtract them to find $\tan \theta = \frac{p^2-1}{2p}$. Divide $\tan$ by $\sec$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 40:</span> <em>Hint:</em> Similar to Q31. Replace '$1$' in numerator with $\csc^2 A - \cot^2 A$. Factor and cancel with denominator.</div>
+            <div class="solution-item"><span class="ans-label">Ans 41:</span> <em>Hint:</em> Square $x, y, z$ and add. $x^2+y^2 = r^2\sin^2 A(\cos^2 C + \sin^2 C) = r^2\sin^2 A$. Then add $z^2$: $r^2\sin^2 A + r^2\cos^2 A = r^2$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 42:</span> <em>Hint:</em> Convert the denominators: $1+\tan^2 = \sec^2 = \frac{1}{\cos^2}$. Simplify the complex fractions. You will get $\frac{\sin^3}{\cos} + \frac{\cos^3}{\sin}$. Take LCM: $\frac{\sin^4+\cos^4}{\sin\cos}$. Use $a^4+b^4 = (a^2+b^2)^2 - 2a^2b^2 = 1 - 2\sin^2\cos^2$.</div>
+        </div>
+
+        <div class="prompt-vault">
+            <h2>[FOR TEACHER/CREATOR: AI IMAGE PROMPT VAULT]</h2>
+            <p>Copy and paste this exact prompt into your AI Image Generator (like Midjourney, DALL-E 3, or Adobe Firefly) to generate a mathematically accurate diagram for Question 6.</p>
+            
+            <div class="prompt-block"><strong>Prompt for Figure 1:</strong>
+A simple, mathematically accurate geometric diagram on a fully white background (#FFFFFF). A right-angled triangle with the top vertex labeled 'P', bottom left vertex labeled 'Q', and bottom right vertex labeled 'R'. The angle at Q is exactly 90 degrees, indicated by a standard square right-angle symbol. The vertical side is PQ, and the horizontal base is QR. The diagonal hypotenuse is PR. Label the length of the vertical side PQ as '12 cm'. Label the length of the diagonal hypotenuse PR as '13 cm'. Do not put any label on the base QR. At the very bottom center of the image, write the text 'Figure 1' in clean, bold, sans-serif font. Flat 2D vector style, strictly black lines on pure white background, no shading.</div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

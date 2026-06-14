@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The American War of Independence - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+        }
+
+        html.dark-mode .watermark-overlay { mix-blend-mode: screen; }
+        html.dark-mode .watermark-image { filter: invert(1); opacity: 0.15; }
+
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease;
+        }
+
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666;
+            margin-top: 10px;
+            font-weight: 600;
+            display: none;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-underline-offset: 4px;
+        }
+
+        p, li { font-size: 1.05rem; line-height: 1.6; margin-bottom: 10px; }
+        strong { color: var(--pink-border); }
+
+        .blue-box, .green-box, .yellow-box {
+            border-radius: 8px; padding: 20px; margin: 25px 0; position: relative;
+        }
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); }
+
+        .box-label {
+            position: absolute; top: -12px; right: 20px; background: var(--paper-bg);
+            padding: 2px 10px; font-weight: bold; font-size: 0.8rem;
+            text-transform: uppercase; border: 2px solid; border-radius: 4px;
+        }
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        .branding-footer {
+            text-align: center; margin-top: 60px; padding-top: 20px;
+            border-top: 1px solid var(--toggle-border); color: var(--meta-text);
+        }
+        .powered-by { color: var(--pink-border); font-style: italic; }
+
+        .theme-toggle {
+            position: absolute; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: var(--toggle-bg); border: none;
+            cursor: pointer; z-index: 1000; display: flex; align-items: center;
+            justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .icon-sun { opacity: 0; transform: scale(0.5); position: absolute; }
+        html.dark-mode .icon-moon { opacity: 0; }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1); stroke: #fff; }
+
+        @media print {
+            body { background-color: #ffffff !important; color: #000 !important; }
+            .paper-sheet { width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            .theme-toggle, .branding-footer { display: none !important; }
+            .contact-info { display: flex !important; }
+            .watermark-overlay { display: flex !important; position: fixed !important; z-index: -1 !important; opacity: 0.1 !important; }
+            @page {
+                size: A4; margin: 2cm;
+                @bottom-center {
+                    content: counter(page);
+                    width: 30px; height: 30px; background-color: #d81b60;
+                    color: #fff; border-radius: 50%; text-align: center; line-height: 30px;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+
+    <div class="paper-sheet">
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 History • Chapter Notes</div>
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <h1>The American War of Independence</h1>
+
+        <h2>1. The Rise of Nationalism</h2>
+        <p><strong>Nationalism</strong> emerged in the 18th century as a strong attachment, loyalty, or devotion to a particular country or nation. It is also referred to as <strong>patriotism</strong>. This ideology suggests that certain groups, such as ethnic groups, should have the freedom to govern themselves and avoid oppression.</p>
+        <ul>
+            <li>The <strong>American and French Revolutions</strong> in the late 18th century are considered the most powerful early manifestations of nationalism.</li>
+            <li>The 19th century is known as the <strong>Age of Nationalism in Europe</strong> as the ideology spread rapidly across Central Europe.</li>
+            <li>In Asia and Africa, nationalism began to rise later in the <strong>20th century</strong>.</li>
+        </ul>
+
+        <h2>2. The British Colonies in America</h2>
+        <p>Following the discovery of the "New World" in the 15th century, European nations like Spain, Holland, France, and Britain established colonies. By the mid-18th century, Britain had driven France out of eastern North America and Canada, establishing <strong>13 British colonies</strong> along the Atlantic coast.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>The 13 Colonies:</strong> Massachusetts, New Hampshire, Rhode Island, Connecticut, New York, Pennsylvania, Delaware, New Jersey, Maryland, Virginia, North Carolina, South Carolina, and Georgia.</p>
+        </div>
+
+        <h3>Society and Economy</h3>
+        <ul>
+            <li>The colonies attracted landless peasants, traders, profiteers, and people seeking <strong>religious freedom</strong>.</li>
+            <li><strong>Northern Colonies:</strong> People were primarily engaged in fishing and ship-building.</li>
+            <li><strong>Southern Colonies:</strong> Dominated by large plantations growing <strong>tobacco</strong> and <strong>cotton</strong>, heavily reliant on slave labor brought from Africa.</li>
+        </ul>
+
+        <h3>Governance Structure</h3>
+        <p>Each colony had a local assembly of <strong>elected representatives</strong> that managed local matters and levied taxes. However, they were ultimately governed by <strong>Governors appointed by the British government</strong>. These Governors prioritized British interests over the welfare of the colonists, leading to growing resentment.</p>
+
+        <h2>3. Causes of the American Revolution</h2>
+        <p>The revolution was a political and military struggle where the 13 colonies rebelled against the imperial rule of Britain's <strong>King George III</strong>. Several factors led to this uprising:</p>
+
+        <h3>Economic Exploitation & Trade Restrictions</h3>
+        <p>Britain's colonial policy deliberately hindered the economic growth of the colonies to benefit the mother country:</p>
+        <ul>
+            <li>Colonists were forbidden from using non-British ships for trade.</li>
+            <li>Crucial products like <strong>tobacco, cotton, and sugar</strong> could be exported <em>only</em> to Britain.</li>
+            <li>Heavy duties were imposed on goods imported from other places to the colonies.</li>
+            <li>Colonists were strictly restricted from establishing local industries, such as <strong>ironworks and textiles</strong>, forcing them to buy these goods directly from Britain.</li>
+        </ul>
+
+        <h3>Restriction on Expansion</h3>
+        <p>The British issued proclamations preventing colonists from moving westward. Britain wanted to monopolize trade links with the <strong>Native Americans</strong>, which deeply angered the colonists.</p>
+
+        <h3>Imposition of Oppressive Taxes</h3>
+        <p>The <strong>Seven Years' War</strong> between Britain and France (1756-1763) left Britain burdened with massive debt. To recover this, they imposed heavy, unfair taxes on the American colonies:</p>
+        <ul>
+            <li><strong>Sugar Act (1764):</strong> Imposed a tax on sugar imports, severely affecting local traders as they could no longer buy sugar at cheap rates.</li>
+            <li><strong>Stamp Act (1765):</strong> Imposed taxes on all business transactions. Revenue stamps (up to 20 shillings) had to be affixed to legal documents and papers. This aroused violent resentment and led colonists to boycott British goods.</li>
+            <li><strong>Townshend Acts (1767):</strong> A series of acts including the Revenue Act, Commissioners of Customs Act, Indemnity Act, and New York Restraining Act. These levied heavy taxes on daily imports like <strong>tea, paper, glass, and paint</strong>.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>"No Taxation Without Representation":</strong> The colonists argued that since they had no elected representatives in the British Parliament, the British government had no right to tax them. They demanded that only their local assemblies could raise money through taxes.</p>
+        </div>
+
+        <h2>4. The Seeds of Rebellion</h2>
+        
+        <h3>Influence of Philosophers</h3>
+        <p>The colonists were heavily inspired by 17th-century English philosophers like <strong>John Locke, Harrington, and John Milton</strong>, who argued that men had fundamental rights. Thinkers like <strong>Thomas Paine</strong> openly criticized the inequalities of British society and strongly encouraged the colonies to fight for complete independence.</p>
+
+        <h3>The Boston Tea Party (1773)</h3>
+        <p>In 1773, the British Parliament passed the <strong>Tea Act</strong>, granting the East India Company a monopoly on the tea trade. In fierce protest, a group of colonists in Massachusetts disguised themselves as Native Americans, raided British ships in Boston harbor, and dumped <strong>342 chests of British tea</strong> into the water. This event became a major catalyst for the war.</p>
+
+        <h3>The Intolerable Acts (1774)</h3>
+        <p>Furious at the Boston Tea Party, the British government passed a series of harsh, punitive laws collectively called the <strong>Intolerable Acts</strong>:</p>
+        <ul>
+            <li>The <strong>Boston Port Act</strong> completely shut down the port of Boston for trade until the destroyed tea was paid for.</li>
+            <li>It forced colonists to house and feed British soldiers.</li>
+            <li>These acts punished everyone in Boston (both patriots and loyalists) and terrified other colonies, uniting them against Britain.</li>
+        </ul>
+
+        <h2>5. The Road to Independence</h2>
+        
+        <h3>First Continental Congress (1774)</h3>
+        <p>Representatives from the colonies met at <strong>Philadelphia</strong> to discuss their shared problems. They peacefully appealed to King George III to remove industrial restrictions and unjust taxes. The King dismissed them as rebellious and declared their actions a <strong>mutiny</strong>, sending troops to suppress them. In response, colonies began forming local <strong>militias</strong> (troops with basic military training).</p>
+
+        <h3>Second Continental Congress & The Declaration of Independence</h3>
+        <p>On <strong>July 4, 1776</strong>, representatives of the 13 colonies met again in Philadelphia and adopted the <strong>Declaration of Independence</strong>, formally announcing their separation from Great Britain.</p>
+        <ul>
+            <li>Drafted by <strong>Thomas Jefferson</strong>.</li>
+            <li>Asserted that "all people were equal by birth" and possessed the right to <strong>life, liberty, and the pursuit of happiness</strong>.</li>
+            <li>Supported the people's right to set up their own government.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Significance of the Declaration:</strong> Before 1776, colonists were fighting for their rights as British subjects. After the Declaration, they fought for their right to exist as a free, independent nation.</p>
+        </div>
+
+        <h2>6. The War of Independence (1775-1783)</h2>
+        <p>The military conflict officially began in 1775. <strong>George Washington</strong> was appointed as the Commander-in-Chief of the American forces (the Continental Army). The first battles took place in and around Boston.</p>
+        <ul>
+            <li><strong>International Support:</strong> The French government supported the colonies with troops, supplies, and funds. Other enemies of Britain, including <strong>Spain and Holland</strong>, also aided the Americans, encouraging them to fight for freedom.</li>
+            <li><strong>The End of the War:</strong> The war effectively ended in <strong>1781</strong> with the decisive defeat of British forces.</li>
+            <li><strong>Treaty of Paris (1783):</strong> Two years later, Britain signed a peace treaty officially recognizing the independence of its 13 former colonies.</li>
+        </ul>
+
+        <h2>7. Consequences and the Birth of a Nation</h2>
+        <p>After winning the war, the 13 independent states realized they needed a unified national government to replace their separate boundaries and finances.</p>
+
+        <h3>Formation of the Constitution</h3>
+        <ul>
+            <li><strong>Articles of Confederation (1781):</strong> The first written document to unite the 13 colonies into one country.</li>
+            <li><strong>Federal Constitution (1787):</strong> A new, stronger constitution was drafted and came into effect in <strong>1789</strong>, officially declaring the USA a republic. This was the first written republican constitution in world history and still exists today.</li>
+            <li><strong>First President:</strong> In 1789, <strong>George Washington</strong> was unanimously elected as the first President of the United States.</li>
+            <li><strong>Bill of Rights (1791):</strong> Championed by Thomas Jefferson and his followers, ten amendments were added to the constitution to guarantee citizens' rights, including freedom of speech, press, religion, and justice under the law.</li>
+        </ul>
+
+        <h3>Global and Economic Impact</h3>
+        <ul>
+            <li><strong>Inspiration for Others:</strong> The success of the American Revolution inspired revolutionaries across Europe (particularly the French people against the rule of Louis XVI) and encouraged Spanish and Portuguese colonies in Latin America to rebel and seek their own independence.</li>
+            <li><strong>Social Changes:</strong> Political and social life changed drastically as citizens gained voting rights and a key role in local and state governance.</li>
+            <li><strong>British Setback:</strong> Britain suffered a huge financial setback and lost its most valuable overseas markets.</li>
+        </ul>
+
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Physics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 Standard Theme - Blue) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue for readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 18px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11.5pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 8px; margin-bottom: 12px; font-size: 11pt;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index:999; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Level 2 Standard Worksheet: Physical Quantities & Measurement</div>
+        <div class="meta-info">
+            <span>Especially designed for: Aaraghya</span>
+            <span>Class: 7 (ICSE)</span>
+            <span>Subject: Physics</span>
+        </div>
+    </div>
+
+    <!-- SECTION A -->
+    <div class="chapter-header">Section A: Multiple Choice Questions (Conceptual)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">Which of the following is the correct SI unit of density? <br>
+                (a) $\mathrm{g/cm^3}$ &nbsp;&nbsp; (b) $\mathrm{kg/m^3}$ &nbsp;&nbsp; (c) $\mathrm{kg/cm^3}$ &nbsp;&nbsp; (d) $\mathrm{g/m^3}$
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">$1 \text{ hectare}$ of land is equivalent to an area of:<br>
+                (a) $100 \mathrm{\ m^2}$ &nbsp;&nbsp; (b) $1,000 \mathrm{\ m^2}$ &nbsp;&nbsp; (c) $10,000 \mathrm{\ m^2}$ &nbsp;&nbsp; (d) $100,000 \mathrm{\ m^2}$
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">The density of pure water is considered to be maximum exactly at a temperature of:<br>
+                (a) $0^\circ\mathrm{C}$ &nbsp;&nbsp; (b) $100^\circ\mathrm{C}$ &nbsp;&nbsp; (c) $4^\circ\mathrm{C}$ &nbsp;&nbsp; (d) $10^\circ\mathrm{C}$
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">The standard unit for measuring relative density is:<br>
+                (a) $\mathrm{kg/m^3}$ &nbsp;&nbsp; (b) $\mathrm{g/cm^3}$ &nbsp;&nbsp; (c) $\mathrm{kg/litre}$ &nbsp;&nbsp; (d) It has no unit
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">A density of $1 \mathrm{\ g/cm^3}$ is equal to:<br>
+                (a) $10 \mathrm{\ kg/m^3}$ &nbsp;&nbsp; (b) $100 \mathrm{\ kg/m^3}$ &nbsp;&nbsp; (c) $1,000 \mathrm{\ kg/m^3}$ &nbsp;&nbsp; (d) $10,000 \mathrm{\ kg/m^3}$
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">The instrument located on the dashboard of a vehicle that indicates its instantaneous speed is the:<br>
+                (a) Odometer &nbsp;&nbsp; (b) Speedometer &nbsp;&nbsp; (c) Hydrometer &nbsp;&nbsp; (d) Barometer
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">The surface area of an irregular flat lamina (like a leaf) is most accurately estimated using a:<br>
+                (a) Measuring cylinder &nbsp;&nbsp; (b) Vernier caliper &nbsp;&nbsp; (c) Graph paper &nbsp;&nbsp; (d) Centimeter ruler
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">The exact mass of an object in a laboratory is conventionally measured using a:<br>
+                (a) Spring balance &nbsp;&nbsp; (b) Measuring tape &nbsp;&nbsp; (c) Physical (Beam) balance &nbsp;&nbsp; (d) Measuring cylinder
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">A volume of $1 \mathrm{\ m^3}$ is exactly equal to a liquid capacity of:<br>
+                (a) $10 \text{ litres}$ &nbsp;&nbsp; (b) $100 \text{ litres}$ &nbsp;&nbsp; (c) $1,000 \text{ litres}$ &nbsp;&nbsp; (d) $10,000 \text{ litres}$
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">The weight of a body:<br>
+                (a) Remains constant everywhere in the universe &nbsp;&nbsp; (b) Changes from place to place depending on gravity &nbsp;&nbsp; (c) Is considered a scalar quantity &nbsp;&nbsp; (d) Is properly measured in kilograms
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION B -->
+    <div class="chapter-header">Section B: Fill in the Blanks</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">11.</span>
+            <div class="q-content">The precise quantity of matter contained within a physical body is called its _________.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">12.</span>
+            <div class="q-content">Because substances expand upon heating, the density of most materials generally _________ with an increase in temperature.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">13.</span>
+            <div class="q-content">$1 \text{ metric tonne}$ is a large unit of mass equal to exactly _________ $\mathrm{kg}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">14.</span>
+            <div class="q-content">A density bottle is provided with a specially designed glass stopper that contains a fine _________ tube to let out excess liquid.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">15.</span>
+            <div class="q-content">The meter installed on a car's dashboard that records the total physical _________ covered by the vehicle is known as an odometer.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">16.</span>
+            <div class="q-content">Speed is classified as a _________ quantity because it requires only magnitude, while velocity requires direction.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">17.</span>
+            <div class="q-content">The relative density of a liquid can be directly measured by allowing a specialized instrument called a _________ to float in it.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">18.</span>
+            <div class="q-content">To directly convert a speed value given in $\mathrm{km/h}$ into $\mathrm{m/s}$, one must multiply it by the fraction _________.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">19.</span>
+            <div class="q-content">Unlike mass, weight is a force that is measured in the SI unit called _________ using a calibrated spring balance.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">20.</span>
+            <div class="q-content">In the CGS system of units, the maximum density of pure water is precisely _________ $\mathrm{g/cm^3}$.</div>
+        </div>
+    </div>
+
+    <!-- SECTION C -->
+    <div class="chapter-header">Section C: True or False (Analyze carefully)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">21.</span>
+            <div class="q-content">Equal volumes of two entirely different chemical substances will always possess the same mass.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">22.</span>
+            <div class="q-content">The fundamental mass of a given object can never be zero, regardless of its location in space.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">23.</span>
+            <div class="q-content">The universally accepted SI unit for measuring area is the square centimeter ($\mathrm{cm^2}$).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">24.</span>
+            <div class="q-content">Relative density is mathematically defined as the ratio of the density of a substance to the density of water at $4^\circ\mathrm{C}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">25.</span>
+            <div class="q-content">A solid piece of wood will easily float on water because its relative density is less than 1.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">26.</span>
+            <div class="q-content">A laboratory pipette is typically used to measure and transfer an exact, specific, fixed volume of a liquid.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">27.</span>
+            <div class="q-content">A physical beam balance strictly measures the weight of an object rather than its mass.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">28.</span>
+            <div class="q-content">Among the three standard states of matter, gases exhibit the highest density due to their molecular structure.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">29.</span>
+            <div class="q-content">If an object successfully covers equal distances in equal intervals of time, it is officially described as moving with uniform speed.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">30.</span>
+            <div class="q-content">The formula for calculating density dictates that it is found by dividing the volume of an object by its mass.</div>
+        </div>
+    </div>
+
+    <!-- SECTION D -->
+    <div class="chapter-header">Section D: Short Answer & Theoretical Questions</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">31.</span>
+            <div class="q-content">Provide a precise definition of 'Density'. Clearly state both its SI unit and CGS unit.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">32.</span>
+            <div class="q-content">What exactly is 'Relative Density'? Explain mathematically why it is considered a purely dimensionless quantity.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">33.</span>
+            <div class="q-content">Draft a table stating three fundamental differences between the Mass of an object and its Weight.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">34.</span>
+            <div class="q-content">Based on the principles of density, explain scientifically why a small iron nail sinks entirely in water, whereas a massive, heavy wooden log easily floats.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">35.</span>
+            <div class="q-content">Briefly summarize the sequential steps required to determine the volume of a heavy, irregular stone using a water-filled measuring cylinder.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">36.</span>
+            <div class="q-content">Explain the specialized 'sinker method'. How does it help us find the volume of an irregular solid (like a cork) that naturally floats on water?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">37.</span>
+            <div class="q-content">Distinguish clearly between uniform speed and non-uniform speed, providing one practical everyday example for each.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">38.</span>
+            <div class="q-content">What is a specific gravity bottle (density bottle)? What is the exact scientific purpose of having a fine capillary hole in its glass stopper?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">39.</span>
+            <div class="q-content">Describe the standardized procedure used to estimate the surface area of a highly irregular shape (like a maple leaf) using a standard millimeter graph paper.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">40.</span>
+            <div class="q-content">How and why does the density of an ordinary liquid fundamentally change upon heating? Provide a brief molecular explanation.</div>
+        </div>
+    </div>
+
+    <!-- SECTION E -->
+    <div class="chapter-header">Section E: Rigorous Numerical Problems (Show calculation steps in your notebook)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">41.</span>
+            <div class="q-content">A solid rectangular block of timber has measurable dimensions of $20 \text{ cm} \times 10 \text{ cm} \times 5 \text{ cm}$. If a physical balance determines its mass to be exactly $600 \text{ g}$, calculate its density.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">42.</span>
+            <div class="q-content">The mass of an empty laboratory density bottle is $25 \text{ g}$. When completely filled to the brim with distilled water, its mass becomes $75 \text{ g}$. When emptied, dried, and filled completely with an unknown organic oil, its mass is recorded as $65 \text{ g}$. Calculate the relative density of the oil.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">43.</span>
+            <div class="q-content">An express train smoothly travels a total distance of $360 \text{ km}$ over a period of exactly $5 \text{ hours}$. Calculate its average speed, and express the final answer in $\mathrm{m/s}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">44.</span>
+            <div class="q-content">The documented density of pure aluminium is given as $2700 \mathrm{\ kg/m^3}$ in SI units. Mathematically convert and express this density in the CGS unit of $\mathrm{g/cm^3}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">45.</span>
+            <div class="q-content">A solid crafted piece of brass, weighing exactly $170 \text{ g}$ on a beam balance, is submerged in a measuring cylinder and found to displace $20 \mathrm{\ cm^3}$ of water. Deduce its density in $\mathrm{g/cm^3}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">46.</span>
+            <div class="q-content">A modern car moving with a strictly constant speed of $54 \text{ km/h}$ takes exactly $20 \text{ seconds}$ to completely travel from one end of a suspension bridge to the other. Find the total length of the bridge in meters.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">47.</span>
+            <div class="q-content">A laboratory measuring cylinder initially contains $50 \text{ ml}$ of water. When an irregular metallic stone of mass $78 \text{ g}$ is carefully completely immersed in the water by a string, the water level noticeably rises to the $60 \text{ ml}$ mark. Calculate the true density of the metallic stone in $\mathrm{g/cm^3}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">48.</span>
+            <div class="q-content">A large industrial metal sheet has a calculated surface area of $5 \mathrm{\ m^2}$. Convert this area systematically into $\mathrm{cm^2}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">49.</span>
+            <div class="q-content">The relative density of liquid mercury at room temperature is exceptionally high at $13.6$. What is the absolute density of this mercury expressed formally in standard SI units?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">50.</span>
+            <div class="q-content">Calculate the total linear distance traveled by a commercial aeroplane flying at a constant cruising speed of $800 \text{ km/h}$ over a time duration of exactly $45 \text{ minutes}$.</div>
+        </div>
+    </div>
+
+    <!-- ANSWER KEY / SOLUTIONS (Numerical Only) -->
+    <div style="page-break-before: always;"></div>
+    <div class="chapter-header">Answers for Numerical Problems (Section E)</div>
+    <div class="questions-container">
+        
+        <div class="solution-item">
+            <span class="ans-label">Ans 41.</span> 
+            Density = $0.6 \mathrm{\ g/cm^3}$
+        </div>
+
+        <div class="solution-item">
+            <span class="ans-label">Ans 42.</span> 
+            Relative density of oil = $0.8$
+        </div>
+
+        <div class="solution-item">
+            <span class="ans-label">Ans 43.</span> 
+            Average Speed = $20 \mathrm{\ m/s}$
+        </div>
+
+        <div class="solution-item">
+            <span class="ans-label">Ans 44.</span> 
+            Density in CGS = $2.7 \mathrm{\ g/cm^3}$
+        </div>
+
+        <div class="solution-item">
+            <span class="ans-label">Ans 45.</span> 
+            Density of brass = $8.5 \mathrm{\ g/cm^3}$
+        </div>
+
+        <div class="solution-item">
+            <span class="ans-label">Ans 46.</span> 
+            Length of the bridge = $300 \mathrm{\ m}$
+        </div>
+
+        <div class="solution-item">
+            <span class="ans-label">Ans 47.</span> 
+            Density of the stone = $7.8 \mathrm{\ g/cm^3}$
+        </div>
+
+        <div class="solution-item">
+            <span class="ans-label">Ans 48.</span> 
+            Area = $50,000 \mathrm{\ cm^2}$
+        </div>
+
+        <div class="solution-item">
+            <span class="ans-label">Ans 49.</span> 
+            Density of mercury in SI = $13,600 \mathrm{\ kg/m^3}$
+        </div>
+
+        <div class="solution-item">
+            <span class="ans-label">Ans 50.</span> 
+            Distance traveled = $600 \mathrm{\ km}$
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

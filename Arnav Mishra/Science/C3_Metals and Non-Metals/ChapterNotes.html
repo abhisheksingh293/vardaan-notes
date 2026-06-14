@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Metals and Non-Metals - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            clear: both;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+            clear: both;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- IMAGE CONTAINER --- */
+        .img-container {
+            width: 180px;
+            max-width: 38%;
+            margin: 10px 0 14px 18px;
+            text-align: center;
+            clear: both;
+        }
+        .img-container:nth-of-type(odd) {
+            float: right;
+            margin-left: 18px;
+            margin-right: 0;
+        }
+        .img-container:nth-of-type(even) {
+            float: left;
+            margin-left: 0;
+            margin-right: 18px;
+        }
+        .img-container img {
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            background-color: #fff; /* Ensure white background for the vector art */
+            border: none !important;
+            box-shadow: none !important;
+            transition: filter 0.3s ease;
+        }
+
+        .img-container::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        html.dark-mode .img-container img {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .img-container {
+                float: none !important;
+                width: 100%;
+                max-width: 320px;
+                margin: 18px auto;
+            }
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* Keep the newspaper-style image layout in print and make images smaller */
+            .img-container {
+                float: right !important;
+                width: 120px !important;
+                max-width: 32% !important;
+                margin: 10px 0 12px 14px !important;
+                clear: both !important;
+            }
+
+            .img-container img {
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Metals and Non-Metals</h1>
+
+        <h2>1. Classification and Occurrence of Elements</h2>
+        <div class="img-container">
+            <img src="../images/metals_natural_resources_gold_coal_iron.webp" alt="Natural Resources: Gold, Coal, and Iron Ore">
+        </div>
+        <p>A pure substance is made up of only one kind of atoms or molecules. There are about 118 known elements. Because it is difficult to study each separately, elements showing similar properties are grouped together into two main categories: <strong>Metals</strong> and <strong>Non-Metals</strong>.</p>
+        
+        <h3>Occurrence in Nature</h3>
+        <ul>
+            <li><strong>Metals:</strong> They exist in abundance in the earth's crust. <strong>Aluminium</strong> is the most abundant metal, followed by iron. Highly reactive metals (like Sodium, Potassium, Aluminium, and Zinc) are found as compounds (oxides, sulphides, carbonates). Less reactive metals (like Gold, Silver, and Platinum) are found in their free, native state.</li>
+            <li><strong>Non-Metals:</strong> They occur both in the free state (like Helium, Neon, Argon) and in the combined state (like Sulphur and Phosphorus).</li>
+        </ul>
+
+        <h2>2. Physical Properties of Metals and Non-Metals</h2>
+        <div class="img-container">
+            <img src="../images/metals_copper_wire_vs_charcoal_brittleness.webp" alt="Physical Properties: Ductility vs Brittleness">
+        </div>
+        <p>Metals and non-metals can be easily distinguished by their physical appearance and behaviour:</p>
+
+        <ul>
+            <li><strong>Physical State:</strong> Most metals are solid at room temperature (Exception: <strong>Mercury</strong> is a liquid). Non-metals can be solid, liquid (<strong>Bromine</strong>), or gas (Oxygen, Nitrogen).</li>
+            <li><strong>Hardness:</strong> Metals are generally very hard (Exception: Sodium and Potassium are soft enough to be cut with a knife). Non-metals are generally soft (Exception: <strong>Diamond</strong>, a form of carbon, is the hardest naturally occurring substance).</li>
+            <li><strong>Lustre:</strong> Metals have a brilliant metallic shine (lustre). Non-metals are usually dull in appearance (Exception: Iodine and Graphite have a shine).</li>
+            <li><strong>Malleability:</strong> The property by which materials can be beaten into thin sheets. <strong>Metals are highly malleable</strong> (e.g., gold and silver foils). Non-metals are brittle and break into pieces when beaten.</li>
+            <li><strong>Ductility:</strong> The property by which materials can be drawn into thin wires. <strong>Metals are ductile</strong> (e.g., copper and aluminium wires). Non-metals are non-ductile.</li>
+            <li><strong>Conductivity:</strong> Metals are excellent conductors of heat and electricity (Silver and Copper are the best). Non-metals are poor conductors (Exception: <strong>Graphite</strong> is a good conductor of electricity).</li>
+            <li><strong>Sonority:</strong> Metals produce a ringing sound when struck hard (they are sonorous). Non-metals are non-sonorous.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Density and Melting Points:</strong> Metals generally have high densities and high melting/boiling points. However, Sodium and Potassium have low densities and low melting points, while the non-metals Diamond and Graphite have exceptionally high melting points.</p>
+        </div>
+
+        <h2>3. Chemical Properties of Metals and Non-Metals</h2>
+        <div class="img-container">
+            <img src="../images/metals_science_experiment_bubbles_pop.webp" alt="Science Experiment: Hydrogen Pop Sound Test">
+        </div>
+        <p>Metals and non-metals behave very differently when reacting with other chemicals.</p>
+
+        <ul>
+            <li><strong>Reaction with Oxygen:</strong> 
+                <br>Metals react with oxygen to form <strong>Basic Oxides</strong>. For example, Magnesium burns in air to form Magnesium Oxide (MgO) using the reaction 2Mg + O<sub>2</sub> &rarr; 2MgO. When dissolved in water, these oxides turn red litmus paper blue.
+                <br><br>Non-metals react with oxygen to form <strong>Acidic Oxides</strong> (e.g., Sulphur dioxide, SO<sub>2</sub>). These oxides turn blue litmus paper red.</li>
+            <li><strong>Reaction with Water:</strong> 
+                <br>Many metals react with water to form a metal hydroxide or oxide and release <strong>Hydrogen gas</strong>. Sodium reacts violently with cold water, Magnesium reacts with hot water, and Iron reacts only with steam.
+                <br>Non-metals generally do <em>not</em> react with water.</li>
+            <li><strong>Reaction with Acids:</strong> 
+                <br>Most metals react with dilute acids to produce a metal salt and release <strong>Hydrogen gas</strong>. The presence of hydrogen is tested by bringing a burning matchstick near the gas, which produces a characteristic <strong>'pop' sound</strong>.
+                <br>Non-metals generally do not react with dilute acids.</li>
+            <li><strong>Reaction with Alkalis:</strong> Some metals like Aluminium and Zinc react with strong alkalis (like Sodium Hydroxide) to produce hydrogen gas. Non-metal reactions with alkalis are highly complex.</li>
+        </ul>
+
+        <h2>4. Reactivity Series and Displacement Reactions</h2>
+        <div class="img-container">
+            <img src="../images/metals_displacement_iron_nail_copper_sulphate.webp" alt="Displacement Reaction: Iron displaces Copper">
+        </div>
+        <p>A chemical reaction in which a more reactive metal displaces a less reactive metal from its salt solution is called a <strong>Displacement Reaction</strong>.</p>
+        <p>For example, if an iron nail is placed in a blue copper sulphate solution, the more reactive iron displaces the less reactive copper. The blue colour fades to light green (iron sulphate), and a reddish-brown coating of copper deposits on the nail:<br>
+        <strong>Iron (Fe) + Copper Sulphate (CuSO<sub>4</sub>) &rarr; Iron Sulphate (FeSO<sub>4</sub>) + Copper (Cu)</strong></p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The Reactivity Series:</strong> Scientists have arranged metals in decreasing order of their reactivity. The order is: Potassium (K), Sodium (Na), Calcium (Ca), Magnesium (Mg), Aluminium (Al), Zinc (Zn), Iron (Fe), Lead (Pb), [Hydrogen (H)], Copper (Cu), Mercury (Hg), Silver (Ag), Gold (Au). Potassium is the most reactive, and Gold is the least reactive.</p>
+        </div>
+
+        <h2>5. Noble Metals and Alloys</h2>
+        <div class="img-container">
+            <img src="../images/metals_alloy_factory_melting_pot.webp" alt="Alloy Creation: Steel Shield from Melting Pot">
+        </div>
+        
+        <h3>Noble Metals</h3>
+        <p>Metals like Gold, Silver, and Platinum are located at the very bottom of the reactivity series. They are highly unreactive, do not corrode easily, and retain their metallic shine for a long time. They are called <strong>Noble Metals</strong> and are widely used for making fine jewelry. <em>Note: Gold and Platinum can be dissolved in a special highly corrosive mixture called <strong>Aqua Regia</strong> (1 part concentrated Nitric acid + 3 parts concentrated Hydrochloric acid).</em></p>
+
+        <h3>Alloys</h3>
+        <p>An alloy is a homogeneous mixture of two or more metals, or a metal and a non-metal. Alloying is done to enhance properties like strength, hardness, and resistance to corrosion.</p>
+        <ul>
+            <li><strong>Steel:</strong> Iron + Carbon (Hard and strong, used for construction).</li>
+            <li><strong>Stainless Steel:</strong> Iron + Carbon + Chromium + Nickel (Does not rust, used for utensils and surgical instruments).</li>
+            <li><strong>Brass:</strong> Copper + Zinc (Used for decorative items and hardware).</li>
+            <li><strong>Bronze:</strong> Copper + Tin (Used for making statues and medals).</li>
+            <li><strong>Duralumin:</strong> Aluminium + Copper + Magnesium + Manganese (Light and strong, used in aircraft parts).</li>
+        </ul>
+
+        <h2>6. Uses of Metals and Non-Metals</h2>
+        <h3>Uses of Metals</h3>
+        <ul>
+            <li><strong>Copper and Aluminium:</strong> Highly ductile and good conductors; used extensively for making electrical wires and cooking utensils.</li>
+            <li><strong>Iron:</strong> Used heavily in building construction, bridges, and manufacturing heavy machinery.</li>
+            <li><strong>Zinc:</strong> Used for galvanising iron (coating iron to prevent rusting).</li>
+            <li><strong>Lead:</strong> Used in automobile batteries and X-ray shields.</li>
+            <li><strong>Mercury:</strong> Used inside clinical thermometers because it expands uniformly with heat.</li>
+        </ul>
+
+        <h3>Uses of Non-Metals</h3>
+        <ul>
+            <li><strong>Oxygen:</strong> Essential for the respiration of all living beings and is necessary for combustion (burning).</li>
+            <li><strong>Nitrogen:</strong> Used in manufacturing fertilizers to enhance plant growth and is pumped into food packaging to keep food fresh.</li>
+            <li><strong>Chlorine:</strong> A powerful disinfectant used for water purification and in swimming pools.</li>
+            <li><strong>Carbon:</strong> Used as Graphite (for pencil leads and battery electrodes) and Diamond (for jewelry and glass cutting).</li>
+            <li><strong>Iodine:</strong> Applied on wounds as an antiseptic solution (tincture of iodine).</li>
+            <li><strong>Sulphur:</strong> Used in making sulphuric acid, fireworks, and for the vulcanization of rubber.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

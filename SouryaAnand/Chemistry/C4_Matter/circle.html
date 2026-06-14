@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Circles Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 - Standard Board Prep) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; font-size: 11pt;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- PROMPT VAULT STYLING --- */
+        .prompt-vault {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #2b2b2b;
+            color: #4ade80;
+            border-radius: 8px;
+            font-family: monospace;
+            page-break-before: always;
+        }
+        .prompt-vault h2 { color: #fff; margin-top: 0; }
+        .prompt-vault p { color: #aaa; font-size: 10pt; }
+        .prompt-block {
+            background-color: #1a1a1a;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4ade80;
+            font-size: 10pt;
+            white-space: pre-wrap;
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .prompt-vault { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Circles: Board Masterclass (Target 100/100)</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 10 CBSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Basic Concepts & Pythagoras Application (1-2 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">How many tangents can a circle have in total? How many tangents can be drawn to a circle from a point outside it?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">A line intersecting a circle in two points is called a _______.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">A tangent $PQ$ at a point $P$ of a circle of radius $5\text{ cm}$ meets a line through the center $O$ at a point $Q$ so that $OQ = 12\text{ cm}$. Find the length of $PQ$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">If tangents $PA$ and $PB$ from a point $P$ to a circle with center $O$ are inclined to each other at an angle of $80^\circ$, find $\angle POA$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">The length of a tangent from a point $A$ at distance $5\text{ cm}$ from the center of the circle is $4\text{ cm}$. Find the radius of the circle.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Two concentric circles are of radii $5\text{ cm}$ and $3\text{ cm}$. Find the length of the chord of the larger circle which touches the smaller circle.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content"><strong>[Refer to Figure 1]</strong> In the given figure, if $TP$ and $TQ$ are the two tangents to a circle with center $O$ so that $\angle POQ = 110^\circ$, then find $\angle PTQ$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">From a point $Q$, the length of the tangent to a circle is $24\text{ cm}$ and the distance of $Q$ from the center is $25\text{ cm}$. Find the radius of the circle.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">If the angle between two tangents drawn from an external point $P$ to a circle of radius $a$ and center $O$, is $60^\circ$, then find the length of $OP$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">At one end $A$ of a diameter $AB$ of a circle of radius $5\text{ cm}$, tangent $XAY$ is drawn to the circle. Find the length of the chord $CD$ parallel to $XY$ and at a distance $8\text{ cm}$ from $A$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section B: Short Answer Applications & Angles (2-3 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content"><strong>[Refer to Figure 2]</strong> In the given figure, $PA$ and $PB$ are tangents to the circle with center $O$ such that $\angle APB = 50^\circ$. Write the measure of $\angle OAB$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">Prove that in two concentric circles, the chord of the larger circle, which touches the smaller circle, is bisected at the point of contact.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">Two tangents $TP$ and $TQ$ are drawn to a circle with center $O$ from an external point $T$. Prove that $\angle PTQ = 2\angle OPQ$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">A quadrilateral $ABCD$ is drawn to circumscribe a circle. Prove that $AB + CD = AD + BC$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content"><strong>[Refer to Figure 3]</strong> In Figure 3, a circle touches all the four sides of a quadrilateral $ABCD$ whose sides are $AB = 6\text{ cm}$, $BC = 7\text{ cm}$, and $CD = 4\text{ cm}$. Find $AD$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">If a hexagon $ABCDEF$ circumscribes a circle, prove that $AB + CD + EF = BC + DE + FA$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">In a right triangle $ABC$ right-angled at $B$, a circle is drawn with $AB$ as diameter intersecting hypotenuse $AC$ at $P$. Prove that the tangent to the circle at $P$ bisects $BC$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">Prove that the tangents drawn at the ends of a diameter of a circle are parallel.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">If two tangents drawn from a point $P$ to a circle with center $O$ and radius $r$ are such that angle between them is $90^\circ$, prove that $OP = \sqrt{2}r$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">Two circles of radii $5\text{ cm}$ and $3\text{ cm}$ intersect at two points and the distance between their centers is $4\text{ cm}$. Find the length of the common chord.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section C: Standard Theorems & Rigorous Proving (3 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">Prove that the lengths of tangents drawn from an external point to a circle are equal.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">Prove that the parallelogram circumscribing a circle is a rhombus.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content"><strong>[Refer to Figure 4]</strong> A circle is touching the side $BC$ of $\triangle ABC$ at $P$ and touching $AB$ and $AC$ produced at $Q$ and $R$ respectively. Prove that $AQ = \frac{1}{2}(\text{Perimeter of } \triangle ABC)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">Prove that the angle between the two tangents drawn from an external point to a circle is supplementary to the angle subtended by the line-segment joining the points of contact at the center.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">$PQ$ is a chord of length $8\text{ cm}$ of a circle of radius $5\text{ cm}$. The tangents at $P$ and $Q$ intersect at a point $T$. Find the length $TP$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">If an isosceles triangle $ABC$, in which $AB = AC$, is inscribed in a circle, and a tangent is drawn at $A$, prove that the tangent is parallel to $BC$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">Let $s$ denote the semi-perimeter of a triangle $ABC$ in which $BC=a, CA=b, AB=c$. If a circle touches the sides $BC, CA, AB$ at $D, E, F$, respectively, prove that $BD = s - b$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">Prove that the intercept of a tangent between two parallel tangents to a circle subtends a right angle at the center.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">Two circles touch each other externally at $C$. Prove that the common tangent at $C$ bisects the other two common tangents.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">Out of the two concentric circles, the radius of the outer circle is $5\text{ cm}$ and the chord $AC$ of length $8\text{ cm}$ is a tangent to the inner circle. Find the radius of the inner circle.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section D: HOTS (Higher Order Thinking Skills) (4-5 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">Prove that opposite sides of a quadrilateral circumscribing a circle subtend supplementary angles at the center of the circle.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content"><strong>[Refer to Figure 5]</strong> A triangle $ABC$ is drawn to circumscribe a circle of radius $4\text{ cm}$ such that the segments $BD$ and $DC$ into which $BC$ is divided by the point of contact $D$ are of lengths $8\text{ cm}$ and $6\text{ cm}$ respectively. Find the sides $AB$ and $AC$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">In Figure 6, $XY$ and $X'Y'$ are two parallel tangents to a circle with center $O$ and another tangent $AB$ with point of contact $C$ intersecting $XY$ at $A$ and $X'Y'$ at $B$. Prove that $\angle AOB = 90^\circ$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">Two tangents $PA$ and $PB$ are drawn to a circle with center $O$ from an external point $P$. Prove that $\angle APB = 2\angle OAB$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">If $a, b, c$ are the sides of a right triangle where $c$ is the hypotenuse, prove that the radius $r$ of the circle which touches the sides of the triangle is given by $r = \frac{a+b-c}{2}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">In a right-angled triangle $ABC$, right-angled at $B$, a circle is inscribed touching the sides $AB, BC, CA$ at $P, Q, R$ respectively. If $AB = 10\text{ cm}$ and $BC = 24\text{ cm}$, find the radius of the incircle.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">37.</span>
+                <div class="q-content">Let $A$ be a point outside a circle with center $O$. A secant through $A$ cuts the circle at $B$ and $C$ ($B$ lies between $A$ and $C$). A tangent from $A$ touches the circle at $T$. Prove that $AT^2 = AB \cdot AC$. *(Note: Though Tangent-Secant theorem is often tested, it can be proved using similar triangles).*</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">38.</span>
+                <div class="q-content">$AB$ is a diameter and $AC$ is a chord of a circle such that $\angle BAC = 30^\circ$. If the tangent at $C$ intersects $AB$ produced at $D$, prove that $BC = BD$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">39.</span>
+                <div class="q-content">A circle touches the sides of a quadrilateral $ABCD$ at $P, Q, R, S$ respectively. Show that the angles subtended at the center by a pair of opposite sides are supplementary. *(Provide the detailed step-by-step proof).*</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">40.</span>
+                <div class="q-content">Common tangents $AB$ and $CD$ to two circles intersect at $E$. Prove that $AB = CD$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section E: Answer Key & Hints</div>
+        <div class="questions-container">
+            <div class="solution-item"><span class="ans-label">Ans 1:</span> Infinite tangents. From an external point: exactly 2.</div>
+            <div class="solution-item"><span class="ans-label">Ans 2:</span> Secant.</div>
+            <div class="solution-item"><span class="ans-label">Ans 3:</span> $\sqrt{119}\text{ cm}$. <em>Hint: $\triangle OPQ$ is right-angled at $P$. $PQ = \sqrt{12^2 - 5^2}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 4:</span> $50^\circ$. <em>Hint: $\angle APB = 80^\circ$. Center lies on bisector, so $\angle APO = 40^\circ$. In $\triangle OPA$, $\angle POA = 180^\circ - 90^\circ - 40^\circ$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 5:</span> $3\text{ cm}$. <em>Hint: Pythagoras triplet (3, 4, 5).</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 6:</span> $8\text{ cm}$. <em>Hint: Radius to point of contact bisects chord. Half-chord = $\sqrt{5^2 - 3^2} = 4$. Total = 8.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 7:</span> $70^\circ$. <em>Hint: $\angle PTQ + \angle POQ = 180^\circ$ (Supplementary).</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 8:</span> $7\text{ cm}$. <em>Hint: $r = \sqrt{25^2 - 24^2}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 9:</span> $2a$. <em>Hint: $\angle APO = 30^\circ$. $\sin 30^\circ = \frac{OA}{OP} \implies \frac{1}{2} = \frac{a}{OP}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 10:</span> $8\text{ cm}$. <em>Hint: Center $O$ is at $5\text{cm}$ from $A$. Distance of chord from $O$ is $8-5=3\text{cm}$. Half-chord = $\sqrt{5^2-3^2} = 4$. Total = 8.</em></div>
+            
+            <div class="solution-item"><span class="ans-label">Ans 11:</span> $25^\circ$. <em>Hint: $\triangle PAB$ is isosceles ($PA=PB$). $\angle PAB = \frac{180-50}{2} = 65^\circ$. $\angle OAB = 90^\circ - 65^\circ = 25^\circ$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 12:</span> <em>Hint:</em> Draw perpendicular from center to the tangent chord. A perpendicular from center to a chord bisects it.</div>
+            <div class="solution-item"><span class="ans-label">Ans 13:</span> <em>Hint:</em> Let $\angle OPQ = x$. $\angle TPT = 90-x$. Since $TP=TQ$, $\triangle TPQ$ is isosceles. $\angle TQP = 90-x$. $\angle PTQ = 180 - (90-x + 90-x) = 2x$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 14:</span> <em>Hint:</em> Use Theorem 10.2: Tangents from external points are equal. Let touching points be $P,Q,R,S$. $AP=AS, BP=BQ, CR=CQ, DR=DS$. Add them.</div>
+            <div class="solution-item"><span class="ans-label">Ans 15:</span> $3\text{ cm}$. <em>Hint: $AB+CD = AD+BC \implies 6+4 = AD+7 \implies 10 = AD+7 \implies AD=3$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 16:</span> <em>Hint:</em> Same logic as quadrilateral. Assign contact points $P_1, P_2 \dots P_6$. Equate tangents from vertices and add alternating sides.</div>
+            <div class="solution-item"><span class="ans-label">Ans 17:</span> <em>Hint:</em> Let tangent at $P$ intersect $BC$ at $Q$. $PQ=BQ$ (tangents from $Q$). Join $BP$. $\angle APB=90^\circ$ (angle in semicircle) $\implies \angle BPC=90^\circ$. Show $\triangle CPQ$ is isosceles to get $PQ=QC$. Thus $BQ=QC$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 18:</span> <em>Hint:</em> Tangent is $\perp$ to radius. Both tangents make $90^\circ$ with the diameter. These are alternate interior angles, so lines are parallel.</div>
+            <div class="solution-item"><span class="ans-label">Ans 19:</span> <em>Hint:</em> If angle is $90^\circ$, the quadrilateral formed by tangents and radii is a square of side $r$. Diagonal $OP = \sqrt{r^2+r^2} = r\sqrt{2}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 20:</span> $6\text{ cm}$. <em>Hint: The common chord is bisected at right angles by line of centers. Let distance be $x$ and $4-x$. Solve $5^2 - x^2 = 3^2 - (4-x)^2 \implies x=4$. Thus it passes through the center of smaller circle. Half-chord=3, Total=6.</em></div>
+
+            <div class="solution-item"><span class="ans-label">Ans 21:</span> <em>Hint:</em> Draw circle, external point $P$, tangents $PQ, PR$. Join $OQ, OR, OP$. Prove $\triangle OQP \cong \triangle ORP$ by RHS congruency.</div>
+            <div class="solution-item"><span class="ans-label">Ans 22:</span> <em>Hint:</em> Parallelogram: $AB=CD, AD=BC$. Circumscribing: $AB+CD=AD+BC$. So $2AB = 2AD \implies AB=AD$. All sides equal.</div>
+            <div class="solution-item"><span class="ans-label">Ans 23:</span> <em>Hint:</em> $AQ = AR$. Perimeter = $AB+BC+CA = AB+(BP+PC)+CA$. Substitute $BP=BQ, PC=CR$. Perimeter = $AB+BQ+CR+CA = AQ+AR = 2AQ$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 24:</span> <em>Hint:</em> In quad $OPTQ$, $\angle OPT = \angle OQT = 90^\circ$. Sum of angles = $360^\circ$. So $\angle PTQ + \angle POQ = 180^\circ$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 25:</span> $\frac{20}{3}\text{ cm}$. <em>Hint: Let $TR$ intersect $PQ$ at $R$. $PR=4$. In $\triangle POR$, $OR=3$. $\triangle POR \sim \triangle PRO \implies \frac{TP}{PO} = \frac{PR}{RO} \implies \frac{TP}{5} = \frac{4}{3}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 26:</span> <em>Hint:</em> Let tangent be $XY$. $\angle XAB = \angle C$ (Alternate segment theorem, or prove via center). Since $AB=AC$, $\angle B=\angle C$. So $\angle XAB=\angle B$. Alternate interior angles equal $\implies$ parallel.</div>
+            <div class="solution-item"><span class="ans-label">Ans 27:</span> <em>Hint:</em> $s = \frac{a+b+c}{2}$. Tangents equal: $AD=AF=x, BD=BE=y, CE=CF=z$. $y+z=a, x+z=b, x+y=c$. $2(x+y+z) = 2s \implies x+y+z=s$. $BD=y=s-(x+z)=s-b$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 28:</span> <em>Hint:</em> Let $AB$ be tangent intersecting parallel tangents $XY, X'Y'$. Join center to points of contact. Prove two pairs of triangles congruent. Show central angles add to $180^\circ$, so angle subtended by $AB$ is half, i.e., $90^\circ$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 29:</span> <em>Hint:</em> Let common tangent at $C$ intersect direct common tangent $AB$ at $P$. Tangents from $P$ to circle 1: $PA=PC$. To circle 2: $PB=PC$. Therefore $PA=PB$, so $P$ bisects $AB$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 30:</span> $3\text{ cm}$. <em>Hint: $AC$ is tangent, so $\perp$ to radius. Bisects $AC \implies AD=4$. In right $\triangle ODA$, $OD = \sqrt{5^2-4^2} = 3$.</em></div>
+
+            <div class="solution-item"><span class="ans-label">Ans 31:</span> <em>Hint:</em> Join center $O$ to points of contact $P,Q,R,S$ and vertices $A,B,C,D$. This forms 8 triangles. Prove adjacent triangles congruent ($\triangle AOP \cong \triangle AOS$, etc.). Let angles be $1,2,3...8$. $\angle 1=\angle 2$, $\angle 3=\angle 4$ etc. Sum = $360^\circ \implies 2(\angle 1+\angle 4+\angle 5+\angle 8)=360^\circ \implies (\angle AOB + \angle COD) = 180^\circ$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 32:</span> $AB = 15\text{ cm}, AC = 13\text{ cm}$. <em>Hint: Let contact points be $D,E,F$. $AE=AF=x$. $s = 14+x$. Area via Heron's = $\sqrt{(14+x)(x)(8)(6)}$. Area via 3 triangles = $\frac{1}{2}(4)(Perimeter) = 2(28+2x) = 4(14+x)$. Equate and square: $48x(14+x) = 16(14+x)^2 \implies 3x = 14+x \implies x=7$. $AB=7+8=15, AC=7+6=13$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 33:</span> <em>Hint:</em> Similar to Q28. Join $O$ to points of contact $P, Q, C$. Prove $\triangle AOP \cong \triangle AOC$ so $\angle POA = \angle AOC$. Similarly $\angle COB = \angle BOQ$. $P,O,Q$ is a diameter line. $2\angle AOC + 2\angle COB = 180^\circ \implies \angle AOB = 90^\circ$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 34:</span> <em>Hint:</em> Let $\angle APB = x$. In isosceles $\triangle PAB$, $\angle PAB = 90 - x/2$. Angle between tangent and radius is $90^\circ$, so $\angle OAB = 90^\circ - (90^\circ - x/2) = x/2$. Thus $2\angle OAB = x = \angle APB$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 35:</span> <em>Hint:</em> Let circle touch hypotenuse $c$ at $R$, side $a$ at $P$, side $b$ at $Q$. Quadrilateral $OPCQ$ is a square of side $r$. Tangents from vertices: $a-r$ and $b-r$. Hypotenuse $c = (a-r) + (b-r) \implies 2r = a+b-c \implies r = \frac{a+b-c}{2}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 36:</span> $4\text{ cm}$. <em>Hint: Hypotenuse $AC = \sqrt{10^2+24^2} = 26$. Use formula from Q35: $r = \frac{10+24-26}{2} = \frac{8}{2} = 4$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 37:</span> <em>Hint:</em> Draw $\triangle ABT$ and $\triangle ACT$. Join center to $T$ and draw perpendicular to $BC$. Prove $\triangle ABT \sim \triangle ATC$ using Alternate Segment Theorem ($\angle ATB = \angle C$) and common angle $A$. $\frac{AT}{AC} = \frac{AB}{AT} \implies AT^2 = AB \cdot AC$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 38:</span> <em>Hint:</em> $\angle C$ in semicircle is $90^\circ$. $\angle B$ in $\triangle ABC$ is $60^\circ$. $\angle OBC=60^\circ$ means $\triangle OBC$ is equilateral ($\angle COB=60, \angle OCB=60$). Tangent $\angle OCD=90^\circ$. $\angle BCD = 90-60=30^\circ$. In $\triangle ABC$, exterior $\angle B=60^\circ$, so $\angle D = 60^\circ-30^\circ=30^\circ$. Since $\angle D = \angle BCD = 30^\circ$, $\triangle BCD$ is isosceles, $BC=BD$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 39:</span> <em>Hint:</em> Detailed step-by-step of Q31. Required for full 5 marks in boards. State congruency criteria clearly.</div>
+            <div class="solution-item"><span class="ans-label">Ans 40:</span> <em>Hint:</em> Extend tangents to intersect at $E$. For circle 1: $EA = EC$. For circle 2: $EB = ED$. Subtract the two equations: $EA - EB = EC - ED \implies AB = CD$.</div>
+        </div>
+
+        <div class="prompt-vault">
+            <h2>[FOR TEACHER/CREATOR: AI IMAGE PROMPT VAULT]</h2>
+            <p>Copy and paste these exact prompts into your AI Image Generator (Midjourney, DALL-E 3) to generate mathematically accurate diagrams for the questions. ALL backgrounds are pure white (#FFFFFF).</p>
+            
+            <div class="prompt-block"><strong>Prompt for Figure 1 (Question 7):</strong>
+A clean, mathematically accurate geometric diagram on a pure white background (#FFFFFF). A circle with center labeled 'O'. An external point 'T' on the left. Two tangent lines drawn from 'T' touching the circle at points 'P' (top) and 'Q' (bottom). Two radius lines drawn from 'O' to 'P' and 'O' to 'Q'. The angle 'POQ' is marked with an arc and labeled '110°'. The angle 'PTQ' is marked with a question mark. At the bottom center, write 'Figure 1' in a clean, bold, sans-serif font. Flat 2D vector style, black lines, no shading.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 2 (Question 11):</strong>
+A clean, mathematically accurate geometric diagram on a pure white background (#FFFFFF). A circle with center 'O'. An external point 'P' on the left. Two tangents 'PA' and 'PB' touching the circle at 'A' (top) and 'B' (bottom). The angle 'APB' is marked with an arc and labeled '50°'. A chord 'AB' is drawn connecting the contact points. A line is drawn from 'O' to 'A'. The angle 'OAB' is highlighted. At the bottom center, write 'Figure 2'. Flat 2D vector style, black lines, no shading.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 3 (Question 15):</strong>
+A clean, mathematically accurate geometric diagram on a pure white background (#FFFFFF). An irregular quadrilateral labeled 'ABCD' circumscribing a circle perfectly (the circle touches all four sides from the inside). The contact points do not need labels. Label the side 'AB' as '6 cm', 'BC' as '7 cm', and 'CD' as '4 cm'. Leave side 'AD' blank. At the bottom center, write 'Figure 3'. Flat 2D vector style, black lines, no shading.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 4 (Question 23):</strong>
+A clean, mathematically accurate geometric diagram on a pure white background (#FFFFFF). A triangle 'ABC' with the top vertex 'A'. The sides 'AB' and 'AC' are extended downwards straight into rays. A circle is drawn below the triangle, touching the bottom side 'BC' at point 'P', and perfectly touching the extended rays of 'AB' and 'AC' at points 'Q' and 'R' respectively. (This is an excircle configuration). At the bottom center, write 'Figure 4'. Flat 2D vector style, black lines.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 5 (Question 32):</strong>
+A clean, mathematically accurate geometric diagram on a pure white background (#FFFFFF). A triangle 'ABC' circumscribing a circle (circle inside touching all three sides). Center of the circle is 'O'. The radius is drawn downwards to the bottom side 'BC' hitting at contact point 'D', labeled '4 cm'. The segment 'BD' on the left of 'D' is labeled '8 cm'. The segment 'DC' on the right of 'D' is labeled '6 cm'. At the bottom center, write 'Figure 5'. Flat 2D vector style, black lines.</div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

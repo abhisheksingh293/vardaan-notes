@@ -1,0 +1,542 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Electricity: Magnetic and Heating Effects - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #1a1a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0a1a0f;
+            --green-border: #81c784;
+            --blue-bg: #050f1a;
+            --blue-border: #64b5f6;
+            --pink-bg: #1a0510;
+            --pink-border: #f06292;
+            --text-main: #f0f0f0;
+            --paper-bg: #000000;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.08);
+            --example-text: #cccccc;
+            --toggle-bg: #1a1a1a;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 70%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- CHAPTER IMAGES (Newspaper Style) --- */
+        .chapter-image {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+
+        .img-left {
+            float: left;
+            margin-right: 25px;
+            margin-bottom: 20px;
+        }
+
+        .img-right {
+            float: right;
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        /* Clear floats after sections to prevent overlapping */
+        h1, h2, h3, .blue-box, .green-box, .yellow-box {
+            clear: both;
+        }
+
+
+
+        /* Invert images in dark mode for better visibility of diagrams */
+        html.dark-mode .chapter-image {
+            filter: invert(1) hue-rotate(180deg);
+
+        }
+
+        /* --- IMAGE PLACEHOLDER (Legacy support) --- */
+        .img-placeholder {
+            border: 2px dashed var(--meta-text);
+            background-color: var(--example-bg);
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 8px;
+            color: var(--example-text);
+            font-size: 0.95rem;
+        }
+        .img-placeholder strong {
+            color: var(--blue-border);
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 70% !important;
+                opacity: 1 !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science â€¢ Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Electricity: Magnetic and Heating Effects</h1>
+        
+        <h2>1. Magnetic Effect of Electric Current</h2>
+        <img src="Images/electromagnet_diagram.png" alt="Electromagnet Diagram" class="chapter-image img-right">
+        <p>Electricity is a form of energy that flows through wires. When an electric current passes through a wire, the wire starts behaving like a magnet and produces a magnetic field around it. This is known as the <strong>magnetic effect of electric current</strong>.</p>
+        <p>If you place a magnetic compass near a current-carrying wire, the needle deflects. When the current is switched off, the needle returns to its original position.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Hans Christian Oersted (1777-1851)</strong>, a Danish scientist, was the first to discover the link between electricity and magnetism in 1820. He noticed a compass needle deflecting during a classroom demonstration when an electric circuit was turned on.</p>
+        </div>
+
+        <h3>Electromagnets</h3>
+        <p>An <strong>electromagnet</strong> is a temporary magnet made by passing electric current through a coil of insulated wire wrapped around an iron core (like a nail). It acts as a magnet ONLY as long as the current flows. Once the switch is turned off, it loses its magnetism instantly.</p>
+
+
+
+        <p><strong>Factors Affecting the Strength of an Electromagnet:</strong></p>
+        <ul>
+            <li><strong>Number of turns:</strong> More turns/coils of wire = stronger magnetic field.</li>
+            <li><strong>Amount of current:</strong> Higher current flowing through the coil = stronger magnetism.</li>
+            <li><strong>Material of the core:</strong> A soft iron core is the best because it magnetises quickly and loses magnetism immediately when the current stops.</li>
+            <li><strong>Tightness of the coil:</strong> Tightly wound wire creates a more concentrated and powerful field.</li>
+            <li><strong>Thickness of the wire:</strong> Thicker wires carry more current without overheating, making the electromagnet stronger.</li>
+        </ul>
+
+        <h2>2. Applications of Magnetic Effect</h2>
+        <img src="Images/electric_bell_circuit.png" alt="Electric Bell Circuit Diagram" class="chapter-image img-left">
+        <p>The relationship between electricity and magnetism is applied in many everyday devices:</p>
+        
+        <ul>
+            <li><strong>Electric Bell:</strong> Uses an electromagnet to pull a metal hammer, which strikes a gong to produce a ringing sound.</li>
+            <li><strong>Lifting Electromagnets:</strong> Giant cranes in scrap yards use powerful electromagnets to lift heavy iron scrap and vehicles. Turning the switch off drops the scrap easily.</li>
+            <li><strong>Maglev Trains:</strong> Modern magnetic levitation trains use powerful electromagnets to float above the tracks, reducing friction for high-speed travel.</li>
+            <li><strong>Loudspeakers and Microphones:</strong> Use the magnetic effect to convert electrical signals into sound waves, and vice versa.</li>
+            <li><strong>Electric Motors:</strong> Found in fans and washing machines, they convert electrical energy into mechanical motion using magnetic fields.</li>
+        </ul>
+
+
+
+        <h2>3. Heating Effect of Electric Current</h2>
+        <p>When electric current flows through a conductor wire, the material opposes the flow of the current. This opposition is called <strong>resistance</strong>. Overcoming this resistance generates heat. This phenomenon is called the <strong>heating effect of electric current</strong>.</p>
+        
+        <p><strong>Factors affecting the heat produced:</strong></p>
+        <ul>
+            <li><strong>Resistance of the conductor:</strong> Higher resistance produces more heat.</li>
+            <li><strong>Magnitude of current:</strong> A higher amount of current produces more heat.</li>
+            <li><strong>Time:</strong> The longer the current flows, the more heat is generated.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>Household heating appliances (like irons, geysers, and room heaters) use a special coiled heating element made of an alloy called <strong>Nichrome</strong>. Nichrome is chosen because it has exceptionally high resistance and a very high melting point, allowing it to get red-hot without melting.</p>
+        </div>
+
+        <h3>Glowing of an Electric Bulb</h3>
+        <p>Traditional electric bulbs contain a very thin wire called a <strong>filament</strong>, made of <strong>Tungsten</strong>. Tungsten has an extremely high melting point (~3400Â°C). When current passes through it, the high resistance makes it heat up (~2500Â°C) and emit bright light. The bulb is filled with inert gases like argon or nitrogen to stop the filament from burning out.</p>
+
+        <h2>4. Electrical Safety Devices</h2>
+        <img src="Images/safety_devices_comparison.png" alt="Electrical Safety Devices: Fuse vs MCB" class="chapter-image img-right">
+        <p>Excessive current can cause overheating and electrical fires. To prevent this, safety devices are installed in circuits.</p>
+        <ul>
+            <li><strong>Electric Fuse:</strong> A small device containing a thin wire with a low melting point. If the current exceeds a safe limit, the fuse wire melts and breaks the circuit. It must be replaced after blowing.</li>
+            <li><strong>Miniature Circuit Breaker (MCB):</strong> An improved safety switch that automatically turns off (trips) when the current exceeds the safe limit. Unlike a fuse, it doesn't need replacing and can simply be switched back ON.</li>
+        </ul>
+
+
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>ISI Mark:</strong> Always look for the ISI (Indian Standards Institute) mark on electrical appliances. It guarantees that the product conforms to standard safety guidelines and is safe to use.</p>
+        </div>
+
+        <h2>5. Portable Sources of Electricity</h2>
+        <p>Devices like torches, wall clocks, and remote controls need portable power sources. A device that converts chemical energy into electrical energy is called a <strong>cell</strong>. A combination of two or more cells is a <strong>battery</strong>.</p>
+
+        <h3>Types of Cells</h3>
+        <ul>
+            <li><strong>Voltaic Cell:</strong> The earliest simple cell invented by Alessandro Volta and Luigi Galvani. It uses two different metal electrodes (like Zinc and Copper) dipped in a liquid electrolyte (salt or acid solution). Chemical reactions between them produce electric current.</li>
+            <li><strong>Dry Cell:</strong> The most common portable battery. It uses a Zinc container (negative terminal), a Carbon rod (positive terminal), and a thick paste of ammonium chloride (electrolyte) instead of a liquid, making it leak-proof. They are <strong>non-rechargeable</strong>.</li>
+            <li><strong>Rechargeable Batteries:</strong> Can be reused by supplying electricity to reverse the chemical reactions inside. Examples include Lithium-ion (mobile phones, laptops) and Lead-acid (car batteries, inverters). They are more eco-friendly and cost-effective in the long run.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan with ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

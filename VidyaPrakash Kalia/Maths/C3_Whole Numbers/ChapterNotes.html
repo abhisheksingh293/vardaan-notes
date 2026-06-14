@@ -1,0 +1,524 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Whole Numbers - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #1a1a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0a1a0f;
+            --green-border: #81c784;
+            --blue-bg: #050f1a;
+            --blue-border: #64b5f6;
+            --pink-bg: #1a0510;
+            --pink-border: #f06292;
+            --text-main: #f0f0f0;
+            --paper-bg: #000000;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.08);
+            --example-text: #cccccc;
+            --toggle-bg: #1a1a1a;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Maths â€¢ Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>3. Whole Numbers</h1>
+        
+        <p>In our daily lives, we use numbers primarily to count objects. This chapter explores the foundational concepts of counting numbers, introducing the concept of zero, and establishing the properties of arithmetic operations that apply to them.</p>
+
+        <h2>1. Natural Numbers and Whole Numbers</h2>
+        <p>The numbers we use for counting are the most basic types of numbers.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Natural Numbers:</strong> The counting numbers {1, 2, 3, 4, ...} are called natural numbers. The smallest natural number is 1. There is no greatest natural number since counting is endless.</p>
+            <p><strong>Whole Numbers:</strong> The collection of all natural numbers along with the number zero (0) forms the set of whole numbers. {0, 1, 2, 3, 4, ...}</p>
+        </div>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>Every natural number is a whole number, but <strong>0</strong> is a whole number which is NOT a natural number.</p>
+            <p>The smallest whole number is <strong>0</strong>.</p>
+        </div>
+
+        <h3>Topic 1 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Which is the smallest whole number?</li>
+            <li><strong>Q2:</strong> Are all whole numbers also natural numbers? Explain with an example.</li>
+        </ul>
+
+        <h2>2. Successor and Predecessor</h2>
+        <p>The order of numbers is sequential, meaning every number comes exactly before or after another number.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Successor:</strong> Given any whole number, the whole number just greater than it (obtained by adding 1) is its successor. (e.g., Successor of 15 is 15 + 1 = 16).</p>
+            <p><strong>Predecessor:</strong> The whole number just less than the given number (obtained by subtracting 1) is its predecessor. (e.g., Predecessor of 20 is 20 - 1 = 19).</p>
+        </div>
+
+        <p><em>Note:</em> Clearly, every whole number has a successor. However, every whole number <strong>except 0</strong> has a predecessor in the set of whole numbers.</p>
+
+        <h3>Topic 2 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Write the predecessor of 10000.</li>
+            <li><strong>Q2:</strong> Write the successor of 9999.</li>
+            <li><strong>Q3:</strong> Does the whole number 0 have a predecessor in whole numbers?</li>
+        </ul>
+
+        <h2>3. Representation of Whole Numbers on a Number Line</h2>
+        <p>Whole numbers can be visually represented on a straight line known as a <strong>number line</strong>.</p>
+        
+        <p>Steps to draw a number line:</p>
+        <ol>
+            <li>Draw a straight line. Mark a point <strong>O</strong> on it and label the point as 0 (zero).</li>
+            <li>Select a unit of length. Let it be 1 cm. Mark a point <strong>A</strong> on the line to the right of O such that OA = 1 unit. Label the point A as 1 (one).</li>
+            <li>Mark another point <strong>B</strong> on the right of A such that AB = 1 unit. Label point B as 2.</li>
+            <li>Continue this process to mark points C, D, E, ... and label them 3, 4, 5, ... respectively.</li>
+        </ol>
+
+        <h2>4. Fundamental Operations on Whole Numbers</h2>
+        <p>Understanding the properties of addition, subtraction, multiplication, and division makes mathematical calculations faster and more logical.</p>
+
+        <h3>A. Closure Property</h3>
+        <p>If <em>a</em> and <em>b</em> are any two whole numbers, then their sum (<em>a + b</em>) and their product (<em>a Ã— b</em>) are <strong>always</strong> whole numbers. This means whole numbers are "closed" under addition and multiplication.</p>
+        <p><em>Note:</em> Subtraction and Division are NOT closed under whole numbers. (e.g., 5 - 7 is not a whole number).</p>
+
+        <h3>B. Commutative Property</h3>
+        <p>The order in which you add or multiply two whole numbers does not change the result.</p>
+        <ul>
+            <li><strong>Addition:</strong> <em>a + b = b + a</em> (e.g., 15 + 10 = 10 + 15 = 25)</li>
+            <li><strong>Multiplication:</strong> <em>a Ã— b = b Ã— a</em> (e.g., 5 Ã— 4 = 4 Ã— 5 = 20)</li>
+        </ul>
+
+        <h3>C. Associative Property</h3>
+        <p>When adding or multiplying three or more whole numbers, the grouping of the numbers does not change the final result.</p>
+        <ul>
+            <li><strong>Addition:</strong> <em>(a + b) + c = a + (b + c)</em></li>
+            <li><strong>Multiplication:</strong> <em>(a Ã— b) Ã— c = a Ã— (b Ã— c)</em></li>
+        </ul>
+
+        <h3>D. Distributive Property of Multiplication over Addition</h3>
+        <p>Multiplication distributes over addition. This is very helpful for mental math and simplification.</p>
+        <p><strong>Formula:</strong> <em>a Ã— (b + c) = (a Ã— b) + (a Ã— c)</em></p>
+        <p><strong>Example:</strong> 5 Ã— (10 + 2) = (5 Ã— 10) + (5 Ã— 2) = 50 + 10 = 60.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Division by Zero:</strong> Division of a whole number by zero (e.g., 5 Ã· 0) is <strong>not defined</strong>.</p>
+        </div>
+
+        <h3>Topic 4 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find the sum by suitable arrangement: 837 + 208 + 363.</li>
+            <li><strong>Q2:</strong> Find the product using the commutative property: 2 Ã— 1768 Ã— 50.</li>
+            <li><strong>Q3:</strong> Find the value using the distributive property: 81265 Ã— 169 - 81265 Ã— 69.</li>
+        </ul>
+
+        <h2>5. Patterns in Whole Numbers</h2>
+        <p>Observation of patterns can help us in simplifying operations on numbers without doing long calculations.</p>
+        
+        <p><strong>Pattern Examples for Addition & Subtraction:</strong></p>
+        <ul>
+            <li>To add 9, 99, 999: Add 10 - 1, 100 - 1, 1000 - 1.</li>
+            <li>e.g., 117 + 9 = 117 + 10 - 1 = 127 - 1 = 126.</li>
+            <li>To subtract 9, 99, 999: Subtract 10 - 1, 100 - 1, 1000 - 1.</li>
+            <li>e.g., 117 - 9 = 117 - 10 + 1 = 107 + 1 = 108.</li>
+        </ul>
+
+        <p><strong>Pattern Examples for Multiplication:</strong></p>
+        <ul>
+            <li>To multiply by 9, 99, 999: Multiply by (10 - 1), (100 - 1), (1000 - 1).</li>
+            <li>e.g., 84 Ã— 9 = 84 Ã— (10 - 1) = 840 - 84 = 756.</li>
+            <li>To multiply by 5, 25, 125: Multiply by 10/2, 100/4, 1000/8.</li>
+            <li>e.g., 96 Ã— 5 = 96 Ã— (10/2) = 48 Ã— 10 = 480.</li>
+        </ul>
+
+        <h3>Topic 5 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Use a pattern to find the value of: 3764 + 999.</li>
+            <li><strong>Q2:</strong> Use a pattern to find the product of: 125 Ã— 25.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan â¤ï¸</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

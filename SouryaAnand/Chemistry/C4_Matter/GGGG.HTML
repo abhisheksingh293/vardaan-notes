@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; font-size: 11pt;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Pair of Linear Equations: Board Masterclass (Target 100/100)</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 10 CBSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- Section A -->
+        <div class="chapter-header">Section A: Consistency & Graphical Analysis (1-2 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Without drawing the graph, find whether the lines representing the pair of linear equations $5x - 4y + 8 = 0$ and $7x + 6y - 9 = 0$ intersect at a point, are parallel, or are coincident.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Find the value of $k$ for which the system of equations $x + 2y = 3$ and $5x + ky + 7 = 0$ has a unique solution.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">For what value of $k$, will the following pair of linear equations have infinitely many solutions? $kx + 3y = k - 3$; $12x + ky = k$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">Determine the value of $c$ for which the pair of equations $cx - y = 2$ and $6x - 2y = 3$ will have no solution.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">Check whether the pair of equations $x + 3y = 6$ and $2x - 3y = 12$ is consistent. If so, solve them graphically.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Half the perimeter of a rectangular garden, whose length is $4\text{ m}$ more than its width, is $36\text{ m}$. Formulate the linear equations for this situation and find the dimensions graphically.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">Given the linear equation $2x + 3y - 8 = 0$, write another linear equation in two variables such that the geometrical representation of the pair so formed is: (i) intersecting lines (ii) parallel lines (iii) coincident lines.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">Find whether the following pair of linear equations has a unique solution. If yes, find the solution: $7x - 4y = 49$ and $5x - 6y = 57$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">Find the area of the triangle formed by the lines $x = 3$, $y = 4$ and $x = y$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">Draw the graphs of the equations $x - y + 1 = 0$ and $3x + 2y - 12 = 0$. Determine the coordinates of the vertices of the triangle formed by these lines and the x-axis, and shade the triangular region.</div>
+            </div>
+        </div>
+
+        <!-- Section B -->
+        <div class="chapter-header">Section B: Algebraic Methods - Substitution & Elimination (2-3 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">Solve the following pair of linear equations by the substitution method: $3x - 5y - 4 = 0$ and $9x = 2y + 7$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">Solve using the elimination method: $\frac{x}{2} + \frac{2y}{3} = -1$ and $x - \frac{y}{3} = 3$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">Solve the following system of equations: $0.2x + 0.3y = 1.3$ and $0.4x + 0.5y = 2.3$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">Solve for $x$ and $y$: $\sqrt{2}x + \sqrt{3}y = 0$ and $\sqrt{3}x - \sqrt{8}y = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">Solve: $217x + 131y = 913$ and $131x + 217y = 827$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">Solve for $x$ and $y$: $ax + by = c$ and $bx + ay = 1 + c$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">Solve the equations $2x + 3y = 11$ and $2x - 4y = -24$ and hence find the value of '$m$' for which $y = mx + 3$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">Find the values of $a$ and $b$ for which the following system of equations has infinitely many solutions: $2x + 3y = 7$ and $(a - b)x + (a + b)y = 3a + b - 2$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">Solve: $\frac{ax}{b} - \frac{by}{a} = a + b$ and $ax - by = 2ab$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">Solve the pair of equations: $152x - 378y = -74$ and $-378x + 152y = -604$.</div>
+            </div>
+        </div>
+
+        <!-- Section C -->
+        <div class="chapter-header">Section C: Word Problems - Numbers, Digits & Ages (3-4 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">The difference between two numbers is 26 and one number is three times the other. Find them.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">The sum of a two-digit number and the number obtained by reversing the digits is 66. If the digits of the number differ by 2, find the number. How many such numbers are there?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">Seven times a given two-digit number is equal to four times the number obtained by reversing the order of the digits. If the difference of the digits is 3, determine the number.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">The sum of a two-digit number and the number formed by interchanging its digits is 110. If 10 is subtracted from the first number, the new number is 4 more than 5 times the sum of the digits in the first number. Find the first number.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">Five years hence, the age of Jacob will be three times that of his son. Five years ago, Jacob's age was seven times that of his son. What are their present ages?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">The present age of a father is three years more than three times the age of his son. Three years hence, father's age will be 10 years more than twice the age of the son. Determine their present ages.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">I am three times as old as my son. Five years later, I shall be two and a half times as old as my son. How old am I and how old is my son?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">Two years ago, a father was five times as old as his son. Two years later, his age will be 8 more than three times the age of the son. Find the present ages of father and son.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">A two-digit number is 3 more than 4 times the sum of its digits. If 18 is added to the number, the digits are reversed. Find the number.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">Ten years ago, a mother was 4 times as old as her daughter. Ten years hence, she will be twice as old as her daughter. Determine their present ages.</div>
+            </div>
+        </div>
+
+        <!-- Section D -->
+        <div class="chapter-header">Section D: Word Problems - Fractions, Commercial, Geometry & Speed (4-5 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">A fraction becomes $\frac{9}{11}$, if 2 is added to both the numerator and the denominator. If 3 is added to both the numerator and the denominator it becomes $\frac{5}{6}$. Find the fraction.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">The sum of the numerator and denominator of a fraction is 3 less than twice the denominator. If the numerator and denominator are decreased by 1, the numerator becomes half the denominator. Determine the fraction.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">The taxi charges in a city consist of a fixed charge together with the charge for the distance covered. For a distance of 10 km, the charge paid is ₹105 and for a journey of 15 km, the charge paid is ₹155. What are the fixed charges and the charge per km? How much does a person have to pay for travelling a distance of 25 km?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">A lending library has a fixed charge for the first three days and an additional charge for each day thereafter. Saritha paid ₹27 for a book kept for seven days, while Susy paid ₹21 for the book she kept for five days. Find the fixed charge and the charge for each extra day.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">Meena went to a bank to withdraw ₹2000. She asked the cashier to give her ₹50 and ₹100 notes only. Meena got 25 notes in all. Find how many notes of ₹50 and ₹100 she received.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">Yash scored 40 marks in a test, getting 3 marks for each right answer and losing 1 mark for each wrong answer. Had 4 marks been awarded for each correct answer and 2 marks been deducted for each incorrect answer, then Yash would have scored 50 marks. How many questions were there in the test?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">37.</span>
+                <div class="q-content">The area of a rectangle gets reduced by 9 square units, if its length is reduced by 5 units and breadth is increased by 3 units. If we increase the length by 3 units and the breadth by 2 units, the area increases by 67 square units. Find the dimensions of the rectangle.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">38.</span>
+                <div class="q-content">In a $\triangle ABC$, $\angle C = 3\angle B = 2(\angle A + \angle B)$. Find the three angles.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">39.</span>
+                <div class="q-content">Places A and B are 100 km apart on a highway. One car starts from A and another from B at the same time. If the cars travel in the same direction at different speeds, they meet in 5 hours. If they travel towards each other, they meet in 1 hour. What are the speeds of the two cars?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">40.</span>
+                <div class="q-content">A train covered a certain distance at a uniform speed. If the train would have been 10 km/h faster, it would have taken 2 hours less than the scheduled time. And, if the train were slower by 10 km/h, it would have taken 3 hours more than the scheduled time. Find the distance covered by the train.</div>
+            </div>
+        </div>
+
+        <!-- Section E: Answer Key & Hints -->
+        <div class="chapter-header">Section E: Answer Key & Hints</div>
+        <div class="questions-container">
+            <div class="solution-item"><span class="ans-label">Ans 1:</span> Intersect at a point. <em>Hint: $\frac{a_1}{a_2} = \frac{5}{7}$, $\frac{b_1}{b_2} = \frac{-4}{6}$. Since $\frac{a_1}{a_2} \neq \frac{b_1}{b_2}$, they intersect.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 2:</span> $k \neq 10$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 3:</span> $k = 6$. <em>Hint: Apply $\frac{a_1}{a_2} = \frac{b_1}{b_2} = \frac{c_1}{c_2}$ for infinite solutions. $k = -6$ fails the third ratio.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 4:</span> $c = 3$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 5:</span> Consistent. Graphically, they intersect at $(6, 0)$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 6:</span> Length = 20 m, Width = 16 m.</div>
+            <div class="solution-item"><span class="ans-label">Ans 7:</span> Example: (i) $3x + 2y - 7 = 0$ (ii) $4x + 6y - 10 = 0$ (iii) $4x + 6y - 16 = 0$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 8:</span> Unique solution. $x = 3$, $y = -7$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 9:</span> 0.5 sq. units. <em>Hint: Vertices are $(3,4), (3,3), (4,4)$. Base=1, Height=1.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 10:</span> Vertices: $(-1, 0), (4, 0), (2, 3)$.</div>
+            
+            <div class="solution-item"><span class="ans-label">Ans 11:</span> $x = \frac{9}{13}$, $y = -\frac{5}{13}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 12:</span> $x = 2$, $y = -3$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 13:</span> $x = 2$, $y = 3$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 14:</span> $x = 0$, $y = 0$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 15:</span> $x = 3$, $y = 2$. <em>Hint: Add equations to get $x+y=5$, subtract to get $x-y=1$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 16:</span> $x = \frac{c(a-b)-b}{a^2 - b^2}$, $y = \frac{c(b-a)+a}{a^2 - b^2}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 17:</span> $x = -2$, $y = 5$. Thus, $m = -1$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 18:</span> $a = 5$, $b = 1$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 19:</span> $x = b$, $y = -a$. <em>Hint: Multiply eq(1) by $ab$ to get $a^2x - b^2y = a^2b + ab^2$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 20:</span> $x = 2$, $y = 1$.</div>
+            
+            <div class="solution-item"><span class="ans-label">Ans 21:</span> 39 and 13.</div>
+            <div class="solution-item"><span class="ans-label">Ans 22:</span> 42 or 24. There are two such numbers. <em>Hint: $x+y=6$. And $x-y=2$ or $y-x=2$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 23:</span> 36. <em>Hint: $7(10x+y) = 4(10y+x) \implies 66x = 33y \implies y=2x$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 24:</span> 64.</div>
+            <div class="solution-item"><span class="ans-label">Ans 25:</span> Jacob: 40 years, Son: 10 years.</div>
+            <div class="solution-item"><span class="ans-label">Ans 26:</span> Father: 33 years, Son: 10 years.</div>
+            <div class="solution-item"><span class="ans-label">Ans 27:</span> Father: 45 years, Son: 15 years.</div>
+            <div class="solution-item"><span class="ans-label">Ans 28:</span> Father: 42 years, Son: 10 years.</div>
+            <div class="solution-item"><span class="ans-label">Ans 29:</span> 35.</div>
+            <div class="solution-item"><span class="ans-label">Ans 30:</span> Mother: 50 years, Daughter: 20 years.</div>
+
+            <div class="solution-item"><span class="ans-label">Ans 31:</span> $\frac{7}{9}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 32:</span> $\frac{4}{7}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 33:</span> Fixed = ₹5, Charge per km = ₹10. Total for 25 km = ₹255.</div>
+            <div class="solution-item"><span class="ans-label">Ans 34:</span> Fixed = ₹15, Extra per day = ₹3.</div>
+            <div class="solution-item"><span class="ans-label">Ans 35:</span> ₹50 notes = 10, ₹100 notes = 15.</div>
+            <div class="solution-item"><span class="ans-label">Ans 36:</span> 20 questions.</div>
+            <div class="solution-item"><span class="ans-label">Ans 37:</span> Length = 17 units, Breadth = 9 units.</div>
+            <div class="solution-item"><span class="ans-label">Ans 38:</span> $\angle A = 20^\circ$, $\angle B = 40^\circ$, $\angle C = 120^\circ$. <em>Hint: Use $\angle A + \angle B + \angle C = 180^\circ$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 39:</span> 60 km/h and 40 km/h. <em>Hint: $5(x-y) = 100$ and $1(x+y) = 100$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 40:</span> 600 km. <em>Hint: Let speed be $x$ km/h and time be $y$ hours. Distance $D = xy$. Eq1: $(x+10)(y-2) = xy$. Eq2: $(x-10)(y+3) = xy$.</em></div>
+        </div>
+        
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

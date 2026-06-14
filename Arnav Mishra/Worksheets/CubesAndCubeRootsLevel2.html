@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Cubes and Roots L2</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        :root {
+            --primary-color: #1565c0; /* Level 2 - Blue */
+            --bg-color: #e3f2fd;
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --border-color: #ccc;
+        }
+
+        html.dark-mode {
+            --primary-color: #42a5f5;   
+            --bg-color: #1a2a40;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --border-color: #444;
+        }
+
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); color: var(--text-main);
+            line-height: 1.3; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        .header { text-align: center; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 15px; }
+        .institute-name { font-size: 22pt; font-weight: bold; text-transform: uppercase; margin: 0; color: var(--primary-color); }
+        .tagline { font-size: 12pt; font-weight: bold; margin-bottom: 5px; color: var(--text-secondary); }
+        .worksheet-title { font-size: 14pt; font-weight: bold; text-decoration: underline; color: var(--text-secondary); }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 10px; 
+            font-size: 10pt; background-color: var(--bg-color); padding: 8px 12px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 5px 10px; margin-top: 15px; margin-bottom: 10px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 12pt; text-transform: uppercase; 
+        }
+        
+        .two-column { column-count: 2; column-gap: 30px; display: block; }
+        .four-column { column-count: 4; column-gap: 15px; display: block; }
+        .questions-container { margin-bottom: 15px; }
+        .question-item { display: flex; align-items: baseline; font-size: 10.5pt; break-inside: avoid; page-break-inside: avoid; margin-bottom: 6px; }
+        .solution-item { border-bottom: 1px dashed var(--bg-color); padding-bottom: 2px; margin-bottom: 4px; break-inside: avoid; page-break-inside: avoid; display: flex; align-items: baseline; }
+        .q-num { font-weight: bold; margin-right: 5px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        
+        .footer { margin-top: 20px; padding-top: 10px; border-top: 2px solid var(--primary-color); text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); }
+
+        .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer; z-index: 1000;
+        }
+        html.dark-mode .theme-toggle { filter: invert(1); }
+        .icon-sun { opacity: 0; position: absolute; top: 10px; left: 10px; width: 24px; height: 24px; }
+        .icon-moon { opacity: 1; position: absolute; top: 10px; left: 10px; width: 24px; height: 24px; }
+        html.dark-mode .icon-sun { opacity: 1; }
+        html.dark-mode .icon-moon { opacity: 0; }
+        @media print { .theme-toggle { display: none; } .two-column { column-count: 2; } }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">vardaanlearning.com | 9508841336</div>
+            <div class="worksheet-title">Cubes & Cube Roots - Level 2 (Intermediate)</div>
+            <div class="meta-info">
+                <span>Designed for: Arnav Mishra</span> 
+                <span>Class: 8 CBSE</span>
+                <span>Total Questions: 30</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Prime Factorization Method (Q1 - Q10)</div>
+        <div class="two-column questions-container">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">Find the cube root of -1331.</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">Find the cube root of 1728.</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">Find the cube root of 2744.</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">Find the cube root of 3375.</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">Find the cube root of 4096.</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">Find the cube root of 4913.</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">Find the cube root of 5832.</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">Find the cube root of 9261.</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">Find the cube root of 10648.</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">Find the cube root of 15625.</div></div>
+        </div>
+
+        <div class="chapter-header">Section B: Multiplication & Division to make Perfect Cubes (Q11 - Q20)</div>
+        <div class="two-column questions-container">
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">Find the smallest number by which 243 must be multiplied to obtain a perfect cube.</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">Find the smallest number by which 256 must be multiplied to obtain a perfect cube.</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">Find the smallest number by which 72 must be multiplied to obtain a perfect cube.</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">Find the smallest number by which 675 must be multiplied to obtain a perfect cube.</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">Find the smallest number by which 100 must be multiplied to obtain a perfect cube.</div></div>
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">Find the smallest number by which 81 must be divided to obtain a perfect cube.</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">Find the smallest number by which 128 must be divided to obtain a perfect cube.</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">Find the smallest number by which 135 must be divided to obtain a perfect cube.</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">Find the smallest number by which 192 must be divided to obtain a perfect cube.</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">Find the smallest number by which 704 must be divided to obtain a perfect cube.</div></div>
+        </div>
+
+        <div class="chapter-header">Section C: Decimals, Fractions & Word Problems (Q21 - Q30)</div>
+        <div class="two-column questions-container">
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">Find the cube root of 0.008.</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">Find the cube root of 0.027.</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">Evaluate: $\sqrt[3]{-\frac{64}{343}}$</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">Evaluate: $\sqrt[3]{\frac{1331}{2197}}$</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">Find the cube root of 42.875.</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">The volume of a cubical box is $512 \text{ cm}^3$. Find the length of its side.</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">If the side of a cube is 1.5 m, find its volume.</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">Three solid cubes of sides 3 cm, 4 cm, and 5 cm are melted to form a new cube. Find the side of the new cube.</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">Evaluate: $\sqrt[3]{216} \times \sqrt[3]{125}$</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">Evaluate: $\frac{\sqrt[3]{1000}}{\sqrt[3]{-8}}$</div></div>
+        </div>
+
+        <div class="chapter-header" style="background-color: var(--bg-color); margin-top: 25px;">Answer Key (Only Answers)</div>
+        <div class="four-column questions-container" style="font-size: 9.5pt;">
+            <div class="solution-item"><span class="q-num">1.</span> -11</div>
+            <div class="solution-item"><span class="q-num">2.</span> 12</div>
+            <div class="solution-item"><span class="q-num">3.</span> 14</div>
+            <div class="solution-item"><span class="q-num">4.</span> 15</div>
+            <div class="solution-item"><span class="q-num">5.</span> 16</div>
+            <div class="solution-item"><span class="q-num">6.</span> 17</div>
+            <div class="solution-item"><span class="q-num">7.</span> 18</div>
+            <div class="solution-item"><span class="q-num">8.</span> 21</div>
+            <div class="solution-item"><span class="q-num">9.</span> 22</div>
+            <div class="solution-item"><span class="q-num">10.</span> 25</div>
+            <div class="solution-item"><span class="q-num">11.</span> 3</div>
+            <div class="solution-item"><span class="q-num">12.</span> 2</div>
+            <div class="solution-item"><span class="q-num">13.</span> 3</div>
+            <div class="solution-item"><span class="q-num">14.</span> 5</div>
+            <div class="solution-item"><span class="q-num">15.</span> 10</div>
+            <div class="solution-item"><span class="q-num">16.</span> 3</div>
+            <div class="solution-item"><span class="q-num">17.</span> 2</div>
+            <div class="solution-item"><span class="q-num">18.</span> 5</div>
+            <div class="solution-item"><span class="q-num">19.</span> 3</div>
+            <div class="solution-item"><span class="q-num">20.</span> 11</div>
+            <div class="solution-item"><span class="q-num">21.</span> 0.2</div>
+            <div class="solution-item"><span class="q-num">22.</span> 0.3</div>
+            <div class="solution-item"><span class="q-num">23.</span> $-\frac{4}{7}$</div>
+            <div class="solution-item"><span class="q-num">24.</span> $\frac{11}{13}$</div>
+            <div class="solution-item"><span class="q-num">25.</span> 3.5</div>
+            <div class="solution-item"><span class="q-num">26.</span> 8 cm</div>
+            <div class="solution-item"><span class="q-num">27.</span> $3.375 \text{ m}^3$</div>
+            <div class="solution-item"><span class="q-num">28.</span> 6 cm</div>
+            <div class="solution-item"><span class="q-num">29.</span> 30</div>
+            <div class="solution-item"><span class="q-num">30.</span> -5</div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

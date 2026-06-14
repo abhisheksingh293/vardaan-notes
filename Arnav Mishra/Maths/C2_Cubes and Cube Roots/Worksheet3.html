@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Cubes & Roots Level 3</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3: Hard/Red) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ff8a80;   
+            --bg-color: #2d1a1a;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 10px; box-sizing: border-box;}
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 10pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 8px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 30px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle { filter: invert(1) hue-rotate(180deg); background: #e0e0e0; }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Cubes & Cube Roots: Level 3 (Hard/Challenger)</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8th</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Section A: Theoretical Challenges -->
+    <div class="chapter-header">Section A: Advanced Theory & Logic</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">If $n$ is a natural number ending in digit 7, prove that $n^3$ will always end in digit 3.</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">A perfect cube can never end with 2, 3, 5, or 6 zeros. Explain the logic using prime factorization of powers of 10.</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">Prove that the cube of any number of the form $3k+1$ is also of the form $3m+1$.</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">If $a^3$ is even, prove that $a$ is also even. Use the concept of contrapositive logic.</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">If $x^3$ ends in 8, find the last digit of $(x+2)^3$.</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">Can a perfect square ever be a perfect cube? Give three examples including 1.</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">Explain why the sum of the cubes of first $n$ natural numbers is the square of their sum.</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Show that if a number is multiplied by $k$, its cube is multiplied by $k^3$.</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">If $p$ is a prime number, how many factors does $p^3$ have? List them.</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">True or False: There exists a two-digit perfect cube whose cube root is also a perfect square. Justify.</div></div>
+    </div>
+
+    <!-- Section B: Evaluation of Complex Expressions -->
+    <div class="chapter-header">Section B: Evaluation of Radical Expressions</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">Evaluate: $\sqrt[3]{-0.000064} \div \sqrt[3]{0.008}$.</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">Find the value of $\sqrt[3]{125} \times \sqrt[3]{64} - \sqrt[3]{216}$.</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">Simplify: $\sqrt[3]{\frac{0.729}{1.331}} \times \frac{11}{9}$.</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Evaluate: $\sqrt[3]{216} + \sqrt[3]{0.216} + \sqrt[3]{0.000216}$.</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Calculate $\sqrt[3]{125 \times 27} \div \sqrt[3]{0.001}$.</div></div>
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">Find the value of $x$ if $\sqrt[3]{x} = -2.5$.</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">Simplify: $\sqrt[3]{\sqrt{441} + 6}$.</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">Evaluate: $\sqrt[3]{a^6 b^9 c^{12}}$.</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">Evaluate: $(\sqrt[3]{64})^2 + (\sqrt[3]{125})^2$.</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">Find $\sqrt[3]{15 \frac{5}{8}}$.</div></div>
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">Evaluate: $\sqrt[3]{\frac{-0.512}{0.343}}$.</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">If $\sqrt[3]{p} = 1.4$, find $p$.</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">Find the cube root of $0.000000729$.</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">Evaluate: $\sqrt[3]{3375 \div (-125)}$.</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Evaluate $\sqrt[3]{1728} \times \sqrt[3]{-0.001}$.</div></div>
+    </div>
+
+    <!-- Section C: Multipliers and Divisors (Advanced) -->
+    <div class="chapter-header">Section C: Factor Optimization</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">Smallest number to multiply 1024 by to get a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">Smallest number to divide 392 by to get a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">What is the smallest number by which 3600 must be multiplied so that the product is a perfect cube? Also find the cube root of the product.</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">Smallest multiplier for 1323 to make it a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">Smallest divisor for 53240 to make it a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">Find $k$ such that $144k$ is a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">Find $m$ such that $250/m$ is a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">What is the smallest number to multiply 3087 by to make it a perfect cube?</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Smallest number to divide 8788 by to make it a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">If $n = 2 \times 3 \times 3 \times 5$, find the smallest number to multiply $n$ by to get a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">Smallest number to divide $2^4 \times 3^5$ to make it a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">Smallest number to multiply 700 by to make it a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">Find the smallest number to multiply 210125 by to get a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">Smallest number to divide 16384 by to make the quotient a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">Find the smallest multiplier for $1.5$ to make it an integer and a perfect cube.</div></div>
+    </div>
+
+    <!-- Section D: Estimation Mastery -->
+    <div class="chapter-header">Section D: Estimation & Mental Calculation</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">Estimate $\sqrt[3]{110592}$.</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">Estimate $\sqrt[3]{175616}$.</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">Guess the cube root of 32768.</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">Estimate $\sqrt[3]{912673}$.</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">Guess the cube root of 6859.</div></div>
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">Estimate $\sqrt[3]{59319}$.</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">Estimate $\sqrt[3]{148877}$.</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">Estimate $\sqrt[3]{250047}$.</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">Estimate $\sqrt[3]{474552}$.</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">Estimate $\sqrt[3]{830584}$.</div></div>
+    </div>
+
+    <!-- Section E: Geometry & Real World Application -->
+    <div class="chapter-header">Section E: Geometry & Capacity Word Problems</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">51.</span><div class="q-content">The surface area of a cube is $150 \, \text{cm}^2$. Find its volume.</div></div>
+        <div class="question-item"><span class="q-num">52.</span><div class="q-content">A cubical tank can hold 27,000 liters of water. Find its internal dimension. ($1 \, \text{m}^3 = 1000 \, \text{l}$)</div></div>
+        <div class="question-item"><span class="q-num">53.</span><div class="q-content">The volume of a cube is $1.331 \, \text{m}^3$. Find the length of its edge in centimeters.</div></div>
+        <div class="question-item"><span class="q-num">54.</span><div class="q-content">Find the surface area of a cube whose volume is $512 \, \text{cm}^3$.</div></div>
+        <div class="question-item"><span class="q-num">55.</span><div class="q-content">The volume of a cubical room is $9261 \, \text{m}^3$. Find the cost of painting its four walls at ₹20 per sq. meter.</div></div>
+        <div class="question-item"><span class="q-num">56.</span><div class="q-content">A cuboid has dimensions $5 \, \text{cm} \times 2 \, \text{cm} \times 5 \, \text{cm}$. How many such cuboids are needed to form a cube?</div></div>
+        <div class="question-item"><span class="q-num">57.</span><div class="q-content">The ratio of the edges of two cubes is $2:3$. Find the ratio of their volumes.</div></div>
+        <div class="question-item"><span class="q-num">58.</span><div class="q-content">If the volume of a cube is increased by 8 times, what happens to its edge length?</div></div>
+        <div class="question-item"><span class="q-num">59.</span><div class="q-content">A cube of side $12 \, \text{cm}$ is melted to form smaller cubes of side $3 \, \text{cm}$. How many cubes are formed?</div></div>
+        <div class="question-item"><span class="q-num">60.</span><div class="q-content">Three metallic cubes of edges $3 \, \text{cm}, 4 \, \text{cm},$ and $5 \, \text{cm}$ are melted to form a single cube. Find the edge of the new cube.</div></div>
+    </div>
+
+    <!-- Section F: Patterns & Proofs -->
+    <div class="chapter-header">Section F: Patterns, Proofs & Mental Math</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">61.</span><div class="q-content">Find the sum: $1^3 + 2^3 + 3^3 + \dots + 10^3$ using the formula $(\frac{n(n+1)}{2})^2$.</div></div>
+        <div class="question-item"><span class="q-num">62.</span><div class="q-content">Express $12^3$ as the sum of 12 consecutive odd numbers.</div></div>
+        <div class="question-item"><span class="q-num">63.</span><div class="q-content">Evaluate $10^3 - 9^3$ using the pattern $1 + 3n(n-1)$.</div></div>
+        <div class="question-item"><span class="q-num">64.</span><div class="q-content">Prove: $(a+b)^3 \neq a^3 + b^3$ by taking $a=1, b=2$.</div></div>
+        <div class="question-item"><span class="q-num">65.</span><div class="q-content">Show that $\sqrt[3]{a/b} = \sqrt[3]{a}/\sqrt[3]{b}$ using $a=216, b=8$.</div></div>
+        <div class="question-item"><span class="q-num">66.</span><div class="q-content">Find the value of $\sqrt[3]{729} + \sqrt[3]{0.008} + \sqrt[3]{0.125}$.</div></div>
+        <div class="question-item"><span class="q-num">67.</span><div class="q-content">Find $x$ if $3^x = 729$. Then find $\sqrt[3]{x^3}$.</div></div>
+        <div class="question-item"><span class="q-num">68.</span><div class="q-content">If $x = \sqrt[3]{216}$ and $y = \sqrt[3]{512}$, find $\sqrt[3]{x \times y \times 9}$.</div></div>
+        <div class="question-item"><span class="q-num">69.</span><div class="q-content">Find the cube root of the product of $2^6$ and $3^3$.</div></div>
+        <div class="question-item"><span class="q-num">70.</span><div class="q-content">If $a^3 = 0.008$, find $a^2$.</div></div>
+        <div class="question-item"><span class="q-num">71.</span><div class="q-content">Evaluate $\sqrt[3]{1^3 + 2^3 + 3^3}$.</div></div>
+        <div class="question-item"><span class="q-num">72.</span><div class="q-content">Express $11^3 - 10^3$ as a sum.</div></div>
+        <div class="question-item"><span class="q-num">73.</span><div class="q-content">If $\sqrt[3]{x} = 0.03$, find $x$.</div></div>
+        <div class="question-item"><span class="q-num">74.</span><div class="q-content">Evaluate $\sqrt[3]{0.027} \div \sqrt[3]{0.001}$.</div></div>
+        <div class="question-item"><span class="q-num">75.</span><div class="q-content">If the edge of a cube is doubled, how many times does its surface area increase?</div></div>
+    </div>
+
+    <!-- Section G: Brain Teasers (HOTS) -->
+    <div class="chapter-header">Section G: Challenger & Brain Teasers</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">76.</span><div class="q-content">Find the value of $\sqrt[3]{2 \times \sqrt[3]{4 \times \sqrt[3]{2 \times \sqrt[3]{4 \dots}}}}$.</div></div>
+        <div class="question-item"><span class="q-num">77.</span><div class="q-content">What is the cube root of $1 + 3 + 3^2 + 3^3 \dots + 3^8$?</div></div>
+        <div class="question-item"><span class="q-num">78.</span><div class="q-content">If $x = \sqrt[3]{4} + \sqrt[3]{2} + 1$, find the value of $1/x$.</div></div>
+        <div class="question-item"><span class="q-num">79.</span><div class="q-content">Evaluate $\sqrt[3]{999^3 + 3(999^2) + 3(999) + 1}$.</div></div>
+        <div class="question-item"><span class="q-num">80.</span><div class="q-content">Prove that the cube of any integer is of the form $9k, 9k+1$ or $9k+8$.</div></div>
+        <div class="question-item"><span class="q-num">81.</span><div class="q-content">Find the cube root of $4741632$ through prime factorization.</div></div>
+        <div class="question-item"><span class="q-num">82.</span><div class="q-content">Smallest number to multiply 3600 by to make it a perfect cube.</div></div>
+        <div class="question-item"><span class="q-num">83.</span><div class="q-content">Evaluate $(\sqrt[3]{27} + \sqrt[3]{0.008} + \sqrt[3]{0.064})^3$.</div></div>
+        <div class="question-item"><span class="q-num">84.</span><div class="q-content">If $\sqrt[3]{x} + \sqrt[3]{y} = \sqrt[3]{z}$, is $x+y=z$? Prove with $x=8, y=27$.</div></div>
+        <div class="question-item"><span class="q-num">85.</span><div class="q-content">Find the smallest prime number whose cube is a four-digit number.</div></div>
+        <div class="question-item"><span class="q-num">86.</span><div class="q-content">Evaluate: $\sqrt[3]{-1331} \times \sqrt[3]{-1728}$.</div></div>
+        <div class="question-item"><span class="q-num">87.</span><div class="q-content">Calculate $\sqrt[3]{10^6}$.</div></div>
+        <div class="question-item"><span class="q-num">88.</span><div class="q-content">If the difference between two consecutive cubes is 127, find the numbers.</div></div>
+        <div class="question-item"><span class="q-num">89.</span><div class="q-content">Evaluate: $\sqrt[3]{0.1 \times 0.1 \times 0.1 \times 2 \times 2 \times 2}$.</div></div>
+        <div class="question-item"><span class="q-num">90.</span><div class="q-content">A cubical box has volume $V$. If its side is doubled, what is the new volume in terms of $V$?</div></div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

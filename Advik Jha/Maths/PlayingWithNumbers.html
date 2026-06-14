@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3 - Hard) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef5350;   /* Lighter red/adjust based on readability */
+            --bg-color: #3b1a1a;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        
+        /* --- ANSWER KEY TABLE STYLING --- */
+        .ans-table-container { margin-top: 25px; page-break-before: always; }
+        .ans-table { width: 100%; border-collapse: collapse; font-size: 10.5pt; text-align: left; background: var(--body-bg); }
+        .ans-table th, .ans-table td { border: 1px solid var(--border-color); padding: 6px 10px; }
+        .ans-table th { background-color: var(--primary-color); color: var(--body-bg); font-weight: bold; text-align: center; }
+        .ans-table td:nth-child(odd) { font-weight: bold; text-align: center; color: var(--primary-color); width: 6%; }
+        html.dark-mode .ans-table th { color: #fff; }
+
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Challenger Worksheet - Playing with Numbers</div>
+        <div class="meta-info">
+            <span>Especially designed for: Advik</span> 
+            <span>Class: 8 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Section A -->
+    <div class="chapter-header">Section A: Generalized Forms & Digit Puzzles (HOTS)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">A two-digit number is such that the product of its digits is $14$. If $45$ is added to the number, the digits interchange their places. Find the original number.</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">The sum of a two-digit number and the number obtained by reversing its digits is $121$. Find the number if its digits differ by $3$.</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">A two-digit number is $4$ times the sum of its digits and twice the product of its digits. Determine the number.</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">The sum of the digits of a three-digit number is $11$. If the digits are reversed, the new number decreases by $495$. Find the original number if the hundreds digit is $3$ times the units digit.</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">If you subtract a two-digit number from the number formed by reversing its digits, the result is always divisible by a specific integer. Prove algebraically that this integer is $9$.</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">Let $abc$ be a three-digit number. Show algebraically that $(abc + bca + cab)$ is always a multiple of $37$.</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">The tens digit of a two-digit number is three times its units digit. If the sum of this number and the number formed by reversing its digits is $88$, find the number.</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">A three-digit number $4A3$ is added to another three-digit number $984$ to give a four-digit number $13B7$, which is divisible by $11$. Find the values of $A$ and $B$.</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">In a three-digit number, the unit's digit is twice the ten's digit and the hundred's digit is thrice the ten's digit. If the sum of its digits is $18$, what is the number?</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Write the generalized form of a four-digit number $pqrs$ and prove that the difference between $pqrs$ and $srqp$ is divisible by $9$.</div></div>
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">A two digit number exceeds the sum of the squares of its digits by $11$ and exceeds twice the product of its digits by $5$. Find the two digit number.</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">The sum of the digits of a 2-digit number is $9$. If $27$ is subtracted from the number, its digits are reversed. Find the number.</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">A three digit number is equal to $17$ times the sum of its digits. If $198$ is added to the number, the digits are reversed. The sum of the extreme digits is $1$ less than the middle digit. Find the number.</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Formulate the largest possible $4$-digit number using the digits $x$, $y$, $z$, $w$ (all distinct and non-zero) such that the number is divisible by $5$ but not by $2$, and $x + y = 15$.</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Let the number $N = 100a + 10b + c$. If $N$ is divisible by $7$, prove that $2a + 3b + c$ is also divisible by $7$.</div></div>
+    </div>
+
+    <!-- Section B -->
+    <div class="chapter-header">Section B: Advanced Divisibility Tests</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">Find the smallest and the largest value of the digit $x$ such that the number $5x423x$ is divisible by $4$.</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">Determine the missing digit $y$ so that the number $34y56$ is completely divisible by $88$.</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">Find the values of $a$ and $b$ if the number $6a3b72$ is divisible by both $9$ and $11$.</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">If the number $42x7y$ is a multiple of $72$, find the value of $x + y$.</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">Check the divisibility of $274536$ by $7$, $11$, and $13$ using the combined divisibility rule of $1001$. Show your working.</div></div>
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">What is the smallest positive integer that must be added to $54321$ to make it exactly divisible by $99$?</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">If $N = 34567x2y$ is divisible by $45$, find all possible pairs of $(x, y)$.</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">Find the least value of $k$ for which the number $8k432$ is a multiple of $11$.</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">Without actual division, show that $10^{12} - 1$ is divisible by $9, 11$, and $13$.</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">A number $712A4B$ is divisible by $36$. Find the maximum possible value of the product $A \times B$.</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">Prove that any $6$-digit number formed by repeating a $3$-digit number (e.g., $456456$) is always divisible by $7, 11,$ and $13$.</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">Find the smallest digit $p$ such that $123p456$ is divisible by $7$.</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">Is the number $9^{100} - 1$ divisible by $8$? Give logical reasoning for your answer.</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">Find the value of $x$ for which $7x86x4$ is divisible by $11$.</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">The number $875A$ is a multiple of $6$. What are the possible values of the digit $A$?</div></div>
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">If $5A + B3 = 65$, and $A$ and $B$ are distinct non-zero digits, determine whether the number $AB$ is divisible by $3$.</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">Demonstrate the divisibility test of $13$ on the number $16198$. Show each step clearly.</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">Determine if $12456789$ is divisible by $8$. Provide the rule used.</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Find the unknown digits $x$ and $y$ such that the number $5x7y$ is divisible by $33$.</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">What is the smallest number which when divided by $4, 5,$ and $6$ leaves a remainder of $3$ in each case?</div></div>
+    </div>
+
+    <!-- Section C -->
+    <div class="chapter-header">Section C: Cryptarithms & Number Alphametics</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">Solve the cryptarithm: $AB \times 6 = BBB$. Find the values of $A$ and $B$.</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">Find the digits $A$, $B$, and $C$ if $1A \times A = 9A$.</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">Solve for $A$ and $B$: $A1 + 1B = B0$.</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">Determine the values of $P$ and $Q$ if $PQ \times P3 = 57Q$.</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">Find the unique digits for letters $M, A, T, H$ such that $MATH \times 4 = HTAM$.</div></div>
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">Solve the addition puzzle: $SEND + MORE = MONEY$. (Find the value of each distinct letter).</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">Find $A, B$, and $C$ in the multiplication: $AB \times C = 175$ (where $A, B, C$ are distinct digits and $C < 9$).</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">If $2AB + AB1 = B18$, find the numerical values of $A$ and $B$.</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">Find the value of $X$ and $Y$ in the subtraction: $XX0 - 7Y = YYY$.</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">Solve: $A + A + A = BA$. Find the digits $A$ and $B$.</div></div>
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">Determine $A$ and $B$ if $AA + BB + CC = ABC$ (where $A, B, C$ are non-zero distinct digits).</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">Find $P, Q, R$ such that $PQ \times R = RRR$.</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">In the equation $CROSS + ROADS = DANGER$, given that $C = 9, R = 6$, and $S = 3$, find the remaining digits.</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">Solve the cryptarithm $EVE \times A = VAA$.</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">Find the values of $x$ and $y$ if $xy \times yx = 1008$.</div></div>
+    </div>
+
+    <!-- Section D -->
+    <div class="chapter-header">Section D: Logical Reasoning & Magic Squares</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">51.</span><div class="q-content">Construct a $3 \times 3$ magic square using numbers from $5$ to $13$. What is the magic constant?</div></div>
+        <div class="question-item"><span class="q-num">52.</span><div class="q-content">In a $3 \times 3$ magic square filled with integers, the sum of the elements of any row, column, or diagonal is $27$. Find the value of the central cell.</div></div>
+        <div class="question-item"><span class="q-num">53.</span><div class="q-content">I am a $4$-digit number. My thousands digit is a prime number. My hundreds digit is a perfect square. My tens digit is half my thousands digit. My units digit is $0$. I am divisible by $3$ and $4$. Who am I?</div></div>
+        <div class="question-item"><span class="q-num">54.</span><div class="q-content">Using the digits $1, 2, 3, 4, 5$ exactly once, what is the largest $5$-digit prime number you can form? Explain your reasoning.</div></div>
+        <div class="question-item"><span class="q-num">55.</span><div class="q-content">How many positive integers less than $100$ have the property that the sum of their digits is equal to the product of their digits?</div></div>
+        <div class="question-item"><span class="q-num">56.</span><div class="q-content">Let $S$ be the sum of all $3$-digit numbers that can be formed using the digits $3, 5,$ and $8$ without repetition. Find the value of $S$ and show that it is divisible by $111$.</div></div>
+        <div class="question-item"><span class="q-num">57.</span><div class="q-content">There are dogs and chickens in a farm. If you count heads, there are $45$. If you count legs, there are $130$. Use algebraic number logic to find the number of dogs.</div></div>
+        <div class="question-item"><span class="q-num">58.</span><div class="q-content">If today is Friday, what day of the week will it be after $10^{15}$ days? (Hint: Use properties of remainders and divisibility by $7$).</div></div>
+        <div class="question-item"><span class="q-num">59.</span><div class="q-content">Is it possible to distribute $50$ apples into $5$ baskets such that each basket contains an odd number of apples? Prove your answer.</div></div>
+        <div class="question-item"><span class="q-num">60.</span><div class="q-content">A boy wrote all the numbers from $1$ to $1000$. How many times did he write the digit '7' in total? Use systematic counting to justify your answer.</div></div>
+    </div>
+
+    <!-- Answer Key Section -->
+    <div class="ans-table-container">
+        <div class="chapter-header">Answer Key</div>
+        <table class="ans-table">
+            <tr><th>Q</th><th>Answer</th><th>Q</th><th>Answer</th><th>Q</th><th>Answer</th></tr>
+            <tr><td>1.</td><td>27</td><td>21.</td><td>30</td><td>41.</td><td>S=9,E=5,N=6,D=7,M=1,O=0,R=8,Y=2</td></tr>
+            <tr><td>2.</td><td>74 or 47</td><td>22.</td><td>(0,0), (9,0), (4,5)</td><td>42.</td><td>A=2, B=5, C=7</td></tr>
+            <tr><td>3.</td><td>36</td><td>23.</td><td>0</td><td>43.</td><td>A=4, B=7</td></tr>
+            <tr><td>4.</td><td>No valid integer solution</td><td>24.</td><td>Proof (1001 factor)</td><td>44.</td><td>No valid solution</td></tr>
+            <tr><td>5.</td><td>Proof (Divisible by 9)</td><td>25.</td><td>40</td><td>45.</td><td>A=5, B=1</td></tr>
+            <tr><td>6.</td><td>Proof (111 = 37x3)</td><td>26.</td><td>Proof (1001 factor)</td><td>46.</td><td>A=1, B=9, C=8</td></tr>
+            <tr><td>7.</td><td>62</td><td>27.</td><td>3</td><td>47.</td><td>No valid solution</td></tr>
+            <tr><td>8.</td><td>A=1, B=9</td><td>28.</td><td>Yes</td><td>48.</td><td>Varies (Complex cryptarithm)</td></tr>
+            <tr><td>9.</td><td>936</td><td>29.</td><td>No solution</td><td>49.</td><td>E=1, V=9, A=5</td></tr>
+            <tr><td>10.</td><td>Proof</td><td>30.</td><td>4</td><td>50.</td><td>x=2, y=4 (or vice versa)</td></tr>
+            <tr><td>11.</td><td>No integer solution</td><td>31.</td><td>Yes (12)</td><td>51.</td><td>27</td></tr>
+            <tr><td>12.</td><td>63</td><td>32.</td><td>Yes</td><td>52.</td><td>9</td></tr>
+            <tr><td>13.</td><td>153</td><td>33.</td><td>No</td><td>53.</td><td>No solution (10 not div by 4)</td></tr>
+            <tr><td>14.</td><td>9685</td><td>34.</td><td>(3,9),(4,8),(5,7),(6,6),(7,5),(8,4),(9,3)</td><td>54.</td><td>None (Sum is 15, div by 3)</td></tr>
+            <tr><td>15.</td><td>Proof</td><td>35.</td><td>63</td><td>55.</td><td>1 (The number 22)</td></tr>
+            <tr><td>16.</td><td>2 and 6</td><td>36.</td><td>A=7, B=4</td><td>56.</td><td>S=3552, Yes</td></tr>
+            <tr><td>17.</td><td>0</td><td>37.</td><td>A=6</td><td>57.</td><td>20 dogs</td></tr>
+            <tr><td>18.</td><td>No valid solution</td><td>38.</td><td>A=7, B=9</td><td>58.</td><td>Thursday</td></tr>
+            <tr><td>19.</td><td>No valid solution</td><td>39.</td><td>P=2, Q=5</td><td>59.</td><td>No (Sum of 5 odds is odd)</td></tr>
+            <tr><td>20.</td><td>Not div. by 7, 11, or 13</td><td>40.</td><td>M=2, A=1, T=7, H=8</td><td>60.</td><td>300</td></tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

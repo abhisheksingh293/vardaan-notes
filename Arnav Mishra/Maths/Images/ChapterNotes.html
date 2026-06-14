@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Images Notes</title>
+  <style>
+:root {
+  --bg: #0f172a;
+  --bg-soft: #111827;
+  --panel: #1f2937;
+  --panel-2: #111827;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #22c55e;
+  --accent-2: #16a34a;
+  --line: #374151;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Segoe UI, Tahoma, Arial, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 10% 10%, #1e293b 0%, var(--bg) 45%, #020617 100%);
+  min-height: 100vh;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+.header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.title { margin: 0; font-size: clamp(1.4rem, 3.5vw, 2rem); }
+.subtitle { margin: 6px 0 0 0; color: var(--muted); }
+.back {
+  color: #bbf7d0;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(17,24,39,0.65);
+}
+.grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.card {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(31,41,55,0.9), rgba(15,23,42,0.9));
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.card:hover { transform: translateY(-3px); border-color: var(--accent); }
+.card h3 { margin: 0 0 8px 0; font-size: 1rem; }
+.card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.section { margin-top: 22px; }
+.section h2 { margin: 0 0 10px 0; font-size: 1.1rem; }
+.chapters { display: grid; gap: 10px; }
+details {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel-2);
+  overflow: hidden;
+}
+summary {
+  cursor: pointer;
+  padding: 12px 14px;
+  font-weight: 600;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+.dropdown {
+  border-top: 1px solid var(--line);
+  padding: 12px 14px;
+  color: var(--muted);
+}
+.note-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #86efac;
+  text-decoration: none;
+  padding: 8px 10px;
+  border: 1px solid #166534;
+  border-radius: 8px;
+  background: rgba(22, 163, 74, 0.15);
+}
+.note-link:hover { background: rgba(22, 163, 74, 0.25); }
+.empty {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px dashed var(--line);
+  color: var(--muted);
+}
+footer { margin-top: 28px; color: var(--muted); font-size: 0.85rem; }
+@media (max-width: 600px) {
+  .container { padding: 16px; }
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1 class="title">Images</h1>
+        <p class="subtitle">Chapter notes placeholder page.</p>
+      </div>
+      <a class="back" href="../index.html">Back to Subject</a>
+    </div>
+    <div class="empty">Chapter notes will be added here.</div>
+    <footer>Class 6 to 8 Portal</footer>
+  </div>
+</body>
+</html>

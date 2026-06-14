@@ -1,0 +1,662 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Algebraic Identities - Vardaan Learning Institute</title>
+    
+    <!-- MathJax Configuration and Script -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+                /* --- NEWSPAPER STYLE IMAGES --- */
+        .image-float-right { float: right; width: 45%; max-width: 360px; margin: 8px 0 14px 18px; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        .image-float-left { float: left; width: 45%; max-width: 360px; margin: 8px 18px 14px 0; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        html.dark-mode .image-float-right, html.dark-mode .image-float-left { filter: invert(1); opacity: 1; }
+
+        @media (max-width: 768px) {
+            .diagram-container,
+            .diagram-container:nth-of-type(even),
+            .image-float-right,
+            .image-float-left {
+                float: none !important;
+                display: block !important;
+                width: 90% !important;
+                max-width: 500px !important;
+                min-width: 0 !important;
+                margin: 20px auto !important;
+                clear: both !important;
+            }
+        }
+        
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Maths â€¢ Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>7. Algebraic Identities</h1>
+        
+        <p>
+            <img src="../images/C7_AlgebraicIdentities.png" alt="Algebraic Identities Conceptual Diagram" class="image-float-right ai-image" style="width: 45%; max-width: 360px; margin-top: 5px;">
+            In previous classes, you have learnt multiplication of algebraic expressionsâ€”monomials, binomials and trinomials. Now consider the following statement involving an algebraic expression: $4x + 3y = 10$.</p>
+        
+        <p>If we substitute $x = 2$, $y = 2$, then $L.H.S. = 8 + 6 = 14$. Thus, $L.H.S. \neq R.H.S.$</p>
+        <p>If we substitute $x = 1$, $y = 2$, then $L.H.S. = 4 + 6 = 10$. Thus, $L.H.S. = R.H.S.$</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Identity:</strong> A statement of equality which holds for <strong>all values</strong> of the variables is called an identity.</p>
+            <p>Thus, $4x + 3y = 10$ is an equation, not an identity, because it is only true for certain values of the variables.</p>
+        </div>
+
+        <p>In this chapter, you will learn the identities which arise as the product of a binomial $(a + b)$ with itself, $(a - b)$ with itself, and $(a + b)$ with $(a - b)$.</p>
+
+        <h2>1. Standard Identities</h2>
+
+        <h3>I. Identity-I</h3>
+        <p>Just like the square of a number means multiplying the number with itself, the square of a binomial means multiplying the binomial with itself.</p>
+
+        <div class="green-box">
+            <span class="box-label">Identity-I</span>
+            <p><strong>$(a + b)^2 = a^2 + 2ab + b^2$</strong></p>
+        </div>
+
+        <p><strong>Proof:</strong><br>
+        $(a + b)^2 = (a + b)(a + b)$<br>
+        $= a(a + b) + b(a + b)$<br>
+        $= a^2 + ab + ba + b^2$<br>
+        $= a^2 + 2ab + b^2 \quad [\because ab = ba]$</p>
+
+        <p><strong>Example 1:</strong> Find $(3x + 4y)^2$ using Identity-I.<br>
+        <strong>Solution:</strong> $(3x + 4y)^2 = (3x)^2 + 2 \times 3x \times 4y + (4y)^2$<br>
+        $= 9x^2 + 24xy + 16y^2$</p>
+
+        <p><strong>Example 2:</strong> Evaluate $42^2$ by using Identity-I.<br>
+        <strong>Solution:</strong> $42^2 = (40 + 2)^2$<br>
+        $= 40^2 + 2 \times 40 \times 2 + 2^2$<br>
+        $= 1600 + 160 + 4 = 1764$</p>
+
+        <h3>Topic 1 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find the following by using Identity-I: <br> (i) $(2x + 5)^2$ <br> (ii) $(8x + 3y)^2$ <br> (iii) $(\frac{3}{5}a + \frac{2}{3}b)^2$ <br> (iv) $(0.2x + 1.5y)^2$</li>
+            <li><strong>Q2:</strong> Evaluate the following by using Identity-I: <br> (i) $101^2$ <br> (ii) $52^2$ <br> (iii) $8.1^2$ <br> (iv) $203^2$</li>
+        </ul>
+
+        <h3>II. Identity-II</h3>
+        <p>You can get this identity by multiplying binomial $a - b$ with itself.</p>
+
+        <div class="green-box">
+            <span class="box-label">Identity-II</span>
+            <p><strong>$(a - b)^2 = a^2 - 2ab + b^2$</strong></p>
+        </div>
+
+        <p><strong>Proof:</strong><br>
+        $(a - b)^2 = (a - b)(a - b)$<br>
+        $= a(a - b) - b(a - b)$<br>
+        $= a^2 - ab - ba + b^2$<br>
+        $= a^2 - 2ab + b^2 \quad [\because ba = ab]$</p>
+        <p><em>Note:</em> Identity-II can also be considered as a special case of Identity-I when '$b$' is replaced by '$-b$'.</p>
+
+        <p><strong>Example 3:</strong> Find $(2x - 3y)^2$ using Identity-II.<br>
+        <strong>Solution:</strong> $(2x - 3y)^2 = (2x)^2 - 2 \times 2x \times 3y + (3y)^2$<br>
+        $= 4x^2 - 12xy + 9y^2$</p>
+
+        <p><strong>Example 4:</strong> Evaluate $99^2$ using Identity-II.<br>
+        <strong>Solution:</strong> $99^2 = (100 - 1)^2 = 100^2 - 2 \times 100 \times 1 + 1^2$<br>
+        $= 10000 - 200 + 1 = 9801$</p>
+
+        <h3>Topic 2 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find the following by using Identity-II: <br> (i) $(x - 7)^2$ <br> (ii) $(5a - 4b)^2$ <br> (iii) $(8mn - 3pq)^2$ <br> (iv) $(a^2 - b^2)^2$</li>
+            <li><strong>Q2:</strong> Evaluate the following by using Identity-II: <br> (i) $48^2$ <br> (ii) $9.9^2$ <br> (iii) $299^2$ <br> (iv) $19.9^2$</li>
+        </ul>
+
+        <h3>III. Identity-III</h3>
+        <p>You can easily multiply the two binomials $(a + b)$ and $(a - b)$ to get this identity.</p>
+
+        <div class="green-box">
+            <span class="box-label">Identity-III</span>
+            <p><strong>$(a + b)(a - b) = a^2 - b^2$</strong></p>
+        </div>
+
+        <p><strong>Proof:</strong><br>
+        $(a + b)(a - b) = a(a - b) + b(a - b)$<br>
+        $= a^2 - ab + ba - b^2$<br>
+        $= a^2 - b^2$</p>
+
+        <p><strong>Example 5:</strong> Find the product $(9x + 5y)(9x - 5y)$ by using Identity-III.<br>
+        <strong>Solution:</strong> $(9x + 5y)(9x - 5y) = (9x)^2 - (5y)^2$<br>
+        $= 81x^2 - 25y^2$</p>
+
+        <p><strong>Example 6:</strong> Simplify $93 \times 87$ by expressing it as a difference of two squares.<br>
+        <strong>Solution:</strong> $93 \times 87 = (90 + 3)(90 - 3)$<br>
+        $= 90^2 - 3^2$<br>
+        $= 8100 - 9 = 8091$</p>
+
+        <h3>Topic 3 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find the following products using Identity-III: <br> (i) $(2x + 7y)(2x - 7y)$ <br> (ii) $(5ab - 8c)(5ab + 8c)$ <br> (iii) $(\frac{x}{3} - \frac{y}{2})(\frac{x}{3} + \frac{y}{2})$</li>
+            <li><strong>Q2:</strong> Evaluate the following by using Identity-III: <br> (i) $81^2 - 19^2$ <br> (ii) $190^2 - 210^2$ <br> (iii) $367^2 - 33^2$</li>
+            <li><strong>Q3:</strong> Simplify the following products by expressing these as difference of two squares: <br> (i) $107 \times 93$ <br> (ii) $12.4 \times 11.6$</li>
+        </ul>
+
+        <h2>2. Expansion of the Square of a Trinomial</h2>
+        <p>Let us take a trinomial $(a + b + c)$. Let $a + b = x$. Now, square the trinomial as follows:</p>
+        
+        <p>$(a + b + c)^2 = (x + c)^2$<br>
+        $= x^2 + 2xc + c^2$ (Using Identity I)<br>
+        $= (a + b)^2 + 2(a + b)c + c^2$<br>
+        $= a^2 + 2ab + b^2 + 2ac + 2bc + c^2$<br>
+        $= a^2 + b^2 + c^2 + 2ab + 2bc + 2ca$</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important Expansion</span>
+            <p><strong>$(a + b + c)^2 = a^2 + b^2 + c^2 + 2ab + 2bc + 2ca$</strong></p>
+        </div>
+
+        <p><strong>Example 7:</strong> Expand $(3x + 2y + 7)^2$<br>
+        <strong>Solution:</strong> $(3x + 2y + 7)^2 = (3x)^2 + (2y)^2 + 7^2 + 2 \times 3x \times 2y + 2 \times 2y \times 7 + 2 \times 3x \times 7$<br>
+        $= 9x^2 + 4y^2 + 49 + 12xy + 28y + 42x$</p>
+
+        <h3>Topic 4 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Expand: $(x - 2y + 3z)^2$</li>
+            <li><strong>Q2:</strong> Expand: $(-5x + 2y + z)^2$</li>
+            <li><strong>Q3:</strong> Expand: $(3a - 5b - 7c)^2$</li>
+        </ul>
+
+        <h2>3. Product of Two Binomials: $(x + a)(x + b)$</h2>
+        <p>Let's multiply two general binomials that share a common first term:</p>
+        <p>$(x + a)(x + b) = x(x + b) + a(x + b)$<br>
+        $= x^2 + xb + ax + ab$<br>
+        $= x^2 + (a + b)x + ab$</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact File</span>
+            <p><strong>$(x + a)(x + b) = x^2 + (a + b)x + ab$</strong></p>
+            <p>From this, we can derive:</p>
+            <ul>
+                <li>$(x + a)(x - b) = x^2 + (a - b)x - ab$</li>
+                <li>$(x - a)(x + b) = x^2 + (b - a)x - ab$</li>
+                <li>$(x - a)(x - b) = x^2 - (a + b)x + ab$</li>
+            </ul>
+        </div>
+
+        <p><strong>Example 8:</strong> Find the product $(p + 6)(p - 3)$.<br>
+        <strong>Solution:</strong> Using $(x + a)(x - b) = x^2 + (a - b)x - ab$<br>
+        $(p + 6)(p - 3) = p^2 + (6 - 3)p - (6 \times 3)$<br>
+        $= p^2 + 3p - 18$</p>
+
+        <p><strong>Example 9:</strong> Evaluate $103 \times 105$ using the identity.<br>
+        <strong>Solution:</strong> $103 \times 105 = (100 + 3)(100 + 5)$<br>
+        $= 100^2 + (3 + 5)100 + (3 \times 5)$<br>
+        $= 10000 + 800 + 15 = 10815$</p>
+
+        <h3>Topic 5 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find the product by using suitable identity: <br> (i) $(x + 5)(x + 4)$ <br> (ii) $(x - 9)(x + 7)$ <br> (iii) $(y - 4)(y + 4)$</li>
+            <li><strong>Q2:</strong> By using a suitable identity, evaluate the following: <br> (i) $102 \times 104$ <br> (ii) $98 \times 96$ <br> (iii) $106 \times 93$</li>
+        </ul>
+
+        <h2>4. Factorisation of Algebraic Expressions</h2>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Factorisation:</strong> The process of writing a given algebraic expression as the product of two or more factors is called factorisation.</p>
+        </div>
+
+        <h3>A. Factorisation by using Identities</h3>
+        <p>We use the reverse of our standard identities to factorise perfect square trinomials or differences of squares.</p>
+
+        <p><strong>Example 10:</strong> Factorise $y^2 + 4y + 4$<br>
+        <strong>Solution:</strong> We can write it as $(y)^2 + 2 \times y \times 2 + (2)^2$<br>
+        $= (y + 2)^2 = (y + 2)(y + 2)$</p>
+
+        <p><strong>Example 11:</strong> Factorise $9y^2 - 16$<br>
+        <strong>Solution:</strong> $9y^2 - 16 = (3y)^2 - (4)^2$<br>
+        $= (3y - 4)(3y + 4)$ (Using $a^2 - b^2 = (a - b)(a + b)$)</p>
+        
+        <p><strong>Example 12:</strong> Factorise $x^4 - y^4$<br>
+        <strong>Solution:</strong> $x^4 - y^4 = (x^2)^2 - (y^2)^2$<br>
+        $= (x^2 - y^2)(x^2 + y^2)$<br>
+        $= (x - y)(x + y)(x^2 + y^2)$ (Applying the identity repeatedly)</p>
+
+        <h3>B. Factorisation of the Form $x^2 + qx + r$ (Splitting the Middle Term)</h3>
+        <p>To factorise this, we use the identity $x^2 + (a + b)x + ab = (x + a)(x + b)$. We need to find two numbers $a$ and $b$ whose product is $r$ and whose sum is $q$.</p>
+
+        <p><strong>Example 13:</strong> Factorise $x^2 + 9x + 18$<br>
+        <strong>Solution:</strong> We need two numbers whose product is 18 and sum is 9. The factors of 18 are $(1 \times 18), (2 \times 9), (3 \times 6)$. The pair that sums to 9 is 3 and 6.<br>
+        $x^2 + 9x + 18 = x^2 + 6x + 3x + 18$<br>
+        $= x(x + 6) + 3(x + 6)$<br>
+        $= (x + 6)(x + 3)$</p>
+
+        <p><strong>Example 14:</strong> Factorise $x^2 - 4x - 45$<br>
+        <strong>Solution:</strong> Product is $-45$, Sum is $-4$. The numbers are $-9$ and $5$.<br>
+        $x^2 - 4x - 45 = x^2 - 9x + 5x - 45$<br>
+        $= x(x - 9) + 5(x - 9) = (x - 9)(x + 5)$</p>
+
+        <h3>Topic 6 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Factorise: $x^2 + z^2 - 2xz$</li>
+            <li><strong>Q2:</strong> Factorise: $64x^2 - 81y^2$</li>
+            <li><strong>Q3:</strong> Factorise: $16x^2 + 9y^2 + 4z^2 + 24xy + 12yz + 16zx$</li>
+            <li><strong>Q4:</strong> Factorise by splitting the middle term: $x^2 + 14x + 33$</li>
+            <li><strong>Q5:</strong> Factorise by splitting the middle term: $p^2 - 5p - 6$</li>
+            <li><strong>Q6:</strong> Factorise by splitting the middle term: $x^2 - 3x - 54$</li>
+        </ul>
+
+        <h2>Brain Teasers (Advanced Practice)</h2>
+        <ul>
+            <li><strong>Q1:</strong> Evaluate $x$ if $36x = 78^2 - 42^2$</li>
+            <li><strong>Q2:</strong> If $x + \frac{1}{x} = 8$, find the value of $x^2 + \frac{1}{x^2}$</li>
+            <li><strong>Q3:</strong> If $5x - 2y = 7$ and $xy = 2$, find the value of $(5x + 2y)^2$</li>
+            <li><strong>Q4:</strong> Simplify $\frac{2.3 \times 2.3 - 0.3 \times 0.3}{2.3 \times 2.3 - 2 \times 2.3 \times 0.3 + 0.3 \times 0.3}$</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan â¤ï¸</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
+
+
+
+

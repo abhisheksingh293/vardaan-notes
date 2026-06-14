@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Nationalist Movement 1870 to 1947 - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            clear: both; /* Ensure it starts below all floated images */
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 6px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            display: flow-root; /* Wraps around floated images */
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 12px;
+            font-weight: 600;
+            display: flow-root; /* Wraps around floated images */
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; clear: both; box-sizing: border-box; width: 100%; display: flow-root; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; clear: both; box-sizing: border-box; width: 100%; display: flow-root; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; clear: both; box-sizing: border-box; width: 100%; display: flow-root; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .newspaper-figure {
+            margin: 15px 0;
+            max-width: 48%;
+            border: 1px solid var(--toggle-border);
+            padding: 8px;
+            background: var(--paper-bg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+            display: flow-root; /* Ensures it contains its float context */
+        }
+
+        .newspaper-figure.float-left {
+            float: left;
+            margin: 10px 20px 10px 0;
+            shape-outside: inset(0 0 0 0);
+        }
+
+        .newspaper-figure.float-right {
+            float: right;
+            margin: 10px 0 10px 20px;
+            shape-outside: inset(0 0 0 0);
+        }
+
+        .newspaper-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        .newspaper-caption {
+            font-size: 0.85rem;
+            color: var(--meta-text);
+            margin-top: 8px;
+            text-align: center;
+            font-style: italic;
+            line-height: 1.3;
+            border-top: 1px solid var(--toggle-border);
+            padding-top: 5px;
+        }
+
+        /* Invert Figure/Images in Dark Mode */
+        html.dark-mode .newspaper-figure {
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            border-color: var(--toggle-border);
+        }
+
+        html.dark-mode .newspaper-img {
+            filter: invert(1) brightness(0.9);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 History • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>The Nationalist Movement (1870 to 1947)</h1>
+        
+        <h2>1. Formation of Indian National Congress (INC)</h2>
+        <p>After Queen Victoria’s Proclamation in 1858, the British government took direct control of India. However, Indians still had no voice in the formulation of policies. To express these problems, the <strong>Indian National Congress (INC)</strong> was formed in <strong>December 1885</strong>.</p>
+        
+        <ul>
+            <li><strong>Founders:</strong> It was formed by <strong>A. O. Hume</strong>, a retired British official, supported by 72 educated Indian delegates.</li>
+            <li><strong>First Meeting:</strong> Held in Bombay under the presidentship of <strong>W. C. Bonnerjee</strong>.</li>
+            <li><strong>The Moderates (1885-1905):</strong> The early phase was dominated by leaders who had faith in British justice. Prominent Moderates included <strong>Gopal Krishna Gokhale, Dadabhai Naoroji, Surendra Nath Banerjee, and Pheroz Shah Mehta</strong>.</li>
+            <li><strong>Methods:</strong> They followed a policy of <strong>3Ps: Prayer, Petition, and Protest</strong>.</li>
+            <li><strong>Demands:</strong> Representative institutions, Indian recruitment for higher administrative positions, holding Civil Services exams in India, and stopping the drain of wealth to Britain.</li>
+        </ul>
+
+        <h2>2. Partition of Bengal & Rise of Radicals</h2>
+        <p>To weaken the growing National Movement and Hindu-Muslim unity, the British resorted to the 'Divide and Rule' policy.</p>
+        
+        <ul>
+            <li><strong>The Partition (1905):</strong> <strong>Lord Curzon</strong> issued an order to partition Bengal. The official reason was administrative convenience, but the real motive was to divide Indians.</li>
+            <li><strong>The Reaction:</strong> The day was observed as the <strong>Day of Mourning</strong>. It triggered the <strong>Swadeshi</strong> (use of Indian goods) and <strong>Boycott</strong> (rejection of foreign goods) movements.</li>
+            <li><strong>The Radicals (Extremists):</strong> Leaders disgusted by British callousness believed in action, protests, and hartals rather than petitions. They were led by <strong>Lala Lajpat Rai, Bal Gangadhar Tilak, and Bipin Chandra Pal</strong> (famously known as <strong>Lal, Bal, Pal</strong>) along with Aurobindo Ghosh.</li>
+            <li><strong>The Split (1907):</strong> Differences between Moderates and Radicals led to a split in the Congress at the <strong>Surat Session in 1907</strong>.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Swaraj:</strong>
+            <p>During the Calcutta session of 1906, Dadabhai Naoroji gave the call for the attainment of 'Swaraj' meaning self-government. Bal Gangadhar Tilak gave the famous slogan: <strong>"Swaraj is my birth right and I shall have it!"</strong></p>
+        </div>
+
+        <figure class="newspaper-figure float-right">
+            <img src="../Images/C14_Swadeshi_Movement.png" alt="Swadeshi Movement" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 1: Patriotic bonfire of British goods during the Swadeshi Movement (1905)</figcaption>
+        </figure>
+
+        <h2>3. Key Political Reforms and Pacts</h2>
+        <p>As the struggle intensified, several political groups and reforms emerged:</p>
+        
+        <ul>
+            <li><strong>Muslim League (1906):</strong> Encouraged by the British to divide Indians, Aga Khan and Nawab Salimulla of Dhaka formed the Muslim League.</li>
+            <li><strong>Morley-Minto Reforms (1909):</strong> Aimed to pacify the Moderates but granted <strong>separate electorates</strong> to Muslims, further threatening Hindu-Muslim unity.</li>
+            <li><strong>Home Rule League (1916):</strong> Established by <strong>Mrs. Annie Besant</strong> (in Madras) and <strong>Bal Gangadhar Tilak</strong> (in Maharashtra) to demand self-government.</li>
+            <li><strong>Lucknow Pact (1916):</strong> The Moderates and Radicals reunited. Furthermore, the Congress and the Muslim League signed a joint pact demanding self-rule for India.</li>
+        </ul>
+
+        <h2>4. The Arrival of Mahatma Gandhi</h2>
+        <p>After the First World War, <strong>Mohandas Karamchand Gandhi</strong> took leadership, completely transforming the National Movement.</p>
+
+        <ul>
+            <li><strong>Satyagraha:</strong> He introduced this technique of non-violent resistance (demand for truth and ahimsa).</li>
+            <li><strong>Early Success:</strong> His first movement supported indigo peasants in <strong>Champaran, Bihar (1917)</strong>.</li>
+        </ul>
+
+        <h3>The Rowlatt Act & Jallianwala Bagh (1919)</h3>
+        <p>To suppress the growing unrest, the British passed the <strong>Rowlatt Act (1919)</strong>. It empowered the government to arrest anyone without a warrant and imprison them without trial. It was fiercely opposed.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Jallianwala Bagh Massacre (April 13, 1919):</strong>
+            <p>People had gathered peacefully in Amritsar on Baisakhi to protest the arrest of leaders Dr. Satya Pal and Saiffudin Kitchlew. <strong>General Dyer</strong> ordered British armed forces to open fire on the unarmed crowd, massacring hundreds of innocent men, women, and children. This stunned the nation.</p>
+        </div>
+
+        <h3>Non-Cooperation Movement (1920-1922)</h3>
+        <p>Gandhiji declared that British rule survived only because of Indian cooperation. The movement included renouncing titles, boycotting schools, courts, and foreign goods. However, in <strong>1922, at Chauri Chaura (UP)</strong>, an angry mob burnt 22 policemen alive. Shocked by the violence, <strong>Gandhiji abruptly called off the movement</strong>.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>The Khilafat Movement:</strong> Started by the Ali brothers (Muhammad Ali and Shaukat Ali) to undo injustices against Muslims in Turkey after WWI. Under Gandhiji's leadership, it was merged with the Non-Cooperation Movement to foster Hindu-Muslim unity.
+        </div>
+
+        <h2>5. Towards Purna Swaraj & Civil Disobedience</h2>
+        
+        <ul>
+            <li><strong>Simon Commission (1927):</strong> Sent to review reforms, it was boycotted with black flags because it had <strong>no Indian representatives</strong>. Lala Lajpat Rai succumbed to injuries sustained in a police lathi charge while protesting it.</li>
+            <li><strong>Lahore Session (1929):</strong> Under the presidency of <strong>Jawaharlal Nehru</strong>, Congress passed the historic resolution for <strong>Purna Swaraj (Complete Independence)</strong>. It was decided to celebrate January 26, 1930, as the first Independence Day.</li>
+            <li><strong>Civil Disobedience Movement (1930-1934):</strong> Began with the historic <strong>Dandi March</strong> (March 12, 1930). Gandhiji and 78 supporters marched to Dandi to break the unjust British salt laws. It became a massive movement involving boycotts and tax refusals. In the North-West, it was led by <strong>Abdul Gaffar Khan (Frontier Gandhi)</strong>.</li>
+        </ul>
+
+        <figure class="newspaper-figure float-left">
+            <img src="../Images/C14_Dandi_March.png" alt="Dandi March" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 2: Mahatma Gandhi leading the historic Dandi March to defy the British salt laws in 1930</figcaption>
+        </figure>
+
+        <h2>6. Revolutionary Movements</h2>
+        <p>Many young Indians, frustrated by the slow pace of non-violence and the withdrawal of the Non-Cooperation Movement, turned to revolutionary activities.</p>
+
+        <ul>
+            <li><strong>Kakori Train Robbery:</strong> Executed by members of the Hindustani Socialist Republican Association (HSRA) like Ramprasad Bismil and Chandrashekhar Azad to buy weapons.</li>
+            <li><strong>Assassination of Sanders:</strong> Bhagat Singh, Azad, and Rajguru assassinated the police officer responsible for Lala Lajpat Rai's death.</li>
+            <li><strong>Assembly Bombing:</strong> <strong>Bhagat Singh and Batukeshwar Datt</strong> threw a bomb in the Central Legislative Assembly to protest unjust laws. <strong>Bhagat Singh, Sukhdev, and Rajguru were hanged in Lahore in 1931.</strong></li>
+        </ul>
+
+        <h2>7. The Final Phase & Independence</h2>
+        
+        <ul>
+            <li><strong>Government of India Act (1935):</strong> Introduced limited autonomy, but the Supreme power remained with the British Governor-General. Both Congress and Muslim League rejected it.</li>
+            <li><strong>Quit India Movement (1942):</strong> After the failure of the Cripps Mission, Gandhiji gave the final blow to the British on August 8, 1942. He gave the mantra <strong>"Do or Die"</strong>. The British retaliated with brutal terror and mass arrests.</li>
+        </ul>
+
+        <h3>Netaji Subhash Chandra Bose</h3>
+        <p>Bose believed in armed struggle. He gave the slogan, <strong>"You give me blood and I will give you freedom."</strong> He escaped British detention, went abroad, and took charge of the <strong>Indian National Army (INA)</strong> (initially organized by Mohan Singh) to overthrow the British militarily.</p>
+
+        <figure class="newspaper-figure float-right">
+            <img src="../Images/C14_Bose_INA.png" alt="Subhash Chandra Bose and INA" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 3: Netaji Subhash Chandra Bose, whose INA challenge seriously threatened British control</figcaption>
+        </figure>
+
+        <h3>Independence and Partition (1947)</h3>
+        <p>After WWII, the British Labour Party (under PM Attlee) agreed to grant freedom. The <strong>Cabinet Mission (1946)</strong> proposed an Interim Government, but the Muslim League demanded a separate nation (Pakistan).</p>
+        <p>Lord Mountbatten presented the partition plan. Despite strong opposition from Gandhiji and others, the widespread communal riots left no choice but to accept the partition. Thus, India achieved its hard-fought independence in <strong>1947</strong>.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3 - Red/Challenger) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef5350;   /* Lighter red for readability */
+            --bg-color: #3b1a1a;        /* Dark container background with red tint */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 8px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 4px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* Compact Layout specific */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; }
+        .ans-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10pt; }
+        .ans-table th, .ans-table td { border: 1px solid var(--border-color); padding: 4px 8px; text-align: center; }
+        .ans-table th { background-color: var(--bg-color); color: var(--primary-color); }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: 999; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .ans-table th { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Advanced Mathematics Worksheet (Challenger)</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Topic 1 -->
+    <div class="chapter-header">Topic 1: Rational Numbers</div>
+    <div class="questions-container grid-2">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">Simplify: $\frac{\frac{2}{3} - \frac{1}{4}}{\frac{5}{6} + \frac{1}{2}} \div \frac{-3}{8}$</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">If $x = \frac{-2}{5}$ and $y = \frac{3}{7}$, verify that $|x + y| \leq |x| + |y|$.</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">The sum of two rational numbers is $\frac{-3}{8}$. If one of them is $\frac{5}{16}$, find the additive inverse of the other.</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">Simplify: $( \frac{-1}{2} )^3 \times \frac{8}{15} - \frac{2}{5} \div \frac{-4}{15}$</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">A drum full of wheat weighs $40 \frac{1}{6}$ kg. If the empty drum weighs $13 \frac{3}{4}$ kg, find the weight of wheat in the drum.</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">Divide the sum of $\frac{1}{2}$ and $\frac{1}{3}$ by their product.</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">What should be subtracted from $(\frac{3}{4} + \frac{1}{3} + \frac{2}{5})$ to get $\frac{1}{2}$?</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Insert three rational numbers between $\frac{1}{3}$ and $\frac{1}{2}$ such that they are equidistant from each other.</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">By what number should the difference of $\frac{3}{5}$ and $\frac{1}{4}$ be multiplied to get $1$?</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Simplify the continued fraction: $1 - \frac{1}{1 - \frac{1}{1 - \frac{1}{2}}}$</div></div>
+    </div>
+
+    <!-- Topic 2 -->
+    <div class="chapter-header">Topic 2: Algebraic Expressions & Identities</div>
+    <div class="questions-container grid-2">
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">If $x + \frac{1}{x} = 5$, find the value of $x^4 + \frac{1}{x^4}$.</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">Evaluate using identities: $99.8^2 - 0.2^2$</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">Factorise completely: $x^4 - (y+z)^4$</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">If $a+b+c=9$ and $ab+bc+ca=23$, find the value of $a^2+b^2+c^2$.</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Simplify: $(x^2+y^2-z^2)^2 - (x^2-y^2+z^2)^2$</div></div>
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">Factorise: $a^2 - b^2 - 2bc - c^2$</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">Find the product: $(x-\frac{1}{x})(x+\frac{1}{x})(x^2+\frac{1}{x^2})(x^4+\frac{1}{x^4})$</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">Factorise: $25a^2 - 4b^2 + 28bc - 49c^2$</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">Divide: $39y^3(50y^2 - 98)$ by $26y^2(5y + 7)$</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">If $3x - 7y = 10$ and $xy = -1$, find the value of $9x^2 + 49y^2$.</div></div>
+    </div>
+
+    <!-- Topic 3 -->
+    <div class="chapter-header">Topic 3: Linear Equations in One Variable</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">Solve for $x$: $\frac{2x+5}{3} - \frac{3x-1}{4} = \frac{3}{2} + x$</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">A motorboat goes downstream and covers a distance in 4 hours while it covers the same distance upstream in 5 hours. If the speed of the stream is 3 km/hr, find the speed of the boat in still water.</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">The digits of a two-digit number differ by 3. If the digits are interchanged and the resulting number is added to the original number, we get 143. Find the original number.</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">In a fraction, twice the numerator is 2 more than the denominator. If 3 is added to the numerator and to the denominator, the new fraction is $\frac{2}{3}$. Find the original fraction.</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Solve: $0.25(4f - 3) = 0.05(10f - 9)$</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">The distance between two stations is 300 km. Two motorcyclists start simultaneously towards each other. The speed of one is 7 km/h more than the other. If the distance between them after 2 hours is 34 km, find their speeds.</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">Solve for $x$: $\frac{x-a}{b+c} + \frac{x-b}{c+a} + \frac{x-c}{a+b} = 3$</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">Baichung's father is 26 years younger than Baichung's grandfather and 29 years older than Baichung. The sum of the ages of all the three is 135 years. What is the age of each one of them?</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">A purse has only Rs 2 and Rs 5 coins. The total value of the coins is Rs 132. If the number of Rs 5 coins is one-third the number of Rs 2 coins, find the number of each type of coin.</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">Solve: $\frac{3x-4}{2x+1} = \frac{3x-1}{2x+5}$</div></div>
+    </div>
+
+    <!-- Topic 4 -->
+    <div class="chapter-header">Topic 4: Exponents and Powers</div>
+    <div class="questions-container grid-2">
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">Solve for $x$: $5^{2x+1} \div 25 = 125$</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">Simplify: $\frac{16 \times 2^{n+1} - 4 \times 2^n}{16 \times 2^{n+2} - 2 \times 2^{n+2}}$</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">If $2^{x-1} + 2^{x+1} = 320$, find the value of $x$.</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Find $m$: $( \frac{2}{9} )^3 \times ( \frac{2}{9} )^{-6} = ( \frac{2}{9} )^{2m-1}$</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">Simplify: $[ \{ ( -\frac{1}{3} )^2 \}^{-2} ]^{-1}$</div></div>
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">Express $\frac{1.5 \times 10^6}{2.5 \times 10^{-4}}$ in standard form.</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">If $a = 2, b = 3$, find the value of $(a^b + b^a)^{-1}$.</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">Find $x$ if $(\frac{5}{3})^{-4} \times (\frac{5}{3})^{-5} = (\frac{5}{3})^{3x}$</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">By what number should we multiply $(-29)^0$ so that the product becomes $(+29)^0$?</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">If $\frac{p}{q} = (\frac{2}{3})^2 \div (\frac{6}{7})^0$, find the value of $(\frac{p}{q})^3$.</div></div>
+    </div>
+
+    <!-- Topic 5 -->
+    <div class="chapter-header">Topic 5: Advanced Commercial Mathematics</div>
+    <div class="questions-container grid-2">
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">A sum of money amounts to Rs 10,240 in 2 years at $6 \frac{2}{3}\%$ per annum, compounded annually. Find the sum.</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">A dealer allows a discount of 16% on the marked price and still makes a profit of 5%. If the cost price is Rs 400, find the marked price.</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">A fort had provisions for 300 men for 90 days. After 20 days, 50 men left the fort. How long would the food last at the same rate?</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">A tap can fill a tank in 6 hours and another can empty it in 8 hours. If both are opened together, in how much time will the tank be filled?</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">The population of a town increases by 10% annually. If the present population is 26,620, what was it 3 years ago?</div></div>
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">By selling 33 m of cloth, a shopkeeper gains the selling price of 11 m of cloth. Find his gain percentage.</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">Calculate the compound interest on Rs 31,250 for $1 \frac{1}{2}$ years at 8% per annum, compounded half-yearly.</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">A machine is bought for Rs 84,000. Its value depreciates at the rate of 8% per annum. Find its value after 1 year.</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">In a camp, there is food for 500 soldiers for 30 days. If 100 more soldiers join, how many days will the food last?</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">If 15 men working 9 hours a day can reap a field in 16 days, in how many days will 18 men reap it, working 8 hours a day?</div></div>
+    </div>
+
+    <!-- Topic 6 -->
+    <div class="chapter-header">Topic 6: Complex Geometry & Mensuration</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">51.</span><div class="q-content">Three solid metal cubes of edges 3 cm, 4 cm and 5 cm are melted to form a single new cube. Find the edge of the new cube.</div></div>
+        <div class="question-item"><span class="q-num">52.</span><div class="q-content">A well of inner diameter 14 m is dug to a depth of 12 m. Earth taken out is evenly spread all around it to a width of 7 m to form an embankment. Find the height of the embankment.</div></div>
+        <div class="question-item"><span class="q-num">53.</span><div class="q-content">A hollow cylindrical pipe is 21 cm long. Its outer and inner diameters are 10 cm and 6 cm respectively. Find the volume of the metal used in making the pipe.</div></div>
+        <div class="question-item"><span class="q-num">54.</span><div class="q-content">The diagonals of a rhombus are in the ratio 3:4. If its perimeter is 40 cm, find the area of the rhombus.</div></div>
+        <div class="question-item"><span class="q-num">55.</span><div class="q-content">A road roller takes 750 complete revolutions to level a road. Find the area of the road if the diameter of the roller is 84 cm and length is 1 m.</div></div>
+        <div class="question-item"><span class="q-num">56.</span><div class="q-content">The internal measures of a cuboidal room are $12 \text{ m} \times 8 \text{ m} \times 4 \text{ m}$. Find the cost of whitewashing all four walls if the rate is Rs 5 per square meter.</div></div>
+        <div class="question-item"><span class="q-num">57.</span><div class="q-content">A swimming pool is 20 m long, 15 m wide and 3 m deep. Find the cost of repairing the floor and four walls at the rate of Rs 25 per square meter.</div></div>
+        <div class="question-item"><span class="q-num">58.</span><div class="q-content">The ratio of the radii of two cylinders is 2:3 and the ratio of their heights is 5:3. Find the ratio of their volumes.</div></div>
+        <div class="question-item"><span class="q-num">59.</span><div class="q-content">In a quadrilateral ABCD, the bisectors of $\angle A$ and $\angle B$ meet at point P. If $\angle C = 100^\circ$ and $\angle D = 60^\circ$, find the measure of $\angle APB$.</div></div>
+        <div class="question-item"><span class="q-num">60.</span><div class="q-content">The area of a trapezium is $105 \text{ cm}^2$ and its height is 7 cm. If one of the parallel sides is longer than the other by 6 cm, find the two parallel sides.</div></div>
+    </div>
+
+    <!-- Answers Key -->
+    <div class="chapter-header" style="margin-top: 40px;">Answers Key</div>
+    <table class="ans-table">
+        <tbody>
+            <tr>
+                <td><b>1.</b> $\frac{-5}{6}$</td>
+                <td><b>2.</b> Verified</td>
+                <td><b>3.</b> $\frac{11}{16}$</td>
+                <td><b>4.</b> $\frac{43}{30}$</td>
+                <td><b>5.</b> $26 \frac{5}{12} \text{ kg}$</td>
+                <td><b>6.</b> $5$</td>
+            </tr>
+            <tr>
+                <td><b>7.</b> $\frac{59}{60}$</td>
+                <td><b>8.</b> $\frac{3}{8}, \frac{5}{12}, \frac{11}{24}$</td>
+                <td><b>9.</b> $\frac{20}{7}$</td>
+                <td><b>10.</b> $2$</td>
+                <td><b>11.</b> $527$</td>
+                <td><b>12.</b> $9960$</td>
+            </tr>
+            <tr>
+                <td><b>13.</b> $(x^2+(y+z)^2)(x+y+z)(x-y-z)$</td>
+                <td><b>14.</b> $35$</td>
+                <td><b>15.</b> $4x^2(y^2-z^2)$</td>
+                <td><b>16.</b> $(a+b+c)(a-b-c)$</td>
+                <td><b>17.</b> $x^8 - \frac{1}{x^8}$</td>
+                <td><b>18.</b> $(5a+2b-7c)(5a-2b+7c)$</td>
+            </tr>
+            <tr>
+                <td><b>19.</b> $3y(5y-7)$</td>
+                <td><b>20.</b> $58$</td>
+                <td><b>21.</b> $x = \frac{5}{13}$</td>
+                <td><b>22.</b> $27 \text{ km/hr}$</td>
+                <td><b>23.</b> $85 \text{ or } 58$</td>
+                <td><b>24.</b> $\frac{7}{12}$</td>
+            </tr>
+            <tr>
+                <td><b>25.</b> $f = \frac{3}{5}$</td>
+                <td><b>26.</b> $63 \text{ km/h}, 70 \text{ km/h}$</td>
+                <td><b>27.</b> $x = a+b+c$</td>
+                <td><b>28.</b> $17, 46, 72 \text{ yrs}$</td>
+                <td><b>29.</b> $12 (Rs 5), 36 (Rs 2)$</td>
+                <td><b>30.</b> $x = \frac{19}{6}$</td>
+            </tr>
+            <tr>
+                <td><b>31.</b> $x = 2$</td>
+                <td><b>32.</b> $\frac{1}{2}$</td>
+                <td><b>33.</b> $x = 7$</td>
+                <td><b>34.</b> $m = -1$</td>
+                <td><b>35.</b> $\frac{1}{81}$</td>
+                <td><b>36.</b> $6 \times 10^9$</td>
+            </tr>
+            <tr>
+                <td><b>37.</b> $\frac{1}{17}$</td>
+                <td><b>38.</b> $x = -3$</td>
+                <td><b>39.</b> $1$</td>
+                <td><b>40.</b> $\frac{64}{729}$</td>
+                <td><b>41.</b> $\text{Rs } 9000$</td>
+                <td><b>42.</b> $\text{Rs } 500$</td>
+            </tr>
+            <tr>
+                <td><b>43.</b> $84 \text{ days}$</td>
+                <td><b>44.</b> $24 \text{ hours}$</td>
+                <td><b>45.</b> $20,000$</td>
+                <td><b>46.</b> $50\%$</td>
+                <td><b>47.</b> $\text{Rs } 3902$</td>
+                <td><b>48.</b> $\text{Rs } 77,280$</td>
+            </tr>
+            <tr>
+                <td><b>49.</b> $25 \text{ days}$</td>
+                <td><b>50.</b> $15 \text{ days}$</td>
+                <td><b>51.</b> $6 \text{ cm}$</td>
+                <td><b>52.</b> $4 \text{ m}$</td>
+                <td><b>53.</b> $1056 \text{ cm}^3$</td>
+                <td><b>54.</b> $96 \text{ cm}^2$</td>
+            </tr>
+            <tr>
+                <td><b>55.</b> $1980 \text{ m}^2$</td>
+                <td><b>56.</b> $\text{Rs } 800$</td>
+                <td><b>57.</b> $\text{Rs } 12,750$</td>
+                <td><b>58.</b> $20:27$</td>
+                <td><b>59.</b> $80^\circ$</td>
+                <td><b>60.</b> $18 \text{ cm}, 12 \text{ cm}$</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3/4 Challenger Theme - Red) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef5350;   /* Lighter red for readability */
+            --bg-color: #3b1a1a;        /* Dark reddish container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 18px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11.5pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 8px; margin-bottom: 12px; font-size: 11pt;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Level 4 Challenger Series: Integers & Fractions</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 7 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- SECTION A -->
+    <div class="chapter-header">Section A: The Labyrinth of Integers (Advanced Manipulation)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">Evaluate the sum of the following series: <br> $(-1)^1 + (-1)^2 + (-1)^3 + (-1)^4 + \dots \text{ up to } (-1)^{1000}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">Simplify strictly using the distributive property of integers: $-345 \times 999 - 345$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">Evaluate the expression carefully using BODMAS: <br> $ - \{ - [ - ( - 5 + 3 ) - 4 ] - 6 \} \times (-2)^3 $</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">The product of three <strong>distinct</strong> integers is $-30$ and their sum is exactly $0$. Find the three integers.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">An elevator descends into a mine shaft at the rate of $8 \text{ m/min}$. It begins its descent from $+15 \text{ m}$ above ground level. Due to technical protocols, after every $5 \text{ minutes}$ of continuous descent, the elevator halts for exactly $2 \text{ minutes}$. How long will it take in total to reach exactly $-185 \text{ m}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">Without performing any manual long calculation, find the exact product of all integers from $-2026$ to $+2026$.</div>
+        </div>
+    </div>
+
+    <!-- SECTION B -->
+    <div class="chapter-header">Section B: The Abyss of Rational Numbers (Complex Fractions)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">Simplify the continued fraction and express your answer as a mixed fraction: <br><br> $\displaystyle 1 + \frac{1}{1 + \frac{1}{1 + \frac{1}{3}}}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">Evaluate the following using the exact rules of BODMAS/VBODMAS. Pay special attention to the vinculum (bar bracket): <br><br> $\displaystyle \left( 3 \frac{1}{4} \div \left\{ 1 \frac{1}{4} - \frac{1}{2} \left( 2 \frac{1}{2} - \overline{\frac{1}{4} - \frac{1}{6}} \right) \right\} \right) \times \frac{4}{13}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">A large industrial water tank is $\frac{3}{5}$ full of water. When $40 \text{ litres}$ of water are drawn out, the tank is found to be $\frac{1}{3}$ full. Calculate the total capacity of the tank in litres.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">Arrange the following negative fractions in strictly descending order (largest to smallest): <br> $-\frac{7}{12}, \ -\frac{11}{18}, \ -\frac{5}{8}, \ -\frac{17}{24}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">11.</span>
+            <div class="q-content">Two positive fractions are such that their product is $3 \frac{1}{3}$ and their quotient is $1 \frac{1}{5}$. Find the sum of the two fractions.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">12.</span>
+            <div class="q-content"><strong>Logical Word Problem Trap:</strong> A man bequeathed $\frac{1}{3}$ of his total property to his wife, $\frac{1}{4}$ of the <strong>remaining</strong> amount to his son, and $\frac{2}{5}$ of the <strong>new remainder</strong> to his daughter. If the final remaining unassigned amount is ₹ $45,000$, what was the total monetary value of his original property?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">13.</span>
+            <div class="q-content">The sum of two fractions is $\frac{45}{8}$ and their difference is $\frac{3}{8}$. Find the quotient obtained when the larger fraction is divided by the smaller fraction.</div>
+        </div>
+    </div>
+
+    <!-- SECTION C -->
+    <div class="chapter-header">Section C: Olympiad Grade Challengers (Mental Agility)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">14.</span>
+            <div class="q-content">If a mathematical operation $\ast$ is defined as $a \ast b = \frac{a \times b}{a + b}$, evaluate the value of: $\displaystyle \left( \frac{1}{2} \ast \frac{1}{3} \right) \ast \frac{1}{4}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">15.</span>
+            <div class="q-content">Evaluate the sum of this telescoping series: <br><br> $\displaystyle \frac{1}{1 \times 2} + \frac{1}{2 \times 3} + \frac{1}{3 \times 4} + \dots + \frac{1}{99 \times 100}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">16.</span>
+            <div class="q-content">Integers $a, b,$ and $c$ are such that $a < b < c$. It is given that $a + b + c = 0$, and the sum of their absolute values is $|a| + |b| + |c| = 14$. Find all possible integer values that $c$ can take.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">17.</span>
+            <div class="q-content">A magical snail attempts to climb a sheer vertical wall that is exactly $30 \text{ m}$ high. During the day, it climbs up $5 \frac{1}{2} \text{ m}$, but while resting at night, it slips down $2 \frac{1}{4} \text{ m}$. On exactly which day will the snail finally touch the top edge of the wall?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">18.</span>
+            <div class="q-content">Given the fractional equation $\displaystyle \frac{1}{1 + \frac{1}{x}} = \frac{3}{5}$. First find the value of $x$, and then compute the exact value of $\displaystyle 2x - \frac{1}{x}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">19.</span>
+            <div class="q-content">A student was instructed to multiply a specific number by $\frac{5}{6}$. Due to misreading the sign, he divided the number by $\frac{5}{6}$ instead. His final result was $11$ more than the correct intended answer. What was the original number he started with?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">20.</span>
+            <div class="q-content">Simplify the following decimal fraction purely by converting to rational fractions or using algebraic identities: <br><br> $\displaystyle \frac{0.1 \times 0.1 \times 0.1 - 0.01 \times 0.01 \times 0.01}{0.1 \times 0.1 + 0.1 \times 0.01 + 0.01 \times 0.01}$</div>
+        </div>
+    </div>
+
+    <!-- ANSWER KEY / SOLUTIONS -->
+    <div style="page-break-before: always;"></div>
+    <div class="chapter-header">Solution Key (For Instructors & Self-Evaluation)</div>
+    <div class="questions-container">
+        
+        <!-- Ans 1 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 1.</span> 
+            The series is $(-1) + (+1) + (-1) + (+1) \dots$ for $1000$ terms. They form $500$ pairs of $(-1 + 1)$. <br>
+            <strong>Result = $0$</strong>.
+        </div>
+
+        <!-- Ans 2 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 2.</span> 
+            Take out the common factor: $-345 \times 999 - 345 \times 1 \implies -345 \times (999 + 1) = -345 \times 1000$. <br>
+            <strong>Result = $-345,000$</strong>.
+        </div>
+
+        <!-- Ans 3 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 3.</span> 
+            Inner parenthesis: $(-5+3) = -2$. <br>
+            Inner bracket: $-[ -(-2) - 4 ] = -[2 - 4] = -[-2] = 2$. <br>
+            Curly braces: $-\{ 2 - 6 \} = -\{-4\} = 4$. <br>
+            Multiply by $(-2)^3$: $4 \times (-8)$. <br>
+            <strong>Result = $-32$</strong>.
+        </div>
+
+        <!-- Ans 4 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 4.</span> 
+            We need $a \times b \times c = -30$ and $a + b + c = 0$. Factors of $30$ are $1, 2, 3, 5, 6, 10, 15, 30$.<br>
+            To get a sum of zero, one number must be negative and the other two positive (or vice versa). Let's test $2, 3,$ and $-5$.<br>
+            Sum: $2 + 3 + (-5) = 0$. Product: $2 \times 3 \times (-5) = -30$.<br>
+            <strong>Result = The integers are $2$, $3$, and $-5$</strong>.
+        </div>
+
+        <!-- Ans 5 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 5.</span> 
+            Total distance to cover = $15 \text{ m} - (-185 \text{ m}) = 200 \text{ m}$. <br>
+            Moving time required = $\frac{200}{8} = 25 \text{ minutes}$.<br>
+            Since it halts every $5 \text{ mins}$ of moving, it will halt after $5, 10, 15,$ and $20$ minutes ($4 \text{ halts}$ in total before reaching the $25 \text{ min}$ mark). <br>
+            Total halt time = $4 \text{ halts} \times 2 \text{ mins/halt} = 8 \text{ minutes}$.<br>
+            Total time = $25 + 8$. <br>
+            <strong>Result = $33 \text{ minutes}$</strong>.
+        </div>
+
+        <!-- Ans 6 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 6.</span> 
+            The sequence from $-2026$ to $+2026$ inevitably includes the integer $0$. Any number multiplied by $0$ is $0$.<br>
+            <strong>Result = $0$</strong>.
+        </div>
+
+        <!-- Ans 7 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 7.</span> 
+            Bottommost fraction: $1 + \frac{1}{3} = \frac{4}{3}$. <br>
+            Next layer up: $1 \div \frac{4}{3} = \frac{3}{4}$. Then $1 + \frac{3}{4} = \frac{7}{4}$.<br>
+            Next layer up: $1 \div \frac{7}{4} = \frac{4}{7}$. Then $1 + \frac{4}{7} = \frac{11}{7}$.<br>
+            <strong>Result = $1 \frac{4}{7}$ (or $\frac{11}{7}$)</strong>.
+        </div>
+
+        <!-- Ans 8 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 8.</span> 
+            Vinculum: $\frac{1}{4} - \frac{1}{6} = \frac{3-2}{12} = \frac{1}{12}$.<br>
+            Parentheses: $2 \frac{1}{2} - \frac{1}{12} = \frac{5}{2} - \frac{1}{12} = \frac{30-1}{12} = \frac{29}{12}$.<br>
+            Multiply by $\frac{1}{2}$: $\frac{1}{2} \times \frac{29}{12} = \frac{29}{24}$.<br>
+            Curly Braces: $1 \frac{1}{4} - \frac{29}{24} = \frac{5}{4} - \frac{29}{24} = \frac{30-29}{24} = \frac{1}{24}$.<br>
+            Division: $3 \frac{1}{4} \div \frac{1}{24} = \frac{13}{4} \times 24 = 13 \times 6 = 78$.<br>
+            Final Multiplication: $78 \times \frac{4}{13} = 6 \times 4 = 24$.<br>
+            <strong>Result = $24$</strong>.
+        </div>
+
+        <!-- Ans 9 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 9.</span> 
+            Let capacity be $X$. Equation: $\frac{3}{5}X - 40 = \frac{1}{3}X$.<br>
+            $\frac{3}{5}X - \frac{1}{3}X = 40 \implies \frac{9X - 5X}{15} = 40 \implies \frac{4X}{15} = 40$.<br>
+            $X = 40 \times \frac{15}{4} = 10 \times 15 = 150$.<br>
+            <strong>Result = $150 \text{ litres}$</strong>.
+        </div>
+
+        <!-- Ans 10 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 10.</span> 
+            LCM of denominators $(12, 18, 8, 24)$ is $72$. Convert to equivalent fractions:<br>
+            $-\frac{42}{72}, \ -\frac{44}{72}, \ -\frac{45}{72}, \ -\frac{51}{72}$.<br>
+            Since they are negative, a smaller numerator magnitude means a larger value. Therefore, $-\frac{42}{72} > -\frac{44}{72} > -\frac{45}{72} > -\frac{51}{72}$.<br>
+            <strong>Result = $-\frac{7}{12}, \ -\frac{11}{18}, \ -\frac{5}{8}, \ -\frac{17}{24}$</strong>.
+        </div>
+
+        <!-- Ans 11 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 11.</span> 
+            Let fractions be $x$ and $y$. $x \cdot y = \frac{10}{3}$ and $\frac{x}{y} = \frac{6}{5}$.<br>
+            Multiply both equations: $(xy) \times \left(\frac{x}{y}\right) = \frac{10}{3} \times \frac{6}{5} \implies x^2 = \frac{60}{15} = 4 \implies x = 2$.<br>
+            If $x = 2$, then $2y = \frac{10}{3} \implies y = \frac{5}{3}$.<br>
+            Sum $= x + y = 2 + \frac{5}{3} = \frac{11}{3}$.<br>
+            <strong>Result = $3 \frac{2}{3}$</strong>.
+        </div>
+
+        <!-- Ans 12 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 12.</span> 
+            Let total be $X$. Wife gets $\frac{1}{3}X$, remaining is $\frac{2}{3}X$.<br>
+            Son gets $\frac{1}{4} \text{ of } \frac{2}{3}X = \frac{1}{6}X$. New remaining $= \frac{2}{3}X - \frac{1}{6}X = \frac{1}{2}X$.<br>
+            Daughter gets $\frac{2}{5} \text{ of } \frac{1}{2}X = \frac{1}{5}X$. Final remaining $= \frac{1}{2}X - \frac{1}{5}X = \frac{3}{10}X$.<br>
+            $\frac{3}{10}X = 45000 \implies X = 45000 \times \frac{10}{3}$.<br>
+            <strong>Result = ₹ $1,50,000$</strong>.
+        </div>
+
+        <!-- Ans 13 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 13.</span> 
+            Let fractions be $x, y$. $(x+y) = \frac{45}{8}$ and $(x-y) = \frac{3}{8}$.<br>
+            Adding both equations: $2x = \frac{48}{8} = 6 \implies x = 3$.<br>
+            Substitute $x$: $3 + y = \frac{45}{8} \implies y = \frac{45}{8} - \frac{24}{8} = \frac{21}{8}$.<br>
+            Quotient $\frac{x}{y} = 3 \div \frac{21}{8} = 3 \times \frac{8}{21} = \frac{8}{7}$.<br>
+            <strong>Result = $1 \frac{1}{7}$</strong>.
+        </div>
+
+        <!-- Ans 14 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 14.</span> 
+            First calculate $\left(\frac{1}{2} \ast \frac{1}{3}\right)$: $\frac{(\frac{1}{2} \times \frac{1}{3})}{(\frac{1}{2} + \frac{1}{3})} = \frac{1/6}{5/6} = \frac{1}{5}$.<br>
+            Now compute $\frac{1}{5} \ast \frac{1}{4}$: $\frac{(\frac{1}{5} \times \frac{1}{4})}{(\frac{1}{5} + \frac{1}{4})} = \frac{1/20}{9/20} = \frac{1}{9}$.<br>
+            <strong>Result = $\frac{1}{9}$</strong>.
+        </div>
+
+        <!-- Ans 15 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 15.</span> 
+            Notice the fraction property: $\frac{1}{n(n+1)} = \frac{1}{n} - \frac{1}{n+1}$.<br>
+            Series expands to: $\left(\frac{1}{1} - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \dots + \left(\frac{1}{99} - \frac{1}{100}\right)$.<br>
+            All intermediate terms cancel out (telescoping series). Leaves $1 - \frac{1}{100}$.<br>
+            <strong>Result = $\frac{99}{100}$</strong>.
+        </div>
+
+        <!-- Ans 16 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 16.</span> 
+            Since sum is $0$ and $a<b<c$, $a$ must be negative and $c$ positive. Thus $a = -(b+c)$.<br>
+            If $b \ge 0$, then $|a| = -a$, $|b| = b$, $|c| = c$. Equation becomes $-a + b + c = 14 \implies (b+c) + b + c = 14 \implies 2(b+c) = 14 \implies b+c=7$. Valid pairs $(b,c)$ where $b<c$: $(0,7), (1,6), (2,5), (3,4)$.<br>
+            If $b < 0$, then $|a| = -a$, $|b| = -b$, $|c| = c$. Equation: $-a - b + c = 14$. Since $a+b=-c \implies -(-c) + c = 14 \implies 2c=14 \implies c=7$.<br>
+            <strong>Result = The possible values for $c$ are $4, 5, 6,$ or $7$</strong>.
+        </div>
+
+        <!-- Ans 17 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 17.</span> 
+            Net climb per day $= 5.5 - 2.25 = 3.25 \text{ m/day}$.<br>
+            Snail reaches the top on the day its starting height $+$ daytime climb $\ge 30 \text{ m}$. Starting height needed before final leap $= 30 - 5.5 = 24.5 \text{ m}$.<br>
+            Days to reach $24.5 \text{ m}$: $\frac{24.5}{3.25} \approx 7.53 \text{ days}$.<br>
+            After exactly $7 \text{ days}$, it's at $7 \times 3.25 = 22.75 \text{ m}$. After exactly $8 \text{ days}$, it's at $8 \times 3.25 = 26 \text{ m}$.<br>
+            On the $9^{\text{th}}$ morning, it starts at $26 \text{ m}$, climbs $5.5 \text{ m}$ to reach $31.5 \text{ m}$, easily crossing the $30 \text{ m}$ mark.<br>
+            <strong>Result = $9^{\text{th}}$ day</strong>.
+        </div>
+
+        <!-- Ans 18 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 18.</span> 
+            $\frac{1}{1 + 1/x} = \frac{3}{5} \implies 1 + \frac{1}{x} = \frac{5}{3} \implies \frac{1}{x} = \frac{5}{3} - 1 = \frac{2}{3} \implies x = \frac{3}{2}$.<br>
+            Calculate $2x - \frac{1}{x} = 2\left(\frac{3}{2}\right) - \left(\frac{2}{3}\right) = 3 - \frac{2}{3} = \frac{9-2}{3} = \frac{7}{3}$.<br>
+            <strong>Result = $x = \frac{3}{2}$ and final value is $2 \frac{1}{3}$ (or $\frac{7}{3}$)</strong>.
+        </div>
+
+        <!-- Ans 19 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 19.</span> 
+            Let number be $N$. Intended answer: $N \times \frac{5}{6}$. Wrong answer: $N \div \frac{5}{6} = \frac{6N}{5}$.<br>
+            Equation: $\frac{6N}{5} - \frac{5N}{6} = 11$.<br>
+            LCM is $30 \implies \frac{36N - 25N}{30} = 11 \implies \frac{11N}{30} = 11 \implies N = 30$.<br>
+            <strong>Result = The original number was $30$</strong>.
+        </div>
+
+        <!-- Ans 20 -->
+        <div class="solution-item">
+            <span class="ans-label">Ans 20.</span> 
+            Recognize the algebraic identity $a^3 - b^3 = (a - b)(a^2 + ab + b^2)$.<br>
+            Here $a = 0.1$ and $b = 0.01$. The expression is in the form $\frac{a^3 - b^3}{a^2 + ab + b^2}$.<br>
+            This simplifies perfectly to $(a - b) \implies 0.1 - 0.01$.<br>
+            <strong>Result = $0.09$ (or $\frac{9}{100}$)</strong>.
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

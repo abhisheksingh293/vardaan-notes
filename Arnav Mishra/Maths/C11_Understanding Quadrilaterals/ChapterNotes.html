@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Understanding Quadrilaterals - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- DIAGRAMS & IMAGES --- */
+        .diagram-container { width: 28%; max-width: 190px; min-width: 140px; float: right; margin: 8px 0 14px 18px; text-align: center; }
+.diagram-container:nth-of-type(even) { float: left; margin: 8px 18px 14px 0; }
+        .ai-image { width: 100%; max-width: 100%; height: auto; border-radius: 0; border: none; box-shadow: none; transition: none; display: block; }
+        html.dark-mode .ai-image { filter: invert(1); opacity: 1; }
+        .ai-prompt-box { background-color: var(--example-bg); border: 1px dashed var(--pink-border); padding: 15px; margin: 20px auto; max-width: 85%; text-align: left; border-radius: 8px; font-family: monospace; font-size: 0.95rem; color: var(--text-main); }
+        .ai-prompt-box strong { color: var(--blue-border); }
+        svg.concept-diagram { max-width: 100%; height: auto; margin: 20px auto; display: block; }
+
+        
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .image-float-right { float: right; width: 45%; max-width: 360px; margin: 8px 0 14px 18px; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        .image-float-left { float: left; width: 45%; max-width: 360px; margin: 8px 18px 14px 0; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        html.dark-mode .image-float-right, html.dark-mode .image-float-left { filter: invert(1); opacity: 1; }
+        
+
+        @media (max-width: 768px) {
+            .diagram-container,
+            .diagram-container:nth-of-type(even),
+            .image-float-right,
+            .image-float-left {
+                float: none !important;
+                display: block !important;
+                width: 90% !important;
+                max-width: 500px !important;
+                min-width: 0 !important;
+                margin: 20px auto !important;
+                clear: both !important;
+            }
+        }
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+    <!-- MathJax added for consistent Math Rendering -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Mathematics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Understanding Quadrilaterals</h1>
+        
+        
+        
+
+        <h2>1. Introduction to Curves and Polygons</h2>
+        <p>
+            <img src="../images/C11_RealWorldPolygons.png" alt="Polygons in Architecture" class="image-float-right ai-image">
+            In our daily life, we come across various plane surfaces (like a notebook page or a desk top). When you join points on these surfaces without lifting your pencil and without retracing any portion, you draw a <strong>curve</strong>. Curves can be open or closed.</p>
+        <div class="clearfix"></div>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Polygon:</strong> A simple closed curve made up of <em>only</em> line segments is called a polygon.</p>
+            <p><strong>Classification of Polygons:</strong> Polygons are classified by the number of sides (or vertices) they have:</p>
+            <ul>
+                <li>3 sides: <strong>Triangle</strong></li>
+                <li>4 sides: <strong>Quadrilateral</strong></li>
+                <li>5 sides: <strong>Pentagon</strong></li>
+                <li>6 sides: <strong>Hexagon</strong>, 7 sides: <strong>Heptagon</strong>, 8 sides: <strong>Octagon</strong>, etc.</li>
+            </ul>
+        </div>
+
+        <h3>Key Terms in a Polygon</h3>
+        <ul>
+            <li><strong>Adjacent Sides:</strong> Any two sides with a common end point (vertex).</li>
+            <li><strong>Adjacent Vertices:</strong> The end points of the same side of a polygon.</li>
+            <li><strong>Diagonal:</strong> A line segment connecting two non-consecutive vertices of a polygon.</li>
+            <li><strong>Interior vs. Exterior:</strong> A closed curve divides the plane into the interior (inside), boundary (on the curve), and exterior (outside).</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Convex vs. Concave Polygons:</strong></p>
+            <p>A polygon is <strong>convex</strong> if the line segment joining any two points inside it lies completely inside the polygon (no diagonals pass through the exterior). Polygons that are not convex are called <strong>concave</strong>.</p>
+            <p><strong>Regular Polygons:</strong> A polygon having all sides equal (equilateral) and all angles equal (equiangular) is a regular polygon. Example: A square is a regular polygon, but a rectangle is not (sides are not all equal).</p>
+        </div>
+
+        <h3>Practice Problems: Polygons</h3>
+        <ul>
+            <li><strong>Q1.</strong> How many diagonals does a convex quadrilateral have? What about a convex pentagon?</li>
+            <li><strong>Q2.</strong> State whether a rhombus is a regular polygon. Justify your answer.</li>
+        </ul>
+
+        <h2>2. Angle-Sum Properties</h2>
+        <p>We know that the sum of angles of a triangle is $180^{\circ}$. By drawing diagonals from one vertex, we can divide any polygon into multiple triangles to find its total interior angle sum.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Interior Angle-Sum Property:</strong></p>
+            <p>For a <strong>Quadrilateral</strong>: It can be divided into 2 triangles. Sum $= 2 \times 180^{\circ} = 360^{\circ}$.<br>
+            For a <strong>Pentagon</strong>: It can be divided into 3 triangles. Sum $= 3 \times 180^{\circ} = 540^{\circ}$.</p>
+            <p><strong>Exterior Angle-Sum Property:</strong></p>
+            <p>The sum of the measures of the exterior angles of <em>any</em> polygon (irrespective of the number of sides) is always <strong>$360^{\circ}$</strong>.</p>
+        </div>
+        
+                <svg class="concept-diagram" viewBox="0 0 300 250" width="70%" xmlns="http://www.w3.org/2000/svg">
+            <!-- Pentagon ABCDE -->
+            <polygon points="150,20 280,100 230,230 70,230 20,100" fill="var(--blue-bg)" opacity="0.4" stroke="var(--blue-border)" stroke-width="3" stroke-linejoin="round"/>
+            
+            <!-- Diagonals from Vertex A (150,20) to C(230,230) and D(70,230) -->
+            <line x1="150" y1="20" x2="230" y2="230" stroke="var(--pink-border)" stroke-width="2" stroke-dasharray="6,4"/>
+            <line x1="150" y1="20" x2="70" y2="230" stroke="var(--pink-border)" stroke-width="2" stroke-dasharray="6,4"/>
+            
+            <text x="142" y="12" fill="var(--text-main)" font-size="16" font-weight="bold">A</text>
+            <text x="288" y="105" fill="var(--text-main)" font-size="16" font-weight="bold">B</text>
+            <text x="236" y="250" fill="var(--text-main)" font-size="16" font-weight="bold">C</text>
+            <text x="52" y="250" fill="var(--text-main)" font-size="16" font-weight="bold">D</text>
+            <text x="4" y="105" fill="var(--text-main)" font-size="16" font-weight="bold">E</text>
+            
+            <text x="210" y="125" fill="var(--text-main)" font-size="20" font-weight="bold">1</text>
+            <text x="145" y="165" fill="var(--text-main)" font-size="20" font-weight="bold">2</text>
+            <text x="75" y="125" fill="var(--text-main)" font-size="20" font-weight="bold">3</text>
+        </svg>
+
+        <h3>Solved Example</h3>
+        <p><strong>Find the measure of an exterior angle $x$ if the other three exterior angles of a quadrilateral are $120^{\circ}, 80^{\circ},$ and $30^{\circ}$.</strong></p>
+        <p><strong>Solution:</strong> We know the sum of exterior angles of any polygon is $360^{\circ}$.<br>
+        $ 120^{\circ} + x + 80^{\circ} + 30^{\circ} = 360^{\circ} $<br>
+        $ 230^{\circ} + x = 360^{\circ} $<br>
+$ x = 360^{\circ} - 230^{\circ} = 130^{\circ} $</p>^{\circ} - 230^{\circ} = 130^{\circ} $$</p>
+
+        <h3>Practice Problems: Angle Sum</h3>
+        <ul>
+            <li><strong>Q1.</strong> The four angles of a quadrilateral are in the ratio $3 : 5 : 7 : 9$. Find the measure of each angle.</li>
+            <li><strong>Q2.</strong> Find the measure of each interior angle of a regular hexagon.</li>
+        </ul>
+
+        <h2>3. Types of Quadrilaterals: Trapezium and Parallelogram</h2>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Trapezium:</strong> A quadrilateral in which exactly <em>one pair</em> of opposite sides is parallel.</p>
+            <p><strong>Parallelogram:</strong> A quadrilateral in which <em>both pairs</em> of opposite sides are parallel.</p>
+            <p><em>Note: Every parallelogram is a trapezium, but a trapezium is not necessarily a parallelogram.</em></p>
+        </div>
+        
+        <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+            <svg class="concept-diagram" viewBox="0 0 300 150" width="45%" xmlns="http://www.w3.org/2000/svg">
+                <!-- Trapezium -->
+                <polygon points="80,30 220,30 270,120 30,120" fill="var(--green-bg)" opacity="0.4" stroke="var(--green-border)" stroke-width="3" stroke-linejoin="round"/>
+                <!-- Parallel arrows on top and bottom -->
+                <polygon points="150,30 140,25 140,35" fill="var(--green-border)"/>
+                <polygon points="150,120 140,115 140,125" fill="var(--green-border)"/>
+                <text x="110" y="80" fill="var(--text-main)" font-size="18" font-weight="bold">Trapezium</text>
+            </svg>
+            <svg class="concept-diagram" viewBox="0 0 300 150" width="45%" xmlns="http://www.w3.org/2000/svg">
+                <!-- Parallelogram -->
+                <polygon points="80,30 260,30 220,120 40,120" fill="var(--blue-bg)" opacity="0.4" stroke="var(--blue-border)" stroke-width="3" stroke-linejoin="round"/>
+                <!-- Parallel arrows top/bottom -->
+                <polygon points="170,30 160,25 160,35" fill="var(--blue-border)"/>
+                <polygon points="130,120 120,115 120,125" fill="var(--blue-border)"/>
+                <!-- Parallel double arrows left edge -->
+                <polygon points="56,84 48,80 48,88" fill="var(--blue-border)" transform="rotate(-66.04 56 84)"/>
+                <polygon points="64,66 56,62 56,70" fill="var(--blue-border)" transform="rotate(-66.04 64 66)"/>
+                <!-- Parallel double arrows right edge -->
+                <polygon points="236,84 228,80 228,88" fill="var(--blue-border)" transform="rotate(-66.04 236 84)"/>
+                <polygon points="244,66 236,62 236,70" fill="var(--blue-border)" transform="rotate(-66.04 244 66)"/>
+                <text x="150" y="82" text-anchor="middle" fill="var(--text-main)" font-size="18" font-weight="bold">Parallelogram</text>
+            </svg>
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Properties of a Parallelogram:</strong></p>
+            <ol>
+                <li><strong>Opposite angles</strong> are equal (e.g., $\angle A = \angle C$ and $\angle B = \angle D$).</li>
+                <li><strong>Opposite sides</strong> are equal in length ($\overline{AB} = \overline{CD}$ and $\overline{BC} = \overline{AD}$).</li>
+                <li><strong>Diagonals bisect each other</strong> (they cut each other into two equal halves).</li>
+                <li>Adjacent angles are supplementary (sum to $180^{\circ}$).</li>
+            </ol>
+        </div>
+
+        <h3>Practice Problems: Parallelograms</h3>
+        <ul>
+            <li><strong>Q1.</strong> Two adjacent angles of a parallelogram are in the ratio $1 : 5$. Find all the angles of the parallelogram.</li>
+            <li><strong>Q2.</strong> The perimeter of a parallelogram is $110\text{ cm}$. If two adjacent sides are in the ratio $3 : 8$, find the lengths of the sides.</li>
+        </ul>
+
+        <h2>4. Special Parallelograms: Rhombus, Rectangle, and Square</h2>
+        <p>When a parallelogram satisfies additional specific conditions, it gets a special name.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Rhombus:</strong> A parallelogram having a pair of adjacent sides equal. As a result, <strong>all sides of a rhombus are equal</strong>.</p>
+            <ul>
+                <li>It has all the properties of a parallelogram.</li>
+                <li><strong>Special Property:</strong> The diagonals of a rhombus bisect each other at <strong>right angles ($90^{\circ}$)</strong>.</li>
+            </ul>
+        </div>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Rectangle:</strong> A parallelogram in which one angle is a right angle ($90^{\circ}$). Consequently, <strong>each angle of a rectangle is $90^{\circ}$</strong>.</p>
+            <ul>
+                <li>It has all the properties of a parallelogram.</li>
+                <li><strong>Special Property:</strong> The diagonals of a rectangle are <strong>equal in length</strong>.</li>
+            </ul>
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Square:</strong> A square is a parallelogram in which one pair of adjacent sides is equal AND one angle is a right angle. It is both a rhombus and a rectangle!</p>
+            <p><strong>Properties of a Square:</strong></p>
+            <ul>
+                <li>All sides are equal.</li>
+                <li>Each angle is $90^{\circ}$.</li>
+                <li>Diagonals are equal in length.</li>
+                <li>Diagonals bisect each other at right angles ($90^{\circ}$).</li>
+            </ul>
+        </div>
+        
+        <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+            <!-- Rhombus -->
+            <svg class="concept-diagram" viewBox="0 0 200 200" width="30%" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="100,20 180,100 100,180 20,100" fill="var(--green-bg)" opacity="0.4" stroke="var(--green-border)" stroke-width="3" stroke-linejoin="round"/>
+                <line x1="20" y1="100" x2="180" y2="100" stroke="var(--green-border)" stroke-width="2" stroke-dasharray="4,4"/>
+                <line x1="100" y1="20" x2="100" y2="180" stroke="var(--green-border)" stroke-width="2" stroke-dasharray="4,4"/>
+                <polyline points="100,90 110,90 110,100" fill="none" stroke="var(--pink-border)" stroke-width="2"/>
+                <text x="100" y="195" text-anchor="middle" fill="var(--text-main)" font-size="14" font-weight="bold">Rhombus</text>
+            </svg>
+            <!-- Rectangle -->
+            <svg class="concept-diagram" viewBox="0 0 200 200" width="30%" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="20,60 180,60 180,140 20,140" fill="var(--blue-bg)" opacity="0.4" stroke="var(--blue-border)" stroke-width="3" stroke-linejoin="round"/>
+                <line x1="20" y1="60" x2="180" y2="140" stroke="var(--blue-border)" stroke-width="2" stroke-dasharray="4,4"/>
+                <line x1="180" y1="60" x2="20" y2="140" stroke="var(--blue-border)" stroke-width="2" stroke-dasharray="4,4"/>
+                <polyline points="20,75 35,75 35,60" fill="none" stroke="var(--pink-border)" stroke-width="2"/>
+                <text x="100" y="165" text-anchor="middle" fill="var(--text-main)" font-size="14" font-weight="bold">Rectangle</text>
+            </svg>
+            <!-- Square -->
+            <svg class="concept-diagram" viewBox="0 0 200 200" width="30%" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="40,40 160,40 160,160 40,160" fill="var(--yellow-bg)" opacity="0.4" stroke="var(--yellow-border)" stroke-width="3" stroke-linejoin="round"/>
+                <line x1="40" y1="40" x2="160" y2="160" stroke="var(--yellow-border)" stroke-width="2" stroke-dasharray="4,4"/>
+                <line x1="160" y1="40" x2="40" y2="160" stroke="var(--yellow-border)" stroke-width="2" stroke-dasharray="4,4"/>
+                <polyline points="40,55 55,55 55,40" fill="none" stroke="var(--pink-border)" stroke-width="2"/>
+                <!-- Centered rotated right angle marker for diagonal intersection -->
+                <polyline points="93,93 100,86 107,93" fill="none" stroke="var(--pink-border)" stroke-width="2"/>
+                <text x="100" y="185" text-anchor="middle" fill="var(--text-main)" font-size="14" font-weight="bold">Square</text>
+            </svg>
+        </div>
+
+        <h3>Practice Problems: Special Parallelograms</h3>
+        <ul>
+            <li><strong>Q1.</strong> The diagonals of a rhombus are in the ratio $3 : 4$. If its perimeter is $40\text{ cm}$, find the lengths of the sides and the diagonals of the rhombus.</li>
+            <li><strong>Q2.</strong> A pair of adjacent sides of a rectangle are in the ratio $3 : 4$. If its diagonal is $20\text{ cm}$, find the lengths of the sides and the perimeter of the rectangle.</li>
+        </ul>
+
+        <h2>5. Lines of Symmetry (Appendix)</h2>
+        <p>A line of symmetry divides a figure into two congruent halves that exactly overlap when folded.</p>
+        <ul>
+            <li><strong>Rectangle:</strong> 2 lines of symmetry (lines joining the mid-points of opposite sides).</li>
+            <li><strong>Rhombus:</strong> 2 lines of symmetry (the two diagonals).</li>
+            <li><strong>Square:</strong> 4 lines of symmetry (the two diagonals AND the lines joining mid-points of opposite sides).</li>
+            <li><strong>Parallelogram (general):</strong> 0 lines of symmetry.</li>
+            <li><strong>Kite:</strong> 1 line of symmetry (one diagonal).</li>
+        </ul>
+
+        <h2>6. Chapter Summary (You Must Know)</h2>
+        <ul>
+            <li>A simple closed curve made of line segments is a <strong>polygon</strong>.</li>
+            <li>A polygon with all sides and angles equal is a <strong>regular polygon</strong>.</li>
+            <li>The sum of the interior angles of a quadrilateral is <strong>$360^{\circ}$</strong>.</li>
+            <li>The sum of the exterior angles of ANY polygon is <strong>$360^{\circ}$</strong>.</li>
+            <li>A <strong>trapezium</strong> has one pair of parallel sides; a <strong>parallelogram</strong> has two.</li>
+            <li>In a <strong>parallelogram</strong>: opposite sides are equal, opposite angles are equal, and diagonals bisect each other.</li>
+            <li>A <strong>rhombus</strong> has equal sides and diagonals that bisect at right angles.</li>
+            <li>A <strong>rectangle</strong> has equal diagonals and $90^{\circ}$ angles.</li>
+            <li>A <strong>square</strong> combines all properties of rectangles and rhombuses.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan â¤ï¸</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+

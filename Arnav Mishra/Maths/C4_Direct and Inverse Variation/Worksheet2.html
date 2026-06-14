@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Variation Level 2</title>
+    <!-- MathJax -->
+    <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root { 
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd; 
+            --body-bg: #fff; 
+            --text-main: #000; 
+            --text-secondary: #333; 
+            --border-color: #ccc; 
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode { 
+            --primary-color: #64b5f6; 
+            --bg-color: #1e2a38; 
+            --body-bg: #121212; 
+            --text-main: #e0e0e0; 
+            --text-secondary: #b0b0b0; 
+            --border-color: #444; 
+        }
+
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main); 
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s; 
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 10px; box-sizing: border-box; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; position: relative;
+        }
+        .institute-name { font-size: 24pt; font-weight: bold; text-transform: uppercase; color: var(--primary-color); margin: 0; }
+        .tagline { font-size: 14pt; font-weight: bold; margin-bottom: 10px; margin-top: 5px; color: var(--text-secondary); }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { font-size: 16pt; font-weight: bold; text-decoration: underline; color: var(--text-secondary); margin-top: 5px; }
+        
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 10pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 8px; }
+        .question-item { display: flex; align-items: baseline; margin-bottom: 5px; font-size: 11pt; page-break-inside: avoid; }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 30px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+        }
+
+        /* --- WATERMARK --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+
+        /* --- PREMIUM THEME TOGGLE --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">vardaanlearning.com | 9508841336</div>
+        <div class="worksheet-title">Direct & Inverse Variation: Level 2 (Standard Mastery)</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8th</span>
+            <span>Subject: Maths</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Direct Variation (Standard)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">If 15 bags of wheat weigh 450 kg, find the weight of 12 such bags.</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">A man deposited ₹5000 and earned ₹600 interest in 2 years. How much interest would ₹8000 earn in the same period at the same rate?</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">If the cost of 12 pencils is ₹30, what is the cost of 28 pencils?</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">Rohan takes 14 steps to cover 2.8m. How many steps to cover 150m?</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">If 8 cartons can pack 48 refined oil cans, how many cartons are needed for 216 cans?</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">A car travels 210 km in 30 litres of petrol. How far will it go in 7 litres?</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">If 15 newspapers cost ₹22.50, find the cost of 25 newspapers.</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">A boat covers 20 km in 4 hrs. How much distance in 7 hrs at same speed?</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">6 water bottles cost ₹48. Find the cost of 15 such bottles.</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">If 5 sheets of paper weigh 20g, how many sheets weigh 2.5 kg?</div></div>
+    </div>
+
+    <div class="chapter-header">Section B: Inverse Variation (Standard)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">52 men can do a work in 35 days. How many days will 28 men take?</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">A camp has provision for 500 students for 30 days. If 100 more join, how long will it last?</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">A bus at 40 km/hr takes $4.5$ hours. How long at 45 km/hr?</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Disha cycles at 12 km/hr and reaches in 20 mins. What speed is needed for 15 mins?</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">30 goats graze a field in 15 days. How many goats graze it in 10 days?</div></div>
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">A contractor with 420 men finishes a building in 9 months. How many extra men for 7 months?</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">Uday finishes a book in 25 days reading 18 pages daily. How many days if he reads 15 pages daily?</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">Shopkeeper buys 40 books at ₹125 each. If he gets ₹25 discount per book, how many can he buy?</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">6 pumps empty a tank in 28 mins. How long for 4 pumps?</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">A train at 75 km/hr takes $4.8$ hrs. Speed needed to cover it in 3 hrs?</div></div>
+    </div>
+
+    <div class="chapter-header">Section C: Time & Work Challenges</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">If 15 men repair a road in 24 days, how many men for 20 days?</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">Ramit finishes work in 25 days working 8 hrs/day. How many hours per day to finish in 20 days?</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">Udit completes work in 10 days. What fraction is done in 8 days?</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">20 men build a wall in 9 days. How many men to build it in 15 days?</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Geetika weaves 20 baskets in 30 days. How many days for 120 baskets?</div></div>
+    </div>
+
+    <div class="chapter-header">Section D: Trains & Motion (Level 2)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">A 400m train at 72 km/hr crosses a telegraph post in __________ seconds.</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">A 360m train at 45 km/hr crosses a 140m bridge. Find the time taken.</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">A 280m train at 42 km/hr passes a standing man. Find the time.</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">A 350m train crosses a pole in 28 seconds. Find its speed in km/hr.</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">A 150m train at 72 km/hr crosses a bridge in 13 seconds. Find the length of the bridge.</div></div>
+    </div>
+
+    <div class="footer">Vardaan Learning Institute &copy; 2026 - Powered by Vardaan Comet</div></div></body></html>

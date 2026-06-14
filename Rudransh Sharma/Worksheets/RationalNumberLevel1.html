@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 1 - Easy/Foundation - Green Theme) */
+            --primary-color: #2e7d32; 
+            --bg-color: #e8f5e9;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #81c784;   /* Lighter green for dark mode readability */
+            --bg-color: #1b3320;        /* Dark green container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- ANSWER KEY TABLE STYLING --- */
+        .ans-table-container { margin-top: 25px; page-break-before: always; }
+        .ans-table { width: 100%; border-collapse: collapse; font-size: 10.5pt; text-align: left; background: var(--body-bg); }
+        .ans-table th, .ans-table td { border: 1px solid var(--border-color); padding: 6px 10px; }
+        .ans-table th { background-color: var(--primary-color); color: var(--body-bg); font-weight: bold; text-align: center; }
+        .ans-table td:nth-child(odd) { font-weight: bold; text-align: center; color: var(--primary-color); width: 6%; }
+        html.dark-mode .ans-table th { color: #fff; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Foundation Worksheet - Rational Numbers</div>
+        <div class="meta-info">
+            <span>Especially designed for: Rudransh Sharma</span>
+            <span>Class: 7 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Section A: Basics & Standard Form -->
+    <div class="chapter-header">Section A: Basics & Standard Form</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">Is $0$ considered a rational number? (Yes/No)</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">Write the numerator of the rational number $\frac{-5}{7}$.</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">Write the denominator of the rational number $\frac{8}{-11}$.</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">Is $\frac{-3}{-4}$ a positive or negative rational number?</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">Is $\frac{5}{-8}$ a positive or negative rational number?</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">Express the integer $-5$ as a rational number with a denominator of $1$.</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">Write the rational number whose numerator is $2 \times 3$ and denominator is $7 - 2$.</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Convert the rational number $\frac{15}{20}$ to its standard (simplest) form.</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">Convert the rational number $\frac{-18}{24}$ to its standard form.</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Convert the rational number $\frac{12}{-16}$ to its standard form (ensure the denominator is positive).</div></div>
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">Which integer is neither a positive nor a negative rational number?</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">Identify the positive rational number among the following: $\frac{-2}{3}$, $\frac{4}{-5}$, $\frac{-7}{-9}$.</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">Express $\frac{3}{4}$ as a rational number with a numerator of $12$.</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Express $\frac{-2}{5}$ as a rational number with a denominator of $20$.</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Write any one rational number equivalent to $\frac{1}{2}$.</div></div>
+    </div>
+
+    <!-- Section B: Comparison & Equivalent Rational Numbers -->
+    <div class="chapter-header">Section B: Equivalent Numbers & Comparison</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">Are the rational numbers $\frac{2}{3}$ and $\frac{4}{6}$ equivalent?</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">Are the rational numbers $\frac{-1}{2}$ and $\frac{-3}{6}$ equivalent?</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">Compare using $<$, $>$, or $=$: $\frac{3}{5}$ \_\_\_\_ $\frac{4}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">Compare using $<$, $>$, or $=$: $\frac{-2}{7}$ \_\_\_\_ $\frac{-5}{7}$.</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">Compare using $<$, $>$, or $=$: $\frac{1}{3}$ \_\_\_\_ $\frac{1}{4}$.</div></div>
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">Compare using $<$, $>$, or $=$: $0$ \_\_\_\_ $\frac{-1}{2}$.</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">Compare using $<$, $>$, or $=$: $\frac{-3}{4}$ \_\_\_\_ $\frac{-6}{8}$.</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">Which rational number is greater: $\frac{5}{8}$ or $\frac{3}{8}$?</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">Arrange in ascending order: $\frac{4}{5}$, $\frac{1}{5}$, $\frac{2}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Arrange in descending order: $\frac{-1}{7}$, $\frac{-3}{7}$, $\frac{-2}{7}$.</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">Find the value of $x$ if $\frac{2}{3} = \frac{x}{9}$.</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">Find the value of $y$ if $\frac{-4}{5} = \frac{12}{y}$.</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">True or False: Every fraction is a rational number.</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">True or False: Every integer is a rational number.</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">True or False: $\frac{5}{0}$ is a valid rational number.</div></div>
+    </div>
+
+    <!-- Section C: Addition & Subtraction -->
+    <div class="chapter-header">Section C: Addition & Subtraction</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">Add: $\frac{2}{7} + \frac{3}{7}$.</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">Add: $\frac{-1}{5} + \frac{2}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">Add and simplify: $\frac{4}{9} + \frac{-7}{9}$.</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Add: $\frac{-3}{11} + \frac{-5}{11}$.</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">Find the sum: $\frac{1}{2} + \frac{1}{4}$.</div></div>
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">Find the sum: $\frac{2}{3} + \frac{1}{6}$.</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">What is the additive inverse of $\frac{3}{8}$?</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">What is the additive inverse of $\frac{-5}{9}$?</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">Subtract: $\frac{5}{8} - \frac{2}{8}$.</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">Subtract: $\frac{4}{7} - \left( \frac{-2}{7} \right)$.</div></div>
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">Subtract and simplify: $\frac{-5}{12} - \frac{1}{12}$.</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">Evaluate: $\frac{1}{2} - \frac{1}{3}$.</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">What must be added to $\frac{1}{5}$ to get $\frac{4}{5}$?</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">Find the sum: $2 + \frac{1}{3}$.</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">Subtract $1$ from $\frac{5}{4}$.</div></div>
+    </div>
+
+    <!-- Section D: Multiplication & Division -->
+    <div class="chapter-header">Section D: Multiplication & Division</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">Multiply: $\frac{2}{3} \times \frac{4}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">Multiply: $\frac{-1}{2} \times \frac{3}{4}$.</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">Multiply: $\frac{-5}{7} \times \frac{-2}{3}$.</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">Find the product: $\frac{3}{8} \times 0$.</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">Multiply: $\frac{4}{5} \times 1$.</div></div>
+        <div class="question-item"><span class="q-num">51.</span><div class="q-content">Multiply: $\frac{2}{5} \times \frac{5}{2}$.</div></div>
+        <div class="question-item"><span class="q-num">52.</span><div class="q-content">What is the reciprocal (multiplicative inverse) of $\frac{3}{7}$?</div></div>
+        <div class="question-item"><span class="q-num">53.</span><div class="q-content">What is the reciprocal of $\frac{-1}{5}$?</div></div>
+        <div class="question-item"><span class="q-num">54.</span><div class="q-content">Does the number $0$ have a reciprocal? (Yes/No)</div></div>
+        <div class="question-item"><span class="q-num">55.</span><div class="q-content">Divide: $\frac{3}{4} \div \frac{1}{2}$.</div></div>
+        <div class="question-item"><span class="q-num">56.</span><div class="q-content">Divide: $\frac{-4}{5} \div \frac{2}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">57.</span><div class="q-content">Divide: $\frac{7}{8} \div 1$.</div></div>
+        <div class="question-item"><span class="q-num">58.</span><div class="q-content">Evaluate: $1 \div \frac{1}{3}$.</div></div>
+        <div class="question-item"><span class="q-num">59.</span><div class="q-content">Find the product of a non-zero rational number and its reciprocal.</div></div>
+        <div class="question-item"><span class="q-num">60.</span><div class="q-content">Divide: $\frac{-6}{7} \div (-2)$.</div></div>
+    </div>
+
+    <!-- Answer Key Section -->
+    <div class="ans-table-container">
+        <div class="chapter-header">Answer Key</div>
+        <table class="ans-table">
+            <tr><th>Q</th><th>Answer</th><th>Q</th><th>Answer</th><th>Q</th><th>Answer</th></tr>
+            <tr><td>1.</td><td>Yes</td><td>21.</td><td>$>$</td><td>41.</td><td>$\frac{-6}{12}$ or $\frac{-1}{2}$</td></tr>
+            <tr><td>2.</td><td>$-5$</td><td>22.</td><td>$=$</td><td>42.</td><td>$\frac{1}{6}$</td></tr>
+            <tr><td>3.</td><td>$-11$</td><td>23.</td><td>$\frac{5}{8}$</td><td>43.</td><td>$\frac{3}{5}$</td></tr>
+            <tr><td>4.</td><td>Positive</td><td>24.</td><td>$\frac{1}{5}, \frac{2}{5}, \frac{4}{5}$</td><td>44.</td><td>$\frac{7}{3}$</td></tr>
+            <tr><td>5.</td><td>Negative</td><td>25.</td><td>$\frac{-1}{7}, \frac{-2}{7}, \frac{-3}{7}$</td><td>45.</td><td>$\frac{1}{4}$</td></tr>
+            <tr><td>6.</td><td>$\frac{-5}{1}$</td><td>26.</td><td>$6$</td><td>46.</td><td>$\frac{8}{15}$</td></tr>
+            <tr><td>7.</td><td>$\frac{6}{5}$</td><td>27.</td><td>$-15$</td><td>47.</td><td>$\frac{-3}{8}$</td></tr>
+            <tr><td>8.</td><td>$\frac{3}{4}$</td><td>28.</td><td>True</td><td>48.</td><td>$\frac{10}{21}$</td></tr>
+            <tr><td>9.</td><td>$\frac{-3}{4}$</td><td>29.</td><td>True</td><td>49.</td><td>$0$</td></tr>
+            <tr><td>10.</td><td>$\frac{-3}{4}$</td><td>30.</td><td>False</td><td>50.</td><td>$\frac{4}{5}$</td></tr>
+            <tr><td>11.</td><td>$0$</td><td>31.</td><td>$\frac{5}{7}$</td><td>51.</td><td>$1$</td></tr>
+            <tr><td>12.</td><td>$\frac{-7}{-9}$</td><td>32.</td><td>$\frac{1}{5}$</td><td>52.</td><td>$\frac{7}{3}$</td></tr>
+            <tr><td>13.</td><td>$\frac{12}{16}$</td><td>33.</td><td>$\frac{-3}{9}$ or $\frac{-1}{3}$</td><td>53.</td><td>$\frac{-5}{1}$ or $-5$</td></tr>
+            <tr><td>14.</td><td>$\frac{-8}{20}$</td><td>34.</td><td>$\frac{-8}{11}$</td><td>54.</td><td>No</td></tr>
+            <tr><td>15.</td><td>e.g., $\frac{2}{4}$ or $\frac{3}{6}$</td><td>35.</td><td>$\frac{3}{4}$</td><td>55.</td><td>$\frac{6}{4}$ or $\frac{3}{2}$</td></tr>
+            <tr><td>16.</td><td>Yes</td><td>36.</td><td>$\frac{5}{6}$</td><td>56.</td><td>$-2$</td></tr>
+            <tr><td>17.</td><td>Yes</td><td>37.</td><td>$\frac{-3}{8}$</td><td>57.</td><td>$\frac{7}{8}$</td></tr>
+            <tr><td>18.</td><td>$<$</td><td>38.</td><td>$\frac{5}{9}$</td><td>58.</td><td>$3$</td></tr>
+            <tr><td>19.</td><td>$>$</td><td>39.</td><td>$\frac{3}{8}$</td><td>59.</td><td>$1$</td></tr>
+            <tr><td>20.</td><td>$>$</td><td>40.</td><td>$\frac{6}{7}$</td><td>60.</td><td>$\frac{3}{7}$</td></tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

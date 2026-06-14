@@ -1,0 +1,454 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Advent of Christianity - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: none; /* Hidden on screen */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+            .theme-toggle, .branding-footer { display: none !important; }
+            .contact-info { display: flex !important; }
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+            .watermark-image { filter: none !important; max-width: 80% !important; }
+            @page {
+                size: A4;
+                margin: 2cm;
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+
+    <div class="paper-sheet">
+        
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 History • Chapter Notes</div>
+            
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <h1>The Advent of Christianity</h1>
+        
+        <h2>1. Introduction to the Medieval Period</h2>
+        <p>Historians divide history into ancient, medieval, and modern periods. The transition between these periods was gradual and did not occur uniformly across the world.</p>
+        <ul>
+            <li>In <strong>India</strong>, the Medieval Period extended roughly from <strong>800 CE to 1800 CE</strong>.</li>
+            <li>In <strong>Europe</strong>, the Medieval Period stretched from about <strong>600 CE to 1500 CE</strong>.</li>
+            <li>This era witnessed significant global developments: Christianity spread across Europe, the Arabs and Turks rose to power, and Europeans began traveling to India for trade.</li>
+        </ul>
+
+        <h2>2. The Birth and Teachings of Jesus Christ</h2>
+        <p>Christianity was founded by a Jew named <strong>Jesus</strong>, born around <strong>4 BCE in Bethlehem</strong>, Judaea. He was raised in Nazareth (Palestine).</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Messiah:</strong> A leader (usually religious) who brings hope for the people. Christians consider Jesus Christ to be the Messiah and the Son of God.</p>
+        </div>
+
+        <h3>The Core Teachings</h3>
+        <p>Jesus began preaching his word around the <strong>age of 30</strong>. His teachings heavily focused on love, equality, and compassion. While his teachings clashed with traditional Jewish leaders, his ability to heal and perform miracles attracted many followers. Some of his primary teachings included:</p>
+        <ul>
+            <li>Live a <strong>simple living</strong> life.</li>
+            <li>Treat all people equally.</li>
+            <li>Love God unconditionally.</li>
+            <li>Love your neighbors and forgive your enemies.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>The Holy Bible:</strong> The sacred text of Christianity consists of the <em>Old Testament</em> and the <em>New Testament</em>. The teachings and life of Jesus are recorded in the New Testament within the <strong>Gospels</strong> of his disciples: Matthew, Mark, Luke, and John.</p>
+        </div>
+
+        <h2>3. Crucifixion and Resurrection</h2>
+        <p>During this time, Palestine was under Roman rule. Jewish leaders persuaded the Romans that Jesus was a threat to their power and religion. As a result, Jesus was arrested, charged with rebellion, and <strong>crucified on Good Friday</strong> (between 30-33 CE).</p>
+        <p>According to Christian belief, Jesus was <strong>resurrected</strong> (rose from the dead) three days later. This miraculous event is celebrated as <strong>Easter</strong>. The belief in Jesus's resurrection gave hope to his followers and became the central foundation of the Christian faith.</p>
+
+        <h2>4. Spread of Christianity</h2>
+        <p>The Roman Emperor <strong>Constantine</strong> adopted a tolerant policy towards Christians. He famously placed the Greek initials for Christ on his shields and banners. He built a new capital named <strong>Constantinople</strong> (present-day Istanbul, formally Byzantium) filled with Christian architecture.</p>
+        <p>By the <strong>4th century CE</strong>, Christianity became the <strong>official religion of the Roman Empire</strong>. Largely due to the efforts of <strong>St. Paul</strong> and other apostles, it spread rapidly beyond Europe into regions like Armenia and Persia.</p>
+
+        <h2>5. Division and Decline of the Roman Empire</h2>
+        <p>After the death of Roman Emperor Theodosius, the vast Roman Empire was divided between his two sons:</p>
+        <ul>
+            <li><strong>Honorius:</strong> Ruled the Western empire from <strong>Rome</strong>.</li>
+            <li><strong>Arcadius:</strong> Ruled the Eastern empire from <strong>Constantinople</strong>.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Reasons for the Decline of the Roman Empire:</strong>
+            <br>1. <strong>Cultural Conflicts:</strong> Christianity's intolerance for older religions caused unrest (e.g., Emperor Theodosius ended the Olympic Games because they honored the Greek God, Zeus).
+            <br>2. <strong>Military Disloyalty:</strong> Soldiers' loyalty shifted from the emperor to their local military leaders.
+            <br>3. <strong>Economic Weakness:</strong> Severe economic problems weakened the empire.
+            <br>4. <strong>Barbarian Invasions:</strong> Constant invasions from outside tribes.</p>
+        </div>
+
+        <h3>Threats and Invasions</h3>
+        <p>The most prominent cause for the decline of the Western Roman Empire was invasions from "barbarian" tribes:</p>
+        <ul>
+            <li><strong>The Goths:</strong> A nomadic Germanic tribe fleeing the Huns. Under their young king <strong>Alaric</strong>, the West Goths attacked the empire multiple times, even plundering Rome.</li>
+            <li>Other tribes included the Vandals, Angles, Saxons, Franks, and Lombards. For instance, the <strong>Angles and Saxons</strong> settled in Britain, and the <strong>Franks</strong> established themselves in what became France.</li>
+            <li>In <strong>476 CE</strong>, Romulus, the last western Roman emperor, was overthrown by a Germanic leader, marking the ultimate fall of the Western Roman Empire.</li>
+        </ul>
+        <p>Meanwhile, the Eastern Roman Empire, known as the <strong>Byzantine Empire</strong>, survived for nearly a thousand more years with its capital at Constantinople. It preserved Roman legacy, used Greek as its main language, and became the center of the <strong>Orthodox Church</strong>.</p>
+
+        <h2>6. The Crusades (1095-1291 CE)</h2>
+        <p>During the Medieval Period, the Turks (like the Khazars and Seljuks) rose to power. In the 11th century, they captured the holy land of <strong>Jerusalem</strong>. This led to religious wars known as the <strong>Crusades</strong>.</p>
+        <p>The Crusades were a series of religious wars between the <strong>Christians and the Muslims</strong> aimed primarily at recovering holy sites considered sacred by both. The wars were sanctioned by the Latin Church, with Pope Urban II declaring that fighting in a crusade would ensure immediate forgiveness of sins.</p>
+
+        <h3>Results of the Crusades:</h3>
+        <ul>
+            <li>Christians learned about <strong>gunpowder</strong> from Muslims, changing European warfare.</li>
+            <li>Knowledge of science, medicine, and architecture from the Islamic and Greek worlds enriched Europe, paving the way for the <strong>Renaissance</strong>.</li>
+            <li>Arab inventions like <strong>algebra and optics</strong> spread to Europe and were introduced as subjects in European universities.</li>
+            <li>Increased trade led to the <strong>growth of towns</strong>. Merchants began supporting stronger kings, which weakened the position of feudal lords.</li>
+        </ul>
+
+        <h2>7. Christian Monastic Orders and the Church</h2>
+        <p>The fall of Rome left a massive political and social void in Europe, which Christianity began to fill. By the 5th century CE, Christian churches had been set up all over Western Europe.</p>
+        
+        <h3>Hierarchy of the Church</h3>
+        <ul>
+            <li><strong>Priests:</strong> Formed the lowest rung, performing religious services, prayers, and marriages.</li>
+            <li><strong>Bishops:</strong> Higher in rank, oversaw churches in entire regions (e.g., Rome, Constantinople, Alexandria, Antioch, Jerusalem).</li>
+            <li><strong>The Pope:</strong> The Bishop of Rome eventually became the supreme spiritual head of Christians.</li>
+        </ul>
+        <p>Over time, the Christian Church split into different branches: the <strong>Roman Catholic Church</strong>, the <strong>Eastern Orthodox Church</strong>, and later, the <strong>Protestant Church</strong>.</p>
+
+        <h3>Monks and Nuns</h3>
+        <p>Some priests chose to live strictly as ascetics in <strong>monasteries</strong>, dedicating their lives to prayer, study, and service. They were known as <strong>monks</strong>. Women who gave up worldly life were known as <strong>nuns</strong> and lived in <strong>convents or nunneries</strong>.</p>
+
+        <h3>Impact of Monasteries</h3>
+        <ul>
+            <li><strong>Centers of Learning:</strong> Monasteries became vital centers of education. Monks and nuns studied and taught literature, art, science, and religion.</li>
+            <li><strong>Preservation of Knowledge:</strong> Monks painstakingly hand-copied texts onto parchment, preserving ancient knowledge.</li>
+            <li><strong>Birth of Universities:</strong> Churches eventually grew into full universities, like Oxford and Cambridge.</li>
+            <li><strong>Social Welfare:</strong> Monasteries functioned as hospitals and shelters, educating children, treating the sick, and helping the poor.</li>
+            <li><strong>Artistic Flourish:</strong> Skills like architecture, woodworking, and glass painting flourished inside monasteries.</li>
+        </ul>
+
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

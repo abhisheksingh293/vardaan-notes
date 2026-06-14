@@ -1,0 +1,623 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Polynomials - Vardaan Learning Institute</title>
+    
+    <!-- MathJax Configuration and Script -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+                /* --- NEWSPAPER STYLE IMAGES --- */
+        .image-float-right { float: right; width: 45%; max-width: 360px; margin: 8px 0 14px 18px; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        .image-float-left { float: left; width: 45%; max-width: 360px; margin: 8px 18px 14px 0; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        html.dark-mode .image-float-right, html.dark-mode .image-float-left { filter: invert(1); opacity: 1; }
+
+        @media (max-width: 768px) {
+            .diagram-container,
+            .diagram-container:nth-of-type(even),
+            .image-float-right,
+            .image-float-left {
+                float: none !important;
+                display: block !important;
+                width: 90% !important;
+                max-width: 500px !important;
+                min-width: 0 !important;
+                margin: 20px auto !important;
+                clear: both !important;
+            }
+        }
+        
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Maths â€¢ Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>8. Polynomials</h1>
+        
+        <p>
+            <img src="../images/C8_Polynomials.png" alt="Polynomials Abstract Math Curve" class="image-float-right ai-image" style="width: 45%; max-width: 360px; margin-top: 5px;">
+            In previous classes, you have learnt about algebraic expressionsâ€”their addition, subtraction, and multiplication. Recall that an algebraic expression is formed using variables and constants, combined with mathematical operations like addition, subtraction, and multiplication.</p>
+        
+        <p>Consider the following examples:</p>
+        <ul>
+            <li>(i) $x^{2}+2x+3$</li>
+            <li>(ii) $x^{2}+3x^{-1}+5$</li>
+            <li>(iii) $x^{2}+6xy+y^{2}+7$</li>
+            <li>(iv) $y^{3}+5\sqrt{y}-6$</li>
+        </ul>
+
+        <p>In examples (i), (ii), and (iv), the algebraic expressions are in <strong>one variable</strong>, while example (iii) is in <strong>two variables</strong> ($x$ and $y$). In this chapter, we shall study special types of algebraic expressions in one variable called <strong>polynomials in one variable</strong>.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Polynomial:</strong> An algebraic expression in which the exponents of the variables are <strong>non-negative integers</strong> (whole numbers like 0, 1, 2...) is called a polynomial.</p>
+        </div>
+
+        <p>Notice that expression (i) is a polynomial. Expression (ii) is <strong>not</strong> a polynomial because it contains the term $x^{-1}$, where ($-1$) is not a non-negative integer. Expression (iv) is also <strong>not</strong> a polynomial because it contains the term $5\sqrt{y}$ (which is $5y^{\frac{1}{2}}$), and $\frac{1}{2}$ is not an integer.</p>
+
+        <h2>1. Terms and Standard Form of a Polynomial</h2>
+        
+        <div class="green-box">
+            <span class="box-label">Classification by Terms</span>
+            <ul>
+                <li><strong>Monomial:</strong> Contains only one term (e.g., $5, 7x^2, 6xy$).</li>
+                <li><strong>Binomial:</strong> Contains two terms (e.g., $5x+6, 7y^2-3y$).</li>
+                <li><strong>Trinomial:</strong> Contains three terms (e.g., $x^2+2x+1, 3x-5xy^2+10xy$).</li>
+                <li><strong>Constant Polynomial:</strong> Contains only a constant term (e.g., 4, 3, -7).</li>
+            </ul>
+        </div>
+
+        <p><em>Note:</em> A polynomial having one variable, say '$x$', is called a polynomial in the variable $x$ and is usually denoted by $p(x), q(x)$, etc.</p>
+
+        <h3>Standard Form of a Polynomial</h3>
+        <p>When the terms of a polynomial are written in the <strong>decreasing order of the powers</strong> of the variable, it is called a polynomial in the standard form.</p>
+        <p><em>Example:</em> $x^{4}-4x^{3}+5x^{2}-x+1$ is in standard form.</p>
+
+        <h2>2. Degree of a Polynomial</h2>
+        <p>The highest power of the variable in a polynomial of one variable is called the <strong>degree</strong> of the polynomial.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Classification by Degree</span>
+            <ul>
+                <li><strong>Linear Polynomial:</strong> Degree is 1 (e.g., $2x+5$).</li>
+                <li><strong>Quadratic Polynomial:</strong> Degree is 2 (e.g., $3y^{2}+5y-7$).</li>
+                <li><strong>Cubic Polynomial:</strong> Degree is 3 (e.g., $p^{3}+9p^{2}+1$).</li>
+                <li><strong>Biquadratic (Quartic) Polynomial:</strong> Degree is 4.</li>
+            </ul>
+            <p><strong>Note:</strong> The degree of a non-zero <em>constant polynomial</em> (like $-7$) is zero because $-7 = -7x^0$.</p>
+        </div>
+
+        <h3>Practice Questions (Basics of Polynomials):</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find out whether the given expression is a polynomial or not. If not, give reasons.
+                <br>(i) $5x^3 - 4x^2 + \frac{1}{2}$
+                <br>(ii) $\sqrt{3}z^2 - 5\sqrt{z} + 6$
+                <br>(iii) $7x^{\frac{2}{3}} - 8x^{\frac{3}{2}} + x^2$
+                <br>(iv) $5x - \frac{1}{x} + \frac{1}{x^2} - 2$
+            </li>
+            <li><strong>Q2:</strong> Write each of the following polynomials in standard form and also write down their degree:
+                <br>(i) $p^6 - 8p^9 + p^7 + 5$
+                <br>(ii) $(x + \frac{2}{3})(x + \frac{3}{4})$
+                <br>(iii) $4p + 15p^6 - p^5 + 4p^2 + 3$
+                <br>(iv) $q^{10} + q^6 - q^4 + q^8$
+            </li>
+        </ul>
+
+        <h2>3. Division of a Polynomial by a Polynomial</h2>
+        <p>The process of division is similar to integer division. It results in two cases: Zero Remainder (exact division) and Non-Zero Remainder.</p>
+
+        <h3>A. Zero Remainder Case</h3>
+
+        <h4>1. Division of a Monomial by a Monomial</h4>
+        <p>Quotient of two monomials = (Quotient of their coefficients) $\times$ (Quotient of their variables).</p>
+        <p><strong>Example 1:</strong> Divide $18x^5$ by $(-3x^3)$<br>
+        <strong>Solution:</strong> $\frac{18x^5}{-3x^3} = (\frac{18}{-3}) \times (\frac{x^5}{x^3}) = -6 \times x^{5-3} = -6x^2$
+        </p>
+
+        <h4>2. Division of a Polynomial by a Monomial</h4>
+        <p>We divide each term of the polynomial by the given monomial, or take out a common factor.</p>
+        <p><strong>Example 2:</strong> Divide $(6x^4 - 8x^3 + 10x^2 + 12x)$ by $2x$<br>
+        <strong>Solution:</strong> $\frac{6x^4}{2x} - \frac{8x^3}{2x} + \frac{10x^2}{2x} + \frac{12x}{2x} = 3x^3 - 4x^2 + 5x + 6$
+        </p>
+
+        <h4>3. Division of a Polynomial by a Binomial</h4>
+        <p><strong>Method 1: Factor Method</strong> - Factorise the dividend so that one factor matches the divisor, then cancel it out.</p>
+        <p><strong>Example 3:</strong> Divide $(x^2 + 5x + 6)$ by $(x + 2)$<br>
+        <strong>Solution:</strong> $x^2 + 5x + 6 = (x + 3)(x + 2)$. <br>
+        So, $\frac{(x + 3)(x + 2)}{(x + 2)} = x + 3$
+        </p>
+
+        <p><strong>Method 2: Long Division Method</strong> - Keep both polynomials in standard form. Divide the first term of the dividend by the first term of the divisor to get the first term of the quotient. Multiply, subtract, and repeat with the remainder.</p>
+        <p><strong>Example 4:</strong> Divide $(6x^2 - 13x + 6)$ by $(2x - 3)$</p>
+        <ul>
+            <li>Step 1: Dividend: $6x^2 - 13x + 6$, Divisor: $2x - 3$</li>
+            <li>Step 2: $6x^2 \div 2x = 3x$ (First quotient term).</li>
+            <li>Step 3: Multiply $(2x - 3) \times 3x = 6x^2 - 9x$. Subtract this from dividend. Remainder is $-4x + 6$.</li>
+            <li>Step 4: $-4x \div 2x = -2$ (Second quotient term).</li>
+            <li>Step 5: Multiply $(2x - 3) \times -2 = -4x + 6$. Subtract. Remainder is $0$.</li>
+            <li><strong>Quotient:</strong> $3x - 2$</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Important Rule</span>
+            <p>If a polynomial $p(x)$ is divided by $q(x)$ leaving remainder zero to give quotient $r(x)$, then:<br>
+            <strong>$Dividend = Divisor \times Quotient$</strong><br>
+            Thus, $q(x)$ is a factor of $p(x)$.</p>
+        </div>
+
+        <h3>Practice Questions (Zero Remainder):</h3>
+        <ul>
+            <li><strong>Q1:</strong> Divide the following monomials:
+                <br>(i) $16p^4$ by $-6p^2$
+                <br>(ii) $4\sqrt{2}y^3$ by $3\sqrt{2}y^2$
+            </li>
+            <li><strong>Q2:</strong> Divide the polynomial by a monomial:
+                <br>(i) $6x^4 - 24x^3 + 15x^2 + 9$ by $(-3x^2)$
+                <br>(ii) $-8p^3 + 16p^2 + 14p + 1$ by $4p$
+            </li>
+            <li><strong>Q3:</strong> Using factor method, divide:
+                <br>(i) $x^2 - 7x - 18$ by $x - 9$
+                <br>(ii) $x^4 + 3x^2 - 10$ by $x^2 + 5$
+            </li>
+            <li><strong>Q4:</strong> Using long division method, divide and check your answer:
+                <br>(i) $4p^3 - 4p^2 + 6p - \frac{5}{2}$ by $2p - 1$
+                <br>(ii) $4x^3 - 37x^2 + 52x - 15$ by $4x - 5$
+            </li>
+            <li><strong>Q5:</strong> Show that the second polynomial is a factor of the first:
+                <br>(i) $x^4 - 16$ ; $x + 2$
+                <br>(ii) $2y^3 - 14y + 12$ ; $y + 3$
+            </li>
+        </ul>
+
+        <h3>B. Non-Zero Remainder Case</h3>
+        <p>We continue the division process until we get a remainder with a <strong>degree strictly less than</strong> that of the divisor.</p>
+
+        <p><strong>Example 5:</strong> Divide $9x^4 + 15x^3 - 2x^2 + 7x - 8$ by $3x - 2$<br>
+        <strong>Solution steps summary:</strong>
+        <br>1. First term: $9x^4 \div 3x = 3x^3$. Subtract $3x^3(3x - 2) = 9x^4 - 6x^3$. New dividend: $21x^3 - 2x^2 + 7x - 8$.
+        <br>2. Next term: $21x^3 \div 3x = 7x^2$. Subtract $7x^2(3x - 2) = 21x^3 - 14x^2$. New dividend: $12x^2 + 7x - 8$.
+        <br>3. Next term: $12x^2 \div 3x = 4x$. Subtract $4x(3x - 2) = 12x^2 - 8x$. New dividend: $15x - 8$.
+        <br>4. Next term: $15x \div 3x = 5$. Subtract $5(3x - 2) = 15x - 10$. Remainder: $2$.
+        <br><strong>Quotient:</strong> $3x^3 + 7x^2 + 4x + 5$
+        <br><strong>Remainder:</strong> $2$
+        </p>
+
+        <div class="green-box">
+            <span class="box-label">Division Algorithm</span>
+            <p><strong>$Dividend = Divisor \times Quotient + Remainder$</strong></p>
+            <p>The degree of the remainder is always less than the degree of the divisor.</p>
+        </div>
+
+        <h3>Practice Questions (Non-Zero Remainder):</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find the quotient and the remainder:
+                <br>(i) $-6a^2 + 29a - 30$ by $3a - 4$
+                <br>(ii) $y^4 - y^2 + 4$ by $y^2 - 4$
+            </li>
+            <li><strong>Q2:</strong> Divide and verify the result:
+                <br>(i) $y^3 - 8$ by $y - 2$
+                <br>(ii) $p^4 + p^3 - p^2 + 1$ by $p - 1$
+            </li>
+            <li><strong>Q3:</strong> Find out whether or not the first polynomial is a factor of the second:
+                <br>(i) $x^2 + 3$, $4x^4 + 7x^2 - 15$
+                <br>(ii) $x + 11$, $x^2 + 9x - 22$
+            </li>
+        </ul>
+
+        <h2>Brain Teasers (Advanced Practice)</h2>
+        <ul>
+            <li><strong>Q1:</strong> Divide $-39x^4$ by $\sqrt{13}x^2$.</li>
+            <li><strong>Q2:</strong> Divide $8p^3 - 729 - 108p^2 + 486p$ by $2p - 9$ and write down quotient and remainder. Check your answer.</li>
+            <li><strong>Q3:</strong> Divide $p^4 + \frac{63}{4}p^2 - 5$ by $p^2 - \frac{1}{4}$.</li>
+            <li><strong>Q4:</strong> Find whether $3x + 2$ is a factor of $3x^4 + 5x^3 - x^2 + 13x + 10$.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan â¤ï¸</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Reaching the Age of Adolescence - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- IMAGE PLACEHOLDER --- */
+        .img-placeholder {
+            border: 2px dashed var(--meta-text);
+            background-color: var(--example-bg);
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            border-radius: 8px;
+            color: var(--example-text);
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        .img-placeholder strong {
+            color: var(--blue-border);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .img-placeholder em {
+            color: var(--pink-border);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Reaching the Age of Adolescence</h1>
+
+        <h2>1. Introduction to Adolescence and Puberty</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple, minimalist 2D flat vector graphic on a pure white background. It shows a timeline of human growth: a crawling baby, a small child walking with a school bag, a teenager (adolescent), and a fully grown adult. A bold arrow connects the child to the teenager, labeled "Adolescence". Clean educational style, no complex shading.
+        </div>
+        <p>The life cycle of human beings consists of three main stages of development: childhood, adulthood, and old age. Between childhood and adulthood lies a crucial transitional phase of physical and mental human development known as adolescence.</p>
+        <p>The term 'adolescence' is derived from a Latin word <em>'adolescere'</em>, which means 'to grow into maturity'. It is the period of life when the body undergoes changes, leading to reproductive maturity. This period usually begins around the age of 11 and lasts up to 18 or 19 years of age. Since this period covers the 'teens' (13 to 19 years of age), adolescents are also called <strong>teenagers</strong>.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>What is Puberty?</strong> The period during adolescence when the reproductive organs begin to function and a boy or girl becomes sexually mature is called <strong>puberty</strong>. Puberty ends when an adolescent reaches complete reproductive maturity.</p>
+        </div>
+
+        <h2>2. Changes at Puberty</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A clean 2D vector diagram on a pure white background showing the outline of a teenage boy's neck and head. Clearly highlight a small bulge on the front of the throat/neck area and label it "Adam's Apple". Flat, vibrant colors, simple educational design.
+        </div>
+        <p>During puberty, the human body undergoes several sudden and noticeable physical changes. These include:</p>
+
+        <ul>
+            <li><strong>Increase in Height:</strong> The most conspicuous change during puberty is the sudden increase in height. The long bones (bones of the arms and the legs) elongate, making a person tall. Initially, girls grow faster than boys, but by about 18 years of age, both reach their maximum height.</li>
+            <li><strong>Change in Body Shape:</strong> In boys, the shoulders broaden and the chest becomes wider. In girls, the region below the waist becomes wider.</li>
+            <li><strong>Voice Change:</strong> At puberty, the voice box (or larynx) begins to grow. In boys, the growing voice box can be seen as a protruding part of the throat called the <strong>Adam's apple</strong>. Their voice becomes deep and hoarse. In girls, the voice box is smaller and their voice generally remains high-pitched.</li>
+            <li><strong>Increased Activity of Sweat and Sebaceous Glands:</strong> The secretion of sweat glands and sebaceous (oil) glands increases dramatically during this period. This often leads to the development of acne and pimples on the face of many teenagers.</li>
+            <li><strong>Development of Sex Organs:</strong> In boys, the testes and penis develop completely, and the testes begin to produce sperms. In girls, the ovaries enlarge and start releasing mature eggs (ova).</li>
+            <li><strong>Mental, Intellectual, and Emotional Maturity:</strong> Adolescents experience a change in their way of thinking. They become more independent, self-conscious, and their intellectual capacity reaches a peak. They often experience mood swings due to hormonal changes.</li>
+        </ul>
+
+        <h2>3. Secondary Sexual Characters</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector graphic on a pure white background showing male and female symbols. On the male side (blue symbol), draw simple flat icons representing secondary traits: a razor for facial hair and a barbell for muscle growth. On the female side (pink symbol), draw icons for broader hips and breast development. Clean, minimalist and highly readable.
+        </div>
+        <p>You have learned that testes and ovaries are the primary reproductive organs. During puberty, certain external features begin to develop which help to easily distinguish males from females. These features are called <strong>secondary sexual characters</strong>.</p>
+        
+        <ul>
+            <li><strong>In Boys:</strong> Facial hair (moustaches and beards) begins to grow. Hair develops on the chest, under the arms, and in the pubic region. Muscles become stronger and more prominent.</li>
+            <li><strong>In Girls:</strong> Breasts begin to develop. Hair grows under the arms and in the pubic region.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Role of Hormones:</strong> All these changes that occur at puberty are tightly controlled by chemical messengers called <strong>hormones</strong>. The male hormone is called <strong>Testosterone</strong> (released by the testes), and the female hormone is called <strong>Estrogen</strong> (released by the ovaries).</p>
+        </div>
+
+        <h2>4. Endocrine Glands and Hormones</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector illustration on a pure white background. Outline of a gender-neutral human body highlighting major endocrine glands with bright, distinct colored dots: Pituitary (in the brain), Thyroid (in the neck), Adrenal (above the kidneys), and Pancreas (in the abdomen). Flat educational style, no background clutter.
+        </div>
+        <p>Hormones are secreted by specialized organs called <strong>endocrine glands</strong>. These are also called <em>ductless glands</em> because they pour their secretions directly into the bloodstream without any tubes or ducts.</p>
+
+        <ul>
+            <li><strong>Pituitary Gland:</strong> Also known as the "master gland". It is attached to the brain and secretes the <strong>growth hormone</strong>. It also controls the functioning of other endocrine glands (like the testes and ovaries).</li>
+            <li><strong>Thyroid Gland:</strong> Located in the neck, it secretes <strong>thyroxine</strong>. A deficiency of iodine limits thyroxine production, leading to a disease called <em>goitre</em> (a swollen neck).</li>
+            <li><strong>Pancreas:</strong> Located near the stomach, it secretes <strong>insulin</strong>. A lack of insulin leads to a high blood sugar disease known as <em>diabetes</em>.</li>
+            <li><strong>Adrenal Glands:</strong> Located just above the kidneys, they secrete <strong>adrenaline</strong>. This hormone helps the body adjust to stress when one is very angry, embarrassed, or worried.</li>
+        </ul>
+
+        <h2>5. Reproductive Phase of Life in Humans</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector graphic on a pure white background. A circular calendar or cycle graphic highlighting a 28-day period, with roughly 4-5 days shaded in pink to clearly represent the menstrual cycle. Minimalist flat design, modern and clean.
+        </div>
+        <p>Adolescents become capable of reproduction when their testes and ovaries begin to produce gametes. In females, the reproductive phase begins at puberty (10-12 years) and generally lasts until the age of 45-50 years.</p>
+        
+        <h3>The Menstrual Cycle</h3>
+        <p>In females, one mature ovum (egg) is released by one of the ovaries approximately every 28 to 30 days. During this period, the wall of the uterus becomes thick to receive a fertilised egg (if pregnancy occurs). If fertilisation does <em>not</em> occur, the unfertilised egg and the thickened lining of the uterus are shed off along with blood vessels. This causes bleeding in women, which is called <strong>menstruation</strong>.</p>
+        
+        <p><strong>Menarche:</strong> The first menstrual flow that begins at puberty is termed menarche.</p>
+        <p><strong>Menopause:</strong> At around 45 to 50 years of age, the menstrual cycle stops completely. This stoppage of menstruation is termed menopause.</p>
+
+        <h2>6. Sex Determination of the Baby</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A clean 2D vector diagram on a pure white background. Show simple chromosomal pairing: A large pink egg labeled with an 'X' chromosome. Next to it, two small blue sperm cells, one labeled 'X' and one labeled 'Y'. Arrows point downwards to show combinations: 'XX' (Girl) and 'XY' (Boy). Bright flat colors.
+        </div>
+        <p>Inside the nucleus of every human cell, there are 23 pairs of thread-like structures called chromosomes. Out of these, one pair (the 23rd pair) consists of the <strong>sex chromosomes</strong>, named X and Y.</p>
+        
+        <ul>
+            <li>A female always has two X chromosomes (<strong>XX</strong>). Thus, every unfertilised egg always has one X chromosome.</li>
+            <li>A male has one X and one Y chromosome (<strong>XY</strong>). Thus, sperm cells are of two kinds: half contain an X chromosome, and the other half contain a Y chromosome.</li>
+        </ul>
+
+        <p>When a sperm containing an <strong>X</strong> chromosome fertilises the egg, the zygote will have two X chromosomes (XX) and will develop into a <strong>female child (girl)</strong>. When a sperm containing a <strong>Y</strong> chromosome fertilises the egg, the zygote will have an XY combination and will develop into a <strong>male child (boy)</strong>. Therefore, the sex of the unborn child depends entirely on the chromosomes contributed by the father.</p>
+
+        <h2>7. Needs of Adolescents (Health and Hygiene)</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector illustration on a pure white background showing healthy adolescent habits. Left side: A neat plate filled with a balanced diet (apple, carrot, slice of bread). Right side: A teenager happily jogging in athletic wear. Flat, vibrant colors, no background clutter.
+        </div>
+        <p>Because the body is growing rapidly during adolescence, an individual's physical and mental well-being requires special attention.</p>
+        
+        <ul>
+            <li><strong>Nutritional Needs (Balanced Diet):</strong> A balanced diet means the meal includes proteins, carbohydrates, fats, vitamins, and minerals in the right proportions. Adolescents strictly need iron-rich foods (like leafy vegetables, jaggery, meat, and citrus fruits) as iron builds blood. Junk food and fast food should be avoided as they lack essential nutrients.</li>
+            <li><strong>Personal Hygiene:</strong> The increased activity of sweat glands makes the body smell. Daily bathing and keeping all body parts exceptionally clean is necessary to prevent severe bacterial infections.</li>
+            <li><strong>Physical Exercise:</strong> Walking, playing outdoor games, and regular physical exercise keep the body physically fit, release stress, and maintain mental sharpness.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Say "NO" to Drugs:</strong> Adolescence is a period of heightened mental activity and emotional confusion. If anyone suggests that you will get relief if you take some drugs or pills, just say 'NO' unless prescribed by a doctor. Drugs are addictive. They ruin health, happiness, and destroy one's entire future. Remember, physical changes at this age are natural—do not feel insecure or stressed about them.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

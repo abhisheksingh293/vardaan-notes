@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Categories of Computers and Computer Languages - CS - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid var(--toggle-border);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+            font-weight: bold;
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Computer Science • Chapter 1</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Categories of Computers and Computer Languages</h1>
+
+        <div class="blue-box">
+            <span class="box-label">Introduction</span>
+            <p>Just like you need different equipment to play different sports (a tennis racquet for tennis, a bat for cricket), computers are designed to carry out specific tasks. Over the years, computers have changed drastically in size, speed, storage capacity, cost, and appearance.</p>
+        </div>
+
+        <h2>1. Types of Computers</h2>
+        <p>Computers are divided into various categories based on their size, speed, processing power, and cost.</p>
+
+        <h3>1.1 Microcomputers</h3>
+        <ul>
+            <li>These computers work on a single <strong>microprocessor</strong> (a miniature electronic chip containing all necessary CPU components).</li>
+            <li>Designed to be used by a single person.</li>
+            <li><strong>Examples:</strong> Desktop computers, Personal Computers (PCs) used in offices, schools, and homes. Dell, Apple, HP, and IBM are some manufacturers.</li>
+        </ul>
+
+        <h3>1.2 Minicomputers</h3>
+        <ul>
+            <li>Have more processing power and memory than microcomputers.</li>
+            <li>Can support hundreds of users simultaneously.</li>
+            <li>A large number of input and output devices can be attached.</li>
+            <li><strong>Examples:</strong> CDC 1700 and HP 3000.</li>
+        </ul>
+
+        <h3>1.3 Mainframe Computers</h3>
+        <ul>
+            <li>Very large and expensive computers with massive memory and data storage.</li>
+            <li>Can carry out billions of instructions per second for many people at the same time.</li>
+            <li>Mostly used in big hospitals, airlines, and banks.</li>
+            <li><strong>Examples:</strong> IBM Z series.</li>
+        </ul>
+
+        <h3>1.4 Supercomputers</h3>
+        <ul>
+            <li>The most powerful computers in terms of processing speed and memory.</li>
+            <li>Extremely expensive and capable of executing billions of instructions per second.</li>
+            <li>Used for scientific research, weather forecasting, underground studies, and aircraft designing.</li>
+            <li><strong>Examples:</strong> CRAY-1 and IBM's Blue Gene.</li>
+        </ul>
+
+        <h3>1.5 Mobile Computers</h3>
+        <p>The smallest computers designed to be carried around by the user.</p>
+        <ul>
+            <li><strong>Netbook:</strong> A low-power notebook computer smaller than a laptop. Usually lacks a DVD drive (e.g., ASUS Eee PC).</li>
+            <li><strong>E-book reader:</strong> A small handheld device used to read e-books and digital media (e.g., Amazon Kindle).</li>
+            <li><strong>Tablets:</strong> Portable computers with a touchscreen interface, larger than a smartphone but smaller than a netbook (e.g., Apple iPad, Microsoft Surface).</li>
+            <li><strong>Smartphones:</strong> A combination of a mobile phone and a computer system.</li>
+            <li><strong>PMP (Portable Media Player):</strong> Stores and plays audio, images, and videos.</li>
+        </ul>
+
+        <h3>1.6 Game Consoles & Embedded Computers</h3>
+        <ul>
+            <li><strong>Game Consoles:</strong> Devices used for playing computer games on a TV screen using a handheld controller (e.g., Microsoft Xbox, Sony PlayStation, Nintendo Wii).</li>
+            <li><strong>Embedded Computers:</strong> A computer integrated into another device to perform a specific function (also called a microcontroller). Used in modern TVs, motor vehicles, digital cameras, microwaves, ATMs, and digital watches.</li>
+        </ul>
+
+        <h2>2. Computer Languages</h2>
+        <p>To communicate with a computer, we must use a language that the computer understands. These are divided into four main categories:</p>
+
+        <h3>2.1 Machine Language (First Generation - 1GL)</h3>
+        <ul>
+            <li>The most basic computer language, written in binary form (0s and 1s).</li>
+            <li>The <strong>only</strong> language directly understood by a computer.</li>
+            <li>Executes very quickly.</li>
+            <li><strong>Machine dependent:</strong> A program written for one machine will not work on another.</li>
+            <li>Difficult for humans to use as programmers must remember machine codes.</li>
+        </ul>
+
+        <h3>2.2 Assembly Language (Second Generation - 2GL)</h3>
+        <ul>
+            <li>Uses symbols and abbreviations instead of 0s and 1s, making it easier for human beings to understand and locate errors.</li>
+            <li>Execution of programs is slower compared to machine language.</li>
+            <li>Also <strong>machine dependent</strong>.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Low-Level Languages</span>
+            <p>Both First Generation (Machine Language) and Second Generation (Assembly Language) are considered <strong>Low-Level Languages (LLL)</strong>.</p>
+        </div>
+
+        <h3>2.3 High-Level Languages (Third Generation - 3GL)</h3>
+        <ul>
+            <li>Developed to run on any type of computer (Machine Independent).</li>
+            <li>Use English words and mathematical operators, making them easy to learn, read, and write.</li>
+            <li><strong>Examples:</strong> C, C++, JAVA, FORTRAN, BASIC, COBOL.</li>
+        </ul>
+
+        <h3>2.4 Fourth Generation Languages (4GL)</h3>
+        <ul>
+            <li>Modern, highly user-friendly high-level languages.</li>
+            <li>Designed to reduce overall time, effort, and cost of software development.</li>
+            <li>Very high speed of execution compared to previous generations.</li>
+            <li><strong>Examples:</strong> SQL, Oracle, Ruby.</li>
+        </ul>
+
+        <h3>2.5 Artificial Intelligence Languages (Fifth Generation - 5GL)</h3>
+        <ul>
+            <li>Used for developing Artificial Intelligence-based programs.</li>
+            <li>Primary goal is to make the computer solve problems <em>without</em> the programmer having to write a step-by-step algorithm.</li>
+            <li>Aims to make computers think and react like human beings.</li>
+            <li><strong>Examples:</strong> Mercury, OPS5, PROLOG.</li>
+        </ul>
+
+        <h2>3. Working of a Translator</h2>
+        <p>Since a computer only understands Machine Language (0s and 1s), programs written in High-level or Assembly languages (called <strong>Source Code</strong>) cannot be run directly. They must be converted into Machine Language (called <strong>Machine Code</strong>) using a Translator.</p>
+
+        <h3>Types of Translators</h3>
+        <ul>
+            <li><strong>Assembler:</strong> Translates a program written in assembly language into machine language.</li>
+            <li><strong>Compiler:</strong> Translates a program written in a high-level language into machine language <em>in one go</em>.</li>
+            <li><strong>Interpreter:</strong> Translates a program written in a high-level language into machine language <em>line by line</em>.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Compiler vs Interpreter</span>
+            <table>
+                <tr>
+                    <th>Compiler</th>
+                    <th>Interpreter</th>
+                </tr>
+                <tr>
+                    <td>Translates the entire program in one go.</td>
+                    <td>Translates the code line by line.</td>
+                </tr>
+                <tr>
+                    <td>Errors are reported <em>after</em> the entire program is translated, making debugging more difficult.</td>
+                    <td>Stops translation when the first error is encountered, making the process of removing errors easier and quicker.</td>
+                </tr>
+                <tr>
+                    <td>Programming languages such as C and C++ use compilers.</td>
+                    <td>Programming languages such as Python, BASIC, and Ruby use interpreters.</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

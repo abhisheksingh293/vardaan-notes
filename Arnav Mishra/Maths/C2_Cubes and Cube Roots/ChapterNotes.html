@@ -1,0 +1,609 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Cubes and Cube Roots - Vardaan Learning Institute</title>
+    
+    <!-- MathJax Configuration and Script -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- DIAGRAMS & IMAGES --- */
+        .diagram-container { width: 28%; max-width: 190px; min-width: 140px; float: right; margin: 8px 0 14px 18px; text-align: center; }
+.diagram-container:nth-of-type(even) { float: left; margin: 8px 18px 14px 0; }
+        .ai-image { width: 100%; max-width: 100%; height: auto; border-radius: 0; border: none; box-shadow: none; transition: none; display: block; }
+        html.dark-mode .ai-image { filter: invert(1); opacity: 1; }
+        .ai-prompt-box { background-color: var(--example-bg); border: 1px dashed var(--pink-border); padding: 15px; margin: 20px auto; max-width: 85%; text-align: left; border-radius: 8px; font-family: monospace; font-size: 0.95rem; color: var(--text-main); }
+        .ai-prompt-box strong { color: var(--blue-border); }
+        svg.concept-diagram { max-width: 100%; height: auto; margin: 20px auto; display: block; }
+
+        
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .image-float-right { float: right; width: 45%; max-width: 360px; margin: 8px 0 14px 18px; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        .image-float-left { float: left; width: 45%; max-width: 360px; margin: 8px 18px 14px 0; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        html.dark-mode .image-float-right, html.dark-mode .image-float-left { filter: invert(1); opacity: 1; }
+        
+
+        @media (max-width: 768px) {
+            .diagram-container,
+            .diagram-container:nth-of-type(even),
+            .image-float-right,
+            .image-float-left {
+                float: none !important;
+                display: block !important;
+                width: 90% !important;
+                max-width: 500px !important;
+                min-width: 0 !important;
+                margin: 20px auto !important;
+                clear: both !important;
+            }
+        }
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Maths â€¢ Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Cubes and Cube Roots</h1>
+        
+        <p>
+            <img src="../images/C2_PerfectCube3D.png" alt="Perfect Cube 3x3x3" class="image-float-right ai-image">
+            In this chapter, we will expand our understanding of exponents from square (power of 2) to <strong>exponent three</strong>. We will learn to calculate the cubes of positive and negative rational numbers, recognize perfect cubes, and extract cube roots through various methods including prime factorisation and estimation.</p>
+        <div class="clearfix"></div>
+
+        
+
+        <h2>1. Cubes and Perfect Cubes</h2>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Cube of a Number:</strong> The cube of a number is the product obtained by multiplying the number by itself three times. It is read as the number raised to the power 3.</p>
+            <p>For a number $n$, its cube is $n^3 = n \times n \times n$.</p>
+            <p><strong>Perfect Cube:</strong> A number $n$ is a perfect cube if there is an integer $m$ such that $n = m \times m \times m$. Example: $64 = 4 \times 4 \times 4$, so 64 is a perfect cube.</p>
+        </div>
+
+        <h3>Checking for Perfect Cubes</h3>
+        <p>To check if a number is a perfect cube, we express it as a product of its prime factors. If the prime factors can be grouped into <strong>triplets</strong> (groups of three identical factors) and no factor is left ungrouped, the number is a perfect cube.</p>
+
+        <p><strong>Example 1: Is 216 a perfect cube?</strong></p>
+        <img src="../images/C2_PrimeTriplets.png" alt="Prime Triplet Grouping" class="image-float-right ai-image" style="width: 45%; max-width: 360px; margin-top: 5px;">
+        <ul>
+            <li>Step 1: Resolve 216 into prime factors: $216 = 2 \times 2 \times 2 \times 3 \times 3 \times 3$</li>
+            <li>Step 2: Group them in triplets: $\underline{2 \times 2 \times 2} \times \underline{3 \times 3 \times 3} = 2^3 \times 3^3$</li>
+            <li>Step 3: No factor is left over. Hence, 216 is a perfect cube. $216 = (2 \times 3)^3 = 6^3$.</li>
+        </ul>
+        <div class="clearfix"></div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Making a Perfect Cube:</strong> If prime factors are left ungrouped, the number is NOT a perfect cube. To make it a perfect cube:</p>
+            <ul>
+                <li><strong>Multiply</strong> by the missing factors to complete the triplet.</li>
+                <li><strong>Divide</strong> by the extra left-out factors to remove them completely.</li>
+            </ul>
+        </div>
+
+        <h3>Topic 1 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Which of the following numbers are perfect cubes? <br> (a) 4096 &nbsp; (b) 108 &nbsp; (c) 392</li>
+            <li><strong>Q2:</strong> Find the smallest number by which 3087 must be multiplied so that the product is a perfect cube.</li>
+            <li><strong>Q3:</strong> Find the smallest number by which 8788 be divided so that the quotient is a perfect cube.</li>
+        </ul>
+
+        <h2>2. Properties of Cubes of Numbers</h2>
+        <p>By observing the cubes of natural numbers (e.g., $2^3 = 8, 3^3 = 27, 4^3 = 64, 5^3 = 125$), we can deduce several powerful properties.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact File</span>
+            <ul>
+                <li><strong>Property I:</strong> The cube of an <strong>even</strong> number is always even. The cube of an <strong>odd</strong> number is always odd.</li>
+                <li><strong>Property II:</strong> The cube of any multiple of 2 is always divisible by <strong>8</strong>. (e.g., $4^3 = 64$, which is divisible by 8).</li>
+                <li><strong>Property III:</strong> The cube of any multiple of 3 is always divisible by <strong>27</strong>. (e.g., $9^3 = 729$, which is divisible by 27).</li>
+                <li><strong>Property IV:</strong> The cube of a <strong>negative</strong> number is always negative. (e.g., $(-5)^3 = -5 \times -5 \times -5 = -125$).</li>
+                <li><strong>Property V:</strong> The cube of a <strong>positive</strong> number is always positive.</li>
+                <li><strong>Property VI:</strong> The cube of a rational number is equal to the cube of its numerator divided by the cube of its denominator: $\left(\frac{a}{b}\right)^3 = \frac{a^3}{b^3}$.</li>
+            </ul>
+        </div>
+
+        <h3>Topic 2 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find the cubes of the following numbers: <br> (a) 13 &nbsp; (b) 0.06 &nbsp; (c) $\frac{2}{3}$ &nbsp; (d) -7</li>
+            <li><strong>Q2:</strong> True or False: Perfect cubes may end with exactly two zeros.</li>
+            <li><strong>Q3:</strong> Prove that if a number is tripled, then its cube is 27 times the cube of the given number.</li>
+        </ul>
+
+        <h2>3. Cube Roots and Interesting Patterns</h2>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Cube Root:</strong> Finding the cube root is the reverse process of cubing a number. If $m$ is the cube root of $n$, we write it as $m = \sqrt[3]{n}$.</p>
+            <p>For example, since $3^3 = 27$, the cube root of 27 is 3, written as $\sqrt[3]{27} = 3$.</p>
+        </div>
+
+        <h3>Fascinating Patterns Involving Cubic Numbers</h3>
+        <ul>
+            <li><strong>Pattern I (Sum of Consecutive Odd Numbers):</strong> The cube of a number $n$ can be expressed as the sum of $n$ consecutive odd numbers.<br>
+            $1^3 = 1$ <br>
+            $2^3 = 3 + 5$ <br>
+            $3^3 = 7 + 9 + 11$ <br>
+            $4^3 = 13 + 15 + 17 + 19$</li>
+            
+            <li><strong>Pattern II (Difference of Consecutive Cubes):</strong> The difference between the cubes of two consecutive numbers follows a specific formula:<br>
+            $n^3 - (n-1)^3 = 1 + n \times (n-1) \times 3$ <br>
+            Example: $4^3 - 3^3 = 1 + 4 \times 3 \times 3 = 1 + 36 = 37$.</li>
+            
+            <li><strong>Pattern III (Accumulative Sums):</strong> The sequence generated by $1 + n(n+1) \times 3$ gives the sum needed to reach the next cube.<br>
+            $1^3 = 1$ <br>
+            $2^3 = 1 + 7$ <br>
+            $3^3 = 1 + 7 + 19$ <br>
+            $4^3 = 1 + 7 + 19 + 37$</li>
+        </ul>
+
+        <h3>Topic 3 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Express $5^3$ as the sum of consecutive odd numbers.</li>
+            <li><strong>Q2:</strong> Using the pattern for the difference of consecutive cubes, find the value of $10^3 - 9^3$ without actually calculating the cubes.</li>
+        </ul>
+
+        <h2>4. Finding Cube Roots</h2>
+
+        <h3>A. Cube Root by Prime Factorisation</h3>
+        <p>We can find the exact cube root of a perfect cube using prime factorisation.</p>
+        <ol>
+            <li>Resolve the given perfect cube into its prime factors.</li>
+            <li>Group the identical prime factors into triplets.</li>
+            <li>Take one factor out of each triplet.</li>
+            <li>Multiply all the factors taken from the triplets to get the cube root.</li>
+        </ol>
+
+        <p><strong>Example: Find $\sqrt[3]{2744}$</strong></p>
+        <ul>
+            <li>$2744 = \underline{2 \times 2 \times 2} \times \underline{7 \times 7 \times 7}$</li>
+            <li>$\sqrt[3]{2744} = 2 \times 7 = 14$</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Cube Root of a Negative Number:</strong> For any positive integer $x$, the cube root of $-x$ is the negative of the cube root of $x$.</p>
+            <p>Formula: $\sqrt[3]{-x} = -\sqrt[3]{x}$</p>
+            <p>Example: $\sqrt[3]{-3375} = -\sqrt[3]{3375} = -15$</p>
+        </div>
+
+        <h3>B. Cube Root of Rational Numbers</h3>
+        <p>If $x$ and $y$ (where $y \neq 0$) are perfect cubes, then the cube root of their fraction is the fraction of their cube roots.</p>
+        <p>Formula: $\sqrt[3]{\frac{x}{y}} = \frac{\sqrt[3]{x}}{\sqrt[3]{y}}$</p>
+        <p>Example: $\sqrt[3]{\frac{729}{1000}} = \frac{\sqrt[3]{729}}{\sqrt[3]{1000}} = \frac{9}{10}$</p>
+
+        <h3>C. Cube Root through Estimation</h3>
+        <p>If we know a number is a perfect cube, we can estimate its cube root very quickly without factorisation.</p>
+        <p><strong>Example: Estimate the cube root of 175616</strong></p>
+        <img src="../images/C2_CubeEstimation.png" alt="Cube Root Estimation" class="image-float-left ai-image" style="width: 45%; max-width: 360px; margin-top: 5px;">
+        <ol>
+            <li><strong>Step 1:</strong> Form groups of three digits starting from the rightmost digit. <br>
+            Groups: <strong>175</strong> and <strong>616</strong></li>
+            <li><strong>Step 2:</strong> Look at the first group (616). Its unit digit is 6. Since we know $6^3 = 216$ (ends in 6), the ones digit of our required cube root must be <strong>6</strong>.</li>
+            <li><strong>Step 3:</strong> Look at the second group (175). Find the consecutive perfect cubes it lies between. We know $5^3 = 125$ and $6^3 = 216$. <br>
+            Since $125 < 175 < 216$ (or $5^3 < 175 < 6^3$), we take the smaller number, which is <strong>5</strong>. This is the tens digit.</li>
+            <li><strong>Result:</strong> $\sqrt[3]{175616} = 56$.</li>
+        </ol>
+        <div class="clearfix"></div>
+
+        <h3>Topic 4 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find the cube root of 216000 by prime factorisation.</li>
+            <li><strong>Q2:</strong> Evaluate: $\sqrt[3]{-474552}$.</li>
+            <li><strong>Q3:</strong> Find the cube root of the rational number: $\frac{-512}{343}$.</li>
+            <li><strong>Q4:</strong> Evaluate: $\sqrt[3]{8 \times 125}$.</li>
+            <li><strong>Q5:</strong> Find the cube root of the following numbers through estimation: <br> (a) 10648 &nbsp; (b) 91125</li>
+            <li><strong>Q6:</strong> Evaluate: $\sqrt[3]{\frac{0.027}{0.008}} + \sqrt{\frac{0.09}{0.04}} - 1$.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan Ã¢ÂÂ¤Ã¯Â¸Â</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+

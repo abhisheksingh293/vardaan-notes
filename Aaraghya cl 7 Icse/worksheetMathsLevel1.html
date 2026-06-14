@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- ANSWER KEY STYLING --- */
+        .answer-key-container {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; 
+            font-size: 10pt; padding: 10px 0;
+        }
+        .ans-item { margin-bottom: 2px; }
+        .ans-item .ans-num { font-weight: bold; color: var(--text-secondary); margin-right: 5px; }
+        @media (max-width: 600px) {
+            .answer-key-container { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Mathematics Practice Worksheet - Level 2</div>
+            <div class="meta-info">
+                <span>Especially designed for: Aaraghya</span> 
+                <span>Class: 7 (ICSE)</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Integers</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">Evaluate: $(-15) + (+27) - (-12)$</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">Find the sum of $-56$ and the additive inverse of $24$.</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">Subtract $-38$ from the sum of $15$ and $-22$.</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">Find the product: $(-8) \times (-5) \times (+3) \times (-2)$</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">Divide $-144$ by $-12$ and add $-8$ to the quotient.</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">Simplify: $|-25| - |-10| + |-3|$</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">Find the value of $x$ if $x \div (-7) = 12$.</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">State whether true or false: The product of three negative integers is a positive integer.</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">Simplify using BODMAS: $45 \div [(-3) \times (-3)] - 2$</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">Simplify: $18 - [15 - \{6 - (5 - 3)\}]$</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">Evaluate: $(-2)^3 \times (-3)^2$</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">Verify the distributive property: $a \times (b + c) = (a \times b) + (a \times c)$ for $a = -4$, $b = 5$, $c = -2$.</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">What must be added to $-23$ to get $15$?</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">The temperature of a city was $-5^\circ\text{C}$ at night. During the day, it rose by $12^\circ\text{C}$. What was the daytime temperature?</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">An elevator descends into a mine shaft at the rate of $6\text{ m/min}$. If the descent starts from $10\text{ m}$ above ground level, how long will it take to reach $-350\text{ m}$?</div></div>
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">In a class test containing 15 questions, 4 marks are given for every correct answer and $-2$ marks are given for every incorrect answer. Aaraghya attempts all questions but only 9 of his answers are correct. What is his total score?</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">A submarine is situated at $800\text{ m}$ below sea level. If it ascends $250\text{ m}$, what is its new position?</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">Rahul's bank account has a balance of ₹ $5000$. He withdraws ₹ $2400$ on Monday, deposits ₹ $1500$ on Tuesday, and withdraws ₹ $1800$ on Wednesday. Find his final balance.</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">Evaluate: $[(-18) \div 6] \times [(-4) + (-2)]$</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">Find the integer which when multiplied by $-1$ gives $-45$.</div></div>
+        </div>
+
+        <div class="chapter-header">Section B: Fractions</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">Convert $5 \frac{3}{7}$ into an improper fraction.</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">Reduce $\frac{144}{180}$ to its simplest form.</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">Arrange the fractions in ascending order: $\frac{2}{3}, \frac{5}{6}, \frac{4}{9}, \frac{7}{12}$</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">Evaluate: $3 \frac{1}{4} + 2 \frac{5}{8}$</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">Subtract $1 \frac{5}{6}$ from $4 \frac{1}{3}$.</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">Simplify: $\frac{5}{8} + \frac{3}{4} - \frac{1}{2}$</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">Multiply: $2 \frac{2}{5} \times 1 \frac{1}{4}$</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">Find the value of $\frac{3}{7}$ of $42\text{ kg}$.</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">Divide: $\frac{8}{15} \div \frac{16}{25}$</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">Evaluate: $5 \frac{1}{2} \div 2 \frac{1}{5}$</div></div>
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">Simplify using BODMAS: $\frac{3}{4} + \frac{1}{2} \times \frac{4}{5}$</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">Simplify: $\left(\frac{2}{3} \div \frac{4}{9}\right) \times \frac{5}{6}$</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">By what number should $3 \frac{1}{3}$ be multiplied to get $10$?</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">Find the reciprocal of $4 \frac{2}{5}$.</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">A wire of length $12 \frac{1}{2}\text{ m}$ is cut into 10 pieces of equal length. Find the length of each piece.</div></div>
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">Aaraghya reads $\frac{1}{5}$ of a book in 1 hour. How much of the book will he read in $2 \frac{1}{2}$ hours?</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">Out of $40$ students in a class, $\frac{3}{5}$ are boys. Find the number of girls in the class.</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">Ravi ate $\frac{2}{7}$ part of an apple and his sister ate the remaining part. How much part of the apple did his sister eat? Who had the larger share?</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">A car runs $16\text{ km}$ using 1 litre of petrol. How much distance will it cover using $2 \frac{3}{4}$ litres of petrol?</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">Find the perimeter of a rectangular park whose length is $15 \frac{1}{2}\text{ m}$ and breadth is $10 \frac{2}{3}\text{ m}$.</div></div>
+        </div>
+
+        <div class="chapter-header">Section C: Decimals</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">Convert $0.045$ into a fraction in its simplest form.</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">Express $\frac{17}{8}$ as a decimal number.</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">Arrange in descending order: $3.5, 3.05, 3.55, 3.005$</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">Add: $14.5 + 0.086 + 5.12$</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">Subtract $18.47$ from $25.2$.</div></div>
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">What should be added to $45.62$ to get $60$?</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">Find the product: $4.25 \times 1.6$</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">Evaluate: $0.05 \times 0.09 \times 1000$</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">Divide: $14.4 \div 1.2$</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">Evaluate: $0.0256 \div 0.016$</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">Simplify: $1.5 \times 2.4 - 0.8 \times 1.2$</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">Convert $45\text{ mm}$ into meters using decimals.</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">Express $2\text{ kg } 50\text{ g}$ in kilograms using decimals.</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">If $1\text{ kg}$ of apples costs ₹ $85.50$, find the cost of $3.5\text{ kg}$ of apples.</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">A tailor needs $1.25\text{ m}$ of cloth to stitch a shirt. How many shirts can he stitch from $25\text{ m}$ of cloth?</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">The side of an equilateral triangle is $4.6\text{ cm}$. Find its perimeter.</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">A two-wheeler covers a distance of $55.3\text{ km}$ in one litre of petrol. How much distance will it cover in $10$ litres of petrol?</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">Find the average of $4.2, 3.8, 7.6, \text{ and } 2.4$.</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">The product of two decimals is $1.824$. If one of them is $0.64$, find the other.</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">A rectangular field has an area of $48.6\text{ sq. m}$. If its length is $8.1\text{ m}$, find its breadth.</div></div>
+        </div>
+
+        <div class="chapter-header" style="page-break-before: always;">Answer Key</div>
+        <div class="answer-key-container">
+            <div class="ans-item"><span class="ans-num">1.</span> 24</div>
+            <div class="ans-item"><span class="ans-num">2.</span> -80</div>
+            <div class="ans-item"><span class="ans-num">3.</span> 31</div>
+            <div class="ans-item"><span class="ans-num">4.</span> -240</div>
+            <div class="ans-item"><span class="ans-num">5.</span> 4</div>
+            <div class="ans-item"><span class="ans-num">6.</span> 18</div>
+            <div class="ans-item"><span class="ans-num">7.</span> -84</div>
+            <div class="ans-item"><span class="ans-num">8.</span> False</div>
+            <div class="ans-item"><span class="ans-num">9.</span> 3</div>
+            <div class="ans-item"><span class="ans-num">10.</span> 7</div>
+            <div class="ans-item"><span class="ans-num">11.</span> -72</div>
+            <div class="ans-item"><span class="ans-num">12.</span> Proved</div>
+            <div class="ans-item"><span class="ans-num">13.</span> 38</div>
+            <div class="ans-item"><span class="ans-num">14.</span> 7°C</div>
+            <div class="ans-item"><span class="ans-num">15.</span> 60 min</div>
+            <div class="ans-item"><span class="ans-num">16.</span> 24</div>
+            <div class="ans-item"><span class="ans-num">17.</span> -550 m</div>
+            <div class="ans-item"><span class="ans-num">18.</span> ₹ 2300</div>
+            <div class="ans-item"><span class="ans-num">19.</span> 18</div>
+            <div class="ans-item"><span class="ans-num">20.</span> 45</div>
+            <div class="ans-item"><span class="ans-num">21.</span> 38/7</div>
+            <div class="ans-item"><span class="ans-num">22.</span> 4/5</div>
+            <div class="ans-item"><span class="ans-num">23.</span> 4/9, 7/12, 2/3, 5/6</div>
+            <div class="ans-item"><span class="ans-num">24.</span> 47/8</div>
+            <div class="ans-item"><span class="ans-num">25.</span> 5/2</div>
+            <div class="ans-item"><span class="ans-num">26.</span> 7/8</div>
+            <div class="ans-item"><span class="ans-num">27.</span> 3</div>
+            <div class="ans-item"><span class="ans-num">28.</span> 18 kg</div>
+            <div class="ans-item"><span class="ans-num">29.</span> 5/6</div>
+            <div class="ans-item"><span class="ans-num">30.</span> 5/2</div>
+            <div class="ans-item"><span class="ans-num">31.</span> 23/20</div>
+            <div class="ans-item"><span class="ans-num">32.</span> 5/4</div>
+            <div class="ans-item"><span class="ans-num">33.</span> 3</div>
+            <div class="ans-item"><span class="ans-num">34.</span> 5/22</div>
+            <div class="ans-item"><span class="ans-num">35.</span> 5/4 m</div>
+            <div class="ans-item"><span class="ans-num">36.</span> 1/2 book</div>
+            <div class="ans-item"><span class="ans-num">37.</span> 16 girls</div>
+            <div class="ans-item"><span class="ans-num">38.</span> 5/7, Sister</div>
+            <div class="ans-item"><span class="ans-num">39.</span> 44 km</div>
+            <div class="ans-item"><span class="ans-num">40.</span> 157/3 m</div>
+            <div class="ans-item"><span class="ans-num">41.</span> 9/200</div>
+            <div class="ans-item"><span class="ans-num">42.</span> 2.125</div>
+            <div class="ans-item"><span class="ans-num">43.</span> 3.55, 3.5, 3.05, 3.005</div>
+            <div class="ans-item"><span class="ans-num">44.</span> 19.706</div>
+            <div class="ans-item"><span class="ans-num">45.</span> 6.73</div>
+            <div class="ans-item"><span class="ans-num">46.</span> 14.38</div>
+            <div class="ans-item"><span class="ans-num">47.</span> 6.8</div>
+            <div class="ans-item"><span class="ans-num">48.</span> 4.5</div>
+            <div class="ans-item"><span class="ans-num">49.</span> 12</div>
+            <div class="ans-item"><span class="ans-num">50.</span> 1.6</div>
+            <div class="ans-item"><span class="ans-num">51.</span> 2.64</div>
+            <div class="ans-item"><span class="ans-num">52.</span> 0.045 m</div>
+            <div class="ans-item"><span class="ans-num">53.</span> 2.05 kg</div>
+            <div class="ans-item"><span class="ans-num">54.</span> ₹ 299.25</div>
+            <div class="ans-item"><span class="ans-num">55.</span> 20 shirts</div>
+            <div class="ans-item"><span class="ans-num">56.</span> 13.8 cm</div>
+            <div class="ans-item"><span class="ans-num">57.</span> 553 km</div>
+            <div class="ans-item"><span class="ans-num">58.</span> 4.5</div>
+            <div class="ans-item"><span class="ans-num">59.</span> 2.85</div>
+            <div class="ans-item"><span class="ans-num">60.</span> 6 m</div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

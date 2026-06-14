@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class 11 Chemistry Chapter 1 Notes | Some Basic Concepts of Chemistry</title>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111827;
+      --muted: #4b5563;
+      --line: #e5e7eb;
+      --soft: #f9fafb;
+      --accent: #f97316;
+      --accent-2: #fb923c;
+      --accent-soft: #fff7ed;
+      --green: #0f766e;
+      --green-soft: #ecfeff;
+      --blue-soft: #eff6ff;
+      --blue: #1d4ed8;
+      --red-soft: #fef2f2;
+      --red: #b91c1c;
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #ffffff 0%, #fffaf5 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      line-height: 1.75;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    .hero {
+      background: radial-gradient(circle at top right, rgba(249,115,22,0.18), transparent 28%),
+                  radial-gradient(circle at bottom left, rgba(29,78,216,0.10), transparent 26%),
+                  #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .kicker {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid #fed7aa;
+      border-radius: 999px;
+      padding: 8px 14px;
+      margin-bottom: 16px;
+    }
+
+    h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 12px; }
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      margin-top: 0;
+    }
+    h3 { font-size: 1.15rem; }
+    p { margin: 0 0 12px; color: var(--text); }
+    .muted { color: var(--muted); }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 6px 20px rgba(17,24,39,0.04);
+    }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      color: var(--text);
+    }
+    .badge strong { color: var(--accent); }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 22px 0 4px;
+    }
+    .toc a {
+      text-decoration: none;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: 0 6px 18px rgba(17,24,39,0.04);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .toc a:hover { transform: translateY(-2px); border-color: #fdba74; }
+    .toc small { display: block; color: var(--muted); margin-top: 4px; }
+
+    section.card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 24px;
+      margin-top: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .box {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .box.blue { background: var(--blue-soft); }
+    .box.green { background: var(--green-soft); }
+    .box.red { background: var(--red-soft); }
+    .box.orange { background: var(--accent-soft); }
+
+    ul { margin: 10px 0 0 20px; padding: 0; }
+    li { margin: 6px 0; }
+    .formula {
+      font-size: 1.05rem;
+      padding: 12px 14px;
+      background: #fff;
+      border: 1px dashed #fdba74;
+      border-radius: 14px;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+    .formula strong { color: var(--accent); }
+
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      min-width: 760px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 13px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #fff7ed;
+      font-weight: 700;
+      color: #7c2d12;
+    }
+    tr:last-child td { border-bottom: none; }
+
+    .note {
+      border-left: 5px solid var(--accent);
+      background: linear-gradient(90deg, rgba(249,115,22,0.09), transparent 70%);
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 14px 0;
+    }
+    .important {
+      border-left-color: var(--red);
+      background: linear-gradient(90deg, rgba(185,28,28,0.08), transparent 70%);
+    }
+    .jee {
+      border-left-color: var(--blue);
+      background: linear-gradient(90deg, rgba(29,78,216,0.08), transparent 70%);
+    }
+    .board {
+      border-left-color: var(--green);
+      background: linear-gradient(90deg, rgba(15,118,110,0.08), transparent 70%);
+    }
+
+    .ai-placeholder {
+      border: 1.5px dashed #d1d5db;
+      border-radius: 22px;
+      background: repeating-linear-gradient(
+        135deg,
+        #ffffff,
+        #ffffff 12px,
+        #fafafa 12px,
+        #fafafa 24px
+      );
+      padding: 18px;
+      margin: 14px 0;
+    }
+    .ai-placeholder .label {
+      display: inline-block;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .ai-placeholder pre {
+      white-space: pre-wrap;
+      margin: 10px 0 0;
+      font-family: inherit;
+      color: var(--muted);
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 14px;
+      border-radius: 16px;
+      overflow-x: auto;
+    }
+
+    .mini-list { list-style: none; margin: 0; padding: 0; }
+    .mini-list li {
+      margin: 8px 0;
+      padding: 10px 12px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .pill {
+      font-size: 0.88rem;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .top-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .hero, section.card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="kicker">Class 11 Chemistry • Chapter 1</div>
+      <h1>Some Basic Concepts of Chemistry</h1>
+      <p class="muted">Board school level + JEE Main level notes, written in a clean, student-friendly format with full formulas, concept flow, and exam-focused highlights.</p>
+
+      <div class="badges">
+        <span class="badge"><strong>NCERT</strong> aligned</span>
+        <span class="badge"><strong>Board</strong> exam ready</span>
+        <span class="badge"><strong>JEE</strong> Main support</span>
+        <span class="badge"><strong>MathJax</strong> formulas included</span>
+      </div>
+
+      <div class="top-grid">
+        <div class="panel">
+          <h3>What this chapter builds</h3>
+          <p>This chapter is the foundation of chemical calculations. It teaches how to measure matter, express composition, convert between mass and moles, and solve stoichiometric problems confidently.</p>
+          <p>It is one of the most important chapters for both school exams and competitive exams because almost every later chapter uses mole concept, concentration terms, and balancing-based calculations.</p>
+        </div>
+        <div class="panel">
+          <h3>High-yield topics</h3>
+          <ul class="mini-list">
+            <li>Measurement and SI units</li>
+            <li>Laws of chemical combination</li>
+            <li>Atomic mass, molecular mass, molar mass</li>
+            <li>Mole concept and Avogadro constant</li>
+            <li>Empirical and molecular formula</li>
+            <li>Stoichiometry and limiting reagent</li>
+            <li>Concentration terms and ppm</li>
+            <li>Significant figures and dimensional analysis</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <a href="#intro">1. Introduction<small>What chemistry studies and why this chapter matters</small></a>
+      <a href="#measurement">2. Measurement in Chemistry<small>Units, mass, amount, and counting</small></a>
+      <a href="#laws">3. Laws of Chemical Combination<small>Core experimental laws</small></a>
+      <a href="#dalton">4. Dalton’s Atomic Theory<small>Historical model and its limits</small></a>
+      <a href="#mole">5. Mole Concept<small>Most important calculation tool</small></a>
+      <a href="#formula">6. Formulae and Composition<small>Empirical and molecular formula</small></a>
+      <a href="#stoich">7. Stoichiometry<small>Reaction calculations and limiting reagent</small></a>
+      <a href="#concentration">8. Concentration Terms<small>Molarity, molality, mole fraction</small></a>
+      <a href="#sigfig">9. Significant Figures<small>Rounding rules for chemistry</small></a>
+      <a href="#dimensional">10. Dimensional Analysis<small>Units-based problem solving</small></a>
+      <a href="#examples">11. Exam Examples<small>Board and JEE style solved patterns</small></a>
+      <a href="#revision">12. Final Revision<small>Quick memory sheet and formula sheet</small></a>
+    </nav>
+
+    <section class="card" id="intro">
+      <h2>1) Introduction to Chemistry</h2>
+      <div class="grid-2">
+        <div class="box">
+          <h3>Meaning of chemistry</h3>
+          <p>Chemistry is the branch of science that studies the composition, structure, properties, and changes of matter. It explains why substances behave the way they do and how one substance can be transformed into another.</p>
+        </div>
+        <div class="box blue">
+          <h3>Why this chapter matters</h3>
+          <p>Before solving chemical reactions, you must know how to count atoms, measure matter, and convert between different representations such as mass, moles, molecules, and concentration.</p>
+        </div>
+      </div>
+
+      <div class="note board">
+        <strong>Board focus:</strong> definitions, unit conversions, basic formulae, and direct numerical problems.
+      </div>
+      <div class="note jee">
+        <strong>JEE focus:</strong> mole relation, stoichiometry, limiting reagent, concentration calculations, and multi-step conversions.
+      </div>
+
+      <div class="ai-placeholder">
+        <div class="label">AI IMAGE PLACEHOLDER 1 — "Chemistry is Everywhere"</div>
+        <pre>Generate a clean, professional educational infographic on a pure white background (#ffffff) showing how chemistry connects daily life: water, medicines, fertilizers, food, batteries, air, fabric, and cleaning products. Use a modern flat-vector style with subtle orange, blue, and teal accents. Keep the composition spacious and minimal, with short labels only, no dense text, and clear visual icons arranged in a balanced circular layout. Make it suitable for Class 11 students and include a neat central title area with no clutter.</pre>
+      </div>
+    </section>
+
+    <section class="card" id="measurement">
+      <h2>2) Measurement in Chemistry</h2>
+      <p>Chemistry depends on measurement. A correct answer must use correct units, correct precision, and correct conversion factors.</p>
+
+      <div class="grid-3">
+        <div class="box green">
+          <h3>SI units used often</h3>
+          <ul>
+            <li>Mass: kilogram (kg), gram (g)</li>
+            <li>Amount of substance: mole (mol)</li>
+            <li>Length: metre (m)</li>
+            <li>Temperature: kelvin (K)</li>
+            <li>Volume: cubic metre (m³), litre (L), millilitre (mL)</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Common relations</h3>
+          <ul>
+            <li>\(1\,\text{L} = 10^{-3}\,\text{m}^3\)</li>
+            <li>\(1\,\text{mL} = 1\,\text{cm}^3\)</li>
+            <li>\(1\,\text{amu} = 1\,\text{u}\)</li>
+            <li>\(1\,\text{mol} = 6.022\times10^{23}\) entities</li>
+          </ul>
+        </div>
+        <div class="box orange">
+          <h3>Counting in chemistry</h3>
+          <p>Atoms and molecules are too small to count one by one. So chemists use the mole as a counting unit, just like a dozen represents 12 objects.</p>
+        </div>
+      </div>
+
+      <div class="formula">
+        <strong>Avogadro constant:</strong> \(N_A = 6.022\times10^{23}\,\text{mol}^{-1}\)
+      </div>
+      <div class="formula">
+        <strong>Number of particles:</strong> \(N = n\,N_A\)
+      </div>
+      <div class="formula">
+        <strong>Amount of substance:</strong> \(n = \dfrac{\text{given mass}}{\text{molar mass}}\)
+      </div>
+
+      <div class="note important">
+        <strong>Important:</strong> The mole links microscopic particles to macroscopic mass. Almost every numerical problem in this chapter begins with mole conversion.
+      </div>
+    </section>
+
+    <section class="card" id="laws">
+      <h2>3) Laws of Chemical Combination</h2>
+      <p>These laws were established experimentally. They are the foundation of stoichiometry and atomic theory.</p>
+
+      <div class="grid-2">
+        <div class="box">
+          <h3>Law of conservation of mass</h3>
+          <p>Mass is neither created nor destroyed during a chemical reaction.</p>
+          <div class="formula">\(\text{Mass of reactants} = \text{Mass of products}\)</div>
+        </div>
+        <div class="box">
+          <h3>Law of definite proportions</h3>
+          <p>A pure compound always contains the same elements in the same fixed proportion by mass.</p>
+        </div>
+        <div class="box">
+          <h3>Law of multiple proportions</h3>
+          <p>When two elements form more than one compound, the masses of one element that combine with a fixed mass of the other are in simple whole-number ratios.</p>
+        </div>
+        <div class="box">
+          <h3>Gay-Lussac’s law of gaseous volumes</h3>
+          <p>At the same temperature and pressure, volumes of reacting gases and gaseous products are in simple whole-number ratios.</p>
+        </div>
+      </div>
+
+      <div class="note board">
+        <strong>Board focus:</strong> memorise the statement of each law and one simple example.
+      </div>
+      <div class="note jee">
+        <strong>JEE focus:</strong> relate these laws to balancing, formula determination, and gas volume stoichiometry.
+      </div>
+    </section>
+
+    <section class="card" id="dalton">
+      <h2>4) Dalton’s Atomic Theory</h2>
+      <p>Dalton proposed that matter is made of tiny indivisible particles called atoms. This idea explained the laws of chemical combination, but later experiments showed that atoms are divisible into subatomic particles.</p>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <h3>Main postulates</h3>
+          <ul>
+            <li>Matter consists of extremely small particles called atoms.</li>
+            <li>Atoms of the same element are similar in mass and properties.</li>
+            <li>Atoms of different elements differ in properties and mass.</li>
+            <li>Atoms combine in fixed, simple whole-number ratios to form compounds.</li>
+            <li>Atoms are neither created nor destroyed in chemical reactions.</li>
+          </ul>
+        </div>
+        <div class="box red">
+          <h3>Limitations</h3>
+          <ul>
+            <li>Atoms are divisible into electrons, protons, and neutrons.</li>
+            <li>Atoms of the same element can have different masses (isotopes).</li>
+            <li>Atoms of different elements can have the same mass number (isobars).</li>
+            <li>Atoms are not always indivisible in nuclear reactions.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="mole">
+      <h2>5) Mole Concept, Atomic Mass, Molecular Mass, and Molar Mass</h2>
+      <p>This is the most important calculation block in the chapter. Master these definitions and formulas.</p>
+
+      <div class="grid-2">
+        <div class="box">
+          <h3>Atomic mass</h3>
+          <p>The average mass of an atom of an element relative to \(\tfrac{1}{12}\)th the mass of one carbon-12 atom.</p>
+        </div>
+        <div class="box">
+          <h3>Molecular mass</h3>
+          <p>The sum of atomic masses of all atoms present in one molecule of a substance.</p>
+        </div>
+        <div class="box">
+          <h3>Formula mass</h3>
+          <p>Used for ionic compounds. It is the sum of atomic masses in the formula unit.</p>
+        </div>
+        <div class="box">
+          <h3>Molar mass</h3>
+          <p>Mass of one mole of a substance. Its numerical value is equal to atomic/molecular/formula mass in grams per mole.</p>
+        </div>
+      </div>
+
+      <div class="formula">\(n = \dfrac{m}{M}\)</div>
+      <div class="formula">\(M = \dfrac{m}{n}\)</div>
+      <div class="formula">\(N = nN_A\)</div>
+      <div class="formula">\(n = \dfrac{N}{N_A}\)</div>
+
+      <div class="grid-3">
+        <div class="box green">
+          <h3>Examples of molar mass</h3>
+          <p>\(M(\text{H}_2\text{O}) = 2(1) + 16 = 18\,\text{g mol}^{-1}\)</p>
+          <p>\(M(\text{CO}_2) = 12 + 2(16) = 44\,\text{g mol}^{-1}\)</p>
+        </div>
+        <div class="box orange">
+          <h3>Number of particles</h3>
+          <p>1 mol of any substance contains the same number of particles.</p>
+          <p>This is true whether the particles are atoms, molecules, ions, or formula units.</p>
+        </div>
+        <div class="box blue">
+          <h3>Common conversions</h3>
+          <p>Mass \(\leftrightarrow\) moles \(\leftrightarrow\) particles</p>
+          <p>Volume of gas at STP is often taken as \(22.4\,\text{L mol}^{-1}\) in school-level problems, but use the exact condition given in the question.</p>
+        </div>
+      </div>
+
+      <div class="note important">
+        <strong>Exam trap:</strong> Do not mix up atomic mass unit (u), gram, and gram per mole. Atomic mass is a relative number; molar mass is a measurable mass per mole.
+      </div>
+    </section>
+
+    <section class="card" id="formula">
+      <h2>6) Percentage Composition, Empirical Formula, and Molecular Formula</h2>
+      <p>These topics help determine the composition of a compound from experimental data.</p>
+
+      <div class="grid-2">
+        <div class="box">
+          <h3>Percentage composition</h3>
+          <div class="formula">
+            \[\%\,\text{of element} = \frac{\text{mass of element in 1 mol of compound}}{\text{molar mass of compound}} \times 100\]
+          </div>
+        </div>
+        <div class="box">
+          <h3>Empirical formula</h3>
+          <p>The simplest whole-number ratio of atoms of each element present in a compound.</p>
+        </div>
+        <div class="box">
+          <h3>Molecular formula</h3>
+          <p>The actual number of atoms of each element present in a molecule.</p>
+        </div>
+        <div class="box">
+          <h3>Relation</h3>
+          <div class="formula">\(\text{Molecular formula} = (\text{Empirical formula})_n\)</div>
+          <div class="formula">\(n = \dfrac{\text{molar mass}}{\text{empirical formula mass}}\)</div>
+        </div>
+      </div>
+
+      <div class="note board">
+        <strong>Board focus:</strong> learn the steps for empirical formula from percentage composition.
+      </div>
+      <div class="note jee">
+        <strong>JEE focus:</strong> be comfortable converting percentage data into empirical formula under time pressure.
+      </div>
+
+      <div class="ai-placeholder">
+        <div class="label">AI IMAGE PLACEHOLDER 2 — "Empirical vs Molecular Formula"</div>
+        <pre>Generate a white-background educational diagram showing the difference between empirical formula and molecular formula using a simple visual comparison. Left side: a molecule model with labeled atoms in a clean minimal style. Right side: the simplified whole-number ratio form. Use very little text, professional typography, and a neat two-panel layout. Keep the design airy, student-friendly, and suitable for a chemistry notes webpage. No dark background, no clutter, no dense paragraphs.</pre>
+      </div>
+    </section>
+
+    <section class="card" id="stoich">
+      <h2>7) Stoichiometry and Limiting Reagent</h2>
+      <p>Stoichiometry deals with the quantitative relationship among reactants and products in a balanced chemical equation.</p>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <h3>How to solve stoichiometry problems</h3>
+          <ul>
+            <li>Write and balance the equation.</li>
+            <li>Convert the given quantity into moles.</li>
+            <li>Use the mole ratio from the balanced equation.</li>
+            <li>Convert the required quantity back into mass, volume, or particles.</li>
+          </ul>
+        </div>
+        <div class="box red">
+          <h3>Limiting reagent</h3>
+          <p>The reactant that is completely consumed first in a reaction and therefore limits the amount of product formed.</p>
+        </div>
+      </div>
+
+      <div class="formula">\(\text{Moles of product} = \text{Moles of reactant} \times \frac{\text{coefficient of product}}{\text{coefficient of reactant}}\)</div>
+
+      <div class="grid-2">
+        <div class="box">
+          <h3>Excess reagent</h3>
+          <p>The reactant that remains after the limiting reagent is fully used up.</p>
+        </div>
+        <div class="box">
+          <h3>Percent yield</h3>
+          <div class="formula">\[\%\,\text{yield} = \frac{\text{actual yield}}{\text{theoretical yield}} \times 100\]</div>
+        </div>
+      </div>
+
+      <div class="note important">
+        <strong>JEE alert:</strong> In mixed-reagent problems, always check the limiting reagent first before calculating final product mass.
+      </div>
+    </section>
+
+    <section class="card" id="concentration">
+      <h2>8) Concentration Terms of Solutions</h2>
+      <p>A solution’s concentration describes how much solute is present in a given amount of solution or solvent.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Formula</th>
+              <th>Unit</th>
+              <th>Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mass percentage</td>
+              <td>\(\dfrac{\text{mass of solute}}{\text{mass of solution}} \times 100\)</td>
+              <td>% (w/w)</td>
+              <td>Useful for solid-liquid systems</td>
+            </tr>
+            <tr>
+              <td>Volume percentage</td>
+              <td>\(\dfrac{\text{volume of solute}}{\text{volume of solution}} \times 100\)</td>
+              <td>% (v/v)</td>
+              <td>Useful for liquid-liquid solutions</td>
+            </tr>
+            <tr>
+              <td>Mass by volume percentage</td>
+              <td>\(\dfrac{\text{mass of solute}}{\text{volume of solution}} \times 100\)</td>
+              <td>% (w/v)</td>
+              <td>Common in laboratories and medicine</td>
+            </tr>
+            <tr>
+              <td>Parts per million</td>
+              <td>\(\dfrac{\text{mass of solute}}{\text{mass of solution}} \times 10^6\)</td>
+              <td>ppm</td>
+              <td>Used for very dilute solutions</td>
+            </tr>
+            <tr>
+              <td>Mole fraction</td>
+              <td>\(\chi_i = \dfrac{n_i}{\sum n_i}\)</td>
+              <td>No unit</td>
+              <td>Useful in gas mixtures and colligative properties</td>
+            </tr>
+            <tr>
+              <td>Molarity</td>
+              <td>\(M = \dfrac{\text{moles of solute}}{\text{volume of solution in L}}\)</td>
+              <td>mol L\(^{-1}\)</td>
+              <td>Temperature dependent</td>
+            </tr>
+            <tr>
+              <td>Molality</td>
+              <td>\(m = \dfrac{\text{moles of solute}}{\text{mass of solvent in kg}}\)</td>
+              <td>mol kg\(^{-1}\)</td>
+              <td>Temperature independent</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note board">
+        <strong>Board focus:</strong> especially remember the difference between molarity and molality.
+      </div>
+      <div class="note jee">
+        <strong>JEE focus:</strong> mole fraction and molarity-molality conversion appear repeatedly in higher-level questions.
+      </div>
+    </section>
+
+    <section class="card" id="sigfig">
+      <h2>9) Significant Figures</h2>
+      <p>Significant figures indicate the precision of a measured value. They are important in numerical answers and in rounding final results.</p>
+
+      <div class="grid-2">
+        <div class="box">
+          <h3>Rules</h3>
+          <ul>
+            <li>All non-zero digits are significant.</li>
+            <li>Zeros between non-zero digits are significant.</li>
+            <li>Leading zeros are not significant.</li>
+            <li>Trailing zeros are significant only if a decimal point is present.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Operations</h3>
+          <ul>
+            <li>In addition/subtraction, match decimal places.</li>
+            <li>In multiplication/division, match the least number of significant figures.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note important">
+        <strong>Very important:</strong> The final answer should not be over-precise beyond the precision of the given data.
+      </div>
+    </section>
+
+    <section class="card" id="dimensional">
+      <h2>10) Dimensional Analysis</h2>
+      <p>Dimensional analysis is the method of using units to check and convert quantities. It is one of the safest methods in chemistry calculations.</p>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <h3>Uses</h3>
+          <ul>
+            <li>Conversion of units</li>
+            <li>Checking whether an equation is dimensionally correct</li>
+            <li>Deriving conversion factors</li>
+            <li>Solving multi-step numerical problems</li>
+          </ul>
+        </div>
+        <div class="box green">
+          <h3>Idea</h3>
+          <p>Multiply by conversion fractions so that unwanted units cancel out and only the required unit remains.</p>
+        </div>
+      </div>
+
+      <div class="formula">
+        Example: \(\text{g} \to \text{mol} \to \text{particles}\)
+      </div>
+      <div class="formula">
+        \[\frac{\text{given quantity}}{1} \times \frac{\text{desired unit}}{\text{present unit}}\]
+      </div>
+    </section>
+
+    <section class="card" id="examples">
+      <h2>11) Exam-Oriented Solved Patterns</h2>
+
+      <div class="grid-2">
+        <div class="box">
+          <h3>Pattern 1: Mass to moles</h3>
+          <p><strong>Question type:</strong> How many moles are present in 36 g of water?</p>
+          <p><strong>Solution:</strong> \(M(\text{H}_2\text{O}) = 18\,\text{g mol}^{-1}\)</p>
+          <p>\(n = \dfrac{36}{18} = 2\,\text{mol}\)</p>
+        </div>
+        <div class="box">
+          <h3>Pattern 2: Moles to particles</h3>
+          <p><strong>Question type:</strong> Number of molecules in 0.5 mol of oxygen?</p>
+          <p>\(N = nN_A = 0.5 \times 6.022\times10^{23} = 3.011\times10^{23}\)</p>
+        </div>
+        <div class="box">
+          <h3>Pattern 3: Empirical formula</h3>
+          <p>Convert % composition into mole ratio, divide by the smallest number, and then convert into the simplest whole-number ratio.</p>
+        </div>
+        <div class="box">
+          <h3>Pattern 4: Limiting reagent</h3>
+          <p>Convert both reactants into moles, compare with stoichiometric coefficients, identify the reactant that finishes first, and calculate product from it.</p>
+        </div>
+      </div>
+
+      <div class="note board">
+        <strong>Board style questions:</strong> direct conversions, percentage composition, and standard formula-based numericals.
+      </div>
+      <div class="note jee">
+        <strong>JEE style questions:</strong> mixed stoichiometry, gaseous volume ratios, limiting reagent, and concentration-based calculation chains.
+      </div>
+    </section>
+
+    <section class="card" id="revision">
+      <h2>12) Final Revision Sheet</h2>
+      <div class="grid-2">
+        <div class="box orange">
+          <h3>Must-remember formulas</h3>
+          <ul>
+            <li>\(n = \dfrac{m}{M}\)</li>
+            <li>\(N = nN_A\)</li>
+            <li>\(n = \dfrac{N}{N_A}\)</li>
+            <li>\(\%\,\text{yield} = \dfrac{\text{actual}}{\text{theoretical}}\times100\)</li>
+            <li>\(M = \dfrac{n}{V(\text{in L})}\)</li>
+            <li>\(m = \dfrac{n}{\text{mass of solvent in kg}}\)</li>
+          </ul>
+        </div>
+        <div class="box blue">
+          <h3>What to practice</h3>
+          <ul>
+            <li>Unit conversion problems</li>
+            <li>Mole concept numericals</li>
+            <li>Empirical and molecular formula questions</li>
+            <li>Limiting reagent questions</li>
+            <li>Molarity, molality, ppm, and mole fraction</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note important">
+        <strong>One-line summary:</strong> This chapter is the language of chemical calculation. If this is strong, the rest of chemistry becomes much easier.
+      </div>
+
+      <div class="footer-note">
+        <strong>Reference base for this note:</strong> NCERT Class 11 Chemistry, standard school-level chemistry texts, and common board/JEE preparation patterns.
+        <br />
+        <strong>Suggested references to cross-check:</strong> NCERT Class 11 Chemistry Chapter 1, school chemistry textbook used by your board, and standard preparation books such as H.C. Verma is not relevant here; for chemistry, use a good Class 11 objective/board support book plus your coaching notes and NCERT exercises.
+      </div>
+    </section>
+  </div>
+</body>
+</html>

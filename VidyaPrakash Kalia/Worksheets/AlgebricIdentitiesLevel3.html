@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Algebraic Identities L3</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3 - Red) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef5350;   
+            --bg-color: #3e1f1f;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Algebraic Identities - Level 3 (Challenger)</div>
+        <div class="meta-info">
+            <span>Especially designed for: Aarav</span> 
+            <span>Class: 8 CBSE</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Higher Order Thinking</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">If $x + \frac{1}{x} = 3$, find the value of $x^4 + \frac{1}{x^4}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">If $x^4 + \frac{1}{x^4} = 119$, find the value(s) of $x - \frac{1}{x}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">Simplify: $\frac{(2.39)^2 - (1.61)^2}{2.39 - 1.61}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">What must be added to $9x^2 - 24x + 10$ to make it a perfect square?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">Find the value of $x$ if $25x = 536^2 - 136^2$.</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section B: Advanced Algebraic Manipulation</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">If $a+b=5$ and $a-b=3$, find the value of $8ab(a^2+b^2)$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">Simplify: $(x+y)(x-y)(x^2+y^2)(x^4+y^4)$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">If $3x - 4y = 10$ and $xy = -1$, find the value of $9x^2 + 16y^2$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">Evaluate using a combination of identities: $10.5 \times 9.5$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">Prove algebraically that: $(a^2+b^2)(c^2+d^2) = (ac-bd)^2 + (ad+bc)^2$</div>
+        </div>
+    </div>
+
+    <div class="chapter-header" style="background-color: #ffcdd2;">Answer Key</div>
+    <div class="questions-container">
+        <div class="question-item solution-item">
+            <span class="q-num">1.</span><div class="q-content"><span class="ans-label">Ans:</span> Step 1: $(x+\frac{1}{x})^2 = 3^2 \implies x^2 + \frac{1}{x^2} + 2 = 9 \implies x^2 + \frac{1}{x^2} = 7$. <br> Step 2: $(x^2 + \frac{1}{x^2})^2 = 7^2 \implies x^4 + \frac{1}{x^4} + 2(x^2)(\frac{1}{x^2}) = 49 \implies x^4 + \frac{1}{x^4} = 47$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">2.</span><div class="q-content"><span class="ans-label">Ans:</span> $(x^2 + \frac{1}{x^2})^2 = x^4 + \frac{1}{x^4} + 2 = 119 + 2 = 121 \implies x^2 + \frac{1}{x^2} = 11$ (ignoring negative as squares sum is positive). <br> Now, $(x - \frac{1}{x})^2 = x^2 + \frac{1}{x^2} - 2 = 11 - 2 = 9 \implies x - \frac{1}{x} = \pm 3$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">3.</span><div class="q-content"><span class="ans-label">Ans:</span> Using $a^2 - b^2 = (a-b)(a+b)$, the numerator becomes $(2.39 - 1.61)(2.39 + 1.61)$. <br> Thus, $\frac{(2.39-1.61)(2.39+1.61)}{(2.39-1.61)} = 2.39 + 1.61 = 4.00$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">4.</span><div class="q-content"><span class="ans-label">Ans:</span> The expression resembles $(3x)^2 - 2(3x)(4) + c^2$. To complete the square $(3x - 4)^2$, the constant term must be $4^2 = 16$. <br> Current constant is $10$. Therefore, $16 - 10 = 6$ must be added.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">5.</span><div class="q-content"><span class="ans-label">Ans:</span> $25x = (536 - 136)(536 + 136) = 400 \times 672$. <br> $x = \frac{400 \times 672}{25} = 16 \times 672 = 10752$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">6.</span><div class="q-content"><span class="ans-label">Ans:</span> Solving linear equations: $2a = 8 \implies a=4$, $b=1$. <br> Expression = $8(4)(1)(4^2 + 1^2) = 32(16+1) = 32(17) = 544$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">7.</span><div class="q-content"><span class="ans-label">Ans:</span> Combine first two terms: $(x^2 - y^2)(x^2 + y^2)(x^4 + y^4)$. <br> Combine again: $(x^4 - y^4)(x^4 + y^4) = x^8 - y^8$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">8.</span><div class="q-content"><span class="ans-label">Ans:</span> Square both sides: $(3x - 4y)^2 = 10^2 \implies 9x^2 - 24xy + 16y^2 = 100$. <br> Substitute $xy = -1 \implies 9x^2 - 24(-1) + 16y^2 = 100 \implies 9x^2 + 16y^2 + 24 = 100 \implies 9x^2 + 16y^2 = 76$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">9.</span><div class="q-content"><span class="ans-label">Ans:</span> $(10 + 0.5)(10 - 0.5) = 10^2 - 0.5^2 = 100 - 0.25 = 99.75$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">10.</span><div class="q-content"><span class="ans-label">Ans:</span> LHS: $(a^2+b^2)(c^2+d^2) = a^2c^2 + a^2d^2 + b^2c^2 + b^2d^2$. <br> RHS: $(ac-bd)^2 + (ad+bc)^2 = (a^2c^2 - 2abcd + b^2d^2) + (a^2d^2 + 2abcd + b^2c^2)$. <br> The $-2abcd$ and $+2abcd$ cancel out, leaving $a^2c^2 + b^2d^2 + a^2d^2 + b^2c^2$. LHS = RHS. Proved.</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

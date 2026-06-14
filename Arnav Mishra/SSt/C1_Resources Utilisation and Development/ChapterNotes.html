@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Resources: Utilisation and Development - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #000000;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            clear: both;
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: hidden; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: hidden; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: hidden; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .newspaper-img {
+            max-width: 45%;
+            border-radius: 8px;
+            border: none;
+            box-shadow: none;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .img-left {
+            float: left;
+            margin: 10px 20px 10px 0;
+        }
+
+        .img-right {
+            float: right;
+            margin: 10px 0 10px 20px;
+        }
+
+        /* Invert Images in Dark Mode */
+        html.dark-mode .newspaper-img {
+            filter: invert(1);
+        }
+
+        @media (max-width: 600px) {
+            .newspaper-img {
+                max-width: 100%;
+                float: none;
+                margin: 10px 0;
+                display: block;
+            }
+        }
+
+        /* --- AI IMAGE PLACEHOLDER (Keep for future additions if needed) --- */
+        .ai-image-placeholder {
+            background-color: var(--example-bg);
+            border: 3px dashed var(--meta-text);
+            border-radius: 12px;
+            padding: 30px 20px;
+            margin: 30px 0;
+            text-align: center;
+            transition: filter 0.3s ease, background-color 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        .ai-image-placeholder svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--meta-text);
+            margin-bottom: 15px;
+        }
+
+        .ai-prompt-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .ai-prompt-text {
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: var(--example-text);
+            background: var(--paper-bg);
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--toggle-border);
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        /* Invert Image Placeholders in Dark Mode */
+        html.dark-mode .ai-image-placeholder {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Resources: Utilisation and Development</h1>
+        
+        <h2>1. Introduction to Resources</h2>
+        <p>Nature has bestowed our Mother Earth with a large variety of rocks, soils, minerals, vegetation, and animals. We use these gifts of nature to fulfill our day-to-day needs, such as air to breathe, water to drink, and food to eat.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Resource:</strong> All the things on earth which are necessary for our existence on this planet are known as resources.</p>
+            <p><strong>Human Resource:</strong> Even human beings are considered a resource because they are an asset. It is only with the help of <strong>human skill</strong> that other resources can be developed and utilized efficiently.</p>
+        </div>
+
+        <img src="../Images/C1_NatureHumans.png" alt="Figure 1: Nature & Humans" class="newspaper-img img-right">
+
+        <h2>2. Human Needs: Changing Over Time</h2>
+        <p>Human needs and wants are <strong>neither uniform</strong> in all parts of the world <strong>nor static</strong> over the years. They generally grow and become complex with the process of change in society.</p>
+        <ul>
+            <li><strong>Ancient Times:</strong> Emphasis was mainly given to satisfying basic needs such as food, clothing, and shelter, which were derived directly from the natural environment.</li>
+            <li><strong>Modern/Advanced Societies:</strong> Greater emphasis is laid on the utilization of resources for satisfying multifarious (diverse and complex) needs of human beings.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>Even today, primitive tribes like the <strong>Pygmies of Africa</strong> eat edible plants, roots, flowers, fruits, and hunt animals to survive, relying purely on direct natural resources.</p>
+        </div>
+
+        <h3>Utility and Value Varies</h3>
+        <p>The utility and value of a resource vary from time to time and place to place.</p>
+        <ul>
+            <li><strong>Past:</strong> Early human civilizations flourished along river valleys because they used water simply for <strong>irrigating fields</strong> and basic survival.</li>
+            <li><strong>Present:</strong> Now, human beings use water for generating <strong>hydroelectricity</strong>, large-scale irrigation, navigation, and running industries.</li>
+        </ul>
+
+        <img src="../Images/C1_ChangingUtility.png" alt="Figure 2: Changing Utility" class="newspaper-img img-left">
+
+        <h2>3. Utilisation of Resources</h2>
+        <p>Resources become usable when they are processed. For example, raw cotton is converted into yarn, which is further processed into fabric, and finally into garments. At various stages, <strong>value addition</strong> is possible by applying human skill and technology.</p>
+        
+        <p>The utilisation of resources depends on several vital factors:</p>
+        <ul>
+            <li><strong>Availability of resources:</strong> The basic presence of raw materials.</li>
+            <li><strong>Skill of human beings:</strong> Knowledge to process the raw material.</li>
+            <li><strong>Availability of capital:</strong> Money and infrastructure to fund extraction and processing.</li>
+            <li><strong>Availability of water:</strong> Crucial for almost all industrial and agricultural processes.</li>
+            <li><strong>Advancement of technology:</strong> Tools, machines, and modern methods.</li>
+            <li><strong>Availability of transport and communication:</strong> Facilities to move goods from source to market.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Mere presence of resources does not guarantee development!</strong> In the initial stages of economic development, resource availability played the main role. Today, capital and technology are equally crucial. For example, the <strong>USA</strong> is developed because it is technologically advanced and self-sufficient, while many <strong>African nations</strong> are less developed despite being rich in resources, due to a lack of skilled labor and technology.</p>
+        </div>
+
+        <h2>4. Classification of Resources</h2>
+        <p>Resources are classified into various categories based on different criteria:</p>
+
+        <h3>A. Classification Based on Renewability</h3>
+        <ul>
+            <li><strong>Renewable Resources:</strong> Also known as <strong>inexhaustible resources</strong>. These can be renewed either naturally or by human efforts. Examples: Solar energy, wind energy, air, and water. Note: The <em>quality</em> of these resources can be affected by improper usage.</li>
+            <li><strong>Non-Renewable Resources:</strong> Also known as <strong>exhaustible resources</strong>. These take millions of years to form or renew. They are available in limited amounts, and complete utilization results in exhaustion. Examples: Coal, petroleum, natural gas. <em>(Note: Some metallic ores like gold and silver are recyclable and can be used again after processing).</em></li>
+        </ul>
+
+        <img src="../Images/C1_Renewability.png" alt="Figure 3: Renewability" class="newspaper-img img-right">
+
+        <h3>B. Classification Based on Origin</h3>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Biotic Resources:</strong> Resources obtained from the biosphere that have life (living beings). They have the capacity to reproduce and regenerate. Examples: Birds, animals, fish, forests.</p>
+            <p><strong>Abiotic Resources:</strong> All non-living resources. They are not renewable (except water). They are in great demand for agriculture and industries. Examples: Land, water, minerals.</p>
+        </div>
+
+        <h3>C. Classification Based on Occurrence</h3>
+        <ul>
+            <li><strong>Natural Resources:</strong> Available from nature and used by human beings to satisfy needs. Examples: Water, minerals, forests. They form the base for a country's development.</li>
+            <li><strong>Man-made Resources:</strong> Resources created by human beings to satisfy their needs. They are developed from natural resources. Examples: Roads, buildings, machines.</li>
+        </ul>
+
+        <h3>D. Classification Based on Development</h3>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Potential Resources:</strong> Available resources in a country which are <em>not fully tapped</em>. They need detailed surveys to estimate quantity and quality. <em>Example: The Arctic sea-bed may hold 25% of the world's undiscovered oil and gas reserves.</em></p>
+            <p><strong>Actual Resources:</strong> Resources which have been <em>thoroughly surveyed</em> and their quantities ascertained. Utilization depends on available technology. <em>Example: Saudi Arabia has 25.9% of the world's surveyed oil reserves.</em></p>
+        </div>
+
+        <h2>5. Sustainable Development and Conservation</h2>
+        <p>The distribution of resources across the world is highly uneven. Rapid population growth has resulted in the over-utilisation of natural resources, leading to their drastic <strong>depletion</strong> (continuous reduction) and <strong>deterioration</strong> (becoming gradually worse) in quality.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Sustainable Development:</strong> Development that takes place without damaging the environment and meets the needs of the present without compromising the ability of future generations to meet their own needs.</p>
+            <p><strong>Conservation:</strong> Sustainable and optimum utilization of resources. It means using resources efficiently and reducing wastage.</p>
+        </div>
+
+        <h3>Why do we need Conservation?</h3>
+        <ul>
+            <li>Most of our resources are limited in supply.</li>
+            <li>Over-use has led to degradation of vital resources like soil, land, and water.</li>
+            <li>We must maintain an ecological balance for the survival of mankind.</li>
+        </ul>
+
+        <h3>Steps for a Sustainable Future:</h3>
+        <ol>
+            <li>Use all renewable resources judiciously.</li>
+            <li>Minimise the depletion of natural resources.</li>
+            <li>Conserve the varied species of flora and fauna.</li>
+            <li>Develop technology and human skills efficiently.</li>
+            <li>Control population growth to reduce the strain on the environment.</li>
+        </ol>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <img src="../Images/C1_Sustainability.png" alt="Figure 4: Sustainability" class="newspaper-img img-left">
+            <p><strong>The 5 R's of Conservation:</strong> Reduce, Reuse, Recycle, Refuse, and Rethink.</p>
+            <p>As Mahatma Gandhi rightly said: <em>"There is enough for everybody's need and not for anybody's greed."</em> We have only one habitable planet; we must care for it.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Agriculture - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #000000;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            clear: both; /* Ensure it starts below all floated images */
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 6px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            display: flow-root; /* Wraps around floated images */
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 12px;
+            font-weight: 600;
+            display: flow-root; /* Wraps around floated images */
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; display: flow-root; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; display: flow-root; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; display: flow-root; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .newspaper-figure {
+            margin: 15px 0;
+            max-width: 48%;
+            border: 1px solid var(--toggle-border);
+            padding: 8px;
+            background: var(--paper-bg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+            display: flow-root; /* Ensures it contains its float context */
+        }
+
+        .newspaper-figure.float-left {
+            float: left;
+            margin: 10px 20px 10px 0;
+            shape-outside: inset(0 0 0 0);
+        }
+
+        .newspaper-figure.float-right {
+            float: right;
+            margin: 10px 0 10px 20px;
+            shape-outside: inset(0 0 0 0);
+        }
+
+        .newspaper-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        .newspaper-caption {
+            font-size: 0.85rem;
+            color: var(--meta-text);
+            margin-top: 8px;
+            text-align: center;
+            font-style: italic;
+            line-height: 1.3;
+            border-top: 1px solid var(--toggle-border);
+            padding-top: 5px;
+        }
+
+        /* Invert Figure/Images in Dark Mode */
+        html.dark-mode .newspaper-figure {
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            border-color: var(--toggle-border);
+        }
+
+        html.dark-mode .newspaper-img {
+            filter: invert(1) brightness(0.9);
+        }
+
+        @media (max-width: 600px) {
+            .newspaper-img {
+                max-width: 100%;
+                float: none;
+                margin: 10px 0;
+                display: block;
+            }
+        }
+
+        /* --- AI IMAGE PLACEHOLDER (Keep for future additions if needed) --- */
+        .ai-image-placeholder {
+            background-color: var(--example-bg);
+            border: 3px dashed var(--meta-text);
+            border-radius: 12px;
+            padding: 30px 20px;
+            margin: 30px 0;
+            text-align: center;
+            transition: filter 0.3s ease, background-color 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        .ai-image-placeholder svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--meta-text);
+            margin-bottom: 15px;
+        }
+
+        .ai-prompt-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .ai-prompt-text {
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: var(--example-text);
+            background: var(--paper-bg);
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--toggle-border);
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        /* Invert Image Placeholders in Dark Mode */
+        html.dark-mode .ai-image-placeholder {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Agriculture</h1>
+        
+        <h2>1. Introduction to Agriculture</h2>
+        <p>Food is the basic requirement of human beings for their survival. Earlier, human beings were entirely dependent upon food gathering, hunting, and fishing for their survival. Gradually, they started growing crops along the river valleys, which led to the beginning of agriculture. This shift helped ancient civilisations to flourish along the river valleys.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Agriculture:</strong> In simple terms, agriculture means cultivation of land. In wider terms, agriculture is the science and art of raising crops, rearing of livestock, forestry, and fishing.</p>
+        </div>
+
+        <figure class="newspaper-figure float-right">
+            <img src="../Images/C5_AgricultureEvolution.png" alt="Evolution of Agriculture" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 1: Transition from Ancient to Modern Agriculture</figcaption>
+        </figure>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Importance of Agriculture:</strong> Most of the population of the world still depends on agriculture for its livelihood, especially in developing countries. India is an agricultural country, making it the <strong>backbone of our country's economic development</strong>.</p>
+            <ul>
+                <li>It supplies food to the people.</li>
+                <li>It creates a huge market for tractors, threshers, harvesters, fertilisers, pesticides, and other industrial products.</li>
+                <li>It helps in providing employment, eradicating poverty, enhancing trade, and earning foreign exchange.</li>
+            </ul>
+        </div>
+
+        <h2>2. Types of Farming</h2>
+        <p>Farming is practiced in various ways across the world depending upon the geographical conditions, demand for produce, labour, and level of technology. It can be broadly classified into two main types:</p>
+
+        <h3>A. Subsistence Farming</h3>
+        <p>This type of farming is practiced to meet the needs of the farmer's family. Traditionally, low levels of technology and household labour are used to produce a small output. It includes:</p>
+        <ul>
+            <li><strong>Intensive Subsistence Agriculture:</strong> The farmer cultivates a small plot of land using simple tools and more labour. Climate with large numbers of days with sunshine and fertile soils permit growing of more than one crop annually on the same plot.</li>
+            <li><strong>Primitive Subsistence Agriculture:</strong> Includes shifting cultivation (slash and burn agriculture) and nomadic herding.</li>
+        </ul>
+
+        <h3>B. Commercial Farming</h3>
+        <p>In commercial farming, crops are grown and animals are reared for sale in the market. The area cultivated and the amount of capital used is large. Most of the work is done by machines. It includes:</p>
+        <ul>
+            <li><strong>Commercial Grain Farming:</strong> Crops are grown for commercial purpose (e.g., wheat and maize in North America).</li>
+            <li><strong>Mixed Farming:</strong> The land is used for growing food and fodder crops and rearing livestock.</li>
+            <li><strong>Plantation:</strong> A type of commercial farming where single crops of tea, coffee, sugarcane, cashew, rubber, banana, or cotton are grown. Large amount of labour and capital are required.</li>
+        </ul>
+
+        <h2>3. Major Crops</h2>
+        <p>A large variety of crops are grown to meet the requirement of the growing population. Crops also supply raw materials for agro-based industries.</p>
+
+        <figure class="newspaper-figure float-left">
+            <img src="../Images/C5_MajorCrops.png" alt="Major Crops Overview" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 2: Classification of Major Agricultural Crops</figcaption>
+        </figure>
+
+        <ul>
+            <li><strong>Food Crops:</strong> 
+                <ul>
+                    <li><strong>Rice:</strong> The major food crop of the world. Needs high temperature, high humidity, and rainfall. Grows best in alluvial clayey soil.</li>
+                    <li><strong>Wheat:</strong> Requires moderate temperature and rainfall during growing season, and bright sunshine at the time of harvest. Thrives best in well-drained loamy soil.</li>
+                </ul>
+            </li>
+            <li><strong>Fibre Crops:</strong>
+                <ul>
+                    <li><strong>Cotton:</strong> Requires high temperature, light rainfall, 210 frost-free days, and bright sunshine. Grows best on black and alluvial soils.</li>
+                    <li><strong>Jute:</strong> Also known as the 'Golden Fibre'. Grows well on alluvial soil and requires high temperature, heavy rainfall, and a humid climate.</li>
+                </ul>
+            </li>
+            <li><strong>Beverage Crops:</strong>
+                <ul>
+                    <li><strong>Tea:</strong> A beverage crop grown on plantations. Requires cool climate and well-distributed high rainfall throughout the year for the growth of its tender leaves. Needs well-drained loamy soils and gentle slopes.</li>
+                    <li><strong>Coffee:</strong> Requires warm and wet climate and well-drained loamy soil. Hill slopes are more suitable for growth.</li>
+                </ul>
+            </li>
+        </ul>
+
+
+        <h2>4. Agricultural Development & Government Initiatives</h2>
+        <p>Agricultural development refers to efforts made to increase farm production in order to meet the growing demand of an increasing population. This can be achieved in many ways such as increasing the cropped area, the number of crops grown, improving irrigation facilities, using fertilisers and high yielding variety of seeds.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Government Initiatives for Farmers in India:</strong></p>
+            <p>Today, farmers' welfare has become a focus to improve the conditions of the Indian farming system. There is a strong need to increase net income, reduce the cost of cultivation, and ensure remunerative prices. Important initiatives include:</p>
+            <ol>
+                <li><strong>Soil Health Card Scheme:</strong> Introduced to assess the nutrient levels available in the soil.</li>
+                <li><strong>Neem-coated Urea:</strong> Promoted to regulate the use of urea and cut down its cost.</li>
+                <li><strong>Paramparagat Krishi Vikas Yojna:</strong> Implemented to promote organic farming.</li>
+                <li><strong>National Crop Insurance Scheme:</strong> Implemented to protect farmers from crop losses due to natural calamities.</li>
+                <li><strong>Minimum Support Price (MSP):</strong> Introduced to eliminate the distress sale of agricultural produce by farmers.</li>
+            </ol>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Physical and Chemical Changes - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 70%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* Made visible on screen as requested */
+            display: flex;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: 9999 !important;
+                opacity: 0.15 !important;
+                mix-blend-mode: multiply !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                pointer-events: none !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 70% !important;
+                opacity: 1 !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Chemistry • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Visible on Screen & Print) -->
+            <div class="contact-info">
+                <span>🌐 <a href="https://vardaanlearning.com" target="_blank">VardaanLearning.com</a></span>
+                <span>📞 <a href="tel:9508841336">9508841336</a></span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Physical and Chemical Changes</h1>
+        
+        <h2>1. Introduction</h2>
+        <p>In our daily life, we constantly observe various changes in our surroundings. These changes happen in states, shapes, sizes, and chemical compositions of matter. Common examples include making a sugar solution, the formation of curd from milk, the rusting of iron, the ripening of fruits, and changing weather.</p>
+
+        <h2>2. Broad Classification of Changes</h2>
+        <p>Changes happening around us can be primarily divided into four categories based on how they occur, their duration, and their reversibility.</p>
+
+        <h3>A. Natural and Man-Made Changes</h3>
+        <ul>
+            <li><strong>Natural Changes:</strong> Changes that take place on their own in nature without any human interference. <em>Examples:</em> Growth of a tree, change of seasons, volcanic eruptions.</li>
+            <li><strong>Man-Made Changes:</strong> Changes that happen due to human actions or under the control of human beings. <em>Examples:</em> Cooking of food, burning of fuel.</li>
+        </ul>
+
+        <h3>B. Periodic and Non-Periodic Changes</h3>
+        <ul>
+            <li><strong>Periodic Changes:</strong> Changes that repeat themselves after a fixed interval of time. <em>Examples:</em> Day and night, beating of a human heart, movement of a pendulum.</li>
+            <li><strong>Non-Periodic Changes:</strong> Changes that do not repeat after a fixed interval of time and occur randomly. <em>Examples:</em> Rusting of iron, volcanic eruptions, earthquakes.</li>
+        </ul>
+
+        <h3>C. Slow and Fast Changes</h3>
+        <ul>
+            <li><strong>Slow Changes:</strong> Changes that take a long time (days, months, or years) to complete. <em>Examples:</em> Formation of curd from milk, rusting of iron, growth of a seedling into a tree.</li>
+            <li><strong>Fast Changes:</strong> Changes that take place in a very short span of time (seconds or minutes). <em>Examples:</em> Burning of a matchstick, bursting of a cracker.</li>
+        </ul>
+
+        <h3>D. Reversible and Irreversible Changes</h3>
+        <ul>
+            <li><strong>Reversible Changes:</strong> A change that can be reversed to obtain the original substance easily. <em>Examples:</em> Stretching of a spring, melting of ice into water (which can be frozen back into ice).</li>
+            <li><strong>Irreversible Changes:</strong> A change that cannot be reversed to get the original substance back. <em>Examples:</em> Curdling of milk, burning of paper.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Note:</strong> A particular change can fall into multiple categories at once. For example, the <strong>rusting of iron</strong> is a natural change, a slow change, a non-periodic change, and an irreversible change all at the same time.</p>
+        </div>
+
+        <h2>3. Physical Changes</h2>
+        <p>Matter undergoes physical changes depending on whether a new substance is formed or not. </p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Physical Change:</strong> A temporary and reversible change in which <strong>no new substance is formed</strong>. Only the physical properties (like state, shape, color, or size) of the substance undergo a change.</p>
+        </div>
+
+        <h3>Examples of Physical Changes:</h3>
+        <ul>
+            <li><strong>Change of State:</strong> Melting of ice into water, and boiling of water into vapour. Cooling the vapour reverses it back to water and then ice.</li>
+            <li><strong>Dissolving Sugar:</strong> Sugar dissolved in water is a physical change because heating the solution evaporates the water, leaving the original sugar crystals behind.</li>
+            <li><strong>Sublimation:</strong> Heating solid camphor or iodine changes it directly into a vapour state without becoming a liquid. On cooling, the vapour turns back into a solid.</li>
+            <li><strong>Expansion of Metals:</strong> A wooden wheel of a bullock cart is fitted with an iron rim. The iron rim is made slightly smaller than the wheel. When heated, the <strong>iron expands</strong> and fits onto the wheel. Pouring cold water causes the iron to <strong>contract</strong> and fit tightly.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Key Characteristics of a Physical Change:</strong><br>
+            1. It is a <strong>temporary</strong> and generally <strong>reversible</strong> change.<br>
+            2. <strong>No new substance</strong> is formed.<br>
+            3. The chemical composition remains exactly the same.<br>
+            4. Usually, there is <strong>no net gain or loss of energy</strong> (heat or light).<br>
+            5. There is <strong>no change in the mass</strong> of the substance.</p>
+        </div>
+
+        <h2>4. Chemical Changes</h2>
+        <p>Unlike physical changes, chemical changes alter the fundamental structure of the matter involved.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Chemical Change:</strong> A permanent change in which the chemical composition and properties of a substance are changed, resulting in the formation of <strong>one or more new substances</strong>.</p>
+        </div>
+
+        <h3>Examples of Chemical Changes:</h3>
+        <ul>
+            <li><strong>Rusting of Iron:</strong> Iron reacts with oxygen and moisture in the air to form a reddish-brown flaky substance called <strong>iron oxide (rust)</strong>.</li>
+            <li><strong>Curdling of Milk:</strong> Adding a few drops of lemon juice or a small amount of curd to warm milk changes it permanently into curd, which has entirely different properties from milk.</li>
+            <li><strong>Reaction of Metals with Acid:</strong> Adding dilute sulphuric acid to a magnesium ribbon produces a new substance (magnesium sulphate) and releases <strong>hydrogen gas</strong> (which burns with a 'pop' sound).</li>
+            <li><strong>Heating Compounds:</strong> Heating green copper carbonate produces two entirely new substances: black copper oxide and carbon dioxide gas.</li>
+            <li><strong>Burning of Sugar:</strong> Heating sugar in a porcelain dish melts it, turns it brown, and finally leaves a black powdery substance (charcoal) while releasing water vapour.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Testing for Gas Evolution (A sign of Chemical Change):</strong><br>
+            When baking soda reacts with vinegar or lemon juice, it produces a fizz. The gas evolved is <strong>carbon dioxide ($CO_{2}$)</strong>. The presence of carbon dioxide is confirmed by passing it through lime water, which turns <strong>milky</strong> due to the formation of calcium carbonate.</p>
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Key Characteristics of a Chemical Change:</strong><br>
+            1. It is a <strong>permanent</strong> and <strong>irreversible</strong> change.<br>
+            2. <strong>New substances</strong> with completely new properties are formed.<br>
+            3. A large amount of <strong>energy (heat/light) is either absorbed or released</strong>.<br>
+            4. The mass of the individual substance may change because matter is either added or removed during the reaction.</p>
+        </div>
+
+        <h2>5. Simultaneous Physical and Chemical Changes</h2>
+        <p>In some cases, physical and chemical changes occur side-by-side at the exact same time.</p>
+
+        <ul>
+            <li><strong>Burning of a Candle:</strong> 
+                <ul>
+                    <li><em>Physical Change:</em> The melting of solid wax into liquid wax, and liquid wax back into solid wax upon cooling.</li>
+                    <li><em>Chemical Change:</em> The liquid wax turning into wax vapour and burning in the air to produce carbon dioxide, water vapour, heat, and light.</li>
+                </ul>
+            </li>
+            <li><strong>Cooking an Egg:</strong>
+                <ul>
+                    <li><em>Chemical Change:</em> The protein in the egg white denatures when heated.</li>
+                    <li><em>Physical Change:</em> The egg white solidifying.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

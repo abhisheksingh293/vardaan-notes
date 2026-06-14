@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Solution Key</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 1) */
+            --primary-color: #2e7d32; 
+            --bg-color: #e8f5e9;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    
+    <script>
+        function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }
+    </script>
+    
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Solution Key: Squares, Cubes & Their Roots - Level 1</div>
+            <div class="meta-info">
+                <span>Document: Evaluator Solution Key (Advik)</span>
+                <span>Class: 8 (ICSE)</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- SECTION A: SQUARES -->
+        <div class="chapter-header">Section A: Properties of Squares (Solutions)</div>
+        <div class="questions-container">
+            <div class="question-item solution-item">
+                <span class="q-num">1.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $225$. (Since $15 \times 15 = 225$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">2.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $625$. (Since $25 \times 25 = 625$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">3.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> No, it is not a perfect square. <br><b>Reason:</b> The number ends with the digit $7$. A perfect square never ends with $2, 3, 7$, or $8$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">4.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $1$. (Since the unit digit of $539$ is $9$, and $9^2 = 81$, the unit digit is $1$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">5.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $1$. (Since the unit digit of $731$ is $1$, and $1^2 = 1$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">6.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $18$ natural numbers. <br><b>Reason:</b> There are $2n$ non-perfect square numbers strictly between the squares of the numbers $n$ and $(n+1)$. Here, $n = 9$. Thus, $2 \times 9 = 18$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">7.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $49 = 1 + 3 + 5 + 7 + 9 + 11 + 13$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">8.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $1.44$. (Since $1.2 \times 1.2 = 1.44$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">9.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $\frac{9}{49}$. (Square the numerator: $3^2=9$; square the denominator: $7^2=49$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">10.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $256$. (The square of an even number is always even, and $256$ is the only even number in the list. $256 = 16^2$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">11.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $169$. (The square of an odd number is always odd. $169 = 13^2$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">12.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $121$. (Since $(-11) \times (-11) = 121$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">13.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> No, $90$ is not a perfect square. <br><b>Reason:</b> Prime factorization of $90 = 2 \times 3^2 \times 5$. Since $2$ and $5$ do not exist in pairs, it is not a perfect square.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">14.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $3$. <br><b>Reason:</b> Prime factorization of $48 = 2^4 \times 3$. The factor $3$ is unpaired, so we must multiply by $3$ to make it a perfect square ($144$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">15.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $19$. <br><b>Reason:</b> Using the property $a^2 - b^2 = (a-b)(a+b)$, $10^2 - 9^2 = (10 - 9)(10 + 9) = 1 \times 19 = 19$.</div>
+            </div>
+        </div>
+
+        <!-- SECTION B: SQUARE ROOTS -->
+        <div class="chapter-header">Section B: Calculating Square Roots (Solutions)</div>
+        <div class="questions-container">
+            <div class="question-item solution-item">
+                <span class="q-num">16.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $14$. <br><b>Steps:</b> Repeatedly subtract consecutive odd numbers ($1, 3, 5, 7, \dots$) from $196$ until $0$ is reached. It takes exactly $14$ steps to reach zero, hence $\sqrt{196} = 14$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">17.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $27$. <br><b>Steps:</b> $729 = 3 \times 3 \times 3 \times 3 \times 3 \times 3 = 3^6$. Taking one from each pair gives $3 \times 3 \times 3 = 27$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">18.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $20$. <br><b>Steps:</b> $400 = 2^4 \times 5^2$. Taking pairs gives $2^2 \times 5 = 4 \times 5 = 20$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">19.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $42$. (Prime factorization $1764 = 2^2 \times 3^2 \times 7^2$. Square root is $2 \times 3 \times 7 = 42$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">20.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $7$. <br><b>Steps:</b> Prime factorization of $252 = 2^2 \times 3^2 \times 7$. The number $7$ is unpaired, so it must be divided by $7$ to leave a perfect square ($36$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">21.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $23$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">22.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $32$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">23.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $3.5$. (Recognizing $\sqrt{1225} = 35$, adjusting the decimal gives $3.5$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">24.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $6.5$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">25.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $\frac{12}{13}$. (Find the square root of numerator $\sqrt{144}=12$ and denominator $\sqrt{169}=13$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">26.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $0.03$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">27.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $30\text{ m}$. (Area $= \text{side}^2$. So, $\text{side} = \sqrt{900} = 30$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">28.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $256$. (Squaring both sides gives $x = 16^2 = 256$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">29.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $11$. ($\sqrt{25} + \sqrt{36} = 5 + 6 = 11$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">30.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $6$. ($\sqrt{100 - 64} = \sqrt{36} = 6$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">31.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $2$. ($\sqrt{100} - \sqrt{64} = 10 - 8 = 2$). No, it is not the same. You must evaluate inside the square root first.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">32.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $10\text{ cm}$. (Area $= \frac{d^2}{2} = 50 \implies d^2 = 100 \implies d = 10$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">33.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $45$ rows. (Let rows be $x$, plants per row be $x$. Total $= x^2 = 2025$. Thus, $x = \sqrt{2025} = 45$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">34.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $900$. <br><b>Steps:</b> Find LCM of $4, 9, 10$ which is $180$. Prime factorization of $180 = 2^2 \times 3^2 \times 5$. The factor $5$ is unpaired. Multiply $180 \times 5 = 900$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">35.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $9$. (Since $9^2 = 81$ is the closest perfect square to $80$).</div>
+            </div>
+        </div>
+
+        <!-- SECTION C: CUBES -->
+        <div class="chapter-header">Section C: Properties of Cubes (Solutions)</div>
+        <div class="questions-container">
+            <div class="question-item solution-item">
+                <span class="q-num">36.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $216$. ($6 \times 6 \times 6 = 216$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">37.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $1331$. ($11 \times 11 \times 11 = 1331$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">38.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $-64$. ($(-4) \times (-4) \times (-4) = -64$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">39.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $7$. (Unit digit is $3$, and $3^3 = 27$. The unit digit of $27$ is $7$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">40.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $2$. (Unit digit is $8$, and $8^3 = 512$. The unit digit of $512$ is $2$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">41.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> No. <br><b>Reason:</b> $243 = 3^5$. The factors of $3$ cannot be grouped entirely into triplets (groups of $3$), so it is not a perfect cube.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">42.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> Yes. <br><b>Reason:</b> $512 = 2^9$. The factors of $2$ can be grouped perfectly into three triplets ($2^3 \times 2^3 \times 2^3$), making it a perfect cube.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">43.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $2$. <br><b>Reason:</b> $256 = 2^8$. It needs one more $2$ to complete the triplet forming $2^9$ ($512$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">44.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $3$. <br><b>Reason:</b> $192 = 2^6 \times 3$. Dividing by the unpaired factor $3$ leaves $2^6$ ($64$), which is a perfect cube.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">45.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $\frac{8}{125}$.</div>
+            </div>
+        </div>
+
+        <!-- SECTION D: CUBE ROOTS -->
+        <div class="chapter-header">Section D: Calculating Cube Roots (Solutions)</div>
+        <div class="questions-container">
+            <div class="question-item solution-item">
+                <span class="q-num">46.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $5$. ($\sqrt[3]{125} = 5$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">47.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $8$. ($512 = 2 \times 2 \times 2 \times 2 \times 2 \times 2 \times 2 \times 2 \times 2 = 2^9$. Root is $2 \times 2 \times 2 = 8$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">48.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $15$. ($3375 = 3^3 \times 5^3$. Cube root is $3 \times 5 = 15$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">49.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $20$. ($\sqrt[3]{8} = 2$, and the three zeros become one zero outside the root).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">50.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $-6$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">51.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $0.3$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">52.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $\frac{4}{7}$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">53.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $10\text{ cm}$. ($\text{Volume} = a^3 = 1000 \implies a = \sqrt[3]{1000} = 10$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">54.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $5$. ($\sqrt[3]{8} + \sqrt[3]{27} = 2 + 3 = 5$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">55.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $20$. ($\sqrt[3]{125} \times \sqrt[3]{64} = 5 \times 4 = 20$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">56.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $6\text{ cm}$. <br><b>Steps:</b> Total Volume $= 3^3 + 4^3 + 5^3 = 27 + 64 + 125 = 216\text{ cm}^3$. The new edge is $\sqrt[3]{216} = 6\text{ cm}$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">57.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $5$. ($\sqrt[3]{1000} - \sqrt[3]{125} = 10 - 5 = 5$).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">58.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> No. It should be divided by $44$. <br><b>Steps:</b> $1188 = 2^2 \times 3^3 \times 11$. The unpaired factors are $2^2 \times 11 = 44$. Dividing by $44$ yields $27$ (a perfect cube).</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">59.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> $0.2$.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">60.</span>
+                <div class="q-content"><span class="ans-label">Answer:</span> True. <br><b>Example:</b> $1^3 = 1$ and $2^3 = 8$. Both $1$ and $8$ are single-digit numbers.</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

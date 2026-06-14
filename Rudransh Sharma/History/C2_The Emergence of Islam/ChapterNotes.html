@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Emergence of Islam - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- IMAGE PLACEHOLDERS --- */
+        .image-placeholder {
+            background-color: var(--example-bg);
+            border: 2px dashed var(--meta-text);
+            border-radius: 8px;
+            padding: 30px 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .image-placeholder-title {
+            font-weight: bold;
+            color: var(--blue-border);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .ai-prompt-code {
+            display: block;
+            background-color: rgba(0,0,0,0.05);
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--pink-border);
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+        
+        html.dark-mode .ai-prompt-code {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">CLASS 7 HISTORY • CHAPTER NOTES</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>THE EMERGENCE OF ISLAM</h1>
+        
+        <h2>1. Arabia Before Islam</h2>
+        <p>Before the emergence of Islam, the Arabs in the 6th century CE were divided into many <strong>nomadic tribes</strong> who were constantly at war with one another. They believed in many gods, practiced image worship, and followed various supernatural beliefs.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>The Kaaba:</strong> Earlier Arabs worshipped different gods and the black stone housed in the <strong>Kaaba</strong> in Mecca. The Kaaba is a majestically standing cube-like building constructed with grey basalt stone blocks. It is not plastered, standing roughly 50 feet long, 33 feet wide, and 45 feet high.</p>
+        </div>
+
+        <div class="image-placeholder">
+            <div class="image-placeholder-title">🖼️ Image Placeholder: The Holy Kaaba</div>
+            <p>Generate an AI image using the following prompt and replace this box with an <code>&lt;img&gt;</code> tag:</p>
+            <code class="ai-prompt-code">A highly detailed, elegant illustration of the holy Kaaba in Mecca, showing its distinctive cubic structure draped in a black cloth with gold embroidery. Clean, pure white background, no text, precise architectural lines, sacred and peaceful atmosphere.</code>
+        </div>
+
+        <h2>2. The Founder of Islam: Prophet Muhammad</h2>
+        <p>One of the most important events of the medieval world was the emergence of Islam, founded by <strong>Prophet Muhammad</strong>.</p>
+        
+        <h3>Early Life and Revelations</h3>
+        <ul>
+            <li>Born in <strong>570 CE</strong> in Mecca, Muhammad was an orphan who travelled with his uncle as a trader.</li>
+            <li>He lived the life of a prosperous trader up to the age of 40.</li>
+            <li>Troubled by the social conditions of Arabia, he spent a lot of time in prayer and meditation. He soon started receiving revelations from the <strong>Archangel Gabriel</strong>.</li>
+        </ul>
+
+        <h3>The Flight to Medina and Return</h3>
+        <p>Muhammad wanted to unite the warring tribes of Arabia through his new religion, but he initially faced heavy resistance from the people of Mecca.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Hijrat (or Hijra):</strong> In <strong>622 CE</strong>, Muhammad was forced to leave Mecca and move to the city of Medina. This journey is known as Hijrat. The <strong>Muslim calendar</strong> is supposed to have started with this flight.</p>
+        </div>
+
+        <ul>
+            <li>In Medina, he was warmly received and secured the support of a large number of followers.</li>
+            <li>He later returned to Mecca, defeated his enemies, and the people of Mecca eventually adopted the new faith.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Timeline of Key Events:</strong><br>
+            <strong>570 CE:</strong> Birth of Prophet Muhammad.<br>
+            <strong>622 CE:</strong> Advent of Islam (Hijrat) to Medina.<br>
+            <strong>632 CE:</strong> Death of Prophet Muhammad.</p>
+        </div>
+
+        <h2>3. Main Tenets of Islam</h2>
+        <p>The word 'Islam' means <strong>surrender</strong> (to the will of God). The democratic ideals, emphasis on the equality of all people, and kindness made Islam a widely popular religion. The main tenets are compiled in the holy book called the <strong>Quran</strong>.</p>
+
+        <h3>Core Beliefs and Restrictions</h3>
+        <ul>
+            <li><strong>Monotheism:</strong> God is One, all-powerful, all-merciful, and Muhammad is His Prophet.</li>
+            <li><strong>Equality:</strong> All men are equal. There should be no class hatred.</li>
+            <li><strong>Afterlife:</strong> There is life after death, which will be rewarded with heaven or punished with hell based on one's deeds.</li>
+            <li><strong>Prohibitions:</strong> A true Muslim should not engage in gambling, eating pork, drinking wine, or charging interest on loans.</li>
+        </ul>
+
+        <h3>The Five Pillars of Islam</h3>
+        <p>Every Muslim is expected to observe five core duties, known as the <strong>Five Pillars</strong>:</p>
+        <ol>
+            <li><strong>Kalima (Shahada):</strong> Belief in one God and Muhammad as His Prophet.</li>
+            <li><strong>Namaz (Salat):</strong> Offering prayers five times a day.</li>
+            <li><strong>Zakat:</strong> Giving alms or charity to the poor.</li>
+            <li><strong>Roza (Sawm):</strong> Fasting from dawn to dusk during the holy month of Ramadan.</li>
+            <li><strong>Hajj:</strong> Making a pilgrimage to Mecca at least once in a lifetime, if physically and financially capable.</li>
+        </ol>
+
+        <h2>4. The Spread of Islam (The Caliphates)</h2>
+        <p>After Muhammad died in <strong>632 CE</strong>, leadership came under the control of his successors, known as the <strong>Caliphs (Khalifas)</strong>. The first Caliph was his devoted follower, <strong>Abu Bakr</strong>.</p>
+
+        <ul>
+            <li>Inspired by religious zeal, the Arabs embarked on a path of conquest. Within a century, Islam spread widely across North Africa, Spain, Persia, and India.</li>
+            <li><strong>The Umayyad Dynasty (661 CE - 750 CE):</strong> Ruled from their capital in <strong>Damascus</strong>.</li>
+            <li><strong>The Abbasid Dynasty (750 CE - middle of 13th century CE):</strong> Ruled from their new capital in <strong>Baghdad</strong>. Their rule was marked by growth in all fields. <strong>Harun-al-Rashid</strong> was a famous and benevolent ruler of this dynasty.</li>
+        </ul>
+
+        <h2>5. Economic Impact and Trade</h2>
+        <p>Trade and conquest led to immense economic prosperity for the Islamic Empire.</p>
+        <ul>
+            <li><strong>Trade Routes:</strong> The Abbasids controlled the crucial trade routes linking the Mediterranean Sea with China and India.</li>
+            <li><strong>Monopoly:</strong> For about 700 years (until Europeans discovered sea routes around Africa in the 15th century), trade between Europe and the East was completely in the hands of the Arabs.</li>
+            <li><strong>Rich Cities:</strong> Standing at the crossroads of these routes, <strong>Baghdad</strong> became a flourishing and rich city.</li>
+            <li><strong>Traded Goods:</strong> Silk, jewelry, spices from the East; ivory from Africa; linen from Egypt; fur and honey from Russia; and frankincense, myrrh, and date palms. (The custom of slave trade was also prevalent).</li>
+        </ul>
+
+        <h2>6. Intellectual and Cultural Progress</h2>
+        <p>The Arabs absorbed the best from older civilizations and made significant contributions of their own. The Caliphs welcomed new ideas and translated works from Greek, Chinese, Egyptian, and Sanskrit into Arabic.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Transfer of Knowledge:</strong> The Arabs learned about glass manufacturing, paper, and the mariner's compass from the Chinese. They learned geometry from the Greeks and mathematics from the Indians. The Indian numerical system and the concept of zero were introduced to Europe by the Arabs, earning them the name <strong>"Arabic numerals."</strong></p>
+        </div>
+
+        <h3>Scientific Advancements</h3>
+        <ul>
+            <li><strong>Mathematics:</strong> The word <strong>Algebra</strong> is of Arabic origin.</li>
+            <li><strong>Astronomy/Navigation:</strong> They perfected the use of the <strong>astrolabe</strong>, an instrument used to determine the position of celestial bodies for navigation.</li>
+            <li><strong>Medicine:</strong> They made great headway in medical science, discovering the causes of diseases like <strong>smallpox</strong> and <strong>tuberculosis</strong>.</li>
+        </ul>
+
+        <div class="image-placeholder">
+            <div class="image-placeholder-title">🖼️ Image Placeholder: An Astrolabe</div>
+            <p>Generate an AI image using the following prompt and replace this box with an <code>&lt;img&gt;</code> tag:</p>
+            <code class="ai-prompt-code">A highly detailed, intricate illustration of a medieval brass astrolabe instrument used for navigation, featuring complex astronomical engravings and moving dials. Pure white background, clean composition, no text, metallic reflections, precise scientific historical art style.</code>
+        </div>
+
+        <h3>Literature</h3>
+        <p>The Arabs introduced new styles in literature and poetry. Some of the most famous works include:</p>
+        <ul>
+            <li><strong>Rubaiyat</strong> by Omar Khayyam.</li>
+            <li><strong>Shahnama</strong> by Al-Firdausi.</li>
+            <li><strong>The Arabian Nights</strong> (compiled in the 14th century in Syria, remaining a popular classic worldwide).</li>
+        </ul>
+
+        <h2>7. Art and Architecture</h2>
+        <p>In the field of art and architecture, the Islamic world developed a highly distinctive visual style:</p>
+        <ul>
+            <li><strong>Arabesque Style:</strong> A beautiful style of ornamentation featuring complex, intertwined patterns of flowers, leaves, branches, and geometric shapes.</li>
+            <li><strong>Calligraphy:</strong> The art of beautiful, decorative handwriting was highly developed and used effectively in building decoration.</li>
+            <li><strong>Architecture:</strong> The <strong>mosque</strong> became an important building for followers of Islam. Their architectural style introduced signature elements such as <strong>arches, portals, onion-shaped domes, and decorative vaults</strong>.</li>
+        </ul>
+
+        <div class="image-placeholder">
+            <div class="image-placeholder-title">🖼️ Image Placeholder: Arabesque Pattern</div>
+            <p>Generate an AI image using the following prompt and replace this box with an <code>&lt;img&gt;</code> tag:</p>
+            <code class="ai-prompt-code">A highly detailed, elegant illustration of a traditional Arabesque floral and geometric pattern. Symmetrical, intertwining vines, leaves, and abstract floral shapes in a monochrome or subtle color palette. Pure white background, clean lines, no text, perfectly balanced geometric design.</code>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

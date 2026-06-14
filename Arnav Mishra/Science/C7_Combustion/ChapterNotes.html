@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Combustion - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- NEWSPAPER LAYOUT STYLES --- */
+        .img-float-left {
+            float: left;
+            max-width: 280px;
+            width: 100%;
+            margin: 10px 20px 15px 0;
+            border-radius: 8px;
+            background-color: #fff;
+            border: none !important;
+            box-shadow: none !important;
+            transition: filter 0.3s ease;
+        }
+
+        .img-float-right {
+            float: right;
+            max-width: 280px;
+            width: 100%;
+            margin: 10px 0 15px 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            border: none !important;
+            box-shadow: none !important;
+            transition: filter 0.3s ease;
+        }
+
+        /* Clear floats at section headers and boxes */
+        h2, h3, .blue-box, .green-box, .yellow-box {
+            clear: both;
+        }
+
+        html.dark-mode .img-float-left, 
+        html.dark-mode .img-float-right {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* Mobile optimization: make images full width on small screens */
+        @media screen and (max-width: 600px) {
+            .img-float-left, .img-float-right {
+                float: none;
+                display: block;
+                margin: 20px auto;
+                max-width: 100%;
+            }
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Combustion</h1>
+
+        <h2>1. Introduction to Combustion</h2>
+        <img src="../images/combustion_combustible_vs_noncombustible.webp" alt="Combustible vs Non-Combustible: Burning Wood vs Stone" class="img-float-right">
+        <p>We use various materials for producing heat energy in our daily lives, such as wood, coal, LPG, and petrol. When a piece of paper or a magnesium ribbon is heated, it catches fire and produces heat and light. </p>
+        <p>The chemical process in which a substance burns in air (or oxygen) with the release of heat and light energy is called <strong>combustion</strong>. </p>
+        
+        <h3>Combustible vs. Non-Combustible Materials</h3>
+        <ul>
+            <li><strong>Combustible Substances:</strong> Materials that catch fire easily and undergo combustion to produce heat and light (e.g., paper, wood, kerosene, LPG). These are also called <strong>fuels</strong>.</li>
+            <li><strong>Non-Combustible Substances:</strong> Materials that do not catch fire or burn in the presence of air (e.g., glass, iron nails, stone, sand).</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Food is a Fuel!</strong> Just like petrol provides energy to a car through combustion, the food we eat undergoes a slow combustion process in our body cells (respiration) reacting with oxygen to release the energy we need to survive.</p>
+        </div>
+
+        <h2>2. Conditions Necessary for Combustion</h2>
+        <img src="../images/fire_triangle_fuel_oxygen_heat.webp" alt="Fire Triangle: Fuel, Oxygen, and Ignition Temperature" class="img-float-left">
+        <p>Combustion cannot happen on its own. For any fire to start and sustain, three essential conditions must be met simultaneously, often referred to as the <strong>Fire Triangle</strong>:</p>
+
+        <ol>
+            <li><strong>Presence of a Combustible Substance (Fuel):</strong> There must be something that can burn.</li>
+            <li><strong>Presence of a Supporter of Combustion (Oxygen):</strong> Air contains about 21% oxygen, which is essential for burning. If you cover a burning candle with a glass jar, the flame goes out once the oxygen is consumed.</li>
+            <li><strong>Attainment of Ignition Temperature (Heat):</strong> A fuel must be heated to a certain minimum temperature before it catches fire. This lowest temperature at which a substance catches fire is called its <strong>Ignition Temperature</strong>. A matchstick does not catch fire on its own at room temperature; it must be struck against a rough surface to generate enough friction (heat) to reach its ignition temperature.</li>
+        </ol>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Inflammable Substances:</strong> Substances that have a very low ignition temperature and can easily catch fire with a small spark are called inflammable substances. Examples include petrol, alcohol, and LPG. Special care must be taken while storing and transporting them.</p>
+        </div>
+
+        <h2>3. How Do We Control Fire?</h2>
+        <img src="../images/fire_extinguisher_co2_flame.webp" alt="Fire Extinguisher: Spraying CO2 on Flame" class="img-float-right">
+        <p>To stop a fire, we simply need to break the "Fire Triangle" by removing one or more of the three essential conditions:</p>
+        <ul>
+            <li><strong>Removing the Fuel:</strong> If possible, move combustible materials away from the fire. However, in building fires, the building itself is the fuel, so this is rarely possible.</li>
+            <li><strong>Cutting off the Air Supply (Oxygen):</strong> Throwing sand or soil over a fire cuts off oxygen. Covering a person whose clothes have caught fire with a heavy woolen blanket extinguishes the flames by blocking air.</li>
+            <li><strong>Lowering the Temperature:</strong> Pouring water cools the combustible material below its ignition temperature. Water vapor also surrounds the material, helping to cut off the air supply.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>When NOT to use water:</strong> <br>
+            1. <strong>Electrical Fires:</strong> Water is a good conductor of electricity. Pouring water on burning electrical equipment can cause severe or fatal electric shocks.<br>
+            2. <strong>Oil/Petrol Fires:</strong> Oil is lighter than water. If you pour water on an oil fire, the water sinks to the bottom and the burning oil floats on top, spreading the fire further. <br>
+            <em>For these fires, a <strong>Carbon Dioxide ($CO_2$) Fire Extinguisher</strong> is the best choice. $CO_2$ is heavier than oxygen, forming a blanket over the fire and cutting off contact with oxygen.</em></p>
+        </div>
+
+        <h2>4. Types of Combustion</h2>
+        <img src="../images/combustion_types_rapid_vs_explosion.webp" alt="Types of Combustion: Rapid (Stove) vs Explosion (Firecracker)" class="img-float-left">
+        <p>Depending upon the speed and nature of the reaction, combustion is classified into different types:</p>
+        <ul>
+            <li><strong>Rapid Combustion:</strong> When a substance burns rapidly to produce large amounts of heat and light. Example: Turning on a gas stove (LPG) and lighting it with a matchstick.</li>
+            <li><strong>Spontaneous Combustion:</strong> When a substance suddenly bursts into flames on its own, without the application of any apparent external heat. Example: White phosphorus catches fire spontaneously at room temperature. Coal dust in mines can also ignite spontaneously, causing dangerous disasters.</li>
+            <li><strong>Explosion:</strong> A sudden and very fast combustion reaction that produces a large amount of heat, light, and a loud sound, along with the release of a massive amount of gas. Example: Bursting of firecrackers during festivals.</li>
+        </ul>
+
+        <h2>5. Flame and its Structure</h2>
+        <img src="../images/candle_flame_structure_zones.webp" alt="Structure of a Candle Flame: Blue, Luminous, and Dark Zones" class="img-float-right">
+        <p>A flame is the visible, glowing part of a fire. <strong>Only those substances which vaporise (turn into gas) during burning produce flames.</strong> For example, wax and kerosene melt, vaporise, and burn with a flame. Charcoal and coal do not vaporise, so they merely glow red without producing a flame.</p>
+
+        <h3>Structure of a Candle Flame</h3>
+        <p>A typical candle flame has three distinct zones based on the amount of oxygen available:</p>
+        <ol>
+            <li><strong>Outermost Zone (Non-Luminous Zone):</strong> This zone has a complete supply of oxygen, leading to <em>complete combustion</em>. It is blue in color and is the <strong>hottest part</strong> of the flame. Goldsmiths use a metallic blowpipe to blow the outermost zone of a flame onto gold or silver to melt them.</li>
+            <li><strong>Middle Zone (Luminous Zone):</strong> This zone gets a limited supply of oxygen, leading to <em>incomplete combustion</em>. Unburnt carbon particles glow brightly, giving this zone a <strong>yellow color</strong>. It is moderately hot.</li>
+            <li><strong>Innermost Zone (Dark Zone):</strong> This area surrounds the wick and consists of unburnt wax vapors because there is no oxygen here. It is black in color and is the <strong>least hot (coolest)</strong> part of the flame.</li>
+        </ol>
+
+        <h2>6. Fuel Efficiency and Calorific Value</h2>
+        <img src="../images/fuel_efficiency_scale_gas_vs_wood.webp" alt="Fuel Efficiency: Gas Cylinder vs Pile of Wood" class="img-float-left">
+        <p>We use different fuels for different purposes. An <strong>ideal fuel</strong> is one that is cheap, readily available, easy to transport, burns easily at a moderate rate, and produces a large amount of heat without leaving harmful residues (like ash or toxic gases).</p>
+
+        <p>The efficiency of a fuel is measured by its <strong>Calorific Value</strong>. The calorific value is the amount of heat energy produced on completely burning 1 kilogram (1 kg) of a fuel. It is expressed in a unit called <strong>kilojoules per kilogram (kJ/kg)</strong>. Gaseous fuels like Hydrogen, LPG, and CNG have very high calorific values.</p>
+
+        <h2>7. Environmental Hazards of Burning Fuels</h2>
+        <img src="../images/environmental_hazards_acid_rain_pollution.webp" alt="Environmental Hazards: Factory Smoke and Acid Rain" class="img-float-right">
+        <p>The increasing consumption of fuels has harmful effects on the environment:</p>
+        <ul>
+            <li><strong>Incomplete Combustion:</strong> Burning fuels like wood and coal in a limited supply of oxygen produces <strong>Carbon Monoxide (CO)</strong> gas. It is a highly poisonous gas that can kill a person sleeping in a closed room with a coal fire. It also releases unburnt carbon particles that cause respiratory diseases like asthma.</li>
+            <li><strong>Global Warming:</strong> The combustion of most fuels releases <strong>Carbon Dioxide ($CO_2$)</strong>. Increased concentration of $CO_2$ in the atmosphere traps the earth's heat, leading to global warming, which causes the melting of polar ice caps and coastal flooding.</li>
+            <li><strong>Acid Rain:</strong> Burning coal and diesel releases <strong>Sulphur Dioxide ($SO_2$)</strong> gas. Petrol engines release <strong>Nitrogen Oxides</strong>. These gases dissolve in rainwater to form acids (sulphuric acid and nitric acid). This <strong>acid rain</strong> is extremely harmful to crops, buildings (like the Taj Mahal), and aquatic life.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

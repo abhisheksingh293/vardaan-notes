@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Chemistry Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .questions-container.single-col { grid-template-columns: 1fr; }
+        
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+            display: flex; align-items: baseline; font-size: 11pt; page-break-inside: avoid; text-align: left;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .questions-container { grid-template-columns: 1fr 1fr; }
+            .questions-container.single-col { grid-template-columns: 1fr; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Electrochemistry (Worksheet & Solutions)</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 12</span>
+                <span>Subject: Chemistry</span>
+            </div>
+        </div>
+
+        <!-- SECTION A: Galvanic Cells -->
+        <div class="chapter-header">Topic A: Galvanic Cells & Standard Electrode Potential</div>
+        <div class="questions-container single-col">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Represent the galvanic cell in which the following reaction takes place: $\mathrm{Zn(s) + Cu^{2+}(aq) \rightarrow Zn^{2+}(aq) + Cu(s)}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Given the standard electrode potentials: $\mathrm{E^\circ_{K^+/K} = -2.93\,V}$, $\mathrm{E^\circ_{Ag^+/Ag} = 0.80\,V}$, $\mathrm{E^\circ_{Hg^{2+}/Hg} = 0.79\,V}$, $\mathrm{E^\circ_{Mg^{2+}/Mg} = -2.37\,V}$, $\mathrm{E^\circ_{Cr^{3+}/Cr} = -0.74\,V}$. Arrange these metals in their increasing order of reducing power.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">Calculate the standard cell potential of the galvanic cell in which the following reaction takes place: $\mathrm{2Cr(s) + 3Cd^{2+}(aq) \rightarrow 2Cr^{3+}(aq) + 3Cd(s)}$. (Given $\mathrm{E^\circ_{Cr^{3+}/Cr} = -0.74\,V}$ and $\mathrm{E^\circ_{Cd^{2+}/Cd} = -0.40\,V}$)</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">Determine whether the reaction $\mathrm{Fe^{2+}(aq) + Ag^+(aq) \rightarrow Fe^{3+}(aq) + Ag(s)}$ is feasible under standard conditions. (Given $\mathrm{E^\circ_{Ag^+/Ag} = 0.80\,V}$ and $\mathrm{E^\circ_{Fe^{3+}/Fe^{2+}} = 0.77\,V}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">Calculate $\Delta_r G^\circ$ for the reaction: $\mathrm{Zn(s) + Cu^{2+}(aq) \rightarrow Zn^{2+}(aq) + Cu(s)}$. (Given $\mathrm{E^\circ_{cell} = 1.1\,V}$, $1\,\mathrm{F} = 96500\,\mathrm{C\,mol^{-1}}$).</div>
+            </div>
+        </div>
+
+        <!-- SECTION B: Nernst Equation -->
+        <div class="chapter-header">Topic B: Nernst Equation, Equilibrium Constant & Gibbs Energy</div>
+        <div class="questions-container single-col">
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Write the Nernst equation and calculate the emf of the following cell at $298\,\mathrm{K}$: $\mathrm{Mg(s) | Mg^{2+}(0.130\,M) || Ag^+(0.0001\,M) | Ag(s)}$. (Given $\mathrm{E^\circ_{Mg^{2+}/Mg} = -2.37\,V}$, $\mathrm{E^\circ_{Ag^+/Ag} = 0.80\,V}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">Calculate the potential of a hydrogen electrode in contact with a solution whose $\mathrm{pH}$ is $10$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">Calculate the equilibrium constant ($\mathrm{K_c}$) for the reaction: $\mathrm{Cu(s) + 2Ag^+(aq) \rightleftharpoons Cu^{2+}(aq) + 2Ag(s)}$. (Given $\mathrm{E^\circ_{cell} = 0.46\,V}$ at $298\,\mathrm{K}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">The standard electrode potential for Daniell cell is $1.1\,\mathrm{V}$. Calculate the standard Gibbs energy for the reaction: $\mathrm{Zn(s) + Cu^{2+}(aq) \rightarrow Zn^{2+}(aq) + Cu(s)}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">A cell contains two hydrogen electrodes. The negative electrode is in contact with a solution of $\mathrm{10^{-6}\,M}$ hydrogen ions. The emf of the cell is $0.118\,\mathrm{V}$ at $298\,\mathrm{K}$. Calculate the concentration of hydrogen ions at the positive electrode.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">Calculate the emf of the cell at $298\,\mathrm{K}$: $\mathrm{Fe(s) | Fe^{2+}(0.001\,M) || H^+(1\,M) | H_2(g)(1\,bar) | Pt(s)}$. (Given $\mathrm{E^\circ_{Fe^{2+}/Fe} = -0.44\,V}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">Find the equilibrium constant for the reaction $\mathrm{In^{2+}(aq) + Cu^{2+}(aq) \rightleftharpoons In^{3+}(aq) + Cu^+(aq)}$ at $298\,\mathrm{K}$. (Given $\mathrm{E^\circ_{Cu^{2+}/Cu^+} = 0.15\,V}$, $\mathrm{E^\circ_{In^{3+}/In^{2+}} = -0.42\,V}$).</div>
+            </div>
+        </div>
+
+        <!-- SECTION C: Conductance -->
+        <div class="chapter-header">Topic C: Conductance, Conductivity & Kohlrausch's Law</div>
+        <div class="questions-container single-col">
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">The electrical resistance of a column of $0.05\,\mathrm{M\,NaOH}$ solution of diameter $1\,\mathrm{cm}$ and length $50\,\mathrm{cm}$ is $5.55 \times 10^3\,\mathrm{ohm}$. Calculate its resistivity, conductivity, and molar conductivity.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">Resistance of a conductivity cell filled with $0.1\,\mathrm{mol\,L^{-1}\,KCl}$ solution is $100\,\mathrm{\Omega}$. If the resistance of the same cell when filled with $0.02\,\mathrm{mol\,L^{-1}\,KCl}$ solution is $520\,\mathrm{\Omega}$, calculate the conductivity and molar conductivity of $0.02\,\mathrm{mol\,L^{-1}\,KCl}$ solution. The conductivity of $0.1\,\mathrm{mol\,L^{-1}\,KCl}$ solution is $1.29\,\mathrm{S\,m^{-1}}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">Calculate $\Lambda^\circ_m$ for acetic acid ($\mathrm{CH_3COOH}$), given that $\Lambda^\circ_m(\mathrm{HCl}) = 426\,\mathrm{S\,cm^2\,mol^{-1}}$, $\Lambda^\circ_m(\mathrm{NaCl}) = 126\,\mathrm{S\,cm^2\,mol^{-1}}$ and $\Lambda^\circ_m(\mathrm{CH_3COONa}) = 91\,\mathrm{S\,cm^2\,mol^{-1}}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">The conductivity of $0.001028\,\mathrm{mol\,L^{-1}}$ acetic acid is $4.95 \times 10^{-5}\,\mathrm{S\,cm^{-1}}$. Calculate its dissociation constant if $\Lambda^\circ_m$ for acetic acid is $390.5\,\mathrm{S\,cm^2\,mol^{-1}}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">State Kohlrausch's law of independent migration of ions. Why does the molar conductivity of a weak electrolyte increase significantly upon dilution?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">The molar conductivity of a $1.5\,\mathrm{M}$ solution of an electrolyte is found to be $138.9\,\mathrm{S\,cm^2\,mol^{-1}}$. Calculate the conductivity of this solution.</div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- SECTION D: Electrolysis -->
+        <div class="chapter-header">Topic D: Electrolysis & Faraday's Laws (Numericals)</div>
+        <div class="questions-container single-col">
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">How much charge is required for the reduction of $1\,\mathrm{mol}$ of $\mathrm{Al^{3+}}$ to $\mathrm{Al}$?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">How much charge in Faraday is required for the reduction of $1\,\mathrm{mol}$ of $\mathrm{MnO_4^-}$ to $\mathrm{Mn^{2+}}$?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">A solution of $\mathrm{Ni(NO_3)_2}$ is electrolysed between platinum electrodes using a current of $5\,\mathrm{amperes}$ for $20\,\mathrm{minutes}$. What mass of $\mathrm{Ni}$ is deposited at the cathode? (Atomic mass of $\mathrm{Ni} = 58.7\,\mathrm{g\,mol^{-1}}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">Three electrolytic cells A, B, C containing solutions of $\mathrm{ZnSO_4}$, $\mathrm{AgNO_3}$ and $\mathrm{CuSO_4}$, respectively, are connected in series. A steady current of $1.5\,\mathrm{amperes}$ was passed through them until $1.45\,\mathrm{g}$ of silver deposited at the cathode of cell B. How long did the current flow? What mass of copper and zinc were deposited? (Atomic mass: $\mathrm{Ag} = 108$, $\mathrm{Cu} = 63.5$, $\mathrm{Zn} = 65.3$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">How much electricity in terms of Faraday is required to produce $20.0\,\mathrm{g}$ of $\mathrm{Ca}$ from molten $\mathrm{CaCl_2}$? (Atomic mass of $\mathrm{Ca} = 40\,\mathrm{g\,mol^{-1}}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">Calculate the time to deposit $1.27\,\mathrm{g}$ of copper at cathode when a current of $2\,\mathrm{A}$ was passed through the solution of $\mathrm{CuSO_4}$. (Molar mass of $\mathrm{Cu} = 63.5\,\mathrm{g\,mol^{-1}}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">If a current of $0.5\,\mathrm{ampere}$ flows through a metallic wire for $2\,\mathrm{hours}$, then how many electrons would flow through the wire?</div>
+            </div>
+        </div>
+
+        <!-- SECTION E: Batteries & Fuel Cells -->
+        <div class="chapter-header">Topic E: Batteries, Fuel Cells & Corrosion</div>
+        <div class="questions-container single-col">
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">Write the chemistry of recharging the lead storage battery, highlighting all the materials that are involved during recharging.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">What is a fuel cell? Write the electrode reactions occurring in an $\mathrm{H_2 - O_2}$ fuel cell. What are its advantages over ordinary batteries?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">Explain how rusting of iron is envisaged as setting up of an electrochemical cell.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">What is the role of a salt bridge in a galvanic cell?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">Suggest two materials other than hydrogen that can be used as fuels in fuel cells.</div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- ==========================================
+             SOLUTION KEY
+        =========================================== -->
+        <div class="header" style="margin-top: 30px;">
+            <h1 class="institute-name">Answer Key & Solutions</h1>
+            <div class="worksheet-title">Detailed Solutions for Electrochemistry Numericals</div>
+        </div>
+
+        <div class="chapter-header">Topic A Solutions</div>
+        <div class="questions-container single-col">
+            <div class="solution-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Cell representation: $\mathrm{Zn(s) | Zn^{2+}(aq) || Cu^{2+}(aq) | Cu(s)}$. Oxidation occurs at the anode (left) and reduction at the cathode (right).</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Lower (more negative) the standard reduction potential, higher is the reducing power. Values: $\mathrm{K} (-2.93) < \mathrm{Mg} (-2.37) < \mathrm{Cr} (-0.74) < \mathrm{Hg} (0.79) < \mathrm{Ag} (0.80)$. <br>Reducing power order: $\mathbf{Ag < Hg < Cr < Mg < K}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">Oxidation: $\mathrm{Cr \rightarrow Cr^{3+}}$ (Anode), Reduction: $\mathrm{Cd^{2+} \rightarrow Cd}$ (Cathode).<br>$\mathrm{E^\circ_{cell} = E^\circ_{cathode} - E^\circ_{anode}} = (-0.40\,\mathrm{V}) - (-0.74\,\mathrm{V}) = \mathbf{+0.34\,\mathrm{V}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">For the reaction, $\mathrm{Ag^+}$ is reduced (Cathode) and $\mathrm{Fe^{2+}}$ is oxidized (Anode).<br>$\mathrm{E^\circ_{cell} = E^\circ_{Ag^+/Ag} - E^\circ_{Fe^{3+}/Fe^{2+}}} = 0.80 - 0.77 = \mathbf{0.03\,\mathrm{V}}$. Since $\mathrm{E^\circ_{cell}}$ is positive, the reaction is <b>feasible</b>.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">$\Delta_r G^\circ = -nFE^\circ_{cell}$. Here, $n=2$ (two electrons transferred).<br>$\Delta_r G^\circ = -2 \times 96500 \times 1.1 = -212300\,\mathrm{J\,mol^{-1}} = \mathbf{-212.3\,\mathrm{kJ\,mol^{-1}}}$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Topic B Solutions</div>
+        <div class="questions-container single-col">
+            <div class="solution-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Reaction: $\mathrm{Mg(s) + 2Ag^+(aq) \rightarrow Mg^{2+}(aq) + 2Ag(s)}$, $n=2$.<br>$\mathrm{E^\circ_{cell}} = 0.80 - (-2.37) = 3.17\,\mathrm{V}$.<br>Nernst Equation: $\mathrm{E_{cell} = E^\circ_{cell} - \frac{0.0591}{2} \log \frac{[Mg^{2+}]}{[Ag^+]^2}}$<br>$\mathrm{E_{cell}} = 3.17 - \frac{0.0591}{2} \log \frac{0.130}{(10^{-4})^2} = 3.17 - 0.0295 \log(1.3 \times 10^7)$<br>$\mathrm{E_{cell}} = 3.17 - 0.0295(7.11) = 3.17 - 0.21 = \mathbf{2.96\,\mathrm{V}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">Reaction: $\mathrm{H^+(aq) + e^- \rightarrow \frac{1}{2}H_2(g)}$. Nernst eq: $\mathrm{E = E^\circ - \frac{0.0591}{1} \log \frac{1}{[H^+]}}$.<br>Given $\mathrm{pH} = 10 \implies \mathrm{[H^+] = 10^{-10}\,M}$. Since $\mathrm{E^\circ = 0\,V}$ for SHE.<br>$\mathrm{E = 0 - 0.0591 \log(10^{10}) = -0.0591 \times 10 = \mathbf{-0.591\,\mathrm{V}}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">Formula: $\log K_c = \frac{n E^\circ_{cell}}{0.0591}$. Here $n=2$.<br>$\log K_c = \frac{2 \times 0.46}{0.0591} = \frac{0.92}{0.0591} = 15.56$.<br>$K_c = \text{Antilog}(15.56) = \mathbf{3.6 \times 10^{15}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">$\Delta_r G^\circ = -nFE^\circ_{cell}$. For Daniell cell, $n=2$, $\mathrm{E^\circ = 1.1\,V}$.<br>$\Delta_r G^\circ = -2 \times 96500 \times 1.1 = -212300\,\mathrm{J\,mol^{-1}} = \mathbf{-212.3\,\mathrm{kJ\,mol^{-1}}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">Concentration cell emf: $\mathrm{E_{cell} = \frac{0.0591}{n} \log \frac{C_2}{C_1}}$. Negative electrode (Anode) has $C_1 = 10^{-6}\,\mathrm{M}$. Positive electrode (Cathode) has $C_2$.<br>$0.118 = \frac{0.0591}{1} \log \frac{C_2}{10^{-6}} \implies 2 = \log C_2 - \log 10^{-6} \implies 2 = \log C_2 + 6$<br>$\log C_2 = -4 \implies C_2 = \mathbf{10^{-4}\,\mathrm{M}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">Reaction: $\mathrm{Fe(s) + 2H^+(aq) \rightarrow Fe^{2+}(aq) + H_2(g)}$. $n=2$.<br>$\mathrm{E^\circ_{cell}} = 0 - (-0.44) = 0.44\,\mathrm{V}$.<br>$\mathrm{E_{cell} = 0.44 - \frac{0.0591}{2} \log \frac{[Fe^{2+}]}{[H^+]^2} = 0.44 - 0.0295 \log \frac{0.001}{1^2}}$<br>$\mathrm{E_{cell}} = 0.44 - 0.0295(-3) = 0.44 + 0.0885 = \mathbf{0.5285\,\mathrm{V}}$.</div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="chapter-header">Topic C Solutions</div>
+        <div class="questions-container single-col">
+            <div class="solution-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">Area $A = \pi r^2 = 3.14 \times (0.5)^2 = 0.785\,\mathrm{cm^2}$. $l = 50\,\mathrm{cm}$.<br>1. Resistivity ($\rho$) = $\frac{R \times A}{l} = \frac{5.55 \times 10^3 \times 0.785}{50} = \mathbf{87.135\,\mathrm{\Omega\,cm}}$.<br>2. Conductivity ($\kappa$) = $\frac{1}{\rho} = \frac{1}{87.135} = \mathbf{0.01148\,\mathrm{S\,cm^{-1}}}$.<br>3. Molar Conductivity ($\Lambda_m$) = $\frac{\kappa \times 1000}{M} = \frac{0.01148 \times 1000}{0.05} = \mathbf{229.6\,\mathrm{S\,cm^2\,mol^{-1}}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">For $0.1\,\mathrm{M\,KCl}$: $\kappa = 1.29\,\mathrm{S\,m^{-1}} = 0.0129\,\mathrm{S\,cm^{-1}}$. Cell constant $G^* = \kappa \times R = 0.0129 \times 100 = 1.29\,\mathrm{cm^{-1}}$.<br>For $0.02\,\mathrm{M\,KCl}$: $\kappa = \frac{G^*}{R} = \frac{1.29}{520} = \mathbf{0.00248\,\mathrm{S\,cm^{-1}}}$.<br>$\Lambda_m = \frac{\kappa \times 1000}{M} = \frac{0.00248 \times 1000}{0.02} = \mathbf{124\,\mathrm{S\,cm^2\,mol^{-1}}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">By Kohlrausch's law: $\Lambda^\circ_m(\mathrm{CH_3COOH}) = \Lambda^\circ_m(\mathrm{CH_3COONa}) + \Lambda^\circ_m(\mathrm{HCl}) - \Lambda^\circ_m(\mathrm{NaCl})$<br>$\Lambda^\circ_m = 91 + 426 - 126 = \mathbf{391\,\mathrm{S\,cm^2\,mol^{-1}}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">$\Lambda_m = \frac{\kappa \times 1000}{C} = \frac{4.95 \times 10^{-5} \times 1000}{0.001028} = 48.15\,\mathrm{S\,cm^2\,mol^{-1}}$.<br>Degree of dissociation ($\alpha$) = $\frac{\Lambda_m}{\Lambda^\circ_m} = \frac{48.15}{390.5} = 0.1233$.<br>Dissociation constant $K_a = \frac{C\alpha^2}{1-\alpha} \approx C\alpha^2 = 0.001028 \times (0.1233)^2 = \mathbf{1.78 \times 10^{-5}\,\mathrm{mol\,L^{-1}}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">Formula: $\Lambda_m = \frac{\kappa \times 1000}{M} \implies \kappa = \frac{\Lambda_m \times M}{1000}$<br>$\kappa = \frac{138.9 \times 1.5}{1000} = \mathbf{0.20835\,\mathrm{S\,cm^{-1}}}$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Topic D Solutions</div>
+        <div class="questions-container single-col">
+            <div class="solution-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">Reaction: $\mathrm{Al^{3+} + 3e^- \rightarrow Al}$. $3$ moles of electrons are needed.<br>Charge = $3\,\mathrm{F} = 3 \times 96500 = \mathbf{289500\,\mathrm{C}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">In $\mathrm{MnO_4^-}$, Mn is in $+7$ state. Reaction: $\mathrm{Mn^{7+} + 5e^- \rightarrow Mn^{2+}}$.<br>Charge required = $\mathbf{5\,\mathrm{F}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">$I = 5\,\mathrm{A}$, $t = 20 \times 60 = 1200\,\mathrm{s}$. Charge $Q = I \times t = 5 \times 1200 = 6000\,\mathrm{C}$.<br>Reaction: $\mathrm{Ni^{2+} + 2e^- \rightarrow Ni}$. $2 \times 96500\,\mathrm{C}$ deposits $58.7\,\mathrm{g}$.<br>Mass of Ni deposited = $\frac{58.7 \times 6000}{2 \times 96500} = \mathbf{1.825\,\mathrm{g}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">For Ag: $\mathrm{Ag^+ + e^- \rightarrow Ag}$. Eq. wt $= 108/1 = 108$.<br>Mass of Ag $W = Z \times I \times t = \frac{E}{96500} \times I \times t \implies 1.45 = \frac{108}{96500} \times 1.5 \times t \implies t = \mathbf{863.7\,\mathrm{s}} \approx \mathbf{14.4\,\mathrm{min}}$.<br>Using Faraday's second law: $\frac{W_{Ag}}{E_{Ag}} = \frac{W_{Cu}}{E_{Cu}} = \frac{W_{Zn}}{E_{Zn}}$.<br>$W_{Cu} = \frac{1.45 \times 31.75}{108} = \mathbf{0.426\,\mathrm{g}}$.<br>$W_{Zn} = \frac{1.45 \times 32.65}{108} = \mathbf{0.438\,\mathrm{g}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">Reaction: $\mathrm{Ca^{2+} + 2e^- \rightarrow Ca}$. $2\,\mathrm{F}$ gives $40\,\mathrm{g}$ of Ca.<br>To produce $20.0\,\mathrm{g}$, Faraday required = $\frac{2}{40} \times 20 = \mathbf{1\,\mathrm{F}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">Reaction: $\mathrm{Cu^{2+} + 2e^- \rightarrow Cu}$. Eq. wt $= 63.5/2 = 31.75\,\mathrm{g}$.<br>$W = \frac{E \times I \times t}{96500} \implies 1.27 = \frac{31.75 \times 2 \times t}{96500} \implies t = \frac{1.27 \times 96500}{63.5} = \mathbf{1930\,\mathrm{s}} \approx \mathbf{32.16\,\mathrm{min}}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">$Q = I \times t = 0.5 \times (2 \times 3600) = 3600\,\mathrm{C}$.<br>Charge of one electron $e = 1.6 \times 10^{-19}\,\mathrm{C}$.<br>Number of electrons = $\frac{Q}{e} = \frac{3600}{1.6 \times 10^{-19}} = \mathbf{2.25 \times 10^{22}\,\text{electrons}}$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Topic E Solutions (Theoretical Highlights)</div>
+        <div class="questions-container single-col">
+            <div class="solution-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">During recharging, the cell is operated like an electrolytic cell. Lead sulphate ($\mathrm{PbSO_4}$) on the anode and cathode is converted back to lead ($\mathrm{Pb}$) and lead dioxide ($\mathrm{PbO_2}$) respectively, and sulphuric acid ($\mathrm{H_2SO_4}$) is regenerated. Reaction: $\mathrm{2PbSO_4(s) + 2H_2O(l) \rightarrow Pb(s) + PbO_2(s) + 4H^+(aq) + 2SO_4^{2-}(aq)}$.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">Fuel cells convert chemical energy of fuel directly into electricity. Anode: $\mathrm{2H_2(g) + 4OH^-(aq) \rightarrow 4H_2O(l) + 4e^-}$. Cathode: $\mathrm{O_2(g) + 2H_2O(l) + 4e^- \rightarrow 4OH^-(aq)}$. Advantage: High efficiency (~70%) and pollution-free.</div>
+            </div>
+            <div class="solution-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">A spot on the iron surface acts as an anode where oxidation occurs: $\mathrm{Fe \rightarrow Fe^{2+} + 2e^-}$. Electrons travel through the metal to another spot (cathode) where oxygen is reduced in the presence of $\mathrm{H^+}$: $\mathrm{O_2 + 4H^+ + 4e^- \rightarrow 2H_2O}$. The overall cell reaction accelerates rusting.</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

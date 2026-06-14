@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Reproduction in Plants - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 15px 20px 15px 0; position: relative; float: left; width: 45%; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 15px 0 15px 20px; position: relative; float: right; width: 45%; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 15px 20px 15px 0; position: relative; float: left; width: 45%; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- AI IMAGE PLACEHOLDER (Custom for Image Requests) --- */
+        .ai-image-placeholder {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px dashed var(--accent-purple);
+            border-radius: 8px;
+            background-color: var(--example-bg);
+            text-align: center;
+        }
+
+        .ai-prompt-title {
+            color: var(--accent-purple);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .ai-prompt-text {
+            font-family: monospace;
+            color: var(--meta-text);
+            font-size: 0.95rem;
+        }
+
+        /* Image Inversion Logic for Final Images added by user */
+        .invertible-img {
+            max-width: 45%;
+            height: auto;
+            display: inline-block;
+            margin: 0 20px 15px 0;
+            float: left;
+        }
+
+        /* Alternate image float direction */
+        .invertible-img:nth-of-type(2n) {
+            float: right;
+            margin: 0 0 15px 20px;
+        }
+
+        /* Invert images and placeholders in dark mode */
+        html.dark-mode .invertible-img,
+        html.dark-mode .ai-image-placeholder {
+            filter: invert(0.9) hue-rotate(180deg);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer,
+            .ai-image-placeholder {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Biology • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Reproduction in Plants</h1>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Reproduction</strong> is the biological process by which all living organisms produce new individuals of their own kind for the survival and continuation of their species.
+        </div>
+
+        <h2>1. Modes of Reproduction</h2>
+        <p>In plants, reproduction is broadly grouped into two main types:</p>
+        <ul>
+            <li><strong>Asexual Reproduction:</strong> Only one parent is involved. There is no formation or fusion of male and female sex cells (gametes).</li>
+            <li><strong>Sexual Reproduction:</strong> Two parents are involved, resulting in the formation and fusion of male and female gametes.</li>
+        </ul>
+
+        <h2>2. Asexual Reproduction in Plants</h2>
+        <p>Lower organisms and some higher plants reproduce asexually through various methods:</p>
+
+        <h3>2.1 Binary Fission</h3>
+        <p>This method means "splitting into two". The parent cell's nucleus or genetic material divides into two, and then the cell itself splits across the middle, forming two small, identical daughter cells. (Examples: <em>Bacteria, Chlorella, Chlamydomonas</em>).</p>
+
+        <h3>2.2 Budding</h3>
+        <p>The parent cell produces an outgrowth called a <strong>bud</strong>. The bud grows and then gets detached along with its daughter nucleus from the parent body to lead an independent life. (Example: <em>Yeast</em>).</p>
+
+        <h3>2.3 Fragmentation</h3>
+        <p>In organisms made of ribbon-like filaments, the filament grows and breaks off into two or more parts called <strong>fragments</strong>. Each fragment then regrows into an individual plant. (Example: <em>Spirogyra</em>).</p>
+
+        <h3>2.4 Spore Formation</h3>
+        <p>Common in fungi and plants like <strong>mosses and ferns</strong>, which bear spores on the underside of their leaves. The spores are light and can be carried by wind or insects. On reaching suitable conditions, they germinate into new plants.</p>
+
+        <img class="invertible-img" src="../Images/C2_diagram showing 'Budding in Yeast' on the left and 'Fragmentation in Spirogyra' on the right.jpg" alt="Budding and Fragmentation - Asexual Reproduction" />
+
+        <h2>3. Vegetative Reproduction (Propagation)</h2>
+        <p>New plants can be produced by certain vegetative parts of a plant such as the <strong>leaf, stem, and root</strong>. These parts are called <strong>propagules</strong>.</p>
+
+        <h3>3.1 Natural Vegetative Propagation</h3>
+        <ul>
+            <li><strong>By Stem:</strong> 
+                <ul>
+                    <li><em>Ginger:</em> A modified underground stem (rhizome) with nodes and internodes. Axillary buds grow out from the nodes to produce new plants.</li>
+                    <li><em>Potato:</em> A modified stem (tuber) bearing vegetative buds called "eyes" which can sprout into new plants.</li>
+                    <li><em>Onion:</em> A bulb containing a thick, short stem with overlapping scaly leaves. The axillary buds grow into new shoots.</li>
+                    <li><em>Common Grass:</em> Long internodes creep on the surface. Roots and shoots grow from each node.</li>
+                </ul>
+            </li>
+            <li><strong>By Leaf:</strong> Plants like <strong>Bryophyllum</strong> produce adventitious buds in the margins (notches) of their leaves. When these leaves fall on moist soil, the buds grow into tiny new plants.</li>
+            <li><strong>By Root:</strong> Plants like <strong>Sweet Potato, Dahlia, and Asparagus</strong> develop swollen, fleshy roots that store food. A single root can give rise to a new plant.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Ginger, potato, and onion</strong> are called modified stems because they perform additional functions of food storage and vegetative propagation!
+        </div>
+
+        <h3>3.2 Advantages and Disadvantages of Vegetative Reproduction</h3>
+        <p><strong>Advantages:</strong></p>
+        <ul>
+            <li>Reproduction takes place in a shorter time.</li>
+            <li>New plants spread over an area very quickly.</li>
+            <li>It is a sure method of propagation.</li>
+            <li>All good characteristics of the mother plant are exactly retained (creates clones).</li>
+        </ul>
+        <p><strong>Disadvantages:</strong></p>
+        <ul>
+            <li>Since all plants are genetically identical, they are all likely to be affected by the same diseases simultaneously.</li>
+            <li>Leads to overcrowding around the parent plant.</li>
+            <li>New varieties cannot be produced.</li>
+        </ul>
+
+        <h3>3.3 Artificial Vegetative Propagation</h3>
+        <p>Horticulturists use artificial methods to rapidly grow desirable plants:</p>
+        <ul>
+            <li><strong>Cutting:</strong> A small piece of the plant (usually a stem) with an axillary bud is cut and planted in moist soil. (Examples: <em>Rose, sugarcane</em>).</li>
+            <li><strong>Layering:</strong> A lower branch is bent down to the ground and covered with soil. Roots develop from the buried portion, and it is then detached from the parent. (Examples: <em>Jasmine, mint</em>).</li>
+            <li><strong>Grafting:</strong> A shoot of a desired variety (<strong>Scion</strong>) is joined tightly to the rooted stem of another plant of the same species (<strong>Stock</strong>). The cambium layers must touch to merge successfully. (Examples: <em>Mango, rose</em>).</li>
+            <li><strong>Tissue Culture (Micropropagation):</strong> A tiny piece of plant tissue (<strong>explant</strong>) is grown in a sterile nutrient medium to form a mass of cells (<strong>callus</strong>). Hormones are added to differentiate them into tiny plantlets, which are then transferred to soil. Excellent for developing disease-free stock.</li>
+        </ul>
+
+        <img class="invertible-img" src="../Images/C2_Grafting.jpg" alt="Grafting - Artificial Vegetative Propagation" />
+
+        <h2>4. Sexual Reproduction in Plants</h2>
+        <p>Flowers are the reproductive organs of the plant. They bear the male and female reproductive parts that produce gametes.</p>
+
+        <h3>4.1 Parts of a Typical Flower (Whorls)</h3>
+        <p>A typical flower is attached to the stem by a stalk called the <strong>pedicel</strong>. The swollen tip of the pedicel is the <strong>thalamus</strong>, upon which the four whorls are arranged:</p>
+        <ul>
+            <li><strong>1. Calyx (Sepals):</strong> The outermost green, leaf-like whorl. Protects the flower in the bud stage.</li>
+            <li><strong>2. Corolla (Petals):</strong> The second whorl made of brightly colored, fragrant petals. They attract insects for pollination.</li>
+            <li><strong>3. Androecium (Male Part):</strong> Made up of <strong>stamens</strong>. Each stamen has a thin stalk called a <em>filament</em> and a swollen tip called an <em>anther</em>. The anther produces pollen grains (male gametes).</li>
+            <li><strong>4. Gynoecium / Pistil (Female Part):</strong> The innermost whorl made of <strong>carpels</strong>. Each carpel has three parts:
+                <ul>
+                    <li><em>Stigma:</em> Sticky top part to catch pollen.</li>
+                    <li><em>Style:</em> Middle tube connecting stigma to ovary.</li>
+                    <li><em>Ovary:</em> Swollen base containing <strong>ovules</strong> (which hold the female egg cells).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            Flowers bearing both male and female parts are called <strong>Bisexual flowers</strong>. Flowers bearing only male (staminate) or female (pistillate) parts are called <strong>Unisexual flowers</strong>.
+        </div>
+
+        <h2>5. Pollination</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Pollination</strong> is the process in which pollen grains from the anthers are transferred to the stigma of a flower of the same species.
+        </div>
+        
+        <h3>5.1 Types of Pollination</h3>
+        <ul>
+            <li><strong>Self-pollination:</strong> Occurs within the <em>same flower</em> or between two flowers on the <em>same plant</em>.</li>
+            <li><strong>Cross-pollination:</strong> Occurs between two flowers on <em>different plants</em> of the same species. Requires agents.</li>
+        </ul>
+
+        <h3>5.2 Agents of Cross-Pollination</h3>
+        <ul>
+            <li><strong>Insects (e.g., Marigold, Dahlia, Salvia):</strong> Flowers are large, brightly colored, scented, contain nectar, and produce sticky pollen grains so they stick to the insect's body.</li>
+            <li><strong>Wind (e.g., Maize, Palm, Pine):</strong> Flowers are small, dull, not scented, and have no nectar. They produce a huge quantity of light, dry pollen grains. Anthers are long and protrude out to catch the wind.</li>
+            <li><strong>Water (e.g., Vallisneria):</strong> Aquatic plants where male flowers detach and float to the surface to come in contact with female flowers. Pollen grains are produced in large numbers.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Exceptions:</strong> <em>Lotus</em> and <em>Trapa (Singhara)</em> are aquatic plants, but their flowers are exposed above the water surface and are pollinated by <strong>insects</strong>, not water!
+        </div>
+
+        <h2>6. Fertilization Process</h2>
+        <p>After pollination, the fusion of the male cell with the female cell to produce a zygote occurs. The steps are:</p>
+        <ol>
+            <li>The pollen grain lands on the stigma and absorbs moisture.</li>
+            <li>It begins to grow a <strong>pollen tube</strong> down through the style.</li>
+            <li>The tube enters the ovary and reaches the ovule.</li>
+            <li>The tube releases the male gametes, which fuse with the female egg cell inside the ovule to produce a <strong>zygote</strong>.</li>
+        </ol>
+
+        <p><strong>Post-Fertilization Changes:</strong></p>
+        <ul>
+            <li>The fertilized ovule develops into a <strong>seed</strong>.</li>
+            <li>The ovary develops into a <strong>fruit</strong>.</li>
+            <li>Other parts like sepals and petals wither and fall off.</li>
+        </ul>
+
+        <img class="invertible-img" src="../Images/C2_diagram showing plant fertilization.jpg" alt="Plant Fertilization Process" />
+
+        <h3>6.1 Artificial Pollination</h3>
+        <p>This is the manual transfer of pollen grains to the stigma practiced by plant breeders. It is used for cross-breeding different varieties of a crop (e.g., a high-yielding variety with a disease-resistant variety) to develop new, superior varieties (hybrids) in crops like rice and wheat.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

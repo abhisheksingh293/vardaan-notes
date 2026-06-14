@@ -1,0 +1,433 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Slave Dynasty - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: none;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+            .theme-toggle, .branding-footer { display: none !important; }
+            .contact-info { display: flex !important; }
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+            .watermark-image { filter: none !important; max-width: 80% !important; }
+            @page {
+                size: A4;
+                margin: 2cm;
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+
+    <div class="paper-sheet">
+        
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 History • Chapter Notes</div>
+            
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <h1>The Slave Dynasty</h1>
+
+        <h2>1. Foundation of the Delhi Sultanate</h2>
+        <p>Muhammad Ghori died in <strong>1206 CE</strong> leaving no royal heir to the throne. His trusted general, <strong>Qutb-ud-din Aibak</strong>, succeeded him and took control of his Indian territories. This marked the official beginning of the Delhi Sultanate.</p>
+
+        <p>The Delhi Sultanate ruled over large parts of India and comprised five successive dynasties:</p>
+        <ul>
+            <li><strong>The Slave Dynasty</strong> (1206-1290 CE)</li>
+            <li><strong>The Khalji Dynasty</strong> (1290-1320 CE)</li>
+            <li><strong>The Tughluq Dynasty</strong> (1320-1413 CE)</li>
+            <li><strong>The Sayyid Dynasty</strong> (1414-1451 CE)</li>
+            <li><strong>The Lodi Dynasty</strong> (1451-1526 CE)</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Origin of the Name:</strong> The first dynasty established by Qutb-ud-din is known as the Slave Dynasty or the <strong>Mamluk Dynasty</strong>. "Mamluk" is an Arabic word meaning <em>slave</em> or <em>owned</em>.</p>
+        </div>
+
+        <h2>2. Qutb-ud-din Aibak (1206-1210 CE)</h2>
+        <p>He was the founder of the Slave Dynasty. Though his reign was short, he initiated several important architectural projects. He built the <strong>Quwwat-ul-Islam</strong> mosque in Delhi and started the construction of the famous <strong>Qutb Minar</strong>. He died accidentally in 1210 CE while playing polo (Chaugan).</p>
+
+        <h2>3. Iltutmish (1211-1236 CE)</h2>
+        <p>Iltutmish is widely considered the <strong>real consolidator</strong> of the Delhi Sultanate. Under his rule, the empire was strengthened and expanded.</p>
+        <ul>
+            <li><strong>Capital Shift:</strong> He shifted the capital of the empire from Lahore to <strong>Delhi</strong>.</li>
+            <li><strong>Architecture:</strong> He successfully completed the construction of the Qutb Minar.</li>
+            <li><strong>New Currency:</strong> He introduced two new coins: the silver <em>'tanka'</em> and the copper <em>'jital'</em>.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Turkan-i-Chahalgani (The Chalisa):</strong> Iltutmish created a powerful administrative group of 40 loyal and elite Turkish nobles. They held immense power and helped him administer the vast kingdom.</p>
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The Mongol Threat (1221 CE):</strong> Iltutmish diplomatically saved India from the wrath of the dreaded Mongol leader, <strong>Genghis Khan</strong>. He did this by politely refusing to give shelter to Jalaluddin Mingburnu, who was actively being chased by the Mongols.</p>
+        </div>
+
+        <h2>4. Razia Sultana (1236-1240 CE)</h2>
+        <p>Iltutmish nominated his daughter, <strong>Razia</strong>, to succeed him because he considered all his sons unfit to rule. Initially, the nobles ignored his wish and placed his brother Ruknuddin on the throne. However, Ruknuddin proved highly incompetent, leading to Razia officially becoming the Sultan in 1236 CE.</p>
+
+        <h3>Her Reign and Challenges:</h3>
+        <ul>
+            <li>She successfully established law and order throughout the empire.</li>
+            <li>She boldly discarded female attire (the purdah system), held open courts, and rode horses and elephants like a king.</li>
+            <li>She took strict action against corrupt nobles.</li>
+            <li><strong>Her Downfall:</strong> The powerful Turkish nobles deeply resented being ruled by a woman. They plotted against her, leading to her defeat and murder in 1240 CE.</li>
+        </ul>
+
+        <h2>5. Nasir-ud-din Mahmud (1246-1265 CE)</h2>
+        <p>After Razia's death, a series of weak rulers occupied the throne. In 1246 CE, the powerful 'Chalisa' placed <strong>Nasir-ud-din Mahmud</strong> (the younger son of Iltutmish) on the throne. He was merely a puppet ruler; the actual power was wielded by his father-in-law, a powerful noble named <strong>Balban</strong>.</p>
+
+        <h2>6. Ghiyas-ud-din Balban (1266-1286 CE)</h2>
+        <p>Originally a slave of Iltutmish, Balban manipulated his way to the top and officially became the Sultan after Nasir-ud-din Mahmud's death. He ruthlessly crushed rebellions and successfully defended the empire's borders.</p>
+
+        <h3>Policies of Balban:</h3>
+        <ul>
+            <li><strong>Border Defense:</strong> He built new forts along the North-West frontier and repaired old ones to defend against Mongol invasions.</li>
+            <li><strong>Repressing Rebellions:</strong> He maintained a strong, highly disciplined central army to suppress any internal revolts (e.g., executing the rebel Tughril Beg in Bengal).</li>
+            <li><strong>Divine Right:</strong> He believed the king was the shadow of God on earth (<em>'Zill-i-Ilahi'</em>).</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Blood and Iron Policy:</strong> Balban adopted a ruthless policy of "Blood and Iron" to strike terror into the hearts of rebels, traitors, and thieves, establishing absolute authority.</p>
+        </div>
+
+        <h3>Introduction of Persian Customs</h3>
+        <p>To elevate the prestige of the Sultan, Balban introduced strict Persian court customs which shocked orthodox Muslims, as they believed such acts were reserved only for God:</p>
+        <ul>
+            <li><strong>Sijda:</strong> Prostration before the Sultan.</li>
+            <li><strong>Paibos:</strong> Kissing the feet of the Sultan.</li>
+        </ul>
+
+        <h2>7. Decline of the Slave Dynasty</h2>
+        <p>After Balban's death, his successors proved weak and incompetent. Balban's grandson, <strong>Kaikubad</strong>, was placed on the throne but his rule quickly collapsed. The Khaljis took advantage of the situation, leading to the end of the Slave Dynasty around <strong>1290 CE</strong>.</p>
+
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

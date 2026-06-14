@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 - Standard/Medium - Blue Theme) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue for dark mode readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- ANSWER KEY TABLE STYLING --- */
+        .ans-table-container { margin-top: 25px; page-break-before: always; }
+        .ans-table { width: 100%; border-collapse: collapse; font-size: 10.5pt; text-align: left; background: var(--body-bg); }
+        .ans-table th, .ans-table td { border: 1px solid var(--border-color); padding: 6px 10px; }
+        .ans-table th { background-color: var(--primary-color); color: var(--body-bg); font-weight: bold; text-align: center; }
+        .ans-table td:nth-child(odd) { font-weight: bold; text-align: center; color: var(--primary-color); width: 6%; }
+        html.dark-mode .ans-table th { color: #fff; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Standard Worksheet - Rational Numbers</div>
+        <div class="meta-info">
+            <span>Especially designed for: Rudransh Sharma</span>
+            <span>Class: 7 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Section A: Standard Form & Comparison -->
+    <div class="chapter-header">Section A: Standard Form & Comparison</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">Convert the rational number $\frac{64}{-112}$ to its standard form.</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">Express $\frac{-78}{117}$ in its simplest form.</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">Compare using $<$, $>$, or $=$: $\frac{-5}{9}$ ____ $\frac{4}{-7}$.</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">Arrange the following in ascending order: $\frac{-3}{4}$, $\frac{5}{-12}$, $\frac{-7}{16}$.</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">Find one rational number exactly between $\frac{-1}{3}$ and $\frac{1}{2}$.</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">Find the value of $x$ if $\frac{-3}{7} = \frac{x}{35}$.</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">Write an equivalent rational number for $\frac{-4}{5}$ with a numerator of $24$.</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Evaluate the absolute value: $\left| \frac{-5}{7} - \frac{2}{3} \right|$.</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">Compare the absolute values: $\left| \frac{-3}{4} \right|$ ____ $\left| \frac{-5}{6} \right|$.</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Are the rational numbers $\frac{-16}{20}$ and $\frac{20}{-25}$ equivalent? Prove it.</div></div>
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">Insert three rational numbers between $\frac{-2}{5}$ and $\frac{-1}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">Arrange in descending order: $\frac{2}{-3}$, $\frac{-4}{5}$, $\frac{-1}{2}$.</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">Which is strictly smaller: $\frac{-8}{15}$ or $\frac{-7}{12}$?</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Express $\frac{-12}{13}$ as a rational number with a denominator of $-65$.</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Does every rational number have a multiplicative inverse (reciprocal)? Justify.</div></div>
+    </div>
+
+    <!-- Section B: Addition & Subtraction (Advanced) -->
+    <div class="chapter-header">Section B: Multi-Step Addition & Subtraction</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">Add: $\frac{-5}{8} + \frac{3}{4}$.</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">Simplify: $\frac{7}{-10} + \frac{8}{15}$.</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">Add: $\frac{-8}{19} + \frac{-4}{57}$.</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">Find the additive inverse of the sum: $\left( \frac{-3}{7} + \frac{-5}{14} \right)$.</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">Subtract $\frac{3}{4}$ from $\frac{-5}{6}$.</div></div>
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">Subtract $\frac{-8}{9}$ from $\frac{-3}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">The sum of two rational numbers is $-2$. If one of them is $\frac{-14}{5}$, find the other.</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">What should be added to $\frac{-5}{8}$ to get $\frac{1}{4}$?</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">What should be subtracted from $\frac{-2}{3}$ to get $\frac{-5}{6}$?</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Simplify: $\frac{5}{6} + \frac{-2}{3} - \frac{-1}{2}$.</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">Simplify: $2 + \frac{-3}{5} - \frac{4}{15}$.</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">Evaluate: $\frac{-7}{10} + \frac{13}{15} + \frac{27}{20}$.</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">From the sum of $\frac{-2}{5}$ and $\frac{3}{10}$, subtract $\frac{-4}{15}$.</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">Use rearrangement property to find the sum: $\left( \frac{4}{5} + \frac{-2}{3} \right) + \left( \frac{-4}{5} + \frac{2}{3} \right)$.</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">Evaluate: $\left| \frac{-3}{5} + \frac{1}{2} \right|$.</div></div>
+    </div>
+
+    <!-- Section C: Multiplication & Division -->
+    <div class="chapter-header">Section C: Multiplication, Division & Distributivity</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">Multiply: $\frac{-3}{8} \times \frac{24}{-5}$.</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">Multiply: $\frac{-15}{11} \times \frac{33}{25}$.</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">Evaluate: $\frac{4}{7} \times \frac{-2}{5} \times \frac{15}{8}$.</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Find the product of $\frac{-7}{8}$ and its reciprocal.</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">Verify that $x \times y = y \times x$ for $x = \frac{-2}{3}$ and $y = \frac{4}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">Find the multiplicative inverse of the product: $\frac{-3}{4} \times \frac{-5}{6}$.</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">Divide $\frac{-4}{9}$ by $\frac{2}{3}$.</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">Divide $\frac{-16}{21}$ by $\frac{-4}{7}$.</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">Evaluate: $\left( \frac{-2}{5} \times \frac{15}{8} \right) \div \frac{3}{4}$.</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">The product of two rational numbers is $\frac{-12}{35}$. If one of them is $\frac{3}{5}$, find the other.</div></div>
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">By what number should $\frac{-44}{9}$ be divided to get $\frac{-11}{3}$?</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">By what rational number should we multiply $\frac{-8}{13}$ to get $24$?</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">Simplify using the distributive property: $\frac{2}{5} \times \frac{-3}{7} - \frac{1}{14} - \frac{3}{7} \times \frac{3}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">Evaluate using BODMAS: $\left( \frac{1}{2} \div \frac{2}{3} \right) \times \frac{4}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">Simplify: $\frac{-4}{5} \div 2$.</div></div>
+    </div>
+
+    <!-- Section D: Word Problems -->
+    <div class="chapter-header">Section D: Real-Life Applications & Word Problems</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">A rope of length $13\frac{1}{2} \text{ m}$ has been divided into $9$ pieces of equal length. What is the length of each piece?</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">The area of a rectangular field is $45\frac{5}{16} \text{ sq m}$. If one side is $7\frac{1}{4} \text{ m}$, find the length of the other side.</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">If $1 \text{ meter}$ of cloth costs ₹$35\frac{1}{2}$, find the cost of $4\frac{2}{5} \text{ meters}$ of the cloth.</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">A train covers a distance of $120\frac{4}{5} \text{ km}$ in $3 \text{ hours}$. Find the speed of the train in km/h.</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">Out of a $500$-page book, Ram read $\frac{3}{5}$ of the book on Monday and $\frac{1}{4}$ of the *remaining* pages on Tuesday. How many pages are still left to be read?</div></div>
+        <div class="question-item"><span class="q-num">51.</span><div class="q-content">Half of a herd of deer are grazing in the field, and $\frac{3}{4}$ of the remaining are playing nearby. The rest $9$ are drinking water from the pond. Find the total number of deer in the herd.</div></div>
+        <div class="question-item"><span class="q-num">52.</span><div class="q-content">Divide the sum of $\frac{65}{12}$ and $\frac{8}{3}$ by their difference.</div></div>
+        <div class="question-item"><span class="q-num">53.</span><div class="q-content">Simplify using property: $\frac{-2}{3} \times \frac{4}{5} + \frac{2}{3} \times \frac{1}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">54.</span><div class="q-content">What is the perimeter of a rectangle with length $\frac{11}{4} \text{ cm}$ and width $\frac{7}{2} \text{ cm}$?</div></div>
+        <div class="question-item"><span class="q-num">55.</span><div class="q-content">If $\frac{a}{b}$ is a rational number, what fundamental mathematical condition must the integer $b$ satisfy?</div></div>
+        <div class="question-item"><span class="q-num">56.</span><div class="q-content">Find the multiplicative inverse of the sum of $\frac{1}{4}$ and $\frac{1}{5}$.</div></div>
+        <div class="question-item"><span class="q-num">57.</span><div class="q-content">Subtract the additive inverse of $\frac{5}{8}$ from the multiplicative inverse of $\frac{-4}{7}$.</div></div>
+        <div class="question-item"><span class="q-num">58.</span><div class="q-content">Evaluate $|x + y|$ if $x = \frac{-2}{5}$ and $y = \frac{1}{3}$.</div></div>
+        <div class="question-item"><span class="q-num">59.</span><div class="q-content">Is $\left( \frac{1}{2} - \frac{1}{3} \right) - \frac{1}{4}$ equal to $\frac{1}{2} - \left( \frac{1}{3} - \frac{1}{4} \right)$? What property does this test?</div></div>
+        <div class="question-item"><span class="q-num">60.</span><div class="q-content">A tailor needs $\frac{3}{4} \text{ m}$ of cloth to make a shirt. How many such shirts can he make from $15 \text{ m}$ of cloth?</div></div>
+    </div>
+
+    <!-- Answer Key Section -->
+    <div class="ans-table-container">
+        <div class="chapter-header">Answer Key</div>
+        <table class="ans-table">
+            <tr><th>Q</th><th>Answer</th><th>Q</th><th>Answer</th><th>Q</th><th>Answer</th></tr>
+            <tr><td>1.</td><td>$\frac{-4}{7}$</td><td>21.</td><td>$\frac{13}{45}$</td><td>41.</td><td>$\frac{4}{3}$</td></tr>
+            <tr><td>2.</td><td>$\frac{-2}{3}$</td><td>22.</td><td>$\frac{4}{5}$</td><td>42.</td><td>$-39$</td></tr>
+            <tr><td>3.</td><td>$>$</td><td>23.</td><td>$\frac{7}{8}$</td><td>43.</td><td>$\frac{-1}{2}$</td></tr>
+            <tr><td>4.</td><td>$\frac{-3}{4}, \frac{-7}{16}, \frac{5}{-12}$</td><td>24.</td><td>$\frac{1}{6}$</td><td>44.</td><td>$\frac{3}{5}$</td></tr>
+            <tr><td>5.</td><td>e.g., $\frac{1}{12}$</td><td>25.</td><td>$\frac{2}{3}$</td><td>45.</td><td>$\frac{-2}{5}$</td></tr>
+            <tr><td>6.</td><td>$-15$</td><td>26.</td><td>$\frac{17}{15}$</td><td>46.</td><td>$1\frac{1}{2} \text{ m}$ (or $1.5 \text{ m}$)</td></tr>
+            <tr><td>7.</td><td>$\frac{24}{-30}$</td><td>27.</td><td>$\frac{91}{60}$</td><td>47.</td><td>$6\frac{1}{4} \text{ m}$</td></tr>
+            <tr><td>8.</td><td>$\frac{29}{21}$</td><td>28.</td><td>$\frac{1}{6}$</td><td>48.</td><td>₹$156\frac{1}{5}$ (or ₹$156.20$)</td></tr>
+            <tr><td>9.</td><td>$<$</td><td>29.</td><td>$0$</td><td>49.</td><td>$40\frac{4}{15} \text{ km/h}$</td></tr>
+            <tr><td>10.</td><td>Yes (Both simplify to $\frac{-4}{5}$)</td><td>30.</td><td>$\frac{1}{10}$</td><td>50.</td><td>$150 \text{ pages}$</td></tr>
+            <tr><td>11.</td><td>e.g., $\frac{-7}{20}, \frac{-6}{20}, \frac{-5}{20}$</td><td>31.</td><td>$\frac{9}{5}$</td><td>51.</td><td>$72 \text{ deer}$</td></tr>
+            <tr><td>12.</td><td>$\frac{-1}{2}, \frac{2}{-3}, \frac{-4}{5}$</td><td>32.</td><td>$\frac{-9}{5}$</td><td>52.</td><td>$\frac{97}{33}$</td></tr>
+            <tr><td>13.</td><td>$\frac{-7}{12}$</td><td>33.</td><td>$\frac{-3}{7}$</td><td>53.</td><td>$\frac{-2}{5}$</td></tr>
+            <tr><td>14.</td><td>$\frac{60}{-65}$</td><td>34.</td><td>$1$</td><td>54.</td><td>$12.5 \text{ cm}$ (or $\frac{25}{2} \text{ cm}$)</td></tr>
+            <tr><td>15.</td><td>No ($0$ has no reciprocal)</td><td>35.</td><td>Both sides $= \frac{-8}{15}$</td><td>55.</td><td>$b \neq 0$</td></tr>
+            <tr><td>16.</td><td>$\frac{1}{8}$</td><td>36.</td><td>$\frac{8}{5}$</td><td>56.</td><td>$\frac{20}{9}$</td></tr>
+            <tr><td>17.</td><td>$\frac{-1}{6}$</td><td>37.</td><td>$\frac{-2}{3}$</td><td>57.</td><td>$\frac{-9}{8}$</td></tr>
+            <tr><td>18.</td><td>$\frac{-28}{57}$</td><td>38.</td><td>$\frac{4}{3}$</td><td>58.</td><td>$\frac{1}{15}$</td></tr>
+            <tr><td>19.</td><td>$\frac{11}{14}$</td><td>39.</td><td>$-1$</td><td>59.</td><td>No. Associativity of subtraction.</td></tr>
+            <tr><td>20.</td><td>$\frac{-19}{12}$</td><td>40.</td><td>$\frac{-4}{7}$</td><td>60.</td><td>$20 \text{ shirts}$</td></tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

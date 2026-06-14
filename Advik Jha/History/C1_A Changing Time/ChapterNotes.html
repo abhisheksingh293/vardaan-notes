@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Changing Time - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #000000;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; clear: both; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; clear: both; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; clear: both; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- AI IMAGE PLACEHOLDER AND DYNAMIC IMAGE STYLING --- */
+        .ai-image-placeholder {
+            background-color: var(--example-bg);
+            border: 2px dashed var(--accent-purple);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        .ai-prompt-text {
+            color: var(--meta-text);
+            font-size: 0.95rem;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* When user replaces the placeholder with an actual image, this class will handle inversion and borderless constraints */
+        img.content-image {
+            max-width: 38%;
+            height: auto;
+            border: none !important;
+            box-shadow: none !important;
+            background-color: transparent !important;
+            transition: transform 0.3s ease;
+            margin-top: 5px;
+        }
+
+        .img-left {
+            float: left;
+            margin-right: 25px;
+            margin-bottom: 15px;
+        }
+
+        .img-right {
+            float: right;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        /* Clearing floats for major sections only */
+        h2 {
+            clear: both;
+            padding-top: 10px;
+        }
+
+
+        html.dark-mode img.content-image {
+            /* Inverts colors for dark mode to make white background dark */
+            filter: invert(1) hue-rotate(180deg) brightness(1.1);
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            .theme-toggle, 
+            .branding-footer,
+            .ai-image-placeholder {
+                display: none !important;
+            }
+
+            .contact-info {
+                display: flex !important;
+            }
+
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 History • Chapter Notes</div>
+            
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>A Changing Time</h1>
+
+        <h2>1. A Period of Transition</h2>
+        <p>History is commonly divided into three main periods: <strong>Ancient, Medieval, and Modern</strong>. The transition from one period to another is not uniform globally.</p>
+        <ul>
+            <li>In <strong>Europe</strong>, the modern period began in the 15th century CE, marked by the <strong>Fall of Constantinople (1453)</strong>, the European Renaissance, and later, the Industrial Revolution.</li>
+            <li>In <strong>India</strong>, the modern period is considered to have started with the advent of British rule, marking its beginning around the time of the <strong>Battle of Plassey (1757)</strong>.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Key Milestone:</strong> The fall of Constantinople in 1453 caused the Turks to capture traditional land trade routes to the East, forcing Europeans to discover new sea routes, eventually linking European and Indian history through colonisation.</p>
+        </div>
+
+        <h2>2. The Renaissance</h2>
+
+        <!-- Renaissance Polymath (Newspaper Style: Right) -->
+        <img src="../Images/renaissance_polymath.png" alt="Leonardo da Vinci and the Printing Press" class="content-image img-right">
+
+        <p>The word <strong>Renaissance</strong> means 'rebirth' or 'revival'. It began in <strong>Italy in the 15th century</strong> and sparked a major shift in thought, resulting in a renewed interest in classical learning, human life, and scientific discovery.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Core Characteristics of the Renaissance:</strong></p>
+            <ul>
+                <li><strong>Humanism:</strong> Emphasis on human life, experiences, and worldly values rather than solely religious ideals.</li>
+                <li><strong>Rationalism:</strong> The use of logic, reason, and questioning.</li>
+                <li><strong>Scientific Inquiry:</strong> Questioning old beliefs through active observation and rigorous experimentation.</li>
+                <li><strong>Secularism:</strong> Focusing on worldly subjects instead of being confined to religion.</li>
+            </ul>
+        </div>
+
+        <h3>Impact on Art, Literature, and Science</h3>
+
+        <ul>
+            <li><strong>Literature:</strong> Writers like <strong>Dante</strong>, <strong>Petrarch</strong>, <strong>Shakespeare</strong>, and <strong>Milton</strong> produced works highlighting humanism.</li>
+            <li><strong>Art:</strong> Artists like <strong>Leonardo da Vinci</strong> (<em>Mona Lisa, The Last Supper</em>), <strong>Michelangelo</strong> (<em>Sistine Chapel</em>), and <strong>Raphael</strong> studied human anatomy to create highly realistic paintings and sculptures.</li>
+            <li><strong>Science:</strong> <strong>Copernicus</strong> proposed the heliocentric theory (Earth revolves around the Sun), later supported by <strong>Galileo's</strong> telescope. <strong>William Harvey</strong> discovered blood circulation, and <strong>Johannes Gutenberg</strong> invented the printing press (around 1440).</li>
+        </ul>
+
+        <h2>3. Discovery of New Sea Routes</h2>
+
+        <!-- Navigation Tools (Newspaper Style: Left) -->
+        <img src="../Images/navigation_tools.png" alt="Antique Mariner's Compass and Map" class="content-image img-left">
+
+        <p>With land routes blocked by the Turks, European rulers (especially from Portugal and Spain) financed new expeditions to find alternative sea routes to the East to trade spices and textiles.</p>
+        <ul>
+            <li><strong>Bartholomeu Diaz (1488):</strong> Reached Africa's southern tip, naming it the <em>Cape of Good Hope</em>.</li>
+            <li><strong>Vasco da Gama (1498):</strong> Successfully discovered the sea route to India, reaching Calicut.</li>
+            <li><strong>Amerigo Vespucci (1499):</strong> Explored the South American continent.</li>
+            <li><strong>Ferdinand Magellan:</strong> His expedition successfully circumnavigated the Earth.</li>
+        </ul>
+
+        <h2>4. The Reformation</h2>
+        <p>In medieval Europe, the Roman Catholic Church and the Pope held immense wealth and power, often leading luxurious lives. This led to a religious reform movement.</p>
+        <ul>
+            <li><strong>Martin Luther:</strong> A German professor of theology who was the first to openly protest against the corrupt practices of the Church.</li>
+            <li>This protest sparked the <strong>Reformation Movement (1517 to 1648 CE)</strong>, leading to the creation of the <strong>Protestant Church</strong> and ending religious unity in Europe.</li>
+            <li>The movement encouraged people to read the Bible themselves, use reason, and question religious authority, thereby aiding scientific progress.</li>
+        </ul>
+
+
+
+        <h2>5. The Industrial Revolution</h2>
+
+        <!-- Industrial Revolution (Newspaper Style: Right) -->
+        <img src="../Images/industrial_locomotive.png" alt="Early Steam Locomotive Engine" class="content-image img-right">
+
+        <p>The <strong>Industrial Revolution</strong> occurred in the second half of the 18th century, beginning in <strong>England</strong>. It marked a rapid shift from manual labour to machine-based production.</p>
+        
+        <h3>Why Did It Begin in England?</h3>
+        <ul>
+            <li><strong>Natural Resources:</strong> England had an abundant supply of coal and iron.</li>
+            <li><strong>Technological Inventions:</strong> Boosted by machines like the <strong>spinning jenny</strong> (James Hargreaves), the <strong>spinning frame</strong> (Richard Arkwright), and steam engines.</li>
+            <li><strong>Transport and Mining:</strong> <strong>George Stephenson</strong> developed steam locomotives. <strong>Humphry Davy</strong> invented the safety lamp for miners.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Impact of the Industrial Revolution:</strong> It led to urbanization as people moved to cities for factory jobs. However, it also created <strong>Capitalism</strong>, dividing society into wealthy factory owners and poor, overworked labourers. This severe exploitation, including massive child labour, eventually gave rise to the idea of <strong>Socialism</strong> (promoted by thinkers like Karl Marx and Friedrich Engels).</p>
+        </div>
+
+        <h2>6. Imperialism and Colonialism</h2>
+        <p>As factories produced goods at a massive scale, European countries needed <strong>new sources of raw materials</strong> and <strong>markets</strong> to sell finished products.</p>
+        <ul>
+            <li><strong>Colonialism:</strong> The practice by which a powerful nation maintains or extends control over another country to exploit its resources.</li>
+            <li><strong>Imperialism:</strong> A policy by which one nation acquires political and economic control over another nation, usually without the will of its people.</li>
+            <li>European powers justified their conquests by claiming they had a "moral obligation" to civilize the East. This led to the rapid colonization of Asian and African countries.</li>
+            <li>Trading companies, like the <strong>English East India Company</strong>, established "factories" (trading centers) in India and ultimately seized political control, devastating local Indian industries.</li>
+        </ul>
+
+
+
+        <h2>7. Sources to Study Modern History</h2>
+        <p>Historians rely on a variety of sources to understand how the transition to the modern period occurred.</p>
+        
+        <h3>Primary Sources</h3>
+        <p>First-hand accounts or original materials from the exact time period:</p>
+        <ul>
+            <li><strong>Buildings and Monuments:</strong> e.g., Gateway of India, Parliament House.</li>
+            <li><strong>Official Records:</strong> Government documents kept in archives that detail British policies and strategies.</li>
+            <li><strong>Written Material:</strong> Old newspapers, magazines, and original books (like Shakespeare's plays).</li>
+            <li><strong>Visual Sources and Maps:</strong> Photographs, films, and detailed maps made by the British.</li>
+        </ul>
+
+        <h3>Secondary Sources</h3>
+        <p>Accounts written later by scholars who studied primary sources:</p>
+        <ul>
+            <li>Reports, reviews, and contemporary history books.</li>
+            <li>Writings by Indian intellectuals responding to British rule, such as <strong>Dadabhai Naoroji</strong> (<em>Poverty and Un-British Rule in India</em>), <strong>Jawaharlal Nehru</strong> (<em>Discovery of India</em>), and <strong>Dinabandhu Mitra</strong> (<em>Nil Darpan</em>).</li>
+        </ul>
+
+        <!-- BRANDING FOOTER -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

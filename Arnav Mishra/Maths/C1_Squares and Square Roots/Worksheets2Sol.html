@@ -1,0 +1,417 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Solution Key</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 - Standard) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Squares and Square Roots - Solution Key (Level 2)</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8th</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Section A: Properties of Squares -->
+    <div class="chapter-header">Section A: Properties of Perfect Squares</div>
+    <div class="questions-container">
+        <div class="question-item solution-item">
+            <span class="q-num">1.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> No, $1057$ ends with the digit $7$. Perfect squares never end in $2, 3, 7,$ or $8$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">2.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> No, it ends with $3$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">3.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $9$. (Since $3^2 = 9$).</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">4.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $9$. (Since $7^2 = 49$, which ends in $9$).</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">5.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Four zeroes. (The number of zeroes doubles when squared).</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">6.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> No, perfect squares cannot end with the digit $8$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">7.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Odd. (The square of an odd number is always odd).</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">8.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Even. (The square of an even number is always even).</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">9.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $2 \times 12 = 24$ non-square numbers.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">10.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $2 \times 25 = 50$ non-square numbers.</div>
+        </div>
+    </div>
+
+    <!-- Section B: Number Patterns & Triplets -->
+    <div class="chapter-header">Section B: Number Patterns & Triplets</div>
+    <div class="questions-container">
+        <div class="question-item solution-item">
+            <span class="q-num">11.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $101 + 100 = 201$. (Using $(n+1)^2 - n^2 = (n+1) + n$).</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">12.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $569 + 568 = 1137$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">13.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $64 = 8^2$, so it is the sum of the first $8$ odd numbers: $1 + 3 + 5 + 7 + 9 + 11 + 13 + 15$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">14.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $81 = 9^2$, so: $1 + 3 + 5 + 7 + 9 + 11 + 13 + 15 + 17$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">15.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Let $2m = 8 \Rightarrow m = 4$. Next members: $m^2 - 1 = 15$, $m^2 + 1 = 17$. Triplet is $(8, 15, 17)$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">16.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Let $2m = 10 \Rightarrow m = 5$. Next members: $m^2 - 1 = 24$, $m^2 + 1 = 26$. Triplet is $(10, 24, 26)$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">17.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $6^2 + 7^2 = 36 + 49 = 85$. Since $8^2 = 64$ and $85 \neq 64$, it is NOT a Pythagorean triplet.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">18.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $5^2 + 12^2 = 25 + 144 = 169$. Since $13^2 = 169$, it IS a Pythagorean triplet.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">19.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $11111^2 = 123454321$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">20.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Sum of first $7$ odd numbers = $7^2 = 49$.</div>
+        </div>
+    </div>
+
+    <!-- Section C: Prime Factorization Method -->
+    <div class="chapter-header">Section C: Prime Factorization Method</div>
+    <div class="questions-container">
+        <div class="question-item solution-item">
+            <span class="q-num">21.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $729 = 3 \times 3 \times 3 \times 3 \times 3 \times 3 = (3 \times 3 \times 3)^2 \Rightarrow \sqrt{729} = 27$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">22.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $1156 = 2 \times 2 \times 17 \times 17 \Rightarrow \sqrt{1156} = 2 \times 17 = 34$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">23.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $1764 = 2 \times 2 \times 3 \times 3 \times 7 \times 7 \Rightarrow \sqrt{1764} = 2 \times 3 \times 7 = 42$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">24.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $3136 = 2 \times 2 \times 2 \times 2 \times 2 \times 2 \times 7 \times 7 \Rightarrow \sqrt{3136} = 2^3 \times 7 = 56$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">25.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $8281 = 7 \times 7 \times 13 \times 13 \Rightarrow \sqrt{8281} = 7 \times 13 = 91$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">26.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $252 = 2 \times 2 \times 3 \times 3 \times 7$. Factor $7$ is unpaired, so multiply by $7$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">27.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $2925 = 3 \times 3 \times 5 \times 5 \times 13$. Divide by the unpaired factor $13$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">28.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $9408 = 2^6 \times 7^2 \times 3$. Factor $3$ is left ungrouped, so divide by $3$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">29.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Let rows be $x$. Total trees $= x^2 = 1521$. $x = \sqrt{1521} = 39$ rows.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">30.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\sqrt{202500} = \sqrt{2025 \times 100} = 45 \times 10 = 450$ cadets per row.</div>
+        </div>
+    </div>
+
+    <!-- Section D: Long Division & Complex Word Problems -->
+    <div class="chapter-header">Section D: Long Division & Complex Word Problems</div>
+    <div class="questions-container">
+        <div class="question-item solution-item">
+            <span class="q-num">31.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $59$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">32.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $1213$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">33.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $625$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">34.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $329$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">35.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Nearest lower perfect square is $63^2 = 3969$. Remainder is $31$. So, subtract $31$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">36.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Long division gives a remainder of $12$ (with quotient $87$). Subtract $12$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">37.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\sqrt{1300}$ is between $36$ and $37$. $37^2 = 1369$. $1369 - 1300 = 69$. Add $69$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">38.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\sqrt{5607}$ is between $74$ and $75$. $75^2 = 5625$. $5625 - 5607 = 18$. Add $18$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">39.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Largest $4$-digit number is $9999$. By long division, remainder is $198$. $9999 - 198 = 9801$ ($99^2$).</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">40.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Smallest $4$-digit number is $1000$. $\sqrt{1000}$ is between $31$ and $32$. $32^2 = 1024$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">41.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\text{Side} = \sqrt{5184} = 72 \mathrm{~m}$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">42.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Area $= \frac{40401}{400} \mathrm{~m^2}$. $\text{Side} = \sqrt{\frac{40401}{400}} = \frac{201}{20} = 10.05 \mathrm{~m}$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">43.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\sqrt{8649} = 93$ rows.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">44.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Men in square $= 64019 - 10 = 64009$. Men in front row $= \sqrt{64009} = 253$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">45.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $3107$</div>
+        </div>
+    </div>
+
+    <!-- Section E: Fractions, Decimals, & Estimation -->
+    <div class="chapter-header">Section E: Fractions, Decimals, & Estimation</div>
+    <div class="questions-container">
+        <div class="question-item solution-item">
+            <span class="q-num">46.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\frac{18}{19}$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">47.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\sqrt{\frac{225}{169}} = \frac{15}{13} = 1 \frac{2}{13}$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">48.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\sqrt{\frac{361}{49}} = \frac{19}{7} = 2 \frac{5}{7}$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">49.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $12.13$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">50.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $0.0243$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">51.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $0.09$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">52.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $12.25$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">53.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $1.73$ (Since actual value is $1.732...$)</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">54.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $1.48$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">55.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $3.162$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">56.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $12.2$ ($12^2 = 144$, $12.2^2 = 148.84 \approx 150$)</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">57.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $24.5$ ($24^2 = 576$, $25^2 = 625$. $24.5^2 = 600.25$)</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">58.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\frac{0.21}{0.021} = 10$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">59.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $7 + 0.7 + 0.07 = 7.77$</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">60.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\sqrt{227.798649} = 15.093$</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

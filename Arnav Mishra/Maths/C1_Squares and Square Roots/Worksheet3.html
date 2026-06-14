@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3 - Challenger) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef5350;   /* Lighter red/adjust based on readability */
+            --bg-color: #3b1a1a;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Squares and Square Roots - Challenger (Level 3)</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8th</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Section A: Advanced Properties & Abstract Patterns -->
+    <div class="chapter-header">Section A: Advanced Properties & Abstract Patterns</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">Check mathematically if $25000$ can be a perfect square, justifying your answer using its prime factorization or zero-count rules.</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">How many non-square numbers lie strictly between $205^2$ and $206^2$?</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">The square of numbers comprising only ones follow a specific palindrome pattern. Using this, directly evaluate $1111111^2$.</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">Formulate a Pythagorean triplet where the smallest even member is $14$. Show all steps finding the other two values.</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">Formulate a Pythagorean triplet where the smallest even member is $18$. Show all steps finding the other two values.</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">Without executing sequential addition, find a generalized formula for the sum: $1 + 3 + 5 + 7 + ... \text{ up to } n \text{ terms}$.</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">Evaluate the difference $1000^2 - 999^2$ using the property of consecutive squares.</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Prove that the sum of the digits of the perfect square $1111^2$ is itself a perfect square.</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">Is it ever possible for a perfect square number to leave a remainder of $2$ when divided by $3$? Reference the exact property.</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Can there exist natural numbers $p$ and $q$ such that the equation $p^2 = 2q^2$ holds true?</div></div>
+    </div>
+
+    <!-- Section B: Prime Factorization Applications -->
+    <div class="chapter-header">Section B: Prime Factorization Applications</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">Find the square root of $47089$ using the prime factorization method. Show your grouping.</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">Find the square root of $24336$ using the prime factorization method. Show your grouping.</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">Find the square root of $28900$ using the prime factorization method. Show your grouping.</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Find the smallest number by which $1100$ must be multiplied so that the product becomes a perfect square.</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Continuing from the previous question, find the exact square root of the newly obtained perfect square.</div></div>
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">Find the smallest number by which $3645$ must be divided so that the quotient becomes a perfect square.</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">Continuing from the previous question, find the exact square root of the resulting quotient.</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">A horticulturist planted $1521$ trees in rows such that the number of rows was exactly equal to the number of plants in each row. Determine the number of rows.</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">A commanding officer wants to arrange $202500$ cadets in the form of a solid square. How many cadets will form the front row?</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">The area of a square field is $5184 \mathrm{~m^2}$. A rectangular field, whose length is twice its breadth, has its perimeter equal to the perimeter of the square field. Find the area of the rectangular field.</div></div>
+    </div>
+
+    <!-- Section C: Advanced Long Division & Word Problems -->
+    <div class="chapter-header">Section C: Advanced Long Division & Word Problems</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">Using the long division method, accurately compute $\sqrt{1471369}$.</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">Using the long division method, accurately compute $\sqrt{64432729}$.</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">Using the long division method, accurately compute $\sqrt{9653449}$.</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">Find the least number which must be strictly subtracted from $6203$ to obtain a perfect square.</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Identify the greatest $6$-digit number mathematically possible which is a perfect square.</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">What is the exact square root of the greatest $6$-digit perfect square found above?</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">Find the least number which must be mathematically added to $6203$ to obtain a perfect square.</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">Identify the smallest possible $6$-digit number which is a perfect square.</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">What is the exact square root of the smallest $6$-digit perfect square found above?</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">A General wishing to draw up his $64019$ men in the form of a solid square found that he had $10$ men extra. Calculate the number of men placed in the front row.</div></div>
+    </div>
+
+    <!-- Section D: Decimals, Fractions & Estimation -->
+    <div class="chapter-header">Section D: Decimals, Fractions & Estimation</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">Find the exact square root of the mixed fraction: $23 \frac{394}{729}$.</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">Find the exact square root of the mixed fraction: $35 \frac{85}{1444}$.</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">Calculate the square root of the decimal: $0.00053361$.</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Calculate the square root of the decimal: $0.374544$.</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">Find the square root of $10$, computing it correct to exactly four places of decimal.</div></div>
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">Find the square root of $2 \frac{1}{12}$, correct to three decimal places.</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">Simplify the following radical expression: $\frac{\sqrt{0.0441}}{\sqrt{0.000441}}$.</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">Simplify the following sum of radicals: $\sqrt{49} + \sqrt{0.49} + \sqrt{0.0049}$.</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">What is that specific decimal which when multiplied by itself yields exactly $227.798649$?</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">Estimate the value of $\sqrt{367 \frac{2}{7}}$ to the nearest one decimal place.</div></div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

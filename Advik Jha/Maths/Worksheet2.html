@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    
+    <script>
+        function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }
+    </script>
+    
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Squares, Cubes & Their Roots - Standard Level 2</div>
+            <div class="meta-info">
+                <span>Especially designed for: Advik</span>
+                <span>Class: 8 (ICSE)</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- SECTION A: SQUARES & PROPERTIES -->
+        <div class="chapter-header">Section A: Properties of Squares & Pythagorean Triplets</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Find the square of $45$ using a suitable shortcut pattern for numbers ending in $5$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Evaluate $86^2 - 85^2$ without actually calculating the squares.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">Find a Pythagorean triplet whose smallest member is $8$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">Find a Pythagorean triplet where one of the members is $16$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">Find the smallest whole number by which $1008$ must be multiplied to make it a perfect square.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Find the smallest whole number by which $2925$ must be divided to get a perfect square.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">Evaluate the sum of the first $15$ odd natural numbers without adding them directly.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">Find the square of the decimal number $2.5$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">Find the square of the mixed fraction $3 \frac{1}{2}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">How many natural numbers lie strictly between $100^2$ and $101^2$?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">Express the square number $144$ as the sum of consecutive odd natural numbers.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">Using the prime factorization method, verify whether $2352$ is a perfect square.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">What will be the unit digit of the square of $1234567$?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">Find the square of $99$ using the algebraic identity $(a-b)^2$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">State whether the square of $431$ will be an even number or an odd number. Give a reason.</div>
+            </div>
+        </div>
+
+        <!-- SECTION B: SQUARE ROOTS -->
+        <div class="chapter-header">Section B: Square Roots (Division Method & Applications)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">Find the square root of $7056$ using the prime factorization method.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">Find the square root of $12544$ using the long division method.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">Find the square root of $3481$ using the long division method.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">Find the square root of the decimal number $31.36$ using the division method.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">Find the square root of the decimal number $2.56$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">Find the least number that must be subtracted from $4000$ to make it a perfect square.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">Find the least number that must be added to $1750$ to make it a perfect square.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">A square field has an area of $441\text{ m}^2$. Find the perimeter of the field.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">A gardener has $1000$ plants. He wants to plant them so that the number of rows equals the number of columns. Find the minimum number of additional plants he needs.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">Find the square root of the fraction $\frac{256}{441}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">Find the square root of the mixed fraction $6 \frac{19}{25}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">Evaluate the given expression: $\sqrt{169} + \sqrt{144} - \sqrt{225}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">Given that $\sqrt{2401} = 49$, calculate the value of $\sqrt{24.01} + \sqrt{0.2401}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">Find the smallest perfect square number that is exactly divisible by each of the numbers $8$, $9$, and $10$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">Estimate the square root of $250$ to the nearest whole number.</div>
+            </div>
+        </div>
+
+        <!-- SECTION C: CUBES -->
+        <div class="chapter-header">Section C: Cubes and their Patterns</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">Calculate the cube of the decimal $1.5$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">Calculate the cube of the decimal $0.05$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">Find the cube of the negative integer $-12$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">Find the smallest natural number by which $675$ must be multiplied to obtain a perfect cube.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">Find the smallest natural number by which $704$ must be divided to obtain a perfect cube.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">Identify which of the following are cubes of even numbers: $216$, $729$, $3375$, and $8000$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">37.</span>
+                <div class="q-content">What will be the unit digit of the cube of the number $149$?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">38.</span>
+                <div class="q-content">What will be the unit digit of the cube of the number $258$?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">39.</span>
+                <div class="q-content">The volume of a cube is calculated using the formula $V = s^3$. Find the volume if the side $s = 1.2\text{ cm}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">40.</span>
+                <div class="q-content">Using prime factorization, check if $53240$ is a perfect cube.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">41.</span>
+                <div class="q-content">Find the smallest natural multiplier for $100$ to make it a perfect cube.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">42.</span>
+                <div class="q-content">Evaluate $(1.1)^3$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">43.</span>
+                <div class="q-content">Prove mathematically that if a number is multiplied by $3$, its cube is multiplied by $27$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">44.</span>
+                <div class="q-content">Find the cube of the rational number $\frac{-3}{7}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">45.</span>
+                <div class="q-content">Fill in the blank: The cube of an odd natural number is always ________.</div>
+            </div>
+        </div>
+
+        <!-- SECTION D: CUBE ROOTS -->
+        <div class="chapter-header">Section D: Cube Roots & Word Applications</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">46.</span>
+                <div class="q-content">Find the cube root of $2744$ using prime factorization.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">47.</span>
+                <div class="q-content">Find the cube root of $9261$ using prime factorization.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">48.</span>
+                <div class="q-content">Find the cube root of $13824$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">49.</span>
+                <div class="q-content">Evaluate the cube root: $\sqrt[3]{-3375}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">50.</span>
+                <div class="q-content">Evaluate the expression: $\sqrt[3]{-1000 \times 125}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">51.</span>
+                <div class="q-content">Find the value of $\sqrt[3]{0.003375}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">52.</span>
+                <div class="q-content">Evaluate the cube root of the fraction: $\sqrt[3]{\frac{729}{1000}}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">53.</span>
+                <div class="q-content">The volume of a solid cubical box is $13.824\text{ m}^3$. Find the length of its edge.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">54.</span>
+                <div class="q-content">Three solid metal cubes of edges $6\text{ cm}$, $8\text{ cm}$, and $10\text{ cm}$ respectively are melted together to form a single new cube. Find the edge length of this new cube.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">55.</span>
+                <div class="q-content">Evaluate the decimal sum: $\sqrt[3]{27} + \sqrt[3]{0.008} + \sqrt[3]{0.064}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">56.</span>
+                <div class="q-content">Find the smallest number by which $8640$ must be divided so that the quotient becomes a perfect cube.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">57.</span>
+                <div class="q-content">Evaluate the division expression: $\frac{\sqrt[3]{512}}{\sqrt[3]{64}}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">58.</span>
+                <div class="q-content">If $x^3 = -1728$, find the value of $x$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">59.</span>
+                <div class="q-content">Find the cube root of the mixed fraction $1 \frac{61}{64}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">60.</span>
+                <div class="q-content">The total surface area of a cube is $150\text{ m}^2$. Find its volume.</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

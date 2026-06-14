@@ -1,0 +1,494 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Europe - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Europe</h1>
+        
+        <h2>1. Introduction and Location</h2>
+        <p>Europe is one of the seven continents of the world. It comprises the western part of <strong>Eurasia</strong> (the combined landmass of Europe and Asia) and appears to be a western extension of the Asian landmass.</p>
+        <ul>
+            <li><strong>Latitudinal Extent:</strong> Between 36°N to 73°N latitudes. A greater part of this continent is situated in the Temperate Zone.</li>
+            <li><strong>Population:</strong> Europe has a high population density (second only to Asia). Because the land area is relatively small compared to its population, the available land is put to maximum use.</li>
+        </ul>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Indented Coastline & Harbours:</strong> Europe has a highly indented coastline, meaning the sea frequently extends deep into the land. This long coastline with numerous <strong>natural harbours</strong> gave Europeans a strong tradition of seafaring, international shipping, and trade.</p>
+        </div>
+
+        <h2>2. Boundaries of Europe</h2>
+        <p>Europe looks like an elongated peninsula surrounded by water bodies on three sides:</p>
+        <ul>
+            <li><strong>North:</strong> The Arctic Ocean</li>
+            <li><strong>West:</strong> The Atlantic Ocean</li>
+            <li><strong>South:</strong> The Mediterranean Sea</li>
+            <li><strong>East:</strong> It is joined to Asia. The natural boundary separating the two continents is formed by the <strong>Ural Mountains</strong>, the <strong>Caspian Sea</strong>, the <strong>Caucasus Mountains</strong>, and the <strong>Black Sea</strong>.</li>
+        </ul>
+
+        <h2>3. Political Divisions and Regional Groups</h2>
+        <p>Europe is made up of many small and big countries, with historically significant cities like London (UK), Moscow (Russia), Berlin (Germany), and Paris (France).</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Vatican City</strong> is the smallest fully independent nation in the world (located within Rome, Italy), whereas <strong>Russia</strong> is the largest country in Europe (and the world), extending far into Asia.</p>
+        </div>
+
+        <h3>Major Groups of Countries</h3>
+        <ul>
+            <li><strong>British Isles:</strong> Includes the island countries of Ireland and the United Kingdom (Great Britain).</li>
+            <li><strong>Low Countries (Benelux):</strong> Belgium, Netherlands, and Luxembourg. Much of the land in these countries is either below sea level or slightly above it.</li>
+            <li><strong>Nordic Countries:</strong> Five countries in northern Europe: Norway, Sweden, Finland, Denmark, and Iceland.</li>
+            <li><strong>Mediterranean Europe:</strong> Countries bordering the Mediterranean Sea, such as Spain, Portugal, Italy, and Greece.</li>
+            <li><strong>Balkan States:</strong> Countries lying to the southeast, near the Black Sea, including Serbia, Croatia, Bulgaria, and Romania.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Polders in the Netherlands:</strong> Huge low-lying coastal areas of the Netherlands have been reclaimed from the sea. These reclaimed lands, safeguarded by embankments (dykes), are called <strong>polders</strong>. Pumps and canals are used to drain out excess water.</p>
+        </div>
+
+        <h2>4. Major Physical Features</h2>
+        <p>The physical landscape of Europe can be broadly divided into four main regions:</p>
+
+        <h3>A. North-western Highlands</h3>
+        <p>These highlands include the old mountains and plateaus of Norway, Sweden, Scotland, Wales, and Ireland. They have been eroded by ice action for millions of years. The coastlines here are highly indented with narrow sea inlets called <strong>fjords</strong> (deep, submerged glacial valleys with steep slopes).</p>
+
+        <h3>B. North European Plains</h3>
+        <p>Extending from the southern UK to western Russia, these vast, shallow plains are mostly made up of alluvial deposits brought down by rivers or glaciers. They are drained by major rivers:</p>
+        <ul>
+            <li><strong>North-flowing rivers:</strong> Seine, Rhine, Elbe, Oder, Vistula.</li>
+            <li><strong>South-flowing rivers:</strong> Don, Dnieper, Volga, Ural.</li>
+        </ul>
+
+        <h3>C. Central Uplands</h3>
+        <p>Located to the south of the North European Plains, these consist of old mountains that have eroded to form plateaus. Key examples include the <em>Meseta Central</em> in Spain, the <em>Massif Central</em> in France, and the <em>Bohemian Plateau</em>.</p>
+
+        <h3>D. The Alpine System</h3>
+        <p>Lying to the south of the Central Uplands, this system consists of <strong>young fold mountains</strong>. They are known for their high, rugged peaks which are often snow-capped. Examples include the <strong>Alps</strong>, <strong>Pyrenees</strong>, <strong>Carpathians</strong>, and <strong>Caucasus</strong> mountains.</p>
+
+        <h2>5. Tourism in Switzerland: A Case Study</h2>
+        <p>Switzerland is a small, landlocked country in Europe, heavily reliant on tourism for economic growth and foreign exchange. Several factors contribute to its massive tourism industry:</p>
+        <ul>
+            <li>Political and economic stability.</li>
+            <li>A highly specialized labor force and excellent hospitality services.</li>
+            <li>A well-distributed network of transport (roads and railways).</li>
+            <li>The breathtaking natural beauty of its landscape, particularly the <strong>Swiss Alps</strong> and the <strong>Jura Mountains</strong>.</li>
+            <li>A haven for winter sports (like skiing) and summer water sports.</li>
+        </ul>
+
+        <h3>Major Cities in Switzerland</h3>
+        <ul>
+            <li><strong>Bern:</strong> The capital city, located along the Aare River. Known for the Clock Tower and Federal Palace.</li>
+            <li><strong>Zurich:</strong> The largest city, famous as an international financial center. Located near Lake Zurich.</li>
+            <li><strong>Geneva:</strong> The second most populous city, home to global headquarters like the United Nations and the Red Cross.</li>
+            <li><strong>Basel:</strong> Known for its museums and rich art heritage.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The Threat of Climate Change:</strong> Global warming and climate change have begun affecting Switzerland's tourism. Diminishing snowfall and the melting of glaciers threaten the winter sports industry, forcing some glacial ski resorts to close or withdraw services due to shorter, warmer winters.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Fractions - Level 2 Worksheet</div>
+        <div class="meta-info">
+            <span>Especially designed for: Shourya</span>
+            <span>Class: 6 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Comparing Unlike Fractions ($<, >, =$)</div>
+    <div class="questions-container grid-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">Compare: $\frac{2}{3}$ and $\frac{3}{4}$</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">Compare: $\frac{5}{6}$ and $\frac{7}{8}$</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">Compare: $\frac{3}{5}$ and $\frac{4}{7}$</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">Compare: $\frac{1}{4}$ and $\frac{2}{9}$</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">Compare: $\frac{4}{5}$ and $\frac{8}{10}$</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">Compare: $1\frac{1}{2}$ and $\frac{5}{3}$</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">Compare: $\frac{7}{12}$ and $\frac{3}{4}$</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Compare: $\frac{5}{9}$ and $\frac{11}{18}$</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">Compare: $2\frac{1}{4}$ and $2\frac{2}{8}$</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Compare: $\frac{9}{11}$ and $\frac{4}{5}$</div></div>
+    </div>
+
+    <div class="chapter-header">Section B: Ordering Fractions</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">Arrange in Ascending Order: $\frac{1}{2}, \frac{3}{4}, \frac{5}{8}$</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">Arrange in Ascending Order: $\frac{2}{3}, \frac{5}{6}, \frac{4}{9}$</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">Arrange in Ascending Order: $\frac{3}{5}, \frac{7}{10}, \frac{1}{2}$</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Arrange in Ascending Order: $\frac{5}{7}, \frac{3}{4}, \frac{9}{14}$</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Arrange in Ascending Order: $\frac{1}{3}, \frac{1}{4}, \frac{1}{5}$</div></div>
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">Arrange in Descending Order: $\frac{7}{8}, \frac{3}{4}, \frac{5}{6}$</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">Arrange in Descending Order: $\frac{2}{5}, \frac{3}{10}, \frac{1}{2}$</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">Arrange in Descending Order: $\frac{4}{9}, \frac{5}{12}, \frac{1}{3}$</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">Arrange in Descending Order: $1\frac{1}{2}, 1\frac{3}{4}, 1\frac{1}{4}$</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">Arrange in Descending Order: $\frac{5}{8}, \frac{7}{12}, \frac{3}{4}$</div></div>
+    </div>
+
+    <div class="chapter-header">Section C: Addition & Subtraction (Unlike & Mixed)</div>
+    <div class="questions-container grid-container">
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">$\frac{1}{2} + \frac{1}{3}$</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">$\frac{3}{4} + \frac{1}{5}$</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">$\frac{5}{6} + \frac{3}{8}$</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">$\frac{2}{9} + \frac{1}{6}$</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">$1\frac{1}{2} + 2\frac{1}{4}$</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">$3\frac{2}{5} + 1\frac{3}{10}$</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">$\frac{7}{8} - \frac{1}{4}$</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">$\frac{4}{5} - \frac{1}{3}$</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">$\frac{5}{6} - \frac{3}{4}$</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">$2\frac{1}{2} - 1\frac{1}{4}$</div></div>
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">$4\frac{1}{3} - 2\frac{5}{6}$</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">$5 - 2\frac{3}{8}$</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">$\frac{3}{10} + \frac{2}{5} + \frac{1}{2}$</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">$\frac{7}{12} + \frac{1}{4} - \frac{1}{3}$</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">$3\frac{1}{4} + 1\frac{1}{2} - 2\frac{3}{8}$</div></div>
+    </div>
+
+    <div class="chapter-header">Section D: Multiplication of Fractions</div>
+    <div class="questions-container grid-container">
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">$\frac{2}{3} \times \frac{4}{5}$</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">$\frac{3}{4} \times \frac{8}{9}$</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">$\frac{5}{6} \times \frac{12}{25}$</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">$\frac{7}{8} \times 16$</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">$\frac{4}{9} \times 27$</div></div>
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">$1\frac{1}{2} \times 2\frac{1}{4}$</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">$3\frac{1}{3} \times 1\frac{4}{5}$</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">$2\frac{2}{5} \times \frac{15}{16}$</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">$\frac{3}{10} \times \frac{5}{6} \times \frac{4}{7}$</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">$1\frac{1}{4} \times 2\frac{2}{3} \times \frac{3}{10}$</div></div>
+    </div>
+
+    <div class="chapter-header">Section E: Division & Word Problems</div>
+    <div class="questions-container grid-container">
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">$\frac{3}{4} \div \frac{1}{2}$</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">$\frac{5}{8} \div \frac{15}{16}$</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">$\frac{7}{9} \div \frac{14}{27}$</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">$5 \div \frac{1}{5}$</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">$\frac{4}{5} \div 8$</div></div>
+        <div class="question-item"><span class="q-num">51.</span><div class="q-content">$2\frac{1}{2} \div 1\frac{1}{4}$</div></div>
+        <div class="question-item"><span class="q-num">52.</span><div class="q-content">$3\frac{3}{4} \div 2\frac{1}{2}$</div></div>
+        <div class="question-item"><span class="q-num">53.</span><div class="q-content">$4\frac{1}{5} \div \frac{7}{10}$</div></div>
+        <div class="question-item"><span class="q-num">54.</span><div class="q-content">$\frac{9}{10} \div 1\frac{4}{5}$</div></div>
+        <div class="question-item"><span class="q-num">55.</span><div class="q-content">$6\frac{2}{3} \div 2\frac{2}{9}$</div></div>
+    </div>
+    
+    <div class="questions-container" style="margin-top: 15px;">
+        <div class="question-item"><span class="q-num">56.</span><div class="q-content">Shourya read $\frac{2}{5}$ of a book on Monday and $\frac{1}{3}$ on Tuesday. What fraction of the book did he read in total?</div></div>
+        <div class="question-item"><span class="q-num">57.</span><div class="q-content">A piece of wire is $5\frac{1}{2}$ meters long. If $2\frac{3}{4}$ meters is cut off, how much wire is left?</div></div>
+        <div class="question-item"><span class="q-num">58.</span><div class="q-content">A recipe requires $\frac{3}{4}$ cup of sugar. How much sugar is needed for half of the recipe?</div></div>
+        <div class="question-item"><span class="q-num">59.</span><div class="q-content">Shourya has $15$ chocolates. He gave $\frac{2}{3}$ of them to his friends. How many chocolates did he give away?</div></div>
+        <div class="question-item"><span class="q-num">60.</span><div class="q-content">How many $\frac{1}{4}$ kg packets can be made from $5\frac{1}{2}$ kg of sugar?</div></div>
+    </div>
+
+    <!-- ANSWER KEY -->
+    <div class="chapter-header" style="background-color: #333; color: white; border-left: none;">Answer Key</div>
+    <div class="questions-container grid-container">
+        <div class="question-item solution-item"><span class="q-num">1.</span><div class="q-content">$\frac{2}{3} < \frac{3}{4}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">2.</span><div class="q-content">$\frac{5}{6} < \frac{7}{8}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">3.</span><div class="q-content">$\frac{3}{5} > \frac{4}{7}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">4.</span><div class="q-content">$\frac{1}{4} > \frac{2}{9}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">5.</span><div class="q-content">$\frac{4}{5} = \frac{8}{10}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">6.</span><div class="q-content">$1\frac{1}{2} < \frac{5}{3}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">7.</span><div class="q-content">$\frac{7}{12} < \frac{3}{4}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">8.</span><div class="q-content">$\frac{5}{9} < \frac{11}{18}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">9.</span><div class="q-content">$2\frac{1}{4} = 2\frac{2}{8}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">10.</span><div class="q-content">$\frac{9}{11} > \frac{4}{5}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">11.</span><div class="q-content">$\frac{1}{2}, \frac{5}{8}, \frac{3}{4}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">12.</span><div class="q-content">$\frac{4}{9}, \frac{2}{3}, \frac{5}{6}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">13.</span><div class="q-content">$\frac{1}{2}, \frac{3}{5}, \frac{7}{10}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">14.</span><div class="q-content">$\frac{9}{14}, \frac{5}{7}, \frac{3}{4}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">15.</span><div class="q-content">$\frac{1}{5}, \frac{1}{4}, \frac{1}{3}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">16.</span><div class="q-content">$\frac{7}{8}, \frac{5}{6}, \frac{3}{4}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">17.</span><div class="q-content">$\frac{1}{2}, \frac{2}{5}, \frac{3}{10}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">18.</span><div class="q-content">$\frac{4}{9}, \frac{5}{12}, \frac{1}{3}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">19.</span><div class="q-content">$1\frac{3}{4}, 1\frac{1}{2}, 1\frac{1}{4}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">20.</span><div class="q-content">$\frac{3}{4}, \frac{5}{8}, \frac{7}{12}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">21.</span><div class="q-content">$\frac{5}{6}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">22.</span><div class="q-content">$\frac{19}{20}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">23.</span><div class="q-content">$\frac{29}{24} = 1\frac{5}{24}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">24.</span><div class="q-content">$\frac{7}{18}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">25.</span><div class="q-content">$3\frac{3}{4}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">26.</span><div class="q-content">$4\frac{7}{10}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">27.</span><div class="q-content">$\frac{5}{8}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">28.</span><div class="q-content">$\frac{7}{15}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">29.</span><div class="q-content">$\frac{1}{12}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">30.</span><div class="q-content">$1\frac{1}{4}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">31.</span><div class="q-content">$1\frac{1}{2}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">32.</span><div class="q-content">$2\frac{5}{8}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">33.</span><div class="q-content">$\frac{6}{5} = 1\frac{1}{5}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">34.</span><div class="q-content">$\frac{1}{2}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">35.</span><div class="q-content">$2\frac{3}{8}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">36.</span><div class="q-content">$\frac{8}{15}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">37.</span><div class="q-content">$\frac{2}{3}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">38.</span><div class="q-content">$\frac{2}{5}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">39.</span><div class="q-content">$14$</div></div>
+        <div class="question-item solution-item"><span class="q-num">40.</span><div class="q-content">$12$</div></div>
+        <div class="question-item solution-item"><span class="q-num">41.</span><div class="q-content">$\frac{27}{8} = 3\frac{3}{8}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">42.</span><div class="q-content">$6$</div></div>
+        <div class="question-item solution-item"><span class="q-num">43.</span><div class="q-content">$\frac{9}{4} = 2\frac{1}{4}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">44.</span><div class="q-content">$\frac{1}{7}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">45.</span><div class="q-content">$1$</div></div>
+        <div class="question-item solution-item"><span class="q-num">46.</span><div class="q-content">$\frac{3}{2} = 1\frac{1}{2}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">47.</span><div class="q-content">$\frac{2}{3}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">48.</span><div class="q-content">$\frac{3}{2} = 1\frac{1}{2}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">49.</span><div class="q-content">$25$</div></div>
+        <div class="question-item solution-item"><span class="q-num">50.</span><div class="q-content">$\frac{1}{10}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">51.</span><div class="q-content">$2$</div></div>
+        <div class="question-item solution-item"><span class="q-num">52.</span><div class="q-content">$\frac{3}{2} = 1\frac{1}{2}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">53.</span><div class="q-content">$6$</div></div>
+        <div class="question-item solution-item"><span class="q-num">54.</span><div class="q-content">$\frac{1}{2}$</div></div>
+        <div class="question-item solution-item"><span class="q-num">55.</span><div class="q-content">$3$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">56.</span><div class="q-content">$\frac{11}{15}$</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">57.</span><div class="q-content">$2\frac{3}{4}$ meters</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">58.</span><div class="q-content">$\frac{3}{8}$ cup</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">59.</span><div class="q-content">$10$ chocolates</div></div>
+        <div class="question-item solution-item" style="grid-column: span 2;"><span class="q-num">60.</span><div class="q-content">$22$ packets</div></div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

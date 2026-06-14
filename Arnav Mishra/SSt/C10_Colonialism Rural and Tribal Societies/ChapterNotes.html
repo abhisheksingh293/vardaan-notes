@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Colonialism: Rural and Tribal Societies - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            clear: both; /* Ensure it starts below all floated images */
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 6px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            display: flow-root; /* Wraps around floated images */
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 12px;
+            font-weight: 600;
+            display: flow-root; /* Wraps around floated images */
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; clear: both; box-sizing: border-box; width: 100%; display: flow-root; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; clear: both; box-sizing: border-box; width: 100%; display: flow-root; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; clear: both; box-sizing: border-box; width: 100%; display: flow-root; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .newspaper-figure {
+            margin: 15px 0;
+            max-width: 48%;
+            border: 1px solid var(--toggle-border);
+            padding: 8px;
+            background: var(--paper-bg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+            display: flow-root; /* Ensures it contains its float context */
+        }
+
+        .newspaper-figure.float-left {
+            float: left;
+            margin: 10px 20px 10px 0;
+            shape-outside: inset(0 0 0 0);
+        }
+
+        .newspaper-figure.float-right {
+            float: right;
+            margin: 10px 0 10px 20px;
+            shape-outside: inset(0 0 0 0);
+        }
+
+        .newspaper-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        .newspaper-caption {
+            font-size: 0.85rem;
+            color: var(--meta-text);
+            margin-top: 8px;
+            text-align: center;
+            font-style: italic;
+            line-height: 1.3;
+            border-top: 1px solid var(--toggle-border);
+            padding-top: 5px;
+        }
+
+        /* Invert Figure/Images in Dark Mode */
+        html.dark-mode .newspaper-figure {
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            border-color: var(--toggle-border);
+        }
+
+        html.dark-mode .newspaper-img {
+            filter: invert(1) brightness(0.9);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 History • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Colonialism: Rural and Tribal Societies</h1>
+        
+        <h2>1. Introduction</h2>
+        <p>Before the advent of the British East India Company, rural life in India was simple and self-sufficient. The English came as traders but gradually conquered India and became its masters. Unlike previous rulers who assimilated, the British totally shattered the traditional self-sufficient rural economy. Their primary aim was economic exploitation, which resulted in the ruin of the peasantry, the uprooting of tribals, and the destruction of Indian trade and handicrafts.</p>
+
+        <h2>2. Colonial Agrarian Policy and Land Revenue Systems</h2>
+        <p>As the British empire expanded, land revenue became the biggest source of income for the Company. To maximize and guarantee this income, they introduced several Land Revenue Settlements. These systems were primarily designed to legitimize economic exploitation.</p>
+
+        <h3>A. Zamindari System (Permanent Settlement)</h3>
+        <ul>
+            <li><strong>Introduced by:</strong> Lord Cornwallis in <strong>1793</strong>.</li>
+            <li><strong>Areas Covered:</strong> Bengal, Bihar, and Orissa.</li>
+            <li><strong>Key Features:</strong> Zamindars (landlords, rajas, and taluqdars) were made the hereditary owners of the land.</li>
+            <li><strong>Revenue Share:</strong> The Zamindars were forced to pay <strong>89%</strong> (or 10/11th) of the total revenue to the British government and kept <strong>11%</strong> (or 1/11th) as their own share.</li>
+            <li><strong>Impact on Peasants:</strong> Peasants lost their land rights and became mere tenants. Zamindars used oppressive methods to collect taxes. Cultivators had to take loans from moneylenders to pay rent, leading to a miserable life and frequent evictions.</li>
+        </ul>
+
+        <h3>B. Ryotwari System</h3>
+        <ul>
+            <li><strong>Introduced by:</strong> Thomas Munro in <strong>1820</strong>.</li>
+            <li><strong>Areas Covered:</strong> South India and later the Bombay area.</li>
+            <li><strong>Key Features:</strong> A direct settlement was established between the government and the <strong>ryots</strong> (cultivators). Ownership rights were given directly to the peasants.</li>
+            <li><strong>Revenue Share:</strong> The rates were excessively high (50% for dry lands and 60% for irrigated lands).</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>The Ryotwari Trap:</strong>
+            <p>Under the Ryotwari System, the tax was based on the <strong>potential of the soil</strong>, not the actual produce. Farmers were brutally forced to pay revenue even when crops failed entirely due to floods, droughts, or natural calamities.</p>
+        </div>
+
+        <h3>C. Mahalwari System</h3>
+        <ul>
+            <li><strong>Introduced by:</strong> Holt Mackenzie in <strong>1822</strong>.</li>
+            <li><strong>Areas Covered:</strong> Gangetic Valley, North-West provinces, Central India, and Punjab.</li>
+            <li><strong>Key Features:</strong> A collective settlement was made with a group of villages called a <strong>Mahal</strong>. The village community owned the land, forests, and pastures collectively.</li>
+            <li><strong>Revenue Share:</strong> The villages were jointly responsible for the payment of land revenue levied on the produce of a Mahal.</li>
+            <li><strong>Impact:</strong> It proved to be a curse. The exorbitant demands led to the impoverishment and eviction of peasants, causing widespread resentment that contributed to the Revolt of 1857.</li>
+        </ul>
+
+        <figure class="newspaper-figure float-right">
+            <img src="../Images/C10_AgrarianExploitation.png" alt="Agrarian Exploitation" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 1: Distressed peasants under the exploitative land revenue systems of the British and Zamindars</figcaption>
+        </figure>
+
+        <h2>3. Growth of Commercial Crops</h2>
+        <p>The East India Company used coercive methods to force farmers to grow cash crops that were in great demand in Europe, buying them at artificially low rates.</p>
+        <ul>
+            <li><strong>Indigo:</strong> Demanded by textile industries in Britain. Peasants were forced to grow it but were paid extremely low prices.</li>
+            <li><strong>Opium:</strong> Grown in Bengal, Bihar, and Punjab. The British smuggled and sold it to China for massive profits.</li>
+            <li><strong>Sugarcane:</strong> The rising demand for sugar in the West led to the setup of sugar plantations. Farmers were forced to sell thickened sugarcane juice at low prices to British factories instead of making local <em>gur</em> (jaggery).</li>
+            <li><strong>Other Crops:</strong> Cotton (Gujarat, Maharashtra), Tea (Assam, West Bengal), and Pepper (Kerala, Tamil Nadu).</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Commercialisation of Agriculture:</strong>
+            <p>It is the process of introducing a new product or shifting agricultural focus from growing food crops for self-consumption to growing cash crops solely for the market to earn maximum profit.</p>
+        </div>
+
+        <h2>4. Revolts by Farmers</h2>
+        <p>Exploitation, heavy taxation, indebtedness, and forced commercialization led to massive mass outbursts and rebellions by peasants against the British and Zamindars.</p>
+        <ul>
+            <li><strong>Blue Rebellion (1859):</strong> The ryots of Bengal violently refused to grow indigo.</li>
+            <li><strong>Moplah Rebellion (1860s & 1870s):</strong> Moplahs of South India revolted against the increasing burden of taxation.</li>
+            <li><strong>Deccan Riots (1875):</strong> Turned violent due to extreme rural indebtedness.</li>
+            <li><strong>Champaran Movement (1860-1920s):</strong> Peasants in north-west Bihar opposed the forced cultivation of indigo and high taxes.</li>
+            <li><strong>Oudh Kisan Sabha (1920):</strong> Formed under the leadership of Jawaharlal Nehru to organize peasant resistance.</li>
+        </ul>
+
+        <figure class="newspaper-figure float-left">
+            <img src="../Images/C10_IndigoCultivation.png" alt="Indigo Cultivation" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 2: Forced cultivation of Indigo by Indian peasants for European markets</figcaption>
+        </figure>
+
+        <h2>5. Colonialism and Tribal Societies</h2>
+        <p>After exploiting the peasants, the British targeted the tribal communities. Tribals lived in deep forests, practicing shifting cultivation, hunting, and herding, leading a self-sufficient life intricately tied to the forest.</p>
+
+        <h3>Impact on Tribal Life</h3>
+        <ul>
+            <li><strong>Loss of Power:</strong> Tribal chiefs lost all their traditional powers and were forced to follow laws made by British officers.</li>
+            <li><strong>Forest Laws:</strong> The British restricted <strong>shifting cultivation</strong> to easily control the tribals. They declared most forests as state property, especially "Reserved Forests" which produced valuable timber.</li>
+            <li><strong>Displacement:</strong> Tribals were evicted from their homes and forced to search for alternative livelihoods, leading to a shortage of laborers for the British to cut trees for railway sleepers.</li>
+            <li><strong>Exploitation by Traders:</strong> Traders and moneylenders offered cash loans but paid peanuts for tribal products. For instance, Santhals of Hazaribagh reared silkworms and were paid just <strong>Rupees 3 for 1000 cocoons</strong> by traders who sold them at five times the price.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Tribal Occupations:</strong> The <strong>Khonds</strong> of Orissa practiced shifting cultivation. The <strong>Van Gujjars</strong> of the Himalayas and <strong>Gaddis</strong> of Kullu lived by herding animals. The <strong>Mundas</strong> of Chotanagpur had a system where land belonged to the entire clan equally.
+        </div>
+
+        <h2>6. Tribal Revolts</h2>
+        <p>The unjust forest laws and ruthless exploitation by middlemen led to fierce tribal rebellions across India.</p>
+        <ul>
+            <li><strong>Khasi Revolt (1829):</strong> In north-west Assam, chiefs united under Bar Manik and Tirut Singh against the construction of a British road through their land.</li>
+            <li><strong>Santhal Rebellion (1855-1856):</strong> Led by <strong>Sidhu and Kanhu Murmu</strong> against the ruthless exploitation of traders and middlemen when the British government failed to protect them.</li>
+            <li><strong>Birsa Munda Movement (1895-1900):</strong> A young boy, <strong>Birsa Munda</strong>, emerged as a hero in Chotanagpur. He urged tribals to keep working on their own land. He raised a white flag as a symbol of 'Birsa Raj' and instigated the tribals to attack zamindars. He died in 1900.</li>
+        </ul>
+
+        <figure class="newspaper-figure float-right">
+            <img src="../Images/C10_BirsaMunda.png" alt="Birsa Munda" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 3: Birsa Munda, the legendary tribal hero who led the movement in Chotanagpur</figcaption>
+        </figure>
+
+        <h2>7. Effects of Colonialism on Crafts and Modern Industries</h2>
+        <p>Before the British, India was world-renowned for its handicrafts, calico, muslin, silk, and metal works. In the 17th century, India exported large quantities of these goods.</p>
+
+        <h3>De-industrialisation of India</h3>
+        <ul>
+            <li>To safeguard the British cotton industry, Indian silk and cotton textiles were systematically destroyed.</li>
+            <li>The British imposed very <strong>heavy duties</strong> on Indian goods.</li>
+            <li>They flooded the Indian market with cheap, machine-made articles from Britain, fueled by the <strong>Industrial Revolution</strong> (1760-1830).</li>
+            <li>Indian craftsmen and artisans lost princely patronage and were forced to give up their traditional livelihoods.</li>
+        </ul>
+
+        <h3>Rise of Modern Industries in India</h3>
+        <p>Due to the national movement and international developments, modern industries slowly emerged in India.</p>
+        <ul>
+            <li><strong>Plantations:</strong> Tea became the biggest plantation industry in Assam, Bengal, and South India. Other plantations included coffee, rubber, and <strong>Cinchona</strong> (used to manufacture quinine for malaria).</li>
+            <li><strong>Heavy Industries:</strong> The expansion of railways increased the demand for coal, iron, and steel. The visionary <strong>Jamshedji Tata</strong> established the Tata Iron and Steel Company.</li>
+            <li><strong>Post-Independence:</strong> Although industries like cotton, jute, and cement grew, India still had to import machinery. True focus on basic/key industries only started after India gained independence.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

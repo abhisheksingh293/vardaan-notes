@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 Default) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* Answer Grid to save space */
+        .answers-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            font-size: 10pt;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+        }
+        .ans-item {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 3px;
+        }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .answers-grid { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Rigorous Practice: Simple & Compound Interest</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- SECTION A -->
+    <div class="chapter-header">Section A: Simple Interest Fundamentals</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">Find the Simple Interest on ₹8,000 at 6% p.a. for 3 years.</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">Find the Simple Interest on ₹12,500 at 5.5% p.a. for 2 years and 6 months.</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">Calculate the Simple Interest on ₹6,400 at 7.5% p.a. for exactly 219 days.</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">Find the final amount when Principal = ₹15,000, Rate = 8% p.a., and Time = 3 years 4 months.</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">A sum of ₹4,000 is lent for 5 years at a certain rate of interest, yielding ₹1,200 as Simple Interest. Find the rate of interest per annum.</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">In what time will a sum of ₹8,500 amount to ₹10,200 at 4% p.a. simple interest?</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">What sum of money will amount to ₹27,600 in 3 years at 5% p.a. simple interest?</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">At what rate percent per annum simple interest will a sum of money double itself in 12 years and 6 months?</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">A certain sum amounts to ₹5,600 in 2 years and to ₹6,500 in 5 years at simple interest. Find the principal and the rate of interest.</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Divide ₹12,000 into two parts such that the simple interest on the first part for 2 years at 6% p.a. is equal to the simple interest on the second part for 3 years at 8% p.a.</div></div>
+    </div>
+
+    <!-- SECTION B -->
+    <div class="chapter-header">Section B: Compound Interest (Compounded Annually)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">Calculate the compound interest on ₹10,000 at 5% p.a. for 2 years.</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">Find the amount and the compound interest on ₹25,000 at 8% p.a. for 3 years.</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">A man invests ₹46,875 at 4% p.a. compound interest for 3 years. Calculate the interest accrued strictly for the 3rd year.</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Calculate the amount if ₹15,000 is invested at compound interest for 2 years, the rates for the successive years being 5% and 8% respectively.</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Find the compound interest on ₹31,250 for 3 years if the rates of interest for the first, second and third year are 4%, 5% and 6% respectively.</div></div>
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">What principal sum of money will amount to ₹5,408 in 2 years at 4% p.a. compound interest?</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">At what rate percent p.a. will ₹4,000 amount to ₹4,410 in 2 years when compounded annually?</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">In what time period will ₹1,000 amount to ₹1,331 at 10% p.a. compounded annually?</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">The compound interest on a certain sum of money at 5% p.a. for 2 years is ₹410. Find the simple interest on the exact same sum at the same rate and for the same time.</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">The Simple interest on a sum of money for 2 years at 4% p.a. is ₹450. Find the compound interest on the same sum and at the same rate for 2 years.</div></div>
+    </div>
+
+    <!-- SECTION C -->
+    <div class="chapter-header">Section C: Compound Interest (Half-Yearly & Quarterly)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">Find the compound interest on ₹16,000 for 1 year at 10% p.a., the interest being compounded half-yearly.</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">Calculate the total amount and compound interest on ₹8,000 for $1\frac{1}{2}$ years at 10% p.a. compounded half-yearly.</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">Find the compound interest on ₹12,500 for 9 months at 16% p.a. compounded quarterly.</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">What exact sum will amount to ₹27,783 in $1\frac{1}{2}$ years at 10% p.a. compounded half-yearly?</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Find the difference between the compound interest on ₹10,000 for 1 year at 20% p.a. when compounded half-yearly and when compounded quarterly.</div></div>
+    </div>
+
+    <!-- SECTION D -->
+    <div class="chapter-header">Section D: Difference between SI and CI</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">Find the difference between the Compound Interest and Simple Interest on ₹5,000 for 2 years at 8% p.a.</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">The difference between CI and SI on a certain sum for 2 years at 10% p.a. is ₹631. Find the principal sum.</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">The difference between the simple and compound interest on a certain sum for 3 years at 5% p.a. is ₹122. Find the sum.</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">Find the rate percent p.a. if the difference between CI and SI on ₹8,000 for 2 years is exactly ₹20.</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">If the simple interest on a sum of money for 2 years at 5% p.a. is ₹50, what is the compound interest on the same sum at the same rate and for the same time?</div></div>
+    </div>
+
+    <!-- SECTION E -->
+    <div class="chapter-header">Section E: Growth and Depreciation (Applications of CI)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">The population of a town increases by 5% annually. If its present population is 80,000, what will it be in 2 years?</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">The population of a city was 1,20,000 in 2023. If it increases at the rate of 6% p.a., find its population in 2025.</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">The value of an industrial machine depreciates at the rate of 10% p.a. If its present value is ₹1,62,000, what was its original value 2 years ago?</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">A brand new car was bought for ₹5,00,000. Its value depreciates at a steady 8% p.a. Find its value after 3 years.</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">The count of bacteria in a certain laboratory experiment was increasing at the rate of 2.5% per hour. Find the bacteria count at the end of 2 hours if the initial count was 5,12,000.</div></div>
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">A scooter was bought at ₹42,000. Its value depreciated at the rate of 8% per annum. Find its exact value after one year.</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">The population of a place increased to 52,920 in the year 2003 at a rate of 5% per annum. Find the population of the place in 2001.</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">In a biology lab, the count of bacteria was increasing at the rate of 2% per hour. Find the total count at the end of 2 hours if the initial count was 50,000.</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">The market value of a property increases every year by 10% of its previous value. If its present value is ₹50,00,000, find its value after 2 years.</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">An automobile factory increased its production of cars from 80,000 units in 2022 to 92,610 units in 2025. Find the annual rate of growth.</div></div>
+    </div>
+
+    <!-- SECTION F -->
+    <div class="chapter-header">Section F: Advanced Exam Level Problems</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">A person borrowed a sum at 10% p.a., interest compounded annually. He repaid ₹3,850 at the end of the 2nd year and cleared the debt by paying ₹2,420 at the end of the 3rd year. Find the sum borrowed.</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">Divide ₹28,730 between A and B so that when their shares are lent at 10% p.a. compound interest compounded annually, the amount that A receives in 3 years is equal to what B receives in 5 years.</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">A man borrows ₹12,500 at 20% compound interest. At the end of every year, he pays ₹2,000 as part repayment. How much does he still owe after three such regular installments?</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">The difference between the compound interest and simple interest on a certain sum for 2 years is ₹54.90. If the simple interest is ₹1,830, find the rate of interest and the sum.</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">Simple interest on a sum of money for 3 years at $6\frac{1}{4}$% p.a. is ₹2,400. What will be the compound interest on that sum at the same rate for the same period?</div></div>
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">A sum of money is invested at compound interest payable annually. The interest earned in two successive years is ₹225 and ₹238.50. Find the rate of interest and the original sum.</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">Find the principal if the compound interest payable annually at 10% p.a. for 3 years is ₹331.</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">A certain sum of money amounts to ₹23,400 in 3 years at 10% p.a. simple interest. Find the amount of the same sum in 2 years at 10% p.a. compound interest.</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">Which is a better investment mathematically: 12% p.a. compounded half-yearly OR 12.5% p.a. compounded annually?</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">A father left ₹16,400 for his two sons aged 17 and 18 years. They are to get equal amounts when they are 20 years of age at 5% p.a. compound interest. Find the original share of each son.</div></div>
+    </div>
+
+    <!-- ANSWER KEY (Tabular/Grid format to save space) -->
+    <div class="chapter-header">Answer Key</div>
+    <div class="answers-grid">
+        <div class="ans-item"><b>1:</b> ₹1,440</div>
+        <div class="ans-item"><b>2:</b> ₹1,718.75</div>
+        <div class="ans-item"><b>3:</b> ₹288</div>
+        <div class="ans-item"><b>4:</b> ₹19,000</div>
+        <div class="ans-item"><b>5:</b> 6% p.a.</div>
+        
+        <div class="ans-item"><b>6:</b> 5 years</div>
+        <div class="ans-item"><b>7:</b> ₹24,000</div>
+        <div class="ans-item"><b>8:</b> 8% p.a.</div>
+        <div class="ans-item"><b>9:</b> P=₹5000, R=6%</div>
+        <div class="ans-item"><b>10:</b> ₹8,000 & ₹4,000</div>
+
+        <div class="ans-item"><b>11:</b> ₹1,025</div>
+        <div class="ans-item"><b>12:</b> A=₹31,492.80; CI=₹6,492.80</div>
+        <div class="ans-item"><b>13:</b> ₹2,028</div>
+        <div class="ans-item"><b>14:</b> ₹17,010</div>
+        <div class="ans-item"><b>15:</b> ₹4,922.50</div>
+
+        <div class="ans-item"><b>16:</b> ₹5,000</div>
+        <div class="ans-item"><b>17:</b> 5% p.a.</div>
+        <div class="ans-item"><b>18:</b> 3 years</div>
+        <div class="ans-item"><b>19:</b> ₹400</div>
+        <div class="ans-item"><b>20:</b> ₹459</div>
+
+        <div class="ans-item"><b>21:</b> ₹1,640</div>
+        <div class="ans-item"><b>22:</b> A=₹9,261; CI=₹1,261</div>
+        <div class="ans-item"><b>23:</b> ₹1,560.80</div>
+        <div class="ans-item"><b>24:</b> ₹24,000</div>
+        <div class="ans-item"><b>25:</b> ₹55.06</div>
+
+        <div class="ans-item"><b>26:</b> ₹32</div>
+        <div class="ans-item"><b>27:</b> ₹63,100</div>
+        <div class="ans-item"><b>28:</b> ₹16,000</div>
+        <div class="ans-item"><b>29:</b> 5% p.a.</div>
+        <div class="ans-item"><b>30:</b> ₹51.25</div>
+
+        <div class="ans-item"><b>31:</b> 88,200</div>
+        <div class="ans-item"><b>32:</b> 1,34,832</div>
+        <div class="ans-item"><b>33:</b> ₹2,00,000</div>
+        <div class="ans-item"><b>34:</b> ₹3,89,344</div>
+        <div class="ans-item"><b>35:</b> 5,37,920</div>
+
+        <div class="ans-item"><b>36:</b> ₹38,640</div>
+        <div class="ans-item"><b>37:</b> 48,000</div>
+        <div class="ans-item"><b>38:</b> 52,020</div>
+        <div class="ans-item"><b>39:</b> ₹60,50,000</div>
+        <div class="ans-item"><b>40:</b> 5% p.a.</div>
+
+        <div class="ans-item"><b>41:</b> ₹5,000</div>
+        <div class="ans-item"><b>42:</b> A=₹15,730; B=₹13,000</div>
+        <div class="ans-item"><b>43:</b> ₹14,320</div>
+        <div class="ans-item"><b>44:</b> 6% p.a., P=₹15,250</div>
+        <div class="ans-item"><b>45:</b> ₹2,553.125</div>
+
+        <div class="ans-item"><b>46:</b> R=6%, Sum=₹3,750</div>
+        <div class="ans-item"><b>47:</b> ₹1,000</div>
+        <div class="ans-item"><b>48:</b> ₹21,780</div>
+        <div class="ans-item"><b>49:</b> 12.5% Annually</div>
+        <div class="ans-item"><b>50:</b> ₹8,000 & ₹8,400</div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div>
+</div></body></html>

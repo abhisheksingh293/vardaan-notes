@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Solution Key</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3 - Challenger) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef5350;   /* Lighter red/adjust based on readability */
+            --bg-color: #3b1a1a;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Squares and Square Roots - Solution Key (Level 3)</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8th</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Section A: Advanced Properties & Abstract Patterns -->
+    <div class="chapter-header">Section A: Advanced Properties & Abstract Patterns</div>
+    <div class="questions-container">
+        <div class="question-item solution-item">
+            <span class="q-num">1.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> No. A number ending with an odd number of zeros (e.g., three zeros) is never a perfect square.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">2.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Using the property that there are $2n$ non-square numbers between $n^2$ and $(n+1)^2$: $2 \times 205 = 410$ non-square numbers.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">3.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Following the palindrome pattern, $1111111^2$ (seven ones) equals $1234567654321$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">4.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Let $2m = 14 \Rightarrow m = 7$. The other numbers are $m^2 - 1 = 49 - 1 = 48$ and $m^2 + 1 = 49 + 1 = 50$. Triplet is $(14, 48, 50)$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">5.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Let $2m = 18 \Rightarrow m = 9$. The other numbers are $m^2 - 1 = 81 - 1 = 80$ and $m^2 + 1 = 81 + 1 = 82$. Triplet is $(18, 80, 82)$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">6.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> The sum of the first $n$ odd natural numbers is always exactly equal to $n^2$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">7.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Since $(n+1)^2 - n^2 = (n+1) + n$, we have $1000 + 999 = 1999$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">8.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $1111^2 = 1234321$. The sum of the digits is $1 + 2 + 3 + 4 + 3 + 2 + 1 = 16$. Since $16 = 4^2$, it is a perfect square.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">9.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> No. By rule, a perfect square number will always leave a remainder of $0$ or $1$ when divided by $3$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">10.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> No. There are no natural numbers $p$ and $q$ that satisfy $p^2 = 2q^2$ (which is the proof that $\sqrt{2}$ is irrational).</div>
+        </div>
+    </div>
+
+    <!-- Section B: Prime Factorization Applications -->
+    <div class="chapter-header">Section B: Prime Factorization Applications</div>
+    <div class="questions-container">
+        <div class="question-item solution-item">
+            <span class="q-num">11.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $47089 = 7 \times 7 \times 31 \times 31 = (7 \times 31)^2$. Thus, $\sqrt{47089} = 217$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">12.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $24336 = 2 \times 2 \times 2 \times 2 \times 3 \times 3 \times 13 \times 13 \Rightarrow \sqrt{24336} = 2 \times 2 \times 3 \times 13 = 156$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">13.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $28900 = 2 \times 2 \times 5 \times 5 \times 17 \times 17 \Rightarrow \sqrt{28900} = 2 \times 5 \times 17 = 170$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">14.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $1100 = 2 \times 2 \times 5 \times 5 \times 11$. The factor $11$ is unpaired, so the smallest multiplier is $11$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">15.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> The new number is $12100$. $\sqrt{12100} = 2 \times 5 \times 11 = 110$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">16.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $3645 = 5 \times 3 \times 3 \times 3 \times 3 \times 3 \times 3$. The factor $5$ is left ungrouped, so divide by $5$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">17.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Result is $729$. $\sqrt{729} = 3 \times 3 \times 3 = 27$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">18.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Let the rows be $x$. Total trees $= x^2 = 1521$. So $x = \sqrt{1521} = 39$ rows.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">19.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Cadets per row $= \sqrt{202500}$. $\sqrt{2025 \times 100} = 45 \times 10 = 450$ cadets.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">20.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Side of square $= \sqrt{5184} = 72 \mathrm{~m}$. Perimeter $= 4 \times 72 = 288 \mathrm{~m}$. For rectangle, $2(2b + b) = 6b = 288 \Rightarrow b = 48 \mathrm{~m}$, $l = 96 \mathrm{~m}$. Area $= 96 \times 48 = 4608 \mathrm{~m^2}$.</div>
+        </div>
+    </div>
+
+    <!-- Section C: Advanced Long Division & Word Problems -->
+    <div class="chapter-header">Section C: Advanced Long Division & Word Problems</div>
+    <div class="questions-container">
+        <div class="question-item solution-item">
+            <span class="q-num">21.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Applying long division $\Rightarrow 1213$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">22.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Applying long division $\Rightarrow 8027$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">23.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Applying long division $\Rightarrow 3107$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">24.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\sqrt{6203} \approx 78.7$. Taking $78^2 = 6084$. Subtraction value: $6203 - 6084 = 119$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">25.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Greatest $6$-digit number is $999999$. Its root $\approx 999.9$. So, $999^2 = 998001$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">26.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $999$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">27.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> The next square after $6084$ ($78^2$) is $79^2 = 6241$. Addition value: $6241 - 6203 = 38$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">28.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Smallest $6$-digit number is $100000$. Its root $\approx 316.2$. The next integer square is $317^2 = 100489$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">29.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $317$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">30.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> The total effective men in the solid square is $64019 - 10 = 64009$. Men in front row $= \sqrt{64009} = 253$.</div>
+        </div>
+    </div>
+
+    <!-- Section D: Decimals, Fractions & Estimation -->
+    <div class="chapter-header">Section D: Decimals, Fractions & Estimation</div>
+    <div class="questions-container">
+        <div class="question-item solution-item">
+            <span class="q-num">31.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $23 \frac{394}{729} = \frac{17161}{729}$. Square root $= \frac{131}{27} = 4 \frac{23}{27}$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">32.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $35 \frac{85}{1444} = \frac{50625}{1444}$. Square root $= \frac{225}{38} = 5 \frac{35}{38}$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">33.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\sqrt{0.00053361} = 0.0231$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">34.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\sqrt{0.374544} = 0.612$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">35.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> Expanding $\sqrt{10}$ by long division gives $3.16227...$, adjusting up to four decimals yields $3.1623$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">36.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $2 \frac{1}{12} = \frac{25}{12} \approx 2.083333$. Solving by division gives $1.4433...$, leading to $1.443$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">37.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $\frac{0.21}{0.021} = 10$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">38.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $7 + 0.7 + 0.07 = 7.77$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">39.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> This requires solving $\sqrt{227.798649}$. Setting periods carefully reveals the decimal $15.093$.</div>
+        </div>
+        <div class="question-item solution-item">
+            <span class="q-num">40.</span>
+            <div class="q-content"><span class="ans-label">Ans:</span> $367 \frac{2}{7} \approx 367.28$. $19^2 = 361$ and $19.2^2 = 368.64$. The estimate to nearest one decimal place is $19.2$.</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

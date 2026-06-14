@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 - Standard/Medium - Blue Theme) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue for dark mode readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- ANSWER KEY TABLE STYLING --- */
+        .ans-table-container { margin-top: 25px; page-break-before: always; }
+        .ans-table { width: 100%; border-collapse: collapse; font-size: 10.5pt; text-align: left; background: var(--body-bg); }
+        .ans-table th, .ans-table td { border: 1px solid var(--border-color); padding: 6px 10px; }
+        .ans-table th { background-color: var(--primary-color); color: var(--body-bg); font-weight: bold; text-align: center; }
+        .ans-table td:nth-child(odd) { font-weight: bold; text-align: center; color: var(--primary-color); width: 6%; }
+        html.dark-mode .ans-table th { color: #fff; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Standard Worksheet - Integers (Level 2)</div>
+        <div class="meta-info">
+            <span>Especially designed for: Shourya Anand</span>
+            <span>Class: 6 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Section A: Simplification & Properties -->
+    <div class="chapter-header">Section A: Simplification & Properties</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">Simplify the expression: $(-15) + (+20) - (-5)$.</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">Simplify: $35 - (-12) + (-8)$.</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">Evaluate: $-[ - (-10) ]$.</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">Find the sum of $-45, 25, -15,$ and $30$.</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">Subtract the sum of $-12$ and $8$ from $-20$.</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">What should be added to $-18$ to get $12$?</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">What should be subtracted from $-15$ to get $5$?</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Simplify: $(-2) + (-4) + (-6) + (-8)$.</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">True or False: $a - b = b - a$ holds true for all integers.</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">True or False: The addition of integers is associative.</div></div>
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">Add $-10$ to the difference of $15$ and $-5$.</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">Find the predecessor of $-199$.</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">Find the successor of $-200$.</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Simplify using brackets: $10 - [ 5 - ( -3 ) ]$.</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Simplify: $-20 - (-10) + (-5)$.</div></div>
+    </div>
+
+    <!-- Section B: Multiplication & Division -->
+    <div class="chapter-header">Section B: Multiplication & Division</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">Multiply: $(-12) \times 5$.</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">Multiply: $(-8) \times (-7)$.</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">Evaluate: $(-1) \times (-1) \times (-1) \times (-1)$.</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">Find the product: $(-15) \times 0 \times (-18)$.</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">Divide: $(-45) \div 9$.</div></div>
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">Divide: $(-60) \div (-12)$.</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">Evaluate: $0 \div (-15)$.</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">Determine the sign of the product of $5$ negative integers and $2$ positive integers.</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">Multiply: $(-3) \times 4 \times (-5)$.</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Simplify: $[(-18) \div 3] \times (-2)$.</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">Find the value of $x$ if $x \div (-5) = 8$.</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">Fill in the blank: $(-8) \times \_\_\_ = 72$.</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">Fill in the blank: $\_\_\_ \div (-4) = -11$.</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">True or False: Division of integers is commutative.</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">Find the quotient: $144 \div (-16)$.</div></div>
+    </div>
+
+    <!-- Section C: BODMAS & Advanced Simplification -->
+    <div class="chapter-header">Section C: BODMAS Rules with Integers</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">Simplify: $15 - (-3) \times 4$.</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">Simplify: $(-20) + 10 \div 2$.</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">Evaluate: $(-4) \times (-2) - (-8) \div 4$.</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Simplify: $18 \div (-3) + (-5) \times 2$.</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">Simplify: $12 - [ 8 - (4 - 6) ]$.</div></div>
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">Simplify: $(-15) \div 5 \times 3 - (-2)$.</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">Evaluate: $20 - \{ 5 + [ (-2) \times 3 ] \}$.</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">Simplify: $(-10) \times [ (-5) + 3 ]$.</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">Simplify: $[ (-24) \div (-4) ] - 8$.</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">Evaluate: $5 \times (-6) + 30 \div (-5)$.</div></div>
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">Simplify: $(-8) - \{ -4 - [ -2 - ( -3 ) ] \}$.</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">Simplify using exponent rules for negatives: $(-1)^{10} \times (-1)^{5}$.</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">Simplify: $100 \div [ (-10) \div 2 ]$.</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">Evaluate: $(-5) \times (-5) \times (-5)$.</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">Simplify: $|-15| \div |-3| + (-2)$.</div></div>
+    </div>
+
+    <!-- Section D: Standard Word Problems -->
+    <div class="chapter-header">Section D: Real-Life Applications & Word Problems</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">The temperature was $-8^\circ\text{C}$ at night and rose by $12^\circ\text{C}$ during the day. What is the new temperature?</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">A diver descends $25 \text{ m}$ below sea level, goes up $10 \text{ m}$, and then descends another $15 \text{ m}$. What is his final depth?</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">A company makes a profit of ₹$500$ on Monday, a loss of ₹$200$ on Tuesday, and a loss of ₹$100$ on Wednesday. What is their net profit/loss for these three days?</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">In a quiz competition, $3$ marks are awarded for every correct answer and $-1$ mark for every wrong answer. If Rohan gives $15$ correct answers and $5$ wrong answers, what is his total score?</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">An elevator descends into a mine shaft at the rate of $6 \text{ m/min}$. If the descent starts from $10 \text{ m}$ above the ground level, how long will it take to reach a depth of $-350 \text{ m}$?</div></div>
+        <div class="question-item"><span class="q-num">51.</span><div class="q-content">An airplane is flying at a height of $5000 \text{ m}$ above sea level. Directly below it, a submarine is floating at $1200 \text{ m}$ below sea level. What is the vertical distance between them?</div></div>
+        <div class="question-item"><span class="q-num">52.</span><div class="q-content">The peak of Mount Everest is $8848 \text{ m}$ above sea level, while the Dead Sea is $430 \text{ m}$ below sea level. What is the difference in their elevations?</div></div>
+        <div class="question-item"><span class="q-num">53.</span><div class="q-content">A bank account has a balance of ₹$1500$. A check of ₹$2000$ is drawn from it. What is the new balance?</div></div>
+        <div class="question-item"><span class="q-num">54.</span><div class="q-content">If the temperature is $-5^\circ\text{C}$ in Srinagar and $22^\circ\text{C}$ in Chennai, what is the exact temperature difference between the two cities?</div></div>
+        <div class="question-item"><span class="q-num">55.</span><div class="q-content">Subtract the sum of $-340$ and $170$ from $-45$.</div></div>
+        <div class="question-item"><span class="q-num">56.</span><div class="q-content">The product of two integers is $-120$. If one of the integers is $15$, find the other integer.</div></div>
+        <div class="question-item"><span class="q-num">57.</span><div class="q-content">Divide the sum of $-20$ and $8$ by $-3$.</div></div>
+        <div class="question-item"><span class="q-num">58.</span><div class="q-content">By what number should $-240$ be divided to obtain a quotient of $16$?</div></div>
+        <div class="question-item"><span class="q-num">59.</span><div class="q-content">A shopkeeper earns a profit of ₹$2$ on selling a pen and incurs a loss of ₹$1$ on selling a pencil. If he sells $40$ pens and $50$ pencils, what is his net gain or loss?</div></div>
+        <div class="question-item"><span class="q-num">60.</span><div class="q-content">The sum of two integers is $-50$. If one of them is $30$, find the other integer.</div></div>
+    </div>
+
+    <!-- Answer Key Section -->
+    <div class="ans-table-container">
+        <div class="chapter-header">Answer Key</div>
+        <table class="ans-table">
+            <tr><th>Q</th><th>Answer</th><th>Q</th><th>Answer</th><th>Q</th><th>Answer</th></tr>
+            <tr><td>1.</td><td>$10$</td><td>21.</td><td>$5$</td><td>41.</td><td>$-3$</td></tr>
+            <tr><td>2.</td><td>$39$</td><td>22.</td><td>$0$</td><td>42.</td><td>$-1$</td></tr>
+            <tr><td>3.</td><td>$-10$</td><td>23.</td><td>Negative</td><td>43.</td><td>$-20$</td></tr>
+            <tr><td>4.</td><td>$-5$</td><td>24.</td><td>$60$</td><td>44.</td><td>$-125$</td></tr>
+            <tr><td>5.</td><td>$-16$</td><td>25.</td><td>$12$</td><td>45.</td><td>$3$</td></tr>
+            <tr><td>6.</td><td>$30$</td><td>26.</td><td>$x = -40$</td><td>46.</td><td>$4^\circ\text{C}$</td></tr>
+            <tr><td>7.</td><td>$-20$</td><td>27.</td><td>$-9$</td><td>47.</td><td>$30 \text{ m}$ depth (or $-30 \text{ m}$)</td></tr>
+            <tr><td>8.</td><td>$-20$</td><td>28.</td><td>$44$</td><td>48.</td><td>Profit of ₹$200$</td></tr>
+            <tr><td>9.</td><td>False</td><td>29.</td><td>False</td><td>49.</td><td>$40$ marks</td></tr>
+            <tr><td>10.</td><td>True</td><td>30.</td><td>$-9$</td><td>50.</td><td>$60$ minutes ($1$ hour)</td></tr>
+            <tr><td>11.</td><td>$10$</td><td>31.</td><td>$27$</td><td>51.</td><td>$6200 \text{ m}$</td></tr>
+            <tr><td>12.</td><td>$-200$</td><td>32.</td><td>$-15$</td><td>52.</td><td>$9278 \text{ m}$</td></tr>
+            <tr><td>13.</td><td>$-199$</td><td>33.</td><td>$10$</td><td>53.</td><td>-₹$500$ (Overdrawn)</td></tr>
+            <tr><td>14.</td><td>$2$</td><td>34.</td><td>$-16$</td><td>54.</td><td>$27^\circ\text{C}$</td></tr>
+            <tr><td>15.</td><td>$-15$</td><td>35.</td><td>$2$</td><td>55.</td><td>$125$</td></tr>
+            <tr><td>16.</td><td>$-60$</td><td>36.</td><td>$-7$</td><td>56.</td><td>$-8$</td></tr>
+            <tr><td>17.</td><td>$56$</td><td>37.</td><td>$21$</td><td>57.</td><td>$4$</td></tr>
+            <tr><td>18.</td><td>$1$</td><td>38.</td><td>$20$</td><td>58.</td><td>$-15$</td></tr>
+            <tr><td>19.</td><td>$0$</td><td>39.</td><td>$-2$</td><td>59.</td><td>Profit of ₹$30$</td></tr>
+            <tr><td>20.</td><td>$-5$</td><td>40.</td><td>$-36$</td><td>60.</td><td>$-80$</td></tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

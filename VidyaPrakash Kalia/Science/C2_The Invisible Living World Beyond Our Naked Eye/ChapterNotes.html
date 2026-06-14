@@ -1,0 +1,561 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Invisible Living World: Beyond Our Naked Eye - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #1a1a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0a1a0f;
+            --green-border: #81c784;
+            --blue-bg: #050f1a;
+            --blue-border: #64b5f6;
+            --pink-bg: #1a0510;
+            --pink-border: #f06292;
+            --text-main: #f0f0f0;
+            --paper-bg: #000000;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.08);
+            --example-text: #cccccc;
+            --toggle-bg: #1a1a1a;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 70%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- CHAPTER IMAGES (Newspaper Style) --- */
+        .chapter-image {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+
+        .img-left {
+            float: left;
+            margin-right: 25px;
+            margin-bottom: 20px;
+        }
+
+        .img-right {
+            float: right;
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        /* Clear floats after sections to prevent overlapping */
+        h1, h2, h3, .blue-box, .green-box, .yellow-box {
+            clear: both;
+        }
+
+
+
+        /* Invert images in dark mode for better visibility of diagrams */
+        html.dark-mode .chapter-image {
+            filter: invert(1) hue-rotate(180deg);
+
+        }
+
+        /* --- IMAGE PLACEHOLDER (Legacy support) --- */
+        .img-placeholder {
+            border: 2px dashed var(--meta-text);
+            background-color: var(--example-bg);
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 8px;
+            color: var(--example-text);
+            font-size: 0.95rem;
+        }
+        .img-placeholder strong {
+            color: var(--blue-border);
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 70% !important;
+                opacity: 1 !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science â€¢ Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>The Invisible Living World: Beyond Our Naked Eye</h1>
+        
+        <h2>1. Introduction to the Microscopic World</h2>
+        <img src="Images/compound_microscope_diagram.png" alt="Compound Microscope Diagram" class="chapter-image img-right">
+        <p>There is an entire world of living organisms around us that are too small to be seen with the naked eye. These tiny organisms live in air, water, soil, food, and even inside our bodies. We discovered them only after the invention of special tools like lenses and microscopes.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Microscope:</strong> A scientific instrument that makes extremely small objects look much larger. The word comes from Greek words 'micro' (small) and 'scope' (to look).</p>
+        </div>
+
+        <h3>Invention of the Microscope</h3>
+        <ul>
+            <li><strong>Hans and Zacharias Janssen:</strong> Built the first compound microscopes in the late 16th century using two lenses in a tube.</li>
+            <li><strong>Robert Hooke (1665):</strong> Used an early microscope to observe a thin slice of cork. He saw tiny box-like chambers and gave them the name <strong>'cells'</strong>. He published his sketches in the book <em>Micrographia</em>.</li>
+            <li><strong>Antonie van Leeuwenhoek:</strong> Known as the "Father of Microbiology", he improved lenses and became the first person to observe living single-celled organisms like bacteria and protozoa in a drop of water.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>There are two main types of microscopes today: <strong>Compound Microscopes</strong> (use lenses and light, magnifying up to 2000x) and <strong>Electron Microscopes</strong> (use beams of electrons, magnifying up to 10,00,000x to show deep inner cell details).</p>
+        </div>
+
+        <h2>2. Cell: The Building Block of Life</h2>
+        <img src="Images/animal_vs_plant_cell.png" alt="Animal vs Plant Cell Comparison" class="chapter-image img-left">
+        <p>A cell is the smallest structural and functional unit of life. All living things are made of cells. Despite being tiny, cells perform all life functions like growing, making energy, and reproducing.</p>
+
+        <h3>Basic Parts of a Cell</h3>
+        <ul>
+            <li><strong>Cell Membrane (Plasma Membrane):</strong> A flexible, living boundary that surrounds the cell. It acts as a gatekeeper, controlling what goes in and out.</li>
+            <li><strong>Cell Wall:</strong> A thick, rigid outer layer made of cellulose. <strong>Found ONLY in plant cells.</strong> It gives plants strength and shape.</li>
+            <li><strong>Nucleus:</strong> The "control center" or "brain" of the cell. It contains genetic material (DNA) that directs all cell activities.</li>
+            <li><strong>Cytoplasm:</strong> A jelly-like fluid inside the cell where all chemical reactions happen and where organelles float.</li>
+            <li><strong>Cell Organelles:</strong> Specialized parts inside the cytoplasm (e.g., <strong>Mitochondria</strong> for energy, <strong>Chloroplasts/Plastids</strong> in plants for making food, and <strong>Vacuoles</strong> for storage).</li>
+        </ul>
+
+        <h2>3. Variation in Cells and Body Organization</h2>
+        <img src="Images/biological_levels_organization.png" alt="Biological Levels of Organization" class="chapter-image img-right">
+        <p>Cells are not all the same; they vary greatly in shape, size, and number depending on their specific job.</p>
+
+        <h3>Variation in Shape</h3>
+        <ul>
+            <li><strong>Neurons (Nerve Cells):</strong> Long and branched to transmit electrical signals quickly across the body.</li>
+            <li><strong>Muscle Cells:</strong> Spindle-shaped to contract and relax for movement.</li>
+            <li><strong>Red Blood Cells (RBCs):</strong> Biconcave discs to carry oxygen through narrow blood vessels.</li>
+            <li><strong>White Blood Cells (WBCs):</strong> Irregular shape to squeeze through vessels and eat harmful microbes.</li>
+        </ul>
+
+        <h3>Variation in Number (Unicellular vs. Multicellular)</h3>
+        <ul>
+            <li><strong>Unicellular Organisms:</strong> Made of only ONE single cell that does everything (e.g., Amoeba, Paramecium, Bacteria).</li>
+            <li><strong>Multicellular Organisms:</strong> Made of millions of cells dividing the work (e.g., Humans, Trees, Earthworms).</li>
+        </ul>
+
+        <h3>Body Levels of Organization</h3>
+        <p>In multicellular beings, cells are organized in a step-by-step manner:</p>
+        <p><strong>Cell &rarr; Tissue &rarr; Organ &rarr; Organ System &rarr; Organism</strong></p>
+
+        <h2>4. Types of Microorganisms</h2>
+        <img src="Images/microorganisms_collage.png" alt="Types of Microorganisms" class="chapter-image img-left">
+        <p>Microorganisms are broadly classified into five main groups based on their structure and behavior:</p>
+
+        <ul>
+            <li><strong>Bacteria:</strong> Simplest, single-celled, oldest living beings. They have no true nucleus (prokaryotic). Classified by shape: Bacilli (rod), Cocci (spherical), Spirilla (spiral), Vibrio (comma).</li>
+            <li><strong>Fungi:</strong> Plant-like but cannot make their own food (no chlorophyll). Examples: Yeast (unicellular), Bread mould, Mushrooms (multicellular). They absorb food from dead matter.</li>
+            <li><strong>Algae:</strong> Simple aquatic plants that CAN make their own food (autotrophs) using chlorophyll. Examples: Spirogyra, Chlamydomonas.</li>
+            <li><strong>Protozoa:</strong> "First animals." Single-celled, heterotrophic (feed on others). They can move using pseudopodia (Amoeba), cilia (Paramecium), or flagella (Euglena).</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Viruses</strong> are a special case! They are considered the connecting link between living and non-living things. Outside a body, they act like dead particles. But once they enter a living host cell, they hijack it to multiply. Examples: Flu virus, HIV, COVID-19.</p>
+        </div>
+
+        <h2>5. Microorganisms: Friends and Foes</h2>
+        <p>Microbes play a dual role in our livesâ€”many are highly useful, while some are dangerous troublemakers.</p>
+
+        <h3>Microbes as Friends (Helpful)</h3>
+        <img src="Images/rhizobium_root_nodules.png" alt="Rhizobium in Root Nodules" class="chapter-image img-right">
+        <ul>
+            <li><strong>In Food:</strong> <em>Lactobacillus</em> bacteria turn milk into curd. Yeast is used in baking (making bread rise by releasing carbon dioxide) and brewing (alcohol).</li>
+            <li><strong>Cleaning the Environment:</strong> Bacteria and fungi act as decomposers. They break down dead plants and animal waste into nutrient-rich <strong>compost</strong> and produce <strong>biogas</strong>.</li>
+            <li><strong>Soil Fertility:</strong> <em>Rhizobium</em> bacteria live in the root nodules of leguminous plants (like peas and beans) and fix atmospheric nitrogen into the soil, acting as a natural fertilizer.</li>
+            <li><strong>Medicines:</strong> Fungi (like <em>Penicillium</em>) and bacteria are used to produce <strong>Antibiotics</strong> to cure diseases. Microbes are also used to make <strong>Vaccines</strong>.</li>
+        </ul>
+
+        <h3>Microbes as Foes (Pathogens)</h3>
+        <p>Harmful microorganisms that cause diseases are called <strong>pathogens</strong>.</p>
+        <ul>
+            <li><strong>In Humans:</strong> Cause diseases like cholera, tuberculosis, common cold, and malaria.</li>
+            <li><strong>In Animals:</strong> Cause Anthrax and Foot-and-mouth disease.</li>
+            <li><strong>In Plants:</strong> Cause Citrus canker, Potato blight, and Wheat rust, destroying farmers' crops.</li>
+            <li><strong>Food Spoilage:</strong> Fungi and bacteria grow on moist food, rotting it and causing food poisoning.</li>
+        </ul>
+
+        <h2>6. Microalgae: The Tiny Powerhouses</h2>
+        <p>Microalgae are microscopic aquatic plants that produce more than half of the oxygen on Earth. They form the base of the aquatic food chain.</p>
+        <ul>
+            <li><strong>Biofuels:</strong> Certain microalgae are processed to make eco-friendly, renewable fuels.</li>
+            <li><strong>Superfoods:</strong> <em>Spirulina</em> is a type of microalga rich in protein, vitamins, and iron, heavily used in health supplements globally.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan â¤ï¸</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

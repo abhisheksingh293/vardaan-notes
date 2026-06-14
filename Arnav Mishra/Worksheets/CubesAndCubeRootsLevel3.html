@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Cubes and Roots L3</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        :root {
+            --primary-color: #b71c1c; /* Level 3 - Red */
+            --bg-color: #ffebee;
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --border-color: #ccc;
+        }
+
+        html.dark-mode {
+            --primary-color: #ef5350;   
+            --bg-color: #3e1f1f;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --border-color: #444;
+        }
+
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        .header { text-align: center; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 15px; }
+        .institute-name { font-size: 22pt; font-weight: bold; text-transform: uppercase; margin: 0; color: var(--primary-color); }
+        .tagline { font-size: 12pt; font-weight: bold; margin-bottom: 5px; color: var(--text-secondary); }
+        .worksheet-title { font-size: 14pt; font-weight: bold; text-decoration: underline; color: var(--text-secondary); }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 10px; 
+            font-size: 10pt; background-color: var(--bg-color); padding: 8px 12px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 5px 10px; margin-top: 15px; margin-bottom: 10px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 12pt; text-transform: uppercase; 
+        }
+        
+        .two-column { column-count: 2; column-gap: 30px; display: block; }
+        .four-column { column-count: 4; column-gap: 15px; display: block; }
+        .questions-container { margin-bottom: 15px; }
+        .question-item { display: flex; align-items: baseline; font-size: 11pt; break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px; }
+        .solution-item { border-bottom: 1px dashed var(--bg-color); padding-bottom: 2px; margin-bottom: 4px; break-inside: avoid; page-break-inside: avoid; display: flex; align-items: baseline; }
+        .q-num { font-weight: bold; margin-right: 8px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        
+        .footer { margin-top: 20px; padding-top: 10px; border-top: 2px solid var(--primary-color); text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); }
+
+        .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer; z-index: 1000;
+        }
+        html.dark-mode .theme-toggle { filter: invert(1); }
+        .icon-sun { opacity: 0; position: absolute; top: 10px; left: 10px; width: 24px; height: 24px; }
+        .icon-moon { opacity: 1; position: absolute; top: 10px; left: 10px; width: 24px; height: 24px; }
+        html.dark-mode .icon-sun { opacity: 1; }
+        html.dark-mode .icon-moon { opacity: 0; }
+        @media print { .theme-toggle { display: none; } }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">vardaanlearning.com | 9508841336</div>
+            <div class="worksheet-title">Cubes & Cube Roots - Level 3 (Challenger)</div>
+            <div class="meta-info">
+                <span>Designed for: Arnav Mishra</span> 
+                <span>Class: 8 CBSE</span>
+                <span>Total Questions: 20</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Complex Evaluations (Q1 - Q7)</div>
+        <div class="two-column questions-container">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">Evaluate: $\sqrt[3]{0.000064}$</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">Evaluate: $\sqrt[3]{1000} + \sqrt[3]{0.008} - \sqrt[3]{0.125}$</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">Evaluate: $\sqrt[3]{0.027 \times 0.008}$</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">Simplify: $\sqrt[3]{\frac{-512}{343}} \times \sqrt[3]{\frac{-729}{1331}}$</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">Find the value of $\sqrt[3]{4 \frac{12}{125}}$.</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">Evaluate: $\sqrt[3]{288 \times \sqrt[3]{72 \times \sqrt[3]{27}}}$</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">Without finding the exact value, determine the number of digits in the cube root of a 8-digit perfect cube.</div></div>
+        </div>
+
+        <div class="chapter-header">Section B: Equations & Variables (Q8 - Q14)</div>
+        <div class="two-column questions-container">
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">If $\sqrt[3]{x} = -4$, find the value of $x$.</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">If $x^3 = \frac{216}{42875}$, find $x$.</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">Solve for $x$: $\sqrt[3]{1 + \frac{x}{8}} = \frac{3}{2}$</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">If the cube of a number $y$ is $50.653$, find the value of $y$.</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">If $\sqrt[3]{a} + \sqrt[3]{125} = 8$, find the value of $a$.</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">If $\sqrt[3]{3^x} = 27$, find the value of $x$.</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">Find the value of $\frac{\sqrt[3]{0.729} - \sqrt[3]{0.343}}{\sqrt[3]{0.729} + \sqrt[3]{0.343}}$.</div></div>
+        </div>
+
+        <div class="chapter-header">Section C: Advanced Word Problems & HOTS (Q15 - Q20)</div>
+        <div class="two-column questions-container">
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">The volume of a cubical box is $13.824 \text{ m}^3$. Find the total surface area of the box.</div></div>
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">The ratio of the volumes of two cubes is $343 : 729$. Find the ratio of their surface areas.</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">Evaluate $\sqrt[3]{(4^3 - 3^3) \times (3^3 - 2^3)}$.</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">A solid cubical block of wood costs ₹256 at the rate of ₹500 per cubic metre. Find the length of its edge.</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">How many small cubes of edge $2 \text{ cm}$ can be cut from a cubical block of edge $10 \text{ cm}$?</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">Find the difference between the cubes of the numbers 11 and 12, without actually computing the cubes directly. (Hint: Use pattern $n^3 - (n-1)^3$).</div></div>
+        </div>
+
+        <div class="chapter-header" style="background-color: var(--bg-color); margin-top: 25px;">Answer Key (Only Answers)</div>
+        <div class="four-column questions-container" style="font-size: 9.5pt;">
+            <div class="solution-item"><span class="q-num">1.</span> 0.04</div>
+            <div class="solution-item"><span class="q-num">2.</span> 9.7</div>
+            <div class="solution-item"><span class="q-num">3.</span> 0.06</div>
+            <div class="solution-item"><span class="q-num">4.</span> $\frac{72}{77}$</div>
+            <div class="solution-item"><span class="q-num">5.</span> $\frac{8}{5}$ (or 1.6)</div>
+            <div class="solution-item"><span class="q-num">6.</span> 12</div>
+            <div class="solution-item"><span class="q-num">7.</span> 3 digits</div>
+            <div class="solution-item"><span class="q-num">8.</span> -64</div>
+            <div class="solution-item"><span class="q-num">9.</span> $\frac{6}{35}$</div>
+            <div class="solution-item"><span class="q-num">10.</span> 19</div>
+            <div class="solution-item"><span class="q-num">11.</span> 3.7</div>
+            <div class="solution-item"><span class="q-num">12.</span> 27</div>
+            <div class="solution-item"><span class="q-num">13.</span> 9</div>
+            <div class="solution-item"><span class="q-num">14.</span> $\frac{1}{8}$ (or 0.125)</div>
+            <div class="solution-item"><span class="q-num">15.</span> $34.56 \text{ m}^2$</div>
+            <div class="solution-item"><span class="q-num">16.</span> $49 : 81$</div>
+            <div class="solution-item"><span class="q-num">17.</span> $\sqrt[3]{703}$</div>
+            <div class="solution-item"><span class="q-num">18.</span> 0.8 m</div>
+            <div class="solution-item"><span class="q-num">19.</span> 125</div>
+            <div class="solution-item"><span class="q-num">20.</span> 397</div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

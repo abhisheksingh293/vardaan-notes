@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Natural Resources: Vegetation and Wildlife - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #000000;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            clear: both; /* Ensure it starts below all floated images */
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 6px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            display: flow-root; /* Wraps around floated images */
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 12px;
+            font-weight: 600;
+            display: flow-root; /* Wraps around floated images */
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; display: flow-root; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; display: flow-root; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; display: flow-root; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .newspaper-figure {
+            margin: 15px 0;
+            max-width: 48%;
+            border: 1px solid var(--toggle-border);
+            padding: 8px;
+            background: var(--paper-bg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+            display: flow-root; /* Ensures it contains its float context */
+        }
+
+        .newspaper-figure.float-left {
+            float: left;
+            margin: 10px 20px 10px 0;
+            shape-outside: inset(0 0 0 0);
+        }
+
+        .newspaper-figure.float-right {
+            float: right;
+            margin: 10px 0 10px 20px;
+            shape-outside: inset(0 0 0 0);
+        }
+
+        .newspaper-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        .newspaper-caption {
+            font-size: 0.85rem;
+            color: var(--meta-text);
+            margin-top: 8px;
+            text-align: center;
+            font-style: italic;
+            line-height: 1.3;
+            border-top: 1px solid var(--toggle-border);
+            padding-top: 5px;
+        }
+
+        /* Invert Figure/Images in Dark Mode */
+        html.dark-mode .newspaper-figure {
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            border-color: var(--toggle-border);
+        }
+
+        html.dark-mode .newspaper-img {
+            filter: invert(1) brightness(0.9);
+        }
+
+        @media (max-width: 600px) {
+            .newspaper-img {
+                max-width: 100%;
+                float: none;
+                margin: 10px 0;
+                display: block;
+            }
+        }
+
+        /* --- AI IMAGE PLACEHOLDER (Keep for future additions if needed) --- */
+        .ai-image-placeholder {
+            background-color: var(--example-bg);
+            border: 3px dashed var(--meta-text);
+            border-radius: 12px;
+            padding: 30px 20px;
+            margin: 30px 0;
+            text-align: center;
+            transition: filter 0.3s ease, background-color 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Natural Resources: Vegetation and Wildlife</h1>
+        
+        <h2>1. Introduction to Natural Vegetation</h2>
+        <p>In the beginning, Earth was a barren planet. Gradually, life appeared in the ocean in the form of plants, followed by various other organisms on land. The distribution of this vegetation is highly dependent on climate.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Natural Vegetation:</strong> The assemblage of plant species in an environment that grows without human interference. It includes forests, grasses, and shrubs.</p>
+        </div>
+
+        <figure class="newspaper-figure float-right">
+            <img src="../Images/C3_VegetationGradient.png" alt="Vegetation Gradient" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 1: Global Vegetation Gradient</figcaption>
+        </figure>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Temperature and rainfall</strong> are the two most important factors for the growth of plants:</p>
+            <ul>
+                <li><strong>Heavy Rainfall:</strong> Thick and dense forests.</li>
+                <li><strong>Low Rainfall/Deserts:</strong> Shrubs and short trees (size and concentration reduce).</li>
+                <li><strong>Cold Regions:</strong> Short growing season; plants occur in scattered patches like mosses and lichens.</li>
+            </ul>
+        </div>
+
+        <h2>2. Classification of Forests</h2>
+        <p>On the basis of location and climatic conditions, forests are divided into three broad types:</p>
+
+        <h3>A. Tropical Hardwood Forests</h3>
+        <p>These are further sub-divided based on temperature and rainfall into two groups:</p>
+        
+        <p><strong>(i) Tropical Evergreen Forests (Rain Forests)</strong></p>
+        <ul>
+            <li><strong>Climate:</strong> Heavy rainfall (200 cm) and hot climate throughout the year.</li>
+            <li><strong>Characteristics:</strong> Trees do <em>not</em> shed their leaves at the same time, making them appear "evergreen". Trees are very tall (up to 60 meters) with dense growth and broad leaves to permit transpiration of surplus moisture.</li>
+            <li><strong>Examples:</strong> Mahogany, ebony, rosewood, rubber, and palm.</li>
+            <li><strong>Animals:</strong> Elephant, lemur, monkey, deer.</li>
+            <li><strong>Regions:</strong> Western Ghats, Andaman & Nicobar, North-Eastern India, parts of Africa (Ivory Coast, Ghana, Nigeria).</li>
+        </ul>
+
+        <p><strong>(ii) Tropical Deciduous Forests (Monsoon Forests)</strong></p>
+        <ul>
+            <li><strong>Climate:</strong> Warm with distinct wet and dry seasons. Receives summer rainfall between 100-200 cm.</li>
+            <li><strong>Characteristics:</strong> Trees shed their leaves during the dry season to conserve moisture. They are medium in height (30-40 meters) and less dense than evergreen forests.</li>
+            <li><strong>Examples:</strong> Sal, teak, sandalwood, bamboo, shisham (Eucalyptus is common in Australia).</li>
+            <li><strong>Animals:</strong> Lion, tiger, elephant, reptiles.</li>
+            <li><strong>Regions:</strong> India, Myanmar, South China, East Brazil, Central America.</li>
+        </ul>
+
+        <h3>B. Mediterranean Forests</h3>
+        <ul>
+            <li><strong>Climate:</strong> Found in areas with dry summer and moderate rainfall during winter.</li>
+            <li><strong>Characteristics:</strong> Trees are widely scattered. They have spiny, waxy, small, leathery leaves, long roots, and thick bark to retain moisture during dry summers.</li>
+            <li><strong>Examples:</strong> Cork, olive, citrus fruit trees.</li>
+            <li><strong>Animals:</strong> Mediterranean monk seal, Barbary macaque, Greek tortoise, Iberian lynx.</li>
+            <li><strong>Regions:</strong> Shores of Europe, Asia, North Africa, South-Western parts of South Africa.</li>
+        </ul>
+
+        <figure class="newspaper-figure float-left">
+            <img src="../Images/C3_LeafAdaptation.png" alt="Tree Leaf Adaptation" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 2: Leaf Adaptation Mechanism</figcaption>
+        </figure>
+
+        <h3>C. Temperate Softwood Forests (Coniferous Forests)</h3>
+        <ul>
+            <li><strong>Climate:</strong> Colder regions/higher latitudes where precipitation is received in the form of snow in winter.</li>
+            <li><strong>Characteristics:</strong> Trees are tall and conical in shape so snow cannot accumulate. They do not shed their thick needle-shaped leaves (they look evergreen).</li>
+            <li><strong>Examples:</strong> Pine, fir, spruce, cedar, deodar, silver fir, chestnut, walnut.</li>
+            <li><strong>Animals:</strong> Kashmir stag, spotted deer, snow leopard, tiger, golden eagle.</li>
+            <li><strong>Regions:</strong> High mountains in Europe, Asia, Northern Canada, USA, and southern slopes of the Himalayas (Mountain Forests).</li>
+        </ul>
+
+        <h2>3. Advantages of Forests & Deforestation</h2>
+        
+        <p>Forests are the "breathing lungs of the civilisation." They provide immense benefits:</p>
+        <ul>
+            <li>Convert carbon dioxide into oxygen (help us breathe).</li>
+            <li>Provide a safe habitat for wild animals and livelihood for many people.</li>
+            <li>Keep the earth cool and help in causing rainfall.</li>
+            <li>Tree roots bind soil particles, prevent floods, and raise the groundwater level.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Deforestation:</strong> Rampant cutting of trees has led to the loss of wildlife habitat, ecological imbalances, and soil erosion. Government measures to combat this include:</p>
+            <ul>
+                <li><strong>Afforestation:</strong> Large scale plantation of trees.</li>
+                <li>Promoting 'Each one plant one' policies.</li>
+                <li>Using substitutes for wood.</li>
+                <li>Enforcing strict laws to prohibit deforestation.</li>
+                <li>Discouraging shifting cultivation which causes forest loss.</li>
+            </ul>
+        </div>
+
+        <h2>4. Wildlife and its Conservation</h2>
+        <p>Wildlife refers to non-domesticated animals (birds, fishes, land animals) that make forests their natural habitat. Wildlife varies based on climatic variations.</p>
+        <ul>
+            <li>Wildlife is essential to maintain ecological balance.</li>
+            <li>It has aesthetic value, boosts tourism, and creates jobs.</li>
+            <li>Animal behaviour changes during disasters (like tsunamis) can provide early warning systems.</li>
+            <li>Dead and decaying animals produce humus, maintaining soil fertility.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>National Park:</strong> A well-defined area for the protection of wildlife where <em>no one has a right to use any forest products</em>. Collection of firewood or timber is totally prohibited (e.g., Grand Canyon National Park, USA).</p>
+            <p><strong>Wildlife Sanctuary:</strong> A protected area in which <em>limited human activities are permitted</em>. People can collect firewood, timber, and medicinal herbs in a moderate amount for research and education (e.g., Manas Wildlife Sanctuary, India).</p>
+        </div>
+
+        <figure class="newspaper-figure float-right">
+            <img src="../Images/C3_WildlifeConservation.png" alt="Wildlife Conservation" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 3: Global Wildlife Conservation</figcaption>
+        </figure>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>The Government of India has taken strict steps for conservation: hunting and poaching are banned and are a punishable offence. India currently has <strong>103 National Parks</strong> and <strong>528 Wildlife Sanctuaries</strong>.</p>
+            <p><strong>Project Tiger:</strong> Launched in <strong>1973</strong> with the aim of conserving tigers. It started with 9 reserves and expanded to 39 by 2010. Jim Corbett National Park is a famous tiger reserve.</p>
+        </div>
+
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

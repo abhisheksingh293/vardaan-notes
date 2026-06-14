@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - English Solution Key</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2: Medium/Standard) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 8px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+        
+        .answer-text {
+            color: #d32f2f; /* Distinct color for answers to stand out */
+            font-weight: bold;
+        }
+        html.dark-mode .answer-text {
+            color: #ff5252;
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Solution Key: English Grammar - Sentences & Nouns</div>
+            <div class="meta-info">
+                <span>Especially designed for: Aaraghya</span> 
+                <span>Class: 7 ICSE</span>
+                <span>Subject: English Language</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: The Sentence - Kinds of Sentences</div>
+        <div class="questions-container">
+            <div class="question-item solution-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Please pass the salt... &rarr; <span class="answer-text">Imperative</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">What a spectacular sunset... &rarr; <span class="answer-text">Exclamatory</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">The earth revolves... &rarr; <span class="answer-text">Assertive (Declarative)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">Have you finished... &rarr; <span class="answer-text">Interrogative</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">Do not run... &rarr; <span class="answer-text">Imperative</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Alas! The poor dog... &rarr; <span class="answer-text">Exclamatory</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">William Shakespeare was... &rarr; <span class="answer-text">Assertive (Declarative)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">Where did you keep... &rarr; <span class="answer-text">Interrogative</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">Let us go for... &rarr; <span class="answer-text">Imperative</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">How gracefully the ballerina... &rarr; <span class="answer-text">Exclamatory</span></div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section B: Subject and Predicate</div>
+        <div class="questions-container">
+            <div class="question-item solution-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">
+                    <strong>Subject:</strong> <span class="answer-text">The loud barking dog</span><br>
+                    <strong>Predicate:</strong> <span class="answer-text">quickly chased the thief away.</span>
+                </div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">
+                    <strong>Subject:</strong> <span class="answer-text">the red balloon</span><br>
+                    <strong>Predicate:</strong> <span class="answer-text">Up into the bright blue sky went</span>
+                </div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">
+                    <strong>Subject:</strong> <span class="answer-text">The brave boy</span><br>
+                    <strong>Predicate:</strong> <span class="answer-text">stood alone on the burning deck.</span>
+                </div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">
+                    <strong>Subject:</strong> <span class="answer-text">a wise hermit</span><br>
+                    <strong>Predicate:</strong> <span class="answer-text">On the top of the snow-covered hill lives</span>
+                </div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">
+                    <strong>Subject:</strong> <span class="answer-text">A rolling stone</span><br>
+                    <strong>Predicate:</strong> <span class="answer-text">gathers no moss.</span>
+                </div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">
+                    <strong>Subject:</strong> <span class="answer-text">Borrowed garments</span><br>
+                    <strong>Predicate:</strong> <span class="answer-text">rarely fit perfectly.</span>
+                </div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">
+                    <strong>Subject:</strong> <span class="answer-text">the Pied Piper</span><br>
+                    <strong>Predicate:</strong> <span class="answer-text">Into the narrow, cobbled street stept.</span>
+                </div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">
+                    <strong>Subject:</strong> <span class="answer-text">My hard-working father and my caring mother</span><br>
+                    <strong>Predicate:</strong> <span class="answer-text">are going to the market.</span>
+                </div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">
+                    <strong>Subject:</strong> <span class="answer-text">The beautiful, colourful rainbow</span><br>
+                    <strong>Predicate:</strong> <span class="answer-text">soon faded away into the clouds.</span>
+                </div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">
+                    <strong>Subject:</strong> <span class="answer-text">the uses of adversity</span><br>
+                    <strong>Predicate:</strong> <span class="answer-text">Sweet are</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section C: Nouns - Identifying the Kinds</div>
+        <div class="questions-container">
+            <div class="question-item solution-item">
+                <span class="q-num">21.</span>
+                <div class="q-content"><span class="answer-text">Honesty (Abstract), policy (Abstract/Common)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">22.</span>
+                <div class="q-content"><span class="answer-text">fleet (Collective), ships (Common), harbour (Common)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">23.</span>
+                <div class="q-content"><span class="answer-text">ring (Common), gold (Material)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">24.</span>
+                <div class="q-content"><span class="answer-text">King Solomon (Proper), wisdom (Abstract)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">25.</span>
+                <div class="q-content"><span class="answer-text">swarm (Collective), bees (Common), boy (Common)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">26.</span>
+                <div class="q-content"><span class="answer-text">family (Collective), Paris (Proper), month (Common)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">27.</span>
+                <div class="q-content"><span class="answer-text">courage (Abstract), face (Common), danger (Abstract)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">28.</span>
+                <div class="q-content"><span class="answer-text">woodcutter (Common), axe (Common), iron (Material)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">29.</span>
+                <div class="q-content"><span class="answer-text">Cleanliness (Abstract), godliness (Abstract)</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">30.</span>
+                <div class="q-content"><span class="answer-text">jury (Collective), prisoner (Common), crime (Abstract/Common)</span></div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section D: Nouns - Number and Gender</div>
+        <div style="margin-bottom: 10px; font-weight: bold; color: var(--text-secondary);">Part 1: Changing Gender</div>
+        <div class="questions-container">
+            <div class="question-item solution-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">The <span class="answer-text">empress</span> loved her brave <span class="answer-text">daughters</span> very much.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">The <span class="answer-text">heroine</span> of the new action movie rode a beautiful <span class="answer-text">mare</span>.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">My favorite <span class="answer-text">aunt</span> owns a colourful <span class="answer-text">peahen</span> and a strong <span class="answer-text">ewe</span>.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">The polite <span class="answer-text">waitress</span> immediately served the distinguished <span class="answer-text">lady</span>.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">The wicked <span class="answer-text">witch</span> cast a dangerous spell on the young <span class="answer-text">princess</span>.</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px; margin-bottom: 10px; font-weight: bold; color: var(--text-secondary);">Part 2: Plural Forms</div>
+        <div class="questions-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="question-item solution-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">Phenomenon &rarr; <span class="answer-text">Phenomena</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">37.</span>
+                <div class="q-content">Criterion &rarr; <span class="answer-text">Criteria</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">38.</span>
+                <div class="q-content">Sister-in-law &rarr; <span class="answer-text">Sisters-in-law</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">39.</span>
+                <div class="q-content">Radius &rarr; <span class="answer-text">Radii</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">40.</span>
+                <div class="q-content">Deer &rarr; <span class="answer-text">Deer</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">41.</span>
+                <div class="q-content">Sheep &rarr; <span class="answer-text">Sheep</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">42.</span>
+                <div class="q-content">Mouse &rarr; <span class="answer-text">Mice</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">43.</span>
+                <div class="q-content">Child &rarr; <span class="answer-text">Children</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">44.</span>
+                <div class="q-content">Goose &rarr; <span class="answer-text">Geese</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">45.</span>
+                <div class="q-content">Loaf &rarr; <span class="answer-text">Loaves</span></div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section E: Advanced Application</div>
+        <div style="margin-bottom: 10px; font-weight: bold; color: var(--text-secondary);">Part 1: Collective Nouns</div>
+        <div class="questions-container">
+            <div class="question-item solution-item">
+                <span class="q-num">46.</span>
+                <div class="q-content">A <span class="answer-text">band / choir / orchestra</span> of skilled musicians...</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">47.</span>
+                <div class="q-content">The <span class="answer-text">board</span> of directors held...</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">48.</span>
+                <div class="q-content">...we saw a <span class="answer-text">pride</span> of lions resting...</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">49.</span>
+                <div class="q-content">...observed a beautiful <span class="answer-text">cluster / galaxy</span> of stars.</div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">50.</span>
+                <div class="q-content">...pick any card from the <span class="answer-text">deck / pack</span> of cards.</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; margin-bottom: 10px; font-weight: bold; color: var(--text-secondary);">Part 2: Abstract Nouns</div>
+        <div class="questions-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="question-item solution-item">
+                <span class="q-num">51.</span>
+                <div class="q-content">True &rarr; <span class="answer-text">Truth</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">52.</span>
+                <div class="q-content">Grow &rarr; <span class="answer-text">Growth</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">53.</span>
+                <div class="q-content">Child &rarr; <span class="answer-text">Childhood</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">54.</span>
+                <div class="q-content">Wise &rarr; <span class="answer-text">Wisdom</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">55.</span>
+                <div class="q-content">Friend &rarr; <span class="answer-text">Friendship</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">56.</span>
+                <div class="q-content">Free &rarr; <span class="answer-text">Freedom</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">57.</span>
+                <div class="q-content">Happy &rarr; <span class="answer-text">Happiness</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">58.</span>
+                <div class="q-content">Protect &rarr; <span class="answer-text">Protection</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">59.</span>
+                <div class="q-content">Dark &rarr; <span class="answer-text">Darkness</span></div>
+            </div>
+            <div class="question-item solution-item">
+                <span class="q-num">60.</span>
+                <div class="q-content">Brave &rarr; <span class="answer-text">Bravery</span></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

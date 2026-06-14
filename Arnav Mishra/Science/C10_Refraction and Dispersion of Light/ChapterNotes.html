@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Refraction and Dispersion of Light - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- NEWSPAPER LAYOUT STYLES --- */
+        .img-float-left {
+            float: left;
+            max-width: 280px;
+            width: 100%;
+            margin: 10px 20px 15px 0;
+            border-radius: 8px;
+            background-color: #fff;
+            border: none !important;
+            box-shadow: none !important;
+            transition: filter 0.3s ease;
+        }
+
+        .img-float-right {
+            float: right;
+            max-width: 280px;
+            width: 100%;
+            margin: 10px 0 15px 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            border: none !important;
+            box-shadow: none !important;
+            transition: filter 0.3s ease;
+        }
+
+        /* Clear floats at section headers and boxes */
+        h2, h3, .blue-box, .green-box, .yellow-box {
+            clear: both;
+        }
+
+        html.dark-mode .img-float-left, 
+        html.dark-mode .img-float-right {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* Mobile optimization: make images full width on small screens */
+        @media screen and (max-width: 600px) {
+            .img-float-left, .img-float-right {
+                float: none;
+                display: block;
+                margin: 20px auto;
+                max-width: 100%;
+            }
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Refraction and Dispersion of Light</h1>
+
+        <h2>1. Introduction to Refraction of Light</h2>
+        <img src="../images/refraction_light_bending_water.webp" alt="Refraction: Light Bending at Water-Air Boundary" class="img-float-right">
+        <p>In previous classes, we learned that light normally propagates (travels) along a straight path when moving through a single, uniform transparent medium. We also learned that it gets reflected when it falls on a polished or shiny surface like a mirror.</p>
+        <p>However, when a ray of light traveling in one transparent medium (like air) obliquely enters another transparent medium (like glass or water), it changes its direction at the boundary separating the two media. This phenomenon of "bending of light" when it travels from one transparent medium to another is called <strong>Refraction of Light</strong>.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Cause of Refraction:</strong> Why does light bend? Light travels at different speeds in different transparent materials. For example, it travels faster in air than it does in water or glass. The bending of light is fundamentally caused by this <strong>change in the speed of light</strong> as it moves from one medium to another.</p>
+        </div>
+
+        <h2>2. Optically Rarer and Denser Mediums</h2>
+        <img src="../images/refraction_rules_air_glass.webp" alt="Refraction Rules: Rarer to Denser Medium and Vice Versa" class="img-float-left">
+        <p>To understand exactly how light will bend, we classify media based on their optical density (how much they slow down light):</p>
+        <ul>
+            <li><strong>Optically Rarer Medium:</strong> A medium in which the speed of light is more (e.g., Air).</li>
+            <li><strong>Optically Denser Medium:</strong> A medium in which the speed of light is less (e.g., Glass, Water).</li>
+        </ul>
+
+        <h3>Rules of Bending (Refraction)</h3>
+        <p>When light travels obliquely across a boundary:</p>
+        <ul>
+            <li><strong>From Rarer to Denser (e.g., Air to Glass):</strong> The light ray slows down and bends <strong>towards the normal</strong> (the imaginary perpendicular line).</li>
+            <li><strong>From Denser to Rarer (e.g., Glass to Air):</strong> The light ray speeds up and bends <strong>away from the normal</strong>.</li>
+            <li><em>Note: If light enters exactly perpendicular (at 90 degrees along the normal), it goes straight through without bending.</em></li>
+        </ul>
+
+        <h2>3. Spherical Lenses</h2>
+        <img src="../images/lenses_convex_vs_concave.webp" alt="Spherical Lenses: Convex (Converging) vs Concave (Diverging)" class="img-float-right">
+        <p>A lens is a piece of transparent material (like glass or plastic) bound by two surfaces, of which at least one is spherical. Lenses use the principle of refraction to magnify or shrink images. They are widely used in spectacles, cameras, microscopes, and telescopes.</p>
+
+        <h3>Types of Lenses</h3>
+        <ul>
+            <li><strong>Convex Lens (Converging Lens):</strong> It is thicker in the middle and thinner at the edges. When parallel rays of light pass through a convex lens, they bend inward and meet (converge) at a single point. It is generally used as a magnifying glass.</li>
+            <li><strong>Concave Lens (Diverging Lens):</strong> It is thinner in the middle and thicker at the edges. When parallel rays of light pass through it, they spread out (diverge) as if they are coming from a single point.</li>
+        </ul>
+
+        <h2>4. Key Terms Related to Lenses</h2>
+        <img src="../images/lens_terms_principal_axis_focus.webp" alt="Key Lens Terms: Optical Centre, Principal Axis, and Focus" class="img-float-left">
+        <p>To understand how images are formed by lenses, we must know a few important terms:</p>
+        <ul>
+            <li><strong>Optical Centre (O):</strong> The central point of the lens. A ray of light passing through the optical centre goes straight without suffering any deviation.</li>
+            <li><strong>Principal Axis:</strong> An imaginary straight line passing through the optical centre and the centers of curvature of both spherical surfaces of the lens.</li>
+            <li><strong>Principal Focus (F):</strong> A point on the principal axis where light rays parallel to the principal axis actually converge (in a convex lens) or appear to diverge from (in a concave lens) after refraction.</li>
+            <li><strong>Focal Length (f):</strong> The distance between the optical centre (O) and the principal focus (F) of the lens.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Real vs. Virtual Images:</strong> A Convex lens can form both <em>Real</em> images (which can be caught on a screen, like a projector) and <em>Virtual</em> images (which cannot be caught on a screen, like a magnifying glass). A Concave lens <em>always</em> forms virtual, erect, and diminished (smaller) images.</p>
+        </div>
+
+        <h2>5. Dispersion of White Light</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A vibrant 2D vector graphic on a pure white background. A bright white beam of light enters a 3D-style triangular glass prism from the left. As it exits on the right side, it splits into a beautiful fan of seven distinct colors (red, orange, yellow, green, blue, indigo, violet). Clean, flat design without extra background clutter.
+        </div>
+        <p>In the 17th century, Sir Isaac Newton performed a famous experiment. He allowed a narrow beam of sunlight (white light) to fall on a triangular glass prism. He observed that the white light, after passing through the prism, split into a beautiful band of seven colours on a screen placed behind it.</p>
+        <p>This phenomenon of the splitting of white light into its constituent seven colours is called <strong>Dispersion of Light</strong>.</p>
+        <p>The band of seven colours obtained on the screen is called the <strong>Spectrum</strong>. The order of colours from bottom to top is Violet, Indigo, Blue, Green, Yellow, Orange, and Red, easily remembered by the acronym <strong>VIBGYOR</strong>.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Why does Dispersion happen?</strong> White light is actually a mixture of seven different colours. When they travel through the air, they travel at the same speed. However, when they enter a glass prism, different colours travel at slightly different speeds and thus bend at different angles. <strong>Red light bends the least</strong> (as it is the fastest in glass), while <strong>Violet light bends the most</strong> (as it is the slowest in glass).</p>
+        </div>
+
+        <h2>6. Formation of a Rainbow</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple, cheerful 2D flat vector illustration on a pure white background. A large, stylized blue raindrop acts as a tiny prism. A yellow beam of sunlight enters it, bends inside, and a beautiful mini-rainbow emerges from the other side. Minimalist lines, bright flat colors.
+        </div>
+        <p>A rainbow is a spectacular natural phenomenon caused by the dispersion of sunlight. It is usually seen in the sky after a rain shower, always in a direction opposite to the sun.</p>
+        <p>After it rains, millions of tiny water droplets remain suspended in the atmosphere. These water droplets act like tiny natural glass prisms. When sunlight enters a water droplet, the droplet first refracts and <strong>disperses</strong> the white light into seven colours. It then reflects the colours internally and finally refracts them again as they come out of the drop. This combined effect across millions of droplets creates the beautiful curved band of seven colours we call a rainbow!</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

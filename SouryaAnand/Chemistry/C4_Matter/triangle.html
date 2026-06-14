@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Triangles Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 - Standard/Board) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; font-size: 11pt;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- PROMPT VAULT STYLING (FOR TEACHERS ONLY) --- */
+        .prompt-vault {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #2b2b2b;
+            color: #4ade80;
+            border-radius: 8px;
+            font-family: monospace;
+            page-break-before: always;
+        }
+        .prompt-vault h2 { color: #fff; margin-top: 0; }
+        .prompt-vault p { color: #aaa; font-size: 10pt; }
+        .prompt-block {
+            background-color: #1a1a1a;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4ade80;
+            font-size: 10pt;
+            white-space: pre-wrap;
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .prompt-vault { display: none; } /* Hide the prompt vault when printing for students */
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Triangles: Board Masterclass (Target 100/100)</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 10 CBSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Basic Proportionality Theorem (BPT) & Converse (1-2 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">State the Basic Proportionality Theorem (Thales Theorem).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content"><strong>[Refer to Figure 1]</strong> In $\triangle ABC$, $DE \parallel BC$. If $AD = 1.5\text{ cm}$, $DB = 3\text{ cm}$, and $AE = 1\text{ cm}$, find the length of $EC$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content"><strong>[Refer to Figure 2]</strong> In the given figure, $\frac{PS}{SQ} = \frac{PT}{TR}$ and $\angle PST = \angle PRQ$. Prove that $\triangle PQR$ is an isosceles triangle.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">If a line intersects sides AB and AC of a $\triangle ABC$ at D and E respectively and is parallel to BC, prove that $\frac{AD}{AB} = \frac{AE}{AC}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content"><strong>[Refer to Figure 3]</strong> ABCD is a trapezium in which $AB \parallel DC$ and its diagonals intersect each other at the point O. Show that $\frac{AO}{BO} = \frac{CO}{DO}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content"><strong>[Refer to Figure 4]</strong> In the given figure, if $LM \parallel CB$ and $LN \parallel CD$, prove that $\frac{AM}{AB} = \frac{AN}{AD}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">In $\triangle ABC$, D and E are points on the sides AB and AC respectively such that $DE \parallel BC$. If $AD = x$, $DB = x - 2$, $AE = x + 2$ and $EC = x - 1$, find the value of $x$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">In $\triangle PQR$, $M$ and $N$ are points on sides $PQ$ and $PR$ respectively. If $PM = 15\text{ cm}$, $PQ = 25\text{ cm}$, $PN = 12\text{ cm}$ and $NR = 8\text{ cm}$, state with reason whether $MN \parallel QR$ or not.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">In $\triangle ABC$, $D$ and $E$ are points on $AB$ and $AC$ such that $DE \parallel BC$. If $AD = 4x - 3$, $AE = 8x - 7$, $BD = 3x - 1$, and $CE = 5x - 3$, find the value of $x$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content"><strong>[Refer to Figure 10]</strong> Point $O$ is inside $\triangle PQR$. Points $A, B$, and $C$ are taken on $OP, OQ$, and $OR$ respectively such that $AB \parallel PQ$ and $BC \parallel QR$. Prove that $AC \parallel PR$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section B: Criteria for Similarity of Triangles (2-3 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">State the SAS (Side-Angle-Side) and SSS (Side-Side-Side) similarity criteria for two triangles.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content"><strong>[Refer to Figure 5]</strong> A vertical pole of length 6 m casts a shadow 4 m long on the ground and at the same time a tower casts a shadow 28 m long. Find the height of the tower.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content"><strong>[Refer to Figure 6]</strong> In the figure, altitudes AD and CE of $\triangle ABC$ intersect each other at the point P. Show that: <br>(i) $\triangle AEP \sim \triangle CDP$ <br>(ii) $\triangle ABD \sim \triangle CBE$</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content"><strong>[Refer to Figure 7]</strong> In the given figure, E is a point on side CB produced of an isosceles triangle ABC with $AB = AC$. If $AD \perp BC$ and $EF \perp AC$, prove that $\triangle ABD \sim \triangle ECF$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content"><strong>[Refer to Figure 8]</strong> D is a point on the side BC of a triangle ABC such that $\angle ADC = \angle BAC$. Show that $CA^2 = CB \cdot CD$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">A girl of height 90 cm is walking away from the base of a lamp-post at a speed of 1.2 m/s. If the lamp is 3.6 m above the ground, find the length of her shadow after 4 seconds.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">Diagonals AC and BD of a trapezium ABCD with $AB \parallel DC$ intersect each other at the point O. Using a similarity criterion for two triangles, show that $\frac{OA}{OC} = \frac{OB}{OD}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content"><strong>[Refer to Figure 11]</strong> In the given figure, $\triangle ODC \sim \triangle OBA$, $\angle BOC = 125^\circ$ and $\angle CDO = 70^\circ$. Find the measure of $\angle OAB$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">If $\triangle ABC \sim \triangle DEF$, $AB = 4\text{ cm}$, $DE = 6\text{ cm}$, $EF = 9\text{ cm}$, and $FD = 12\text{ cm}$, find the perimeter of $\triangle ABC$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content"><strong>[Refer to Figure 12]</strong> $\triangle ABC$ and $\triangle AMP$ are two right triangles, right angled at B and M respectively. Prove that: (i) $\triangle ABC \sim \triangle AMP$, (ii) $\frac{CA}{PA} = \frac{BC}{MP}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">Points $D$ and $E$ are on the sides $AB$ and $AC$ of $\triangle ABC$ respectively, such that $\angle ADE = \angle C$. Prove that $\triangle ADE \sim \triangle ACB$. Hence, if $AD = 7.6\text{ cm}, AE = 7.2\text{ cm}, BE = 4.2\text{ cm}$ and $BC = 8.4\text{ cm}$, find $DE$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section C: Advanced Proving & Long Answer Questions (4-5 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content"><strong>[Refer to Figure 9]</strong> In the given figure, $DE \parallel OQ$ and $DF \parallel OR$. Show that $EF \parallel QR$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">Sides AB and BC and median AD of a triangle ABC are respectively proportional to sides PQ and QR and median PM of $\triangle PQR$. Show that $\triangle ABC \sim \triangle PQR$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">If AD and PM are medians of triangles ABC and PQR, respectively, where $\triangle ABC \sim \triangle PQR$, prove that $\frac{AB}{PQ} = \frac{AD}{PM}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">In $\triangle PQR$, $QM \perp PR$ and $PR^2 - PQ^2 = QR^2$. Prove that $QM^2 = PM \times MR$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">A 15 m high tower casts a shadow 24 m long at a certain time and at the same time, a telephone pole casts a shadow 16 m long. Find the height of the telephone pole using the concept of similar triangles. Let the top of the tower, base of the tower, and end of the shadow form a triangle. Similarly, for the pole. Prove they are similar before finding the height.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content"><strong>[Refer to Figure 13]</strong> In the given figure, $PA$, $QB$, and $RC$ are each perpendicular to $AC$. If $PA = x$, $RC = y$, and $QB = z$, prove that $\frac{1}{x} + \frac{1}{y} = \frac{1}{z}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content"><strong>[Refer to Figure 14]</strong> In $\triangle ABC$, $\angle B = 90^\circ$ and $BD \perp AC$. Prove that $BD^2 = AD \cdot DC$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">In $\triangle ABC$, altitudes $AD$ and $CE$ intersect each other at point $H$. Prove that $AB \times CE = BC \times AD$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">If a perpendicular is drawn from the vertex of the right angle of a right triangle to the hypotenuse, prove that the triangles on both sides of the perpendicular are similar to the whole triangle and to each other.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content"><strong>[Refer to Figure 15]</strong> $CD$ and $GH$ are respectively the bisectors of $\angle ACB$ and $\angle EGF$ such that $D$ and $H$ lie on sides $AB$ and $FE$ of $\triangle ABC$ and $\triangle EFG$ respectively. If $\triangle ABC \sim \triangle FEG$, show that $\frac{CD}{GH} = \frac{AC}{FG}$ and $\triangle DCB \sim \triangle HGE$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">Prove that the ratio of the corresponding sides of two similar triangles is equal to the ratio of their corresponding altitudes.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section D: Answer Key & Proof Hints</div>
+        <div class="questions-container">
+            <div class="solution-item"><span class="ans-label">Ans 1:</span> If a line is drawn parallel to one side of a triangle to intersect the other two sides in distinct points, the other two sides are divided in the same ratio.</div>
+            <div class="solution-item"><span class="ans-label">Ans 2:</span> $EC = 2\text{ cm}$. <em>Hint: By BPT, $\frac{AD}{DB} = \frac{AE}{EC} \implies \frac{1.5}{3} = \frac{1}{EC}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 3:</span> <em>Hint:</em> By the converse of BPT, since $\frac{PS}{SQ} = \frac{PT}{TR}$, we have $ST \parallel QR$. Thus, corresponding angles are equal: $\angle PST = \angle PQR$. Given $\angle PST = \angle PRQ$, substituting gives $\angle PQR = \angle PRQ$. Sides opposite equal angles are equal, so $PR = PQ$, making it isosceles.</div>
+            <div class="solution-item"><span class="ans-label">Ans 4:</span> <em>Hint:</em> By BPT, $\frac{AD}{DB} = \frac{AE}{EC}$. Add 1 to both sides: $\frac{AD}{DB} + 1 = \frac{AE}{EC} + 1 \implies \frac{AD+DB}{DB} = \frac{AE+EC}{EC} \implies \frac{AB}{DB} = \frac{AC}{EC}$. Invert to get $\frac{DB}{AB} = \frac{EC}{AC}$. Subtract from 1 to yield the final result.</div>
+            <div class="solution-item"><span class="ans-label">Ans 5:</span> <em>Hint:</em> Draw a line EOF through O parallel to AB and DC. In $\triangle ADC$, $EO \parallel DC$, so by BPT $\frac{AE}{ED} = \frac{AO}{OC}$. In $\triangle DAB$, $EO \parallel AB$, so by BPT $\frac{DE}{EA} = \frac{DO}{OB} \implies \frac{AE}{ED} = \frac{BO}{OD}$. Equate both to get $\frac{AO}{OC} = \frac{BO}{OD} \implies \frac{AO}{BO} = \frac{CO}{DO}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 6:</span> <em>Hint:</em> In $\triangle ABC$, $LM \parallel BC \implies \frac{AM}{AB} = \frac{AL}{AC}$ (Corollary of BPT). In $\triangle ADC$, $LN \parallel DC \implies \frac{AN}{AD} = \frac{AL}{AC}$. Equate the two to get the result.</div>
+            <div class="solution-item"><span class="ans-label">Ans 7:</span> $x = 4$. <em>Hint: $\frac{x}{x-2} = \frac{x+2}{x-1}$. Cross multiply: $x(x-1) = (x-2)(x+2) \implies x^2 - x = x^2 - 4 \implies x = 4$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 8:</span> Yes, $MN \parallel QR$. <em>Hint: $MQ = PQ - PM = 25 - 15 = 10$. $\frac{PM}{MQ} = \frac{15}{10} = \frac{3}{2}$. $\frac{PN}{NR} = \frac{12}{8} = \frac{3}{2}$. Since ratios are equal, lines are parallel by converse of BPT.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 9:</span> $x = 1$. <em>Hint: By BPT, $\frac{4x-3}{3x-1} = \frac{8x-7}{5x-3}$. Cross-multiplying gives $20x^2 - 27x + 9 = 24x^2 - 29x + 7 \implies 4x^2 - 2x - 2 = 0 \implies 2x^2 - x - 1 = 0$. Solving gives $x=1$ (reject $x=-1/2$ as length cannot be negative).</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 10:</span> <em>Hint:</em> In $\triangle POQ$, $AB \parallel PQ \implies \frac{OA}{AP} = \frac{OB}{BQ}$. In $\triangle QOR$, $BC \parallel QR \implies \frac{OB}{BQ} = \frac{OC}{CR}$. Equating both, $\frac{OA}{AP} = \frac{OC}{CR}$. By converse of BPT in $\triangle POR$, $AC \parallel PR$.</div>
+            
+            <div class="solution-item"><span class="ans-label">Ans 11:</span> SAS: If one angle of a triangle is equal to one angle of the other and the sides including these angles are proportional, they are similar. SSS: If corresponding sides of two triangles are proportional, they are similar.</div>
+            <div class="solution-item"><span class="ans-label">Ans 12:</span> Height = 42 m. <em>Hint: Both $\triangle$s are similar by AA (90° and Sun's elevation). $\frac{6}{h} = \frac{4}{28} \implies h = \frac{6 \times 28}{4} = 42$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 13:</span> <em>Hint:</em> (i) In $\triangle AEP$ and $\triangle CDP$, $\angle E = \angle D = 90^\circ$ and vertically opposite $\angle APE = \angle CPD$. So, AA Similarity. (ii) In $\triangle ABD$ and $\triangle CBE$, $\angle D = \angle E = 90^\circ$ and $\angle B$ is common. So, AA Similarity.</div>
+            <div class="solution-item"><span class="ans-label">Ans 14:</span> <em>Hint:</em> In $\triangle ABD$ and $\triangle ECF$: $\angle ADB = \angle EFC = 90^\circ$. Since $AB = AC$ (isosceles), $\angle B = \angle C$. Therefore, by AA similarity, $\triangle ABD \sim \triangle ECF$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 15:</span> <em>Hint:</em> In $\triangle ADC$ and $\triangle BAC$: $\angle ADC = \angle BAC$ (given), and $\angle C$ is common. By AA criterion, $\triangle ADC \sim \triangle BAC$. Therefore, ratio of corresponding sides is equal: $\frac{CA}{CB} = \frac{CD}{CA}$. Cross-multiplying gives $CA^2 = CB \cdot CD$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 16:</span> 1.6 m. <em>Hint: Distance = $1.2 \times 4 = 4.8\text{ m}$. Let shadow be $x$. $\triangle$ containing girl is similar to $\triangle$ containing lamp by AA. $\frac{0.9}{3.6} = \frac{x}{4.8 + x} \implies \frac{1}{4} = \frac{x}{4.8+x} \implies 4.8+x = 4x \implies 3x=4.8 \implies x=1.6$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 17:</span> <em>Hint:</em> In $\triangle OAB$ and $\triangle OCD$: $\angle AOB = \angle COD$ (Vertically opposite), and $\angle OAB = \angle OCD$ (Alternate interior angles since $AB \parallel DC$). By AA similarity, $\triangle OAB \sim \triangle OCD$. Thus, $\frac{OA}{OC} = \frac{OB}{OD}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 18:</span> $55^\circ$. <em>Hint: $\angle DOC = 180^\circ - 125^\circ = 55^\circ$ (linear pair). In $\triangle ODC$, $\angle DCO = 180^\circ - (70^\circ+55^\circ) = 55^\circ$. Since $\triangle ODC \sim \triangle OBA$, corresponding angles are equal, so $\angle OAB = \angle OCD = 55^\circ$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 19:</span> $18\text{ cm}$. <em>Hint: Perimeter of $\triangle DEF = 6+9+12 = 27$. Ratio of sides $\frac{AB}{DE} = \frac{4}{6} = \frac{2}{3}$. Ratio of perimeters equals ratio of sides. So, Perimeter of $\triangle ABC = \frac{2}{3} \times 27 = 18\text{ cm}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 20:</span> <em>Hint:</em> (i) In $\triangle ABC$ and $\triangle AMP$, $\angle B = \angle M = 90^\circ$. $\angle A$ is common. AA similarity. (ii) Since $\triangle ABC \sim \triangle AMP$, corresponding sides are proportional: $\frac{AC}{AP} = \frac{BC}{MP}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 21:</span> $DE = 5.6\text{ cm}$. <em>Hint: In $\triangle ADE$ and $\triangle ACB$, $\angle A$ is common, $\angle ADE = \angle C$. By AA, $\triangle ADE \sim \triangle ACB$. Thus $\frac{AD}{AC} = \frac{DE}{CB}$. Notice $AB = AE + EB = 7.2 + 4.2 = 11.4$. Oh wait, D is on AB, E is on AC. So $AC$ is the full side corresponding to $AD$. Actually $\frac{AD}{AC} = \frac{AE}{AB} = \frac{DE}{CB}$. $AB = AD + DB$. Given $BE=4.2 \implies AB$ is unknown? Re-read: $E$ is on $AC$, $D$ is on $AB$. Ah, if $\angle ADE = \angle C$, then $AD$ corresponds to $AC$, $AE$ corresponds to $AB$. So $\frac{AD}{AC} = \frac{AE}{AB} \implies AB = AE+EB = 11.4$. $\frac{AD}{AC} = \frac{7.2}{11.4}$. So $\frac{DE}{8.4} = \frac{7.6}{11.4} \implies DE = 5.6$.</em></div>
+
+            <div class="solution-item"><span class="ans-label">Ans 22:</span> <em>Hint:</em> In $\triangle POQ$, $DE \parallel OQ$, so by BPT, $\frac{PE}{EQ} = \frac{PD}{DO}$. In $\triangle POR$, $DF \parallel OR$, so by BPT, $\frac{PF}{FR} = \frac{PD}{DO}$. Equating them gives $\frac{PE}{EQ} = \frac{PF}{FR}$. By the converse of BPT in $\triangle PQR$, $EF \parallel QR$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 23:</span> <em>Hint:</em> Extend AD to E such that AD=DE. Connect CE. Extend PM to N such that PM=MN. Connect RN. Prove $\triangle ABD \cong \triangle ECD$ (SAS), so $AB=CE$. Similarly, $PQ=RN$. Given $\frac{AB}{PQ} = \frac{BC}{QR} = \frac{AD}{PM}$. Substitute to get $\frac{CE}{RN} = \frac{2BD}{2QM} = \frac{2AD}{2PM} \implies \frac{CE}{RN} = \frac{CD}{MR} = \frac{AE}{PN}$. By SSS, $\triangle ACE \sim \triangle PRN$. This yields $\angle CAD = \angle RPN$. Similarly, $\angle BAD = \angle QPM$. Add them: $\angle A = \angle P$. Finally, by SAS, $\triangle ABC \sim \triangle PQR$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 24:</span> <em>Hint:</em> $\triangle ABC \sim \triangle PQR \implies \frac{AB}{PQ} = \frac{BC}{QR}$ and $\angle B = \angle Q$. Since D and M are midpoints, $BC = 2BD$ and $QR = 2QM$. Thus, $\frac{AB}{PQ} = \frac{2BD}{2QM} = \frac{BD}{QM}$. With $\angle B = \angle Q$, by SAS similarity, $\triangle ABD \sim \triangle PQM$. Therefore, $\frac{AB}{PQ} = \frac{AD}{PM}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 25:</span> <em>Hint:</em> Given $PR^2 - PQ^2 = QR^2 \implies PR^2 = PQ^2 + QR^2$. By converse of Pythagoras, $\angle PQR = 90^\circ$. Now, in right $\triangle PQR$, $QM \perp PR$. So $\triangle PQM \sim \triangle QRM$ (Standard theorem). Therefore, $\frac{PM}{QM} = \frac{QM}{MR}$. Cross-multiply: $QM^2 = PM \times MR$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 26:</span> Height = 10 m. <em>Hint: Prove $\triangle$s similar via AA (90° angle with ground, and angle of elevation of the sun is identical at the same time). Then $\frac{H_{tower}}{H_{pole}} = \frac{S_{tower}}{S_{pole}} \implies \frac{15}{h} = \frac{24}{16} \implies h = \frac{15 \times 16}{24} = 10$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 27:</span> <em>Hint:</em> In $\triangle PAC$ and $\triangle BQC$, $QB \parallel PA \implies \triangle BQC \sim \triangle PAC \implies \frac{z}{x} = \frac{BC}{AC}$. In $\triangle RCA$ and $\triangle BQA$, $QB \parallel RC \implies \triangle BQA \sim \triangle RCA \implies \frac{z}{y} = \frac{AB}{AC}$. Add both equations: $\frac{z}{x} + \frac{z}{y} = \frac{BC+AB}{AC} = \frac{AC}{AC} = 1$. Divide by $z$ to get $\frac{1}{x} + \frac{1}{y} = \frac{1}{z}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 28:</span> <em>Hint:</em> In $\triangle ABD$ and $\triangle BCD$, $\angle ADB = \angle BDC = 90^\circ$. Let $\angle A = \theta$, then $\angle ABD = 90^\circ - \theta$. In right $\triangle ABC$, $\angle C = 90^\circ - \theta$. Hence $\angle C = \angle ABD$. By AA similarity, $\triangle ABD \sim \triangle BCD$. Thus, $\frac{AD}{BD} = \frac{BD}{CD} \implies BD^2 = AD \cdot DC$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 29:</span> <em>Hint:</em> In $\triangle ADB$ and $\triangle CEB$, $\angle ADB = \angle CEB = 90^\circ$ and $\angle B$ is common. By AA similarity, $\triangle ADB \sim \triangle CEB$. Therefore, $\frac{AB}{CB} = \frac{AD}{CE}$. Cross-multiplying gives $AB \times CE = BC \times AD$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 30:</span> <em>Hint:</em> Let $\triangle ABC$ be right-angled at $B$ and $BD \perp AC$. In $\triangle ADB$ and $\triangle ABC$, $\angle A$ is common, $\angle ADB = \angle ABC = 90^\circ \implies \triangle ADB \sim \triangle ABC$ (AA). Similarly, in $\triangle BDC$ and $\triangle ABC$, $\angle C$ is common, $\angle BDC = \angle ABC = 90^\circ \implies \triangle BDC \sim \triangle ABC$ (AA). From these two, $\triangle ADB \sim \triangle BDC$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 31:</span> <em>Hint:</em> Since $\triangle ABC \sim \triangle FEG$, $\angle A = \angle F$, $\angle B = \angle E$, and $\angle C = \angle G$. Bisectors divide equal angles, so $\angle ACD = \angle FGH$. By AA similarity, $\triangle ACD \sim \triangle FGH$, leading to $\frac{CD}{GH} = \frac{AC}{FG}$. Similarly, $\triangle DCB \sim \triangle HGE$ by AA.</div>
+            <div class="solution-item"><span class="ans-label">Ans 32:</span> <em>Hint:</em> Let $\triangle ABC \sim \triangle PQR$ with altitudes $AD$ and $PM$. Since $\angle B = \angle Q$ and $\angle ADB = \angle PMQ = 90^\circ$, $\triangle ABD \sim \triangle PQM$ (AA). Therefore, $\frac{AB}{PQ} = \frac{AD}{PM}$.</div>
+        </div>
+
+        <div class="prompt-vault">
+            <h2>[FOR TEACHER/CREATOR: AI IMAGE PROMPT VAULT]</h2>
+            <p>Copy and paste these exact prompts into your AI Image Generator (like Midjourney, DALL-E 3, or Adobe Firefly). The prompts are heavily detailed to ensure the AI generates mathematically accurate diagrams with a pure white background and includes the Figure labels directly on the image, perfectly matching the questions above.</p>
+            
+            <div class="prompt-block"><strong>Prompt for Figure 1:</strong>
+A simple, mathematically accurate geometric diagram on a fully white background (#FFFFFF). A large triangle with its top vertex labeled 'A', bottom left vertex labeled 'B', and bottom right vertex labeled 'C'. A horizontal line segment connects the left side to the right side of the triangle. The left end of this segment is labeled 'D' and the right end is labeled 'E'. The line DE is strictly parallel to the bottom base BC. Label the lengths clearly next to the lines: AD = 1.5 cm, DB = 3 cm, AE = 1 cm. At the very bottom center of the image, write the text 'Figure 1' in clean, bold, sans-serif font. No other background elements, just black lines on white.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 2:</strong>
+A simple, mathematically accurate geometric diagram on a fully white background (#FFFFFF). A large triangle with the top vertex labeled 'P', bottom left vertex labeled 'Q', and bottom right vertex labeled 'R'. A line segment connects the left side (PQ) to the right side (PR). The point on the left side is labeled 'S' and the point on the right side is labeled 'T'. Draw a distinct geometric angle arc at angle PST, and another identical geometric angle arc at angle PRQ to visually indicate that these two angles are perfectly equal. At the very bottom center of the image, write the text 'Figure 2' in clean, bold, sans-serif font. Pure white background, high contrast black lines.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 3:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). A trapezium shape with four vertices labeled A, B, C, and D. The top horizontal side is labeled AB and the bottom horizontal side is labeled DC. The side DC is significantly longer than the side AB. The lines AB and DC are strictly parallel. Draw two diagonal lines connecting A to C, and B to D. The point where the two diagonals intersect in the middle is labeled 'O'. At the very bottom center of the image, write the text 'Figure 3' in clean, bold, sans-serif font. Flat 2D vector style.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 4:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). Two triangles joined at a common horizontal base line labeled AC. Triangle ABC points upwards, and Triangle ADC points downwards, forming a 4-sided polygon ABCD. Inside the upper triangle ABC, a line segment LM is drawn parallel to the side BC, with point L resting on the line AC and point M resting on the line AB. Inside the lower triangle ADC, a line segment LN is drawn parallel to the side CD, with point N resting on the line AD (point L is still on the line AC). At the very bottom center of the image, write the text 'Figure 4' in clean, bold, sans-serif font. Flat 2D vector illustration.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 5:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). Two separate right-angled triangles standing side-by-side on a flat ground line. The first triangle on the left has a vertical line representing a pole, labeled '6 m', and a horizontal base line representing a shadow, labeled '4 m'. The second triangle on the right has a taller vertical line representing a tower, labeled 'h', and a longer horizontal base line representing a shadow, labeled '28 m'. Both triangles have a dotted hypotenuse line to indicate the sun's rays striking at the exact same angle. At the very bottom center of the image, write the text 'Figure 5' in clean, bold, sans-serif font.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 6:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). An acute-angled triangle with the top vertex labeled 'A', bottom left labeled 'B', and bottom right labeled 'C'. From vertex A, a perfectly straight vertical perpendicular line drops down to the base BC, meeting it at a point labeled 'D'. Draw a standard square 90-degree symbol at D. From vertex C, another perfectly straight perpendicular line is drawn over to the side AB, meeting it at a point labeled 'E'. Draw a standard square 90-degree symbol at E. The two perpendicular lines (altitudes) intersect each other at a point inside the triangle labeled 'P'. At the very bottom center of the image, write the text 'Figure 6' in clean, bold, sans-serif font.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 7:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). An isosceles triangle ABC with top vertex A, bottom left B, and bottom right C. Draw identical tick marks on side AB and side AC to show they are equal length. The base line BC is extended outward to the left to a new point labeled 'E'. From vertex A, a vertical perpendicular line AD is drawn straight down to the base BC, with a 90-degree square symbol at D. From the far left point E, a straight perpendicular line is drawn diagonally upwards until it intersects the side AC at a point labeled 'F'. Place a 90-degree square symbol at F. At the very bottom center of the image, write the text 'Figure 7' in clean, bold, sans-serif font.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 8:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). A triangle with the top vertex labeled 'A', bottom left vertex labeled 'B', and bottom right vertex labeled 'C'. On the bottom horizontal line segment BC, mark a point labeled 'D' slightly to the left of center. Draw a straight line connecting vertex A to point D. Draw a small geometric angle arc at angle ADC. Draw another identical geometric angle arc spanning the entire angle BAC at the top, to visually indicate that angle ADC is exactly equal to the whole angle BAC. At the very bottom center of the image, write the text 'Figure 8' in clean, bold, sans-serif font.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 9:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). A tall vertical line representing a lamp-post, labeled 'AB' with a height label '3.6 m' next to it. To the right of it, a smaller vertical line representing a girl, labeled 'CD' with a height label '90 cm'. A horizontal ground line passes through the bottom points B and D, continuing further right to a point labeled 'E'. A straight diagonal line starts from the top of the lamp-post (A), touches the top of the girl (C), and continues down to meet the ground exactly at point E. The horizontal segment DE represents the shadow. At the very bottom center of the image, write the text 'Figure 9' in clean, bold, sans-serif font.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 10:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). A large outer triangle with top vertex P, bottom left vertex Q, and bottom right vertex R. A single point labeled 'O' is located directly in the center interior of the triangle. Three solid straight lines connect the center point O to each of the outer vertices (OP, OQ, and OR). On the line OP, there is a point labeled 'A'. On the line OQ, there is a point labeled 'B'. On the line OR, there is a point labeled 'C'. A dashed line connects A to B (this line AB is strictly parallel to the outer side PQ). Another dashed line connects B to C (this line BC is strictly parallel to the outer side QR). A third dashed line connects A to C. At the very bottom center of the image, write the text 'Figure 10' in clean, bold, sans-serif font.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 11:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). Two straight lines AC and BD intersect at a central point labeled 'O', forming an "X" shape. A horizontal line segment connects the top two endpoints, forming line DC. A horizontal line segment connects the bottom two endpoints, forming line AB. The line DC is parallel to line AB. Draw a clear angle arc at the center intersection angle BOC and label it '125°'. Draw another clear angle arc at the top left interior angle CDO and label it '70°'. At the very bottom center of the image, write the text 'Figure 11' in clean, bold, sans-serif font.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 12:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). A large right-angled triangle ABC, with a horizontal base BC and a vertical side AB pointing upwards. Place a square 90-degree symbol at vertex B. A line extends diagonally upwards from vertex A to a point P. A vertical line drops straight down from P to intersect the line extended from AB at a point labeled 'M'. Place a square 90-degree symbol at vertex M. Thus forming another right-angled triangle AMP. Both triangles share the common vertex A. At the very bottom center of the image, write the text 'Figure 12' in clean, bold, sans-serif font.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 13:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). A perfectly flat horizontal ground line with endpoints labeled 'A' on the left and 'C' on the right. From point A, a straight vertical line shoots straight up to a point 'P', labeled 'x'. From point C, a straight vertical line shoots straight up to a point 'R', labeled 'y'. Draw a straight diagonal line connecting P to C, and another straight diagonal line connecting R to A. These two diagonal lines intersect exactly at a point labeled 'Q'. From this intersection point Q, drop a straight vertical line down to the ground line AC, meeting it at a point labeled 'B'. Label this middle vertical line 'z'. Place square 90-degree symbols at the base of lines PA, QB, and RC where they meet the ground line AC. At the very bottom center of the image, write the text 'Figure 13' in clean, bold, sans-serif font.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 14:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). A right-angled triangle ABC. The hypotenuse AC is drawn as the flat horizontal base at the bottom. The vertex B points upwards. Draw a square 90-degree symbol at the top vertex B to indicate angle ABC is 90 degrees. From the top vertex B, drop a perfectly straight vertical line straight down to the base AC, meeting it at a point labeled 'D'. Draw a square 90-degree symbol at point D where the line touches AC to indicate it is perpendicular. At the very bottom center of the image, write the text 'Figure 14' in clean, bold, sans-serif font.</div>
+
+            <div class="prompt-block"><strong>Prompt for Figure 15:</strong>
+A mathematically accurate geometric diagram on a fully white background (#FFFFFF). Two separate but visually identical triangles drawn side-by-side. The left triangle is labeled ABC with top vertex C, bottom left A, bottom right B. A straight line is drawn from vertex C down to the base AB, meeting it at point D. Draw identical small angle arcs on both sides of line CD at vertex C to show it perfectly bisects angle ACB. The right triangle is labeled EFG with top vertex G, bottom left E, bottom right F. A straight line is drawn from vertex G down to the base EF, meeting it at point H. Draw identical small angle arcs on both sides of line GH at vertex G to show it perfectly bisects angle EGF. At the very bottom center of the image, write the text 'Figure 15' in clean, bold, sans-serif font.</div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Asia - Land, Climate and Natural Vegetation - Geography - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid var(--toggle-border);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+            font-weight: bold;
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Asia - Land, Climate and Natural Vegetation</h1>
+
+        <div class="blue-box">
+            <span class="box-label">Introduction</span>
+            <p>Asia is a continent of great cultures. Three of the world's oldest civilizations—the <strong>Indus Valley</strong>, the <strong>Mesopotamian</strong>, and the <strong>Chinese</strong>—flourished here. Almost all the world's major religions originated in Asia. Geographically, economically, and socio-culturally, Asia is a land of remarkable contrasts.</p>
+        </div>
+
+        <h2>1. A Land of Extremes</h2>
+        <p>Asia is often called a 'Land of Extremes' due to its vast geographical contrasts:</p>
+        <ul>
+            <li><strong>Highest Point:</strong> Mount Everest (8,850 m above sea level).</li>
+            <li><strong>Lowest Exposed Point:</strong> Dead Sea (424 m below sea level).</li>
+            <li><strong>Coldest Inhabited Place:</strong> Oymyakon in Russia (-67.7°C).</li>
+            <li><strong>Hottest Places:</strong> Ahvaz in Iran and Tirat Zvi in Israel (both recorded 54°C). The <strong>Lut Desert</strong> in Iran is considered the hottest place on Earth.</li>
+            <li><strong>Wettest Place:</strong> Mawsynram in Meghalaya, India.</li>
+            <li><strong>Driest Places:</strong> The deserts of Arabia, Thar, and Gobi receive very scanty rainfall.</li>
+            <li><strong>Population Density:</strong> The great river valleys are the most densely populated regions globally, whereas Northern Russia and Mongolia have very low population density.</li>
+        </ul>
+
+        <h2>2. Size, Extent, and Location</h2>
+        
+        <h3>2.1 Size and Extent</h3>
+        <p>Asia is the <strong>largest of the seven continents</strong>, occupying about one-third of the world's total land area. It also houses nearly 60% of the world's population.</p>
+        <ul>
+            <li><strong>Latitudinal Extent:</strong> 10°S to 80°N.</li>
+            <li><strong>Longitudinal Extent:</strong> 25°E to 170°W.</li>
+            <li>The greater part of the continent lies in the <strong>Northern</strong> and <strong>Eastern Hemispheres</strong>.</li>
+            <li>Asia and Europe together form one continuous landmass called <strong>Eurasia</strong>.</li>
+        </ul>
+
+        <h3>2.2 Location and Boundaries</h3>
+        <p>Asia is bordered by oceans on three sides:</p>
+        <ul>
+            <li><strong>North:</strong> Arctic Ocean.</li>
+            <li><strong>South:</strong> Indian Ocean.</li>
+            <li><strong>East:</strong> Pacific Ocean.</li>
+        </ul>
+        <p><strong>Separation from other continents:</strong></p>
+        <ul>
+            <li><strong>From Europe:</strong> Separated by the Ural Mountains, Caspian Sea, Caucasus Mountains, and Black Sea.</li>
+            <li><strong>From Africa:</strong> Linked in the south-west through the <strong>Sinai Peninsula</strong>.</li>
+            <li><strong>From North America:</strong> Separated by the narrow <strong>Bering Strait</strong> in the extreme north-east.</li>
+        </ul>
+
+        <h2>3. Political Divisions</h2>
+        <p>The countries of Asia range in size from tiny nations like Maldives and Singapore to Russia, China, and India, which are among the largest countries in the world.</p>
+        <p>The countries are grouped based on their locations:</p>
+        <ul>
+            <li><strong>East Asia:</strong> Japan, North Korea, South Korea, Taiwan, China, Mongolia.</li>
+            <li><strong>North Asia:</strong> The Asian part of Russia.</li>
+            <li><strong>Central Asia:</strong> Tajikistan, Kyrgyzstan, Kazakhstan, Uzbekistan, Turkmenistan.</li>
+            <li><strong>South-East Asia:</strong> Myanmar, Thailand, Laos, Cambodia, Vietnam, Malaysia, Singapore, Indonesia, Brunei, Timor-Leste, Philippines.</li>
+            <li><strong>South-Central Asia (South Asia):</strong> India, Afghanistan, Pakistan, Bangladesh, Nepal, Bhutan, Sri Lanka, Maldives.</li>
+            <li><strong>West Asia:</strong> Iran, Iraq, Saudi Arabia, Kuwait, Qatar, Bahrain, UAE, Oman, Yemen, Jordan, Israel, Palestine, Lebanon, Syria, Turkey, Cyprus, Armenia, Georgia, Azerbaijan.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Eurasia:</strong> Asia and Europe are part of the same continuous landmass. Russia and Turkey are examples of transcontinental countries that lie in both Asia and Europe.</p>
+        </div>
+
+        <h2>4. Physiography of Asia</h2>
+        <p>Asia can be divided into five major physical divisions:</p>
+
+        <h3>4.1 The Northern Lowlands</h3>
+        <p>These are vast lowlands located in the north, bordering the Arctic Ocean.</p>
+        <ul>
+            <li><strong>The Siberian Plain:</strong> The northern part of these lowlands. It extends from the Ural Mountains in the west to the Bering Sea in the east, making it the <strong>greatest continuous plain in the world</strong>.</li>
+            <li>It is drained by three large rivers: <strong>Ob, Yenisey, and Lena</strong>, which flow northwards into the Arctic Ocean.</li>
+            <li><strong>Swamps and Marshes:</strong> During winter, the lower courses and mouths of these rivers freeze. In spring, the upper courses melt first, causing water to overflow and form extensive marshes.</li>
+            <li><strong>The Turan Plain:</strong> Located south of the Siberian Plain, surrounding the Aral Sea. It is drained by the <strong>Amu Darya</strong> and <strong>Syr Darya</strong> rivers, which flow into the Aral Sea, forming an area of <strong>inland drainage</strong>.</li>
+        </ul>
+
+        <h3>4.2 The Central Mountains</h3>
+        <p>To the south of the Northern Lowlands lies an extensive young fold mountain system.</p>
+        <ul>
+            <li><strong>The Pamir Knot:</strong> Almost all mountain ranges of Asia radiate from a central highland area known as the Pamir Knot.</li>
+            <li><strong>Westward Ranges:</strong> Hindu Kush and Sulaiman.
+                <ul>
+                    <li>The Hindu Kush continues westward as the <strong>Elburz Mountains</strong> (along the Caspian Sea).</li>
+                    <li>The Sulaiman range runs south as the Kirthar Range and then turns west as the <strong>Zagros Mountains</strong>.</li>
+                    <li>The Elburz and Zagros converge at the <strong>Armenian Knot</strong>, continuing westward as the Pontic and Taurus Mountains into Turkey.</li>
+                </ul>
+            </li>
+            <li><strong>Eastward Ranges:</strong> Himalayas, Karakoram, Kunlun, Altyn Tagh, and Tien Shan.
+                <ul>
+                    <li>The <strong>Himalayas</strong> contain Mt. Everest, the highest peak in the world.</li>
+                    <li>The <strong>Karakoram</strong> range lies north of the Himalayas and contains Mt. K2 (Godwin Austen), the second highest peak.</li>
+                </ul>
+            </li>
+            <li><strong>Intermontane Plateaus:</strong> Plateaus enclosed by mountain ranges.
+                <ul>
+                    <li><strong>Plateau of Iran:</strong> Between Elburz and Zagros.</li>
+                    <li><strong>Plateau of Anatolia:</strong> Between Pontic and Taurus mountains.</li>
+                    <li><strong>Plateau of Tibet:</strong> Between Kunlun and Himalayas. It is the highest plateau in the world, called the <strong>'Roof of the World'</strong>.</li>
+                    <li><strong>Plateau of Mongolia:</strong> Enclosed by mountains, featuring the Gobi Desert.</li>
+                    <li><strong>Tarim Basin & Tsaidam Basin:</strong> Depressions enclosing the Takla Makan Desert of China.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>4.3 The Southern Plateaus</h3>
+        <p>Located south of the Central Mountains, these are stable blocks made of hard crystalline rocks.</p>
+        <ul>
+            <li><strong>Plateau of Arabia:</strong> Rises steeply along the Red Sea and slopes towards the Persian Gulf. It is a dry desert.</li>
+            <li><strong>Plateau of Peninsular India (Deccan Plateau):</strong> Has a steep edge along the Arabian Sea (Western Ghats) and slopes gently towards the Bay of Bengal. Traversed by rivers like Mahanadi, Godavari, Krishna, and Kaveri.</li>
+            <li><strong>Plateaus of Shan (Myanmar) and Yunnan (China):</strong> Drained by the Salween, Mekong, and Si Kiang rivers.</li>
+        </ul>
+
+        <h3>4.4 The Great River Valleys</h3>
+        <p>Formed by rivers bringing huge amounts of alluvium from the snow-covered mountains, giving rise to extensive fertile plains.</p>
+        <ul>
+            <li><strong>Tigris-Euphrates Valley (Iraq):</strong> Also known as the Mesopotamian Lowland.</li>
+            <li><strong>Indus Valley (Pakistan/India):</strong> Formed by the Indus and its five tributaries (Chenab, Jhelum, Ravi, Beas, Sutlej).</li>
+            <li><strong>Ganga-Brahmaputra Valley (India/Bangladesh):</strong> A massive, fertile plain.</li>
+            <li><strong>Great Plain of China:</strong> Formed by Hwang Ho, Yangtze, and Si Kiang rivers.</li>
+            <li><strong>Other Valleys:</strong> Irrawaddy and Salween (Myanmar), Mekong (Indo-China), and Amur Valley (Manchurian Plain).</li>
+        </ul>
+
+        <h3>4.5 The Island Groups</h3>
+        <p>A group of islands is called an <strong>archipelago</strong>. Asia has many island nations primarily in the east and south-east.</p>
+        <ul>
+            <li><strong>Indonesian Archipelago:</strong> The largest in the world (Borneo, Sumatra, Java, Sulawesi, Bali, Timor).</li>
+            <li><strong>Indian Islands:</strong> Lakshadweep (Arabian Sea), Andaman and Nicobar (Bay of Bengal).</li>
+            <li><strong>Other Islands:</strong> Japan, Philippines, Taiwan, Sri Lanka, Bahrain.</li>
+        </ul>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>Most of these islands have been formed due to the submergence of fold or volcanic mountains. Consequently, some of these islands contain <strong>active volcanoes</strong>.</p>
+        </div>
+
+        <h2>5. Climate of Asia</h2>
+        <p>Being a continent of extremes, Asia experiences a wide variety of climatic conditions.</p>
+
+        <h3>5.1 Factors Affecting Climate</h3>
+        <ul>
+            <li><strong>Size and Latitudinal Extent:</strong> Spans all three heat zones, ranging from hot equatorial to cold arctic climates.</li>
+            <li><strong>Distance from the Sea:</strong> The deep interior lies far from the moderating influence of the sea, resulting in extreme (continental) climates.</li>
+            <li><strong>Relief:</strong> East-west mountain ranges obstruct rain-bearing southern winds and block cold northern winds from reaching the south.</li>
+            <li><strong>Winds:</strong> Monsoon winds (seasonal reversal of winds) heavily affect rainfall distribution.</li>
+            <li><strong>Ocean Currents:</strong> Warm (Kuro Shio) and cold (Oya Shio) ocean currents influence coastal climates.</li>
+        </ul>
+
+        <h3>5.2 Types of Climate, Natural Vegetation, and Wildlife</h3>
+        
+        <table>
+            <tr>
+                <th>Climatic Type</th>
+                <th>Areas</th>
+                <th>Climate Characteristics</th>
+                <th>Natural Vegetation</th>
+                <th>Wildlife</th>
+            </tr>
+            <tr>
+                <td><strong>Equatorial</strong></td>
+                <td>Indonesia, Malaysia, southern Philippines.</td>
+                <td>Hot and wet; high temperatures, heavy convectional rainfall all year.</td>
+                <td>Equatorial, dark, dense evergreen forests with broad leaves (mahogany, ebony, rubber).</td>
+                <td>Monkeys, sloths, tree frogs, snakes, lizards, crocodiles.</td>
+            </tr>
+            <tr>
+                <td><strong>Monsoon</strong></td>
+                <td>India, Pakistan, Bangladesh, Sri Lanka, Myanmar, Thailand, Vietnam, southern China.</td>
+                <td>Hot summers, cool/dry winters; seasonal reversal of winds brings rain in summer.</td>
+                <td>Tropical deciduous forests (teak, sal, sandalwood, bamboo).</td>
+                <td>Elephants, tigers, leopards, rhinos, monkeys.</td>
+            </tr>
+            <tr>
+                <td><strong>Desert</strong></td>
+                <td>South-west (Arabia, Iran, Thar) & cold deserts of Gobi, Tibet, central Asia.</td>
+                <td>Scanty rainfall; hot deserts are extremely hot/cool, cold deserts have extreme temperature ranges.</td>
+                <td>Scrub, thorny bushes, cactus, date palms at oases. Deep roots, thick bark.</td>
+                <td>Camels, desert foxes, hyenas, scorpions, lizards.</td>
+            </tr>
+            <tr>
+                <td><strong>Mediterranean</strong></td>
+                <td>Along the Mediterranean Sea (Syria, Turkey, Israel, Lebanon).</td>
+                <td>Hot, dry summers; mild, rainy winters (winter rain).</td>
+                <td>Short evergreen trees with thick bark, deep roots (olive, oak, walnut, fig).</td>
+                <td>Land cleared for agriculture; hence cattle & sheep reared.</td>
+            </tr>
+            <tr>
+                <td><strong>Temperate</strong></td>
+                <td>China, Japan, Korea.</td>
+                <td>Warm summers, cold winters; moderate rainfall (more in summer).</td>
+                <td>Mixed evergreen & deciduous forests (oak, magnolia, camellia, bamboo, pine).</td>
+                <td>Giant pandas, deer, antelopes, monkeys, bears.</td>
+            </tr>
+            <tr>
+                <td><strong>Steppe (Temperate Grassland)</strong></td>
+                <td>South-western Siberia, eastern Mongolia.</td>
+                <td>Warm summers, cold winters; low rainfall. Extreme temperatures.</td>
+                <td>Short, soft grasses. Much land cleared for agriculture.</td>
+                <td>Antelopes, wild donkeys, horses, wolves.</td>
+            </tr>
+            <tr>
+                <td><strong>Taiga</strong></td>
+                <td>Siberia.</td>
+                <td>Warm, short summers; severely cold winters. Low precipitation, mostly snow.</td>
+                <td>Coniferous forests (pine, fir, spruce). Softwood used for paper/pulp.</td>
+                <td>Bears, foxes, lynx, sable, mink, squirrels.</td>
+            </tr>
+            <tr>
+                <td><strong>Tundra</strong></td>
+                <td>Beyond the Arctic Circle (northern fringes).</td>
+                <td>Short, cool summers; long, extremely cold winters. Precipitation as snow.</td>
+                <td>Mosses, lichens, stunted shrubs (grow during brief thaw).</td>
+                <td>Reindeer, polar bears, foxes, musk oxen, seals, walruses.</td>
+            </tr>
+        </table>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

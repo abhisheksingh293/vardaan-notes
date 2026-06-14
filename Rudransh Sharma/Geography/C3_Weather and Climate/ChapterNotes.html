@@ -1,0 +1,514 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Weather and Climate - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Weather and Climate</h1>
+        
+        <h2>1. Weather vs. Climate</h2>
+        <p>Not all days of a year feel the same. Changes in hotness, coldness, cloud cover, and rainfall play a major role in how we lead our lives.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Weather:</strong> It is defined as the atmospheric condition of a certain place at a particular point of time. All weather changes take place in the lowest layer of the atmosphere (the troposphere).</p>
+            <p><strong>Climate:</strong> It refers to the sum total of the average weather conditions that prevail at a particular place calculated over a long period of time (usually 30-35 years).</p>
+        </div>
+
+        <h3>Key Differences</h3>
+        <ul>
+            <li><strong>Duration:</strong> Weather changes over a short period (even within a day). Climate is stable and permanent over a long period.</li>
+            <li><strong>Area:</strong> Weather is determined over a small or local area. Climate is calculated for a large area (a state, country, or continent).</li>
+            <li><strong>Nature:</strong> Weather is highly dynamic and erratic. Climate helps determine broad themes like natural vegetation regions and cropping patterns.</li>
+        </ul>
+
+        <h2>2. Elements of Weather</h2>
+        <p>The components essential for determining the weather and climate of a region are known as the elements of weather.</p>
+
+        <h3>Temperature</h3>
+        <p>Temperature is termed as the degree of hotness or coldness of air. It varies from place to place due to:</p>
+        <ul>
+            <li><strong>Latitudinal Position:</strong> Lower latitudes (near the Equator) are generally warmer than higher latitudes (near the Poles).</li>
+            <li><strong>Altitude:</strong> The higher the altitude, the lower the temperature. This is why hill stations are cooler than plains.</li>
+            <li><strong>Distance from the Sea:</strong> Coastal areas enjoy an equable (moderate) climate, while inland areas experience extreme temperatures.</li>
+            <li><strong>Ocean Currents:</strong> Warm ocean currents increase the temperature of coastal areas, while cold currents decrease it.</li>
+            <li><strong>Wind:</strong> Winds blowing from colder regions lower the temperature, while those from warmer regions raise it (e.g., the hot, dry 'Loo' in summer).</li>
+            <li><strong>Vegetation Cover:</strong> Forested areas provide shade and reduce the temperature.</li>
+        </ul>
+
+        <h3>Atmospheric Pressure</h3>
+        <p>This is the pressure exerted by the column of air at any point on the Earth's surface. It depends on altitude, temperature, moisture, and Earth's rotation.</p>
+        <ul>
+            <li>As altitude increases, pressure drops because the air becomes thinner (less dense).</li>
+            <li><strong>High Temperature = Low Pressure:</strong> Warm air expands, rises, and exerts less pressure.</li>
+            <li><strong>Low Temperature = High Pressure:</strong> Cold air is denser and sinks, creating high pressure.</li>
+            <li>Low pressure is associated with unsettled, stormy weather, while high pressure brings calm, fair weather.</li>
+        </ul>
+
+        <h3>Wind</h3>
+        <p>Moving air is called wind. Wind always blows from a region of <strong>high pressure to low pressure</strong>.</p>
+        <ul>
+            <li><strong>Coriolis Force:</strong> Due to the Earth's rotation, winds deflect to the right in the Northern Hemisphere and to the left in the Southern Hemisphere.</li>
+            <li>Wind velocity depends on the difference in atmospheric pressure. A large difference causes high-speed winds.</li>
+        </ul>
+
+        <h3>Humidity</h3>
+        <p>Humidity is the amount of moisture (water vapour) content in the air. Warm air can hold more moisture than cold air.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Absolute vs. Relative Humidity:</strong><br>
+            • <em>Absolute Humidity:</em> The actual amount of water vapour present in a unit volume of air.<br>
+            • <em>Relative Humidity:</em> The ratio (expressed as a percentage) of the actual water vapour present compared to the maximum amount the air could hold at that temperature.</p>
+        </div>
+
+        <h3>Precipitation</h3>
+        <p>When clouds become too heavy, water falls back to the Earth. Precipitation includes rain, sleet, hail, and snow. There are three types of rainfall based on mechanism:</p>
+        <ul>
+            <li><strong>Convectional Rainfall:</strong> Heated air rises, expands, cools, and condenses.</li>
+            <li><strong>Orographic Rainfall:</strong> A physical barrier (like a mountain) forces moisture-bearing winds to rise and rain.</li>
+            <li><strong>Cyclonic Rainfall:</strong> Warm and cold air masses meet to cause rain.</li>
+        </ul>
+
+        <h3>Cloud Cover</h3>
+        <p>Clouds are formed by the condensation of water vapour around minute dust particles (condensation nuclei). The main types are:</p>
+        <ul>
+            <li><strong>Cirrus:</strong> High-level, thin, feathery, needle-like clouds indicating fair weather.</li>
+            <li><strong>Cumulus:</strong> Medium-level, fluffy clouds resembling cauliflower heads.</li>
+            <li><strong>Stratus:</strong> Low-level, layered clouds that can produce drizzle.</li>
+            <li><strong>Nimbus:</strong> Dark, grey rain-bearing clouds that cause heavy rain and thunderstorms.</li>
+        </ul>
+
+        <h2>3. Weather Forecast and Its Importance</h2>
+        <p>Weather forecasting is the prediction of weather conditions for a given place based on data collected by meteorological departments and artificial satellites. It is crucial for:</p>
+        <ul>
+            <li>Ocean navigation and aviation (guiding flights and ships safely).</li>
+            <li>Alerting people about extreme weather conditions (cyclones, floods).</li>
+            <li>Guiding farmers to prepare their cropping patterns.</li>
+            <li>Military operations.</li>
+        </ul>
+
+        <h2>4. Weather Instruments</h2>
+        <p>Meteorologists use specific scientific instruments to collect weather data:</p>
+        <ul>
+            <li><strong>Thermometer:</strong> A <em>Six's maximum and minimum thermometer</em> measures the highest and lowest temperatures of the day.</li>
+            <li><strong>Rain Gauge:</strong> Measures the amount of rainfall (in mm or cm) using a metallic cylinder and a funnel. It is placed in an open area to avoid splashing.</li>
+            <li><strong>Barometer:</strong> Measures atmospheric pressure in millibars (mb). A <em>Mercury barometer</em> uses liquid mercury, while an <em>Aneroid barometer</em> contains no liquid and is portable.</li>
+            <li><strong>Hygrometer:</strong> A <em>Wet and Dry Bulb Thermometer</em> is used to measure relative humidity based on the rate of evaporation.</li>
+            <li><strong>Wind Vane:</strong> Determines the direction from which the wind is blowing.</li>
+            <li><strong>Anemometer:</strong> Measures the speed of the wind in kilometres per hour using spinning cups.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Stevenson's Screen:</strong> To get accurate "shade temperatures" without direct sunlight or rain interference, thermometers are placed inside a wooden box on stilts with louvered doors, known as Stevenson's screen.</p>
+        </div>
+
+        <h2>5. Isotherms and Isohyets</h2>
+        <p>Meteorologists plot data on maps using special lines to understand distribution patterns:</p>
+        <ul>
+            <li><strong>Isotherms:</strong> Imaginary lines drawn on a map joining places that have <strong>equal temperature</strong>.</li>
+            <li><strong>Isohyets:</strong> Imaginary lines drawn on a map joining places receiving the <strong>same amount of rainfall</strong> over a unit of time.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Variation Level 1</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        :root {
+            --primary-color: #2e7d32; --bg-color: #e8f5e9;
+            --body-bg: #fff; --text-main: #000; --text-secondary: #333; --border-color: #ccc;
+        }
+        html.dark-mode {
+            --primary-color: #81c784; --bg-color: #1b2e1c; --body-bg: #121212;
+            --text-main: #e0e0e0; --text-secondary: #b0b0b0; --border-color: #444;
+        }
+        body { font-family: "Times New Roman", Times, serif; background-color: var(--body-bg); color: var(--text-main); line-height: 1.4; margin: 0; padding: 0; transition: background-color 0.3s, color 0.3s; }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 10px; box-sizing: border-box;}
+        .header { text-align: center; border-bottom: 3px solid var(--primary-color); padding-bottom: 15px; margin-bottom: 20px; position: relative; }
+        .institute-name { font-size: 24pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0; color: var(--primary-color); }
+        .tagline { font-size: 14pt; font-weight: bold; margin-bottom: 10px; margin-top: 5px; color: var(--text-secondary); }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { font-size: 16pt; font-weight: bold; text-decoration: underline; margin-top: 5px; color: var(--text-secondary); }
+        .meta-info { display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; font-size: 10pt; background-color: var(--bg-color); padding: 10px 15px; border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); }
+        .chapter-header { background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); font-size: 13pt; text-transform: uppercase; page-break-after: avoid; }
+        .questions-container { display: flex; flex-direction: column; gap: 8px; }
+        .question-item { display: flex; align-items: baseline; margin-bottom: 5px; font-size: 11pt; page-break-inside: avoid; text-align: left; }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 30px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .footer { margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); line-height: 1.6; }
+        .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+        .theme-toggle { position: fixed; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        html.dark-mode .theme-toggle { filter: invert(1) hue-rotate(180deg); background: #e0e0e0; }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        @media print { .theme-toggle { display: none; } }
+    </style></head><body><button class="theme-toggle" onclick="document.documentElement.classList.toggle('dark-mode')" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    <div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline"><a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336</div>
+        <div class="worksheet-title">Direct & Inverse Variation: Level 1 (Foundation)</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8th</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Identifying Variation Types</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">If the number of members in a family increases, will the milk consumption increase or decrease?</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">Is the cost of chocolates vs. the number of chocolates a case of direct or inverse variation?</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">If speed is increased, will the time taken to cover a fixed distance increase or decrease?</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">Is the number of workers vs. the time taken to finish a job an inverse variation?</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">State the formula for a constant $k$ in Direct Variation.</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">State the formula for a constant $k$ in Inverse Variation.</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">Two quantities $x$ and $y$ are in direct variation if $x/y$ remains __________.</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Two quantities $x$ and $y$ are in inverse variation if $x \times y$ remains __________.</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">If $x = ky$, then $x$ and $y$ are said to be in __________ variation.</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Identify: As the distance travelled by a car increases, the petrol consumed __________.</div></div>
+    </div>
+
+    <div class="chapter-header">Section B: Completing Variation Tables</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">If $x$ and $y$ vary directly, and $x=6$ when $y=18$, find $y$ when $x=8$.</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">Complete (Direct): $x$: [10, 20]; $y$: [5, ?].</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">Complete (Direct): $x$: [6, 12]; $y$: [18, ?].</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Complete (Direct): $x$: [?, 30]; $y$: [10, 15].</div></div>
+        <div class="sol-item" style="display:none">15. Answer: 20</div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">If $x$ and $y$ vary inversely, and $x=5$ when $y=8$, find $y$ when $x=10$.</div></div>
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">Complete (Inverse): $a$: [7, ?]; $b$: [8, 4].</div></div>
+        <div class="question-item"><span class="q-num">17.</span><span class="q-content">Complete (Inverse): $x$: [40, 60]; $y$: [9, ?].</span></div>
+        <div class="question-item"><span class="q-num">18.</span><span class="q-content">Complete (Inverse): $x$: [30, ?]; $y$: [12, 6].</span></div>
+        <div class="question-item"><span class="q-num">19.</span><span class="q-content">If $xy = 40$, find $x$ when $y=2$.</span></div>
+        <div class="question-item"><span class="q-num">20.</span><span class="q-content">If $x/y = 0.5$, find $y$ when $x=10$.</span></div>
+    </div>
+
+    <div class="chapter-header">Section C: Basic Word Problems (Direct Variation)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">5 bags of rice weigh 150 kg. Find the weight of 1 bag.</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">If 3 kg of sugar costs ₹54, find the cost of 1 kg.</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">Using Q22, find the cost of 15 kg of sugar.</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">A boat covers 20 km in 4 hrs. Find the distance covered in 1 hr.</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Using Q24, find the distance covered in 7 hrs.</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">If 12 women weave 15m cloth, how much cloth does 1 woman weave?</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">Using Q26, how much cloth can 20 women weave?</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">Weight of 5 sheets is 20g. What is the weight of 1 sheet?</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">Using Q28, how many sheets weigh 2500g (2.5kg)?</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">Reena types 600 words in 4 mins. How many words per minute?</div></div>
+    </div>
+
+    <div class="chapter-header">Section D: Basic Word Problems (Inverse Variation)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">10 students finish a report in 3 days. Total "student-days" = ?</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">How many students finish the same report (Q31) in 2 days?</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">15 men repair a road in 24 days. How many days for 1 man?</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Using Q33, how long for 9 men to repair the road?</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">30 goats graze a field in 15 days. How many goats for 1 day?</div></div>
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">Using Q35, how many goats graze it in 10 days?</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">Reads 18 pages daily to finish a book in 25 days. Total pages = ?</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">Using Q37, how many days if he reads 15 pages daily?</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">6 pumps empty a tank in 28 mins. Total "pump-minutes" = ?</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">Using Q39, how long for 4 pumps to empty the tank?</div></div>
+    </div>
+
+    <div class="chapter-header">Section E: Calculations & Speed Basics</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">Formula: $Speed = \text{Distance} / \text{?}$</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">Formula: $\text{Distance} = \text{Speed} \times \text{?}$</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">Convert 72 km/hr into m/sec.</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">Convert 10 m/sec into km/hr.</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">If a train is 400m long, distance to cross a pole is __________.</div></div>
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">If a 100m train crosses a 200m bridge, total distance is __________.</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">A train at 20 m/s covers 400m in __________ seconds.</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">Cost of 15 newspapers is ₹22.50. Cost of 1 newspaper = ?</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">Cost of 25 newspapers (from Q48) = ?</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">A labourer gets ₹675 for 9 days. Daily wage = ?</div></div>
+    </div>
+
+    <div class="chapter-header">Section F: True or False & Fillers</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">51.</span><div class="q-content">In direct variation, $x_1/y_1 = x_2/y_2$. (T/F)</div></div>
+        <div class="question-item"><span class="q-num">52.</span><div class="q-content">In inverse variation, $x_1 y_1 = x_2 y_2$. (T/F)</div></div>
+        <div class="question-item"><span class="q-num">53.</span><div class="q-content">Speed and time are directly proportional. (T/F)</div></div>
+        <div class="question-item"><span class="q-num">54.</span><div class="q-content">Work done and time taken are directly proportional. (T/F)</div></div>
+        <div class="question-item"><span class="q-num">55.</span><div class="q-content">Number of articles and their total cost is a case of __________ variation.</div></div>
+        <div class="question-item"><span class="q-num">56.</span><div class="q-content">Speed and time for a fixed distance is __________ variation.</div></div>
+        <div class="question-item"><span class="q-num">57.</span><div class="q-content">If $x$ and $y$ vary directly, doubling $x$ will __________ $y$.</div></div>
+        <div class="question-item"><span class="q-num">58.</span><div class="q-content">If $x$ and $y$ vary inversely, doubling $x$ will __________ $y$.</div></div>
+        <div class="question-item"><span class="q-num">59.</span><div class="q-content">Is $y = 3x$ a direct variation?</div></div>
+        <div class="question-item"><span class="q-num">60.</span><div class="q-content">Is $xy = 100$ a direct variation?</div></div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

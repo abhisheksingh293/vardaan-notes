@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Pollution of Water - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- IMAGE PLACEHOLDER --- */
+        .img-placeholder {
+            border: 2px dashed var(--meta-text);
+            background-color: var(--example-bg);
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            border-radius: 8px;
+            color: var(--example-text);
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        .img-placeholder strong {
+            color: var(--blue-border);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .img-placeholder em {
+            color: var(--pink-border);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Pollution of Water</h1>
+
+        <h2>1. Introduction to Water and its Importance</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple, minimalist 2D flat vector graphic on a pure white background. It shows a large, stylized globe where three-quarters are coloured bright blue (representing water). In the foreground, two hands are gently cupping a single, large, clean drop of water. Clean educational style, no complex shading.
+        </div>
+        <p>Water is an incredibly precious resource. Next to air, water is the most essential element for the survival of all living beings—plants, animals, and humans alike. It covers nearly three-fourths of the Earth's surface, existing as snow on mountains, and as liquid water in oceans, lakes, rivers, and ponds.</p>
+        <p>However, despite this abundance, pure and usable water is scarce. The major causes of this scarcity include an increasing population, a rapid increase in industries, massive agricultural needs, poor rainfall, and rampant deforestation.</p>
+
+        <h2>2. What is Water Pollution?</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector graphic on a pure white background showing a split scene. On the left half, a clear blue river with a happy fish. On the right half, the river turns murky brown/green with floating plastic bottles and a sad fish. Minimalist, flat colors, highly readable.
+        </div>
+        <p>Water has the unique property of being a 'universal solvent', meaning it can dissolve a large number of substances. While this is useful, it also becomes a major cause of its pollution, as harmful substances easily mix with water.</p>
+        
+        <p><strong>Water pollution</strong> is defined as the change in the normal properties of water due to the presence of foreign, harmful materials. The substances that contaminate the water are called <strong>water pollutants</strong>.</p>
+        
+        <h3>Indicators of Water Pollution</h3>
+        <p>You can often recognize if a water body is polluted by observing the following changes:</p>
+        <ul>
+            <li>A bad or foul taste in drinking water.</li>
+            <li>An offensive, rotting odour emanating from lakes, rivers, and ocean beaches.</li>
+            <li>The unchecked and rapid growth of aquatic weeds (like algae) covering the water surface.</li>
+            <li>A noticeable decrease in the number of fish and other aquatic animals in freshwater bodies.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Toxicity in Water:</strong> When harmful chemicals dissolve in water, they don't just disappear. They enter the food chain. Tiny aquatic plants absorb them, small fish eat the plants, and larger animals (and humans) eat the fish. This causes toxic substances to accumulate in living bodies, causing severe health hazards.</p>
+        </div>
+
+        <h2>3. Causes of Water Pollution</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A clean 2D flat vector illustration on a pure white background. Show a river winding through the middle. On one bank, an industrial pipe is pouring thick green liquid (Industrial Waste) into the water. On the other bank, a farmer is spraying crops, with arrows showing the runoff going into the river (Agricultural Runoff). Simple flat design.
+        </div>
+        <p>Water bodies are constantly being polluted by various human activities:</p>
+        <ul>
+            <li><strong>Industrial Waste:</strong> Many industries discharge highly toxic chemicals directly into rivers and streams without treating them first. These chemicals include dangerous heavy metals like <strong>arsenic, lead, and fluorides</strong>, which cause severe toxicity in both plants and animals.</li>
+            <li><strong>Domestic Sewage:</strong> In many towns and cities, untreated sewage containing human waste, food waste, and detergents is dumped directly into local water bodies.</li>
+            <li><strong>Agricultural Chemicals:</strong> Farmers use large amounts of chemical fertilizers and pesticides to protect crops. Excess chemicals are washed away by rain into nearby ponds and rivers, contaminating them.</li>
+            <li><strong>Religious and Cultural Practices:</strong> Throwing non-biodegradable polythene bags, painted idols of gods and goddesses, and vast amounts of flowers into rivers during festivals adds significantly to pollution.</li>
+        </ul>
+
+        <h2>4. Case Study: The River Ganga</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector map on a pure white background. A winding blue line represents the River Ganga. Place a simplified city skyline icon labeled "Kanpur" next to the river, surrounded by small hazard icons (garbage, chemical barrels) indicating heavy pollution. Educational, clean lines.
+        </div>
+        <p>The River Ganga is one of the most important and sacred rivers in India, sustaining millions of people. However, it is also one of the most endangered rivers in the world due to extreme pollution.</p>
+        
+        <h3>The Ganga Action Plan</h3>
+        <p>Launched by the Government of India in <strong>1985</strong>, the Ganga Action Plan aimed at reducing the critical pollution levels in the river. </p>
+        <p>The river at <strong>Kanpur</strong> in Uttar Pradesh is known to be one of the most polluted stretches. Kanpur is a highly populated town with a massive concentration of industries. People throw garbage, flowers, idols, and non-biodegradable polythene bags into the river daily. Additionally, hundreds of industries discharge untreated, highly toxic chemicals directly into the water, severely damaging the river's ecosystem.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Algal Bloom:</strong> Have you ever seen ponds looking completely green from a distance? This is because agricultural fertilizers wash into the pond, acting as nutrients for algae. The algae grow explosively, covering the surface. When these algae die, bacteria decompose them, using up all the oxygen in the water. This lack of oxygen suffocates and kills the fish.</p>
+        </div>
+
+        <h2>5. Potable Water and Purification Methods</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector graphic on a pure white background showing three safe drinking methods. Left: A simple funnel with filter paper dripping water into a beaker (Filtration). Middle: A pot of water bubbling over a small fire (Boiling). Right: A hand dropping a small white pill into a glass of water (Chlorination). Minimalist flat style.
+        </div>
+        <p>Water that is completely safe and suitable for drinking is called <strong>potable water</strong>. It must be free from harmful disease-causing microbes and dissolved toxic impurities.</p>
+
+        <p>To make water safe for domestic use, it is purified using several methods:</p>
+        <ul>
+            <li><strong>Filtration:</strong> A physical method of removing solid impurities. At home, standard water filters (like candle filters or modern RO systems) are used to trap dirt and impurities.</li>
+            <li><strong>Boiling:</strong> Boiling water for at least 10-15 minutes kills the vast majority of disease-causing germs and microorganisms present in it, making it completely safe to drink.</li>
+            <li><strong>Chlorination:</strong> A widely used chemical method. Small chlorine tablets or bleaching powder are added to the water. The chlorine effectively kills harmful bacteria. <em>(Note: It must be used in correct, measured amounts; excessive chlorine can be harmful).</em></li>
+        </ul>
+
+        <h2>6. Conservation of Water</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A clean 2D vector illustration on a pure white background demonstrating water conservation. It shows a leaky tap being fixed by a wrench, and a person using a bucket of water to wash a car instead of a running hose pipe. Eco-friendly flat design with bright colors.
+        </div>
+        <p>With clean water becoming increasingly scarce, it is the duty of every citizen to prevent water wastage and pollution. We must follow the principles of <strong>Reduce, Reuse, and Recycle</strong>.</p>
+        
+        <ul>
+            <li><strong>Reduce:</strong> Fix leaking taps immediately. Do not leave the tap running while brushing teeth or washing dishes.</li>
+            <li><strong>Reuse:</strong> Water used for washing vegetables or fruits can be collected and reused to water the plants in the garden.</li>
+            <li><strong>Recycle:</strong> Industries must be strictly mandated to treat their toxic liquid waste in effluent treatment plants before discharging it into rivers, allowing the water to safely re-enter the ecosystem.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Save Water, Save Life:</strong> Small daily habits create massive impacts. By being mindful of our water usage and avoiding the disposal of plastics and chemicals in local water bodies, we protect the fragile aquatic life and secure clean drinking water for our future generations.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

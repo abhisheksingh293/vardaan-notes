@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Legislature - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Civics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>THE LEGISLATURE</h1>
+        
+        <h2>1. Organs of the Government</h2>
+        <p>The <strong>Constitution of India</strong> is a vital document that outlines the rules and procedures for governing the country. It ensures the rights and duties of citizens are protected. In India, the head of the State is the <strong>President</strong>.</p>
+        <p>India has three main organs of the government:</p>
+        <ul>
+            <li><strong>Legislature:</strong> It is the law-making body. It controls the Executive's finances and questions the laws passed.</li>
+            <li><strong>Executive:</strong> It implements the laws and runs the government.</li>
+            <li><strong>Judiciary:</strong> It interprets laws and ensures justice for all citizens.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>What is the Union Legislature?</strong></p>
+            <p>The Union Legislature, also called the <strong>Parliament</strong>, is responsible for making laws for the country. It consists of the President and two Houses: The <strong>Lok Sabha</strong> (Lower House) and the <strong>Rajya Sabha</strong> (Upper House).</p>
+        </div>
+
+        <h2>2. Division of Powers Between the Centre and States</h2>
+        <p>The Legislative powers have been divided between the Union and the states. Subjects have been listed under three legislative lists:</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <ul>
+                <li><strong>Union List:</strong> Matters over which only the <strong>Centre</strong> can make laws. (Examples: Defence, Citizenship, Railways, Finance, Foreign Affairs).</li>
+                <li><strong>State List:</strong> Matters over which only the <strong>States</strong> can make laws. (Examples: Public health, Agriculture, Fisheries, Water supply).</li>
+                <li><strong>Concurrent List:</strong> Matters over which <strong>both</strong> the centre and states can make laws. (Examples: Education, Trade unions, Forests, Population control).</li>
+            </ul>
+        </div>
+
+        <h2>3. The Lok Sabha (House of the People)</h2>
+        <p>The Lok Sabha is the <strong>Lower House</strong> of the Parliament. People directly elect members from constituencies all over the country.</p>
+
+        <h3>Composition and Strength</h3>
+        <ul>
+            <li>The maximum strength of the Lok Sabha can be <strong>550 members</strong>.</li>
+            <li>530 representatives are elected from states.</li>
+            <li>20 representatives are elected from union territories.</li>
+            <li>As of 2024, out of the <strong>543 members</strong> of the Lok Sabha, 524 represent the states, while 19 represent the union territories.</li>
+        </ul>
+
+        <h3>Qualifications & Tenure</h3>
+        <p>To become a Member of Parliament (MP) in the Lok Sabha, a candidate must meet these criteria:</p>
+        <ul>
+            <li>Must be a <strong>citizen of India</strong>, a registered voter, and mentally sound.</li>
+            <li>Must be at least <strong>25 years of age</strong>.</li>
+            <li>Must not hold an office of profit under the government.</li>
+            <li>Must not be an insolvent or bankrupt.</li>
+            <li>Must not be a proclaimed criminal.</li>
+        </ul>
+        <p>The tenure of the Lok Sabha is normally <strong>five years</strong>. However, it can be dissolved earlier by the President.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Procedure for Election:</strong> Voting is done by <strong>secret ballot</strong>. The voting age of a person in India is 18 years or above (Universal Adult Franchise). India uses <strong>Electronic Voting Machines (EVMs)</strong> for elections.</p>
+        </div>
+
+        <h3>The Speaker</h3>
+        <p>The <strong>Speaker</strong> is the presiding officer of the Lok Sabha. He/She maintains order and supervises the work of the House. The Speaker is elected from among the members of the Lok Sabha and may cast a vote only in case of a tie.</p>
+
+        <h2>4. The Rajya Sabha (Council of States)</h2>
+        <p>The Rajya Sabha is the <strong>Upper House</strong> of the Parliament. It represents the states of India and is a <strong>permanent body</strong> (it cannot be dissolved).</p>
+
+        <h3>Composition and Strength</h3>
+        <ul>
+            <li>The maximum strength of the Rajya Sabha is <strong>250 members</strong>.</li>
+            <li><strong>238 members</strong> represent the states and union territories. They are elected by the members of the State Legislative Assemblies.</li>
+            <li><strong>12 members</strong> are nominated by the <strong>President</strong>. They are distinguished individuals from the fields of art, literature, science, or social service.</li>
+        </ul>
+
+        <h3>Tenure & Eligibility</h3>
+        <ul>
+            <li>To become a member, one must be at least <strong>30 years of age</strong>.</li>
+            <li>Members are elected for a period of <strong>six years</strong>.</li>
+            <li>One-third of its members retire every two years, making it a Permanent House.</li>
+            <li>The <strong>Vice President</strong> is the presiding officer of the Rajya Sabha.</li>
+        </ul>
+
+        <h2>5. Functions of the Parliament: Law-Making Procedures</h2>
+        <p>Until a proposal is passed by both Houses and receives the consent of the President, it is referred to as a <strong>bill</strong>. After it is passed, it becomes an <strong>Act</strong> (law).</p>
+
+        <h3>Types of Bills</h3>
+        <ul>
+            <li><strong>Ordinary Bills:</strong> Can be introduced in <strong>either</strong> the Lok Sabha or the Rajya Sabha. It can be introduced by a minister or a private member.</li>
+            <li><strong>Money Bills:</strong> Can be introduced <strong>only in the Lok Sabha</strong>. The Speaker decides if a bill is a money bill. It is sent to the Rajya Sabha for discussion, but they only have <strong>14 days</strong> to accept it or offer recommendations. The President's consent is a mere formality as prior approval is taken.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Process Flow</span>
+            <p><strong>Draft Bill</strong> ➔ Introduced in House ➔ Debated and passed by both Houses ➔ Sent to President for assent ➔ <strong>Becomes an Act</strong>.</p>
+        </div>
+
+        <h2>6. The State Legislature</h2>
+        <p>India has 28 states and eight union territories. Each state is divided into smaller constituencies. State legislatures can be:</p>
+        <ul>
+            <li><strong>Unicameral:</strong> Having only one House. Most states in India have unicameral legislatures.</li>
+            <li><strong>Bicameral:</strong> Having two Houses. Only some states have this, such as Uttar Pradesh, Bihar, Karnataka, Andhra Pradesh, Telangana, and Maharashtra.</li>
+        </ul>
+
+        <h3>Houses of the State Legislature</h3>
+        <ul>
+            <li><strong>Vidhan Sabha (Legislative Assembly):</strong> The Lower House. People directly elect the Members of Legislative Assembly (MLAs). Total members range between 60 and 500. The term is <strong>five years</strong>, and the qualification age is 25.</li>
+            <li><strong>Vidhan Parishad (Legislative Council):</strong> The Upper House. Members are indirectly elected and nominated (MLCs). Total members cannot be more than one-third of the Vidhan Sabha.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Key Role</span>
+            <p><strong>The Governor:</strong> The Governor plays an important role in the state legislature. All state bills go to the Governor for his/her assent. The Governor also has the power to summon or dissolve the Legislative Assembly.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Maths Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Inject based on Level 1/2/3) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+        .answers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            font-size: 11pt;
+        }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Exponents Worksheet (Class 8 ICSE)</div>
+        <div class="meta-info">
+            <span>Especially designed for: Aditi</span>
+            <span>Class: 8 ICSE (Level 2)</span>
+            <span>Subject: Maths</span>
+        </div>
+    </div>
+
+    <!-- Section A: Evaluating Fractional and Negative Exponents -->
+    <div class="chapter-header">Section A: Evaluating Fractional & Negative Exponents</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">Evaluate: $(\frac{3}{4})^{-2}$</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">Evaluate: $(\frac{-2}{5})^{-3}$</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">Evaluate: $4^{-1} + 8^{-1}$</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">Evaluate: $(\frac{1}{2})^{-2} + (\frac{1}{3})^{-2} + (\frac{1}{4})^{-2}$</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">Evaluate: $(5^{-1} \times 3^{-1})^{-1}$</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">Simplify: $(\frac{5}{8})^{-7} \times (\frac{8}{5})^{-4}$</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">Evaluate: $(3^0 + 4^{-1}) \times 2^2$</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Evaluate: $(2^{-1} - 4^{-1})^2$</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">Evaluate: $\{(\frac{1}{3})^{-3} - (\frac{1}{2})^{-3}\} \div (\frac{1}{4})^{-3}$</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Evaluate: $(\frac{2}{3})^{-2} \times (\frac{3}{2})^2$</div></div>
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">Evaluate: $(-3)^4 \times (\frac{5}{3})^4$</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">Simplify: $(\frac{-1}{3})^4 \div (\frac{-1}{3})^8 \times (\frac{-1}{3})^5$</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">Evaluate: $(5^{-1} \div 6^{-1}) \times (\frac{1}{5})^{-1}$</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">Evaluate: $[ (\frac{3}{4})^{-1} ]^{-2}$</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Evaluate: $2^{-3} \times (-7)^{-3}$</div></div>
+    </div>
+
+    <!-- Section B: Simplification using Laws of Exponents -->
+    <div class="chapter-header">Section B: Simplification using Laws of Exponents</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">Simplify: $\frac{25 \times t^{-4}}{5^{-3} \times 10 \times t^{-8}}$</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">Simplify: $\frac{3^{-5} \times 10^{-5} \times 125}{5^{-7} \times 6^{-5}}$</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">Simplify: $(\frac{x^a}{x^b})^c \times (\frac{x^b}{x^c})^a \times (\frac{x^c}{x^a})^b$</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">Simplify: $\frac{x^{-2} y^3}{x^3 y^{-2}}$</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">Simplify: $(2x^2 y^{-3})^{-3}$</div></div>
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">Simplify: $(\frac{a^{-2} b}{a^3 b^{-4}})^{-1}$</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">Simplify: $\frac{16 \times 2^{n+1} - 4 \times 2^n}{16 \times 2^{n+2} - 2 \times 2^{n+2}}$</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">Simplify: $\frac{x^{m+n} \times x^{m-n}}{x^{2m}}$</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">Simplify: $\frac{4^x \times 2^{x+1}}{8^{x-1}}$</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Simplify: $\frac{3^n \times 9^{n+1}}{27^n}$</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">Simplify: $\frac{(-2)^3 \times (-2)^7}{(-2)^5}$</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">Evaluate: $(x^2 - y^2)^0 \times 5^2$</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">Simplify: $(\frac{2}{3})^{-5} \times (\frac{2}{3})^2 \times (\frac{3}{2})^{-2}$</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">Simplify: $\frac{a^5 \times b^{-3} \times c^2}{a^{-2} \times b^4 \times c^{-1}}$</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">Simplify: $( \frac{1}{3} x^{-2} y^3 )^2$</div></div>
+    </div>
+
+    <!-- Section C: Exponential Equations -->
+    <div class="chapter-header">Section C: Exponential Equations (Find the value of x)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">Find $x$: $(\frac{5}{3})^{-4} \times (\frac{5}{3})^{-5} = (\frac{5}{3})^{3x}$</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">Find $x$: $2^{3x - 1} = 32$</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">Find $x$: $5^{2x+1} \div 25 = 125$</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Find $x$: $7^x = \frac{1}{343}$</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">Find $x$: $(\frac{4}{9})^4 \times (\frac{4}{9})^{-7} = (\frac{4}{9})^{2x-1}$</div></div>
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">Find $x$: $3^{x} = 81$</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">Find $x$: $(-3)^{x-1} = -243$</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">Find $x$: $2^{x-5} \times 5^{x-5} = 1000$</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">Find $x$: $8^{x-1} = 2^{x+3}$</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">Find $x$: $3^x - 3^{x-1} = 54$</div></div>
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">Find $x$: $10^{2x-5} = 1$</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">Find $x$: $2^{x} + 2^{x} + 2^{x} + 2^{x} = 2^8$</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">Find $x$: $(\frac{1}{5})^{x-2} = 125$</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">Find $x$: $9 \times 3^x = 27^{2x-1}$</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">Find $x$: $(\frac{2}{5})^x \div (\frac{2}{5})^{-3} = (\frac{2}{5})^8$</div></div>
+    </div>
+
+    <!-- Section D: Standard Form & Mixed -->
+    <div class="chapter-header">Section D: Standard Form (Scientific Notation)</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">Express in standard form: $0.00000542$</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">Express in standard form: $632,000,000$</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">Express in usual form: $3.02 \times 10^{-5}$</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">Express in usual form: $4.5 \times 10^4$</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">Evaluate & Express in standard form: $(2.5 \times 10^3) + (3.1 \times 10^4)$</div></div>
+        <div class="question-item"><span class="q-num">51.</span><div class="q-content">Which is greater: $2.4 \times 10^{11}$ or $3.0 \times 10^{10}$?</div></div>
+        <div class="question-item"><span class="q-num">52.</span><div class="q-content">Express $1$ micron $(1/1000000 \text{ m})$ in standard form.</div></div>
+        <div class="question-item"><span class="q-num">53.</span><div class="q-content">Mass of Earth is $5.97 \times 10^{24}$ kg and Moon is $7.35 \times 10^{22}$ kg. Find their total mass (Standard Form).</div></div>
+        <div class="question-item"><span class="q-num">54.</span><div class="q-content">Simplify and express in standard form: $\frac{1.4 \times 10^9}{2 \times 10^4}$</div></div>
+        <div class="question-item"><span class="q-num">55.</span><div class="q-content">Express in standard form: $0.00000000837$</div></div>
+        <div class="question-item"><span class="q-num">56.</span><div class="q-content">Write the number of seconds in a day ($86,400$) in standard form.</div></div>
+        <div class="question-item"><span class="q-num">57.</span><div class="q-content">The thickness of a piece of paper is $0.0016$ cm. Express in standard form.</div></div>
+        <div class="question-item"><span class="q-num">58.</span><div class="q-content">Evaluate $y$ if $y \times 10^{-4} = 0.00035$</div></div>
+        <div class="question-item"><span class="q-num">59.</span><div class="q-content">Multiply & express in standard form: $(3 \times 10^{-5}) \times (4 \times 10^8)$</div></div>
+        <div class="question-item"><span class="q-num">60.</span><div class="q-content">Divide & express in standard form: $(6.9 \times 10^6) \div (3 \times 10^{-2})$</div></div>
+    </div>
+
+    <!-- Answers Section -->
+    <div class="chapter-header" style="page-break-before: always;">Answer Key</div>
+    <div class="answers-grid">
+        <div class="solution-item"><span class="ans-label">1.</span> $\frac{16}{9}$</div>
+        <div class="solution-item"><span class="ans-label">2.</span> $\frac{-125}{8}$</div>
+        <div class="solution-item"><span class="ans-label">3.</span> $\frac{3}{8}$</div>
+        <div class="solution-item"><span class="ans-label">4.</span> $29$</div>
+        <div class="solution-item"><span class="ans-label">5.</span> $15$</div>
+        <div class="solution-item"><span class="ans-label">6.</span> $\frac{512}{125}$</div>
+        <div class="solution-item"><span class="ans-label">7.</span> $5$</div>
+        <div class="solution-item"><span class="ans-label">8.</span> $\frac{1}{16}$</div>
+        <div class="solution-item"><span class="ans-label">9.</span> $\frac{19}{64}$</div>
+        <div class="solution-item"><span class="ans-label">10.</span> $\frac{81}{16}$</div>
+        <div class="solution-item"><span class="ans-label">11.</span> $625$</div>
+        <div class="solution-item"><span class="ans-label">12.</span> $\frac{-1}{3}$</div>
+        <div class="solution-item"><span class="ans-label">13.</span> $6$</div>
+        <div class="solution-item"><span class="ans-label">14.</span> $\frac{9}{16}$</div>
+        <div class="solution-item"><span class="ans-label">15.</span> $\frac{-1}{2744}$</div>
+        
+        <div class="solution-item"><span class="ans-label">16.</span> $\frac{625t^4}{2}$</div>
+        <div class="solution-item"><span class="ans-label">17.</span> $3125$</div>
+        <div class="solution-item"><span class="ans-label">18.</span> $1$</div>
+        <div class="solution-item"><span class="ans-label">19.</span> $\frac{y^5}{x^5}$</div>
+        <div class="solution-item"><span class="ans-label">20.</span> $\frac{y^9}{8x^6}$</div>
+        <div class="solution-item"><span class="ans-label">21.</span> $\frac{a^5}{b^5}$</div>
+        <div class="solution-item"><span class="ans-label">22.</span> $\frac{1}{2}$</div>
+        <div class="solution-item"><span class="ans-label">23.</span> $1$</div>
+        <div class="solution-item"><span class="ans-label">24.</span> $16$</div>
+        <div class="solution-item"><span class="ans-label">25.</span> $9$</div>
+        <div class="solution-item"><span class="ans-label">26.</span> $-32$</div>
+        <div class="solution-item"><span class="ans-label">27.</span> $25$</div>
+        <div class="solution-item"><span class="ans-label">28.</span> $\frac{3}{2}$</div>
+        <div class="solution-item"><span class="ans-label">29.</span> $\frac{a^7 c^3}{b^7}$</div>
+        <div class="solution-item"><span class="ans-label">30.</span> $\frac{y^6}{9x^4}$</div>
+        
+        <div class="solution-item"><span class="ans-label">31.</span> $x = -3$</div>
+        <div class="solution-item"><span class="ans-label">32.</span> $x = 2$</div>
+        <div class="solution-item"><span class="ans-label">33.</span> $x = 2$</div>
+        <div class="solution-item"><span class="ans-label">34.</span> $x = -3$</div>
+        <div class="solution-item"><span class="ans-label">35.</span> $x = -1$</div>
+        <div class="solution-item"><span class="ans-label">36.</span> $x = 4$</div>
+        <div class="solution-item"><span class="ans-label">37.</span> $x = 6$</div>
+        <div class="solution-item"><span class="ans-label">38.</span> $x = 8$</div>
+        <div class="solution-item"><span class="ans-label">39.</span> $x = 3$</div>
+        <div class="solution-item"><span class="ans-label">40.</span> $x = 4$</div>
+        <div class="solution-item"><span class="ans-label">41.</span> $x = 2.5$</div>
+        <div class="solution-item"><span class="ans-label">42.</span> $x = 6$</div>
+        <div class="solution-item"><span class="ans-label">43.</span> $x = -1$</div>
+        <div class="solution-item"><span class="ans-label">44.</span> $x = 1$</div>
+        <div class="solution-item"><span class="ans-label">45.</span> $x = 5$</div>
+        
+        <div class="solution-item"><span class="ans-label">46.</span> $5.42 \times 10^{-6}$</div>
+        <div class="solution-item"><span class="ans-label">47.</span> $6.32 \times 10^8$</div>
+        <div class="solution-item"><span class="ans-label">48.</span> $0.0000302$</div>
+        <div class="solution-item"><span class="ans-label">49.</span> $45000$</div>
+        <div class="solution-item"><span class="ans-label">50.</span> $3.35 \times 10^4$</div>
+        <div class="solution-item"><span class="ans-label">51.</span> $2.4 \times 10^{11}$</div>
+        <div class="solution-item"><span class="ans-label">52.</span> $1 \times 10^{-6}$</div>
+        <div class="solution-item"><span class="ans-label">53.</span> $6.0435 \times 10^{24}$</div>
+        <div class="solution-item"><span class="ans-label">54.</span> $7 \times 10^4$</div>
+        <div class="solution-item"><span class="ans-label">55.</span> $8.37 \times 10^{-9}$</div>
+        <div class="solution-item"><span class="ans-label">56.</span> $8.64 \times 10^4$</div>
+        <div class="solution-item"><span class="ans-label">57.</span> $1.6 \times 10^{-3}$</div>
+        <div class="solution-item"><span class="ans-label">58.</span> $3.5$</div>
+        <div class="solution-item"><span class="ans-label">59.</span> $1.2 \times 10^4$</div>
+        <div class="solution-item"><span class="ans-label">60.</span> $2.3 \times 10^8$</div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

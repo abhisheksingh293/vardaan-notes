@@ -1,0 +1,727 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Parallel Lines - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- DIAGRAMS & IMAGES --- */
+        .diagram-container { width: 28%; max-width: 190px; min-width: 140px; float: right; margin: 8px 0 14px 18px; text-align: center; }
+.diagram-container:nth-of-type(even) { float: left; margin: 8px 18px 14px 0; }
+        
+        .ai-image { width: 100%; max-width: 100%; height: auto; border-radius: 0; border: none; box-shadow: none; transition: none; display: block; }
+
+        /* Invert images in dark mode as requested */
+        html.dark-mode .ai-image { filter: invert(1); opacity: 1; }
+
+        /* Styling for the prompt box shown to developers/writers */
+        .ai-prompt-box {
+            background-color: var(--example-bg);
+            border: 1px dashed var(--pink-border);
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 85%;
+            text-align: left;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .ai-prompt-box strong {
+            color: var(--blue-border);
+        }
+
+        /* Responsive styling for SVGs */
+        svg.concept-diagram {
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+        }
+
+        
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .image-float-right { float: right; width: 45%; max-width: 360px; margin: 8px 0 14px 18px; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        .image-float-left { float: left; width: 45%; max-width: 360px; margin: 8px 18px 14px 0; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        html.dark-mode .image-float-right, html.dark-mode .image-float-left { filter: invert(1); opacity: 1; }
+        
+
+        @media (max-width: 768px) {
+            .diagram-container,
+            .diagram-container:nth-of-type(even),
+            .image-float-right,
+            .image-float-left {
+                float: none !important;
+                display: block !important;
+                width: 90% !important;
+                max-width: 500px !important;
+                min-width: 0 !important;
+                margin: 20px auto !important;
+                clear: both !important;
+            }
+        }
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+    <!-- MathJax added for consistent Math Rendering -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Mathematics â€¢ Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>Ã°Å¸Å’Â vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Parallel Lines</h1>
+        
+        <h2>1. Introduction to Parallel Lines</h2>
+        <p>
+            <img src="../images/C10_RailwayTracks.png" alt="Railway Tracks Parallel Lines" class="image-float-right ai-image">
+            In our daily lives, we come across several examples of lines that never meet. Whether it is the railway tracks, the tracks made by the wheels of a car on a wet muddy road, or the opposite edges of your math book, they all share a common property.</p>
+        <div class="clearfix"></div>
+
+        
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Parallel Lines:</strong> If two lines in a plane do not intersect each other even when extended infinitely in both directions, they are called parallel lines. We denote parallel lines $l$ and $m$ as $l \parallel m$.</p>
+            <p><strong>Transversal:</strong> A line that intersects two or more lines at distinct points is called a transversal.</p>
+        </div>
+
+        <h3>Angles Formed by a Transversal</h3>
+        <p>When a transversal intersects two lines, 8 angles are formed. These angles are categorized into distinct pairs:</p>
+        
+        <svg class="concept-diagram" viewBox="0 0 500 300" width="80%" xmlns="http://www.w3.org/2000/svg">
+            <!-- Parallel Lines l and m -->
+            <line x1="50" y1="100" x2="450" y2="100" stroke="var(--blue-border)" stroke-width="3" stroke-linecap="round"/>
+            <line x1="50" y1="200" x2="450" y2="200" stroke="var(--blue-border)" stroke-width="3" stroke-linecap="round"/>
+            
+            <!-- Transversal t -->
+            <line x1="150" y1="50" x2="350" y2="250" stroke="var(--pink-border)" stroke-width="3" stroke-linecap="round"/>
+            
+            <!-- Arrowheads for parallel lines -->
+            <polygon points="50,100 65,95 65,105" fill="var(--blue-border)"/>
+            <polygon points="450,100 435,95 435,105" fill="var(--blue-border)"/>
+            <polygon points="50,200 65,195 65,205" fill="var(--blue-border)"/>
+            <polygon points="450,200 435,195 435,205" fill="var(--blue-border)"/>
+            
+            <!-- Arrowheads for transversal line (precisely rotated) -->
+            <polygon points="150,50 140,45 140,55" fill="var(--pink-border)" transform="rotate(-135 150 50)"/>
+            <polygon points="350,250 340,245 340,255" fill="var(--pink-border)" transform="rotate(45 350 250)"/>
+            
+            <!-- Labels for lines -->
+            <text x="460" y="105" fill="var(--text-main)" font-size="20" font-family="sans-serif" font-style="italic">l</text>
+            <text x="460" y="205" fill="var(--text-main)" font-size="20" font-family="sans-serif" font-style="italic">m</text>
+            <text x="135" y="45" fill="var(--pink-border)" font-size="20" font-family="sans-serif" font-style="italic">t</text>
+            
+            <!-- Angles at top intersection (200, 100) -->
+            <text x="165" y="85" fill="var(--text-main)" font-size="16" font-weight="bold">1</text>
+            <text x="210" y="85" fill="var(--text-main)" font-size="16" font-weight="bold">2</text>
+            <text x="185" y="130" fill="var(--text-main)" font-size="16" font-weight="bold">3</text>
+            <text x="235" y="130" fill="var(--text-main)" font-size="16" font-weight="bold">4</text>
+            
+            <!-- Angles at bottom intersection (300, 200) -->
+            <text x="265" y="185" fill="var(--text-main)" font-size="16" font-weight="bold">5</text>
+            <text x="310" y="185" fill="var(--text-main)" font-size="16" font-weight="bold">6</text>
+            <text x="285" y="230" fill="var(--text-main)" font-size="16" font-weight="bold">7</text>
+            <text x="335" y="230" fill="var(--text-main)" font-size="16" font-weight="bold">8</text>
+        </svg>
+
+        <ul>
+            <li><strong>Corresponding Angles:</strong> Angles in the same relative position at each intersection where the straight line crosses the others.</li>
+            <li><strong>Alternate Interior Angles:</strong> A pair of angles on opposite sides of the transversal and between the two lines.</li>
+            <li><strong>Alternate Exterior Angles:</strong> A pair of angles on opposite sides of the transversal and outside the two lines.</li>
+            <li><strong>Interior Angles on the Same Side (Co-interior):</strong> A pair of angles on the same side of the transversal and between the two lines.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Properties of Parallel Lines:</strong></p>
+            <p>If two <strong>parallel</strong> lines are cut by a transversal, then:</p>
+            <ul>
+                <li>The pairs of <strong>corresponding angles</strong> are equal.</li>
+                <li>The pairs of <strong>alternate (interior as well as exterior) angles</strong> are equal.</li>
+                <li>The interior angles on the same side of the transversal are <strong>supplementary</strong> (their sum is $180^\circ$).</li>
+            </ul>
+        </div>
+
+        <h3>Practice Problems: Angles</h3>
+        <ul>
+            <li><strong>Q1.</strong> Let $l \parallel m$. If one angle formed by the transversal is $55^\circ$, find the corresponding angle, the alternate interior angle, and the co-interior angle to it.</li>
+            <li><strong>Q2.</strong> Two parallel lines are intersected by a transversal. If a pair of interior angles on the same side are $2x$ and $3x - 20^\circ$, find the value of $x$.</li>
+        </ul>
+
+        <h2>2. Conditions for Parallelism (Converse)</h2>
+        <p>Is the reverse of the above properties true? Yes! If you are given two lines and a transversal, you can prove the lines are parallel by checking their angles.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Converse Properties:</strong></p>
+            <p>If a transversal cuts a pair of lines in such a way that ANY ONE of the following is true, then the lines are <strong>PARALLEL</strong>:</p>
+            <ol>
+                <li>Any pair of corresponding angles are equal.</li>
+                <li>Any pair of alternate interior (or exterior) angles are equal.</li>
+                <li>Any pair of interior angles on the same side of the transversal are supplementary (sum to $180^\circ$).</li>
+            </ol>
+        </div>
+
+        <h3>Solved Example</h3>
+        <p><strong>Example:</strong> In a quadrilateral $ABCD$, $\angle A = 90^\circ$ and $\angle B = 90^\circ$. Is $\overline{AD} \parallel \overline{BC}$?</p>
+        
+        <svg class="concept-diagram" viewBox="0 0 320 200" width="60%" xmlns="http://www.w3.org/2000/svg">
+            <!-- Quadrilateral Shape (using distinct AD and BC sizes) -->
+            <path d="M 50 150 L 250 150 M 50 150 L 50 50 M 50 50 L 200 50 M 200 50 L 250 150" fill="none" stroke="var(--blue-border)" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M 50 50 L 200 50 L 250 150 L 50 150 Z" fill="var(--blue-bg)" opacity="0.4"/>
+            
+            <!-- 90 deg symbols at A and B -->
+            <polyline points="50,135 65,135 65,150" fill="none" stroke="var(--pink-border)" stroke-width="2"/>
+            <polyline points="50,65 65,65 65,50" fill="none" stroke="var(--pink-border)" stroke-width="2"/>
+            
+            <!-- Labels -->
+            <text x="30" y="160" fill="var(--text-main)" font-size="16" font-weight="bold">A</text>
+            <text x="30" y="55" fill="var(--text-main)" font-size="16" font-weight="bold">B</text>
+            <text x="205" y="40" fill="var(--text-main)" font-size="16" font-weight="bold">C</text>
+            <text x="255" y="160" fill="var(--text-main)" font-size="16" font-weight="bold">D</text>
+        </svg>
+
+        <p><strong>Solution:</strong><br>
+        Line segment $\overline{AB}$ acts as a transversal intersecting $\overline{AD}$ and $\overline{BC}$.<br>
+        We are given $\angle A = 90^\circ$ and $\angle B = 90^\circ$.<br>
+        The sum of interior angles on the same side of the transversal is: $$ \angle A + \angle B = 90^\circ + 90^\circ = 180^\circ $$<br>
+        Since the sum is $180^\circ$ (they are supplementary), according to the converse property, $\overline{AD} \parallel \overline{BC}$.</p>
+
+        <h2>3. Distance Between Parallel Lines</h2>
+        <p>If you measure the breadth of your study table at different points, you will find it is exactly the same everywhere. This illustrates a fundamental property of parallel lines.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Distance Property:</strong> The perpendicular distance between two parallel lines does not change; it is the same everywhere.</p>
+        </div>
+        
+        <svg class="concept-diagram" viewBox="0 0 500 150" width="80%" xmlns="http://www.w3.org/2000/svg">
+            <!-- Parallel lines -->
+            <line x1="50" y1="40" x2="450" y2="40" stroke="var(--blue-border)" stroke-width="3" stroke-linecap="round"/>
+            <line x1="50" y1="110" x2="450" y2="110" stroke="var(--blue-border)" stroke-width="3" stroke-linecap="round"/>
+            
+            <!-- Arrowheads -->
+            <polygon points="50,40 65,35 65,45" fill="var(--blue-border)"/>
+            <polygon points="450,40 435,35 435,45" fill="var(--blue-border)"/>
+            <polygon points="50,110 65,105 65,115" fill="var(--blue-border)"/>
+            <polygon points="450,110 435,105 435,115" fill="var(--blue-border)"/>
+
+            <!-- Perpendicular distances -->
+            <g stroke="var(--pink-border)" stroke-width="2" stroke-dasharray="5,5">
+                <line x1="150" y1="40" x2="150" y2="110" />
+                <line x1="250" y1="40" x2="250" y2="110" />
+                <line x1="350" y1="40" x2="350" y2="110" />
+            </g>
+            
+            <!-- 90 deg squares -->
+            <g fill="none" stroke="var(--pink-border)" stroke-width="1.5">
+                <polyline points="150,105 155,105 155,110" />
+                <polyline points="250,105 255,105 255,110" />
+                <polyline points="350,105 355,105 355,110" />
+            </g>
+
+            <text x="160" y="80" fill="var(--text-main)" font-size="16" font-weight="bold">d</text>
+            <text x="260" y="80" fill="var(--text-main)" font-size="16" font-weight="bold">d</text>
+            <text x="360" y="80" fill="var(--text-main)" font-size="16" font-weight="bold">d</text>
+        </svg>
+
+        <h3>Lines Parallel/Perpendicular to a Given Line</h3>
+        <ul>
+            <li><strong>Parallel to the Same Line:</strong> Lines parallel to the same given line are parallel to each other. If $m \parallel l$ and $n \parallel l$, then $m \parallel n$.</li>
+            <li><strong>Perpendicular to the Same Line:</strong> Two lines in the same plane perpendicular to a given line are parallel to each other. (Because they form corresponding angles of $90^\circ$ which are equal).</li>
+        </ul>
+
+        <h3>Practice Problems: Distance & Multi-lines</h3>
+        <ul>
+            <li><strong>Q1.</strong> Lines $l, m, n$ are parallel to each other. A transversal $p$ intersects them. If the angle corresponding to line $l$ is $110^\circ$, what is the corresponding angle on line $n$?</li>
+            <li><strong>Q2.</strong> If $p \perp l$ and $q \perp l$, prove that $p \parallel q$.</li>
+        </ul>
+
+        <h2>4. Division of a Line Segment into Equal Parts</h2>
+        <p>Using the properties of parallel lines, we can divide a line segment into $n$ equal parts or in a specific internal ratio without just measuring and guessing.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Construction Concept:</strong></p>
+            <p>If $\overline{AB}$ is any line segment and '$n$' is a positive integer, $\overline{AB}$ can be divided into $n$ equal parts by drawing parallel lines. This relies on the property that equal intercepts on parallel lines create equal intercepts on any transversal cutting them.</p>
+        </div>
+
+        <h3>Dividing a Line Segment internally in a ratio (e.g., $4:3$)</h3>
+        <p><strong>Steps of Construction:</strong></p>
+        <ol>
+            <li>Draw a line segment $\overline{AB} = 6 \text{ cm}$.</li>
+            <li>Draw rays $\overrightarrow{AQ}$ and $\overrightarrow{BP}$ parallel to each other on opposite sides of $\overline{AB}$.</li>
+            <li>Add the ratio numbers: $4 + 3 = 7$. Mark 7 points on $\overrightarrow{AQ}$ ($A_1$ to $A_7$) and 7 points on $\overrightarrow{BP}$ ($B_1$ to $B_7$) at equal distances.</li>
+            <li>Join the final points $A_7$ to $B$ and $B_7$ to $A$.</li>
+            <li>To divide in the ratio $4:3$, join the point $A_4$ to $B_3$. The intersection of this line with $\overline{AB}$ gives a point $C$.</li>
+            <li>Point $C$ divides $\overline{AB}$ internally in the ratio $4:3$.</li>
+        </ol>
+
+        <svg class="concept-diagram" viewBox="0 0 500 280" width="90%" xmlns="http://www.w3.org/2000/svg">
+            <style>
+                .lbl { font-size: 14px; font-family: sans-serif; fill: var(--text-main); }
+                .lbl-sm { font-size: 12px; font-family: sans-serif; fill: var(--text-main); }
+            </style>
+            <!-- Line AB -->
+            <line x1="100" y1="140" x2="400" y2="140" stroke="var(--text-main)" stroke-width="3"/>
+            <text x="80" y="145" class="lbl" font-weight="bold">A</text>
+            <text x="415" y="145" class="lbl" font-weight="bold">B</text>
+            
+            <!-- Ray AQ (points up right) -->
+            <line x1="100" y1="140" x2="330" y2="40" stroke="var(--blue-border)" stroke-width="2"/>
+            <polygon points="330,40 320,46 323,49" fill="var(--blue-border)"/>
+            <text x="335" y="40" class="lbl">Q</text>
+            
+            <!-- Ray BP (points down left) -->
+            <line x1="400" y1="140" x2="170" y2="240" stroke="var(--blue-border)" stroke-width="2"/>
+            <polygon points="170,240 180,234 177,231" fill="var(--blue-border)"/>
+            <text x="155" y="248" class="lbl">P</text>
+            
+            <!-- Points on AQ (roughly +33dx, -14dy per step) -->
+            <circle cx="133" cy="126" r="3" fill="var(--pink-border)"/> <text x="120" y="118" class="lbl-sm">A1</text>
+            <circle cx="166" cy="111" r="3" fill="var(--pink-border)"/> <text x="153" y="103" class="lbl-sm">A2</text>
+            <circle cx="199" cy="97" r="3" fill="var(--pink-border)"/>  <text x="186" y="89" class="lbl-sm">A3</text>
+            <circle cx="232" cy="83" r="3" fill="var(--pink-border)"/>  <text x="219" y="75" class="lbl-sm" font-weight="bold">A4</text>
+            <circle cx="265" cy="68" r="3" fill="var(--blue-border)"/>
+            <circle cx="298" cy="54" r="3" fill="var(--blue-border)"/>
+            
+            <!-- Points on BP (roughly -33dx, +14dy per step) -->
+            <circle cx="367" cy="154" r="3" fill="var(--pink-border)"/> <text x="370" y="172" class="lbl-sm">B1</text>
+            <circle cx="334" cy="169" r="3" fill="var(--pink-border)"/> <text x="337" y="187" class="lbl-sm">B2</text>
+            <circle cx="301" cy="183" r="3" fill="var(--pink-border)"/> <text x="304" y="201" class="lbl-sm" font-weight="bold">B3</text>
+            <circle cx="268" cy="197" r="3" fill="var(--blue-border)"/>
+            <circle cx="235" cy="212" r="3" fill="var(--blue-border)"/>
+
+            <!-- Connect A4 to B3 -->
+            <line x1="232" y1="83" x2="301" y2="183" stroke="var(--accent-purple)" stroke-width="2" stroke-dasharray="6,4"/>
+            
+            <!-- Point C -->
+            <circle cx="271.4" cy="140" r="4" fill="var(--pink-border)"/>
+            <text x="265" y="130" class="lbl" font-weight="bold">C</text>
+        </svg>
+
+        <h3>Practice Problems: Constructions</h3>
+        <ul>
+            <li><strong>Q1.</strong> Draw a line segment $\overline{AB} = 7.6 \text{ cm}$. Divide it into 4 equal parts. What is the length of each part?</li>
+            <li><strong>Q2.</strong> Draw a line segment of length $5.5 \text{ cm}$. Divide it internally in the ratio $2:3$.</li>
+            <li><strong>Q3.</strong> Draw a line segment $\overline{AB} = 7 \text{ cm}$ and find a point $P$ on it such that $\overline{AP} : \overline{PB} = 2:3$.</li>
+        </ul>
+
+        <h2>5. Chapter Summary (You Must Know)</h2>
+        <ul>
+            <li>Lines parallel to the same line are parallel to each other.</li>
+            <li>Lines perpendicular to the same line are parallel to each other.</li>
+            <li>If two parallel lines are cut by a transversal, corresponding angles are equal, alternate angles are equal, and co-interior angles are supplementary.</li>
+            <li>Division of a line segment into '$n$' equal parts can be reliably done by constructing parallel lines.</li>
+            <li>A line segment can be divided internally in a given ratio by constructing parallel lines and using the intercept theorem logic.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan Ã¢ÂÂ¤Ã¯Â¸Â</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+

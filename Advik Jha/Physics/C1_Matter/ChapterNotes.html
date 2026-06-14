@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Matter - Vardaan Learning Institute</title>
+
+    <!-- MathJax for professional LaTeX rendering -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+            clear: both;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            clear: both;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+            clear: both;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        /* --- NEWSPAPER LAYOUT UTILITIES --- */
+        .float-right {
+            float: right;
+            width: 280px;
+            margin: 10px 0 15px 25px;
+        }
+
+        .float-left {
+            float: left;
+            width: 280px;
+            margin: 10px 25px 15px 0;
+        }
+
+        .newspaper-img {
+            transition: filter 0.3s ease;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        html.dark-mode .newspaper-img {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        @media screen and (max-width: 600px) {
+            .float-right, .float-left {
+                float: none;
+                width: 100%;
+                margin: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Physics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>MATTER</h1>
+        
+        <h2>1. Introduction to Matter</h2>
+        <p>In our daily lives, we are surrounded by a variety of living and non-living things. Everything we see around us, such as water, air, books, plants, and even ourselves, is made up of matter.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Definition</span>
+            <p><strong>Matter</strong> is defined as anything that occupies space, has mass, and can be perceived by our senses.</p>
+        </div>
+
+        <h3>Composition of Matter</h3>
+        <ul>
+            <li>In ancient times, Indian philosophers believed that matter was made of five basic elements (<strong>Panch tatvas</strong>): air (vayu), fire (tejas/agni), water (jal), earth (prithvi), and sky (akash).</li>
+            <li>Maharishi Kanada, an ancient Indian sage, was among the first to suggest that matter is composed of tiny, indivisible particles called <strong>Anu</strong> or <strong>Parmanu</strong>.</li>
+            <li>Today, it is scientifically established that all matter is composed of extremely tiny particles known as <strong>molecules</strong>.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Definition</span>
+            <p>A <strong>molecule</strong> is the smallest particle of matter that can exist independently and freely while retaining all the physical and chemical properties of that substance.</p>
+        </div>
+
+        <h2>2. Characteristics of Molecules (Kinetic Theory)</h2>
+        <img src="Image/molecular_arrangement.png" alt="Molecular Arrangement Illustration" class="newspaper-img float-right">
+        <p>The <strong>Kinetic Theory of Matter</strong> helps us understand the behavior and arrangement of molecules in different states. The core characteristics of molecules are:</p>
+
+        <h2>3. States of Matter</h2>
+        <p>The state of a substance—whether it is a solid, liquid, or gas—is determined by three main properties: Intermolecular space, Intermolecular force of attraction, and the Kinetic energy of the molecules.</p>
+
+        <h3>1. Solids</h3>
+        <ul>
+            <li><strong>Molecular Arrangement:</strong> Molecules are tightly packed together.</li>
+            <li><strong>Intermolecular Force:</strong> Very strong.</li>
+            <li><strong>Intermolecular Space:</strong> Negligible / very small.</li>
+            <li><strong>Shape and Volume:</strong> They have a definite shape and a definite volume. They are rigid and cannot be compressed easily.</li>
+            <li><strong>Examples:</strong> Wood, iron, ice, stone.</li>
+        </ul>
+
+        <h3>2. Liquids</h3>
+        <ul>
+            <li><strong>Molecular Arrangement:</strong> Molecules are loosely packed compared to solids. They can slide over one another.</li>
+            <li><strong>Intermolecular Force:</strong> Moderate (weaker than solids, stronger than gases).</li>
+            <li><strong>Intermolecular Space:</strong> Moderate.</li>
+            <li><strong>Shape and Volume:</strong> They have a definite volume but no definite shape. They take the shape of the container they are poured into and can flow.</li>
+            <li><strong>Examples:</strong> Water, milk, oil, alcohol.</li>
+        </ul>
+
+        <h3>3. Gases</h3>
+        <ul>
+            <li><strong>Molecular Arrangement:</strong> Molecules are very wide apart and move freely in all random directions.</li>
+            <li><strong>Intermolecular Force:</strong> Negligible / almost zero.</li>
+            <li><strong>Intermolecular Space:</strong> Very large.</li>
+            <li><strong>Shape and Volume:</strong> They have neither a definite shape nor a definite volume. They fill the entire space available to them and are highly compressible.</li>
+            <li><strong>Examples:</strong> Oxygen, hydrogen, carbon dioxide, steam.</li>
+        </ul>
+
+        <h2>4. Change of State of Matter</h2>
+        <p>Matter can change from one physical state to another by changing its temperature (heating or cooling). This process of changing from one state to another at a constant temperature by absorbing or rejecting heat is called a <strong>change of state</strong>.</p>
+
+        <h3>Key Processes in Change of State:</h3>
+        <img src="Image/state_change_cycle.png" alt="State Change Cycle Illustration" class="newspaper-img float-left">
+        <ul>
+            <li><strong>Melting (or Fusion):</strong> The process in which a solid changes into a liquid on heating. The fixed temperature at which this occurs is called the <strong>Melting Point</strong> (e.g., Ice melts at 0°C).</li>
+            <li><strong>Freezing:</strong> The process in which a liquid changes into a solid on cooling. The fixed temperature is called the <strong>Freezing Point</strong> (e.g., Water freezes at 0°C). <em>Note: For a specific substance, the melting point and freezing point are exactly the same.</em></li>
+            <li><strong>Boiling (or Vaporization):</strong> The rapid change of a liquid into a gas (or vapor) on heating at a constant temperature. This fixed temperature is the <strong>Boiling Point</strong> (e.g., Water boils at 100°C).</li>
+            <li><strong>Condensation:</strong> The change from a gaseous state to a liquid state on cooling at a constant temperature. This is the <strong>Condensation Point</strong>.</li>
+            <li><strong>Sublimation:</strong> The direct change of a solid into a gas on heating, <em>without</em> passing through the liquid state (e.g., Camphor, Naphthalene balls, Dry ice, Iodine).</li>
+            <li><strong>Deposition (or Solidification):</strong> The reverse of sublimation; the direct change of a gas into a solid on cooling, without becoming a liquid.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Latent Heat (Hidden Heat):</strong><br> 
+            During a change of state (like melting or boiling), the temperature of the substance remains <strong>constant</strong>, even though heat is continuously supplied. This heat energy is used exclusively to overcome the intermolecular forces of attraction, pulling the molecules apart. Since it does not increase the kinetic energy (which would raise the temperature), it is called Latent or 'Hidden' heat.</p>
+        </div>
+
+        <h2>5. Evaporation and Its Effects</h2>
+        <p><strong>Evaporation</strong> is the slow, gradual process by which a liquid changes into its vapor state at <strong>all temperatures</strong> from the surface of the liquid.</p>
+
+        <h3>Evaporation vs. Boiling</h3>
+        <ul>
+            <li><strong>Temperature:</strong> Evaporation occurs at all temperatures, whereas boiling occurs only at a specific fixed temperature (boiling point).</li>
+            <li><strong>Location:</strong> Evaporation is a surface phenomenon (happens only at the top surface), while boiling is a bulk phenomenon (bubbles form throughout the liquid).</li>
+            <li><strong>Speed:</strong> Evaporation is a slow and silent process; boiling is a rapid and violent process.</li>
+        </ul>
+
+        <h3>Factors Affecting the Rate of Evaporation:</h3>
+        <ol>
+            <li><strong>Temperature of the Liquid:</strong> Higher temperature means higher kinetic energy for molecules. Thus, the rate of evaporation increases with an increase in temperature (e.g., clothes dry faster on a hot summer day).</li>
+            <li><strong>Area of Exposed Surface:</strong> Evaporation is a surface phenomenon. A larger surface area allows more molecules to escape, increasing the rate of evaporation (e.g., tea cools faster in a wide saucer than in a narrow cup).</li>
+            <li><strong>Nature of the Liquid:</strong> Volatile liquids (like alcohol, petrol, ether, and perfumes) have weaker intermolecular forces. They evaporate much faster than water.</li>
+            <li><strong>Wind Speed (Air flow):</strong> Moving air carries away the escaped vapor molecules from the surface, making room for more molecules to evaporate. High wind speed increases the evaporation rate.</li>
+            <li><strong>Humidity:</strong> Humidity is the amount of moisture present in the air. Dry air can hold more water vapor, so evaporation is faster on a dry day than on a highly humid or rainy day.</li>
+        </ol>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Why does Evaporation cause Cooling?</strong><br>
+            When liquid molecules evaporate, they need energy (heat) to break free from the intermolecular forces holding them together. They absorb this required heat energy from the remaining liquid or the surrounding surface. As a result, the surrounding object loses heat and gets cooled. For example, sweating cools our body, and a few drops of alcohol on the palm feel intensely cold as they evaporate.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

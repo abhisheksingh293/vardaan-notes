@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 - Standard/Medium) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- ANSWER KEY TABLE STYLING --- */
+        .ans-table-container { margin-top: 25px; page-break-before: always; }
+        .ans-table { width: 100%; border-collapse: collapse; font-size: 10.5pt; text-align: left; background: var(--body-bg); }
+        .ans-table th, .ans-table td { border: 1px solid var(--border-color); padding: 6px 10px; }
+        .ans-table th { background-color: var(--primary-color); color: var(--body-bg); font-weight: bold; text-align: center; }
+        .ans-table td:nth-child(odd) { font-weight: bold; text-align: center; color: var(--primary-color); width: 6%; }
+        html.dark-mode .ans-table th { color: #fff; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Worksheet - Direct and Inverse Proportions</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8 (CBSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Section A: Direct Proportion -->
+    <div class="chapter-header">Section A: Direct Proportion</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">The cost of $15$ pens is ₹$150$. Find the cost of $25$ such pens.</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">A machine in a soft drink factory fills $840$ bottles in $6$ hours. How many bottles will it fill in $5$ hours?</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">A $5 \text{ m } 60 \text{ cm}$ high vertical pole casts a shadow $3 \text{ m } 20 \text{ cm}$ long. Find at the same time the length of the shadow cast by another pole $10 \text{ m } 50 \text{ cm}$ high.</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">A photograph of a bacteria enlarged $50,000$ times attains a length of $5 \text{ cm}$. What is the actual length of the bacteria?</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">In a model of a ship, the mast is $9 \text{ cm}$ high, while the mast of the actual ship is $12 \text{ m}$ high. If the length of the actual ship is $28 \text{ m}$, how long is the model ship?</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">Suppose $2 \text{ kg}$ of sugar contains $9 \times 10^6$ crystals. How many sugar crystals are there in $5 \text{ kg}$ of sugar?</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">Rashmi has a road map with a scale of $1 \text{ cm}$ representing $18 \text{ km}$. She drives on a road for $72 \text{ km}$. What would be her distance covered in the map?</div></div>
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">A loaded truck travels $14 \text{ km}$ in $25$ minutes. If the speed remains the same, how far can it travel in $5$ hours?</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">If the weight of $12$ sheets of thick paper is $40$ grams, how many sheets of the same paper would weigh $2 \frac{1}{2} \text{ kilograms}$?</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">A train is moving at a uniform speed of $75 \text{ km/h}$. How far will it travel in $20$ minutes?</div></div>
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">Continuing with the previous train moving at $75 \text{ km/h}$, find the time required to cover a distance of $250 \text{ km}$.</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">The scale of a map is given as $1 : 30,000,000$. Two cities are $4 \text{ cm}$ apart on the map. Find the actual distance between them in kilometers.</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">If $8 \text{ meters}$ of cloth costs ₹$250$, find the cost of $5.8 \text{ meters}$ of the same cloth.</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">An extension cord of $15 \text{ m}$ costs ₹$450$. What is the length of a cord that costs ₹$1050$?</div></div>
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">If a typist types $540$ words in half an hour, how many words will she type in $12$ minutes?</div></div>
+    </div>
+
+    <!-- Section B: Inverse Proportion -->
+    <div class="chapter-header">Section B: Inverse Proportion</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">$6$ pipes are required to fill a tank in $1 \text{ hour } 20 \text{ minutes}$. How long will it take if only $5$ pipes of the same type are used?</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">There are $100$ students in a hostel. Food provision for them is for $20$ days. How long will these provisions last, if $25$ more students join the group?</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">A batch of bottles was packed in $25$ boxes with $12$ bottles in each box. If the same batch is packed using $20$ bottles in each box, how many boxes would be filled?</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">A farmer has enough food to feed $20$ animals in his cattle for $6$ days. How long would the food last if there were $10$ more animals in his cattle?</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">A contractor estimates that $3$ persons could rewire Jasminder's house in $4$ days. If he uses $4$ persons instead of $3$, how long should they take to complete the job?</div></div>
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">A car takes $2$ hours to reach a destination by travelling at the speed of $60 \text{ km/h}$. How long will it take when the car travels at the speed of $80 \text{ km/h}$?</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">Two persons could fit new windows in a house in $3$ days. One of the persons fell ill before the work started. How long would the job take now?</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">A school has $8$ periods a day each of $45$ minutes duration. How long would each period be, if the school has $9$ periods a day, assuming the number of school hours to be the same?</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">$120$ men had food provision for $200$ days. After $5$ days, $30$ men died due to an epidemic. How long will the remaining food last for the rest of the men?</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">A garrison of $1200$ men is provisioned for $60$ days. After $15$ days, a reinforcement of $300$ men arrived. For how many days will the remaining food last?</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">If $15$ workers can build a wall in $48$ hours, how many workers will be required to do the same work in $30$ hours?</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">A journey by car takes $45$ minutes at $80 \text{ km/h}$. What must be the speed of the car if the journey is to be completed in $30$ minutes?</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">$3$ pumps, working $8$ hours a day, can empty a tank in $2$ days. How many hours a day must $4$ pumps work to empty the tank in $1$ day?</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">A girls' hostel has rations for $60$ girls for $15$ days. If $15$ girls go on a holiday, how long will the rations last for the remaining girls?</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">It takes $8$ days for $20$ workers to harvest a field. How many workers are needed to harvest the field in $5$ days?</div></div>
+    </div>
+
+    <!-- Section C: Time and Work -->
+    <div class="chapter-header">Section C: Time and Work</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">$A$ can do a piece of work in $10$ days and $B$ can do it in $15$ days. In how many days will they finish it if they work together?</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">$A$ and $B$ working together can mow a field in $5$ days. If $A$ alone can mow it in $8$ days, in how many days can $B$ alone mow it?</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">$A$ takes $6$ hours to read a book while $B$ takes $8$ hours. If they read together, what fraction of the book will be read in $2$ hours?</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Tap $A$ can fill a cistern in $8$ hours and Tap $B$ can empty it in $12$ hours. If both are opened together, how long will it take to fill the cistern completely?</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">$P$ can do a job in $24$ days. $Q$ is $20\%$ more efficient than $P$. In how many days can $Q$ alone finish the work?</div></div>
+        <div class="question-item"><span class="q-num">36.</span><div class="q-content">$A$, $B$, and $C$ can complete a piece of work in $12$, $15$, and $20$ days respectively. How long will they take to finish it if they work together?</div></div>
+        <div class="question-item"><span class="q-num">37.</span><div class="q-content">$A$ works twice as fast as $B$. If both of them can together finish a work in $12$ days, find the time $B$ alone can do it.</div></div>
+        <div class="question-item"><span class="q-num">38.</span><div class="q-content">$A$ and $B$ can do a job in $15$ days. $B$ and $C$ can do it in $20$ days. $C$ and $A$ can do it in $12$ days. In how many days can $A$, $B$, and $C$ together finish it?</div></div>
+        <div class="question-item"><span class="q-num">39.</span><div class="q-content">A cistern can be filled by tap $X$ in $4$ hours and by tap $Y$ in $6$ hours. How long will it take to fill if both taps are opened together?</div></div>
+        <div class="question-item"><span class="q-num">40.</span><div class="q-content">$45$ men can dig a canal in $16$ days. $6$ days after they started, $15$ more men joined them. How many more days will they take to complete the remaining work?</div></div>
+    </div>
+
+    <!-- Section D: Mixed Word Problems & HOTS -->
+    <div class="chapter-header">Section D: Mixed Word Problems & HOTS</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">41.</span><div class="q-content">If $x$ and $y$ vary directly and $x=15$ when $y=20$, find $x$ when $y=32$.</div></div>
+        <div class="question-item"><span class="q-num">42.</span><div class="q-content">If $a$ and $b$ vary inversely and $a=8$ when $b=15$, find the value of $b$ when $a=12$.</div></div>
+        <div class="question-item"><span class="q-num">43.</span><div class="q-content">A train $280 \text{ m}$ long is moving at a speed of $60 \text{ km/h}$. What is the time taken by it to cross a platform $220 \text{ m}$ long?</div></div>
+        <div class="question-item"><span class="q-num">44.</span><div class="q-content">If $15$ men can reap a field in $28$ days, in how many days will $10$ men reap it?</div></div>
+        <div class="question-item"><span class="q-num">45.</span><div class="q-content">The weight of an object on the Moon is directly proportional to its weight on Earth. If an object weighing $60 \text{ kg}$ on Earth weighs $10 \text{ kg}$ on the Moon, how much will an object weighing $84 \text{ kg}$ on Earth weigh on the Moon?</div></div>
+        <div class="question-item"><span class="q-num">46.</span><div class="q-content">A wheel has $12$ spokes and the angle between a pair of consecutive spokes is $30^\circ$. If the number of spokes is increased to $15$, what will be the angle between a pair of consecutive spokes?</div></div>
+        <div class="question-item"><span class="q-num">47.</span><div class="q-content">A box of sweets is divided among $24$ children, and they get $5$ sweets each. How many would each get, if the number of the children is reduced by $4$?</div></div>
+        <div class="question-item"><span class="q-num">48.</span><div class="q-content">$5$ men or $7$ women can earn ₹$5250$ per day. How much would $7$ men and $13$ women earn per day?</div></div>
+        <div class="question-item"><span class="q-num">49.</span><div class="q-content">If $p$ varies inversely as $q$ and $p=2$ when $q=3$, find the value of $p$ when $q=0.5$.</div></div>
+        <div class="question-item"><span class="q-num">50.</span><div class="q-content">A fort had provisions for $300$ men for $90$ days. After $20$ days, $50$ men left the fort. How long will the food last at the same rate for the remaining men?</div></div>
+        <div class="question-item"><span class="q-num">51.</span><div class="q-content">A tap fills a tank in $6$ hours. After half the tank is filled, three more similar taps are opened. What is the total time taken to fill the tank completely?</div></div>
+        <div class="question-item"><span class="q-num">52.</span><div class="q-content">A variable $A$ varies directly as $B$ and inversely as $C$. When $A = 10$, $B = 5$ and $C = 2$. Find the value of $A$ when $B = 8$ and $C = 4$.</div></div>
+        <div class="question-item"><span class="q-num">53.</span><div class="q-content">The mass of a copper block varies directly with its volume. A block of volume $25 \text{ cm}^3$ has a mass of $220 \text{ g}$. What will be the volume of a block having a mass of $616 \text{ g}$?</div></div>
+        <div class="question-item"><span class="q-num">54.</span><div class="q-content">In a camp, there is a meal for $120$ men or $200$ children. If $150$ children have taken the meal, how many men will be catered to with the remaining meal?</div></div>
+        <div class="question-item"><span class="q-num">55.</span><div class="q-content">Two cogs, one with $16$ teeth and the other with $24$ teeth, are meshed together. If the smaller cog makes $45$ revolutions per minute, how many revolutions per minute does the larger cog make?</div></div>
+    </div>
+
+    <!-- Answer Key Section -->
+    <div class="ans-table-container">
+        <div class="chapter-header">Answer Key</div>
+        <table class="ans-table">
+            <tr><th>Q</th><th>Answer</th><th>Q</th><th>Answer</th><th>Q</th><th>Answer</th></tr>
+            <tr><td>1.</td><td>₹250</td><td>21.</td><td>1.5 hours</td><td>41.</td><td>24</td></tr>
+            <tr><td>2.</td><td>700 bottles</td><td>22.</td><td>6 days</td><td>42.</td><td>10</td></tr>
+            <tr><td>3.</td><td>6 m</td><td>23.</td><td>40 minutes</td><td>43.</td><td>30 seconds</td></tr>
+            <tr><td>4.</td><td>$10^{-4}$ cm ($0.0001$ cm)</td><td>24.</td><td>260 days</td><td>44.</td><td>42 days</td></tr>
+            <tr><td>5.</td><td>21 cm</td><td>25.</td><td>36 days</td><td>45.</td><td>14 kg</td></tr>
+            <tr><td>6.</td><td>$2.25 \times 10^7$ crystals</td><td>26.</td><td>24 workers</td><td>46.</td><td>$24^\circ$</td></tr>
+            <tr><td>7.</td><td>4 cm</td><td>27.</td><td>120 km/h</td><td>47.</td><td>6 sweets</td></tr>
+            <tr><td>8.</td><td>168 km</td><td>28.</td><td>12 hours</td><td>48.</td><td>₹17,100</td></tr>
+            <tr><td>9.</td><td>750 sheets</td><td>29.</td><td>20 days</td><td>49.</td><td>12</td></tr>
+            <tr><td>10.</td><td>25 km</td><td>30.</td><td>32 workers</td><td>50.</td><td>84 days</td></tr>
+            <tr><td>11.</td><td>3 hrs 20 mins</td><td>31.</td><td>6 days</td><td>51.</td><td>3 hrs 45 mins</td></tr>
+            <tr><td>12.</td><td>1200 km</td><td>32.</td><td>$13 \frac{1}{3}$ days (or $40/3$)</td><td>52.</td><td>8</td></tr>
+            <tr><td>13.</td><td>₹181.25</td><td>33.</td><td>$7/12$ fraction</td><td>53.</td><td>$70 \text{ cm}^3$</td></tr>
+            <tr><td>14.</td><td>35 m</td><td>34.</td><td>24 hours</td><td>54.</td><td>30 men</td></tr>
+            <tr><td>15.</td><td>216 words</td><td>35.</td><td>20 days</td><td>55.</td><td>30 revolutions</td></tr>
+            <tr><td>16.</td><td>96 mins (or 1 hr 36 mins)</td><td>36.</td><td>5 days</td><td></td><td></td></tr>
+            <tr><td>17.</td><td>16 days</td><td>37.</td><td>36 days</td><td></td><td></td></tr>
+            <tr><td>18.</td><td>15 boxes</td><td>38.</td><td>10 days</td><td></td><td></td></tr>
+            <tr><td>19.</td><td>4 days</td><td>39.</td><td>2.4 hrs (or 2 hrs 24 mins)</td><td></td><td></td></tr>
+            <tr><td>20.</td><td>3 days</td><td>40.</td><td>7.5 days</td><td></td><td></td></tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

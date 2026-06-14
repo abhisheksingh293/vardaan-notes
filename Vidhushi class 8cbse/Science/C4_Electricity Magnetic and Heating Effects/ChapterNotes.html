@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity - Science</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            .contact-info {
+                display: flex !important;
+            }
+
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">CLASS 8 SCIENCE • CHAPTER NOTES</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>ELECTRICITY: HEATING, MAGNETIC, AND CHEMICAL EFFECTS</h1>
+
+        <h2>1. The Heating Effect of Electric Current</h2>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Heating Effect:</strong> Whenever an electric current flows through any electrical component, it becomes warm. This is because some of the electric energy is converted into heat energy. This phenomenon is known as the <strong>heating effect of electric current</strong>.</p>
+        </div>
+
+        <h3>Factors Affecting Heat Generation</h3>
+        <p>The amount of heat generated in a wire depends on three primary factors:</p>
+        <ul>
+            <li><strong>Electric Current:</strong> Passing more current generates a greater amount of heat.</li>
+            <li><strong>Time:</strong> Passing current for a longer duration generates more heat.</li>
+            <li><strong>Material:</strong> Different materials warm up differently. For example, a nichrome wire becomes red hot when current passes through it, whereas an aluminium wire of the same dimensions does not heat up as much.</li>
+        </ul>
+
+        <h3>Heating Elements in Appliances</h3>
+        <p>Appliances like room heaters, electric stoves, kettles, and iron boxes work based on the heating effect of electric current. They contain a specific component responsible for producing heat, known as a <strong>heating element</strong> (usually in the form of a coil, rod, ribbon, or strip of wire).</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Nichrome</strong> is a widely used heating element. It is an alloy of nickel and chromium with a very high melting point (1400°C), so it produces a significant heating effect without melting. <strong>Tungsten</strong>, used as the filament in electric bulbs, has an even higher melting point (3422°C) and glows to convert heat energy into light energy.</p>
+        </div>
+
+        <h3>Safety Devices in Circuits</h3>
+        <p>When too much current passes through an appliance, the wires can overheat and cause damage or a fire. To prevent this, safety devices are used:</p>
+        <ul>
+            <li><strong>Electric Fuse:</strong> A safety device that prevents damage from excess current. It works on the principle of the heating effect and contains a thin wire (made of tin and lead alloy). If the current exceeds a permissible limit, the wire melts easily and breaks the circuit.</li>
+            <li><strong>Miniature Circuit Breaker (MCB):</strong> An automatically operated electric switch that protects a circuit during an overload or short circuit. Unlike a fuse that must be replaced, an MCB can simply be reset manually or automatically to restore normal operation.</li>
+        </ul>
+
+        <h2>2. Magnetic Effects of Electric Current</h2>
+        <p>Electricity and magnetism are closely related. When an electric current is passed through a conductor, it behaves like a magnet. This phenomenon was discovered by the Danish physicist <strong>Hans Christian Oersted</strong> in 1820.</p>
+
+        <h3>Solenoid and Electromagnets</h3>
+        <ul>
+            <li><strong>Solenoid:</strong> A cylindrical coil of insulated copper wire. When current flows through it, the solenoid behaves like a magnet.</li>
+            <li><strong>Electromagnet:</strong> A temporary magnet made by wrapping a current-carrying insulated wire around a piece of soft iron rod. It loses its magnetism as soon as the electric current stops flowing.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>You can increase the magnetic strength of an electromagnet in two ways: by using a more powerful battery (<strong>increasing the current</strong>) or by <strong>increasing the number of coils</strong> (winding) around the iron core.</p>
+        </div>
+
+        <h3>Uses of Electromagnets</h3>
+        <p>Electromagnets are used in many electrical appliances such as televisions, computers, electric bells, and electric motors (found in fans, washing machines, and ACs). Extremely strong electromagnets are used in cranes for lifting heavy iron pieces and in medical devices like MRI machines.</p>
+
+        <h3>The Electric Bell</h3>
+        <p>An electric bell uses an electromagnet to pull an iron strip, making a hammer hit a gong. The working steps are:</p>
+        <ol>
+            <li>When the switch is turned ON, an electric current flows and turns the <strong>electromagnet ON</strong>.</li>
+            <li>The electromagnet attracts the soft iron strip. The hammer attached to the strip hits the gong, producing a ring.</li>
+            <li>When the strip is pulled towards the electromagnet, it no longer touches the interrupter screw. This <strong>breaks the circuit</strong>.</li>
+            <li>With the circuit broken, the electromagnet turns OFF and releases the iron strip. The strip returns to its initial position, touches the screw, and completes the circuit again. This cycle repeats rapidly, creating a continuous ringing sound.</li>
+        </ol>
+
+        <h2>3. The Chemical Effect of Electric Current</h2>
+        <p>An electric cell is a source of electric energy. A combination of two or more cells is known as a <strong>battery</strong>. Conventional electric current always flows from the positive (+) terminal to the negative (-) terminal through metal wires.</p>
+
+        <h3>Primary vs. Secondary Cells</h3>
+        <ul>
+            <li><strong>Primary Cells:</strong> Non-rechargeable cells that can be used only once and then thrown away. Examples: Dry cells, coin cells.</li>
+            <li><strong>Secondary Cells:</strong> Rechargeable cells that can be used repeatedly. Examples: Mobile phone batteries, laptop batteries, car batteries.</li>
+        </ul>
+
+        <h3>Structure of a Dry Cell</h3>
+        <ul>
+            <li><strong>Carbon Rod:</strong> Acts as the positive terminal (+).</li>
+            <li><strong>Zinc Container:</strong> Acts as the negative terminal (-).</li>
+            <li><strong>Electrolyte Paste:</strong> A moist chemical paste that conducts electricity and keeps the chemicals separated until used.</li>
+        </ul>
+
+        <h3>Conduction of Electricity Through Liquids</h3>
+        <p>Not all liquids conduct electricity. Liquids that allow electric current to pass through them are called <strong>electrolytes</strong> (usually solutions of acids, bases, and salts).</p>
+        <ul>
+            <li><strong>Good Conductors:</strong> Tap water, lemon juice, vinegar.</li>
+            <li><strong>Poor Conductors / Insulators:</strong> Distilled water, kerosene, milk, sugar solutions.</li>
+        </ul>
+
+        <h3>Electrolysis</h3>
+        <p>When an electric current is passed through water containing a little salt or acid, it breaks the water down into its constituent elements: <strong>hydrogen and oxygen</strong>. This results in the evolution of gases at the two electrodes. The process of breaking down an electrolyte chemically by passing an electric current through it is called <strong>electrolysis</strong>.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Electrochemical Cell:</strong> A device used to generate electricity from a spontaneous chemical reaction (Galvanic/Voltaic cells) or that uses electricity to drive a non-spontaneous chemical reaction (Electrolytic cells).</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

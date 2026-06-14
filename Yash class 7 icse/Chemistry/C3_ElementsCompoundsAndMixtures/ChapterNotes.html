@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Elements, Compounds and Mixtures - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Chemistry • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>ELEMENTS, COMPOUNDS AND MIXTURES</h1>
+        
+        <h2>1. Atoms and Molecules</h2>
+        <p>Matter is anything that has mass and occupies space. It exists in three physical states: solid, liquid, and gas.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>An <strong>atom</strong> is the smallest particle of an element that exhibits all the properties of that element. Atoms may or may not exist independently but participate in every chemical reaction. <em>Examples: C (Carbon), H (Hydrogen), O (Oxygen).</em></p>
+        </div>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>A <strong>molecule</strong> is the smallest particle of a substance that can exist freely and retain the characteristics of that substance. It is formed when atoms combine together.</p>
+        </div>
+        
+        <h3>Characteristics of Atoms</h3>
+        <ul>
+            <li>Atoms of most elements are very reactive and generally do not exist as free atoms.</li>
+            <li>Atoms of a specific element are identical (alike in shape, size, and mass).</li>
+            <li>An atom maintains its properties through all physical and chemical changes.</li>
+        </ul>
+
+        <h2>2. Elements</h2>
+        <p>A substance made of only the same kind of atoms is called an <strong>element</strong>. Atoms cannot be broken down into simpler substances.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>Currently, about <strong>118 elements</strong> are known, out of which <strong>92 occur naturally</strong> in the earth's crust. The rest have been synthesized by scientists in laboratories.</p>
+        </div>
+
+        <h3>Characteristics of Elements</h3>
+        <ul>
+            <li>It is a pure substance made up of only one type of atom.</li>
+            <li>It cannot be separated into simpler pieces except during nuclear processes.</li>
+            <li>The smallest unit is an atom, which displays all characteristics of that element.</li>
+            <li>Elements can be found in nature in a free state or combined as compounds.</li>
+        </ul>
+        
+        <p>Elements exist in all three states of matter:</p>
+        <ul>
+            <li><strong>Solid:</strong> Gold, silver, iron, copper, lead, aluminium, zinc, sodium, carbon.</li>
+            <li><strong>Liquid:</strong> Mercury and bromine.</li>
+            <li><strong>Gas:</strong> Oxygen, neon, nitrogen, helium, hydrogen, chlorine, fluorine.</li>
+        </ul>
+
+        <h2>3. Classification of Elements</h2>
+        <p>Elements are classified into four main groups based on their physical and chemical properties:</p>
+
+        <h3>A. Metals</h3>
+        <ul>
+            <li>All metals (except mercury, which is liquid) are <strong>solids at room temperature</strong>.</li>
+            <li>Usually lustrous (shiny surface).</li>
+            <li>Ductile (can be drawn into wires).</li>
+            <li>Malleable (can be hammered/rolled into thin sheets).</li>
+            <li>Good conductors of heat and electricity.</li>
+            <li><em>Examples:</em> Sodium (Na), Magnesium (Mg), Calcium (Ca), Copper (Cu), Potassium (K), Silver (Ag), Gold (Au), Aluminium (Al).</li>
+        </ul>
+
+        <h3>B. Non-metals</h3>
+        <ul>
+            <li>Generally <strong>liquids and gases</strong> at room temperature (some are solids like carbon and sulphur).</li>
+            <li>Have dull surfaces.</li>
+            <li>Non-malleable (cannot be easily hammered into shapes) and non-ductile.</li>
+            <li>Poor conductors of heat and electricity.</li>
+            <li><em>Examples:</em> Hydrogen gas (H₂), Oxygen gas (O₂), Nitrogen gas (N₂), Sulphur solid (S), Carbon solid (C).</li>
+        </ul>
+
+        <h3>C. Metalloids</h3>
+        <ul>
+            <li>Also known as semi-metals.</li>
+            <li>They show properties that are intermediate between metals and non-metals.</li>
+            <li><em>Examples:</em> Arsenic (As), Boron (B), Silicon (Si).</li>
+        </ul>
+
+        <h3>D. Noble or Inert Gases</h3>
+        <ul>
+            <li>Elements belonging to group 18 of the Modern Periodic Table.</li>
+            <li>They are chemically unreactive (inert).</li>
+            <li><em>Examples:</em> Helium (He), Neon (Ne), Argon (Ar), Krypton (Kr), Xenon (Xe), Radon (Rn).</li>
+        </ul>
+
+        <h2>4. Compounds</h2>
+        <p>When atoms of two or more <strong>different elements combine chemically in a fixed proportion</strong>, they form compounds.</p>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>Atoms of the <em>same</em> element combining together form a molecule of an element, NOT a compound. E.g., O₂ is a molecule of an element, while H₂O is a compound because it has atoms of two different elements (Hydrogen and Oxygen).</p>
+        </div>
+
+        <p><em>Examples of Compounds:</em> Hydrogen chloride gas (HCl), Sodium chloride solid (NaCl), Nitrogen dioxide gas (NO₂), Zinc sulphide solid (ZnS), Magnesium chloride solid (MgCl₂).</p>
+
+        <h3>Characteristics of Compounds</h3>
+        <ul>
+            <li>A compound is a pure substance.</li>
+            <li>The components are present in a <strong>fixed, definite ratio</strong>.</li>
+            <li>It has a <strong>homogeneous composition</strong> (uniform structure throughout).</li>
+            <li>The properties of a compound are entirely <strong>different</strong> from the properties of its constituent elements. (e.g., Sodium is a highly reactive metal, Chlorine is a poisonous gas, but Sodium Chloride is edible table salt).</li>
+            <li>Elements in a compound cannot be separated by physical methods.</li>
+            <li>Energy is either released or absorbed during compound formation.</li>
+        </ul>
+
+        <h2>5. Symbols of Elements</h2>
+        <p>The abbreviation of the name of an element to its initial letter or letters is called the <strong>symbol</strong> of the element.</p>
+
+        <h3>Rules for writing chemical symbols:</h3>
+        <ol>
+            <li>The symbol is often the <strong>first letter</strong> of its name (e.g., H for hydrogen, C for carbon).</li>
+            <li>If names begin with the same letter, the <strong>first two letters</strong> are used (e.g., Ar for argon, Al for aluminium).</li>
+            <li>Some symbols come from their <strong>Latin names</strong>:
+                <ul>
+                    <li>Mercury (Hydrargyrum) → Hg</li>
+                    <li>Copper (Cuprum) → Cu</li>
+                    <li>Gold (Aurum) → Au</li>
+                    <li>Sodium (Natrium) → Na</li>
+                    <li>Potassium (Kalium) → K</li>
+                    <li>Silver (Argentum) → Ag</li>
+                    <li>Iron (Ferrum) → Fe</li>
+                    <li>Lead (Plumbum) → Pb</li>
+                </ul>
+            </li>
+            <li>Some symbols use the first letter followed by a letter with a <strong>strong sound</strong> (e.g., Mg for magnesium, Cl for chlorine).</li>
+        </ol>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Significance of a Symbol:</strong> It represents the name of the element and denotes exactly <em>one atom</em> of that element.</p>
+        </div>
+
+        <h2>6. Atomicity of an Element</h2>
+        <p>Atomicity is defined as the number of atoms present in one molecule of an element.</p>
+        <ul>
+            <li><strong>Monoatomic molecules (1 atom):</strong> Noble gases like Helium (He), Neon (Ne), Argon (Ar).</li>
+            <li><strong>Diatomic molecules (2 atoms):</strong> Hydrogen (H₂), Nitrogen (N₂), Oxygen (O₂), Chlorine (Cl₂).</li>
+            <li><strong>Triatomic molecules (3 atoms):</strong> Ozone (O₃).</li>
+            <li><strong>Polyatomic molecules (>3 atoms):</strong> Phosphorus (P₄), Sulphur (S₈).</li>
+        </ul>
+
+        <h2>7. Valency</h2>
+        <p>Valency is a whole number that indicates the <strong>combining capacity</strong> of an element's atom with other atoms to form a compound. It is defined as the number of electrons donated or accepted by an atom during chemical combination.</p>
+        
+        <ul>
+            <li><strong>Electropositive valency:</strong> Atom donates electrons (e.g., Sodium Na is +1).</li>
+            <li><strong>Electronegative valency:</strong> Atom accepts electrons (e.g., Chlorine Cl is -1).</li>
+        </ul>
+
+        <h3>Types based on Valency:</h3>
+        <ul>
+            <li><strong>Monovalent (Valency 1):</strong> Fluorine, chlorine, bromine, iodine, sodium, potassium.</li>
+            <li><strong>Divalent (Valency 2):</strong> Oxygen, magnesium, sulphur, calcium.</li>
+            <li><strong>Trivalent (Valency 3):</strong> Boron, nitrogen, aluminium, phosphorus.</li>
+            <li><strong>Tetravalent (Valency 4):</strong> Carbon, silicon, lead.</li>
+        </ul>
+
+        <h2>8. Chemical Formulae of Compounds</h2>
+        <p>The symbolic representation of a molecule of a compound is called its <strong>chemical formula</strong> or molecular formula.</p>
+        <p>It shows the atoms (and their quantities as subscripts) present in one molecule.</p>
+        
+        <h3>Important Formulae:</h3>
+        <ul>
+            <li>Water: H₂O</li>
+            <li>Common Salt (Sodium chloride): NaCl</li>
+            <li>Carbon dioxide: CO₂</li>
+            <li>Ammonia: NH₃</li>
+            <li>Marble / Calcium carbonate: CaCO₃</li>
+            <li>Baking soda: NaHCO₃</li>
+            <li>Sand / Silicon dioxide: SiO₂</li>
+            <li>Quick lime (Calcium oxide): CaO</li>
+            <li>Caustic soda (Sodium hydroxide): NaOH</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Significance of a Formula:</strong> It represents the name of the compound, one molecule of the compound, the names of the elements involved, and the exact number of atoms of each element in one molecule.</p>
+        </div>
+
+        <h2>9. Mixtures</h2>
+        <p>If two or more substances are mixed together in <strong>any proportion</strong>, do not undergo any chemical change, and <strong>retain their own properties</strong>, the result is a mixture.</p>
+        
+        <h3>Characteristics of a Mixture</h3>
+        <ul>
+            <li>Composed of substances mixed in any ratio without chemical reaction.</li>
+            <li>Retains the properties of its constituent components.</li>
+            <li>Components can be separated by simple <strong>physical methods</strong>.</li>
+            <li>No energy change (heat/light) occurs during its formation.</li>
+        </ul>
+
+        <h3>Types of Mixtures</h3>
+        
+        <h4>A. Homogeneous Mixtures</h4>
+        <p>A mixture in which the composition is the <strong>same (uniform) throughout</strong>. The components cannot be seen separately.</p>
+        <ul>
+            <li><em>Examples:</em> Salt in water, sugar in water, air (mixture of gases), alloys (brass, bronze, steel).</li>
+        </ul>
+
+        <h4>B. Heterogeneous Mixtures</h4>
+        <p>A mixture that consists of physically distinct parts, each with different properties. The composition is <strong>not uniform</strong>.</p>
+        <ul>
+            <li><em>Examples:</em> Sand and water, iron filings and sulphur powder, oil and water.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Difference between Iron-Sulphur Mixture vs. Compound:</strong><br>
+            - <em>Mixture (Fe + S):</em> Iron can be separated using a magnet. Sulphur dissolves in carbon disulphide.<br>
+            - <em>Compound (Iron Sulphide, FeS):</em> Formed by heating. Iron cannot be separated by a magnet. Sulphur does not dissolve in carbon disulphide. The properties change entirely.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

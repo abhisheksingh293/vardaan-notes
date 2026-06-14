@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Squares and Roots L2</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            --primary-color: #1565c0; /* Level 2 - Blue */
+            --bg-color: #e3f2fd;
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --border-color: #ccc;
+        }
+
+        html.dark-mode {
+            --primary-color: #42a5f5;   
+            --bg-color: #1a2a40;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --border-color: #444;
+        }
+
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); color: var(--text-main);
+            line-height: 1.3; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        .header { text-align: center; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 15px; }
+        .institute-name { font-size: 22pt; font-weight: bold; text-transform: uppercase; margin: 0; color: var(--primary-color); }
+        .tagline { font-size: 12pt; font-weight: bold; margin-bottom: 5px; color: var(--text-secondary); }
+        .worksheet-title { font-size: 14pt; font-weight: bold; text-decoration: underline; color: var(--text-secondary); }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 10px; 
+            font-size: 10pt; background-color: var(--bg-color); padding: 8px 12px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 5px 10px; margin-top: 15px; margin-bottom: 10px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 12pt; text-transform: uppercase; 
+        }
+        
+        .two-column { column-count: 2; column-gap: 30px; display: block; }
+        .four-column { column-count: 4; column-gap: 15px; display: block; }
+        .questions-container { margin-bottom: 15px; }
+        .question-item { display: flex; align-items: baseline; font-size: 10.5pt; break-inside: avoid; page-break-inside: avoid; margin-bottom: 6px; }
+        .solution-item { border-bottom: 1px dashed var(--bg-color); padding-bottom: 2px; margin-bottom: 4px; break-inside: avoid; page-break-inside: avoid; display: flex; align-items: baseline; }
+        .q-num { font-weight: bold; margin-right: 5px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        
+        .footer { margin-top: 20px; padding-top: 10px; border-top: 2px solid var(--primary-color); text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); }
+
+        .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer; z-index: 1000;
+        }
+        html.dark-mode .theme-toggle { filter: invert(1); }
+        .icon-sun { opacity: 0; position: absolute; top: 10px; left: 10px; width: 24px; height: 24px; }
+        .icon-moon { opacity: 1; position: absolute; top: 10px; left: 10px; width: 24px; height: 24px; }
+        html.dark-mode .icon-sun { opacity: 1; }
+        html.dark-mode .icon-moon { opacity: 0; }
+        @media print { .theme-toggle { display: none; } .two-column { column-count: 2; } }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">vardaanlearning.com | 9508841336</div>
+            <div class="worksheet-title">Squares & Square Roots - Level 2 (Intermediate)</div>
+            <div class="meta-info">
+                <span>Designed for: Aditi Sujan</span> 
+                <span>Class: 8 ICSE</span>
+                <span>Total Questions: 30</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Long Division Method (Q1 - Q10)</div>
+        <div class="two-column questions-container">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">Find the square root of 529.</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">Find the square root of 1024.</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">Find the square root of 1296.</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">Find the square root of 2025.</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">Find the square root of 3136.</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">Find the square root of 4096.</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">Find the square root of 5476.</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">Find the square root of 7056.</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">Find the square root of 9801.</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">Find the square root of 15129.</div></div>
+        </div>
+
+        <div class="chapter-header">Section B: Multiplication & Division to make Perfect Squares (Q11 - Q20)</div>
+        <div class="two-column questions-container">
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">Find the smallest whole number by which 252 should be multiplied so as to get a perfect square number.</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">Find the smallest whole number by which 180 should be multiplied so as to get a perfect square number.</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">Find the smallest whole number by which 1008 should be multiplied so as to get a perfect square number.</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">Find the smallest whole number by which 2028 should be multiplied so as to get a perfect square number.</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">Find the smallest whole number by which 768 should be multiplied so as to get a perfect square number.</div></div>
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">Find the smallest whole number by which 2925 should be divided so as to get a perfect square number.</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">Find the smallest whole number by which 396 should be divided so as to get a perfect square number.</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">Find the smallest whole number by which 2800 should be divided so as to get a perfect square number.</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">Find the smallest whole number by which 1620 should be divided so as to get a perfect square number.</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">Find the smallest whole number by which 2645 should be divided so as to get a perfect square number.</div></div>
+        </div>
+
+        <div class="chapter-header">Section C: Addition & Subtraction & Word Problems (Q21 - Q30)</div>
+        <div class="two-column questions-container">
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">Find the least number which must be subtracted from 402 to make it a perfect square.</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">Find the least number which must be subtracted from 3250 to make it a perfect square.</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">Find the least number which must be added to 1300 to make it a perfect square.</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">Find the least number which must be added to 6412 to make it a perfect square.</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">Find the greatest 4-digit number which is a perfect square.</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">Find the smallest 4-digit number which is a perfect square.</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">The area of a square playground is $225.6004 \text{ m}^2$. Find the length of one side of the playground.</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">A general wishes to draw up his 7500 soldiers in the form of a solid square. After arranging them, he found that some soldiers were left out. How many were left out?</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">2025 plants are to be planted in a garden in such a way that each row contains as many plants as the number of rows. Find the number of rows.</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">The students of Class VIII donated ₹2401 in all, for the Prime Minister's National Relief Fund. Each student donated as many rupees as the number of students in the class. Find the number of students.</div></div>
+        </div>
+
+        <div class="chapter-header" style="background-color: var(--bg-color); margin-top: 25px;">Answer Key (Only Answers)</div>
+        <div class="four-column questions-container" style="font-size: 9.5pt;">
+            <div class="solution-item"><span class="q-num">1.</span> 23</div>
+            <div class="solution-item"><span class="q-num">2.</span> 32</div>
+            <div class="solution-item"><span class="q-num">3.</span> 36</div>
+            <div class="solution-item"><span class="q-num">4.</span> 45</div>
+            <div class="solution-item"><span class="q-num">5.</span> 56</div>
+            <div class="solution-item"><span class="q-num">6.</span> 64</div>
+            <div class="solution-item"><span class="q-num">7.</span> 74</div>
+            <div class="solution-item"><span class="q-num">8.</span> 84</div>
+            <div class="solution-item"><span class="q-num">9.</span> 99</div>
+            <div class="solution-item"><span class="q-num">10.</span> 123</div>
+            <div class="solution-item"><span class="q-num">11.</span> 7</div>
+            <div class="solution-item"><span class="q-num">12.</span> 5</div>
+            <div class="solution-item"><span class="q-num">13.</span> 7</div>
+            <div class="solution-item"><span class="q-num">14.</span> 3</div>
+            <div class="solution-item"><span class="q-num">15.</span> 3</div>
+            <div class="solution-item"><span class="q-num">16.</span> 13</div>
+            <div class="solution-item"><span class="q-num">17.</span> 11</div>
+            <div class="solution-item"><span class="q-num">18.</span> 7</div>
+            <div class="solution-item"><span class="q-num">19.</span> 5</div>
+            <div class="solution-item"><span class="q-num">20.</span> 5</div>
+            <div class="solution-item"><span class="q-num">21.</span> 2</div>
+            <div class="solution-item"><span class="q-num">22.</span> 1</div>
+            <div class="solution-item"><span class="q-num">23.</span> 69</div>
+            <div class="solution-item"><span class="q-num">24.</span> 149</div>
+            <div class="solution-item"><span class="q-num">25.</span> 9801</div>
+            <div class="solution-item"><span class="q-num">26.</span> 1024</div>
+            <div class="solution-item"><span class="q-num">27.</span> 15.02 m</div>
+            <div class="solution-item"><span class="q-num">28.</span> 39 soldiers</div>
+            <div class="solution-item"><span class="q-num">29.</span> 45 rows</div>
+            <div class="solution-item"><span class="q-num">30.</span> 49 students</div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; font-size: 11pt;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Real Numbers: Board Masterclass (Target 100/100)</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 10 CBSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- Section A -->
+        <div class="chapter-header">Section A: Fundamental Theorem of Arithmetic & Basics (1-2 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Express 3825 as a product of its prime factors.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Find the HCF and LCM of 12, 15 and 21 by applying the prime factorization method.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">Given that $\text{HCF} (306, 657) = 9$, find $\text{LCM} (306, 657)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">Check whether $6^n$ can end with the digit $0$ for any natural number $n$. Give reasons for your answer.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">Explain why $7 \times 11 \times 13 + 13$ and $7 \times 6 \times 5 \times 4 \times 3 \times 2 \times 1 + 5$ are composite numbers.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Can two numbers have 18 as their HCF and 380 as their LCM? Give reasons.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">The HCF of two numbers is 145 and their LCM is 2175. If one number is 725, find the other number.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">Find the least number that is divisible by all the numbers from 1 to 10 (both inclusive).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">What is the HCF of the smallest prime number and the smallest composite number?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">If $p$ and $q$ are two distinct prime numbers, what are their HCF and LCM?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">If $a = x^3 y^2$ and $b = x y^3$, where $x, y$ are prime numbers, find $\text{HCF}(a,b)$ and $\text{LCM}(a,b)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">Two numbers are in the ratio $2 : 3$ and their LCM is 180. What is the HCF of these numbers?</div>
+            </div>
+        </div>
+
+        <!-- Section B -->
+        <div class="chapter-header">Section B: Proving Irrationality (3 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">Prove that $\sqrt{2}$ is an irrational number.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">Prove that $\sqrt{5}$ is an irrational number.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">Prove that $3 + 2\sqrt{5}$ is irrational, given that $\sqrt{5}$ is irrational.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">Prove that $\frac{1}{\sqrt{2}}$ is irrational.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">Prove that $7\sqrt{5}$ is irrational.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">Prove that $5 - \sqrt{3}$ is an irrational number.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">Prove that $\sqrt{2} + \sqrt{3}$ is irrational.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">Let $p$ be a prime number. Prove that $\sqrt{p}$ is irrational.</div>
+            </div>
+        </div>
+
+        <!-- Section C -->
+        <div class="chapter-header">Section C: Word Problems - LCM & HCF Applications (3-4 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">There is a circular path around a sports field. Sonia takes 18 minutes to drive one round of the field, while Ravi takes 12 minutes for the same. Suppose they both start at the same point and at the same time, and go in the same direction. After how many minutes will they meet again at the starting point?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">An army contingent of 616 members is to march behind an army band of 32 members in a parade. The two groups are to march in the same number of columns. What is the maximum number of columns in which they can march?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">A sweet seller has 420 kaju barfis and 130 badam barfis. She wants to stack them in such a way that each stack has the same number, and they take up the least area of the tray. What is the maximum number of barfis that can be placed in each stack for this purpose?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">Three alarm clocks ring at intervals of 4, 12, and 20 minutes respectively. If they start ringing together, after how much time will they next ring together?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">Two tankers contain 850 litres and 680 litres of kerosene oil respectively. Find the maximum capacity of a container which can measure the kerosene oil of both the tankers when used an exact number of times.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">Six bells commence tolling together and toll at intervals of 2, 4, 6, 8, 10 and 12 seconds respectively. In 30 minutes, how many times do they toll together?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">In a morning walk, three persons step off together. Their steps measure 80 cm, 85 cm and 90 cm respectively. What is the minimum distance each should walk so that all can cover the same distance in complete steps?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">The length, breadth and height of a room are 8m 25cm, 6m 75cm and 4m 50cm respectively. Find the length of the longest rod that can measure the three dimensions of the room exactly.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">144 cartons of Coke cans and 90 cartons of Pepsi cans are to be stacked in a canteen. If each stack is of the same height and is to contain cartons of the same drink, what would be the greatest number of cartons each stack would have?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">Amita, Suneha and Raghav start preparing cards for all persons of an old age home. In order to complete one card, they take 10, 16 and 20 minutes respectively. If all of them started together, after what time will they start preparing a new card together?</div>
+            </div>
+        </div>
+
+        <!-- Section D -->
+        <div class="chapter-header">Section D: Advanced Remainders & Competency Type (4-5 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">Find the largest number which divides 245 and 1029 leaving remainder 5 in each case.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">Find the largest number that will divide 398, 436 and 542 leaving remainders 7, 11 and 15 respectively.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">Find the least number which when divided by 12, 16, 24 and 36 leaves a remainder 7 in each case.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">Find the smallest number which leaves remainders 8 and 12 when divided by 28 and 32 respectively.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">Find the greatest number of 6 digits exactly divisible by 24, 15 and 36.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">A mason has to fit a bathroom with square marble tiles of the largest possible size. The size of the bathroom is 10 ft. by 8 ft. What would be the size in inches of the tile required that has to be cut and how many such tiles are required?</div>
+            </div>
+        </div>
+
+        <!-- Section E: Answer Key & Hints -->
+        <div class="chapter-header">Section E: Answer Key & Hints</div>
+        <div class="questions-container">
+            <div class="solution-item"><span class="ans-label">Ans 1:</span> $3825 = 3^2 \times 5^2 \times 17$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 2:</span> HCF = 3, LCM = 420.</div>
+            <div class="solution-item"><span class="ans-label">Ans 3:</span> 22338. <em>Hint: $\text{LCM} = \frac{306 \times 657}{9}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 4:</span> No. <em>Hint: Prime factorization of $6^n$ is $(2 \times 3)^n$. It does not contain the prime factor 5, which is necessary for a number to end with 0.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 5:</span> $13 \times (7 \times 11 + 1) = 13 \times 78$. Since it has more than two factors (1, 13, 78, itself), it is composite. Same logic for the second expression taking 5 common.</div>
+            <div class="solution-item"><span class="ans-label">Ans 6:</span> No. <em>Hint: HCF must always exactly divide the LCM. Here, $\frac{380}{18}$ is not an integer.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 7:</span> 435. <em>Hint: Second Number = $\frac{\text{HCF} \times \text{LCM}}{\text{First Number}} = \frac{145 \times 2175}{725}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 8:</span> 2520. <em>Hint: Find the LCM of numbers 1 to 10.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 9:</span> 2. <em>Hint: Smallest prime = 2, Smallest composite = 4. HCF(2,4) = 2.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 10:</span> HCF = 1, LCM = $pq$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 11:</span> HCF = $xy^2$ (lowest powers), LCM = $x^3y^3$ (highest powers).</div>
+            <div class="solution-item"><span class="ans-label">Ans 12:</span> HCF = 30. <em>Hint: Numbers are $2x, 3x$. LCM of $2x, 3x$ is $6x$. $6x = 180 \implies x = 30$. HCF is $x$.</em></div>
+
+            <div class="solution-item"><span class="ans-label">Ans 13-20:</span> Standard textbook proofs. Assume rational, represent as $\frac{a}{b}$ (coprime), square both sides or isolate the root, and show a contradiction.</div>
+            
+            <div class="solution-item"><span class="ans-label">Ans 21:</span> 36 minutes. <em>Hint: LCM of 18 and 12.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 22:</span> 8 columns. <em>Hint: HCF of 616 and 32.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 23:</span> 10 barfis per stack. <em>Hint: HCF of 420 and 130.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 24:</span> 60 minutes. <em>Hint: LCM of 4, 12, 20.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 25:</span> 170 litres. <em>Hint: HCF of 850 and 680.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 26:</span> 16 times. <em>Hint: LCM(2,4,6,8,10,12) = 120 seconds = 2 minutes. In 30 mins, they toll $\frac{30}{2} + 1 = 16$ times (adding 1 for the first toll together at 0th second).</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 27:</span> 12240 cm (or 122m 40cm). <em>Hint: LCM of 80, 85, 90.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 28:</span> 75 cm. <em>Hint: Convert to cm (825, 675, 450) and find HCF.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 29:</span> 18 cartons per stack. <em>Hint: HCF of 144 and 90.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 30:</span> 80 minutes. <em>Hint: LCM of 10, 16, 20.</em></div>
+
+            <div class="solution-item"><span class="ans-label">Ans 31:</span> 16. <em>Hint: Find HCF of $(245-5)$ and $(1029-5)$, i.e., HCF(240, 1024).</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 32:</span> 17. <em>Hint: HCF of $(398-7), (436-11), (542-15)$, i.e., HCF(391, 425, 527).</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 33:</span> 151. <em>Hint: LCM(12, 16, 24, 36) + 7 = 144 + 7 = 151.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 34:</span> 204. <em>Hint: Notice difference $(28-8=20)$ and $(32-12=20)$ is same. Required number = $\text{LCM}(28, 32) - 20 = 224 - 20 = 204$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 35:</span> 999720. <em>Hint: LCM of 24, 15, 36 is 360. Greatest 6-digit is 999999. Divide 999999 by 360, remainder is 279. Subtract 279 from 999999.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 36:</span> Size = 24 inches (2 feet). Tiles required = 20. <em>Hint: 10 ft = 120 in, 8 ft = 96 in. HCF(120, 96) = 24 in. Area = $\frac{120 \times 96}{24 \times 24} = 20$.</em></div>
+        </div>
+        
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

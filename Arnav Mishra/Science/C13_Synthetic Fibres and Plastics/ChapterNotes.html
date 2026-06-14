@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Synthetic Fibres and Plastics - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- IMAGE PLACEHOLDER --- */
+        .img-placeholder {
+            border: 2px dashed var(--meta-text);
+            background-color: var(--example-bg);
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            border-radius: 8px;
+            color: var(--example-text);
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        .img-placeholder strong {
+            color: var(--blue-border);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .img-placeholder em {
+            color: var(--pink-border);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Synthetic Fibres and Plastics</h1>
+
+        <h2>1. Introduction to Fibres and Polymers</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple, minimalist 2D flat vector graphic on a pure white background. On the left, show a single bead (Monomer). An arrow points to the right, showing a long necklace made of many identical beads joined together (Polymer). Clean educational textbook style.
+        </div>
+        <p>In previous classes, we learned about fibres like jute, cotton, wool, and silk. Since these are obtained from natural sources like plants and animals, they are called <strong>natural fibres</strong>. They are used extensively for making clothes, ropes, and carpets.</p>
+        <p>However, the global demand for fabrics is so massive that natural fibres alone cannot fulfill it. To meet this ever-increasing demand, scientists developed artificial fibres in laboratories and factories, known as <strong>synthetic fibres</strong> or man-made fibres.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>What is a Polymer?</strong> Just like a necklace is made by joining many small beads together, or a toy train is made by joining small wagons, a synthetic fibre is also a chain of small units joined together. Each small unit is a chemical substance called a <strong>monomer</strong>. Many such small units combine to form a large single unit called a <strong>polymer</strong> (from Greek: <em>poly</em> meaning many, <em>mer</em> meaning part/unit). The process of combining monomers to form a polymer is called <em>polymerisation</em>.</p>
+        </div>
+
+        <h2>2. Types of Synthetic Fibres</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A clean 2D vector graphic on a pure white background showing four everyday items made from synthetic fibres, arranged horizontally: A shiny blue bedsheet (Rayon), a strong green climbing rope (Nylon), a crisp yellow shirt (Polyester), and a cozy red winter sweater (Acrylic). Minimalist, flat colors.
+        </div>
+        
+        <h3>A. Rayon (Artificial Silk)</h3>
+        <p>Silk is a beautiful, lustrous natural fibre obtained from silkworms, but it is very expensive. Scientists successfully created a fibre with properties similar to silk, called <strong>Rayon</strong>. Although it is man-made, it is obtained by the chemical treatment of a natural source: <strong>wood pulp</strong> (cellulose). It is cheaper than silk, can be dyed in many colours, and is often mixed with cotton to make bedsheets or with wool to make carpets.</p>
+
+        <h3>B. Nylon</h3>
+        <p>Nylon was the first <em>fully</em> synthetic fibre, prepared in 1931 without using any natural raw material (plant or animal). It was prepared from <strong>coal, water, and air</strong>. Nylon fibres are incredibly strong, elastic, light, lustrous, and easy to wash. A nylon thread is actually stronger than a steel wire of the same thickness! It is widely used to make socks, ropes, tents, toothbrushes, car seat belts, sleeping bags, and even parachutes and rock-climbing ropes.</p>
+
+        <h3>C. Polyester (PET / Terylene)</h3>
+        <p>Polyester is another extremely popular synthetic fibre. Fabrics made from this fibre do not get wrinkled easily, remain crisp, and are very easy to wash, making them highly suitable for making dress materials. <strong>Terylene</strong> is a popular type of polyester. <strong>PET</strong> (Polyethylene terephthalate) is a very familiar form of polyester used for making water bottles, utensils, films, and wires. Polyester is often blended with natural fibres to enhance quality, such as <em>Polycot</em> (Polyester + Cotton) and <em>Polywool</em> (Polyester + Wool).</p>
+
+        <h3>D. Acrylic</h3>
+        <p>Many of the sweaters, shawls, and blankets we use in winter are not made from natural wool, which is quite expensive. They are made from a synthetic fibre called <strong>Acrylic</strong>. It resembles wool but is much cheaper, highly durable, and available in a wide variety of vibrant colours.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Danger in the Kitchen!</strong> Synthetic fibres have a major disadvantage: they melt on heating. If a synthetic fabric catches fire, it melts and sticks to the body of the person wearing it, causing severe burns. Therefore, we should <strong>never</strong> wear synthetic clothes while working in the kitchen or in a science laboratory. Always wear cotton!</p>
+        </div>
+
+        <h2>3. Plastics and Their Types</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector illustration on a pure white background comparing polymer arrangements in plastics. Top: 'Linear Arrangement' showing straight, unlinked chains of dots. Bottom: 'Cross-linked Arrangement' showing straight chains connected vertically and diagonally by other dots. Simple flat educational design.
+        </div>
+        <p>Like synthetic fibres, <strong>plastic is also a polymer</strong>. However, the arrangement of the tiny monomer units is not the same in all plastics. In some, it is linear (straight chains), while in others, it is cross-linked (chains connected to each other).</p>
+        <p>Plastics are highly versatile—they can be easily moulded into any shape, recycled, reused, coloured, melted, rolled into sheets, or made into wires.</p>
+
+        <h3>Types of Plastics</h3>
+        <ul>
+            <li><strong>Thermoplastics:</strong> Plastics that get deformed easily on heating and can be bent easily are known as thermoplastics. Because their polymer chains are linear and loosely held, they soften when heated. Examples: <strong>Polythene</strong> and <strong>PVC</strong>. They are used for manufacturing toys, combs, and various types of containers.</li>
+            <li><strong>Thermosetting Plastics:</strong> Plastics which, when moulded into a shape once, cannot be softened by heating again. Because they have strongly cross-linked polymer chains, they retain their hard shape. 
+                <ul>
+                    <li><em>Bakelite:</em> A poor conductor of heat and electricity. Used for making electrical switches and handles of various utensils.</li>
+                    <li><em>Melamine:</em> A versatile material that resists fire and can tolerate heat better than other plastics. Used for making floor tiles, kitchenware, and fabrics for firemen.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>4. Plastics as Materials of Choice</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A clean 2D vector graphic on a pure white background showing three everyday uses of plastics based on their properties. Left: a white plastic medicine bottle (non-reactive). Middle: a light, sturdy plastic bucket (light/strong). Right: a frying pan with a prominent black plastic handle (poor conductor of heat). Flat colors, no clutter.
+        </div>
+        <p>Today, if we think of storing food, water, milk, or pickles, plastic containers seem the most convenient. This is because of their special characteristic properties:</p>
+        <ul>
+            <li><strong>Plastics are Non-reactive:</strong> Unlike iron which rusts when exposed to moisture and air, plastics do not react with water and air. They are not corroded easily, which is why they are used to store various chemicals and foods.</li>
+            <li><strong>Plastics are Light, Strong, and Durable:</strong> Since plastic is lighter, cheaper, and stronger than traditional metals, it is widely used in cars, aircraft, spacecraft, and household articles like buckets and mugs.</li>
+            <li><strong>Plastics are Poor Conductors:</strong> They do not conduct heat or electricity. This makes them ideal for covering electrical wires, making handles of screw drivers, and handles of frying pans.</li>
+        </ul>
+
+        <h2>5. Plastics and the Environment</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector illustration on a pure white background comparing waste types. On the left, an apple core and a crumpled paper bag with a green checkmark (Biodegradable). On the right, a tangled mass of colorful polythene bags and plastic bottles with a red 'X' mark (Non-biodegradable). Eco-friendly flat design.
+        </div>
+        <p>A material which gets decomposed easily through natural processes (such as the action of bacteria) is called <strong>biodegradable</strong> (e.g., peels of vegetables, paper, wood). A material which is not easily decomposed by natural processes is termed <strong>non-biodegradable</strong>.</p>
+        
+        <p><strong>Environmental Hazards of Plastics:</strong></p>
+        <ul>
+            <li>Plastics take several years (even hundreds of years) to decompose, making them highly non-biodegradable and a major cause of environmental pollution.</li>
+            <li>The burning process of synthetic materials is quite slow and does not burn completely easily. Burning plastics releases highly poisonous fumes and toxic gases into the atmosphere, causing severe air pollution.</li>
+            <li>When garbage is thrown improperly, animals like cows eat the food waste along with polythene bags. The plastic material chokes their respiratory system or forms a lining in their stomach, leading to a painful death.</li>
+            <li>Carelessly thrown plastic bags often find their way into drains and sewer systems, clogging them entirely.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>The 5R Principle:</strong> As responsible citizens, we must adopt eco-friendly habits. Avoid using plastic bags; carry a cotton or jute bag for shopping. Separate biodegradable and non-biodegradable waste at home. Always remember the 5R Principle: <strong>Reduce, Reuse, Recycle, Recover, and Refuse</strong>.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ankit Raj - Maths</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --orange:#F97315; --orange-soft:rgba(249,115,21,.12); }
+    [data-theme="dark"] {
+      --bg:#0b0b0d; --card:#151519; --line:rgba(255,255,255,.1); --text:#f4f4f6; --muted:#9f9fb1;
+      --nav:rgba(11,11,13,.82); --input:rgba(255,255,255,.04); --orb1:rgba(249,115,21,.16); --orb2:rgba(249,115,21,.08);
+    }
+    [data-theme="light"] {
+      --bg:#f5f5f7; --card:#fff; --line:rgba(0,0,0,.1); --text:#111116; --muted:#626276;
+      --nav:rgba(245,245,247,.9); --input:#fff; --orb1:rgba(249,115,21,.12); --orb2:rgba(249,115,21,.07);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+    .orb{position:fixed;border-radius:50%;filter:blur(74px);pointer-events:none;z-index:0}
+    .orb.a{width:460px;height:460px;background:var(--orb1);top:-120px;right:-90px}
+    .orb.b{width:340px;height:340px;background:var(--orb2);left:-100px;bottom:-60px}
+    nav{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:0 24px;height:64px;background:var(--nav);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+    .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#F97315,#d96000);display:grid;place-items:center;color:#fff;font-weight:800;font-family:'Syne',sans-serif}
+    .brand span{font-family:'Syne',sans-serif;font-weight:800}
+    .brand em{font-style:normal;color:var(--orange)}
+    .toggle{width:52px;height:28px;border-radius:999px;border:1px solid var(--line);background:var(--input);position:relative;cursor:pointer}
+    .knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#F97315,#db6200);transition:.28s}
+    [data-theme="light"] .knob{transform:translateX(24px)}
+    .wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:28px 24px 80px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .tag{display:inline-flex;gap:8px;align-items:center;background:var(--orange-soft);border:1px solid rgba(249,115,21,.25);color:var(--orange);font-size:.74rem;font-weight:700;text-transform:uppercase;padding:6px 14px;border-radius:999px}
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--orange)}
+    .back{color:var(--text);text-decoration:none;font-size:.85rem;border:1px solid var(--line);padding:8px 12px;border-radius:10px;background:var(--input)}
+    h1{margin-top:18px;font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.2rem);line-height:1.06;letter-spacing:-.03em}
+    h1 b{color:var(--orange)}
+    .sub{margin-top:12px;color:var(--muted);max-width:700px;line-height:1.6}
+    .stats{display:flex;gap:24px;margin-top:24px;flex-wrap:wrap}
+    .stat .num{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800}
+    .stat .lab{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+    .controls{margin-top:30px}
+    .search{width:100%;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--input);color:var(--text);padding:0 14px;font-size:.95rem;outline:none}
+    .search:focus{border-color:rgba(249,115,21,.55);box-shadow:0 0 0 3px rgba(249,115,21,.12)}
+    .head{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+    .head h2{font-family:'Syne',sans-serif;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .count{font-size:.82rem;color:var(--muted);padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:var(--input)}
+    .chapter-list{margin-top:14px;display:grid;gap:12px}
+    details{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    summary{cursor:pointer;list-style:none;padding:14px 16px;font-family:'Syne',sans-serif;font-weight:700}
+    summary::-webkit-details-marker{display:none}
+    .dropdown{padding:12px 16px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+    .note-link{display:inline-block;margin-top:10px;text-decoration:none;color:var(--text);background:var(--orange-soft);border:1px solid rgba(249,115,21,.25);border-radius:10px;padding:8px 12px}
+    .note-link:hover{border-color:rgba(249,115,21,.45)}
+    .empty{display:none;text-align:center;color:var(--muted);margin-top:38px}
+    footer{margin-top:38px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:center;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.82rem}
+    @media (max-width:520px){ .wrap{padding:22px 16px 60px} nav{padding:0 16px} }
+  </style>
+</head>
+<body>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <nav>
+    <a class="brand" href="#">
+      <div class="logo">VC</div>
+      <span>Vardaan <em>Comet</em></span>
+    </a>
+    <div class="toggle" id="themeToggle"><div class="knob"></div></div>
+  </nav>
+  <main class="wrap">
+    <div class="top">
+      <div class="tag"><span class="dot"></span>Subject Portal</div>
+      <a class="back" href="../AnkitRaj.html">Back to Subjects</a>
+    </div>
+    <h1><b>Maths</b><br>Chapter Dashboard</h1>
+    <p class="sub">Click a chapter to open the dropdown, then open Chapter Notes.</p>
+    <div class="stats">
+      <div class="stat"><div class="num" id="statChapters">0+</div><div class="lab">Chapters</div></div>
+      <div class="stat"><div class="num" id="statNotes">0+</div><div class="lab">Notes Pages</div></div>
+    </div>
+    <div class="controls">
+      <input id="searchInput" class="search" type="search" placeholder="Search chapter name..." autocomplete="off" />
+    </div>
+    <div class="head">
+      <h2>Chapters</h2>
+      <span id="countLabel" class="count">0 chapters</span>
+    </div>
+    <section id="chapterList" class="chapter-list"></section>
+    <section class="empty" id="emptyState">
+      <h3>No chapters found</h3>
+      <p>Try typing a different chapter name.</p>
+    </section>
+    <footer>
+      <span>Ankit Raj</span>
+      <span>|</span>
+      <span>Maths</span>
+      <span>|</span>
+      <span>&copy; 2026</span>
+    </footer>
+  </main>
+  <script>
+    const chapters = [
+      {"name":"C1_Number Systems","notes":"./C1_Number%20Systems/ChapterNotes.html"},
+      {"name":"C2_Factors and Multiples","notes":"./C2_Factors%20and%20Multiples/ChapterNotes.html"},
+      {"name":"C3_Whole Numbers","notes":"./C3_Whole%20Numbers/ChapterNotes.html"},
+      {"name":"C4_Integers","notes":"./C4_Integers/ChapterNotes.html"},
+      {"name":"C5_Fractions","notes":"./C5_Fractions/ChapterNotes.html"},
+      {"name":"C6_Simplification","notes":"./C6_Simplification/ChapterNotes.html"},
+      {"name":"C7_Decimals","notes":"./C7_Decimals/ChapterNotes.html"},
+      {"name":"C8_Ratio","notes":"./C8_Ratio/ChapterNotes.html"},
+      {"name":"C9_The Unitary Method","notes":"./C9_The%20Unitary%20Method/ChapterNotes.html"},
+      {"name":"C10_Speed, Time and Distance","notes":"./C10_Speed%2C%20Time%20and%20Distance/ChapterNotes.html"},
+      {"name":"C11_Introduction to Sets","notes":"./C11_Introduction%20to%20Sets/ChapterNotes.html"},
+      {"name":"C12_Fundamental Concepts of Algebra","notes":"./C12_Fundamental%20Concepts%20of%20Algebra/ChapterNotes.html"},
+      {"name":"C13_Fundamental Operations","notes":"./C13_Fundamental%20Operations/ChapterNotes.html"},
+      {"name":"C14_Linear Equations","notes":"./C14_Linear%20Equations/ChapterNotes.html"},
+      {"name":"C15_Fundamental Concepts of Geometry","notes":"./C15_Fundamental%20Concepts%20of%20Geometry/ChapterNotes.html"},
+      {"name":"C16_Angles and Lines","notes":"./C16_Angles%20and%20Lines/ChapterNotes.html"},
+      {"name":"C17_Construction of Angles","notes":"./C17_Construction%20of%20Angles/ChapterNotes.html"},
+      {"name":"C18_Triangles","notes":"./C18_Triangles/ChapterNotes.html"},
+      {"name":"C19_Quadrilaterals","notes":"./C19_Quadrilaterals/ChapterNotes.html"},
+      {"name":"C20_Polygons","notes":"./C20_Polygons/ChapterNotes.html"},
+      {"name":"C21_Circles","notes":"./C21_Circles/ChapterNotes.html"},
+      {"name":"C22_Three-Dimensional Shapes","notes":"./C22_Three-Dimensional%20Shapes/ChapterNotes.html"},
+      {"name":"C23_Symmetry Reflection","notes":"./C23_Symmetry%20Reflection/ChapterNotes.html"},
+      {"name":"C24_Perimeter and Area","notes":"./C24_Perimeter%20and%20Area/ChapterNotes.html"},
+      {"name":"C25_Statistics","notes":"./C25_Statistics/ChapterNotes.html"}
+    ];
+    const html = document.documentElement;
+    function setTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('vcTheme', theme);
+    }
+    setTheme(localStorage.getItem('vcTheme') || 'dark');
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+    function renderStats() {
+      document.getElementById('statChapters').textContent = chapters.length + '+';
+      document.getElementById('statNotes').textContent = chapters.length + '+';
+    }
+    function renderChapters(list) {
+      const container = document.getElementById('chapterList');
+      const empty = document.getElementById('emptyState');
+      const count = document.getElementById('countLabel');
+      container.innerHTML = '';
+      if (!list.length) {
+        container.style.display = 'none';
+        empty.style.display = 'block';
+        count.textContent = '0 chapters';
+        return;
+      }
+      container.style.display = 'grid';
+      empty.style.display = 'none';
+      count.textContent = list.length + ' chapter' + (list.length === 1 ? '' : 's');
+      list.forEach(chapter => {
+        const details = document.createElement('details');
+        details.innerHTML =
+          '<summary>' + chapter.name + '</summary>' +
+          '<div class="dropdown">' +
+            'Click below to open notes for this chapter.<br>' +
+            '<a class="note-link" href="' + chapter.notes + '">Open Chapter Notes</a>' +
+          '</div>';
+        container.appendChild(details);
+      });
+    }
+    function filterChapters() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const filtered = chapters.filter(ch => ch.name.toLowerCase().includes(q));
+      renderChapters(filtered);
+    }
+    document.getElementById('searchInput').addEventListener('input', filterChapters);
+    renderStats();
+    renderChapters(chapters);
+  </script>
+</body>
+</html>

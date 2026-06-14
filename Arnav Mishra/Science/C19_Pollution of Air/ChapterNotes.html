@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Pollution of Air - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- IMAGE PLACEHOLDER --- */
+        .img-placeholder {
+            border: 2px dashed var(--meta-text);
+            background-color: var(--example-bg);
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            border-radius: 8px;
+            color: var(--example-text);
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        .img-placeholder strong {
+            color: var(--blue-border);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .img-placeholder em {
+            color: var(--pink-border);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Pollution of Air</h1>
+
+        <h2>1. Introduction to Environment and Pollution</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. Simple 2D vector graphic on a pure white background. Split screen showing a contrast. Left side: a clean, green environment with a bright sun, a tree, and a clear blue sky. Right side: a polluted environment with a grey factory chimney blowing thick dark smoke into a yellowish, hazy sky. Minimalist educational style.
+        </div>
+        <p>We are completely dependent on our environment for our survival. A clean environment is vital for the maintenance of life for all living organisms. However, an exponential increase in the human population has created an extra burden on our planet. To meet the demands of housing, food, and daily items, more forests are being cut down, more industries are set up, and the number of vehicles on the road is constantly increasing.</p>
+        <p>All these activities release harmful gases and wastes, leading to the contamination of our environment. The term <strong>pollution</strong> has been derived from the Latin word <em>pollotioneum</em>, which means 'to make dirty'.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Pollutant vs. Pollution:</strong> Any substance present in the environment in proportions greater than its natural abundance, and which causes harmful effects on living beings or non-living things, is called a <strong>pollutant</strong>. The phenomenon of the environment getting contaminated by these pollutants is known as <strong>pollution</strong>.</p>
+        </div>
+
+        <h2>2. Air Pollution and its Sources</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. Clean 2D flat vector illustration on a pure white background. Show three main sources of air pollution arranged horizontally: 1. A car exhaust pipe emitting grey smoke. 2. An industrial factory with chimneys billowing dark clouds. 3. A natural volcano erupting with ash. Simple flat colors, highly readable.
+        </div>
+        <p>Air is a mixture of gases. By volume, about 78% of this mixture is nitrogen and about 21% is oxygen. When air is contaminated by unwanted substances which have a harmful effect on both the living and the non-living, it is referred to as <strong>air pollution</strong>.</p>
+        
+        <h3>Sources of Air Pollution</h3>
+        <p>The substances which contaminate the air are called air pollutants. These pollutants come from various sources:</p>
+        <ul>
+            <li><strong>Natural Sources:</strong> Smoke and dust arising from natural forest fires, or ash coming from volcanic eruptions. Sand and dust storms also add particulate matter to the air.</li>
+            <li><strong>Man-made Sources:</strong> 
+                <ul>
+                    <li><strong>Automobile Exhaust:</strong> Vehicles running on petrol and diesel produce a huge amount of pollutants like carbon monoxide, carbon dioxide, nitrogen oxides, and smoke.</li>
+                    <li><strong>Factories and Industries:</strong> Petroleum refineries, thermal power plants, and chemical industries release harmful gases like sulphur dioxide and nitrogen dioxide.</li>
+                    <li><strong>Burning of Fuels:</strong> In many rural areas, burning firewood and cow dung cakes for cooking produces dense smoke.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Bhopal Gas Tragedy:</strong> One of the worst industrial disasters in history occurred in Bhopal (1984) when a highly toxic gas called <strong>Methyl Isocyanate (MIC)</strong> leaked from the Union Carbide pesticide factory. It contaminated the environment so heavily that thousands of people lost their lives overnight.</p>
+        </div>
+
+        <h2>3. Major Air Pollutants and Smog</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. Simple 2D vector graphic on a pure white background. Show a thick, grey-yellowish layer of smog hanging heavily over a stylized city skyline (tall buildings). In the foreground, a person is walking while wearing a protective medical face mask. Flat, modern design.
+        </div>
+        <p>Some of the most dangerous air pollutants affecting human health include:</p>
+        <ul>
+            <li><strong>Carbon Monoxide (CO):</strong> Produced from the incomplete burning of fuels. It is a highly poisonous gas because it vastly reduces the oxygen-carrying capacity of the blood.</li>
+            <li><strong>Chlorofluorocarbons (CFCs):</strong> These are synthetic chemicals used in refrigerators, air conditioners, and aerosol sprays. CFCs are extremely dangerous because they damage the <strong>ozone layer</strong> of the atmosphere, which protects us from the sun's harmful ultraviolet (UV) rays.</li>
+            <li><strong>Suspended Particulate Matter (SPM):</strong> Tiny particles of unburnt carbon and ash that remain suspended in the air. They reduce visibility and cause severe respiratory problems like asthma when inhaled.</li>
+        </ul>
+
+        <h3>Smog</h3>
+        <p>During winters in polluted cities, a thick fog-like layer often blankets the atmosphere. This is called <strong>smog</strong> (a combination of Smoke + Fog). Smog contains harmful oxides of nitrogen which mix with other air pollutants and fog. Breathing in smog causes breathing difficulties, asthma, cough, and wheezing in children.</p>
+
+        <h2>4. Acid Rain and The Taj Mahal</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector illustration on a pure white background. Show a dark, grey rain cloud dropping rain onto the iconic white dome of the Taj Mahal. The raindrops have small warning or skull icons on them to represent 'Acid Rain', and the marble of the Taj Mahal has a slight yellowish tint. Minimalist style.
+        </div>
+        <p>Industries release gases like <strong>sulphur dioxide</strong> ($SO_2$) and <strong>nitrogen dioxide</strong> ($NO_2$) into the air. These gases rise high up and react with the water vapour present in the atmosphere to form sulphuric acid and nitric acid. These acids drop down with rain, making the rain acidic. This is called <strong>acid rain</strong>.</p>
+        
+        <h3>The "Marble Cancer"</h3>
+        <p>Acid rain is highly destructive to crops, soil, and buildings. India's most famous monument, the Taj Mahal, is made of pristine white marble. The acid rain reacts with the marble (calcium carbonate), slowly corroding and destroying it. This phenomenon is known as <strong>"Marble Cancer"</strong>. Furthermore, suspended soot particles emitted by the Mathura oil refinery have contributed to the yellowing of the brilliant white marble.</p>
+
+        <h2>5. The Greenhouse Effect and Global Warming</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A clean 2D vector diagram on a pure white background. Show the Earth partially surrounded by a curved, semi-transparent shield representing the atmosphere. Yellow arrows from a Sun enter the shield and hit Earth, but when they bounce back as red wavy arrows (heat), they are blocked and trapped by the shield. Flat educational style.
+        </div>
+        <p>When the sun's rays fall on the earth, a part of the radiation is absorbed by the earth, warming it up, and a part is reflected back into space. However, certain gases in our atmosphere—mainly <strong>Carbon Dioxide ($CO_2$)</strong>, methane, and water vapour—act like the glass roof of a greenhouse. They allow sunlight to enter but trap the reflected heat, preventing it from escaping into space. This natural trapping of heat keeps the earth warm enough to sustain life and is called the <strong>Greenhouse Effect</strong>.</p>
+        
+        <h3>Global Warming</h3>
+        <p>Due to rampant deforestation and excessive burning of fossil fuels, the amount of $CO_2$ in the atmosphere is increasing dangerously. This excess $CO_2$ is trapping more and more heat, causing the average temperature of the earth's atmosphere to rise gradually. This alarming phenomenon is called <strong>Global Warming</strong>.</p>
+        <p>Global warming is melting the polar ice caps, which can cause a catastrophic rise in sea levels, flooding coastal areas worldwide.</p>
+
+        <h2>6. Measures to Control Air Pollution</h2>
+        <div class="img-placeholder">
+            <strong>📸 IMAGE PLACEHOLDER</strong>
+            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector graphic on a pure white background showing eco-friendly solutions. On the left, a bright green city bus with "CNG" clearly written on its side driving smoothly. On the right, a person's hands planting a small green sapling in the brown soil. Clear flat colors, no background clutter.
+        </div>
+        <p>Air pollution is a global crisis, but small steps taken by everyone can make a massive difference. We can control air pollution by:</p>
+        
+        <ul>
+            <li><strong>Switching to Cleaner Fuels:</strong> Replacing highly polluting fuels like diesel and petrol with cleaner alternatives like <strong>CNG</strong> (Compressed Natural Gas) and <strong>LPG</strong> in automobiles, or shifting to electric vehicles.</li>
+            <li><strong>Using Unleaded Petrol:</strong> Using petrol without lead additives reduces the emission of toxic lead compounds into the air.</li>
+            <li><strong>Planting Trees (Afforestation):</strong> Trees are nature's air purifiers. They absorb excess $CO_2$. Participating in events like <em>Van Mahotsav</em>, where lakhs of trees are planted every year in July, helps greatly.</li>
+            <li><strong>Using Public Transport:</strong> Utilizing buses, metro trains, or carpooling instead of personal cars reduces the number of vehicles on the road, thus cutting down emissions.</li>
+            <li><strong>Alternative Energy Sources:</strong> Shifting away from coal-based thermal power plants and embracing renewable, clean energy sources like solar energy, wind energy, and hydropower.</li>
+            <li><strong>Regular Pollution Checks:</strong> Ensuring our vehicles strictly pass regular emission tests (like PUC certificates).</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

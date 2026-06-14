@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Transport in Plants - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            clear: both;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 20px 0; position: relative; float: none; width: 100%; box-sizing: border-box; clear: both; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 20px 0; position: relative; float: none; width: 100%; box-sizing: border-box; clear: both; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 20px 0; position: relative; float: none; width: 100%; box-sizing: border-box; clear: both; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- AI IMAGE PLACEHOLDER (Custom for Image Requests) --- */
+        .ai-image-placeholder {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px dashed var(--accent-purple);
+            border-radius: 8px;
+            background-color: var(--example-bg);
+            text-align: center;
+        }
+
+        .ai-prompt-title {
+            color: var(--accent-purple);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .ai-prompt-text {
+            font-family: monospace;
+            color: var(--meta-text);
+            font-size: 0.95rem;
+        }
+
+        /* Image Inversion Logic for Final Images added by user */
+        .invertible-img {
+            max-width: 44%;
+            height: auto;
+            display: block;
+            margin: 10px 15px 15px 0;
+            float: left;
+        }
+
+        /* Right-floated image variant */
+        .invertible-img.float-right {
+            float: right;
+            margin: 10px 0 15px 15px;
+        }
+
+        /* Invert images and placeholders in dark mode */
+        html.dark-mode .invertible-img,
+        html.dark-mode .ai-image-placeholder {
+            filter: invert(0.9) hue-rotate(180deg);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer,
+            .ai-image-placeholder {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Biology • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Transport in Plants</h1>
+
+        <h2>1. Introduction to Transportation in Plants</h2>
+        <p>Plants, just like animals, require a systematic mechanism to transport essential life-sustaining substances from one part of their body to another. The primary substances that need transport are:</p>
+        <ul>
+            <li><strong>Water and Minerals:</strong> Absorbed from the soil through the root system and transported upwards to the aerial parts (stem and leaves).</li>
+            <li><strong>Food (Glucose):</strong> Synthesized in the leaves through the process of <strong>photosynthesis</strong> and distributed downwards and upwards to all living cells, including roots.</li>
+        </ul>
+        <p>The process by which substances absorbed or synthesized in one part of the plant are moved to other parts of the plant is known as <strong>Transportation</strong>.</p>
+
+        <h2>2. The Conducting Tissues (Vascular Bundle)</h2>
+        
+        <img class="invertible-img float-right" src="../Images/C1_whole plant showing the underground Root System and the above-ground Shoot System.jpg" alt="Plant Transport System - Root and Shoot" />
+        <p>Transportation in higher plants is carried out by a specialized conducting system consisting of two main tissues: <strong>Xylem</strong> and <strong>Phloem</strong>. Together, they constitute the <strong>Vascular Bundle</strong>.</p>
+
+        <h3>2.1 Xylem (The Water Carrier)</h3>
+        <p>The primary function of the xylem is to create a tubular passage to transport <strong>water and dissolved mineral salts</strong> from the roots to the aerial parts of the plant. It flows in a <strong>unidirectional</strong> manner (only upwards).</p>
+        <p>The xylem tissue consists of four types of cells:</p>
+        <ul>
+            <li><strong>Xylem Tracheids:</strong> Elongated, dead cells with tapering ends. Their thick walls have lateral pores. They conduct water upwards and provide mechanical strength.</li>
+            <li><strong>Xylem Vessels:</strong> Long, tube-like structures open at both ends and placed one above the other to form a continuous channel. They also provide mechanical support.</li>
+            <li><strong>Xylem Parenchyma:</strong> Small, thick-walled <strong>living</strong> cells. They store food and assist in conducting water. This is the <em>only living part</em> of the xylem.</li>
+            <li><strong>Xylem Sclerenchyma (Wood Fibres):</strong> Dead, thick-walled, long, and narrow cells with tapering ends. They exclusively provide mechanical support.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Ascent of Sap</strong> is the upward movement of water and dissolved minerals (called plant sap) from the roots to the topmost leaves through the xylem vessels.
+        </div>
+
+        <h3>2.2 Phloem (The Food Carrier)</h3>
+        <p>Phloem transports food (manufactured by the leaves in the form of sucrose/glucose) to all other parts of the plant, including the roots. This process is called the <strong>translocation of solutes</strong>. The transport here is <strong>bidirectional</strong> (moves both upwards and downwards).</p>
+        <p>The phloem tissue is made up of four types of cells:</p>
+        <ul>
+            <li><strong>Sieve Tubes:</strong> Cylindrical living cells that lack a nucleus. Arranged vertically end-to-end with perforated end walls called <strong>sieve plates</strong>. Food material passes through these pores.</li>
+            <li><strong>Companion Cells:</strong> Living, thin-walled elongated cells attached directly to the sides of sieve tubes. They assist the sieve tubes in food conduction.</li>
+            <li><strong>Phloem Parenchyma:</strong> Thin-walled living cells responsible for the storage of food.</li>
+            <li><strong>Phloem Fibres (Sclerenchyma):</strong> Dead, elongated fibres that provide mechanical strength to the plant.</li>
+        </ul>
+
+        <img class="invertible-img" src="../Images/C1_cross-section comparison of Xylem and Phloem tubes in a plant stem.jpg" alt="Xylem and Phloem Cross-Section Comparison" />
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Differences to Remember:</strong> Xylem conducts water (unidirectional) and is mostly made of dead cells. Phloem translocates food (bidirectional), requires energy expenditure, and is mostly made of living cells.
+        </div>
+
+        <h2>3. Absorption of Water by Roots</h2>
+        <p>The root system anchors the plant and absorbs water/minerals. The main root gives off lateral branches, which bear millions of fine, microscopic outgrowths called <strong>root hairs</strong>.</p>
+        
+        <h3>3.1 Special Features of Root Hairs</h3>
+        <p>Root hairs are perfectly adapted for maximal water absorption due to three specific features:</p>
+        <ul>
+            <li><strong>Large Surface Area:</strong> The massive number of root hairs creates an enormous surface area. Greater surface area equals greater absorption.</li>
+            <li><strong>Concentration Gradient:</strong> The root hairs contain <strong>cell sap</strong> which has a higher concentration of solutes (salts) than the surrounding soil water. This draws water inward.</li>
+            <li><strong>Semi-permeable Membrane:</strong> The outer cell wall is freely permeable (allows everything through), but the inner <strong>cell membrane is semi-permeable</strong>. It strictly allows small water molecules to pass while blocking larger molecules, facilitating osmosis.</li>
+        </ul>
+
+        <h2>4. Movement of Molecules in Plants</h2>
+        <p>Molecules move inside a plant system via three primary mechanisms:</p>
+
+        <h3>4.1 Diffusion</h3>
+        <p>The free movement of molecules of a gas, liquid, or solid from a region of their <strong>higher concentration to a region of their lower concentration</strong> until they are uniformly distributed. <em>Example: Soil water and minerals moving into the root hair, or the exchange of O₂ and CO₂ during photosynthesis.</em></p>
+
+        <h3>4.2 Osmosis</h3>
+        <p>The precise movement of <strong>water molecules</strong> from a region of higher water concentration (dilute solution) to a region of lower water concentration (concentrated solution) entirely across a <strong>semi-permeable membrane</strong>.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            When a plant absorbs water from the soil, it does so primarily through <strong>osmosis</strong> because the soil holds a higher concentration of water compared to the concentrated cell sap inside the root hair.
+        </div>
+
+        <h3>4.3 Active Transport</h3>
+        <p>While water enters via osmosis, minerals are often already more concentrated inside the root than in the soil. Moving these minerals from a lower concentration (soil) to a higher concentration (inside the root) forces the plant to move against the concentration gradient. This requires the expenditure of cellular <strong>energy (ATP)</strong> and is termed <strong>Active Transport</strong>.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Root Pressure</strong> is the hydrostatic pressure developed within the roots due to the continuous osmotic inflow of water. This pressure actively pushes the plant sap upward into the xylem vessels.
+        </div>
+
+        <h2>5. Transpiration</h2>
+        <p>Plants absorb immense amounts of water, but only a tiny fraction (about 1-2%) is utilized for photosynthesis and retaining cellular shape. The massive remaining bulk must be eliminated.</p>
+        <p><strong>Transpiration</strong> is defined as the loss of water in the form of water vapour from the aerial parts of a plant (primarily through the microscopic <strong>stomata</strong> present on the leaves).</p>
+
+        <img class="invertible-img" src="../Images/C1_diagram demonstrating transpiration.jpg" alt="Transpiration Demonstration" />
+
+        <h3>5.1 Factors Affecting the Rate of Transpiration</h3>
+        <ul>
+            <li><strong>Sunlight:</strong> Speeds up transpiration. Stomata open wider during the day to allow CO₂ in for photosynthesis, incidentally letting more water vapour escape.</li>
+            <li><strong>Temperature:</strong> Higher temperatures on hot summer days increase the rate of evaporation, thereby increasing transpiration.</li>
+            <li><strong>Wind:</strong> Faster wind speeds blow away the moisture-laden air around the leaf, allowing faster evaporation and thus faster transpiration.</li>
+            <li><strong>Humidity:</strong> <em>Decreases</em> transpiration. If the surrounding air is already fully saturated (humid) with moisture, it cannot accept more water vapour from the plant.</li>
+        </ul>
+
+        <h3>5.2 Importance of Transpiration</h3>
+        <ul>
+            <li><strong>Cooling Effect:</strong> Just as sweating cools animals, the evaporation of water from the leaves utilizes the plant's own latent heat, naturally cooling the plant during hot weather.</li>
+            <li><strong>Maintains Sap Concentration:</strong> By eliminating excess water, transpiration prevents the plant's internal sap from becoming too dilute, ensuring continued absorption of fresh minerals from the soil.</li>
+            <li><strong>Transpirational Pull:</strong> As water evaporates from the leaves, it creates a powerful suction force in the xylem vessels. This "pull" literally drags water upward from the roots to the top of tall trees (sometimes over 100 meters high!).</li>
+        </ul>
+
+        <h2>6. Importance of Minerals (Nutrients)</h2>
+        <p>Plants require specific nutrient elements from the soil to grow well and complete their life cycle. These are broadly categorized into two groups:</p>
+
+        <h3>6.1 Macro-nutrients (Required in large amounts)</h3>
+        <ul>
+            <li><strong>Nitrogen (N):</strong> Major constituent of all proteins. <em>Deficiency causes yellowing of leaves and wrinkling of cereal grains.</em></li>
+            <li><strong>Phosphorus (P):</strong> Constituent of the cell membrane and certain proteins. <em>Deficiency causes purple/red spots on leaves and delays seed germination.</em></li>
+            <li><strong>Potassium (K):</strong> Abundant in growing tissues and controls the opening and closing of stomata. <em>Deficiency results in poor growth and a reduced rate of transpiration.</em></li>
+        </ul>
+
+        <h3>6.2 Micro-nutrients (Required in trace amounts)</h3>
+        <ul>
+            <li><strong>Iron (Fe):</strong> Constituent of some proteins. <em>Deficiency leads to the severe yellowing of leaves.</em></li>
+            <li><strong>Manganese (Mn):</strong> Constituent of essential enzymes. <em>Deficiency causes yellowing of leaves accompanied by grey spots.</em></li>
+            <li><strong>Zinc (Zn):</strong> Activates enzymes and forms plant hormones. <em>Deficiency causes stunted plant growth, deshaped leaves, and yellowing.</em></li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Force and Pressure - Vardaan Learning Institute</title>
+
+    <!-- MathJax for professional LaTeX rendering -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+            clear: both;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            clear: both;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+            clear: both;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        /* --- NEWSPAPER LAYOUT UTILITIES --- */
+        .float-right {
+            float: right;
+            width: 280px;
+            margin: 10px 0 15px 25px;
+        }
+
+        .float-left {
+            float: left;
+            width: 280px;
+            margin: 10px 25px 15px 0;
+        }
+
+        .newspaper-img {
+            transition: filter 0.3s ease;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        html.dark-mode .newspaper-img {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        @media screen and (max-width: 600px) {
+            .float-right, .float-left {
+                float: none;
+                width: 100%;
+                margin: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Physics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>FORCE AND PRESSURE</h1>
+        
+        <h2>1. Concept of Force</h2>
+        <p>A body at rest remains at rest, and a body in motion continues to move in a straight line unless acted upon by an external cause. This external cause is known as Force.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Definition</span>
+            <p>A <strong>Force</strong> is a physical cause (a push or a pull) which tends to change the state of rest or the state of motion of a body. It can also change the size or shape of a non-rigid body.</p>
+        </div>
+
+        <h3>Effects Produced by a Force:</h3>
+        <ul>
+            <li>It can cause a stationary body to start moving (e.g., kicking a football at rest).</li>
+            <li>It can stop a moving body (e.g., a fielder catching a moving cricket ball).</li>
+            <li>It can change the speed of a moving body (e.g., pressing the brakes slows down a car).</li>
+            <li>It can change the direction of motion (e.g., a hockey player striking a moving ball in a different direction).</li>
+            <li>It can change the dimensions (size or shape) of a body (e.g., stretching a rubber band, squeezing a toothpaste tube).</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Units of Force</span>
+            <p><strong>S.I. Unit:</strong> Newton ($N$)<br>
+            <strong>Gravitational Unit:</strong> Kilogram-force ($kgf$)<br>
+            <strong>Relationship:</strong> $1\ kgf = 10\ N$ (approx).<br>
+            <em>One Newton</em> is roughly the force you have to exert to hold a mass of 100g on your palm.</p>
+        </div>
+
+        <h2>2. Turning Effect of a Force (Moment of Force)</h2>
+        <img src="Image/moment_of_force.png" alt="Moment of Force Illustration" class="newspaper-img float-right">
+        <p>If a force is applied to a stationary rigid body that is <em>free to move</em>, it produces straight-line (linear) motion. However, if the body is <strong>pivoted</strong> (fixed at a point or an axis), the applied force will cause the body to rotate about that pivot. This is called the turning effect.</p>
+
+        <h3>Daily Life Examples of Moment of Force:</h3>
+        <ul>
+            <li><strong>Opening a Door:</strong> The handle of a door is always provided near the free edge, at a maximum distance from the hinges (pivot). This ensures maximum turning effect with minimum force. Pushing near the hinges requires a much greater force.</li>
+            <li><strong>Spanner/Wrench:</strong> A spanner used to loosen a tight nut has a long handle. Applying force at the far end of the handle generates a large torque easily.</li>
+            <li><strong>Hand Flour Grinder:</strong> The handle is placed near the outer rim of the circular stone to maximize the perpendicular distance from the center pivot.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Sign Convention for Moment of Force:</strong><br> 
+            If the force tends to turn the body in an <strong>anticlockwise</strong> direction, the moment of force is taken as <strong>positive (+)</strong>. If the force turns the body in a <strong>clockwise</strong> direction, the moment is taken as <strong>negative (-)</strong>.</p>
+        </div>
+
+        <h2>3. Thrust and Pressure</h2>
+        <p>A force can be applied to a surface in any direction. However, the force acting normally (perpendicularly) on a surface has a special name: Thrust.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Definition</span>
+            <p><strong>Thrust</strong> is the total force acting perpendicular to a given surface. (Its unit is the same as force: Newton or kgf).<br><br>
+            <strong>Pressure</strong> is defined as the thrust acting per unit area of a surface.</p>
+            <p style="text-align: center; font-weight: bold; font-size: 1.2rem;">Pressure ($P$) = Thrust ($F$) / Area ($A$)</p>
+        </div>
+
+        <h3>Units of Pressure:</h3>
+        <ul>
+            <li><strong>S.I. Unit:</strong> Newton per square metre ($N\ m^{-2}$), which is officially called <strong>Pascal (Pa)</strong>.</li>
+            <li>$1\ Pascal\ (Pa)$ is the pressure exerted by a thrust of $1\ Newton$ on a surface area of $1\ m^2$.</li>
+            <li>Bigger unit: Kilo-pascal ($kPa$), where $1\ kPa = 1000\ Pa$.</li>
+        </ul>
+
+        <h3>Factors Affecting Pressure:</h3>
+        <img src="Image/pressure_area_nails.png" alt="Pressure vs Area Illustration" class="newspaper-img float-left">
+        <p>From the formula $P = F / A$, we can see that pressure depends on:</p>
+
+        <h2>4. Examples of Pressure in Daily Life</h2>
+        
+        <h3>A. Decreasing Area to Increase Pressure:</h3>
+        <ul>
+            <li><strong>Nails and Pins:</strong> A board pin or nail has a very sharp, pointed end. The small area of contact means that even a small pushing force creates immense pressure, driving the pin easily into the wood.</li>
+            <li><strong>Cutting Tools:</strong> Knives, axes, and scissors have very sharp edges (small area) to exert high pressure and cut objects easily.</li>
+            <li><strong>High Heels:</strong> A lady wearing pencil heels exerts much more pressure on the ground than a heavier man wearing flat, broad shoes, because the area of the pencil heel is extremely small.</li>
+        </ul>
+
+        <h3>B. Increasing Area to Decrease Pressure:</h3>
+        <ul>
+            <li><strong>Camel's Feet:</strong> A camel has broad feet, which spreads its weight over a large area of sand. The resulting low pressure prevents its feet from sinking deeply into the desert sand.</li>
+            <li><strong>Heavy Trucks:</strong> Heavy cargo trucks and trailers are provided with multiple pairs of broad double-tires. This increases the area of contact with the road, reducing the pressure and preventing damage to the road.</li>
+            <li><strong>School Bags:</strong> School bags are provided with wide, broad straps so that the weight of the bag acts over a larger area of the child's shoulders, reducing the painful pressure.</li>
+            <li><strong>Building Foundations:</strong> The foundations of tall buildings and dams are made extremely wide to distribute the massive weight over a large area, preventing the structure from sinking into the soil.</li>
+            <li><strong>Tanks and Bulldozers:</strong> Army tanks run on continuous broad steel tracks (caterpillar tracks) rather than wheels, distributing the huge weight and reducing pressure so they don't sink in mud or snow.</li>
+        </ul>
+
+        <h2>5. Liquid Pressure</h2>
+        <p>Solids exert pressure only downwards due to their weight. However, liquids and gases (fluids) flow and lack a rigid shape. Therefore, a liquid contained in a vessel exerts pressure not only at the bottom but also on the <strong>walls</strong> of the container in all directions.</p>
+
+        <h3>Factors Affecting Liquid Pressure:</h3>
+        <img src="Image/liquid_pressure_depth.png" alt="Liquid Pressure Illustration" class="newspaper-img float-right">
+        <p>The pressure at a point inside a liquid depends strictly on two factors:</p>
+
+        <h2>6. Atmospheric Pressure</h2>
+        <p>The earth is surrounded by an envelope of air extending up to about 200 kilometers. This blanket of air is called the <strong>Atmosphere</strong>.</p>
+        
+        <p>Since air has weight, it exerts a massive thrust on the surface of the earth. The thrust exerted by the column of air on a unit area of the earth's surface is called <strong>Atmospheric Pressure</strong>.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Standard Value:</strong> At sea level, atmospheric pressure is measured as <strong>76 cm of Mercury column</strong> ($760\ mm\ Hg$), which is equivalent to $1\ atm$ or $1.013 \times 10^5\ Pa$ (roughly $100,000\ N\ m^{-2}$).<br><br>
+            <em>Note: As we go higher above the earth's surface (high altitudes), the amount of air above us decreases, causing the atmospheric pressure to <strong>decrease</strong>.</em></p>
+        </div>
+
+        <h3>Applications and Effects of Atmospheric Pressure:</h3>
+        <ul>
+            <li><strong>Drinking with a Straw:</strong> When you suck through a straw, you remove the air inside it, reducing the pressure inside. The higher atmospheric pressure acting on the surface of the liquid in the glass pushes the drink up into the straw.</li>
+            <li><strong>Rubber Suckers:</strong> Used for hooks in bathrooms. When pressed against a smooth wall, air is forced out, creating a low pressure inside. The heavy atmospheric pressure from the outside strongly holds the sucker against the wall.</li>
+            <li><strong>Filling a Syringe or Fountain Pen:</strong> Pulling the plunger removes air, dropping the pressure inside the barrel. Atmospheric pressure on the liquid ink/medicine forces it up into the tube.</li>
+            <li><strong>Taking Oil from a Sealed Tin:</strong> If you make only one hole in an oil tin, the oil won't come out easily because air cannot enter to push it out. If two holes are made, air enters through one hole, and its atmospheric pressure pushes the oil out smoothly from the other.</li>
+            <li><strong>Nose Bleeding at High Altitudes:</strong> Human bodies are adapted to standard atmospheric pressure at ground level (our internal blood pressure balances the external air pressure). At high altitudes, external air pressure drops significantly, but internal blood pressure remains high. This imbalance can cause delicate blood vessels in the nose to burst, resulting in a nosebleed.</li>
+            <li><strong>Lizards on Walls:</strong> The feet of lizards act like suction pads. They stick to walls due to atmospheric pressure pushing them securely against the surface.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

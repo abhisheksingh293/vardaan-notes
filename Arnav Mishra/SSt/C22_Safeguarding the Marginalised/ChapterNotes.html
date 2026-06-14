@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Safeguarding the Marginalised - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- IMAGE PLACEHOLDER --- */
+        .img-placeholder {
+            border: 2px dashed var(--accent-purple);
+            background-color: var(--example-bg);
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            margin: 25px 0;
+            transition: filter 0.3s ease;
+        }
+        
+        .img-placeholder .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .img-placeholder .prompt-title {
+            font-weight: 700;
+            color: var(--accent-purple);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        
+        .img-placeholder .prompt-text {
+            font-family: monospace;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            background: var(--paper-bg);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--toggle-border);
+        }
+
+        /* Image Inversion Request handling for Dark Mode */
+        html.dark-mode .img-placeholder {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Civics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Safeguarding the Marginalised</h1>
+        
+        <h2>1. The Concept of Marginalisation</h2>
+        <p>Successive governments have aimed to eradicate poverty and social injustice, but unfortunately, even after over 70 years of independence, a significant majority of people in India remain socially, economically, educationally, and politically backward. These groups form the <strong>marginalised sections</strong> of society.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Marginalisation:</strong>
+            <p>It means the social process of discriminating and isolating an individual or a group to a lower or outer edge and treating them as 'inferiors'. The major marginalised groups in India are the <strong>Scheduled Castes (SCs), Scheduled Tribes (STs), Other Backward Classes (OBCs), and certain Minority groups</strong>.</p>
+        </div>
+
+        <p>To uplift these groups, it becomes the duty of the State to provide additional benefits—such as reservations and special safeguards—so they can stand on an equal footing with the rest of the country.</p>
+
+        <h2>2. Steps Taken for the Upliftment of the Marginalised</h2>
+        <p>Both the Central and State governments have framed extensive policies to improve the conditions of the marginalised classes. These include constitutional provisions as well as specific welfare programs.</p>
+
+        <h3>A. Constitutional Provisions and Reservations</h3>
+        <ul>
+            <li><strong>Fundamental Rights:</strong> Rights against exploitation, the abolition of untouchability, and the right to equality are powerful tools embedded in the Constitution.</li>
+            <li><strong>Political Reservations:</strong> Seats are reserved for SCs and STs in the Lok Sabha, Vidhan Sabhas, and local bodies like Panchayati Raj institutions, ensuring their voices are heard in policy-making.</li>
+            <li><strong>Job and Education Reservations:</strong> A certain percentage of seats are reserved in government educational institutions (like IITs and medical colleges) and government jobs for SCs, STs, and OBCs.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Who are OBCs?</strong>
+            <p>Even though SCs, STs, and OBCs are often clubbed together as 'Backward Classes', their nature of backwardness varies. OBCs are castes that are socially and educationally backward but do not fall under the SC/ST categories.</p>
+        </div>
+
+        <!-- AI Image Placeholder 1 -->
+        <div class="img-placeholder">
+            <span class="icon">🖼️</span>
+            <div class="prompt-title">AI Image Generation Prompt (Empowerment through Education)</div>
+            <div class="prompt-text">
+                "A highly detailed, realistic conceptual illustration showing empowerment through education in India. A confident young Indian student from a marginalized community, wearing a clean school uniform, receiving a scholarship certificate from a teacher. Pure white background, clean vector-style realism, no text, 8k resolution."
+            </div>
+        </div>
+
+        <h3>B. Economic and Welfare Schemes</h3>
+        <p>The government implements numerous schemes, often through the Five Year Plans, focused on direct economic upliftment:</p>
+        <ul>
+            <li>Providing free coaching to SC/ST students for competitive exams like medical, engineering, and civil services.</li>
+            <li>Constructing hostels for students belonging to these categories.</li>
+            <li>Distributing land to the landless and offering subsidized loans and agricultural tools.</li>
+            <li>Implementing schemes specifically targeting the eradication of extreme poverty and creating employment opportunities in rural areas.</li>
+        </ul>
+
+        <h2>3. Protective Laws and the Scourge of Manual Scavenging</h2>
+        <p>While reservations and economic help are vital, direct protection from inhuman practices and violence is equally crucial.</p>
+
+        <h3>The Manual Scavengers and Their Rehabilitation Act, 2013</h3>
+        <p>One of the most degrading jobs forced upon the lowest strata of the caste system was <strong>manual scavenging</strong> (the removal of human waste/excreta using brooms, tin plates, and baskets). This inhuman practice forced people to work in highly unhygienic conditions, leading to serious health issues.</p>
+        
+        <ul>
+            <li>In 1993, the government passed an Act prohibiting the employment of manual scavengers.</li>
+            <li>However, the practice persisted. Therefore, a stricter law, <strong>The Prohibition of Employment as Manual Scavengers and their Rehabilitation Act, 2013</strong>, was passed.</li>
+            <li>This act strictly bans manual scavenging and emphasizes the rehabilitation of the workers and their families by providing alternative livelihoods.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Swachh Bharat Mission:</strong>
+            <p>The total eradication of manual scavenging is closely linked to sanitation. The construction of proper toilets across rural and urban India under the Swachh Bharat Mission aims to eliminate the very need for manual scavenging.</p>
+        </div>
+
+        <!-- AI Image Placeholder 2 -->
+        <div class="img-placeholder">
+            <span class="icon">🖼️</span>
+            <div class="prompt-title">AI Image Generation Prompt (Eradicating Manual Scavenging)</div>
+            <div class="prompt-text">
+                "A powerful, realistic conceptual illustration representing the end of manual scavenging. A worker breaking an old dirty broom and basket, looking towards a bright future with a new modern mechanical cleaning machine and safety gear. Pure white background, highly detailed, 8k resolution, minimalist, no text."
+            </div>
+        </div>
+
+        <h2>4. Protecting Marginalised Communities from Exploitation</h2>
+        <p>Laws like the <strong>Scheduled Castes and the Scheduled Tribes (Prevention of Atrocities) Act, 1989</strong> were enacted specifically to protect Dalits and Adivasis from upper-caste violence, land grabbing, and humiliation.</p>
+
+        <ul>
+            <li><strong>Adivasi Land Rights:</strong> The law provides strict penalties for anyone who wrongfully occupies or cultivates land owned by a member of an SC or ST. It supports the rights of Adivasis to their traditional forest lands.</li>
+            <li><strong>Dignity of Women:</strong> The Act has specific provisions to severely punish anyone who assaults or uses force against an SC/ST woman with the intent to dishonor her.</li>
+        </ul>
+
+        <h2>5. The Role of Civil Society and the Judiciary</h2>
+        <p>The fight for safeguarding the marginalised is not just the government's responsibility. It requires active participation from all pillars of democracy.</p>
+        
+        <ul>
+            <li><strong>Activism:</strong> Organizations, NGOs, and activists belonging to these communities (like the Safai Karamchari Andolan) have filed Public Interest Litigations (PILs) to force the government to implement existing laws strictly.</li>
+            <li><strong>Judiciary:</strong> The Supreme Court has repeatedly directed the central and state governments to identify manual scavengers, liberate them, and ensure their proper rehabilitation with financial assistance.</li>
+        </ul>
+
+        <!-- AI Image Placeholder 3 -->
+        <div class="img-placeholder">
+            <span class="icon">🖼️</span>
+            <div class="prompt-title">AI Image Generation Prompt (Social Harmony)</div>
+            <div class="prompt-text">
+                "A vibrant, hyper-realistic conceptual illustration representing social justice and harmony in India. A diverse group of adult Indian citizens from various backgrounds holding hands, with a balanced scale of justice floating above them. Pure white background, clean vector style, 8k resolution, no text."
+            </div>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

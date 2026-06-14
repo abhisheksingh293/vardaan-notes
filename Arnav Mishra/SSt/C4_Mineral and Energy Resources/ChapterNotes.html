@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Mineral and Energy Resources - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #000000;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            clear: both; /* Ensure it starts below all floated images */
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 6px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            display: flow-root; /* Wraps around floated images */
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 12px;
+            font-weight: 600;
+            display: flow-root; /* Wraps around floated images */
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; display: flow-root; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; display: flow-root; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; display: flow-root; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .newspaper-figure {
+            margin: 15px 0;
+            max-width: 48%;
+            border: 1px solid var(--toggle-border);
+            padding: 8px;
+            background: var(--paper-bg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+            display: flow-root; /* Ensures it contains its float context */
+        }
+
+        .newspaper-figure.float-left {
+            float: left;
+            margin: 10px 20px 10px 0;
+            shape-outside: inset(0 0 0 0);
+        }
+
+        .newspaper-figure.float-right {
+            float: right;
+            margin: 10px 0 10px 20px;
+            shape-outside: inset(0 0 0 0);
+        }
+
+        .newspaper-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        .newspaper-caption {
+            font-size: 0.85rem;
+            color: var(--meta-text);
+            margin-top: 8px;
+            text-align: center;
+            font-style: italic;
+            line-height: 1.3;
+            border-top: 1px solid var(--toggle-border);
+            padding-top: 5px;
+        }
+
+        /* Invert Figure/Images in Dark Mode */
+        html.dark-mode .newspaper-figure {
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            border-color: var(--toggle-border);
+        }
+
+        html.dark-mode .newspaper-img {
+            filter: invert(1) brightness(0.9);
+        }
+
+        /* --- AI IMAGE PLACEHOLDER --- */
+        .ai-image-placeholder {
+            background-color: var(--example-bg);
+            border: 3px dashed var(--meta-text);
+            border-radius: 12px;
+            padding: 30px 20px;
+            margin: 30px 0;
+            text-align: center;
+            transition: filter 0.3s ease, background-color 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        .ai-image-placeholder svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--meta-text);
+            margin-bottom: 15px;
+        }
+
+        .ai-prompt-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .ai-prompt-text {
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: var(--example-text);
+            background: var(--paper-bg);
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--toggle-border);
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        /* Invert Image Placeholders in Dark Mode */
+        html.dark-mode .ai-image-placeholder {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Mineral and Energy Resources</h1>
+        
+        <h2>1. Introduction to Minerals</h2>
+        <p>Mineral and energy resources provide the foundation for economic and industrial development. Human progress through the Copper Age, Bronze Age, and Iron Age shows the importance of metals. The earth's crust is composed of different kinds of rocks, and all rocks contain crystals of naturally occurring chemicals called <strong>minerals</strong>.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Geologist:</strong> A scientist who studies the composition and structure of the earth's crust (Geology).</p>
+            <p><strong>Mineral:</strong> A naturally occurring chemical in rocks. A mineral may be a single element or a compound. Mineral crystals give rocks their hardness, lustre, and colors.</p>
+        </div>
+
+        <h2>2. Extraction and Classification of Minerals</h2>
+
+        <h3>A. Extraction of Minerals</h3>
+        <p>A rock having a large concentration of a particular metal mineral is called its <strong>ore</strong> (e.g., iron ore, copper ore). The extraction of useful minerals from rocks under the earth's surface is called <strong>mining</strong>. Methods include:</p>
+        <ul>
+            <li><strong>Open Cast Mining:</strong> Extraction from just below the ground surface by removing surface layers.</li>
+            <li><strong>Shaft Mining:</strong> Extraction by sinking a vertical shaft and cutting horizontal tunnels to reach deep minerals.</li>
+            <li><strong>Drilling:</strong> Boring narrow, deep wells to extract liquids/gases like petroleum and natural gas.</li>
+            <li><strong>Quarrying:</strong> Open excavation for building materials like rock, sand, or clay.</li>
+        </ul>
+
+        <h3>B. Types of Minerals</h3>
+        <figure class="newspaper-figure float-right">
+            <img src="../Images/C4_MineralExtraction.png" alt="Mineral Extraction" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 1: Common Mineral Extraction Methods</figcaption>
+        </figure>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>1. Metallic Minerals:</strong> Hard substances with a shine/lustre.</p>
+            <ul>
+                <li><em>Ferrous:</em> Contain iron (e.g., Iron ore, Manganese ore).</li>
+                <li><em>Non-ferrous:</em> Do not contain iron (e.g., Gold, Silver, Copper).</li>
+                <li><em>Alloys:</em> Mixtures of metals to improve strength (e.g., Brass = Copper + Zinc; Bronze = Copper + Tin).</li>
+            </ul>
+            <p><strong>2. Non-metallic Minerals:</strong> Do not contain metals and are lighter (e.g., Sandstone, Limestone, Mica, Diamond).</p>
+            <p><strong>3. Mineral Fuels:</strong> Obtained from sedimentary rocks, used for energy (e.g., Coal, Petroleum, Natural Gas).</p>
+        </div>
+
+        <h2>3. Distribution and Conservation of Minerals</h2>
+        
+        <p>Distribution of minerals is highly uneven as it depends on the type of rocks. Igneous and metamorphic rocks are rich in metallic minerals (iron, gold), while sedimentary rocks hold mineral fuels. Sometimes rivers erode and deposit minerals, forming <strong>placer deposits</strong>.</p>
+        
+        <p><strong>Key Examples:</strong></p>
+        <ul>
+            <li><strong>Iron:</strong> Backbone of modern civilization (Haematite & Magnetite). Found in Australia, Russia, India (Jharkhand, Odisha).</li>
+            <li><strong>Copper:</strong> Used in electric goods. Found in Chile, Australia, USA, India (MP, Rajasthan).</li>
+            <li><strong>Bauxite (Aluminium):</strong> Used in wiring and aeroplanes. Found in Guinea, Australia, India (Odisha, Andhra Pradesh).</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Conservation of Minerals:</strong> Minerals are exhaustible resources. Conservation means utilizing them in the best possible way without damaging the environment. Measures include:</p>
+            <ol>
+                <li>Using efficient mining/processing methods to minimize wastage.</li>
+                <li>Recycling mineral resources (using metallic scrap).</li>
+                <li>Substituting scarce minerals with abundant ones.</li>
+            </ol>
+        </div>
+
+        <h2>4. Energy Resources</h2>
+        <p>Energy is the capacity to do work. Electricity is generated through Thermal Power Plants, Nuclear Power Plants, and Hydroelectric Plants, and distributed via an <strong>electrical grid</strong>.</p>
+
+        <h3>A. Conventional Sources of Energy</h3>
+        <p>These are traditional sources, widely in use, and mostly non-renewable (except hydel power).</p>
+        <figure class="newspaper-figure float-left">
+            <img src="../Images/C4_HydroelectricPower.png" alt="Hydroelectric Power" class="newspaper-img">
+            <figcaption class="newspaper-caption">Figure 2: Hydroelectric Power Generation</figcaption>
+        </figure>
+
+        <ul>
+            <li><strong>Coal:</strong> Formed from buried plant cover. Types include Anthracite (best quality, 90% carbon), Bituminous, Lignite, Peat. Used in steel and thermal industries.</li>
+            <li><strong>Petroleum / Mineral Oil:</strong> Also called <strong>Black Gold</strong>. Extracted heavily from the Middle East. By-products include petrol, diesel, and kerosene.</li>
+            <li><strong>Natural Gas:</strong> Often found with mineral oil. Used as CNG for vehicles.</li>
+            <li><strong>Hydel Power (Hydroelectricity):</strong> Renewable. Falling water from dams turns turbines. Initial cost is high, but it becomes a cheap source of energy (e.g., Bhakra Nangal Dam).</li>
+        </ul>
+
+
+        <h3>B. Non-Conventional Sources of Energy</h3>
+        <p>These are newer, experimental, renewable, less expensive to maintain, and eco-friendly.</p>
+        <ul>
+            <li><strong>Solar Energy:</strong> Unlimited energy from the sun. Captured via Solar Photovoltaic (SPV) panels.</li>
+            <li><strong>Wind Energy:</strong> Captured by windmills in coastal areas (e.g., Netherlands).</li>
+            <li><strong>Geothermal Energy:</strong> Internal heat of the earth, prominent in volcanic areas (e.g., hot springs in Manikaran, HP).</li>
+            <li><strong>Nuclear Energy:</strong> Obtained from radioactive elements like uranium and thorium. An alternative to fossil fuels that reduces greenhouse gases.</li>
+            <li><strong>Tidal Energy:</strong> Generated from ocean tides by building dams at narrow sea openings.</li>
+            <li><strong>Biogas:</strong> Gaseous fuel from organic wastes (animal dung, kitchen waste).</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Comparison:</strong> Conventional sources are expensive to install/maintain, mostly non-renewable, and cause severe air pollution. Non-conventional sources are renewable, eco-friendly, and represent the future of global energy.</p>
+        </div>
+
+        <h2>5. Conservation of Energy Resources</h2>
+        <p>Rapid population growth has drastically increased energy consumption. The rampant exploitation of non-renewable fossil fuels can lead to an <strong>energy crisis</strong>. Conservation means restricting wasteful consumption.</p>
+        
+        <p><strong>Measures for Energy Conservation:</strong></p>
+        <ol>
+            <li>Use of LED bulbs and tubelights.</li>
+            <li>Use public transport instead of private vehicles.</li>
+            <li>Switch off lights and fans when not in use.</li>
+            <li>Use power-saving electronic devices and automatic power savers.</li>
+            <li>Shift towards non-conventional sources (solar panels, solar water heaters).</li>
+        </ol>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Friction - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- NEWSPAPER LAYOUT STYLES --- */
+        .img-float-left {
+            float: left;
+            max-width: 280px;
+            width: 100%;
+            margin: 10px 20px 15px 0;
+            border-radius: 8px;
+            background-color: #fff;
+            border: none !important;
+            box-shadow: none !important;
+            transition: filter 0.3s ease;
+        }
+
+        .img-float-right {
+            float: right;
+            max-width: 280px;
+            width: 100%;
+            margin: 10px 0 15px 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            border: none !important;
+            box-shadow: none !important;
+            transition: filter 0.3s ease;
+        }
+
+        /* Clear floats at section headers and boxes */
+        h2, h3, .blue-box, .green-box, .yellow-box {
+            clear: both;
+        }
+
+        html.dark-mode .img-float-left, 
+        html.dark-mode .img-float-right {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* Mobile optimization: make images full width on small screens */
+        @media screen and (max-width: 600px) {
+            .img-float-left, .img-float-right {
+                float: none;
+                display: block;
+                margin: 20px auto;
+                max-width: 100%;
+            }
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Friction</h1>
+
+        <h2>1. Introduction to Friction</h2>
+        <img src="../images/friction_rolling_ball_opposing_force.webp" alt="Force of Friction: Opposing Motion on a Rolling Ball" class="img-float-right">
+        <p>From our daily experience, we know that if we roll a ball on the ground, it gradually slows down and eventually stops. Similarly, if we stop pedalling a moving bicycle, it slows down and comes to a halt. In the previous chapter, we learned that an external force is needed to change an object's state of motion.</p>
+        <p>The invisible force responsible for slowing down and stopping these moving objects is called the <strong>force of friction</strong>. Friction is a contact force that <strong>opposes relative motion</strong> between two surfaces that are touching each other. It always acts in the direction opposite to the applied force or motion.</p>
+
+        <h2>2. Causes of Friction</h2>
+        <img src="../images/friction_microscopic_irregularities_zoom.webp" alt="Microscopic View of Surface Irregularities" class="img-float-left">
+        <p>Friction is caused by the <strong>irregularities</strong> on the two surfaces in contact. Even surfaces that appear perfectly smooth to the naked eye have minute bumps and microscopic depressions.</p>
+        <p>When two surfaces are placed together, these irregularities <strong>interlock</strong> with one another. To move one surface over the other, we have to apply a force to overcome this interlocking. This opposition to motion is what we experience as friction.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Factors Affecting Friction:</strong><br>
+            1. <strong>Nature of the surfaces:</strong> A rough surface has a larger number of irregularities, creating stronger interlocking and therefore <em>more friction</em>. A smooth surface creates <em>less friction</em>.<br>
+            2. <strong>How hard the surfaces press together:</strong> If the surfaces are pressed hard together (like when a heavy weight is placed on a box), the interlocking becomes tighter, and the friction increases significantly.</p>
+        </div>
+
+        <h2>3. Types of Friction</h2>
+        <img src="../images/friction_types_static_sliding_rolling.webp" alt="Types of Friction: Static, Sliding, and Rolling" class="img-float-right">
+        <p>Friction can be classified into different types depending on the state of motion of the objects:</p>
+        <ul>
+            <li><strong>Static Friction:</strong> This is the force of friction that comes into play when we try to move an object at rest. It is the strongest type of friction because the irregularities have had time to fully interlock.</li>
+            <li><strong>Sliding (Kinetic) Friction:</strong> This is the force that acts when one object is actually sliding over another. Sliding friction is <strong>slightly less than static friction</strong> because, once moving, the surfaces do not get enough time to interlock deeply.</li>
+            <li><strong>Rolling Friction:</strong> This acts when an object rolls over the surface of another. Rolling drastically reduces friction. It is much easier to roll a heavy suitcase fitted with rollers than to drag it.</li>
+        </ul>
+
+        <h2>4. Friction: A Necessary Evil</h2>
+        <img src="../images/friction_friend_vs_foe_shoe_tyre.webp" alt="Friction: A Friend (Shoe Sole) and a Foe (Worn Tyre)" class="img-float-left">
+        <p>Friction plays a dual role in our lives. In some situations, it is extremely necessary, while in others, it is a nuisance. Hence, it is often called a "necessary evil".</p>
+
+        <h3>Friction as a Friend (Advantages)</h3>
+        <ul>
+            <li><strong>Walking:</strong> The friction between the soles of our shoes and the ground prevents us from slipping.</li>
+            <li><strong>Writing:</strong> The friction between a pen/pencil and the paper allows the ink or graphite particles to stick, enabling us to write.</li>
+            <li><strong>Lighting a matchstick:</strong> Friction generates heat when we strike a matchstick against a rough surface, causing it to light up.</li>
+            <li><strong>Driving:</strong> The friction between the vehicle's tyres and the road provides the necessary grip for moving, turning, and braking safely.</li>
+        </ul>
+
+        <h3>Friction as a Foe (Disadvantages)</h3>
+        <ul>
+            <li><strong>Wear and Tear:</strong> Constant friction wears out the soles of our shoes, the tyres of vehicles, and the moving parts of machines (like gears and screws).</li>
+            <li><strong>Energy Loss (Heat):</strong> Friction always produces heat. In machines, a significant amount of input energy is wasted in overcoming friction and dissipating as heat, reducing efficiency.</li>
+            <li><strong>Slows down motion:</strong> It opposes movement, meaning extra force (and fuel) is needed to keep vehicles and machinery running.</li>
+        </ul>
+
+        <h2>5. Increasing and Reducing Friction</h2>
+        <img src="../images/friction_increase_reduce_oil_chalk.webp" alt="Increasing vs Reducing Friction: Chalk vs Oil" class="img-float-right">
+        <p>Depending on our needs, we intentionally increase or decrease friction in our daily lives.</p>
+
+        <h3>Ways to Increase Friction</h3>
+        <ul>
+            <li><strong>Treading of Tyres:</strong> Tyres of cars and trucks have deep grooves (treads) to increase their grip on the road, especially in wet conditions.</li>
+            <li><strong>Spiked Shoes:</strong> Athletes and football players wear shoes with spikes (cleats) to increase friction with the ground and prevent slipping while running.</li>
+            <li><strong>Rough Surfaces:</strong> Gymnasts and weightlifters apply coarse chalk powder to their hands to improve their grip.</li>
+        </ul>
+
+        <h3>Ways to Reduce Friction</h3>
+        <ul>
+            <li><strong>Using Lubricants:</strong> Applying oil, grease, or graphite between the moving parts of a machine creates a thin layer that prevents direct surface-to-surface interlocking.</li>
+            <li><strong>Using Ball Bearings:</strong> In machines like ceiling fans and bicycles, sliding friction is converted into rolling friction by using small steel balls (ball bearings) between moving parts.</li>
+            <li><strong>Polishing:</strong> Polishing rough surfaces makes them smoother, greatly reducing friction.</li>
+            <li><strong>Using Wheels:</strong> Attaching wheels or rollers to heavy luggage makes it incredibly easy to pull.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Can friction be reduced to zero?</strong> No matter how smooth the surfaces are made or how much lubricant is used, friction can never be entirely eliminated. Some irregularities will always remain.</p>
+        </div>
+
+        <h2>6. Fluid Friction (Drag)</h2>
+        <img src="../images/friction_streamlining_plane_bird.webp" alt="Streamlining: Comparison between Aeroplane and Bird" class="img-float-left">
+        <p>In science, gases and liquids are together called <strong>fluids</strong>. Just like solid surfaces, fluids also exert an opposing force of friction on objects moving through them. This frictional force exerted by fluids is called <strong>drag</strong>.</p>
+        
+        <p>The frictional force on an object in a fluid depends on:</p>
+        <ul>
+            <li>The <strong>speed</strong> of the object with respect to the fluid (higher speed = more drag).</li>
+            <li>The <strong>shape</strong> of the object.</li>
+            <li>The <strong>nature</strong> (thickness/density) of the fluid. Water exerts more friction than air.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Streamlining:</strong> To minimize energy loss due to fluid friction, objects moving through fluids are given special shapes called <strong>streamlined shapes</strong> (narrow at the front and back, and wider in the middle). Nature gave birds and fish streamlined shapes. Scientists copied nature and designed aeroplanes, rockets, submarines, and sports cars with streamlined shapes to reduce drag.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

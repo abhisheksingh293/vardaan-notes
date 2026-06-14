@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 1) */
+            --primary-color: #2e7d32; 
+            --bg-color: #e8f5e9;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Squares and Square Roots - Foundation</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8th</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="chapter-header">Section A: Properties of Perfect Squares</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">What is the square of $12$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">Which of the following numbers end with the digit $1$: $19^2$ or $14^2$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">What will be the unit digit of the square of $34$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">Can a number ending in $7$ be a perfect square?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">Is $25000$ a perfect square? Give a reason.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">The square of an even number is always ___________.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">The square of an odd number is always ___________.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">State true or false: A number ending with an odd number of zeros is never a perfect square.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">Which of these can be perfect squares: $1026, 1022, 1024, 1027$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">Does the number $32$ represent a perfect square?</div>
+        </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="chapter-header">Section B: Number Patterns & Triplets</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">11.</span>
+            <div class="q-content">How many non-square numbers lie between $4^2$ and $5^2$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">12.</span>
+            <div class="q-content">How many non-square numbers lie between $10^2$ and $11^2$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">13.</span>
+            <div class="q-content">Find the value without calculating the squares: $100^2 - 99^2$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">14.</span>
+            <div class="q-content">Find the value of $27^2 - 26^2$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">15.</span>
+            <div class="q-content">Without adding, find the sum: $1 + 3 + 5 + 7 + 9$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">16.</span>
+            <div class="q-content">Express $49$ as the sum of $7$ odd numbers.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">17.</span>
+            <div class="q-content">If a Pythagorean triplet has the smallest number $6$, what are the other two numbers?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">18.</span>
+            <div class="q-content">Identify the pattern: $11^2 = 121$, $111^2 = 12321$. What is $1111^2$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">19.</span>
+            <div class="q-content">Identify if $(3, 4, 5)$ is a Pythagorean triplet.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">20.</span>
+            <div class="q-content">Fill in the blank: The difference between the squares of two consecutive natural numbers is equal to their ___________.</div>
+        </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="chapter-header">Section C: Finding Square Roots</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">21.</span>
+            <div class="q-content">What is the symbol used to denote a square root?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">22.</span>
+            <div class="q-content">If $m^2 = n$, then $\sqrt{n} = $ ________.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">23.</span>
+            <div class="q-content">Find $\sqrt{25}$ using the repeated subtraction method. (Show the first step: $25 - 1 = 24$).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">24.</span>
+            <div class="q-content">Find the square root of $64$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">25.</span>
+            <div class="q-content">Find the square root of $144$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">26.</span>
+            <div class="q-content">Write the prime factorization of $225$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">27.</span>
+            <div class="q-content">Find $\sqrt{400}$ using prime factorization.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">28.</span>
+            <div class="q-content">Is $154$ a perfect square? Check using prime factorization.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">29.</span>
+            <div class="q-content">By what smallest number must $180$ be multiplied so that it becomes a perfect square?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">30.</span>
+            <div class="q-content">Find the square root of $441$ by prime factorization.</div>
+        </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="chapter-header">Section D: Long Division Method</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">31.</span>
+            <div class="q-content">In the long division method for finding the square root of $1521$, how do we place bars (mark off periods)?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">32.</span>
+            <div class="q-content">Find $\sqrt{529}$ using the long division method.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">33.</span>
+            <div class="q-content">Find $\sqrt{9801}$ using the long division method.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">34.</span>
+            <div class="q-content">Find $\sqrt{6561}$ using the long division method.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">35.</span>
+            <div class="q-content">What is the square root of $10000$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">36.</span>
+            <div class="q-content">Find the square root of $3600$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">37.</span>
+            <div class="q-content">Find the least number which must be subtracted from $130$ to obtain a perfect square.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">38.</span>
+            <div class="q-content">Find the least number which must be added to $80$ to obtain a perfect square.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">39.</span>
+            <div class="q-content">Find $\sqrt{390625}$ using the long division method.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">40.</span>
+            <div class="q-content">Find $\sqrt{108241}$ using the long division method.</div>
+        </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="chapter-header">Section E: Fractions & Decimals</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">41.</span>
+            <div class="q-content">Evaluate $\sqrt{\frac{49}{25}}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">42.</span>
+            <div class="q-content">Evaluate $\sqrt{\frac{81}{100}}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">43.</span>
+            <div class="q-content">Find the value of $\sqrt{49 \times 25}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">44.</span>
+            <div class="q-content">Evaluate $\sqrt{1.44}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">45.</span>
+            <div class="q-content">Evaluate $\sqrt{0.16}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">46.</span>
+            <div class="q-content">If $15^2 = 225$, what is $(0.15)^2$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">47.</span>
+            <div class="q-content">The square of $0.41$ will have how many decimal places?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">48.</span>
+            <div class="q-content">Evaluate $\sqrt{0.0009}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">49.</span>
+            <div class="q-content">Find $\sqrt{7.29}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">50.</span>
+            <div class="q-content">Estimate the square root of $90$ to one decimal place.</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

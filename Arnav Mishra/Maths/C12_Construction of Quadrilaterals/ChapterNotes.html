@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction of Quadrilaterals - Vardaan Learning Institute</title>
+    <style>
+        :root {
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+        }
+
+        html.dark-mode .watermark-overlay { mix-blend-mode: screen; }
+        html.dark-mode .watermark-image { filter: invert(1); opacity: 0.15; }
+
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+        }
+
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            display: none;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by { font-size: 1rem; margin-bottom: 5px; font-weight: bold; }
+        .powered-by { font-size: 0.9rem; color: var(--pink-border); font-style: italic; }
+
+        h1 { font-size: 2.2rem; color: var(--blue-border); text-align: center; margin-top: 5px; margin-bottom: 20px; text-transform: uppercase; border-bottom: 2px solid var(--blue-border); padding-bottom: 10px; }
+        h2 { font-size: 1.6rem; color: var(--pink-border); margin-top: 40px; border-left: 5px solid var(--pink-border); padding-left: 15px; font-weight: 700; }
+        h3 { font-size: 1.3rem; color: var(--accent-purple); margin-top: 25px; margin-bottom: 10px; text-decoration: underline; text-decoration-color: var(--accent-purple); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+        p, li { font-size: 1.05rem; line-height: 1.6; margin-bottom: 10px; }
+        ul { padding-left: 20px; }
+        strong { color: var(--pink-border); }
+
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; stroke: var(--icon-fill); }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- NEWSPAPER STYLE IMAGES (Standardized) --- */
+        .image-float-right { float: right; width: 40%; max-width: 350px; margin: 8px 0 20px 20px; border-radius: 0; box-shadow: none; }
+        .image-float-left { float: left; width: 40%; max-width: 350px; margin: 8px 20px 20px 0; border-radius: 0; box-shadow: none; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+        html.dark-mode .image-float-right, html.dark-mode .image-float-left { filter: invert(1); opacity: 1; }
+        
+        /* Specific Case: Ai-images in dark mode should be inverted for clarity on dark background */
+        html.dark-mode .ai-image { filter: invert(1); background-color: transparent; padding: 0; border-radius: 0; }
+
+        .diagram-container { width: 28%; max-width: 190px; min-width: 140px; float: right; margin: 8px 0 14px 18px; text-align: center; }
+        .ai-image { height: auto; display: block; }
+        svg.concept-diagram { max-width: 100%; height: auto; margin: 20px auto; display: block; }
+
+        @media (max-width: 768px) {
+            .image-float-right, .image-float-left { float: none !important; width: 90% !important; margin: 20px auto !important; }
+        }
+
+        @media print {
+            body { background-color: #ffffff !important; color: #000000 !important; }
+            .paper-sheet { width: 100% !important; padding: 0 !important; }
+            .theme-toggle, .branding-footer { display: none !important; }
+            .contact-info { display: flex !important; }
+            .watermark-overlay { display: flex !important; position: fixed !important; z-index: -1 !important; opacity: 0.1 !important; }
+            @page { size: A4; margin: 2cm; }
+        }
+    </style>
+    <script>
+        MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+
+    <div class="paper-sheet">
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Mathematics • Chapter Notes</div>
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <h1>Construction of Quadrilaterals</h1>
+
+        <h2>1. Introduction to Construction</h2>
+        <p>
+            <img src="../images/C12_GeometryTools.png" alt="Geometry Construction Tools" class="image-float-right ai-image">
+            In previous classes, you learned how to construct triangles using specific sets of measurements like SSS, AAS, SAS, or RHS. A triangle is a <strong>rigid</strong> figure; if you take three strips of cardboard and pin them at their ends, you cannot distort its shape.</p>
+        <div class="clearfix"></div>
+        <p>However, if you join four strips to form a quadrilateral, you can easily pull the vertices and change its shape into various different quadrilaterals (like changing a rectangle into a parallelogram) without altering the side lengths. To make a quadrilateral rigid and unique, you need to fix a diagonal as well.</p>
+
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>The "Five Parts" Rule:</strong></p>
+            <p>To construct a unique quadrilateral, we strictly need <strong>five specific parts (measurements)</strong>. A quadrilateral can be uniquely constructed if any of the following combinations are given:</p>
+            <ul>
+                <li>Four sides and one diagonal</li>
+                <li>Three sides and both diagonals</li>
+                <li>Four sides and one angle</li>
+                <li>Three sides and the two included angles</li>
+                <li>Two adjacent sides and three angles</li>
+            </ul>
+        </div>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Triangle Inequality Rule:</strong> Constructing a quadrilateral is essentially constructing two triangles joined together. Therefore, the lengths of the diagonals must always be less than the sum of the lengths of the adjacent sides forming the triangle. If this fails, the quadrilateral cannot be constructed!</p>
+        </div>
+
+        <h2>2. Case I: When Four Sides and One Diagonal are Given</h2>
+        <p>In this case, you will construct two triangles standing on a common base (the diagonal).</p>
+        
+        <h3>General Steps of Construction:</h3>
+        <ol>
+            <li>Draw the given diagonal as the base line segment.</li>
+            <li>Use the given side lengths to draw two intersecting arcs from the endpoints of the diagonal on one side to find the third vertex.</li>
+            <li>Join these points to complete the first triangle.</li>
+            <li>Use the remaining two side lengths to draw two intersecting arcs from the endpoints of the diagonal on the <em>opposite</em> side to find the fourth vertex.</li>
+            <li>Join the points to complete the quadrilateral.</li>
+        </ol>
+
+        <div class="clearfix"></div>
+        <img src="../images/c12_quad_construction_case1.png" alt="Quadrilateral Construction Case I" class="image-float-right ai-image">
+        <div class="clearfix"></div>
+        <p style="font-size: 0.9rem; color: var(--meta-text); font-style: italic; text-align: right; margin-right: 20px;">Note: Diagonals are perpendicular ($90^\circ$) for this specific construction example.</p>
+        <div class="clearfix"></div>
+
+        <h3>Practice Problems: Case I</h3>
+        <ul>
+            <li><strong>Q1.</strong> Construct a quadrilateral $ABCD$ in which $AB = 4.5 \text{ cm}$, $BC = 3.5 \text{ cm}$, $CD = 4 \text{ cm}$, $AD = 5 \text{ cm}$, and diagonal $AC = 5.5 \text{ cm}$.</li>
+            <li><strong>Q2.</strong> Construct a quadrilateral $PQRS$ where $PQ = 5 \text{ cm}$, $QR = 6 \text{ cm}$, $RS = 4 \text{ cm}$, $SP = 5.5 \text{ cm}$, and diagonal $PR = 7 \text{ cm}$.</li>
+        </ul>
+
+        <h2>3. Case II: When Three Sides and Both Diagonals are Given</h2>
+        <p>This case also relies heavily on constructing triangles first. You will find one vertex using a side and a diagonal, and then use the second diagonal and another side to locate the final vertex.</p>
+
+        <h3>General Steps of Construction:</h3>
+        <ol>
+            <li>Draw the given side that acts as a base connecting two known vertices.</li>
+            <li>Use one given side and one diagonal to draw intersecting arcs to locate the third vertex. Join to form a triangle.</li>
+            <li>From the third vertex, use the remaining given side to draw an arc. From the initial vertex, use the second diagonal to draw an intersecting arc. This locates the fourth vertex.</li>
+            <li>Join all the points to complete the figure.</li>
+        </ol>
+
+        <div class="clearfix"></div>
+        <div style="text-align: center; margin: 20px 0;">
+            <svg class="concept-diagram" viewBox="0 0 400 250" width="75%" xmlns="http://www.w3.org/2000/svg" style="background: var(--example-bg); border-radius: 12px; padding: 10px;">
+                <!-- Base CD -->
+                <line x1="120" y1="200" x2="280" y2="200" stroke="var(--green-border)" stroke-width="3"/>
+                <text x="105" y="205" fill="var(--text-main)" font-size="16" font-weight="bold">C</text>
+                <text x="290" y="205" fill="var(--text-main)" font-size="16" font-weight="bold">D</text>
+
+                <!-- Finding Vertex A (using AD and diagonal AC) -->
+                <path d="M 120,200 L 80,80" stroke="var(--blue-border)" stroke-width="1.5" stroke-dasharray="4,2"/> <!-- Diagonal AC -->
+                <path d="M 280,200 L 80,80" stroke="var(--text-main)" stroke-width="2"/> <!-- Side AD -->
+                <text x="70" y="70" fill="var(--text-main)" font-size="16" font-weight="bold">A</text>
+                
+                <!-- Arcs for A -->
+                <path d="M 60,90 Q 80,70 100,90" fill="none" stroke="var(--blue-border)" stroke-width="1" stroke-dasharray="2,2"/>
+
+                <!-- Finding Vertex B (using BC and diagonal BD) -->
+                <path d="M 280,200 L 320,60" stroke="var(--blue-border)" stroke-width="1.5" stroke-dasharray="4,2"/> <!-- Diagonal BD -->
+                <path d="M 120,200 L 320,60" stroke="var(--text-main)" stroke-width="2"/> <!-- Side BC -->
+                <text x="330" y="60" fill="var(--text-main)" font-size="16" font-weight="bold">B</text>
+
+                <!-- Arcs for B -->
+                <path d="M 300,50 Q 320,40 340,70" fill="none" stroke="var(--pink-border)" stroke-width="1" stroke-dasharray="2,2"/>
+
+                <!-- Completed Quadrilateral -->
+                <line x1="80" y1="80" x2="320" y2="60" stroke="var(--text-main)" stroke-width="2"/> <!-- Side AB -->
+                <polygon points="120,200 280,200 320,60 80,80" fill="var(--blue-bg)" opacity="0.05"/>
+                
+                <!-- Indicators -->
+                <text x="180" y="220" fill="var(--meta-text)" font-size="12">Base (CD)</text>
+                <text x="180" y="140" fill="var(--blue-border)" font-size="12" transform="rotate(-30 180,140)">Diagonal AC</text>
+                <text x="220" y="130" fill="var(--blue-border)" font-size="12" transform="rotate(30 220,130)">Diagonal BD</text>
+            </svg>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Special Property Shortcut: Parallelograms</strong></p>
+            <p>Sometimes you are asked to construct a parallelogram given only two adjacent sides and one diagonal (only 3 parts!). How is this possible? Because in a parallelogram, <strong>opposite sides are equal</strong>. So, knowing two adjacent sides gives you all four sides automatically, converting the problem into Case I (Four sides and one diagonal).</p>
+        </div>
+
+        <h3>Practice Problems: Case II</h3>
+        <ul>
+            <li><strong>Q1.</strong> Construct a quadrilateral $ABCD$ where $BC = 4.5 \text{ cm}$, $AD = 5.5 \text{ cm}$, $CD = 5 \text{ cm}$, diagonal $AC = 5.5 \text{ cm}$, and diagonal $BD = 7 \text{ cm}$.</li>
+            <li><strong>Q2.</strong> Construct a parallelogram $ABCD$ given that $AB = 5 \text{ cm}$, $BC = 4 \text{ cm}$, and diagonal $AC = 6.5 \text{ cm}$.</li>
+        </ul>
+
+        <h2>4. Case III: When Four Sides and One Angle are Given</h2>
+        <p>In this scenario, you use the angle to fix the position of one of the sides before using compass arcs for the rest.</p>
+
+        <h3>General Steps of Construction:</h3>
+        <ol>
+            <li>Draw a base line segment equal to one of the given sides.</li>
+            <li>At one end of the base, construct the given angle using a compass (or protractor).</li>
+            <li>Cut off the length of the second side along the angle's arm to locate the third vertex.</li>
+            <li>From this new vertex and the other end of the base, draw two intersecting arcs using the remaining two side lengths to find the fourth vertex.</li>
+            <li>Join the vertices to complete the quadrilateral.</li>
+        </ol>
+
+        <svg class="concept-diagram" viewBox="0 0 350 250" width="60%" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,200 250,200 300,50 100,80" fill="var(--blue-bg)" opacity="0.2" stroke="var(--text-main)" stroke-width="2"/>
+            <text x="40" y="220" fill="var(--text-main)" font-size="16" font-weight="bold">A</text>
+            <text x="250" y="220" fill="var(--text-main)" font-size="16" font-weight="bold">B</text>
+            <path d="M 80 200 A 30 30 0 0 0 65 165" fill="none" stroke="var(--blue-border)" stroke-width="2"/>
+            <text x="85" y="180" fill="var(--blue-border)" font-size="14">Angle given</text>
+            <text x="80" y="70" fill="var(--text-main)" font-size="16" font-weight="bold">D</text>
+            <text x="310" y="45" fill="var(--text-main)" font-size="16" font-weight="bold">C</text>
+            <path d="M 270 20 Q 300 40 330 80" fill="none" stroke="var(--pink-border)" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <path d="M 280 90 Q 300 40 320 10" fill="none" stroke="var(--pink-border)" stroke-width="1.5" stroke-dasharray="4,4"/>
+        </svg>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Special Property Shortcut: Rhombus</strong></p>
+            <p>If you need to construct a Rhombus given just one side and one angle (only 2 parts!), remember that <strong>all four sides of a rhombus are equal</strong>. So, knowing one side gives you all four, turning this into Case III.</p>
+        </div>
+
+        <h3>Practice Problems: Case III</h3>
+        <ul>
+            <li><strong>Q1.</strong> Construct a quadrilateral $ABCD$ in which $AB = 4 \text{ cm}$, $BC = 5 \text{ cm}$, $CD = 6.5 \text{ cm}$, $DA = 5.5 \text{ cm}$, and $\angle C = 105^\circ$.</li>
+            <li><strong>Q2.</strong> Construct a rhombus $BEST$ where side $BE = 4.5 \text{ cm}$ and $\angle E = 60^\circ$.</li>
+        </ul>
+
+        <h2>5. Case IV: When Three Sides and Two Included Angles are Given</h2>
+        <p>Here, the angles act as the defining hinges for the three known sides.</p>
+
+        <h3>General Steps of Construction:</h3>
+        <ol>
+            <li>Draw a base line segment for the middle side (the one situated between the two given angles).</li>
+            <li>Construct the given angles at both endpoints of this base line segment.</li>
+            <li>On the arms of these angles, cut off lengths equal to the respective given adjacent sides to locate the third and fourth vertices.</li>
+            <li>Join the third and fourth vertices to enclose the quadrilateral.</li>
+        </ol>
+
+        <h3>Practice Problems: Case IV</h3>
+        <ul>
+            <li><strong>Q1.</strong> Construct a quadrilateral $PQRS$ where $PQ = 4 \text{ cm}$, $QR = 5 \text{ cm}$, $RS = 4.5 \text{ cm}$, $\angle Q = 60^\circ$, and $\angle R = 90^\circ$.</li>
+            <li><strong>Q2.</strong> Construct a quadrilateral $ABCD$ given $AB = 4 \text{ cm}$, $BC = 3 \text{ cm}$, $CD = 5 \text{ cm}$, $\angle B = 105^\circ$, and $\angle C = 80^\circ$.</li>
+        </ul>
+
+        <h2>6. Case V: When Two Adjacent Sides and Three Angles are Given</h2>
+        <p>In this final case, the three angles dictate the shape, while the two sides set the scale.</p>
+
+        <h3>General Steps of Construction:</h3>
+        <ol>
+            <li>Draw the base line segment using one of the given sides.</li>
+            <li>Construct the two given angles at the endpoints of this base side.</li>
+            <li>Cut off the second given side length along one of the angle arms to find the third vertex.</li>
+            <li>At this third vertex, construct the third given angle.</li>
+            <li>Extend the arms of the angles until they intersect to form the fourth vertex, completing the figure.</li>
+        </ol>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Applying Properties to Find Missing Parts:</strong></p>
+            <p>Sometimes you might be given two adjacent sides and only ONE angle to construct a parallelogram. You can use the property that <strong>adjacent angles in a parallelogram are supplementary (sum to $180^\circ$)</strong> and <strong>opposite angles are equal</strong> to calculate the missing two angles required to use the Case V method!</p>
+        </div>
+
+        <h3>Practice Problems: Case V</h3>
+        <ul>
+            <li><strong>Q1.</strong> Construct a quadrilateral $ABCD$ in which $AB = 3.5 \text{ cm}$, $BC = 6.5 \text{ cm}$, $\angle A = 75^\circ$, $\angle B = 105^\circ$, and $\angle C = 120^\circ$.</li>
+            <li><strong>Q2.</strong> Construct a parallelogram $ABCD$ given that $AB = 5 \text{ cm}$, $BC = 4 \text{ cm}$, and $\angle B = 60^\circ$. <em>(Hint: Find $\angle A$ and $\angle C$ first).</em></li>
+        </ul>
+
+        <h2>7. Chapter Summary (You Must Know)</h2>
+        <ul>
+            <li>We need exactly <strong>five</strong> independent parts to construct a unique quadrilateral.</li>
+            <li>A quadrilateral can be constructed if measurements of all four sides and one diagonal are given, three sides and both diagonals are given, etc.</li>
+            <li>Lengths of diagonals must be less than the sum of lengths of adjacent sides.</li>
+        </ul>
+
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️ </p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+</body>
+</html>

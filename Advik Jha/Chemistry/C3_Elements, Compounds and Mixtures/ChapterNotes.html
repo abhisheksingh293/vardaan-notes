@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Elements, Compounds and Mixtures - Chemistry - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+            clear: both;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+            clear: both;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+            clear: both;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; overflow: auto; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- IMAGE PLACEHOLDER & INVERSION UTILITY --- */
+        .ai-image-placeholder {
+            border: 2px dashed var(--blue-border);
+            padding: 20px;
+            margin: 25px 0;
+            background-color: var(--example-bg);
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .ai-image-placeholder p {
+            margin: 5px 0;
+        }
+
+        /* Add this class to your <img> tags when you replace the placeholder */
+        .invert-on-dark {
+            transition: filter 0.3s ease;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        html.dark-mode .invert-on-dark {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* --- NEWSPAPER LAYOUT UTILITIES --- */
+        .float-right {
+            float: right;
+            width: 280px;
+            margin: 10px 0 15px 25px;
+        }
+
+        .float-left {
+            float: left;
+            width: 280px;
+            margin: 10px 25px 15px 0;
+        }
+
+        @media screen and (max-width: 600px) {
+            .float-right, .float-left {
+                float: none;
+                width: 100%;
+                margin: 15px 0;
+            }
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Chemistry • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>3. ELEMENTS, COMPOUNDS AND MIXTURES</h1>
+
+        <h2>1. Introduction & Classification of Matter</h2>
+        <p>Millions of substances exist in the Earth's crust in a free state as well as in combined states. To study them systematically, matter can be chemically classified into two broad categories: <strong>Pure Substances</strong> and <strong>Impure Substances (Mixtures)</strong>.</p>
+        
+        <ul>
+            <li><strong>Pure Substances:</strong> Have a definite chemical composition and definite physical/chemical properties. They are homogeneous (uniform throughout). Examples: Elements and Compounds.</li>
+            <li><strong>Impure Substances (Mixtures):</strong> Made up of two or more pure substances mixed in any proportion. They do not have a definite set of properties and can be homogeneous or heterogeneous.</li>
+        </ul>
+
+        <h2>2. Elements</h2>
+        <div class="blue-box">
+            <span class="box-label">Definition</span>
+            <p>An <strong>Element</strong> is a pure substance which cannot be converted into anything simpler than itself by any physical or chemical process. It is made up of only one kind of atoms.</p>
+        </div>
+
+        <h3>Characteristics of Elements</h3>
+        <ul>
+            <li>They are the simplest type of pure and homogeneous substances.</li>
+            <li>They cannot be broken down into simpler substances.</li>
+            <li>They have fixed melting and boiling points.</li>
+            <li>Each element is represented by a <strong>symbol</strong> (a shorthand notation of one or two letters derived from English or Latin names).</li>
+        </ul>
+
+        <h3>Classification of Elements</h3>
+        <p>Currently, 118 elements are known (92 are naturally occurring). They are classified into four main categories:</p>
+
+        <div class="green-box">
+            <span class="box-label">Classification</span>
+            <ul>
+                <li><strong>Metals:</strong> Usually hard solids, lustrous, malleable, ductile, and good conductors of heat and electricity. <em>Examples: Sodium (Na), Magnesium (Mg), Iron (Fe), Gold (Au).</em> (Exceptions: Mercury is a liquid; Sodium/Potassium are soft; Zinc is brittle).</li>
+                <li><strong>Non-Metals:</strong> Can be soft solids, liquids, or gases. They are neither malleable nor ductile and are poor conductors. <em>Examples: Hydrogen (H), Oxygen (O), Sulphur (S), Bromine (Br - liquid).</em> (Exceptions: Iodine/Graphite are lustrous; Graphite conducts electricity).</li>
+                <li><strong>Metalloids:</strong> Show properties of both metals and non-metals. They are hard solids. <em>Examples: Boron (B), Silicon (Si), Arsenic (As), Antimony (Sb).</em></li>
+                <li><strong>Inert (Noble) Gases:</strong> Monoatomic gaseous elements that do not react chemically with other elements. <em>Examples: Helium (He), Neon (Ne), Argon (Ar).</em></li>
+            </ul>
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Atomicity:</strong> The number of atoms present in one molecule of an element is called its atomicity. </p>
+            <ul>
+                <li>All metals, metalloids, and inert gases are <strong>monoatomic</strong> (1 atom, e.g., He, Fe).</li>
+                <li>Non-metals can be <strong>diatomic</strong> (e.g., O₂, N₂, H₂), <strong>triatomic</strong> (e.g., Ozone O₃), or <strong>polyatomic</strong> (e.g., Phosphorus P₄, Sulphur S₈).</li>
+            </ul>
+        </div>
+
+        <h2>3. Compounds</h2>
+        <img src="Images/elements_vs_compounds.png" alt="Elements vs Compounds" class="invert-on-dark float-right">
+        <div class="blue-box">
+            <span class="box-label">Definition</span>
+            <p>A <strong>Compound</strong> is a pure substance composed of two or more elements, combined chemically in a <strong>definite proportion by mass</strong>. The smallest unit of a compound is a molecule.</p>
+        </div>
+
+        <h3>Characteristics of Compounds</h3>
+        <ul>
+            <li>The properties of a compound are <strong>entirely different</strong> from those of its constituent elements. (e.g., Sodium is a highly reactive metal, Chlorine is a poisonous gas, but Sodium Chloride is edible table salt).</li>
+            <li>They are pure and homogeneous, with definite melting and boiling points.</li>
+            <li>They are represented by a definite chemical formula.</li>
+            <li>The constituents can only be separated by <strong>chemical methods</strong>, not physical ones.</li>
+            <li>During the formation of a compound, energy is either absorbed or liberated (e.g., burning Carbon and Oxygen liberates heat to form CO₂).</li>
+        </ul>
+
+        <p><strong>Example - Iron (II) Sulphide (FeS):</strong> Formed when iron and sulphur are heated and combine chemically. Iron is magnetic and sulphur dissolves in carbon disulphide. However, the resulting FeS is neither magnetic nor soluble in carbon disulphide.</p>
+
+        <h2>4. Mixtures</h2>
+        <div class="blue-box">
+            <span class="box-label">Definition</span>
+            <p><strong>Mixtures</strong> are formed by mixing two or more pure substances (elements or compounds) in <strong>any proportion</strong>, such that they do not undergo any chemical change and retain their individual properties. They are impure substances.</p>
+        </div>
+
+        <h3>Characteristics of Mixtures</h3>
+        <ul>
+            <li>No chemical combination takes place; components are loosely held together.</li>
+            <li>Components vary in their proportions and retain their individual properties.</li>
+            <li>They do not have fixed melting or boiling points (it depends on the proportion of the components).</li>
+            <li>Components can be separated by <strong>simple physical methods</strong>.</li>
+            <li>No energy change takes place during their formation, and they cannot be represented by a chemical formula.</li>
+        </ul>
+
+        <h3>Types of Mixtures</h3>
+        <ul>
+            <li><strong>Homogeneous Mixtures:</strong> Components are uniformly distributed throughout its volume and cannot be seen separately. <em>Examples: Salt solution, tap water, air, alloys like brass.</em></li>
+            <li><strong>Heterogeneous Mixtures:</strong> Components are not uniformly distributed and can be seen separately. It has different compositions in different parts. <em>Examples: Soil, sand and water, oil and water.</em></li>
+        </ul>
+
+        <h2>5. Key Differences: Compounds vs. Mixtures</h2>
+        
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left;">
+            <thead>
+                <tr style="background-color: var(--blue-bg); color: var(--blue-border); border-bottom: 2px solid var(--blue-border);">
+                    <th style="padding: 12px; border: 1px solid var(--toggle-border);">Parameter</th>
+                    <th style="padding: 12px; border: 1px solid var(--toggle-border);">Compound</th>
+                    <th style="padding: 12px; border: 1px solid var(--toggle-border);">Mixture</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);"><strong>Nature</strong></td>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);">Pure substance, always homogeneous.</td>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);">Impure substance, can be homogeneous or heterogeneous.</td>
+                </tr>
+                <tr style="background-color: var(--example-bg);">
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);"><strong>Composition</strong></td>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);">Fixed composition; elements combine in a definite ratio by mass.</td>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);">Variable composition; substances are mixed in any ratio.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);"><strong>Properties</strong></td>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);">Has a completely new and specific set of properties.</td>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);">Does not have specific properties; retains the properties of its components.</td>
+                </tr>
+                <tr style="background-color: var(--example-bg);">
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);"><strong>Energy Change</strong></td>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);">Involves a change in energy (heat/light absorbed or released).</td>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);">Does not involve a change in energy.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);"><strong>Separation</strong></td>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);">Separated only by complex chemical processes.</td>
+                    <td style="padding: 12px; border: 1px solid var(--toggle-border);">Separated easily by simple physical methods.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>6. Separation of Mixtures</h2>
+        <p>We need to separate mixtures to remove harmful/unwanted components (like stones in rice) or to obtain useful components (like extracting petrol and diesel from crude petroleum).</p>
+
+        <h3>A. Separation of Solid-Solid Mixtures</h3>
+        <ul>
+            <li><strong>Magnetic Separation:</strong> Used when one component is magnetic (e.g., Iron). <em>Example: Separating iron filings from sulphur or sand using a magnet.</em></li>
+            <li><strong>Sublimation:</strong> Used when one component sublimes (changes directly to gas on heating) while the other does not. <em>Example: Separating iodine/camphor/ammonium chloride from sand or salt.</em></li>
+            <li><strong>Solvent Extraction:</strong> Used when one component is soluble in a specific solvent and the other is not. <em>Example: Separating salt and carbon (salt dissolves in water, carbon doesn't).</em></li>
+        </ul>
+
+        <h3>B. Separation of Solid-Liquid Mixtures</h3>
+        <p><strong>For Heterogeneous (Insoluble Solid in Liquid):</strong></p>
+        <ul>
+            <li><strong>Sedimentation & Decantation:</strong> Allowing heavy insoluble particles (sediment) to settle down, then gently pouring out the clear liquid (supernatant) without disturbing the solid. <em>Example: Sand and water.</em> Note: Alum can be added to speed this up (process called Loading).</li>
+            <li><strong>Filtration:</strong> Passing the mixture through a filter (like filter paper). The liquid that passes through is the <em>filtrate</em>, and the solid left behind is the <em>residue</em>. <em>Example: Chalk and water.</em></li>
+            <li><strong>Centrifugation (Churning):</strong> Rotating the mixture at high speed in a centrifuge. Heavier solid particles move to the bottom, and lighter ones float. <em>Example: Separating cream from milk.</em></li>
+        </ul>
+
+        <p><strong>For Homogeneous (Soluble Solid in Liquid):</strong></p>
+        <img src="Images/distillation_apparatus.png" alt="Simple Distillation Apparatus" class="invert-on-dark float-left">
+        <ul>
+            <li><strong>Evaporation:</strong> Heating the solution so the liquid vaporizes, leaving the solid behind. The liquid is lost. <em>Example: Getting salt from sea water.</em></li>
+            <li><strong>Crystallization:</strong> Cooling a hot, concentrated (super-saturated) solution to form pure crystals of the solid. <em>Example: Obtaining pure sugar crystals.</em></li>
+            <li><strong>Distillation:</strong> Heating a solution to vaporize the liquid, then cooling the vapours in a condenser to collect the pure liquid (distillate). The solid is left in the flask. <em>Example: Getting pure distilled water from tap water.</em></li>
+        </ul>
+
+        <h3>C. Separation of Liquid-Liquid Mixtures</h3>
+        <ul>
+            <li><strong>Separating Funnel (For Immiscible Liquids):</strong> Used for liquids that don't mix and have different densities. The heavier liquid forms the bottom layer and can be drained out. <em>Example: Kerosene oil and water.</em></li>
+            <li><strong>Fractional Distillation (For Miscible Liquids):</strong> Used when liquids dissolve in each other but have different boiling points (difference must be greater than 30°C). A fractionating column is used. <em>Example: Separating alcohol (boiling point 78°C) and water (100°C), or extracting petrol/diesel from crude oil.</em></li>
+        </ul>
+
+        <h3>D. Chromatography</h3>
+        <p>A technique used to separate components of a mixture when they are very similar in their properties, based on differences in their rates of adsorption on a suitable material.</p>
+        <div class="green-box">
+            <span class="box-label">Process</span>
+            <p><strong>Paper Chromatography:</strong> Uses filter paper as a <em>stationary phase</em> and a solvent as a <em>mobile phase</em>. A drop of the mixture (like ink) is placed on the paper, which is dipped in solvent. As the solvent rises, the more soluble components travel faster and rise higher, separating into different spots.</p>
+            <p><strong>Applications:</strong> Separating colours in a dye, drugs from blood, and pigments from natural colours.</p>
+        </div>
+
+        <h3>E. Separation of Gas-Gas Mixtures</h3>
+        <ul>
+            <li><strong>Diffusion:</strong> Depends on the difference in densities. The lighter gas diffuses more rapidly. <em>Example: Hydrogen diffuses faster than oxygen.</em></li>
+            <li><strong>Solvent Extraction:</strong> Based on the fact that some gases are highly soluble in a solvent while others are not. <em>Example: Carbon dioxide (soluble in water) and Carbon monoxide (sparingly soluble).</em></li>
+            <li><strong>Liquefaction:</strong> Based on the fact that different gases liquefy at different temperatures and pressures. <em>Example: Ammonia easily liquefies, leaving nitrogen behind. Air can be separated by liquefying it and performing fractional distillation.</em></li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

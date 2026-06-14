@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; font-size: 11pt;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Polynomials: Board Masterclass (Target 100/100)</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 10 CBSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- Section A -->
+        <div class="chapter-header">Section A: Basic Concepts & Graphical Representation (1 Mark)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">If the graph of a polynomial intersects the x-axis at exactly three distinct points, how many zeroes does the polynomial have?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Find the zeroes of the quadratic polynomial $x^2 - 9$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">Write a quadratic polynomial whose sum and product of zeroes are $0$ and $\sqrt{5}$ respectively.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">If one zero of the polynomial $p(x) = (k^2+4)x^2 + 13x + 4k$ is the reciprocal of the other, find the value of $k$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">If one zero of the quadratic polynomial $x^2 + 3x + k$ is $2$, find the value of $k$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Find a quadratic polynomial whose zeroes are $-3$ and $4$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">If the product of the zeroes of the polynomial $ax^2 - 6x - 6$ is $4$, find the value of $a$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">What is the geometrical shape of the graph of a quadratic polynomial $ax^2 + bx + c$?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">If $\alpha$ and $\beta$ are zeroes of the polynomial $x^2 - 7x + 10$, find the value of $\alpha + \beta$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">Find the number of zeroes of a polynomial $p(x)$ if its graph is parallel to the x-axis and does not intersect it.</div>
+            </div>
+        </div>
+
+        <!-- Section B -->
+        <div class="chapter-header">Section B: Finding Zeroes & Verifying Relationships (2-3 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">Find the zeroes of the quadratic polynomial $4s^2 - 4s + 1$ and verify the relationship between the zeroes and the coefficients.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">Find the zeroes of the polynomial $t^2 - 15$ and verify the relationship between the zeroes and the coefficients.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">Find the zeroes of the polynomial $3x^2 - x - 4$ and verify the relationship between the zeroes and the coefficients.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">Find the zeroes of the polynomial $\sqrt{3}x^2 - 8x + 4\sqrt{3}$ and verify the relationship between the zeroes and its coefficients.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">Form a quadratic polynomial whose zeroes are $3 + \sqrt{2}$ and $3 - \sqrt{2}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">If the sum of the zeroes of the polynomial $p(x) = (k^2-14)x^2 - 2x - 12$ is $1$, find the value(s) of $k$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">If one zero of the polynomial $3x^2 - 8x + 2k+1$ is seven times the other, find the value of $k$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">Find a quadratic polynomial whose zeroes are the reciprocals of the zeroes of the polynomial $ax^2 + bx + c$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">If $\alpha$ and $\beta$ are the zeroes of the polynomial $x^2 - 5x + c$, and $\alpha - \beta = 1$, find the value of $c$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">If $\alpha$ and $\beta$ are the zeroes of the quadratic polynomial $f(x) = x^2 - px + q$, prove that $\frac{\alpha^2}{\beta^2} + \frac{\beta^2}{\alpha^2} = \frac{p^4}{q^2} - \frac{4p^2}{q} + 2$.</div>
+            </div>
+        </div>
+
+        <!-- Section C -->
+        <div class="chapter-header">Section C: Advanced $\alpha, \beta$ Manipulations (3-4 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">If $\alpha$ and $\beta$ are the zeroes of the quadratic polynomial $f(x) = 2x^2 + 5x + k$ such that $\alpha^2 + \beta^2 + \alpha\beta = \frac{21}{4}$, find the value of $k$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">If $\alpha$ and $\beta$ are the zeroes of the polynomial $f(x) = x^2 - 8x + k$ such that the sum of the squares of the zeroes is $40$, find the value of $k$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">If $\alpha$ and $\beta$ are the zeroes of the polynomial $p(x) = x^2 - p(x+1) - c$, show that $(\alpha+1)(\beta+1) = 1-c$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">If $\alpha$ and $\beta$ are the zeroes of the quadratic polynomial $f(x) = x^2 - 4x + 3$, form a quadratic polynomial whose zeroes are $3\alpha$ and $3\beta$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">If the squared difference of the zeroes of the quadratic polynomial $f(x) = x^2 + px + 45$ is equal to $144$, find the value(s) of $p$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">If $\alpha$ and $\beta$ are the zeroes of the polynomial $f(x) = ax^2 + bx + c$, find the value of $\frac{1}{\alpha} + \frac{1}{\beta} - 2\alpha\beta$ in terms of $a, b$, and $c$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">Find the value of $k$ if the zeroes of the quadratic polynomial $kx^2 + 4x + 4$ are $\alpha$ and $\beta$, and they satisfy the relation $\alpha^2 + \beta^2 = 24$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">If the zeroes of the polynomial $x^2 + px + q$ are double in value to the zeroes of $2x^2 - 5x - 3$, find the values of $p$ and $q$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">A quadratic polynomial graph is a downward-opening parabola that intersects the x-axis at $(-2, 0)$ and $(3, 0)$. It also passes through the y-axis at $(0, 12)$. Find the expression for this polynomial.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">If $\alpha$ and $\beta$ are the zeroes of the quadratic polynomial $f(x) = x^2 - 1$, find a quadratic polynomial whose zeroes are $\frac{2\alpha}{\beta}$ and $\frac{2\beta}{\alpha}$.</div>
+            </div>
+        </div>
+
+        <!-- Section D: Answer Key & Hints -->
+        <div class="chapter-header">Section D: Answer Key & Hints</div>
+        <div class="questions-container">
+            <div class="solution-item"><span class="ans-label">Ans 1:</span> 3 zeroes.</div>
+            <div class="solution-item"><span class="ans-label">Ans 2:</span> $3, -3$. <em>Hint: $x^2 - 9 = 0 \implies (x-3)(x+3) = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 3:</span> $x^2 - \sqrt{5}$. <em>Hint: $k[x^2 - (\text{Sum})x + \text{Product}]$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 4:</span> $k = 2$. <em>Hint: Product of zeroes = 1 $\implies \frac{c}{a} = 1 \implies \frac{4k}{k^2+4} = 1$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 5:</span> $k = -10$. <em>Hint: Substitute $x=2$, $p(2)=0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 6:</span> $x^2 + x - 12$. <em>Hint: Sum = 1, Product = -12.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 7:</span> $a = -\frac{3}{2}$. <em>Hint: $\frac{c}{a} = 4 \implies \frac{-6}{a} = 4$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 8:</span> Parabola.</div>
+            <div class="solution-item"><span class="ans-label">Ans 9:</span> $7$. <em>Hint: Sum of zeroes $\alpha + \beta = -\frac{b}{a}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 10:</span> 0 zeroes.</div>
+            
+            <div class="solution-item"><span class="ans-label">Ans 11:</span> Zeroes are $\frac{1}{2}, \frac{1}{2}$. Sum = $1 = -\frac{-4}{4}$, Product = $\frac{1}{4} = \frac{1}{4}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 12:</span> Zeroes are $\sqrt{15}, -\sqrt{15}$. Sum = $0 = -\frac{0}{1}$, Product = $-15 = \frac{-15}{1}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 13:</span> Zeroes are $\frac{4}{3}, -1$. Sum = $\frac{1}{3} = -\frac{-1}{3}$, Product = $-\frac{4}{3} = \frac{-4}{3}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 14:</span> Zeroes are $2\sqrt{3}, \frac{2}{\sqrt{3}}$. Sum = $\frac{8}{\sqrt{3}} = -\frac{-8}{\sqrt{3}}$, Product = $4 = \frac{4\sqrt{3}}{\sqrt{3}}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 15:</span> $x^2 - 6x + 7$. <em>Hint: Sum = $6$, Product = $(3)^2 - (\sqrt{2})^2 = 7$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 16:</span> $k = 4, -4$. <em>Hint: $-\frac{b}{a} = 1 \implies \frac{2}{k^2-14} = 1 \implies k^2 - 14 = 2$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 17:</span> $k = \frac{2}{3}$. <em>Hint: Let zeroes be $\alpha, 7\alpha$. Sum = $8\alpha = \frac{8}{3} \implies \alpha = \frac{1}{3}$. Product = $7\alpha^2 = \frac{2k+1}{3}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 18:</span> $cx^2 + bx + a$. <em>Hint: New sum = $\frac{1}{\alpha} + \frac{1}{\beta} = \frac{\alpha+\beta}{\alpha\beta} = -\frac{b}{c}$. New product = $\frac{a}{c}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 19:</span> $c = 6$. <em>Hint: $(\alpha-\beta)^2 = (\alpha+\beta)^2 - 4\alpha\beta \implies 1^2 = 5^2 - 4c$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 20:</span> Proof based on expanding $\left(\frac{\alpha}{\beta} + \frac{\beta}{\alpha}\right)^2 = \left(\frac{\alpha^2+\beta^2}{\alpha\beta}\right)^2 = \left(\frac{p^2-2q}{q}\right)^2$.</div>
+            
+            <div class="solution-item"><span class="ans-label">Ans 21:</span> $k = 2$. <em>Hint: $\alpha^2 + \beta^2 + \alpha\beta = (\alpha+\beta)^2 - \alpha\beta = \frac{25}{4} - \frac{k}{2}$. Equate to $\frac{21}{4}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 22:</span> $k = 12$. <em>Hint: $\alpha^2 + \beta^2 = (\alpha+\beta)^2 - 2\alpha\beta = 64 - 2k = 40$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 23:</span> Proof. <em>Hint: Expand $f(x) = x^2 - px - (p+c)$. $\alpha+\beta = p$, $\alpha\beta = -(p+c)$. Expand LHS: $\alpha\beta + \alpha + \beta + 1$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 24:</span> $x^2 - 12x + 27$. <em>Hint: $\alpha=3, \beta=1$. New zeroes are $9$ and $3$. Sum=12, Prod=27.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 25:</span> $p = 18$ or $-18$. <em>Hint: $(\alpha-\beta)^2 = (\alpha+\beta)^2 - 4\alpha\beta = p^2 - 180 = 144$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 26:</span> $\frac{-b - 2c^2}{ac}$. <em>Hint: $\frac{\alpha+\beta}{\alpha\beta} - 2\alpha\beta = \frac{-b/a}{c/a} - \frac{2c}{a}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 27:</span> $k = -1, \frac{2}{3}$. <em>Hint: $(\alpha+\beta)^2 - 2\alpha\beta = (-\frac{4}{k})^2 - 2(\frac{4}{k}) = \frac{16}{k^2} - \frac{8}{k} = 24$. Multiply by $k^2$ to form quadratic in $k$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 28:</span> $p = -5, q = -6$. <em>Hint: Zeroes of $2x^2-5x-3$ are $3, -\frac{1}{2}$. Doubled zeroes are $6, -1$. Form new poly $x^2 - 5x - 6$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 29:</span> $p(x) = -2x^2 + 2x + 12$. <em>Hint: Roots $-2, 3 \implies y=a(x+2)(x-3)$. At $x=0, y=12 \implies 12 = a(2)(-3) \implies a=-2$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 30:</span> $x^2 + 4x + 4$. <em>Hint: Zeroes of $x^2-1$ are $1, -1$. New zeroes: $\frac{2(1)}{-1} = -2$ and $\frac{2(-1)}{1} = -2$. Sum = -4, Prod = 4.</em></div>
+        </div>
+        
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet Level 3</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3 - Red) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef9a9a;   /* Lighter red for dark mode */
+            --bg-color: #3e1f1f;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- ANSWER KEY STYLING --- */
+        .answer-key-container {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; 
+            font-size: 10pt; padding: 10px 0;
+        }
+        .ans-item { margin-bottom: 2px; }
+        .ans-item .ans-num { font-weight: bold; color: var(--text-secondary); margin-right: 5px; }
+        @media (max-width: 600px) {
+            .answer-key-container { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Mathematics Practice Worksheet - Level 3 (Advanced)</div>
+            <div class="meta-info">
+                <span>Especially designed for: Aaraghya</span> 
+                <span>Class: 7 (ICSE)</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Integers</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">Simplify: $150 \div [(-5) \times \{-5 + (-15 \div 3)\}]$</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">Evaluate using absolute values: $|-18| \times |-5| - |-24| \div |-6| + (-15)$</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">A shopkeeper earns a profit of ₹ $15$ on selling one pen and incurs a loss of ₹ $4$ on selling one pencil. If he sells 45 pens and some pencils, his net profit is ₹ $375$. How many pencils did he sell?</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">In a competitive exam, $+5$ is awarded for a correct answer, $-2$ for an incorrect answer, and $0$ for an unattempted question. Ravi scored $30$ marks even though he got 10 correct answers. How many questions did he get wrong?</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">Simplify using distributive property: $(-48) \times 105 - (-48) \times 5$</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">The product of three integers is $-600$. If two of them are $-15$ and $8$, find the third integer.</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">Evaluate: $[(-3)^3 \times (-2)^2] \div [(-6)^2]$</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">What must be subtracted from the sum of $-125$ and $85$ to get $-110$?</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">An elevator descends at the rate of $8\text{ m/min}$. If it starts from $20\text{ m}$ above ground level, what will be its position after $45\text{ minutes}$?</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">By how much does the sum of $-45$ and $-30$ exceed the difference of $-20$ and $-60$?</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">Simplify: $24 - [20 - \{10 - (7 - \overline{5 - 3})\}]$</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">Find the integer $x$ such that $x \div (-12) = -15$.</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">A plane is flying at $5000\text{ m}$ above sea level. A submarine is $1200\text{ m}$ below sea level exactly underneath the plane. What is the total vertical distance between them?</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">Evaluate: $(-1)^{100} + (-1)^{101} + (-1)^{102} + (-1)^{103}$</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">If the difference between two negative integers $a$ and $b$ (where $a > b$) is $15$, and $a = -8$, find the value of $b$.</div></div>
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">A freezing process requires room temperature to be lowered from $40^\circ\text{C}$ at the rate of $5^\circ\text{C}$ every hour. What will be the room temperature 10 hours after the process begins?</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">Evaluate: $\{-15 + (-5)\} \div \{(-10) + 8\}$</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">In a magic square, each row, column, and diagonal sum is the same. If a row has $-4$, $x$, and $2$, and the sum of that row is $-9$, find $x$.</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">Determine the sign of the final product if we multiply $199$ negative integers and $10$ positive integers together.</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">Simplify: $(-25) \times 36 \times (-4) \times 10$</div></div>
+        </div>
+
+        <div class="chapter-header">Section B: Fractions</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">Simplify: $4 \frac{1}{2} - [3 \frac{1}{4} \div \{1 \frac{1}{4} - \frac{1}{2}(1 \frac{1}{2} - \frac{1}{3})\}]$</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">A water drum is $\frac{2}{3}$ full. If $50$ litres more are required to fill it completely, what is the total capacity of the drum?</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">Out of a total journey, $\frac{1}{5}$ is covered by bus, $\frac{1}{3}$ by train, and the remaining $14\text{ km}$ on foot. Find the total distance of the journey.</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">A boy reads $\frac{1}{4}$ of a book on the first day and $\frac{1}{3}$ of the <i>remaining</i> portion on the second day. If $150$ pages are still left unread, how many pages are there in the book?</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">Evaluate: $\left(2 \frac{3}{4} + 1 \frac{1}{2}\right) \div \left(2 \frac{3}{4} - 1 \frac{1}{2}\right)$</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">Which is greater: $\frac{4}{5} \text{ of } \frac{5}{6}$ OR $\frac{5}{6} \text{ of } \frac{6}{7}$?</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">The cost of $3 \frac{1}{2}\text{ m}$ of cloth is ₹ $166 \frac{1}{4}$. Find the cost of exactly $1\text{ m}$ of cloth.</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">If $x = 3 \frac{1}{3}$ and $y = 2 \frac{1}{2}$, find the exact value of $(x+y) \div (x-y)$.</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">A strong wire of length $27 \frac{1}{2}\text{ m}$ is cut into smaller pieces, each measuring $2 \frac{3}{4}\text{ m}$. How many pieces are formed?</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">Find the fraction which when multiplied by $1 \frac{2}{3}$ gives the product as $3 \frac{1}{4}$.</div></div>
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">Two fractions are such that their product is $2 \frac{4}{5}$ and one of them is $1 \frac{2}{5}$. Find the other fraction.</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">Simplify by cancellation: $\frac{2}{3} \times \frac{5}{7} \times \frac{21}{20} \times \frac{4}{5}$</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">After spending $\frac{3}{4}$ of his pocket money, a man has ₹ $450$ left. How much money did he have initially?</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">By what fraction should $5 \frac{3}{5}$ be divided to get the quotient as $2 \frac{1}{10}$?</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">A rectangle's length is $5 \frac{1}{4}\text{ cm}$ and breadth is $3 \frac{1}{5}\text{ cm}$. Calculate its exact area in square units.</div></div>
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">Arrange the fractions in descending order: $\frac{3}{4}, \frac{7}{8}, \frac{5}{12}, \frac{11}{16}$</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">Simplify: $1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4}$</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">In an orchard, $\frac{1}{3}$ of the trees are apple trees, $\frac{1}{4}$ are orange trees, and the remaining $50$ are mango trees. Find the total number of trees.</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">A man walks continuously at a speed of $4 \frac{1}{2}\text{ km/hr}$. How long will he take to walk a distance of $18\text{ km}$?</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">Evaluate the complex fraction: $\frac{1}{1+\frac{1}{2}}$</div></div>
+        </div>
+
+        <div class="chapter-header">Section C: Decimals</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">Simplify smartly using distribution concepts: $3.5 \times 0.24 + 3.5 \times 0.76$</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">Evaluate using algebraic identities ($a^3+b^3$): $\frac{0.08 \times 0.08 \times 0.08 + 0.02 \times 0.02 \times 0.02}{0.08 \times 0.08 - 0.08 \times 0.02 + 0.02 \times 0.02}$</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">The product of two decimals is $14.837$. If one of the decimals is $4.01$, find the other.</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">Perform the division: $0.0024 \div 0.06$</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">A car covers $110.5\text{ km}$ in $2.5\text{ hours}$. Find its average speed in km/hr.</div></div>
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">Simplify using BODMAS: $(15.8 - 6.23) + (3.4 \times 1.5)$</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">By how much is $18.5$ greater than the quotient of $15.6 \div 1.2$?</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">Convert $2\text{ kg } 5\text{ g } 4\text{ mg}$ entirely into kilograms using decimals.</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">The total perimeter of a regular hexagon is $27.3\text{ cm}$. Find the exact length of each side.</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">Evaluate: $\frac{1.44 \times 0.05}{0.012}$</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">A milkman sells $42.5$ litres of milk at a rate of ₹ $55.50$ per litre. Calculate his total earnings.</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">Arrange in ascending order: $0.045, 0.405, 0.054, 0.45, 0.005$</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">Simplify: $2.5 - [1.2 + \{0.8 - (0.5 - 0.2)\}]$</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">Find the area of a perfect square whose perimeter measures exactly $18.4\text{ m}$.</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">What precise value should be subtracted from $100$ to get exactly $35.48$?</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">If $1\text{ inch} = 2.54\text{ cm}$, convert $15.5\text{ inches}$ to centimeters.</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">Evaluate: $0.1 \times 0.1 \times 0.1 - 0.01 \times 0.01$</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">A man buys 15 identical pens for ₹ $187.50$. Find the total cost if he wanted to buy 24 such pens.</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">Express the fraction $\frac{13}{125}$ as a precise decimal without rounding.</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">The sum of two decimals is $15.6$. If one is $4.85$ more than the other, find the smaller decimal.</div></div>
+        </div>
+
+        <div class="chapter-header" style="page-break-before: always;">Answer Key</div>
+        <div class="answer-key-container">
+            <div class="ans-item"><span class="ans-num">1.</span> 3</div>
+            <div class="ans-item"><span class="ans-num">2.</span> 71</div>
+            <div class="ans-item"><span class="ans-num">3.</span> 75 pencils</div>
+            <div class="ans-item"><span class="ans-num">4.</span> 10 wrong</div>
+            <div class="ans-item"><span class="ans-num">5.</span> -4800</div>
+            <div class="ans-item"><span class="ans-num">6.</span> 5</div>
+            <div class="ans-item"><span class="ans-num">7.</span> -3</div>
+            <div class="ans-item"><span class="ans-num">8.</span> 70</div>
+            <div class="ans-item"><span class="ans-num">9.</span> -340 m</div>
+            <div class="ans-item"><span class="ans-num">10.</span> -115</div>
+            <div class="ans-item"><span class="ans-num">11.</span> 9</div>
+            <div class="ans-item"><span class="ans-num">12.</span> 180</div>
+            <div class="ans-item"><span class="ans-num">13.</span> 6200 m</div>
+            <div class="ans-item"><span class="ans-num">14.</span> 0</div>
+            <div class="ans-item"><span class="ans-num">15.</span> -23</div>
+            <div class="ans-item"><span class="ans-num">16.</span> -10°C</div>
+            <div class="ans-item"><span class="ans-num">17.</span> 10</div>
+            <div class="ans-item"><span class="ans-num">18.</span> -7</div>
+            <div class="ans-item"><span class="ans-num">19.</span> Negative</div>
+            <div class="ans-item"><span class="ans-num">20.</span> 36000</div>
+            <div class="ans-item"><span class="ans-num">21.</span> -3/8</div>
+            <div class="ans-item"><span class="ans-num">22.</span> 150 L</div>
+            <div class="ans-item"><span class="ans-num">23.</span> 30 km</div>
+            <div class="ans-item"><span class="ans-num">24.</span> 300 pages</div>
+            <div class="ans-item"><span class="ans-num">25.</span> 17/5</div>
+            <div class="ans-item"><span class="ans-num">26.</span> 5/6 of 6/7</div>
+            <div class="ans-item"><span class="ans-num">27.</span> ₹ 47.50</div>
+            <div class="ans-item"><span class="ans-num">28.</span> 7</div>
+            <div class="ans-item"><span class="ans-num">29.</span> 10 pieces</div>
+            <div class="ans-item"><span class="ans-num">30.</span> 39/20</div>
+            <div class="ans-item"><span class="ans-num">31.</span> 2</div>
+            <div class="ans-item"><span class="ans-num">32.</span> 2/5</div>
+            <div class="ans-item"><span class="ans-num">33.</span> ₹ 1800</div>
+            <div class="ans-item"><span class="ans-num">34.</span> 8/3</div>
+            <div class="ans-item"><span class="ans-num">35.</span> 84/5 sq cm</div>
+            <div class="ans-item"><span class="ans-num">36.</span> 7/8, 3/4, 11/16, 5/12</div>
+            <div class="ans-item"><span class="ans-num">37.</span> 7/12</div>
+            <div class="ans-item"><span class="ans-num">38.</span> 120 trees</div>
+            <div class="ans-item"><span class="ans-num">39.</span> 4 hrs</div>
+            <div class="ans-item"><span class="ans-num">40.</span> 2/3</div>
+            <div class="ans-item"><span class="ans-num">41.</span> 3.5</div>
+            <div class="ans-item"><span class="ans-num">42.</span> 0.1</div>
+            <div class="ans-item"><span class="ans-num">43.</span> 3.7</div>
+            <div class="ans-item"><span class="ans-num">44.</span> 0.04</div>
+            <div class="ans-item"><span class="ans-num">45.</span> 44.2 km/hr</div>
+            <div class="ans-item"><span class="ans-num">46.</span> 14.67</div>
+            <div class="ans-item"><span class="ans-num">47.</span> 5.5</div>
+            <div class="ans-item"><span class="ans-num">48.</span> 2.005004 kg</div>
+            <div class="ans-item"><span class="ans-num">49.</span> 4.55 cm</div>
+            <div class="ans-item"><span class="ans-num">50.</span> 6</div>
+            <div class="ans-item"><span class="ans-num">51.</span> ₹ 2358.75</div>
+            <div class="ans-item"><span class="ans-num">52.</span> 0.005, 0.045, 0.054, 0.405, 0.45</div>
+            <div class="ans-item"><span class="ans-num">53.</span> 0.8</div>
+            <div class="ans-item"><span class="ans-num">54.</span> 21.16 sq m</div>
+            <div class="ans-item"><span class="ans-num">55.</span> 64.52</div>
+            <div class="ans-item"><span class="ans-num">56.</span> 39.37 cm</div>
+            <div class="ans-item"><span class="ans-num">57.</span> 0.0009</div>
+            <div class="ans-item"><span class="ans-num">58.</span> ₹ 300</div>
+            <div class="ans-item"><span class="ans-num">59.</span> 0.104</div>
+            <div class="ans-item"><span class="ans-num">60.</span> 5.375</div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

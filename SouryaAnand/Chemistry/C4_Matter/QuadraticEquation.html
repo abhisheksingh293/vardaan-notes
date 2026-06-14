@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; font-size: 11pt;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Quadratic Equations: Board Masterclass (Target 100/100)</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 10 CBSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- Section A -->
+        <div class="chapter-header">Section A: Basics, Identification & Roots (1-2 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Check whether the following is a quadratic equation: $(x+1)^2 = 2(x-3)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Check whether $(x-2)(x+1) = (x-1)(x+3)$ is a quadratic equation.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">Determine whether $x = -\sqrt{2}$ is a solution of the quadratic equation $\sqrt{2}x^2 + 7x + 5\sqrt{2} = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">If $x = 3$ is a root of the quadratic equation $x^2 - 2kx - 6 = 0$, find the value of $k$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">Find the value of $p$ so that $-2$ is a root of the equation $px^2 - 3x + 2 = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">If $1/2$ is a root of the equation $x^2 + kx - 5/4 = 0$, then find the value of $k$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">Represent the following situation in the form of a quadratic equation: "The area of a rectangular plot is $528 \text{ m}^2$. The length of the plot (in metres) is one more than twice its breadth."</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">Rohan's mother is 26 years older than him. The product of their ages (in years) 3 years from now will be 360. Formulate the quadratic equation to find Rohan's present age.</div>
+            </div>
+            <!-- New Exhaustive Additions -->
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">Check whether $(x+2)^3 = 2x(x^2 - 1)$ is a quadratic equation.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">Check if $x^2 + 3x + 1 = (x-2)^2$ is a quadratic equation.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">Write a quadratic equation whose roots are $2 + \sqrt{3}$ and $2 - \sqrt{3}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">If $x = \frac{2}{3}$ and $x = -3$ are roots of the quadratic equation $ax^2 + 7x + b = 0$, find the values of $a$ and $b$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">Find the value of $k$ if $x=2$ is a root of the equation $kx^2 + 2x - 3 = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">If one root of the quadratic equation $ax^2+bx+c=0$ is zero, what is the required condition for the coefficients?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">Can a quadratic equation have exactly three real roots? Justify your answer.</div>
+            </div>
+        </div>
+
+        <!-- Section B -->
+        <div class="chapter-header">Section B: Solving by Factorization & Quadratic Formula (2-3 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">Find the roots of the quadratic equation $x^2 - 3x - 10 = 0$ by factorization.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">Solve for $x$: $2x^2 - x + \frac{1}{8} = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">Find the roots of the equation $\sqrt{2}x^2 + 7x + 5\sqrt{2} = 0$ by factorization.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">Solve for $x$: $100x^2 - 20x + 1 = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">Find the roots of the quadratic equation $3x^2 - 2\sqrt{6}x + 2 = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">Solve for $x$ using the quadratic formula: $x^2 + 4x + 1 = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">Solve for $x$: $\frac{1}{x+4} - \frac{1}{x-7} = \frac{11}{30}$, where $x \neq -4, 7$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">Solve for $x$: $\frac{1}{a+b+x} = \frac{1}{a} + \frac{1}{b} + \frac{1}{x}$, where $a+b \neq 0$ and $x \neq 0, -(a+b)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">Solve the quadratic equation: $4x^2 - 4a^2x + (a^4 - b^4) = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">Solve for $x$: $abx^2 + (b^2 - ac)x - bc = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">Solve for $x$: $9x^2 - 9(a+b)x + (2a^2 + 5ab + 2b^2) = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">Solve for $x$: $3\left(\frac{3x-1}{2x+3}\right) - 2\left(\frac{2x+3}{3x-1}\right) = 5$, where $x \neq \frac{1}{3}, \frac{-3}{2}$.</div>
+            </div>
+            <!-- New Exhaustive Additions -->
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">Solve for $x$: $\sqrt{3}x^2 - 2\sqrt{2}x - 2\sqrt{3} = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">Solve for $x$: $x^2 - (\sqrt{3} + 1)x + \sqrt{3} = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">Solve for $x$: $\frac{x-1}{x-2} + \frac{x-3}{x-4} = 3 \frac{1}{3}$ (where $x \neq 2, 4$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">Solve for $x$: $\frac{1}{2a+b+2x} = \frac{1}{2a} + \frac{1}{b} + \frac{1}{2x}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">Solve the quadratic equation: $x^2 - 2ax + (a^2 - b^2) = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">Solve for $x$: $p^2x^2 + (p^2 - q^2)x - q^2 = 0$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">Solve for $x$: $\frac{x-1}{x+1} + \frac{x+1}{x-1} = \frac{34}{15}$ (where $x \neq 1, -1$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">Solve for $x$: $a^2b^2x^2 + b^2x - a^2x - 1 = 0$.</div>
+            </div>
+        </div>
+
+        <!-- Section C -->
+        <div class="chapter-header">Section C: Nature of Roots & Finding Unknowns (3 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">Find the discriminant of the quadratic equation $2x^2 - 4x + 3 = 0$, and hence find the nature of its roots.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">37.</span>
+                <div class="q-content">Find the value(s) of $k$ for which the quadratic equation $2x^2 + kx + 3 = 0$ has two real and equal roots.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">38.</span>
+                <div class="q-content">Find the value of $k$ for which the equation $kx(x-2) + 6 = 0$ has two equal roots.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">39.</span>
+                <div class="q-content">For what value of $k$ does the quadratic equation $(k-12)x^2 + 2(k-12)x + 2 = 0$ have equal roots?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">40.</span>
+                <div class="q-content">If the equation $(1+m^2)x^2 + 2mcx + c^2 - a^2 = 0$ has equal roots, show that $c^2 = a^2(1 + m^2)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">41.</span>
+                <div class="q-content">Find the values of $p$ for which the quadratic equation $4x^2 + px + 3 = 0$ has equal roots.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">42.</span>
+                <div class="q-content">If $-5$ is a root of the quadratic equation $2x^2 + px - 15 = 0$ and the quadratic equation $p(x^2 + x) + k = 0$ has equal roots, find the value of $k$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">43.</span>
+                <div class="q-content">Determine whether the quadratic equation $3x^2 - 5x + 2 = 0$ has real roots. If so, find them.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">44.</span>
+                <div class="q-content">Show that the equation $2x^2 + 5\sqrt{3}x + 16 = 0$ has no real roots.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">45.</span>
+                <div class="q-content">Find the value of $p$ for which the roots of the equation $px^2 - 14x + 8 = 0$ are in the ratio $3:4$.</div>
+            </div>
+            <!-- New Exhaustive Additions -->
+            <div class="question-item">
+                <span class="q-num">46.</span>
+                <div class="q-content">Find the value of $k$ if the equation $x^2 - 2x(1+3k) + 7(3+2k) = 0$ has real and equal roots.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">47.</span>
+                <div class="q-content">Find the values of $k$ for which the quadratic equation $kx^2 + 6x + 1 = 0$ has real and distinct roots.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">48.</span>
+                <div class="q-content">Find the values of $p$ for which the quadratic equation $px^2 - 2\sqrt{5}px + 15 = 0$ has no real roots.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">49.</span>
+                <div class="q-content">Prove that the roots of the equation $x^2 - 2ax - b^2 = 0$ are always real for all real values of $a$ and $b$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">50.</span>
+                <div class="q-content">If the roots of the equation $(b-c)x^2 + (c-a)x + (a-b) = 0$ are equal, prove that $2b = a+c$.</div>
+            </div>
+        </div>
+
+        <!-- Section D -->
+        <div class="chapter-header">Section D: Competency Word Problems - All Typologies (4-5 Marks)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">51.</span>
+                <div class="q-content">The sum of the squares of two consecutive odd positive integers is 290. Find the integers.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">52.</span>
+                <div class="q-content">A train travels $360\text{ km}$ at a uniform speed. If the speed had been $5\text{ km/h}$ more, it would have taken 1 hour less for the same journey. Find the speed of the train.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">53.</span>
+                <div class="q-content">A motor boat whose speed is $18\text{ km/h}$ in still water takes 1 hour more to go $24\text{ km}$ upstream than to return downstream to the same spot. Find the speed of the stream.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">54.</span>
+                <div class="q-content">Two water taps together can fill a tank in $9 \frac{3}{8}$ hours. The tap of larger diameter takes 10 hours less than the smaller one to fill the tank separately. Find the time in which each tap can separately fill the tank.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">55.</span>
+                <div class="q-content">The sum of the areas of two squares is $468\text{ m}^2$. If the difference of their perimeters is $24\text{ m}$, find the sides of the two squares.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">56.</span>
+                <div class="q-content">A flight is delayed by 30 minutes. To reach its destination $1500\text{ km}$ away on time, the pilot increases the speed by $250\text{ km/h}$ from its usual speed. Find the usual speed of the plane.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">57.</span>
+                <div class="q-content">A natural number, when increased by 12, equals 160 times its reciprocal. Find the number.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">58.</span>
+                <div class="q-content">The numerator of a fraction is 3 less than its denominator. If 2 is added to both the numerator and the denominator, then the sum of the new fraction and original fraction is $\frac{29}{20}$. Find the original fraction.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">59.</span>
+                <div class="q-content">In a class test, the sum of Shefali's marks in Mathematics and English is 30. Had she got 2 marks more in Mathematics and 3 marks less in English, the product of their marks would have been 210. Find her marks in the two subjects.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">60.</span>
+                <div class="q-content">A pole has to be erected at a point on the boundary of a circular park of diameter 13 metres in such a way that the differences of its distances from two diametrically opposite fixed gates A and B on the boundary is 7 metres. Is it possible to do so? If yes, at what distances from the two gates should the pole be erected?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">61.</span>
+                <div class="q-content">A piece of cloth costs ₹200. If the piece was 5 m longer and each metre of cloth costed ₹2 less, the cost of the piece would have remained unchanged. How long is the piece and what is its original rate per metre?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">62.</span>
+                <div class="q-content">Out of a group of swans, $\frac{7}{2}$ times the square root of the number are playing on the shore of a tank. The two remaining ones are playing in deep water. What is the total number of swans?</div>
+            </div>
+            <!-- New Exhaustive Additions -->
+            <div class="question-item">
+                <span class="q-num">63.</span>
+                <div class="q-content">Divide 29 into two parts such that the sum of their squares is 425.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">64.</span>
+                <div class="q-content">The sum of a number and its reciprocal is $2 \frac{1}{30}$. Find the number.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">65.</span>
+                <div class="q-content">A two-digit number is such that the product of its digits is 18. When 63 is subtracted from the number, the digits interchange their places. Find the number.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">66.</span>
+                <div class="q-content">A girl is twice as old as her sister. Four years hence, the product of their ages (in years) will be 160. Find their present ages.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">67.</span>
+                <div class="q-content">Person A takes 6 days less than Person B to finish a piece of work. If both work together they finish it in 4 days. Find the time taken by B alone to finish the work.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">68.</span>
+                <div class="q-content">An express train takes 1 hour less than a passenger train to travel $132\text{ km}$ between Mysore and Bangalore. If the average speed of the express train is $11\text{ km/h}$ more than that of the passenger train, find the average speed of the two trains.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">69.</span>
+                <div class="q-content">The hypotenuse of a right-angled triangle is $3\sqrt{10}\text{ cm}$. If the smaller leg is tripled and the longer leg doubled, the new hypotenuse becomes $9\sqrt{5}\text{ cm}$. How long are the legs of the triangle?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">70.</span>
+                <div class="q-content">A shopkeeper buys a number of books for ₹1200. If he had bought 10 more books for the same amount, each book would have cost ₹20 less. How many books did he buy initially?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">71.</span>
+                <div class="q-content">The numerator of a fraction is 1 less than its denominator. If 3 is added to each of the numerator and denominator, the fraction is increased by $\frac{3}{28}$. Find the original fraction.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">72.</span>
+                <div class="q-content">The perimeter of a right-angled triangle is $60\text{ cm}$. Its hypotenuse is $25\text{ cm}$. Find the area of the triangle.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">73.</span>
+                <div class="q-content">Two pipes running together can fill a cistern in $3 \frac{1}{13}$ minutes. If one pipe takes 3 minutes more than the other to fill it, find the time in which each pipe would fill the cistern separately.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">74.</span>
+                <div class="q-content">Some students planned a picnic. The total budget for food was ₹2000. But 5 students failed to attend the picnic and thus the cost of food for each member increased by ₹20. How many students attended the picnic and how much did each pay for the food?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">75.</span>
+                <div class="q-content">The difference of two natural numbers is 5 and the difference of their reciprocals is $\frac{1}{10}$. Find the numbers.</div>
+            </div>
+        </div>
+
+        <!-- Section E: Answer Key & Hints -->
+        <div class="chapter-header">Section E: Answer Key & Hints</div>
+        <div class="questions-container">
+            <div class="solution-item"><span class="ans-label">Ans 1:</span> Yes. <em>Hint: Expands to $x^2 + 2x + 1 = 2x - 6 \implies x^2 + 7 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 2:</span> No. <em>Hint: Expands to $x^2 - x - 2 = x^2 + 2x - 3 \implies -3x + 1 = 0$ (Linear).</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 3:</span> Yes.</div>
+            <div class="solution-item"><span class="ans-label">Ans 4:</span> $k = \frac{1}{2}$. <em>Hint: Put $x=3 \implies 9 - 6k - 6 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 5:</span> $p = -2$. <em>Hint: Put $x=-2 \implies 4p + 6 + 2 = 0 \implies 4p=-8$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 6:</span> $k = 2$. <em>Hint: $(1/2)^2 + k(1/2) - 5/4 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 7:</span> Let breadth be $x$. Length = $2x+1$. $x(2x+1) = 528 \implies 2x^2 + x - 528 = 0$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 8:</span> Let Rohan's age be $x$. Mother = $x+26$. $(x+3)(x+29) = 360 \implies x^2 + 32x - 273 = 0$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 9:</span> No. <em>Hint: $x^3 + 6x^2 + 12x + 8 = 2x^3 - 2x \implies x^3 - 6x^2 - 14x - 8 = 0$ (Degree 3).</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 10:</span> No. <em>Hint: $x^2+3x+1 = x^2-4x+4 \implies 7x - 3 = 0$ (Linear).</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 11:</span> $x^2 - 4x + 1 = 0$. <em>Hint: Sum = 4, Product = $(2)^2 - (\sqrt{3})^2 = 1$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 12:</span> $a = 3, b = -6$. <em>Hint: Sum = $-7/a = -7/3 \implies a=3$. Product = $b/a = -2 \implies b=-6$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 13:</span> $k = -\frac{1}{4}$. <em>Hint: Put $x=2 \implies 4k + 4 - 3 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 14:</span> $c = 0$. <em>Hint: Product of roots is $c/a = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 15:</span> No, a polynomial of degree 2 can have at most 2 real roots.</div>
+
+            <div class="solution-item"><span class="ans-label">Ans 16:</span> $x = 5, -2$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 17:</span> $x = \frac{1}{4}, \frac{1}{4}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 18:</span> $x = -\sqrt{2}, -\frac{5}{\sqrt{2}}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 19:</span> $x = \frac{1}{10}, \frac{1}{10}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 20:</span> $x = \sqrt{\frac{2}{3}}, \sqrt{\frac{2}{3}}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 21:</span> $x = -2 \pm \sqrt{3}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 22:</span> $x = 1, 2$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 23:</span> $x = -a, -b$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 24:</span> $x = \frac{a^2+b^2}{2}, \frac{a^2-b^2}{2}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 25:</span> $x = \frac{c}{b}, -\frac{b}{a}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 26:</span> $x = \frac{2a+b}{3}, \frac{a+2b}{3}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 27:</span> $x = 0, 7$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 28:</span> $x = \sqrt{6}, -\sqrt{\frac{2}{3}}$. <em>Hint: Split middle term as $-3\sqrt{2}x + \sqrt{2}x$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 29:</span> $x = \sqrt{3}, 1$. <em>Hint: $x(x-\sqrt{3}) - 1(x-\sqrt{3}) = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 30:</span> $x = 5, \frac{5}{2}$. <em>Hint: Write as $1+\frac{1}{x-2} + 1+\frac{1}{x-4} = \frac{10}{3} \implies \frac{1}{x-2} + \frac{1}{x-4} = \frac{4}{3}$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 31:</span> $x = -a, -\frac{b}{2}$. <em>Hint: Bring $\frac{1}{2x}$ to LHS and take LCM.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 32:</span> $x = a+b, a-b$. <em>Hint: $x^2 - (a+b)x - (a-b)x + (a+b)(a-b) = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 33:</span> $x = -1, \frac{q^2}{p^2}$. <em>Hint: $p^2x^2 + p^2x - q^2x - q^2 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 34:</span> $x = 4, -4$. <em>Hint: Let $y = \frac{x-1}{x+1}$. Solve $y + 1/y = 34/15$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 35:</span> $x = \frac{1}{b^2}, -\frac{1}{a^2}$. <em>Hint: $b^2x(a^2x+1) - 1(a^2x+1) = 0$.</em></div>
+
+            <div class="solution-item"><span class="ans-label">Ans 36:</span> $D = -8$. Roots are imaginary (no real roots).</div>
+            <div class="solution-item"><span class="ans-label">Ans 37:</span> $k = \pm 2\sqrt{6}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 38:</span> $k = 6$. ($k=0$ rejected).</div>
+            <div class="solution-item"><span class="ans-label">Ans 39:</span> $k = 14$. <em>Hint: $D = 4(k-12)^2 - 8(k-12) = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 40:</span> Proof. <em>Hint: $D = (2mc)^2 - 4(1+m^2)(c^2-a^2) = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 41:</span> $p = \pm 4\sqrt{3}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 42:</span> $k = \frac{7}{8}$. <em>Hint: Put $x=-5$ in first eq $\implies p=7$. Put $p=7$ in second and set $D=0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 43:</span> Real and distinct roots. $x = 1, \frac{2}{3}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 44:</span> Proof. <em>Hint: $D = 75 - 128 = -53 < 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 45:</span> $p = 6$. <em>Hint: Roots $3\alpha, 4\alpha$. Sum = $7\alpha = 14/p$, Prod = $12\alpha^2 = 8/p$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 46:</span> $k = 2, -\frac{10}{9}$. <em>Hint: $D = 4(1+3k)^2 - 28(3+2k) = 0 \implies 9k^2 - 8k - 20 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 47:</span> $k < 9$ and $k \neq 0$. <em>Hint: $D = 36 - 4k > 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 48:</span> $0 < p < 3$. <em>Hint: $D = 20p^2 - 60p < 0 \implies 20p(p-3) < 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 49:</span> Proof. <em>Hint: $D = 4a^2 - 4(1)(-b^2) = 4(a^2+b^2) \ge 0$ for all real numbers.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 50:</span> Proof. <em>Hint: $x=1$ is clearly a root since $(b-c)+(c-a)+(a-b)=0$. For equal roots, product $= 1 \implies \frac{a-b}{b-c} = 1 \implies a-b = b-c \implies 2b = a+c$.</em></div>
+
+            <div class="solution-item"><span class="ans-label">Ans 51:</span> 11 and 13.</div>
+            <div class="solution-item"><span class="ans-label">Ans 52:</span> $40\text{ km/h}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 53:</span> $6\text{ km/h}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 54:</span> Smaller tap = 25 hrs, Larger tap = 15 hrs.</div>
+            <div class="solution-item"><span class="ans-label">Ans 55:</span> Sides are $18\text{ m}$ and $12\text{ m}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 56:</span> $750\text{ km/h}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 57:</span> 8.</div>
+            <div class="solution-item"><span class="ans-label">Ans 58:</span> $\frac{7}{10}$.</div>
+            <div class="solution-item"><span class="ans-label">Ans 59:</span> Math: 12, English: 18 OR Math: 13, English: 17.</div>
+            <div class="solution-item"><span class="ans-label">Ans 60:</span> Yes. 5m and 12m from the gates.</div>
+            <div class="solution-item"><span class="ans-label">Ans 61:</span> Length = 20m, Rate = ₹10/m.</div>
+            <div class="solution-item"><span class="ans-label">Ans 62:</span> 16 swans.</div>
+            <div class="solution-item"><span class="ans-label">Ans 63:</span> 13 and 16. <em>Hint: $x^2 + (29-x)^2 = 425 \implies x^2 - 29x + 208 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 64:</span> $\frac{5}{6}$ or $\frac{6}{5}$. <em>Hint: $x + 1/x = 61/30 \implies 30x^2 - 61x + 30 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 65:</span> 92. <em>Hint: $xy = 18$. $(10x+y) - 63 = (10y+x) \implies x-y=7$. Subst $y = x-7 \implies x(x-7)=18 \implies x=9, y=2$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 66:</span> Sister: 6 years, Girl: 12 years. <em>Hint: Let sister be $x$. $(x+4)(2x+4) = 160 \implies x^2 + 6x - 72 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 67:</span> 12 days. <em>Hint: $1/x + 1/(x-6) = 1/4 \implies x^2 - 14x + 24 = 0 \implies x=12, 2$. Reject 2 since $x-6$ must be $>0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 68:</span> Passenger: 33 km/h, Express: 44 km/h. <em>Hint: $\frac{132}{x} - \frac{132}{x+11} = 1 \implies x^2 + 11x - 1452 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 69:</span> 3 cm and 9 cm. <em>Hint: $x^2+y^2 = 90$ and $9x^2+4y^2 = 405$. Solve simultaneously to get $5x^2 = 45 \implies x=3, y=9$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 70:</span> 20 books. <em>Hint: Let $x$ books be bought. Rate = $1200/x$. Eq: $(x+10)(\frac{1200}{x} - 20) = 1200 \implies x^2 + 10x - 600 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 71:</span> $\frac{3}{4}$. <em>Hint: Original $\frac{x}{x+1}$. New $\frac{x+3}{x+4}$. Eq: $\frac{x+3}{x+4} - \frac{x}{x+1} = \frac{3}{28} \implies x^2+5x-24=0$. Roots are $3, -8$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 72:</span> $150 \text{ cm}^2$. <em>Hint: $x+y=35$ and $x^2+y^2=625$. $(x+y)^2 = 1225 \implies 625+2xy = 1225 \implies xy=300$. Area = $\frac{1}{2}xy = 150$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 73:</span> 5 minutes and 8 minutes. <em>Hint: $\frac{1}{x} + \frac{1}{x+3} = \frac{13}{40} \implies 13x^2 - 41x - 120 = 0$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 74:</span> Attended: 20 students, Paid: ₹100 each. <em>Hint: Let original students be $x$. $\frac{2000}{x-5} - \frac{2000}{x} = 20 \implies x^2-5x-500=0 \implies x=25$.</em></div>
+            <div class="solution-item"><span class="ans-label">Ans 75:</span> 10 and 5. <em>Hint: $x-y=5$ and $\frac{1}{y} - \frac{1}{x} = \frac{1}{10} \implies \frac{x-y}{xy} = \frac{1}{10} \implies xy=50$. Subst $x=y+5 \implies y^2+5y-50=0$.</em></div>
+        </div>
+        
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

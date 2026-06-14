@@ -1,0 +1,548 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Compound Interest - Vardaan Learning Institute</title>
+    
+    <!-- MathJax Configuration and Script -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+con-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- DIAGRAMS & IMAGES --- */
+        .diagram-container { width: 28%; max-width: 190px; min-width: 140px; float: right; margin: 8px 0 14px 18px; text-align: center; }
+.diagram-container:nth-of-type(even) { float: left; margin: 8px 18px 14px 0; }
+        .ai-image { width: 100%; max-width: 100%; height: auto; border-radius: 0; border: none; box-shadow: none; transition: none; display: block; }
+        html.dark-mode .ai-image { filter: invert(1); opacity: 1; }
+        .ai-prompt-box { background-color: var(--example-bg); border: 1px dashed var(--pink-border); padding: 15px; margin: 20px auto; max-width: 85%; text-align: left; border-radius: 8px; font-family: monospace; font-size: 0.95rem; color: var(--text-main); }
+        .ai-prompt-box strong { color: var(--blue-border); }
+        svg.concept-diagram { max-width: 100%; height: auto; margin: 20px auto; display: block; }
+
+        
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .image-float-right { float: right; width: 45%; max-width: 360px; margin: 8px 0 14px 18px; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        .image-float-left { float: left; width: 45%; max-width: 360px; margin: 8px 18px 14px 0; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        html.dark-mode .image-float-right, html.dark-mode .image-float-left { filter: invert(1); opacity: 1; }
+        
+
+        @media (max-width: 768px) {
+            .diagram-container,
+            .diagram-container:nth-of-type(even),
+            .image-float-right,
+            .image-float-left {
+                float: none !important;
+                display: block !important;
+                width: 90% !important;
+                max-width: 500px !important;
+                min-width: 0 !important;
+                margin: 20px auto !important;
+                clear: both !important;
+            }
+        }
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Maths â€¢ Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>6. Compound Interest</h1>
+        
+        <p>
+            <img src="../images/C6_CompoundGrowth.png" alt="Simple vs Compound Interest" class="image-float-right ai-image">
+            In Class VII, we learnt about <strong>Simple Interest</strong>. We know that when money is borrowed on simple interest, the interest is calculated uniformly on the actual principal throughout the loan period. However, banks, post offices, insurance corporations, and other financial institutions use a different, more profitable method of computing interest called <strong>Compound Interest</strong>.</p>
+        <div class="clearfix"></div>
+
+        
+
+        <h2>1. Understanding the Difference: Simple vs. Compound Interest</h2>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Simple Interest (S.I.):</strong> Interest is calculated only on the initial principal. The formula is $S.I. = \frac{P \times R \times T}{100}$.</p>
+            <p><strong>Compound Interest (C.I.):</strong> In this method, the borrower and the lender agree to fix up a certain time interval (like one year, half-year, or a quarter). At the end of the first interval, the interest is calculated and <strong>added to the original principal</strong>. This new amount becomes the principal for the next time interval. This process repeats, meaning you earn "interest on interest".</p>
+            <p><strong>Conversion Period:</strong> The time period after which interest is calculated and then added to the principal each time to form a new principal.</p>
+        </div>
+
+        <p><strong>Example of the Process:</strong> If you invest â‚¹100 at 10% per annum for 2 years:</p>
+        <ul>
+            <li><strong>Under Simple Interest:</strong> First year interest is â‚¹10. Second year interest is â‚¹10. Total interest = â‚¹20.</li>
+            <li><strong>Under Compound Interest:</strong> First year interest is â‚¹10. New Principal for the second year becomes â‚¹110. Second year interest is 10% of â‚¹110 = â‚¹11. Total interest = â‚¹10 + â‚¹11 = â‚¹21.</li>
+        </ul>
+        <div class="clearfix"></div>
+
+        <img src="../images/C6_InterestGraph.png" alt="Graph" class="image-float-right ai-image" style="width: 45%; max-width: 360px; margin-top: 5px;">
+        <h2>2. Formula for Compound Interest (Compounded Annually)</h2>
+        <p>Calculating compound interest year-by-year can become very tedious for long periods. Thus, mathematicians derived a direct formula.</p>
+
+        <div class="green-box">
+            <span class="box-label">Core Formula</span>
+            <p><strong>Amount ($A$)</strong> = $P\left(1 + \frac{R}{100}\right)^n$</p>
+            <p><strong>Compound Interest ($C.I.$)</strong> = $A - P = P\left[ \left(1 + \frac{R}{100}\right)^n - 1 \right]$</p>
+            <br>
+            <p>Where:</p>
+            <ul>
+                <li><strong>P</strong> = Principal (initial amount borrowed/invested)</li>
+                <li><strong>R</strong> = Rate of interest per annum</li>
+                <li><strong>n</strong> = Number of conversion periods (years, if compounded annually)</li>
+            </ul>
+        </div>
+
+        <h3>Topic 2 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find the Amount and Compound Interest on Ã¢â€šÂ¹15,000 for 2 years at 8% per annum compounded annually.</li>
+            <li><strong>Q2:</strong> Calculate the compound interest on Ã¢â€šÂ¹8,000 for 3 years at 5% per annum.</li>
+        </ul>
+
+        <h2>3. Interest Compounded Half-Yearly and Quarterly</h2>
+        <p>Interest isn't always calculated yearly. Sometimes banks calculate it every 6 months (half-yearly) or every 3 months (quarterly).</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Modifying the Formula</span>
+            <p><strong>If compounded Half-Yearly:</strong></p>
+            <ul>
+                <li>The rate of interest becomes half: $\frac{R}{2}$ per half-year.</li>
+                <li>The time period becomes double: $2n$ half-years.</li>
+                <li>Formula: $A = P\left(1 + \frac{R/2}{100}\right)^{2n}$</li>
+            </ul>
+            <p><strong>If compounded Quarterly:</strong></p>
+            <ul>
+                <li>The rate of interest becomes one-fourth: $\frac{R}{4}$ per quarter.</li>
+                <li>The time period becomes four times: $4n$ quarters.</li>
+                <li>Formula: $A = P\left(1 + \frac{R/4}{100}\right)^{4n}$</li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+        <p><strong>Example:</strong> Calculate the amount on Ã¢â€šÂ¹10,000 for 1 year at 10% per annum compounded half-yearly.<br>
+        <strong>Solution:</strong> $P = 10000$, $R = 10\%$ p.a., so Rate per half-year = $5\%$. Time $n = 1$ year, so Conversion periods = $2$ half-years.<br>
+        $A = 10000 \times \left(1 + \frac{5}{100}\right)^2 = 10000 \times \left(\frac{105}{100}\right)^2 = 10000 \times \frac{21}{20} \times \frac{21}{20} = Ã¢â€šÂ¹11,025$.</p>
+
+        <h3>Topic 3 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> M/s Heera Associates let out Ã¢â€šÂ¹4,00,000 for 1 year at 16% p.a. compounded annually. How much they could earn if the interest is compounded (i) half-yearly (ii) quarterly?</li>
+            <li><strong>Q2:</strong> Sirish borrowed a sum of Ã¢â€šÂ¹1,63,840 at 12.5% p.a. compounded annually. On the same day, he lent out the same amount to Sahej at the same rate of interest but compounded half-yearly. Find his gain after 2 years.</li>
+        </ul>
+
+        <h2>4. Applications of Compound Interest Formula</h2>
+        <p>The compound interest formula is not just used for money. It is a general formula used to calculate the future value of any quantity that grows or decays at a constant percentage rate over time.</p>
+
+        <h3>A. Population Growth or Bacterial Growth</h3>
+        <p>When a quantity increases over time (like population of a city or bacteria in a culture), we use the standard compound interest formula.</p>
+        <p><strong>Formula:</strong> $P_{new} = P_{initial}\left(1 + \frac{R}{100}\right)^n$</p>
+
+        <h3>B. Depreciation</h3>
+        <p>When a quantity decreases over time (like the value of a car, machinery, or electronic goods), it is called depreciation. Since the value is reducing, the plus sign in the formula becomes a minus sign.</p>
+        <p><strong>Formula:</strong> $Value_{new} = Value_{initial}\left(1 - \frac{R}{100}\right)^n$</p>
+
+        <h3>Topic 4 Practice Questions (Applications):</h3>
+        <ul>
+            <li><strong>Q1:</strong> The annual rate of growth in population of a certain city is 8%. If its present population is 1,96,830, what was the population 3 years ago?</li>
+            <li><strong>Q2:</strong> A scooter was bought at Ã¢â€šÂ¹42,000. Its value depreciates at the rate of 8% per annum. Find its value after 1 year.</li>
+            <li><strong>Q3:</strong> The count of bacteria in a certain experiment was increasing at the rate of 2.5% per hour. Find the bacteria at the end of 2 hours if the count was initially 5,06,000.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan Ã¢ÂÂ¤Ã¯Â¸Â</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+

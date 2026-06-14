@@ -1,0 +1,589 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Exponents and Radicals - Vardaan Learning Institute</title>
+    
+    <!-- MathJax Configuration and Script -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- DIAGRAMS & IMAGES --- */
+        .diagram-container { width: 28%; max-width: 190px; min-width: 140px; float: right; margin: 8px 0 14px 18px; text-align: center; }
+.diagram-container:nth-of-type(even) { float: left; margin: 8px 18px 14px 0; }
+        .ai-image { width: 100%; max-width: 100%; height: auto; border-radius: 0; border: none; box-shadow: none; transition: none; display: block; }
+        html.dark-mode .ai-image { filter: invert(1); opacity: 1; }
+        .ai-prompt-box { background-color: var(--example-bg); border: 1px dashed var(--pink-border); padding: 15px; margin: 20px auto; max-width: 85%; text-align: left; border-radius: 8px; font-family: monospace; font-size: 0.95rem; color: var(--text-main); }
+        .ai-prompt-box strong { color: var(--blue-border); }
+        svg.concept-diagram { max-width: 100%; height: auto; margin: 20px auto; display: block; }
+
+        
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .image-float-right { float: right; width: 45%; max-width: 360px; margin: 8px 0 14px 18px; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        .image-float-left { float: left; width: 45%; max-width: 360px; margin: 8px 18px 14px 0; border-radius: 0; border: none; box-shadow: none; transition: none; }
+        html.dark-mode .image-float-right, html.dark-mode .image-float-left { filter: invert(1); opacity: 1; }
+        
+
+        @media (max-width: 768px) {
+            .diagram-container,
+            .diagram-container:nth-of-type(even),
+            .image-float-right,
+            .image-float-left {
+                float: none !important;
+                display: block !important;
+                width: 90% !important;
+                max-width: 500px !important;
+                min-width: 0 !important;
+                margin: 20px auto !important;
+                clear: both !important;
+            }
+        }
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Maths â€¢ Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>3. Exponents and Radicals</h1>
+        
+        <p>
+            <img src="../images/C3_ScaleOfUniverse.png" alt="Microscopic to Macroscopic Exponents" class="image-float-right ai-image">
+            In the previous classes, we studied the exponents of rational numbers and their foundational laws. In this chapter, we extend our understanding from integer exponents to <strong>rational numbers as exponents</strong> (fractions) and explore the laws governing them.</p>
+        <div class="clearfix"></div>
+
+        
+
+        <h2>1. Recall of Exponent Laws</h2>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Zero Exponent:</strong> For any non-zero rational number $a$, we define $a^0 = 1$.</p>
+            <p><strong>Negative Integral Exponent:</strong> Let $a$ be any non-zero rational number and $n$ be a positive integer, then $a^{-n} = \frac{1}{a^n}$.</p>
+        </div>
+        
+        <p><strong>Fundamental Laws of Exponents:</strong> If $a$ and $b$ are any two rational numbers and let $m$ and $n$ be integers, then we have:</p>
+        <ul>
+            <li>(i) $a^m \times a^n = a^{m+n}$</li>
+            <li>(ii) $\frac{a^m}{a^n} = a^{m-n}$, where $a \neq 0$</li>
+            <li>(iii) $(a^m)^n = a^{mn} = (a^n)^m$</li>
+            <li>(iv) $(ab)^n = a^n b^n$</li>
+            <li>(v) $\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}$, where $b \neq 0$</li>
+        </ul>
+
+        <h2>2. Rational Numbers as Exponents</h2>
+        <p>We know that $4^2 = 16$ and inversely $\sqrt{16} = 4$. This relationship can also be expressed using a fractional exponent:</p>
+        <p>$\sqrt{16} = 4$ can be written as $16^{\frac{1}{2}} = 4$ (Sixteen raised to the power half is four).</p>
+        <p>Similarly, $\sqrt[3]{64} = 4$ can be written as $64^{\frac{1}{3}} = 4$.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important Terminology</span>
+            <p>When a quantity has a rational (fractional) exponent, its numerator denotes the <strong>exponent (power)</strong>, while its denominator denotes the <strong>radical (root)</strong> of the quantity.</p>
+            <p><strong>Formula:</strong> $a^{\frac{m}{n}} = \sqrt[n]{a^m}$</p>
+            <ul>
+                <li><strong>Radicand:</strong> $a^m$</li>
+                <li><strong>Radical:</strong> $\sqrt[n]{a^m}$</li>
+                <li><strong>Index:</strong> $n$ (Index of a radical is always a positive integer)</li>
+                <li><strong>Radical Sign:</strong> $\sqrt{}$</li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+        <p><strong>Examples:</strong></p>
+        <ul>
+            <li>$(225)^{\frac{3}{2}}$ means the square root of $(225)^3$.</li>
+            <li>$(216)^{\frac{2}{3}}$ means the cube root of $(216)^2$.</li>
+        </ul>
+
+        <h3>Topic 2 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Express $\sqrt{7}$ and $\sqrt[3]{3^2}$ in exponential form.</li>
+            <li><strong>Q2:</strong> Express $(17)^{\frac{2}{5}}$ and $\left(\frac{12}{19}\right)^{\frac{3}{5}}$ as radicals.</li>
+        </ul>
+
+        <h2>3. Positive and Negative Rational Exponents</h2>
+        
+        <h3>Positive Rational Exponents</h3>
+        <p>If $a$ is a positive rational number and $\frac{m}{n}$ is a positive rational exponent, we define $a^{\frac{m}{n}}$ as the $n^{th}$ root of $a^m$.</p>
+        <p><strong>Formula:</strong> $a^{\frac{m}{n}} = (a^m)^{\frac{1}{n}}$</p>
+        
+        <p><em>Example:</em> Evaluate $(125)^{\frac{2}{3}}$</p>
+        <p>$(125)^{\frac{2}{3}} = [(125)^2]^{\frac{1}{3}} = \sqrt[3]{125^2} = \sqrt[3]{125 \times 125} = \sqrt[3]{5 \times 5 \times 5 \times 5 \times 5 \times 5} = 5 \times 5 = 25$.</p>
+
+        <h3>Negative Rational Exponents</h3>
+        <p>If $a$ is a non-zero positive rational number and $\frac{m}{n}$ is a positive rational number in lowest form, then a negative exponent means the reciprocal.</p>
+        <p><strong>Formula:</strong> $a^{\frac{-m}{n}} = \frac{1}{a^{\frac{m}{n}}} = \frac{1}{(a^m)^{\frac{1}{n}}}$</p>
+
+        <p><em>Example:</em> Evaluate $(27)^{\frac{-2}{3}}$</p>
+        <p>$(27)^{\frac{-2}{3}} = \frac{1}{(27^2)^{\frac{1}{3}}} = \frac{1}{\sqrt[3]{27 \times 27}} = \frac{1}{\sqrt[3]{3 \times 3 \times 3 \times 3 \times 3 \times 3}} = \frac{1}{3 \times 3} = \frac{1}{9}$.</p>
+
+        <h3>Topic 3 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Find the value of $(512)^{\frac{-2}{9}}$.</li>
+            <li><strong>Q2:</strong> Express $x^{\frac{-1}{2}}$ and $\frac{7}{x^{\frac{-5}{6}}}$ with positive indices.</li>
+        </ul>
+
+        <h2>4. Laws of Rational Exponents</h2>
+        <p>The rules for rational exponents are identical to the laws for integer exponents. Let $x$ and $y$ be positive rational numbers and let $a$ and $b$ be rational exponents:</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact File: The 5 Laws</span>
+            <ul>
+                <li><strong>Law I (Product Law):</strong> $x^a \times x^b = x^{a+b}$</li>
+                <li><strong>Law II (Quotient Law):</strong> $x^a \div x^b = x^{a-b}$ (where $a > b$)</li>
+                <li><strong>Law III (Power Law):</strong> $(x^a)^b = x^{ab} = (x^b)^a$</li>
+                <li><strong>Law IV (Power of a Product):</strong> $x^a \times y^a = (xy)^a$</li>
+                <li><strong>Law V (Power of a Quotient):</strong> $\left(\frac{x}{y}\right)^a = \frac{x^a}{y^a}$</li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+        <p><strong>Example (Applying Law I):</strong> Find the value of $6^{\frac{1}{2}} \times 6^{\frac{3}{2}}$</p>
+        <p>$6^{\frac{1}{2}} \times 6^{\frac{3}{2}} = 6^{\frac{1}{2} + \frac{3}{2}} = 6^{\frac{4}{2}} = 6^2 = 36$.</p>
+
+        <p><strong>Example (Applying Law III):</strong> Evaluate $(0.000064)^{\frac{5}{6}}$</p>
+        <p>$(0.000064)^{\frac{5}{6}} = \left(\frac{64}{1000000}\right)^{\frac{5}{6}} = \frac{(2^6)^{\frac{5}{6}}}{(10^6)^{\frac{5}{6}}} = \frac{2^5}{10^5} = \frac{32}{100000} = 0.00032$.</p>
+
+        <h3>Topic 4 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Simplify: $x^{\frac{1}{2}} \times x^{\frac{5}{2}}$</li>
+            <li><strong>Q2:</strong> Evaluate: $\frac{27^{\frac{-2}{3}} \times 81^{\frac{5}{4}}}{(\frac{1}{3})^{-3}}$</li>
+            <li><strong>Q3:</strong> Find the value of: $[(216)^{\frac{2}{3}}]^{\frac{1}{2}}$</li>
+            <li><strong>Q4:</strong> Simplify and express the answer with positive indices: $[\sqrt[3]{x^4y} \times \frac{1}{\sqrt[3]{xy^7}}]^{-4}$</li>
+            <li><strong>Q5:</strong> Evaluate: $(0.04)^{\frac{3}{2}}$</li>
+        </ul>
+
+        <h2>5. Exponential Equations</h2>
+        <p>An exponential equation is an equation where the unknown variable appears in the exponent. To solve these equations, we generally try to make the bases on both sides equal.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Rule for Solving:</strong> If the bases on both sides of an equation are the same (and not equal to 0, 1, or -1), we can equate their powers/exponents.</p>
+            <p>If $a^x = a^y$, then $x = y$.</p>
+        </div>
+
+        <p><strong>Example 1:</strong> Solve $7^x = 343$</p>
+        <p>Since $343 = 7 \times 7 \times 7 = 7^3$, the equation becomes: $7^x = 7^3$.</p>
+        <p>Since the bases are the same, we equate the powers: <strong>$x = 3$</strong>.</p>
+
+        <p><strong>Example 2:</strong> Solve $2^{x-3} = 1$</p>
+        <p>We know that any non-zero number raised to the power 0 is 1. Thus, $1 = 2^0$.</p>
+        <p>The equation becomes: $2^{x-3} = 2^0$.</p>
+        <p>Equating powers: $x - 3 = 0 \Rightarrow$ <strong>$x = 3$</strong>.</p>
+
+        <h3>Topic 5 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Solve the exponential equation: $(\sqrt{6})^{x-2} = 1$</li>
+            <li><strong>Q2:</strong> Find the value of $x$ if $3^{4x} = \frac{1}{81}$</li>
+            <li><strong>Q3:</strong> Solve for $x$: $2^{2x+1} = 4^{2x-1}$</li>
+            <li><strong>Q4:</strong> Find the value of $x$, if $8^{255} = (32)^x$</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan Ã¢ÂÂ¤Ã¯Â¸Â</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+

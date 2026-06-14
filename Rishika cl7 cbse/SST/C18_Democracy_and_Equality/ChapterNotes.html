@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Democracy and Equality - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Civics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Democracy and Equality</h1>
+        
+        <h2>1. The Need for a Constitution</h2>
+        <p>India became an independent country on <strong>15 August 1947</strong>, ending nearly 200 years of foreign domination. Following independence, there was an urgent need to formulate our own rules and political structure to govern the newly won freedom.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <h3>What is a Constitution?</h3>
+            <p>A <strong>Constitution</strong> is a written document consisting of a set of regulations that people have made and agreed upon. It lays down the framework, political structures, and the powers and duties of the government.</p>
+        </div>
+
+        <h2>2. The Preamble and Ideals of the Constitution</h2>
+        <p>Centuries of subjugation, casteism, poverty, and illiteracy had divided Indian society. The framers of the Constitution wanted to eradicate these divisions and ensure the upliftment of all citizens, especially those who were historically exploited.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <h3>The Preamble</h3>
+            <p>The <strong>Preamble</strong> serves as an introduction to the Indian Constitution. It starts with the powerful words: <em>"We the people of India..."</em>.</p>
+            <p>It establishes India as a <strong>Sovereign, Socialist, Secular, Democratic Republic</strong> and secures Justice, Liberty, Equality, and Fraternity for all its citizens.</p>
+        </div>
+
+        <h3>Understanding Secularism</h3>
+        <p>India opted for <strong>secularism</strong>. In a secular nation, everyone is free to follow a religion of their choice, and the State does not have an official religion of its own. In India, a person's identity is not determined by religion or caste, but by what they make of themselves.</p>
+
+        <h2>3. Universal Adult Franchise & Elections</h2>
+        <p>In a democracy, equality is paramount. The Constitution guarantees the right to vote through the principle of Universal Adult Franchise.</p>
+        <ul>
+            <li><strong>Universal Adult Franchise:</strong> The right to vote granted to every citizen who is above <strong>18 years</strong> of age, without any discrimination based on caste, colour, religion, region, or language.</li>
+            <li><strong>One Man One Vote:</strong> This principle ensures that every vote carries equal weight. This was a courageous step by the framers of the Constitution, considering the high illiteracy and poverty rates at the time.</li>
+            <li>Citizens elect their <strong>representatives</strong> for a fixed period to run the government according to the people's wishes.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Historical Fact</span>
+            <p>On 25 November 1949, <strong>Dr. B.R. Ambedkar</strong> spoke in the Constituent Assembly against the caste system. He stated: <em>"The castes are anti-national... because they bring about separation in social life... and generate jealousy and antipathy between caste and caste."</em></p>
+        </div>
+
+        <h3>Political Parties and Governments</h3>
+        <ul>
+            <li><strong>Democracy:</strong> A system where supreme power lies with the people, who rule through their chosen representatives.</li>
+            <li><strong>Multi-Party System:</strong> India has many political parties that campaign and participate in elections.</li>
+            <li><strong>Coalition Government:</strong> When a single majority party cannot form the government, multiple political parties join hands to form a government.</li>
+            <li><strong>Opposition:</strong> All parties other than the party/parties in power perform the role of the opposition. They keep a check on the activities of the ruling party and protect the rights of the people.</li>
+        </ul>
+
+        <h2>4. The Right to Equality</h2>
+        <p>The Indian Constitution guarantees the equality of status and opportunity to all its citizens. The main provisions under the <strong>Right to Equality</strong> are:</p>
+        <ul>
+            <li>All citizens are equal before the law.</li>
+            <li>Discrimination on the basis of religion, caste, gender, or place of birth is strictly prohibited.</li>
+            <li>Everyone is entitled to equal opportunities in all walks of life.</li>
+            <li>The law provides equal protection to all citizens.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>Our Constitution has completely banned the practice of <strong>untouchability</strong>. Additionally, the awarding of discriminatory titles like <em>Raj Bahadur</em> or <em>Khan Bahadur</em> has been abolished as they created artificial divisions in society.</p>
+        </div>
+
+        <h2>5. Inequalities that Still Exist</h2>
+        <p>Despite being an independent nation for decades with constitutional rights in place, true equality is yet to reach everyone. Millions still struggle for basic necessities.</p>
+        <ul>
+            <li><strong>Economic Inequality:</strong> E.g., The story of Sheikho, a 10-year-old rag-picker who works from early morning till late evening. Despite his parents having the right to vote, they lack basic necessities like food, shelter, and clothing.</li>
+            <li><strong>Social and Caste Discrimination:</strong> E.g., The story of Paro, a flower seller. Her parents were forced to leave their village because they belonged to a "lower caste" and were denied access to public wells by so-called "upper castes."</li>
+            <li><strong>Communal Discrimination:</strong> Some religious places ban the entry of people from other communities. Some communities are denied jobs or housing based on their background.</li>
+        </ul>
+
+        <h2>6. Government Steps to Ensure Equality</h2>
+        <p>The Government of India implements the provisions of the Right to Equality in two primary ways:</p>
+        <ol>
+            <li><strong>Making Laws:</strong> Passing legislations to protect the Right to Equality (e.g., equal opportunities in education and jobs).</li>
+            <li><strong>Launching Programmes/Schemes:</strong> Providing assistance to disadvantaged communities.</li>
+        </ol>
+
+        <div class="green-box">
+            <span class="box-label">Key Scheme</span>
+            <h3>The Mid-Day Meal Scheme</h3>
+            <p>This is one of the most successful government schemes. Initiated on the request of teachers, it provides cooked and nutritious meals to children in schools.</p>
+            <p><strong>Impact:</strong> It dramatically increased the enrolment and attendance of children in schools, aiding the goal of free and compulsory elementary education.</p>
+        </div>
+
+        <h3>Reservation and Welfare Measures</h3>
+        <p>To liberate weaker sections from centuries of oppression and forced isolation, the Constitution provided for <strong>reservation</strong>. This ensures that disadvantaged groups have a proportionate share in education and jobs.</p>
+        <ul>
+            <li><strong>Scheduled Castes (SCs) & Scheduled Tribes (STs):</strong> Disadvantaged groups officially enlisted in Article 341 of the Indian Constitution.</li>
+            <li><strong>Other Backward Classes (OBCs):</strong> Later included to receive the benefits of reservation.</li>
+        </ul>
+
+        <p><strong>Other Government Measures Include:</strong></p>
+        <ul>
+            <li>Loans and self-employment schemes.</li>
+            <li>Low-budget housing on instalments and widow pensions.</li>
+            <li>Literacy programmes like <strong>Operation Black Board</strong> and Adult Education.</li>
+            <li>Providing free uniforms, books, stipends, and scholarships to students from weaker sections.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

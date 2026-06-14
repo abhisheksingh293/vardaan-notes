@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Turkish Invasions - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: none;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+            .theme-toggle, .branding-footer { display: none !important; }
+            .contact-info { display: flex !important; }
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+            .watermark-image { filter: none !important; max-width: 80% !important; }
+            @page {
+                size: A4;
+                margin: 2cm;
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+
+    <div class="paper-sheet">
+        
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 History • Chapter Notes</div>
+            
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <h1>The Turkish Invasions</h1>
+
+        <h2>1. Background: Political Condition of India</h2>
+        <p>By the 9th century, the Arab Empire had disintegrated into several independent kingdoms. Two important centers that rose to prominence were <strong>Ghazni and Ghor</strong>, located in present-day Afghanistan.</p>
+        <p>During the 10th and 11th centuries, North India was highly fragmented into many small kingdoms. This <strong>political instability</strong>, combined with famous tales of India's immense wealth, attracted several invasions from Central Asia.</p>
+
+        <h2>2. Mahmud of Ghazni (971-1030 CE)</h2>
+        <p>Mahmud, the son of a Turkish noble named <strong>Subuktigin</strong>, became the ruler of Ghazni in 971 CE. His primary ambition was to become a great conqueror and acquire wealth to strengthen his home kingdom.</p>
+        
+        <h3>The 17 Raids on India</h3>
+        <p>Between <strong>1001 and 1025 CE</strong>, Mahmud launched <strong>17 raids</strong> into India. He specifically targeted rich cities and highly wealthy temple towns.</p>
+        <ul>
+            <li><strong>Somnath Expedition (1025 CE):</strong> His most famous and destructive raid was on the Somnath temple in Gujarat. He plundered enormous amounts of wealth from this temple.</li>
+            <li><strong>Use of Wealth:</strong> He did not want to establish an empire in India. Instead, he used the looted wealth to:
+                <ul>
+                    <li>Beautify his capital city, Ghazni, with mosques, libraries, and museums.</li>
+                    <li>Maintain a massive, powerful army.</li>
+                    <li>Patronize scholars and artists.</li>
+                </ul>
+            </li>
+            <li><strong>Annexation:</strong> The only territory he formally annexed was <strong>Punjab</strong>, which he used as a base for future campaigns. Mahmud died in 1030 CE.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Patron of Scholars:</strong> Mahmud of Ghazni patronized famous scholars. <strong>Al-Biruni</strong> wrote the comprehensive account of India called <em>Kitab-ul-Hind</em>, and <strong>Firdausi</strong> wrote the famous epic <em>Shah Nama</em>.</p>
+        </div>
+
+        <h2>3. Muhammad Ghori & The Battles of Tarain</h2>
+        <p>After a gap of nearly 150 years, <strong>Muhammad Ghori</strong>, a Turkish ruler from Afghanistan, invaded India in <strong>1175 CE</strong>. Unlike Mahmud of Ghazni, Ghori’s main intention was to conquer territories and <strong>establish a permanent empire</strong> in India.</p>
+
+        <h3>The Battles of Tarain</h3>
+        <p>Ghori conquered Multan, Sindh, Peshawar, and Lahore. His expansion brought him into direct conflict with the powerful Rajput ruler, <strong>Prithviraj Chauhan</strong>.</p>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>First Battle of Tarain (1191 CE):</strong> Prithviraj Chauhan completely defeated Muhammad Ghori.</p>
+            <p><strong>Second Battle of Tarain (1192 CE):</strong> Ghori returned with a much larger and better-prepared army and defeated Prithviraj Chauhan. This battle is considered a major turning point as it marked the <strong>end of Rajput rule</strong> in northern India.</p>
+        </div>
+
+        <h3>Foundation of the Delhi Sultanate</h3>
+        <p>In 1194 CE, Ghori also defeated ruler Jaichand and annexed Kanauj. Before returning to Ghor, he left his trusted general, <strong>Qutb-ud-din Aibak</strong>, in charge of his conquered Indian territories. Muhammad Ghori was assassinated in <strong>1206 CE</strong>, paving the way for the start of the Delhi Sultanate.</p>
+
+        <h2>4. Causes for the Defeat of the Rajputs</h2>
+        <p>Despite their bravery, the Rajputs were defeated by the Turkish invaders due to several key factors:</p>
+        <ul>
+            <li><strong>Lack of Unity:</strong> The Rajput chiefs constantly fought among themselves and failed to unite against a common foreign enemy.</li>
+            <li><strong>The Caste System:</strong> Only the Rajput caste fought in the wars. The rest of the society was unengaged, meaning a smaller portion of the population was mobilized for defense.</li>
+            <li><strong>Outdated Military Tactics:</strong> Rajputs relied heavily on slow-moving elephants, whereas the Turks used swift, highly mobile cavalry (horses) and advanced archery techniques.</li>
+        </ul>
+
+        <h2>5. Impact of the Turkish Invasions</h2>
+        <p>The Turkish invasions had profound, long-lasting effects on the Indian subcontinent:</p>
+        <ul>
+            <li><strong>Political Shift:</strong> It led to the establishment of the Delhi Sultanate, beginning with the Slave Dynasty.</li>
+            <li><strong>Cultural Exchange:</strong> A large number of scholars, artisans, and Sufi saints migrated from Central Asia to India.</li>
+            <li><strong>Language and Arts:</strong> It introduced Persian into Indian administration and eventually led to the birth of a new language, <strong>Urdu</strong>. Food, music, and architecture were highly influenced.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Indo-Islamic Culture:</strong> The blending of Turkish/Islamic traditions with indigenous Indian traditions resulted in the development of a unique, rich composite culture known as Indo-Islamic culture.</p>
+        </div>
+
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

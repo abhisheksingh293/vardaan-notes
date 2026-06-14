@@ -1,0 +1,514 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Number Systems - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #1a1a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0a1a0f;
+            --green-border: #81c784;
+            --blue-bg: #050f1a;
+            --blue-border: #64b5f6;
+            --pink-bg: #1a0510;
+            --pink-border: #f06292;
+            --text-main: #f0f0f0;
+            --paper-bg: #000000;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.08);
+            --example-text: #cccccc;
+            --toggle-bg: #1a1a1a;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Maths â€¢ Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>1. Number Systems</h1>
+        
+        <p>Numbers are fundamental tools in mathematics that help us count, measure, and identify objects. In this chapter, we will learn about writing large numbers, grouping them based on Indian and International systems, forming numbers, and performing basic arithmetic operations on large numbers.</p>
+
+        <h2>1. The Hindu-Arabic Number System</h2>
+        <p>The system we use for writing numerals was developed by Hindu mathematicians and popularized by Arabs, hence it is known as the <strong>Hindu-Arabic number system</strong>.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Numeral:</strong> A symbolic representation of a number.</p>
+            <p><strong>Denary System:</strong> A number system based on the number 10. The Hindu-Arabic system is a denary system because counting is done in tens using ten symbols called <strong>digits</strong> (0, 1, 2, 3, 4, 5, 6, 7, 8, and 9).</p>
+        </div>
+        
+        <p>For example in a denary system:</p>
+        <ul>
+            <li>Ten <strong>'units'</strong> make one 'ten' (10 Ã— 1 = 10)</li>
+            <li>Ten <strong>'tens'</strong> make one 'hundred' (10 Ã— 10 = 100)</li>
+            <li>Ten <strong>'hundreds'</strong> make one 'thousand' (10 Ã— 100 = 1000)</li>
+        </ul>
+
+        <h3>Topic 1 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Which digits are classified as even digits and which as odd digits in the Hindu-Arabic system?</li>
+            <li><strong>Q2:</strong> Why is the Hindu-Arabic number system called a denary system?</li>
+        </ul>
+
+        <h2>2. Face Value and Place Value</h2>
+        <p>In the Hindu-Arabic system, the digits in a numeral hold a specific value depending on their position.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Face Value:</strong> The actual, unchanging value of the digit itself, regardless of where it is placed in the numeral.</p>
+            <p><strong>Place Value:</strong> The value of the digit determined by its position (ones, tens, hundreds, etc.) within the numeral.</p>
+        </div>
+        
+        <p><strong>Example:</strong> In the numeral 235, the <strong>face value</strong> of the digit 2 is two, while its <strong>place value</strong> is two hundred (200).</p>
+
+        <h3>Indian vs. International Place Value System</h3>
+        <p>In the <strong>Indian System</strong>, digits are grouped into periods of Lakhs, Thousands, and Ones.</p>
+        <ul>
+            <li><strong>Crores:</strong> Ten Crores, Crores</li>
+            <li><strong>Lakhs:</strong> Ten Lakhs, Lakhs</li>
+            <li><strong>Thousands:</strong> Ten Thousands, Thousands</li>
+            <li><strong>Ones:</strong> Hundreds, Tens, Ones</li>
+        </ul>
+
+        <p>In the <strong>International System</strong>, digits are grouped into periods of Millions, Thousands, and Ones.</p>
+        <ul>
+            <li><strong>Millions:</strong> Hundred Millions, Ten Millions, Millions</li>
+            <li><strong>Thousands:</strong> Hundred Thousands, Ten Thousands, Thousands</li>
+            <li><strong>Ones:</strong> Hundreds, Tens, Ones</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>1 Million = 10 Lakhs</p>
+            <p>10 Millions = 1 Crore</p>
+            <p>100 Millions = 10 Crores</p>
+        </div>
+
+        <h3>Topic 2 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Write the face value and place value of the odd digits in the number: 81,65,03,40,729.</li>
+            <li><strong>Q2:</strong> Rewrite the number 71235 and 157936480 using an International Place Value chart, placing commas accurately.</li>
+            <li><strong>Q3:</strong> Write the number "Sixty million two hundred eleven thousand and seventy-eight" in figures.</li>
+        </ul>
+
+        <h2>3. Comparing and Arranging Numbers</h2>
+        <p>When comparing two large numbers, we evaluate two main rules:</p>
+        <ul>
+            <li><strong>Rule 1:</strong> Count the digits. The number with more digits is always greater. (e.g., 46,325 < 1,34,700).</li>
+            <li><strong>Rule 2:</strong> If the number of digits is equal, compare the digits from the extreme left. If the first digits are the same, compare the second digits from the left, and so on.</li>
+        </ul>
+
+        <p>Based on these comparisons, numbers can be arranged in <strong>Ascending Order</strong> (smallest to greatest) or <strong>Descending Order</strong> (greatest to smallest).</p>
+
+        <h3>Forming Greatest and Smallest Numbers</h3>
+        <p>To form the greatest number from a set of digits, arrange them in descending order. To form the smallest number, arrange them in ascending order (Note: The digit 0 cannot be the first digit of a number).</p>
+        
+        <h3>Topic 3 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Compare the numbers: 60,714 and 52,130. Which is greater?</li>
+            <li><strong>Q2:</strong> Write the greatest and smallest 8-digit numbers that can be formed using all the digits of the number: 1,39,42,738.</li>
+            <li><strong>Q3:</strong> Arrange the following numbers in ascending order: 5123687, 21674116, 5132786, 24765829, 978678.</li>
+            <li><strong>Q4:</strong> Arrange the following numbers in descending order: 74964502, 5478786, 74982401, 4789899, 638542.</li>
+        </ul>
+
+        <h2>4. Operations on Large Numbers</h2>
+        <p>We add, subtract, multiply, and divide large numbers using the exact same standard algorithms we use for smaller numbers.</p>
+
+        <h3>Key Applications (Word Problems)</h3>
+        <ul>
+            <li><strong>Addition:</strong> Finding totals (e.g., finding the total population of three cities).</li>
+            <li><strong>Subtraction:</strong> Finding differences, remaining amounts, or missing addends (e.g., finding the number of females if total population and male population are given).</li>
+            <li><strong>Multiplication:</strong> Finding total value when the value of a single unit is known (e.g., If 1 mobile phone costs â‚¹16,355, the cost of 643 phones is 16,355 Ã— 643).</li>
+            <li><strong>Division:</strong> Distributing equally or finding the unit rate (e.g., If a car covers 675 km in 12 hours, the speed per hour is 675 Ã· 12).</li>
+        </ul>
+
+        <h3>Topic 4 Practice Questions:</h3>
+        <ul>
+            <li><strong>Q1:</strong> Simplify: 235647 + 4678896 - 783459 + 8058465.</li>
+            <li><strong>Q2:</strong> Multiply 798539 by 8905.</li>
+            <li><strong>Q3:</strong> Divide 25744733 by 4786 and find the quotient and remainder.</li>
+            <li><strong>Q4:</strong> The total population of a city is 16,785,101. If the number of males is 8,987,326, find the number of females in the city.</li>
+            <li><strong>Q5:</strong> A vessel has 70 L of cold drink. In how many bottles, each of 1 L 250 mL capacity, can it be filled?</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan â¤ï¸</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Rotational Symmetry - Vardaan Learning Institute</title>
+
+    <!-- External Libraries: MathJax for equations -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255, 255, 255, 0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255, 255, 255, 0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen;
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1);
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px;
+            /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666;
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px;
+
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p,
+        li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background-color: var(--example-bg);
+        }
+
+        th,
+        td {
+            border: 1px solid var(--toggle-border);
+            padding: 10px 12px;
+            text-align: center;
+            font-size: 1.05rem;
+        }
+
+        th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+            font-weight: bold;
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box {
+            background-color: var(--blue-bg);
+            border: 2px solid var(--blue-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .green-box {
+            background-color: var(--green-bg);
+            border: 2px solid var(--green-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .yellow-box {
+            background-color: var(--yellow-bg);
+            border: 2px solid var(--yellow-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label {
+            color: var(--blue-border);
+            border-color: var(--blue-border);
+        }
+
+        .green-box .box-label {
+            color: var(--green-border);
+            border-color: var(--green-border);
+        }
+
+        .yellow-box .box-label {
+            color: #f9a825;
+            border-color: var(--yellow-border);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun,
+        .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun {
+            opacity: 0;
+            transform: scale(0.5) rotate(-90deg);
+        }
+
+        html.dark-mode .icon-moon {
+            opacity: 0;
+            transform: scale(0.5) rotate(90deg);
+        }
+
+        html.dark-mode .icon-sun {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+
+        /* --- NEWSPAPER STYLE IMAGES --- */
+        .image-float-right {
+            float: right;
+            width: 40%;
+            max-width: 350px;
+            margin: 8px 0 20px 20px;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            transition: none;
+            display: block;
+        }
+
+        .image-float-left {
+            float: left;
+            width: 40%;
+            max-width: 350px;
+            margin: 8px 20px 20px 0;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            transition: none;
+            display: block;
+        }
+
+        .ai-image {
+            background-color: #ffffff;
+            height: auto;
+            display: block;
+        }
+
+        html.dark-mode .image-float-right,
+        html.dark-mode .image-float-left {
+            filter: invert(1);
+            opacity: 1;
+        }
+
+        html.dark-mode .ai-image {
+            background-color: #000000;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+
+        @media (max-width: 768px) {
+
+            .diagram-container,
+            .diagram-container:nth-of-type(even),
+            .image-float-right,
+            .image-float-left {
+                float: none !important;
+                display: block !important;
+                width: 90% !important;
+                max-width: 500px !important;
+                min-width: 0 !important;
+                margin: 20px auto !important;
+                clear: both !important;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+
+            /* 1. Reset Colors to Clean White/Black */
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .paper-sheet {
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle,
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important;
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+
+                @bottom-left {
+                    content: none;
+                }
+
+                @bottom-right {
+                    content: none;
+                }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60;
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg"
+            alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Mathematics &bull; Chapter Notes</div>
+
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>ðŸŒ vardaanlearning.com</span>
+                <span>ðŸ“ž 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Rotational Symmetry</h1>
+
+        <h2>1. Quick Recall: Line Symmetry</h2>
+        <div class="clearfix">
+            <img src="../images/C16_RotationalSymmetry.png" alt="Geometric Rotational Symmetry"
+                class="image-float-right ai-image" style="margin-bottom: 30px;">
+            <p>Before diving into rotations, let's recall <strong>line symmetry</strong>. A figure has line symmetry if
+                a line can be drawn dividing the figure into two identical halves (mirror images).</p>
+        </div>
+        <ul>
+            <li><strong>Regular Hexagon:</strong> Has 6 lines of symmetry.</li>
+            <li><strong>Square:</strong> Has 4 lines of symmetry.</li>
+            <li><strong>Circle:</strong> Has unlimited (infinite) lines of symmetry.</li>
+            <li><strong>Equilateral Triangle:</strong> Has 3 lines of symmetry.</li>
+            <li><strong>Scalene Triangle:</strong> Has 0 lines of symmetry.</li>
+        </ul>
+
+        <h2>2. Rotational Symmetry</h2>
+        <p>Have you seen the hands of a clock moving? They move round and round about a fixed point, always in one
+            direction (clockwise). Other common examples of rotating objects include the blades of a ceiling fan and the
+            wheels of a bicycle.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>What is Rotation?</strong> Rotation turns an object around a fixed point. During rotation, the
+                size and shape of the object <strong>do not change</strong>.</p>
+            <ul>
+                <li><strong>Centre of Rotation:</strong> The fixed point about which the object rotates.</li>
+                <li><strong>Angle of Rotation:</strong> The angle of turn during rotation.</li>
+            </ul>
+        </div>
+
+        <h3>Angles of Turn</h3>
+        <ul>
+            <li>A <strong>full turn</strong> means a rotation of $360^{\circ}$.</li>
+            <li>A <strong>half turn</strong> means a rotation of $180^{\circ}$.</li>
+            <li>A <strong>quarter turn</strong> means a rotation of $90^{\circ}$.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>If an object looks <strong>exactly the same</strong> after a certain amount of rotation (less than
+                $360^{\circ}$), we say that the object has <strong>Rotational Symmetry</strong>.</p>
+            <p>Every plane figure, if rotated through an angle of $360^{\circ}$, will coincide with itself. Thus,
+                <strong>every figure has a rotational symmetry of order 1</strong>.</p>
+        </div>
+
+        <h2>3. Order of Rotational Symmetry</h2>
+        <p>In a complete turn ($360^{\circ}$), the number of times an object looks exactly the same is called the
+            <strong>order of rotational symmetry</strong> of the object.</p>
+
+        <h3>Example A: A Square</h3>
+        <p>A square looks exactly the same 4 times during a complete $360^{\circ}$ rotation (at $90^{\circ}$,
+            $180^{\circ}$, $270^{\circ}$, and $360^{\circ}$).</p>
+        <ul>
+            <li><strong>Centre of rotation:</strong> Intersection of its diagonals (centre of the square).</li>
+            <li><strong>Angle of rotation:</strong> $90^{\circ}$</li>
+            <li><strong>Order of rotation:</strong> 4</li>
+        </ul>
+
+        <h3>Example B: An Equilateral Triangle</h3>
+        <p>An equilateral triangle looks exactly the same 3 times during a complete rotation (at $120^{\circ}$,
+            $240^{\circ}$, and $360^{\circ}$).</p>
+        <ul>
+            <li><strong>Centre of rotation:</strong> Centroid (centre of the triangle).</li>
+            <li><strong>Angle of rotation:</strong> $120^{\circ}$</li>
+            <li><strong>Order of rotation:</strong> 3</li>
+        </ul>
+
+        <h3>Example C: A Windmill</h3>
+        <p>A classic 4-blade windmill will look exactly the same after every quarter turn. Hence, it has a rotational
+            symmetry of <strong>order 4</strong> at an angle of $90^{\circ}$.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Practice</span>
+            <strong>Worksheet 1: Identify the Order</strong><br>
+            Determine the order of rotational symmetry for common shapes:<br>
+            1. <strong>Regular Pentagon:</strong> Order is 5 (Angle: $\frac{360^{\circ}}{5} = 72^{\circ}$).<br>
+            2. <strong>Regular Octagon:</strong> Order is 8 (Angle: $\frac{360^{\circ}}{8} = 45^{\circ}$).<br>
+            3. <strong>Rectangle:</strong> Order is 2 (Looks same only at $180^{\circ}$ and $360^{\circ}$).
+        </div>
+
+        <h2>4. Line Symmetry AND Rotational Symmetry</h2>
+        <p>When you observe shapes around us, some objects have <strong>only</strong> line symmetry, some have
+            <strong>only</strong> rotational symmetry, and some have <strong>both</strong>.</p>
+
+        <p>A <strong>Circle</strong> is the most perfect symmetrical figure. It can be rotated about its centre through
+            any angle and look the exact same. Therefore:</p>
+        <ul>
+            <li>A circle has <strong>unlimited (infinite)</strong> lines of symmetry.</li>
+            <li>A circle has rotational symmetry around its centre for <strong>every single angle</strong> (Infinite
+                order).</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>English Alphabets Analysis:</strong></p>
+            <ul>
+                <li><strong>Only Line Symmetry:</strong> A, B, C, D, E, M, T, U, V, W, Y</li>
+                <li><strong>Only Rotational Symmetry:</strong> N, S, Z (Order 2, Half-turn)</li>
+                <li><strong>Both Line and Rotational Symmetry:</strong> H, I, O, X</li>
+                <li><strong>No Symmetry:</strong> F, G, J, L, P, Q, R</li>
+            </ul>
+        </div>
+
+        <h2>5. Quick Reference Table</h2>
+        <p>Here is a consolidated table containing both types of symmetry for common geometric shapes.</p>
+
+        <table>
+            <tr>
+                <th>Shape</th>
+                <th>Lines of Symmetry</th>
+                <th>Order of Rotation</th>
+                <th>Angle of Rotation</th>
+            </tr>
+            <tr>
+                <td>Square</td>
+                <td>4</td>
+                <td>4</td>
+                <td>$90^{\circ}$</td>
+            </tr>
+            <tr>
+                <td>Rectangle</td>
+                <td>2</td>
+                <td>2</td>
+                <td>$180^{\circ}$</td>
+            </tr>
+            <tr>
+                <td>Parallelogram</td>
+                <td>0</td>
+                <td>2</td>
+                <td>$180^{\circ}$</td>
+            </tr>
+            <tr>
+                <td>Equilateral Triangle</td>
+                <td>3</td>
+                <td>3</td>
+                <td>$120^{\circ}$</td>
+            </tr>
+            <tr>
+                <td>Regular Hexagon</td>
+                <td>6</td>
+                <td>6</td>
+                <td>$60^{\circ}$</td>
+            </tr>
+            <tr>
+                <td>Circle</td>
+                <td>Infinite</td>
+                <td>Infinite</td>
+                <td>Any angle</td>
+            </tr>
+            <tr>
+                <td>Semi-circle</td>
+                <td>1</td>
+                <td>1</td>
+                <td>$360^{\circ}$</td>
+            </tr>
+        </table>
+
+        <div class="yellow-box">
+            <span class="box-label">Practice</span>
+            <strong>Brain Teasers & Assessment</strong><br><br>
+            <strong>Q1. Name one figure each having rotational symmetry of order:</strong><br>
+            (i) <strong>4:</strong> Square (Angle: $90^{\circ}$)<br>
+            (ii) <strong>2:</strong> Rectangle or Parallelogram (Angle: $180^{\circ}$)<br>
+            (iii) <strong>3:</strong> Equilateral Triangle (Angle: $120^{\circ}$)<br>
+            (iv) <strong>6:</strong> Regular Hexagon (Angle: $60^{\circ}$)<br><br>
+
+            <strong>Q2. In the word 'MATHS', which letter shows rotational symmetry of order 2?</strong><br>
+            <em>Answer:</em> The letters <strong>H</strong> and <strong>S</strong>. (When rotated $180^{\circ}$, they
+            look exactly the same).<br><br>
+
+            <strong>Q3. List two letters of the English alphabet which exhibit both line as well as rotational
+                symmetry.</strong><br>
+            <em>Answer:</em> <strong>H</strong>, <strong>O</strong>, <strong>I</strong>, or <strong>X</strong>.
+        </div>
+
+        <h2>Summary: You Must Know...</h2>
+        <ul>
+            <li><strong>Rotation</strong> turns an object around a fixed point.</li>
+            <li>The fixed point is called the <strong>centre of rotation</strong>.</li>
+            <li>The angle by which the object rotates about the fixed point is called the <strong>angle of
+                    rotation</strong>.</li>
+            <li>If an object looks exactly the same after a certain amount of rotation, it has <strong>rotational
+                    symmetry</strong>.</li>
+            <li>In a complete turn ($360^{\circ}$), the number of times the object looks exactly the same is called the
+                <strong>order of rotational symmetry</strong>.</li>
+            <li>Order of rotational symmetry of a square is 4, and that of an equilateral triangle is 3.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan â¤ï¸</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+
+</html>

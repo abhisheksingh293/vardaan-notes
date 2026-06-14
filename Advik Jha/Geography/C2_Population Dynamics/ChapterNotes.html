@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Population Dynamics - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- NEWSPAPER IMAGE LAYOUT --- */
+        .news-figure {
+            float: left;
+            max-width: 42%;
+            margin: 10px 18px 12px 0;
+        }
+
+        .news-figure--right {
+            float: right;
+            margin: 10px 0 12px 18px;
+        }
+
+        .news-figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .news-figure figcaption {
+            font-size: 0.88rem;
+            color: var(--meta-text);
+            margin-top: 6px;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        h2 {
+            clear: both;
+        }
+
+        @media (max-width: 768px) {
+            .news-figure,
+            .news-figure--right {
+                float: none;
+                max-width: 100%;
+                margin: 16px 0;
+            }
+
+            .news-figure figcaption {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">CLASS 8 GEOGRAPHY • CHAPTER NOTES</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>POPULATION DYNAMICS</h1>
+        
+        <h2>1. Introduction to Population Dynamics</h2>
+        <p>Population refers to the total number of people inhabiting a specific area. Population and resources are highly unevenly distributed across the world and are closely related. Rapid growth in population threatens the sustainability of limited natural resources.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Demography:</strong> It is a social science that entails the statistical study of human populations, including size, structure, and distribution.</p>
+        </div>
+
+        <h3>Growing Population of the World</h3>
+        <ul>
+            <li>At present, the population of the world is nearly <strong>7.9 billion</strong> (as of 2022).</li>
+            <li>The current population growth rate is nearly <strong>1 per cent per year</strong>.</li>
+            <li>The global population is expected to reach <strong>9.7 billion in 2050</strong> and could peak at nearly 11 billion around 2100.</li>
+            <li>The speed of population growth peaked between 1962-65 but has slowed down by more than half since then due to reduced fertility rates.</li>
+        </ul>
+
+        <h2>2. Population Distribution and Density</h2>
+        <p><strong>Population distribution</strong> refers to how the population is spread across the world. Strikingly, 7.9 billion people are concentrated in only <strong>20 per cent</strong> of the Earth's land surface that is suitable for human habitation.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Top 3 Most Populated Countries (2022):</strong><br>
+            1. China (1,426 million)<br>
+            2. India (1,412 million)<br>
+            3. USA (337 million)</p>
+        </div>
+
+        <h3>Population Density</h3>
+        <p><strong>Density of population</strong> means the number of people living per square kilometre. It is calculated as: <strong>Density = Total Population ÷ Total Area</strong>.</p>
+        <p>The average density is much higher in less developed countries (697 persons/sq. km) compared to developed countries (238 persons/sq. km).</p>
+
+        <figure class="news-figure">
+            <img src="../Images/C2_illustrating population density using a heat map color scale.jpg" alt="Global population density heat map" />
+            <figcaption>Global population density heat map showing densely and sparsely populated regions.</figcaption>
+        </figure>
+
+        <h3>Areas of High Density</h3>
+        <p>Regions with vast fertile lands, ample water supply, suitable climate, and thriving economic activities attract dense populations.</p>
+        <ul>
+            <li><strong>Asia:</strong> The riverine plains of Asia, such as the Ganga Plains in India, hold the highest population density.</li>
+            <li><strong>Europe:</strong> Industrial north-west Europe (France, UK, Germany, Denmark) due to cool climate, industrial growth, and diverse natural resources.</li>
+            <li><strong>Americas:</strong> The fertile, temperate regions of the US, Mexico, and Brazil. The US attracts high immigrant populations due to technological advancement and job prospects.</li>
+            <li><strong>Africa:</strong> The rich Nile Valley, Mediterranean Coast, Guinea Coast, and coastal South Africa.</li>
+        </ul>
+
+        <h3>Areas of Moderate and Low Density</h3>
+        <ul>
+            <li><strong>Moderate Density:</strong> Central USA, Tropical western Africa, Russia, Eastern Europe, Deccan Plateau of India, and Central China.</li>
+            <li><strong>Low Density (Sparsely Populated):</strong> Arid hot and cold deserts, mountainous regions, and dense equatorial forests. Examples include <strong>Mongolia (lowest density of 2 persons per sq. km)</strong>, Iceland, Namibia, northern Canada, and the Australian outbacks. These areas suffer from extreme climates, lack of arable land, and poor transportation.</li>
+        </ul>
+
+        <h2>3. Overpopulation and Underpopulation</h2>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Optimum Population:</strong> This is a state where the available resources in a given area are just adequate to support a certain number of people. It provides a perfect balance, ensuring high standards of living and sufficient resources for everyone.</p>
+        </div>
+
+        <h3>Overpopulation</h3>
+        <p>Overpopulation occurs when a very large number of people exist for the available resources in a region. This is caused by a sudden population increase or rapid depletion of resources. India, Bangladesh, and China are examples.</p>
+        <p><strong>Impact of Overpopulation:</strong></p>
+        <ul>
+            <li><strong>Depletion of Resources:</strong> Overutilisation creates water scarcity, food crises, and starvation. We must adopt <strong>sustainable development</strong> (judicious use of resources without compromising future generations' needs).</li>
+            <li><strong>Unemployment:</strong> Stiffer competition for fewer available jobs.</li>
+            <li><strong>Poor Living Conditions:</strong> Growth of slums and unhygienic conditions due to lack of land.</li>
+            <li><strong>Price Rise:</strong> High demand and low supply increase the cost of living.</li>
+            <li><strong>Environmental Degradation:</strong> Burning of fossil fuels and deforestation lead to global warming and loss of biodiversity.</li>
+        </ul>
+
+        <figure class="news-figure news-figure--right">
+            <img src="../Images/C2_overpopulated, cramped urban city.jpg" alt="Overpopulated and cramped urban city" />
+            <figcaption>A dense urban settlement illustrating pressure on housing and civic infrastructure.</figcaption>
+        </figure>
+
+        <h3>Underpopulation</h3>
+        <p>Underpopulation is a state where the number of people living in a region is so small that the resources are not fully utilised. It results from a high death rate, low birth rate, or high emigration. Example: The Prairies of North America.</p>
+        <p><strong>Impact of Underpopulation:</strong></p>
+        <ul>
+            <li><strong>Negative:</strong> Yields an insufficient skilled labour force, leading to poor resource utilisation and poor economic growth.</li>
+            <li><strong>Positive:</strong> Results in better job opportunities, sufficient resource availability, and reduced levels of pollution due to less fierce competition.</li>
+        </ul>
+
+        <h2>4. Factors That Affect Population Change</h2>
+        <p>Population change is determined by birth rate, death rate, and migration. The <strong>Census</strong> (official enumeration of population conducted every 10 years) provides accurate data for these factors.</p>
+
+        <ul>
+            <li><strong>1. Crude Birth Rate:</strong> The number of live childbirths per 1000 persons in a given area per year. Birth rates are higher in developing countries (need for helping hands) and lower in developed countries (higher living standards). <em>Lowest: Monaco, Japan. Highest: Niger, Angola.</em></li>
+            <li><strong>2. Crude Death Rate:</strong> The number of deaths per 1000 persons in a given area in a year. It is high in Sub-Saharan Africa (high child mortality) and also in some developed countries (due to a large aging population).</li>
+            <li><strong>3. Population Growth Rate:</strong> Compares the average annual percentage change in population, resulting from a surplus of births over deaths and the net balance of migrants.</li>
+            <li><strong>4. Migration:</strong> The movement of people with the intention of settling permanently.
+                <ul>
+                    <li><strong>Emigrants:</strong> People who move <em>out</em> of a country.</li>
+                    <li><strong>Imigrants:</strong> People who come <em>into</em> another country to live.</li>
+                    <li>Migration can lead to cultural enrichment and new cities, but it can also cause racial tension or a <strong>brain drain</strong> (extensive transfer of skilled human resources to another country).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>5. Composition of Population</h2>
+        
+        <h3>Sex Ratio</h3>
+        <p>Sex ratio refers to the <strong>number of females per 1000 males</strong> in a population. It indicates equality between genders in society. According to the 2011 Census of India, the overall sex ratio was <strong>940</strong>. Kerala has the highest (1084), while Daman and Diu have the lowest (710). Discrepancy persists due to female foeticide and discrimination.</p>
+
+        <h3>Age Composition</h3>
+        <p>This categorizes people into three main groups, signifying the rate of resource use and work capacity:</p>
+        <ol>
+            <li><strong>Children (0-14 years):</strong> Dependent population.</li>
+            <li><strong>Working age (15-59 years):</strong> Productive population.</li>
+            <li><strong>Old age (Above 59 years):</strong> Dependent population.</li>
+        </ol>
+
+        <h3>Population Pyramid</h3>
+        <p>A population pyramid is a graphical representation of the population structure based on age and gender. The male population is on the left, female on the right. Age groups are on the Y-axis.</p>
+
+        <figure class="news-figure">
+            <img src="../Images/C2_population pyramids side-by-side.jpg" alt="Population pyramid comparison" />
+            <figcaption>Comparison of population pyramids for developing and developed countries.</figcaption>
+        </figure>
+
+        <ul>
+            <li><strong>Developing Country (e.g., Bangladesh):</strong> Broad base (high birth rate), tapering top (high mortality rate, low life expectancy). Indicates a lack of medical care and education.</li>
+            <li><strong>Developed Country (e.g., USA):</strong> Almost rectangular base (low birth and death rates). Thicker top shows longer life expectancy and a greater number of dependent old people. Women tend to outlive men. Indicates a high standard of living.</li>
+        </ul>
+
+        <h3>Rural and Urban Population</h3>
+        <p>There is a massive global trend towards <strong>urbanization</strong>. More than half the world's population currently lives in urban areas, and it is expected to surpass 6 billion by 2045. This causes problems related to housing, transport, and employment.</p>
+        <p><strong>India and China</strong> have the largest rural populations globally due to their massive agrarian economies.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>World's Most Populous Cities (2021):</strong><br>
+            1. Tokyo (37.4 million)<br>
+            2. Delhi (29.3 million)<br>
+            3. Shanghai (26.3 million)<br>
+            4. Sao Paulo (21.8 million)<br>
+            5. Mexico City (21.6 million)</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

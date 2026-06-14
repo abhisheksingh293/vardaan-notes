@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Creating and Managing Tables in MS Word 2019 - CS - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid var(--toggle-border);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+            font-weight: bold;
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Computer Science • Chapter 3</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Creating and Managing Tables in MS Word 2019</h1>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Tables</strong> are an arrangement of data in rows and columns. They are used to organize and present data in a neat and ordered way. Data in a tabular form makes it easier to read, analyze, and compare.</p>
+            <ul>
+                <li><strong>Row:</strong> The horizontal arrangement of data is called a row.</li>
+                <li><strong>Column:</strong> The vertical arrangement of data is called a column.</li>
+                <li><strong>Cell:</strong> The intersection of a row and a column is called a cell.</li>
+            </ul>
+        </div>
+
+        <h2>1. Creating a Table</h2>
+        <p>With the help of Microsoft Word 2019, you can insert a variety of tables into a Word document. There are two main ways to create a table:</p>
+
+        <h3>Method I: Using the Grid</h3>
+        <ul>
+            <li>Click on the <strong>Insert</strong> tab.</li>
+            <li>Click the <strong>Table</strong> drop-down button in the Tables group.</li>
+            <li>Drag the mouse pointer across the grid to select the desired number of rows and columns.</li>
+            <li>Click on the last square of the selected range to insert the table in your document.</li>
+        </ul>
+        <p><em>Note: You can use this method to insert a table of maximum 8 rows and 10 columns.</em></p>
+
+        <h3>Method II: Using the Insert Table Option</h3>
+        <ul>
+            <li>Click on the <strong>Insert</strong> tab.</li>
+            <li>Click on the <strong>Table</strong> drop-down button in the Tables group.</li>
+            <li>From the drop-down list, click on the <strong>Insert Table...</strong> option.</li>
+            <li>The <strong>Insert Table dialog box</strong> appears. Enter the required number of rows and columns under Table size.</li>
+            <li>Click on <strong>OK</strong>. The table will be inserted.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>A Microsoft Word table can have any number of rows but a maximum of <strong>63 columns</strong>.</p>
+        </div>
+
+        <h2>2. Entering Data into Cells</h2>
+        <p>After creating a table, you can enter data into the cells easily:</p>
+        <ul>
+            <li>Click to place the cursor in the cell where the data is to be entered. Then, type the data.</li>
+            <li>Press the <strong>Tab key</strong> to move the cursor to the next cell on the right, or use the <strong>arrow keys</strong> to move from one cell to another in any direction.</li>
+            <li>Click anywhere outside the table once you have finished entering the data.</li>
+        </ul>
+
+        <h2>3. Modifying a Table</h2>
+        <p>After entering data into a table, you can make changes to it if you need to. You can insert or delete rows/columns, change row height/column width, merge or split cells, and apply borders and shading.</p>
+
+        <h3>3.1 Inserting a Row or Column</h3>
+        <ul>
+            <li>Click on the cell adjacent to where the new row or column is to be added.</li>
+            <li>Click on the <strong>Layout tab</strong> under the Table Tools contextual tab.</li>
+            <li>In the <strong>Rows & Columns group</strong>, click on any of these options:
+                <ul>
+                    <li><strong>Insert Above:</strong> to insert a row above the selected cell.</li>
+                    <li><strong>Insert Below:</strong> to insert a row below the selected cell.</li>
+                    <li><strong>Insert Left:</strong> to insert a column on the left of the selected cell.</li>
+                    <li><strong>Insert Right:</strong> to insert a column on the right of the selected cell.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>3.2 Deleting a Row or Column</h3>
+        <ul>
+            <li>Click on any cell in the row or column which is to be deleted.</li>
+            <li>Click on the <strong>Layout tab</strong> under Table Tools.</li>
+            <li>In the <strong>Rows & Columns group</strong>, click on the <strong>Delete</strong> drop-down button.</li>
+            <li>Click on the desired option from the drop-down list (e.g., Delete Rows, Delete Columns).</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Cool Tip:</strong> You can also use the <strong>context menu</strong> by right-clicking on a cell to access options like inserting rows/columns, deleting cells, or changing table properties!</p>
+        </div>
+
+        <h3>3.3 Changing the Row Height</h3>
+        <ul>
+            <li>Right-click on any cell in a row whose height you want to change.</li>
+            <li>From the context menu, click on the <strong>Table Properties...</strong> option.</li>
+            <li>The Table Properties dialog box appears. Click on the <strong>Row tab</strong>.</li>
+            <li>Click on the <strong>Specify height</strong> check box and type the required row height.</li>
+            <li>Click on <strong>OK</strong>.</li>
+        </ul>
+
+        <h3>3.4 Changing the Column Width</h3>
+        <ul>
+            <li>Right-click on any cell in a column whose width you want to change.</li>
+            <li>From the context menu, click on the <strong>Table Properties...</strong> option.</li>
+            <li>The Table Properties dialog box appears. Click on the <strong>Column tab</strong>.</li>
+            <li>Click on the <strong>Preferred width</strong> check box and type the required column width.</li>
+            <li>Click on <strong>OK</strong>.</li>
+        </ul>
+
+        <h2>4. Merging and Splitting Cells</h2>
+
+        <h3>4.1 Merging Cells</h3>
+        <p>To <strong>merge</strong> means to combine or join. You can join two or more cells into a single cell. This feature is often used to create headings that span across multiple columns.</p>
+        <ul>
+            <li>Select the cells you wish to merge into a single cell.</li>
+            <li>Click on the <strong>Layout tab</strong> under Table Tools.</li>
+            <li>In the <strong>Merge group</strong>, click on <strong>Merge Cells</strong>.</li>
+        </ul>
+
+        <h3>4.2 Splitting Cells</h3>
+        <p><strong>Splitting cells</strong> is the opposite of merging cells. When you split a cell, you divide it into two or more distinct cells. The text of the original cell will appear in the first cell of the split cells.</p>
+        <ul>
+            <li>Click on the cell you wish to split.</li>
+            <li>Click on the <strong>Layout tab</strong> under Table Tools.</li>
+            <li>In the <strong>Merge group</strong>, click on the <strong>Split Cells</strong> option.</li>
+            <li>In the Split Cells dialog box, enter the number of columns and rows you wish to split the cell into.</li>
+            <li>Click on <strong>OK</strong>.</li>
+        </ul>
+
+        <h2>5. Resizing a Table</h2>
+        <ul>
+            <li>Move the pointer over the table until the <strong>resize handle</strong> (a small square) appears on the lower-right corner.</li>
+            <li>Press and hold the left mouse button on this handle and drag to increase or decrease the size of the entire table.</li>
+        </ul>
+
+        <h2>6. Applying Borders and Shading</h2>
+        <p>To enhance the appearance of a table, you can apply a variety of border and shading styles.</p>
+        <ul>
+            <li>Click anywhere inside the table.</li>
+            <li>Click on the <strong>Design tab</strong> under Table Tools.</li>
+            <li>Click on the <strong>Borders</strong> drop-down button in the Borders group, and select <strong>Borders and Shading...</strong></li>
+            <li>In the dialog box, under the <strong>Borders tab</strong>, you can choose the border style, color, and width.</li>
+            <li>To apply a background color, click on the <strong>Shading tab</strong> and select a color from the Fill drop-down menu.</li>
+            <li>Click on <strong>OK</strong>.</li>
+        </ul>
+
+        <h2>7. Alignment of Text in a Table</h2>
+        <p>Alignment of data refers to the positioning of data within cells. Word has several alignment options to set the orientation of text. Click on the <strong>Layout tab</strong> in the <strong>Alignment group</strong> to choose from 9 options:</p>
+        <ul>
+            <li><strong>Align Top Left:</strong> Aligns text to the top-left of the cell.</li>
+            <li><strong>Align Top Center:</strong> Centers text and aligns it to the top.</li>
+            <li><strong>Align Top Right:</strong> Aligns text to the top-right.</li>
+            <li><strong>Align Center Left:</strong> Centers text vertically and aligns to the left.</li>
+            <li><strong>Align Center:</strong> Centers text both horizontally and vertically.</li>
+            <li><strong>Align Center Right:</strong> Centers text vertically and aligns to the right.</li>
+            <li><strong>Align Bottom Left:</strong> Aligns text to the bottom-left corner.</li>
+            <li><strong>Align Bottom Center:</strong> Centers text horizontally and aligns to the bottom.</li>
+            <li><strong>Align Bottom Right:</strong> Aligns text to the bottom-right of the cell.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
