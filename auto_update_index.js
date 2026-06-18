@@ -66,18 +66,34 @@ for (const item of items) {
     link = `./${encodeURIComponent(item.name).replace(/%20/g, ' ')}/${encodedParts.join('/')}`;
   }
   
-  // Count subjects
-  let subdirs = 1;
+  // Count subjects and chapters
+  let subjectCount = 0;
+  let chapterCount = 0;
+  
   try {
-    subdirs = fs.readdirSync(studentDir, { withFileTypes: true })
-                .filter(d => d.isDirectory() && !d.name.startsWith('.')).length || 1;
+    const studentContents = fs.readdirSync(studentDir, { withFileTypes: true });
+    for (const subItem of studentContents) {
+      if (subItem.isDirectory() && !subItem.name.startsWith('.') && subItem.name !== 'Worksheets' && subItem.name !== 'Images') {
+        subjectCount++;
+        
+        try {
+          const subjectPath = path.join(studentDir, subItem.name);
+          const chapters = fs.readdirSync(subjectPath, { withFileTypes: true });
+          for (const chap of chapters) {
+            if (chap.isDirectory() && !chap.name.startsWith('.')) {
+              chapterCount++;
+            }
+          }
+        } catch(err) {}
+      }
+    }
   } catch(e) {}
                 
   students.push({
     name: item.name,
     link: link,
-    subjects: subdirs,
-    chapters: (subdirs * 4) || 2
+    subjects: subjectCount,
+    chapters: chapterCount
   });
 }
 

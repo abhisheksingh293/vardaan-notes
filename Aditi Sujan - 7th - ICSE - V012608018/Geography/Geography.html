@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geography - Chapters Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #F97315;
+      --primary-glow: rgba(249, 115, 21, 0.4);
+      --bg: #0d0d12;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-hover: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8f8f8;
+      --text-muted: #a0a0b0;
+      --glass-bg: rgba(13, 13, 18, 0.7);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(249, 115, 21, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(249, 115, 21, 0.05) 0%, transparent 50%);
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between;
+      align-items: center; padding: 0 40px; height: 80px; background: var(--glass-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--text); transition: transform 0.3s ease; }
+    .brand:hover { transform: scale(1.02); }
+    .logo { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); }
+    .brand span { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
+    .brand em { font-style: normal; color: var(--primary); }
+    .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 60px 24px 100px; }
+    .hero-section { text-align: center; margin-bottom: 60px; animation: fadeInDown 0.8s ease-out forwards; }
+    h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
+    h1 b { background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    h1 .highlight { background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 10px rgba(249,115,21,0.2)); }
+    .sub { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    .stats { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+    .stat { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .stat .num { font-size: 2.5rem; font-weight: 800; color: var(--text); text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+    .stat .lab { font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+    .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-top: 40px; }
+    .head h2 { font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; color: var(--text); }
+    .count { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 16px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
+    .grid { display: flex; flex-direction: column; gap: 16px; }
+    .card {
+      display: flex; flex-direction: row; align-items: center; justify-content: space-between;
+      text-decoration: none; color: var(--text); background: var(--surface);
+      border: 1px solid var(--border); border-radius: 16px; padding: 16px 24px; 
+      transition: all 0.3s ease; position: relative; overflow: hidden; backdrop-filter: blur(10px);
+    }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(249,115,21,0.1), transparent); opacity: 0; transition: opacity 0.3s ease; }
+    .card:hover { transform: translateX(8px); border-color: rgba(249, 115, 21, 0.3); background: var(--surface-hover); box-shadow: 0 10px 30px rgba(0,0,0,0.2), 0 0 20px rgba(249,115,21,0.1); }
+    .card:hover::before { opacity: 1; }
+    .card-left { display: flex; align-items: center; gap: 20px; }
+    .name-wrapper { display: flex; flex-direction: column; gap: 4px; }
+    .badge { font-size: 0.7rem; font-weight: 700; color: var(--primary); background: rgba(249,115,21,0.1); padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; width: fit-content; }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--primary), #b34e00);
+      display: grid; place-items: center; color: #fff; font-size: 1.1rem; font-weight: 700; flex-shrink: 0; box-shadow: 0 4px 12px rgba(249, 115, 21, 0.2);
+    }
+    .name { font-size: 1.1rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .meta-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-muted); }
+    .meta-icon { width: 16px; height: 16px; opacity: 0.7; }
+    .empty { display: none; text-align: center; padding: 60px 20px; background: var(--surface); border-radius: 24px; border: 1px dashed var(--border); margin-top: 24px; }
+    .empty h3 { font-size: 1.5rem; margin-bottom: 8px; color: var(--text); }
+    .empty p { color: var(--text-muted); }
+    footer { margin-top: 80px; padding: 30px 0; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-muted); font-size: 0.9rem; }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 768px) { .wrap { padding: 40px 16px 80px; } nav { padding: 0 20px; } .stats { gap: 20px; } h1 { font-size: 2.2rem; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="#">
+      <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1772276441/Vardaan_Comet-removebg-preview_dsut6f.png" alt="Vardaan Comet Logo" class="logo">
+      <span>Vardaan <em class="highlight">Comet</em></span>
+    </a>
+  </nav>
+
+  <main class="wrap">
+    <div class="hero-section">
+      <h1><b><span class="highlight">Geography</span></b></h1>
+      <p class="sub">Choose a chapter to open your notes and resources for Aditi Sujan.</p>
+      
+      <div class="stats">
+        <div class="stat"><div class="num" id="statChapters">10</div><div class="lab">Chapters</div></div>
+      </div>
+    </div>
+
+    <div class="head">
+      <h2>Chapters Directory</h2>
+      <span id="countLabel" class="count">10 chapters</span>
+    </div>
+
+    <section class="grid" id="chapterGrid"></section>
+
+    <section class="empty" id="emptyState">
+      <h3>No chapters found</h3>
+      <p>Try adding a new chapter folder.</p>
+    </section>
+
+    <footer>
+      <span>Created by Team Vardaan</span>
+      <span>•</span>
+      <span>Study Portal</span>
+      <span>•</span>
+      <span>© 2026</span>
+    </footer>
+  </main>
+  <script>
+    const chapters = [
+    {
+        "name": "C1_Representation of Geographical Features",
+        "link": "./C1_Representation of Geographical Features/ChapterNotes.html"
+    },
+    {
+        "name": "C2_Population Dynamics",
+        "link": "./C2_Population Dynamics/ChapterNotes.html"
+    },
+    {
+        "name": "C3_Migration",
+        "link": "./C3_Migration/ChapterNotes.html"
+    },
+    {
+        "name": "C4_Urbanisation_Causes and Effects",
+        "link": "./C4_Urbanisation_Causes and Effects/ChapterNotes.html"
+    },
+    {
+        "name": "C5_Disasters_Natural and Human-made",
+        "link": "./C5_Disasters_Natural and Human-made/ChapterNotes.html"
+    },
+    {
+        "name": "C6_Asia_Land, Climate and Natural Vegetation",
+        "link": "./C6_Asia_Land%2C Climate and Natural Vegetation/ChapterNotes.html"
+    },
+    {
+        "name": "C7_India_Location and Physical Features",
+        "link": "./C7_India_Location and Physical Features/ChapterNotes.html"
+    },
+    {
+        "name": "C8_India_Climate, Natural Vegetation and Wildlife",
+        "link": "./C8_India_Climate%2C Natural Vegetation and Wildlife/ChapterNotes.html"
+    },
+    {
+        "name": "C9_Human Resources",
+        "link": "./C9_Human Resources/ChapterNotes.html"
+    },
+    {
+        "name": "Images",
+        "link": "./Images/"
+    }
+];
+
+    function formatChapterIcon(name) {
+      const match = name.match(/^Cd+/i);
+      if (match) return match[0].toUpperCase();
+      return name.substring(0, 2).toUpperCase();
+    }
+
+    function formatChapterName(name) {
+      let clean = name.replace(/^Cd+_/, '').replace(/_/g, ' ');
+      return clean.replace(/w/g, char => char.toUpperCase());
+    }
+
+    function renderCards(list) {
+      const grid = document.getElementById('chapterGrid');
+      const emptyState = document.getElementById('emptyState');
+      const countLabel = document.getElementById('countLabel');
+      
+      grid.innerHTML = '';
+      
+      if (!list.length) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        countLabel.textContent = '0 chapters';
+        return;
+      }
+      
+      grid.style.display = 'grid';
+      emptyState.style.display = 'none';
+      countLabel.textContent = list.length + ' chapter' + (list.length === 1 ? '' : 's');
+      
+      list.forEach(chapter => {
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = chapter.link;
+        
+        card.innerHTML = `
+          <div class="card-left">
+            <div class="avatar">${formatChapterIcon(chapter.name)}</div>
+            <div class="name-wrapper">
+              <div class="name">${formatChapterName(chapter.name)}</div>
+              <span class="badge">Chapter</span>
+            </div>
+          </div>
+          <div class="meta-item">
+            <span>Open notes</span>
+            <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Initialize
+    renderCards(chapters);
+  </script>
+</body>
+</html>

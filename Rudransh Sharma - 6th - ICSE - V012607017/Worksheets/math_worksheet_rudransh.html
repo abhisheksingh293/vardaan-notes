@@ -1,0 +1,406 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS */
+            --primary-color: #2e7d32; /* Green for Math */
+            --bg-color: #e8f5e9;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #81c784;   /* Lighter green/adjust based on readability */
+            --bg-color: #1b5e20;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.5; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 20px;}
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 18px; }
+        .question-item { 
+            display: flex; align-items: flex-start; margin-bottom: 5px; 
+            font-size: 12pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 12px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 10pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .container { padding: 0; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Mathematics Practice Worksheet</div>
+        <div class="meta-info">
+            <span>Student: Rudransh Sharma</span> 
+            <span>Class: 7 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <!-- SECTION 1: FRACTIONS -->
+    <div class="chapter-header">Section A: Fractions</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">Simplify: \(\frac{3}{4} + \frac{5}{6} - \frac{1}{3}\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">Evaluate: \(2 \frac{1}{2} \times 3 \frac{1}{4}\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">Divide: \(5 \frac{1}{4} \div 1 \frac{1}{6}\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">Arrange the following fractions in ascending order: \(\frac{2}{3}, \frac{5}{6}, \frac{7}{9}, \frac{1}{2}\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">What should be added to \(4 \frac{2}{5}\) to get \(6 \frac{1}{10}\)?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">A rope of length \(15 \frac{1}{2}\) meters is cut into \(5\) equal pieces. Find the length of each piece.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">A man spends \(\frac{1}{3}\) of his income on food, \(\frac{1}{4}\) on rent, and saves the rest. What fraction of his income does he save?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">Find the value of \(\frac{4}{7}\) of \(42 \text{ kg}\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">Evaluate: \(3 \frac{1}{5} + 2 \frac{1}{10} - 1 \frac{1}{2}\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">Simplify: \(\left( \frac{2}{3} \times \frac{5}{8} \right) + \frac{1}{6}\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">11.</span>
+            <div class="q-content">Find the reciprocal of the mixed fraction \(4 \frac{2}{7}\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">12.</span>
+            <div class="q-content">A boy reads \(\frac{1}{4}\) of a book on the first day and \(\frac{1}{3}\) of it on the second day. What fraction of the book is left unread?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">13.</span>
+            <div class="q-content">By what number should \(2 \frac{3}{5}\) be multiplied to get \(1 \frac{6}{7}\)?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">14.</span>
+            <div class="q-content">Arrange the following fractions in descending order: \(\frac{3}{5}, \frac{7}{10}, \frac{8}{15}, \frac{1}{2}\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">15.</span>
+            <div class="q-content">Simplify using BODMAS: \(\frac{1}{2} \div \left( \frac{1}{3} + \frac{1}{4} \right)\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">16.</span>
+            <div class="q-content">A water tank is \(\frac{3}{5}\) full. If \(50 \text{ liters}\) more are needed to fill it completely, find the total capacity of the tank.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">17.</span>
+            <div class="q-content">Find the difference between \(8\) and \(3 \frac{5}{9}\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">18.</span>
+            <div class="q-content">Multiply the sum of \(\frac{3}{4}\) and \(\frac{1}{2}\) by their difference.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">19.</span>
+            <div class="q-content">Out of \(40\) students in a class, \(\frac{3}{8}\) are girls. How many boys are there in the class?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">20.</span>
+            <div class="q-content">Evaluate: \(\left( 1 \frac{1}{2} \right)^3\)</div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: DECIMAL FRACTIONS -->
+    <div class="chapter-header">Section B: Decimal Fractions</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">21.</span>
+            <div class="q-content">Convert the fraction \(\frac{17}{25}\) into a decimal number.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">22.</span>
+            <div class="q-content">Add the following decimals: \(23.45 + 7.8 + 0.093\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">23.</span>
+            <div class="q-content">Subtract \(18.456\) from \(30.1\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">24.</span>
+            <div class="q-content">Multiply: \(4.56 \times 2.3\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">25.</span>
+            <div class="q-content">Evaluate: \(14.4 \div 1.2\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">26.</span>
+            <div class="q-content">Simplify: \(0.8 \times 0.05 \times 100\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">27.</span>
+            <div class="q-content">A car covers a distance of \(89.1 \text{ km}\) in \(2.2 \text{ hours}\). What is the average distance covered by it in \(1 \text{ hour}\)?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">28.</span>
+            <div class="q-content">The cost of \(1 \text{ meter}\) of cloth is ₹ \(45.50\). Find the cost of \(3.5 \text{ meters}\) of cloth.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">29.</span>
+            <div class="q-content">Convert \(0.045\) into a fraction in its lowest terms.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">30.</span>
+            <div class="q-content">Multiply: \(0.007 \times 1000\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">31.</span>
+            <div class="q-content">Divide: \(5.05 \div 100\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">32.</span>
+            <div class="q-content">Simplify: \(2.5 \times 4.2 - 1.8 \times 3.5\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">33.</span>
+            <div class="q-content">What should be added to \(3.189\) to get \(7\)?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">34.</span>
+            <div class="q-content">A tailor uses \(1.25 \text{ m}\) of cloth to make a shirt. How many shirts can be made from \(15 \text{ m}\) of cloth?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">35.</span>
+            <div class="q-content">The product of two decimals is \(1.824\). If one of them is \(0.64\), find the other number.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">36.</span>
+            <div class="q-content">Express \(5 \text{ kg } 8 \text{ g}\) in kg using decimals.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">37.</span>
+            <div class="q-content">Simplify: \(\frac{0.144}{0.012}\)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">38.</span>
+            <div class="q-content">Find the perimeter of a rectangle with length \(4.5 \text{ cm}\) and breadth \(3.2 \text{ cm}\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">39.</span>
+            <div class="q-content">By how much is \(19.5\) greater than \(8.45\)?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">40.</span>
+            <div class="q-content">The weight of \(12\) identical books is \(15.6 \text{ kg}\). What is the exact weight of one book?</div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: RATIO AND PROPORTION -->
+    <div class="chapter-header">Section C: Ratio and Proportion</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">41.</span>
+            <div class="q-content">Express the ratio \(45 : 60\) in its simplest form.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">42.</span>
+            <div class="q-content">Find the ratio of \(40 \text{ minutes}\) to \(2 \text{ hours}\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">43.</span>
+            <div class="q-content">Divide ₹ \(1500\) between A and B in the ratio \(2 : 3\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">44.</span>
+            <div class="q-content">Check whether the numbers \(3, 4, 9, 12\) are in proportion.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">45.</span>
+            <div class="q-content">Find the value of \(x\) if \(5 : x :: 15 : 21\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">46.</span>
+            <div class="q-content">If the cost of \(8\) books is ₹ \(480\), find the cost of \(15\) such books.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">47.</span>
+            <div class="q-content">Two numbers are in the ratio \(5 : 7\). If their sum is \(84\), find the numbers.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">48.</span>
+            <div class="q-content">A map is given with a scale of \(2 \text{ cm} = 1000 \text{ km}\). What is the actual distance between the two places if the distance on the map is \(2.5 \text{ cm}\)?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">49.</span>
+            <div class="q-content">Find the ratio of \(250 \text{ ml}\) to \(2 \text{ liters}\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">50.</span>
+            <div class="q-content">If \(A : B = 2 : 3\) and \(B : C = 4 : 5\), find the ratio of \(A : C\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">51.</span>
+            <div class="q-content">The ratio of boys to girls in a school is \(5 : 3\). If there are \(400\) boys, find the number of girls.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">52.</span>
+            <div class="q-content">Find the fourth proportional to the numbers \(4, 9, 12\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">53.</span>
+            <div class="q-content">Find the mean proportional between \(9\) and \(16\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">54.</span>
+            <div class="q-content">Are the ratios \(25 \text{ g} : 30 \text{ g}\) and \(40 \text{ kg} : 48 \text{ kg}\) in proportion? State yes or no with reasoning.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">55.</span>
+            <div class="q-content">The angles of a triangle are in the ratio \(1 : 2 : 3\). Find the measure of each angle.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">56.</span>
+            <div class="q-content">If \(15\) men can do a piece of work in \(20\) days, in how many days can \(25\) men do the same work?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">57.</span>
+            <div class="q-content">A recipe requires \(3\) cups of flour for every \(2\) cups of sugar. If \(9\) cups of flour are used, how much sugar is needed?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">58.</span>
+            <div class="q-content">The ratio of copper and zinc in an alloy is \(9 : 5\). If the weight of copper in the alloy is \(48.6 \text{ g}\), find the weight of zinc.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">59.</span>
+            <div class="q-content">Divide ₹ \(3450\) among A, B, and C in the ratio \(3 : 5 : 7\).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">60.</span>
+            <div class="q-content">Determine if the numbers \(12, 16, 18, 24\) are in proportion.</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div>
+</div></body></html>

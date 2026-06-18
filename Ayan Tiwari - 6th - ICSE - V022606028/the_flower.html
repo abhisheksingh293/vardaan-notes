@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Flower - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Biology • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>THE FLOWER</h1>
+
+        <h2>1. Structure of a Flower</h2>
+        <p>A flower is the <strong>reproductive part</strong> of a plant. Often, each flower has a stalk called the <strong>pedicel</strong>. The upper portion of the pedicel gets flattened and enlarged to form the <strong>thalamus</strong>. A flower generally consists of four sets of whorls arranged in rings on the thalamus:</p>
+        
+        <ul>
+            <li><strong>Calyx:</strong> The outermost whorl consisting of green, leaf-like structures called <strong>sepals</strong>. They protect the inner parts in the bud stage.</li>
+            <li><strong>Corolla:</strong> The next inner whorl consisting of brightly coloured parts called <strong>petals</strong>. They attract insects for pollination.</li>
+            <li><strong>Androecium:</strong> The third whorl, representing the <em>male reproductive part</em>. It consists of units called <strong>stamens</strong>. Each stamen has an <strong>anther</strong> and a <strong>filament</strong>. The anther produces powdery <strong>pollen grains</strong>.</li>
+            <li><strong>Gynoecium:</strong> The innermost whorl forming the central part. It represents the <em>female reproductive part</em> and consists of a <strong>carpel (or pistil)</strong>. Each carpel has an <strong>ovary</strong> (basal swollen part), <strong>style</strong>, and <strong>stigma</strong>. The ovary contains <strong>ovules</strong>.</li>
+        </ul>
+
+        <h3>Types of Flowers</h3>
+        <ul>
+            <li><strong>Complete Flower:</strong> Contains all four whorls (calyx, corolla, stamens, and carpel). <em>Examples: Mustard, China-rose, Pea.</em></li>
+            <li><strong>Incomplete Flower:</strong> One or more whorls are missing. <em>Examples: Date palm, Mulberry.</em></li>
+            <li><strong>Bisexual (Hermaphrodite) Flower:</strong> Has both male (stamens) and female (carpels) reproductive parts in the same flower. <em>Examples: Mustard, Lily, Pea.</em></li>
+            <li><strong>Unisexual Flower:</strong> Contains either only male parts or only female parts. <em>Examples: Cucumber, Gourd.</em></li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Gametes:</strong> Gametes are the sex cells produced during sexual reproduction. The <em>male gametes</em> (produced in pollen grains) are usually smaller and produced in larger numbers. The <em>female gamete</em> (produced inside the ovule) is larger, with more cytoplasm.</p>
+        </div>
+
+        <h2>2. Sexual Reproduction and Pollination</h2>
+        <p><strong>Sexual reproduction</strong> is the process by which new organisms are produced by the fusion of male and female gametes.</p>
+
+        <h3>Pollination</h3>
+        <p>Pollination is the transfer of pollen grains from the anther to the stigma. It takes place in two main ways:</p>
+        <ul>
+            <li><strong>Self-pollination:</strong> The transfer of pollen grains from the anthers to the stigma of the <em>same flower</em>, or another flower of the <em>same plant</em>.</li>
+            <li><strong>Cross-pollination:</strong> The transfer of pollen grains from the anthers of a flower to the stigma of a flower on <em>another plant of the same species</em>.</li>
+        </ul>
+
+        <h3>Agents of Pollination</h3>
+        <ul>
+            <li><strong>Insects:</strong> Insect-pollinated flowers are large, brightly-coloured, and produce scent and nectar. The pollen grains are sticky. <em>Examples: Dahlia, Rose, Sunflower.</em></li>
+            <li><strong>Wind:</strong> Wind-pollinated flowers are small and inconspicuous. They do not produce nectar or scent. Their pollen grains are light, dry, and produced in large numbers. The stigma is large and feathery. <em>Examples: Wheat, Maize, Grasses.</em></li>
+            <li><strong>Water:</strong> Water currents carry pollen grains from anthers to the stigma. <em>Examples: Hydrilla, Vallisneria.</em></li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Did you know?</strong> The largest flower in the world is the <strong>Rafflesia</strong> (growing in Indonesia, ~1 metre in diameter). To attract flies for pollination, it produces a smell like rotting meat! The smallest flower is the <strong>Duckweed (Wolffia)</strong>, measuring only about 0.5 mm in diameter.</p>
+        </div>
+
+        <h2>3. Fertilisation and Formation of Fruit</h2>
+        <p><strong>Fertilisation</strong> is the fusion of the male gamete with the female gamete. After pollination, the pollen grain germinates on the stigma and a <strong>pollen tube</strong> develops. It grows downwards through the style into the ovary, carrying the male gametes to fuse with the egg cell inside the ovule. This fusion results in a <strong>zygote</strong>.</p>
+        
+        <h3>Changes After Fertilisation:</h3>
+        <ul>
+            <li>The flower loses its bright colour; sepals, petals, and stamens fall off.</li>
+            <li>The <strong>ovary</strong> increases in size and becomes the <strong>fruit</strong>.</li>
+            <li>The <strong>ovary wall</strong> becomes the <strong>fruit wall</strong>.</li>
+            <li>The <strong>ovules</strong> develop to form the <strong>seeds</strong>.</li>
+        </ul>
+
+        <h2>4. Parts of a Fruit</h2>
+        <p>A fruit is the ripened ovary. Fruits are broadly classified as <strong>dry fruits</strong> (e.g., Pea, Cotton) and <strong>fleshy fruits</strong> (e.g., Mango, Tomato).</p>
+        <p>A fruit consists of two main parts: the seeds, and the fruit wall (called the <strong>pericarp</strong>). In fleshy fruits like mango, the pericarp is divided into three layers:</p>
+        <ul>
+            <li><strong>Epicarp:</strong> The outer thin, protective skin.</li>
+            <li><strong>Mesocarp:</strong> The middle, fleshy, and sweet layer.</li>
+            <li><strong>Endocarp:</strong> The inner hard, stony layer that contains the seed.</li>
+        </ul>
+
+        <h2>5. The Seed and Germination</h2>
+        <p>The ovules after fertilisation develop into seeds. A seed consists of an <strong>embryo</strong> (baby plant), one or two <strong>cotyledons</strong> (food storage), and a protective <strong>seed coat</strong>. The embryo contains the <strong>plumule</strong> (which forms the shoot) and the <strong>radicle</strong> (which forms the root).</p>
+
+        <h3>Types of Seeds</h3>
+        <ul>
+            <li><strong>Dicotyledonous (Dicot) Seeds:</strong> Have <em>two</em> cotyledons. Food is stored in the cotyledons. Endosperm is absent. <em>Examples: Gram, Pea, Bean.</em></li>
+            <li><strong>Monocotyledonous (Monocot) Seeds:</strong> Have <em>one</em> cotyledon. Food is stored in the <strong>endosperm</strong>. The seed coat and fruit wall are fused. <em>Examples: Maize, Wheat, Rice.</em></li>
+        </ul>
+
+        <h3>Seed Germination</h3>
+        <p><strong>Seed Germination</strong> is the process by which the embryo of a seed becomes active and grows into a new plant. It starts with the rapid uptake of water, which activates enzymes to digest stored food.</p>
+        <ul>
+            <li><strong>Epigeal Germination:</strong> Cotyledons are pushed <em>above</em> the soil because the hypocotyl elongates faster. <em>Examples: Bean, Castor, Sunflower.</em></li>
+            <li><strong>Hypogeal Germination:</strong> Cotyledons remain <em>below</em> the soil because the epicotyl elongates faster. <em>Examples: Maize, Gram, Pea.</em></li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Conditions Necessary for Germination:</strong><br>
+            <strong>1. Water:</strong> Softens the seed coat and dissolves stored food for the embryo.<br>
+            <strong>2. Oxygen (Air):</strong> Required for respiration.<br>
+            <strong>3. Favourable Temperature:</strong> A temperature ranging from 25°C to 35°C is essential for the healthy growth of the seedling.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

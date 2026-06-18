@@ -1,295 +1,670 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vardaan Comet - Study Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --orange:#F97315; --orange-soft:rgba(249,115,21,.12); }
-    [data-theme="dark"] {
-      --bg:#0b0b0d; --card:#151519; --line:rgba(255,255,255,.1); --text:#f4f4f6; --muted:#9f9fb1;
-      --nav:rgba(11,11,13,.82); --input:rgba(255,255,255,.04); --orb1:rgba(249,115,21,.16); --orb2:rgba(249,115,21,.08);
+    :root {
+      --primary: #F97315;
+      --primary-glow: rgba(249, 115, 21, 0.4);
+      --bg: #0d0d12;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-hover: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8f8f8;
+      --text-muted: #a0a0b0;
+      --glass-bg: rgba(13, 13, 18, 0.7);
     }
-    [data-theme="light"] {
-      --bg:#f5f5f7; --card:#fff; --line:rgba(0,0,0,.1); --text:#111116; --muted:#626276;
-      --nav:rgba(245,245,247,.9); --input:#fff; --orb1:rgba(249,115,21,.12); --orb2:rgba(249,115,21,.07);
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(249, 115, 21, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(249, 115, 21, 0.05) 0%, transparent 50%);
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-    .orb{position:fixed;border-radius:50%;filter:blur(74px);pointer-events:none;z-index:0}
-    .orb.a{width:460px;height:460px;background:var(--orb1);top:-120px;right:-90px}
-    .orb.b{width:340px;height:340px;background:var(--orb2);left:-100px;bottom:-60px}
-    nav{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:0 24px;height:64px;background:var(--nav);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
-    .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#F97315,#d96000);display:grid;place-items:center;color:#fff;font-weight:800;font-family:'Syne',sans-serif}
-    .brand span{font-family:'Syne',sans-serif;font-weight:800}
-    .brand em{font-style:normal;color:var(--orange)}
-    .toggle{width:52px;height:28px;border-radius:999px;border:1px solid var(--line);background:var(--input);position:relative;cursor:pointer}
-    .knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#F97315,#db6200);transition:.28s}
-    [data-theme="light"] .knob{transform:translateX(24px)}
-    .wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:28px 24px 80px}
-    .tag{display:inline-flex;gap:8px;align-items:center;background:var(--orange-soft);border:1px solid rgba(249,115,21,.25);color:var(--orange);font-size:.74rem;font-weight:700;text-transform:uppercase;padding:6px 14px;border-radius:999px}
-    .dot{width:6px;height:6px;border-radius:50%;background:var(--orange)}
-    h1{margin-top:18px;font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.3rem);line-height:1.06;letter-spacing:-.03em}
-    h1 b{color:var(--orange)}
-    .sub{margin-top:12px;color:var(--muted);max-width:620px;line-height:1.6}
-    .stats{display:flex;gap:24px;margin-top:24px;flex-wrap:wrap}
-    .stat .num{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800}
-    .stat .lab{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-    .controls{margin-top:30px}
-    .search{width:100%;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--input);color:var(--text);padding:0 14px;font-size:.95rem;outline:none}
-    .search:focus{border-color:rgba(249,115,21,.55);box-shadow:0 0 0 3px rgba(249,115,21,.12)}
-    .head{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
-    .head h2{font-family:'Syne',sans-serif;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-    .count{font-size:.82rem;color:var(--muted);padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:var(--input)}
-    .grid{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
-    .card{display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;transition:.22s}
-    .card:hover{transform:translateY(-4px);border-color:rgba(249,115,21,.45);box-shadow:0 14px 35px rgba(249,115,21,.15)}
-    .badge{float:right;font-size:.64rem;font-weight:700;color:var(--orange);background:var(--orange-soft);border:1px solid rgba(249,115,21,.25);padding:3px 8px;border-radius:999px}
-    .avatar{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#F97315,#c95300);display:grid;place-items:center;color:#fff;font-family:'Syne',sans-serif;font-weight:800;margin:2px 0 12px}
-    .name{font-family:'Syne',sans-serif;font-weight:700}
-    .meta{margin-top:8px;font-size:.82rem;color:var(--muted);display:grid;gap:4px}
-    .empty{display:none;text-align:center;color:var(--muted);margin-top:38px}
-    footer{margin-top:38px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:center;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.82rem}
-    @media (max-width:520px){ .wrap{padding:22px 16px 60px} nav{padding:0 16px} .grid{grid-template-columns:1fr 1fr;gap:10px} }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      height: 80px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.3s ease;
+    }
+    
+    .brand:hover {
+      transform: scale(1.02);
+    }
+
+    .logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px var(--primary-glow));
+    }
+
+    .brand span {
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .brand em {
+      font-style: normal;
+      color: var(--primary);
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeInDown 0.8s ease-out forwards;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(249, 115, 21, 0.1);
+      border: 1px solid rgba(249, 115, 21, 0.2);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 8px 20px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+      box-shadow: 0 0 20px rgba(249, 115, 21, 0.1);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+      animation: pulse 2s infinite;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+
+    h1 b {
+      background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 10px rgba(249,115,21,0.2));
+    }
+
+    .sub {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .stat .num {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--text);
+      text-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    .stat .lab {
+      font-size: 0.85rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+
+    .controls {
+      margin: 60px auto 40px;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .search {
+      width: 100%;
+      height: 64px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      padding: 0 24px 0 60px;
+      font-size: 1.1rem;
+      outline: none;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      backdrop-filter: blur(10px);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      color: var(--text-muted);
+      pointer-events: none;
+      transition: color 0.3s ease;
+    }
+
+    .search:focus {
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 0 4px rgba(249, 115, 21, 0.15), 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .search:focus + .search-icon {
+      color: var(--primary);
+    }
+
+    .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .head h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+
+    .count {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      perspective: 1000px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at top right, rgba(249,115,21,0.1), transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(249, 115, 21, 0.3);
+      background: var(--surface-hover);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(249,115,21,0.1);
+    }
+    
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .badge {
+      align-self: flex-start;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(249,115,21,0.1);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary), #b34e00);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 16px rgba(249, 115, 21, 0.2);
+    }
+
+    .name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    
+    .meta-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+    }
+
+    .empty {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--surface);
+      border-radius: 24px;
+      border: 1px dashed var(--border);
+      margin-top: 24px;
+    }
+    
+    .empty h3 {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    
+    .empty p {
+      color: var(--text-muted);
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 30px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(249, 115, 21, 0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(249, 115, 21, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(249, 115, 21, 0); }
+    }
+    
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 40px 16px 80px; }
+      nav { padding: 0 20px; }
+      .stats { gap: 20px; }
+      .stat .num { font-size: 2rem; }
+      h1 { font-size: 2.2rem; }
+    }
   </style>
 </head>
 <body>
-  <div class="orb a"></div>
-  <div class="orb b"></div>
   <nav>
     <a class="brand" href="#">
-      <div class="logo">VC</div>
-      <span>Vardaan <em>Comet</em></span>
+      <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1772276441/Vardaan_Comet-removebg-preview_dsut6f.png" alt="Vardaan Comet Logo" class="logo">
+      <span>Vardaan <em class="highlight">Comet</em></span>
     </a>
-    <div class="toggle" id="themeToggle"><div class="knob"></div></div>
   </nav>
+
   <main class="wrap">
-    <div class="tag"><span class="dot"></span>Vardaan Comet Portal</div>
-    <h1>Your <b>learning</b><br>starts here.</h1>
-    <p class="sub">Select your profile to open subject pages, chapter dropdowns, and chapter notes from your existing folder structure.</p>
-    <div class="stats">
-      <div class="stat"><div class="num" id="statStudents">0+</div><div class="lab">Students</div></div>
-      <div class="stat"><div class="num" id="statSubjects">0+</div><div class="lab">Subjects</div></div>
-      <div class="stat"><div class="num" id="statChapters">0+</div><div class="lab">Chapters</div></div>
+    <div class="hero-section">
+      <h1><b>Your</b> <span class="highlight">learning</span> <b>starts here.</b></h1>
+      <p class="sub">Select your profile to open subject pages, chapter dropdowns, and chapter notes from your existing folder structure.</p>
+      
+      <div class="stats">
+        <div class="stat"><div class="num" id="statStudents">0+</div><div class="lab">Students</div></div>
+        <div class="stat"><div class="num" id="statSubjects">0+</div><div class="lab">Subjects</div></div>
+        <div class="stat"><div class="num" id="statChapters">0+</div><div class="lab">Chapters</div></div>
+      </div>
     </div>
+
     <div class="controls">
-      <input id="searchInput" class="search" type="search" placeholder="Search student name..." autocomplete="off" />
+      <div style="position: relative;">
+        <input id="searchInput" class="search" type="search" placeholder="Search student name..." autocomplete="off" />
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
     </div>
+
     <div class="head">
-      <h2>Students</h2>
+      <h2>Students Directory</h2>
       <span id="countLabel" class="count">0 students</span>
     </div>
+
     <section class="grid" id="studentGrid"></section>
+
     <section class="empty" id="emptyState">
       <h3>No students found</h3>
-      <p>Try typing a different name.</p>
+      <p>Try searching for a different name.</p>
     </section>
+
     <footer>
       <span>Created by Team Vardaan</span>
-      <span>|</span>
+      <span>•</span>
       <span>Study Portal</span>
-      <span>|</span>
+      <span>•</span>
       <span>© 2026</span>
     </footer>
   </main>
   <script>
     const students = [
       {
-            "name": "Aaraghya cl 7 Icse",
-            "link": "./Aaraghya cl 7 Icse/BiologyTissueWorksheet.html",
-            "subjects": 3,
+            "name": "Aaraghya Pandey - 7th - ICSE - V012607011",
+            "link": "./Aaraghya Pandey - 7th - ICSE - V012607011/BiologyTissueWorksheet.html",
+            "subjects": 1,
             "chapters": 12
       },
       {
-            "name": "Aarush",
-            "link": "./Aarush/SSt/C1_The Story of Indian Farming/ChapterNotes.html",
+            "name": "Aarush Kumar - 7th - CBSE - V022607008",
+            "link": "./Aarush Kumar - 7th - CBSE - V022607008/AarushKumar-7th-CBSE-V022607008.html",
             "subjects": 1,
-            "chapters": 4
+            "chapters": 8
       },
       {
-            "name": "Abhay class 9 icse",
-            "link": "#",
-            "subjects": 1,
-            "chapters": 4
+            "name": "Aditi Sujan - 7th - ICSE - V012608018",
+            "link": "./Aditi Sujan - 7th - ICSE - V012608018/Aditi.html",
+            "subjects": 6,
+            "chapters": 52
       },
       {
-            "name": "Aditi",
-            "link": "./Aditi/Aditi.html",
-            "subjects": 7,
-            "chapters": 28
-      },
-      {
-            "name": "Aditya cl7 icse v3",
-            "link": "./Aditya cl7 icse v3/Physics/C1_Physical Quantities and Measurement/ChapterNotes.html",
+            "name": "Aditya - 7th - ICSE - V032607003",
+            "link": "./Aditya - 7th - ICSE - V032607003/Aditya-7th-ICSE-V032607003.html",
             "subjects": 2,
             "chapters": 8
       },
       {
-            "name": "Advik Jha",
-            "link": "./Advik Jha/AdvikJha.html",
+            "name": "Advik Kumar Jha - 7th - ICSE - V012608009",
+            "link": "./Advik Kumar Jha - 7th - ICSE - V012608009/AdvikJha.html",
             "subjects": 7,
-            "chapters": 28
+            "chapters": 55
       },
       {
-            "name": "Ankit Raj",
-            "link": "./Ankit Raj/AnkitRaj.html",
+            "name": "Ankush singh - 8th - ICSE - V032608004",
+            "link": "./Ankush singh - 8th - ICSE - V032608004/Ankushsingh-8th-ICSE-V032608004.html",
             "subjects": 2,
+            "chapters": 31
+      },
+      {
+            "name": "Ansh - 8th - ICSE - V022608019",
+            "link": "./Ansh - 8th - ICSE - V022608019/Ansh-8th-ICSE-V022608019.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Arnav - 8th - CBSE - V012608006",
+            "link": "./Arnav - 8th - CBSE - V012608006/ArnavMishra.html",
+            "subjects": 3,
+            "chapters": 61
+      },
+      {
+            "name": "Arpit Kumar Singh - 7th - CBSE - V012608016",
+            "link": "./Arpit Kumar Singh - 7th - CBSE - V012608016/ArpitKumarSingh-7th-CBSE-V012608016.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Astuti Jha - 6th - ICSE - V022606013",
+            "link": "./Astuti Jha - 6th - ICSE - V022606013/AstutiJha-6th-ICSE-V022606013.html",
+            "subjects": 2,
+            "chapters": 17
+      },
+      {
+            "name": "Ayan Tiwari - 6th - ICSE - V022606028",
+            "link": "./Ayan Tiwari - 6th - ICSE - V022606028/landforms.html",
+            "subjects": 2,
+            "chapters": 2
+      },
+      {
+            "name": "Harsh - 8th - CBSE - V012608015",
+            "link": "./Harsh - 8th - CBSE - V012608015/Harsh-8th-CBSE-V012608015.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Nikhil Kumar - 8th - ICSE - V022608006",
+            "link": "./Nikhil Kumar - 8th - ICSE - V022608006/NikhilKumar-8th-ICSE-V022608006.html",
+            "subjects": 6,
+            "chapters": 42
+      },
+      {
+            "name": "Porshiya Bhowmick - 6th - ICSE - V012607005",
+            "link": "./Porshiya Bhowmick - 6th - ICSE - V012607005/Porshiya.html",
+            "subjects": 3,
+            "chapters": 15
+      },
+      {
+            "name": "Pratik - 8th - ICSE - V022608018",
+            "link": "./Pratik - 8th - ICSE - V022608018/Pratik-8th-ICSE-V022608018.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Ridhyam - 8th - ICSE - V022608005",
+            "link": "./Ridhyam - 8th - ICSE - V022608005/Ridhyam-8th-ICSE-V022608005.html",
+            "subjects": 3,
             "chapters": 8
       },
       {
-            "name": "Ankush cl 8 icse",
-            "link": "./Ankush cl 8 icse/History/C10_Introduction of Modern Education/ChapterNotes.html",
-            "subjects": 3,
-            "chapters": 12
+            "name": "Rishika priya - 7th - CBSE - V012607014",
+            "link": "./Rishika priya - 7th - CBSE - V012607014/Rishikapriya-7th-CBSE-V012607014.html",
+            "subjects": 2,
+            "chapters": 40
       },
       {
-            "name": "Arnav Mishra",
-            "link": "./Arnav Mishra/ArnavMishra.html",
+            "name": "Rudransh Anand - 8th - CBSE - V022608016",
+            "link": "./Rudransh Anand - 8th - CBSE - V022608016/RudranshAnand-8th-CBSE-V022608016.html",
             "subjects": 4,
-            "chapters": 16
-      },
-      {
-            "name": "Ayan class 6 icse",
-            "link": "./Ayan class 6 icse/Chemistry/C2_Elements Compounds  and Mixtures/ChapterNotes.html",
-            "subjects": 2,
-            "chapters": 8
-      },
-      {
-            "name": "Nikhil Pandey",
-            "link": "./Nikhil Pandey/Chemistry/C2_Physical and Chemical Changes/ChapterNotes.html",
-            "subjects": 6,
-            "chapters": 24
-      },
-      {
-            "name": "Porshiya",
-            "link": "./Porshiya/Porshiya.html",
-            "subjects": 3,
-            "chapters": 12
-      },
-      {
-            "name": "Ridhyam cl 8 icse",
-            "link": "./Ridhyam cl 8 icse/Chemistry/C2_Physical_and_Chemical_Changes/ChapterNotes.html",
-            "subjects": 1,
             "chapters": 4
       },
       {
-            "name": "Rishika cl7 cbse",
-            "link": "./Rishika cl7 cbse/Science/C10_Soil/chapternotes.html",
-            "subjects": 2,
-            "chapters": 8
+            "name": "Rudransh Sharma - 6th - ICSE - V012607017",
+            "link": "./Rudransh Sharma - 6th - ICSE - V012607017/RudranshSharma.html",
+            "subjects": 6,
+            "chapters": 36
       },
       {
-            "name": "Rudransh Class 8",
-            "link": "./Rudransh Class 8/Geography/C1_Chapter 1/ChapterNotes.html",
+            "name": "Shourya Anand - 6th - ICSE - V012606015",
+            "link": "./Shourya Anand - 6th - ICSE - V012606015/SouryaAnand.html",
             "subjects": 5,
-            "chapters": 20
+            "chapters": 36
       },
       {
-            "name": "Rudransh Sharma",
-            "link": "./Rudransh Sharma/RudranshSharma.html",
-            "subjects": 7,
-            "chapters": 28
-      },
-      {
-            "name": "SouryaAnand",
-            "link": "./SouryaAnand/SouryaAnand.html",
-            "subjects": 6,
-            "chapters": 24
-      },
-      {
-            "name": "Stuti class 6 icse",
-            "link": "./Stuti class 6 icse/Geography/C1_Map Reading/ChapterNotes.html",
+            "name": "Suryansh Pandey - 7th - CBSE - V022607024",
+            "link": "./Suryansh Pandey - 7th - CBSE - V022607024/worksheetMathsFractionsLevel1.html",
             "subjects": 2,
-            "chapters": 8
+            "chapters": 3
       },
       {
-            "name": "Suryansh cl 7 cbse",
-            "link": "./Suryansh cl 7 cbse/worksheetMathsFractionsLevel1.html",
-            "subjects": 1,
-            "chapters": 4
-      },
-      {
-            "name": "Vedansh cl 6 icse",
-            "link": "./Vedansh cl 6 icse/Biology/C1_Plant Life - The Leaf/ChapterNotes.html",
+            "name": "Vedansh Mishra - 6th - ICSE - V022606018",
+            "link": "./Vedansh Mishra - 6th - ICSE - V022606018/VedanshMishra-6th-ICSE-V022606018.html",
             "subjects": 6,
-            "chapters": 24
+            "chapters": 33
       },
       {
             "name": "Vidhushi class 8cbse",
-            "link": "./Vidhushi class 8cbse/Science/C2_The Invisible Living World Beyond Our Naked Eye/ChapterNotes.html",
+            "link": "./Vidhushi class 8cbse/Vidhushiclass8cbse.html",
             "subjects": 1,
-            "chapters": 4
+            "chapters": 3
       },
       {
-            "name": "VidyaPrakash Kalia",
-            "link": "./VidyaPrakash Kalia/AaravKalia.html",
-            "subjects": 4,
-            "chapters": 16
+            "name": "Vidyaprakash - 7th - CBSE - V012608008",
+            "link": "./Vidyaprakash - 7th - CBSE - V012608008/AaravKalia.html",
+            "subjects": 3,
+            "chapters": 48
       },
       {
-            "name": "Yash class 7 icse",
-            "link": "./Yash class 7 icse/Chemistry/C3_ElementsCompoundsAndMixtures/ChapterNotes.html",
-            "subjects": 4,
-            "chapters": 16
+            "name": "Yash - 7th - ICSE - V022607023",
+            "link": "./Yash - 7th - ICSE - V022607023/Yash-7th-ICSE-V022607023.html",
+            "subjects": 5,
+            "chapters": 23
       }
 ];
-    const html = document.documentElement;
-    function setTheme(theme) {
-      html.setAttribute('data-theme', theme);
-      localStorage.setItem('vcTheme', theme);
-    }
-    setTheme(localStorage.getItem('vcTheme') || 'dark');
-    document.getElementById('themeToggle').addEventListener('click', () => {
-      setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    });
     function initials(name) {
       return name.split(' ').map(part => part[0]).join('').slice(0, 2).toUpperCase();
     }
+
     function renderStats() {
       const totalStudents = students.length;
       const totalSubjects = students.reduce((sum, s) => sum + s.subjects, 0);
       const totalChapters = students.reduce((sum, s) => sum + s.chapters, 0);
-      document.getElementById('statStudents').textContent = totalStudents + '+';
-      document.getElementById('statSubjects').textContent = totalSubjects + '+';
-      document.getElementById('statChapters').textContent = totalChapters + '+';
+      document.getElementById('statStudents').textContent = totalStudents;
+      document.getElementById('statSubjects').textContent = totalSubjects;
+      document.getElementById('statChapters').textContent = totalChapters;
     }
+
     function renderCards(list) {
       const grid = document.getElementById('studentGrid');
       const emptyState = document.getElementById('emptyState');
       const countLabel = document.getElementById('countLabel');
+      
       grid.innerHTML = '';
+      
       if (!list.length) {
         grid.style.display = 'none';
         emptyState.style.display = 'block';
         countLabel.textContent = '0 students';
         return;
       }
+      
       grid.style.display = 'grid';
       emptyState.style.display = 'none';
       countLabel.textContent = list.length + ' student' + (list.length === 1 ? '' : 's');
+      
       list.forEach(student => {
         const card = document.createElement('a');
         card.className = 'card';
         card.href = student.link;
-        card.innerHTML =
-          '<span class="badge">Student</span>' +
-          '<div class="avatar">' + initials(student.name) + '</div>' +
-          '<div class="name">' + student.name + '</div>' +
-          '<div class="meta">' +
-            '<span>' + student.subjects + ' subject folders</span>' +
-            '<span>' + student.chapters + ' chapter folders</span>' +
-          '</div>';
+        
+        card.innerHTML = `
+          <span class="badge">Student</span>
+          <div class="avatar">${initials(student.name)}</div>
+          <div class="name">${student.name}</div>
+          <div class="meta">
+            <div class="meta-item">
+              <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              <span>${student.subjects} subject${student.subjects === 1 ? '' : 's'}</span>
+            </div>
+            <div class="meta-item">
+              <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
+              </svg>
+              <span>${student.chapters} chapter folder${student.chapters === 1 ? '' : 's'}</span>
+            </div>
+          </div>
+        `;
         grid.appendChild(card);
       });
     }
+
     function filterStudents() {
       const term = document.getElementById('searchInput').value.toLowerCase().trim();
       const filtered = students.filter(student => student.name.toLowerCase().includes(term));
       renderCards(filtered);
     }
+
     document.getElementById('searchInput').addEventListener('input', filterStudents);
+    
+    // Initialize
     renderStats();
     renderCards(students);
   </script>

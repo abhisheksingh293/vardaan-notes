@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Motion - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Physics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>MOTION</h1>
+
+        <h2>1. Rest and Motion</h2>
+        <p>In our daily lives, we see some objects moving while others remain stationary. Based on this observation, objects can be classified into two states:</p>
+        <ul>
+            <li><strong>Motion:</strong> An object is said to be in motion if its position changes with respect to its surroundings and time (e.g., flying birds, moving cars).</li>
+            <li><strong>Rest:</strong> If an object does not change its position with respect to its surroundings with time, it is said to be in a state of rest (e.g., houses, trees).</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Rest and Motion are Relative Terms:</strong> An object may appear to be in motion to one observer while appearing at rest to another. For example, to a passenger in a moving car, the trees outside appear to be moving backwards, but to a person standing outside, the trees are at rest and the car is moving.</p>
+        </div>
+
+        <h2>2. Types of Motion</h2>
+        <p>Objects can undergo different types of motion based on the path they follow:</p>
+
+        <h3>Translatory Motion</h3>
+        <p>When a body moves in a line such that all its parts move through the same distance in the same time interval, it is called translatory (or linear) motion. It is of two types:</p>
+        <ul>
+            <li><strong>Rectilinear Motion:</strong> Motion along a straight line (e.g., a falling apple, a car on a straight road).</li>
+            <li><strong>Curvilinear Motion:</strong> Motion along a curved or circular path (e.g., a discus in a discus throw).</li>
+        </ul>
+
+        <h3>Other Important Types of Motion</h3>
+        <ul>
+            <li><strong>Circular Motion:</strong> When an object moves around a fixed point in a circular path. The distance from the fixed point remains constant (e.g., a child on a merry-go-round, the moon around the Earth).</li>
+            <li><strong>Rotatory Motion:</strong> When a body spins about a fixed axis without changing its radius of motion (e.g., movement of a fan, a giant wheel). Unlike circular motion, different parts of a rotating body cover different distances.</li>
+            <li><strong>Oscillatory Motion:</strong> The back-and-forth (to and fro) movement of a body about its mean (rest) position (e.g., a pendulum clock, a swinging child).</li>
+            <li><strong>Vibratory Motion:</strong> A type of oscillatory motion where only a <em>part</em> of the body moves back and forth, not the entire object. This rapid movement often produces sound (e.g., guitar strings, tabla surface).</li>
+            <li><strong>Periodic Motion:</strong> Motion that repeats itself exactly after a fixed, regular interval of time (e.g., the Earth revolving around the sun, movement of clock hands).</li>
+            <li><strong>Non-periodic Motion:</strong> Motion that does not repeat itself after regular time intervals (e.g., running, heartbeat while exercising).</li>
+            <li><strong>Multiple Motion:</strong> When a body exhibits more than one type of motion simultaneously (e.g., the Earth rotates on its axis and revolves around the sun).</li>
+            <li><strong>Rolling Motion:</strong> A special combination of both rotatory and translatory motion (e.g., a ball rolling on the ground, bicycle wheels moving forward).</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>The Simple Pendulum:</strong> It consists of a heavy mass (bob) suspended by a string from a rigid support. One complete to-and-fro motion from its mean position is called <strong>one oscillation</strong>. The time taken to complete one oscillation is its <strong>time period (T)</strong>, measured in seconds (s). The motion of a simple pendulum is strictly <em>periodic</em>.</p>
+        </div>
+
+        <h2>3. Distance and Displacement</h2>
+        <p>To measure motion accurately, we need to understand distance and displacement:</p>
+
+        <ul>
+            <li><strong>Distance:</strong> The total length of the actual path covered by an object, regardless of its direction. It is denoted by 'd'. The SI unit is the <strong>metre (m)</strong>.</li>
+            <li><strong>Displacement:</strong> The shortest possible straight-line distance from the initial position to the final position in a particular direction. It is denoted by 's'. The SI unit is also the <strong>metre (m)</strong>.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Scalar vs Vector Quantities:</strong><br>
+            • A <strong>Scalar Quantity</strong> has only magnitude and no direction (e.g., Distance, Speed, Mass, Volume).<br>
+            • A <strong>Vector Quantity</strong> has both magnitude AND direction (e.g., Displacement, Velocity, Weight).</p>
+        </div>
+
+        <h2>4. Uniform and Non-uniform Motion</h2>
+        <p>Depending upon the distance travelled, time taken, and the direction of motion, the motion of a body can be broadly divided into uniform or non-uniform motion.</p>
+
+        <h3>Uniform Motion</h3>
+        <p>If a body covers <strong>equal distances in equal intervals of time</strong>, it is said to exhibit uniform motion.</p>
+        <ul>
+            <li><strong>Example:</strong> A motorbike moving along a straight road that covers a distance of 15 metres every second.</li>
+            <li><strong>Speed:</strong> An object in uniform motion always has a <strong>constant speed</strong>.</li>
+        </ul>
+
+        <h3>Non-uniform Motion</h3>
+        <p>If a body covers <strong>unequal distances in equal intervals of time</strong>, it is said to exhibit non-uniform motion.</p>
+        <ul>
+            <li><strong>Example:</strong> A car moving on a busy road that covers 10 metres in the first 3 seconds, 15 metres in the next 3 seconds, and 20 metres in another 3 seconds.</li>
+            <li><strong>Direction change:</strong> A body is also considered to be in non-uniform motion if it covers equal distances in equal intervals of time, but its <strong>direction is not constant</strong>.</li>
+            <li><strong>Speed:</strong> The speed is not constant; it keeps changing.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Average Speed:</strong> Because the speed of an object in non-uniform motion keeps changing, we calculate its average speed.</p>
+            <p>Average speed is the ratio of the <strong>total distance travelled</strong> by the object to the <strong>total time taken</strong> during the journey.<br>
+            <em>Average Speed = Total Distance Travelled ÷ Total Time Taken</em></p>
+        </div>
+
+        <h3>Speed and Velocity</h3>
+        <ul>
+            <li><strong>Speed:</strong> The distance travelled by a body in unit time. It is a <em>scalar quantity</em>. (Speed = Distance ÷ Time). The SI unit is <strong>m/s</strong>.</li>
+            <li><strong>Velocity:</strong> Speed with a specified direction. It is defined as the displacement in unit time. It is a <em>vector quantity</em>. (Velocity = Displacement ÷ Time). The SI unit is also <strong>m/s</strong>.</li>
+        </ul>
+
+        <h2>5. Mass and Weight</h2>
+        <p>In physics, mass and weight are two very different concepts:</p>
+
+        <ul>
+            <li><strong>Mass (m):</strong> The quantity of matter contained within a body. It is a <em>scalar quantity</em>, always remains constant, and can never be zero. It is measured with a beam balance, and its SI unit is the <strong>kilogram (kg)</strong>.</li>
+            <li><strong>Weight (W):</strong> The force with which the Earth attracts a body towards its center due to gravity. It is a <em>vector quantity</em> (acts downwards) and varies from place to place. It can be zero in the absence of gravity. It is measured with a spring balance, and its SI unit is the <strong>newton (N)</strong>.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Formula for Weight:</strong> Weight = Mass × acceleration due to gravity (<strong>W = m × g</strong>). <br>
+            Another common unit for weight is the Kilogram-force (kgf). <br>
+            <strong>1 kgf = 9.8 N</strong> (often rounded to 10 N for simpler calculations).</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
