@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Vardaan Comet - Study Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,14 +10,14 @@
   <style>
     :root {
       --primary: #F97315;
-      --primary-glow: rgba(249, 115, 21, 0.4);
-      --bg: #0d0d12;
-      --surface: rgba(255, 255, 255, 0.03);
-      --surface-hover: rgba(255, 255, 255, 0.08);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #f8f8f8;
-      --text-muted: #a0a0b0;
-      --glass-bg: rgba(13, 13, 18, 0.7);
+      --primary-glow: rgba(249, 115, 21, 0.2);
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-hover: #f9f9fa;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #111827;
+      --text-muted: #6b7280;
+      --glass-bg: rgba(255, 255, 255, 0.85);
     }
     
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -61,12 +61,7 @@
       transform: scale(1.02);
     }
 
-    .logo {
-      height: 48px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 4px 12px var(--primary-glow));
-    }
+    .logo { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); }
 
     .brand span {
       font-weight: 800;
@@ -127,11 +122,7 @@
       margin-bottom: 20px;
     }
 
-    h1 b {
-      background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    h1 b { background: linear-gradient(135deg, #111827 0%, #6b7280 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
     h1 .highlight {
       background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%);
@@ -257,6 +248,9 @@
     .card {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
       text-decoration: none;
       color: var(--text);
       background: var(--surface);
@@ -303,30 +297,33 @@
     }
 
     .avatar {
-      width: 56px;
-      height: 56px;
+      width: 64px;
+      height: 64px;
       border-radius: 16px;
       background: linear-gradient(135deg, var(--primary), #b34e00);
       display: grid;
       place-items: center;
       color: #fff;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       font-weight: 700;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       box-shadow: 0 8px 16px rgba(249, 115, 21, 0.2);
     }
 
     .name {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       color: var(--text);
+      line-height: 1.3;
     }
 
     .meta {
       display: flex;
       flex-direction: column;
       gap: 8px;
+      align-items: center;
+    }
     }
     
     .meta-item {
@@ -387,11 +384,23 @@
     }
 
     @media (max-width: 768px) {
-      .wrap { padding: 40px 16px 80px; }
-      nav { padding: 0 20px; }
-      .stats { gap: 20px; }
-      .stat .num { font-size: 2rem; }
-      h1 { font-size: 2.2rem; }
+      .wrap { padding: 20px 12px 60px; }
+      nav { padding: 0 12px; height: 60px; }
+      .logo { height: 32px; }
+      .brand span { font-size: 1.2rem; }
+      .stats { gap: 12px; }
+      .stat .num { font-size: 1.5rem; }
+      h1 { font-size: 1.8rem; margin-bottom: 12px; }
+      .sub { font-size: 0.95rem; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .card { padding: 12px 16px; gap: 12px; }
+      .avatar { width: 40px; height: 40px; font-size: 1rem; }
+      .name { font-size: 1.05rem; }
+      .meta { flex-direction: column; gap: 4px; align-items: flex-start; }
+      .meta-item span { font-size: 0.8rem; }
+      .meta-icon { width: 14px; height: 14px; }
+      .search { padding: 12px 20px 12px 40px; font-size: 1rem; }
+      .search-icon { left: 14px; width: 18px; height: 18px; }
     }
   </style>
 </head>
@@ -436,13 +445,7 @@
       <p>Try searching for a different name.</p>
     </section>
 
-    <footer>
-      <span>Created by Team Vardaan</span>
-      <span>•</span>
-      <span>Study Portal</span>
-      <span>•</span>
-      <span>© 2026</span>
-    </footer>
+
   </main>
   <script>
     const students = [
@@ -634,7 +637,6 @@
         card.href = student.link;
         
         card.innerHTML = `
-          <span class="badge">Student</span>
           <div class="avatar">${initials(student.name)}</div>
           <div class="name">${student.name}</div>
           <div class="meta">
@@ -643,12 +645,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
               <span>${student.subjects} subject${student.subjects === 1 ? '' : 's'}</span>
-            </div>
-            <div class="meta-item">
-              <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
-              </svg>
-              <span>${student.chapters} chapter folder${student.chapters === 1 ? '' : 's'}</span>
             </div>
           </div>
         `;
