@@ -861,9 +861,14 @@
       const totalStudents = students.length;
       const totalSubjects = students.reduce((sum, s) => sum + s.subjects, 0);
       const totalChapters = students.reduce((sum, s) => sum + s.chapters, 0);
-      document.getElementById('statStudents').textContent = totalStudents;
-      document.getElementById('statSubjects').textContent = totalSubjects;
-      document.getElementById('statChapters').textContent = totalChapters;
+      
+      const elStudents = document.getElementById('statStudents');
+      const elSubjects = document.getElementById('statSubjects');
+      const elChapters = document.getElementById('statChapters');
+      
+      if (elStudents) elStudents.textContent = totalStudents;
+      if (elSubjects) elSubjects.textContent = totalSubjects;
+      if (elChapters) elChapters.textContent = totalChapters;
     }
 
     function renderCards(list) {
