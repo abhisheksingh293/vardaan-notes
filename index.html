@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Vardaan Comet - Study Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --primary: #F97315;
@@ -19,16 +21,20 @@
       --text-muted: #6b7280;
       --glass-bg: rgba(255, 255, 255, 0.85);
     }
-    
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Outfit', sans-serif;
       background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
-      background-image: 
+      background-image:
         radial-gradient(circle at 15% 50%, rgba(249, 115, 21, 0.08) 0%, transparent 50%),
         radial-gradient(circle at 85% 30%, rgba(249, 115, 21, 0.05) 0%, transparent 50%);
     }
@@ -56,12 +62,17 @@
       color: var(--text);
       transition: transform 0.3s ease;
     }
-    
+
     .brand:hover {
       transform: scale(1.02);
     }
 
-    .logo { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); }
+    .logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px var(--primary-glow));
+    }
 
     .brand span {
       font-weight: 800;
@@ -122,13 +133,17 @@
       margin-bottom: 20px;
     }
 
-    h1 b { background: linear-gradient(135deg, #111827 0%, #6b7280 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    
+    h1 b {
+      background: linear-gradient(135deg, #111827 0%, #6b7280 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
     h1 .highlight {
       background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 2px 10px rgba(249,115,21,0.2));
+      filter: drop-shadow(0 2px 10px rgba(249, 115, 21, 0.2));
     }
 
     .sub {
@@ -158,7 +173,7 @@
       font-size: 2.5rem;
       font-weight: 800;
       color: var(--text);
-      text-shadow: 0 0 20px rgba(255,255,255,0.1);
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     }
 
     .stat .lab {
@@ -189,7 +204,7 @@
       font-family: inherit;
       backdrop-filter: blur(10px);
     }
-    
+
     .search-icon {
       position: absolute;
       left: 20px;
@@ -205,10 +220,10 @@
     .search:focus {
       border-color: var(--primary);
       background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 0 0 4px rgba(249, 115, 21, 0.15), 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 0 0 4px rgba(249, 115, 21, 0.15), 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
-    .search:focus + .search-icon {
+    .search:focus+.search-icon {
       color: var(--primary);
     }
 
@@ -262,12 +277,15 @@
       overflow: hidden;
       backdrop-filter: blur(10px);
     }
-    
+
     .card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle at top right, rgba(249,115,21,0.1), transparent 50%);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at top right, rgba(249, 115, 21, 0.1), transparent 50%);
       opacity: 0;
       transition: opacity 0.4s ease;
     }
@@ -276,9 +294,9 @@
       transform: translateY(-8px) scale(1.02);
       border-color: rgba(249, 115, 21, 0.3);
       background: var(--surface-hover);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(249,115,21,0.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(249, 115, 21, 0.1);
     }
-    
+
     .card:hover::before {
       opacity: 1;
     }
@@ -288,7 +306,7 @@
       font-size: 0.75rem;
       font-weight: 700;
       color: var(--primary);
-      background: rgba(249,115,21,0.1);
+      background: rgba(249, 115, 21, 0.1);
       padding: 4px 12px;
       border-radius: 999px;
       margin-bottom: 20px;
@@ -324,8 +342,8 @@
       gap: 8px;
       align-items: center;
     }
-    }
-    
+
+
     .meta-item {
       display: flex;
       align-items: center;
@@ -333,7 +351,7 @@
       font-size: 0.9rem;
       color: var(--text-muted);
     }
-    
+
     .meta-icon {
       width: 16px;
       height: 16px;
@@ -349,13 +367,13 @@
       border: 1px dashed var(--border);
       margin-top: 24px;
     }
-    
+
     .empty h3 {
       font-size: 1.5rem;
       margin-bottom: 8px;
       color: var(--text);
     }
-    
+
     .empty p {
       color: var(--text-muted);
     }
@@ -373,41 +391,122 @@
     }
 
     @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(249, 115, 21, 0.4); }
-      70% { box-shadow: 0 0 0 6px rgba(249, 115, 21, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(249, 115, 21, 0); }
+      0% {
+        box-shadow: 0 0 0 0 rgba(249, 115, 21, 0.4);
+      }
+
+      70% {
+        box-shadow: 0 0 0 6px rgba(249, 115, 21, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(249, 115, 21, 0);
+      }
     }
-    
+
     @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 768px) {
-      .wrap { padding: 20px 12px 60px; }
-      nav { padding: 0 12px; height: 60px; }
-      .logo { height: 32px; }
-      .brand span { font-size: 1.2rem; }
-      .stats { gap: 12px; }
-      .stat .num { font-size: 1.5rem; }
-      h1 { font-size: 1.8rem; margin-bottom: 12px; }
-      .sub { font-size: 0.95rem; }
-      .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .card { padding: 12px 16px; gap: 12px; }
-      .avatar { width: 72px; height: 72px; font-size: 1.8rem; border-radius: 18px; margin-bottom: 8px; }
-      .name { font-size: 1.05rem; }
-      .meta { flex-direction: column; gap: 4px; align-items: flex-start; }
-      .meta-item span { font-size: 0.8rem; }
-      .meta-icon { width: 14px; height: 14px; }
-      .search { padding: 12px 20px 12px 40px; font-size: 1rem; }
-      .search-icon { left: 14px; width: 18px; height: 18px; }
+      .wrap {
+        padding: 20px 12px 60px;
+      }
+
+      nav {
+        padding: 0 12px;
+        height: 60px;
+      }
+
+      .logo {
+        height: 32px;
+      }
+
+      .brand span {
+        font-size: 1.2rem;
+      }
+
+      .stats {
+        gap: 12px;
+      }
+
+      .stat .num {
+        font-size: 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+      }
+
+      .sub {
+        font-size: 0.95rem;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .card {
+        padding: 12px 16px;
+        gap: 12px;
+      }
+
+      .avatar {
+        width: 72px;
+        height: 72px;
+        font-size: 1.8rem;
+        border-radius: 18px;
+        margin-bottom: 8px;
+      }
+
+      .name {
+        font-size: 1.05rem;
+      }
+
+      .meta {
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-start;
+      }
+
+      .meta-item span {
+        font-size: 0.8rem;
+      }
+
+      .meta-icon {
+        width: 14px;
+        height: 14px;
+      }
+
+      .search {
+        padding: 12px 20px 12px 40px;
+        font-size: 1rem;
+      }
+
+      .search-icon {
+        left: 14px;
+        width: 18px;
+        height: 18px;
+      }
     }
   </style>
 </head>
+
 <body>
   <nav>
     <a class="brand" href="#">
-      <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1772276441/Vardaan_Comet-removebg-preview_dsut6f.png" alt="Vardaan Comet Logo" class="logo">
+      <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1772276441/Vardaan_Comet-removebg-preview_dsut6f.png"
+        alt="Vardaan Comet Logo" class="logo">
       <span>Vardaan <em class="highlight">Comet</em></span>
     </a>
   </nav>
@@ -417,8 +516,10 @@
     <div class="controls">
       <div style="position: relative;">
         <input id="searchInput" class="search" type="search" placeholder="Search student name..." autocomplete="off" />
-        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
       </div>
     </div>
@@ -452,22 +553,46 @@
             "chapters": 8
       },
       {
-            "name": "Aditi Sujan - 7th - ICSE - V012608018",
-            "link": "./Aditi Sujan - 7th - ICSE - V012608018/Aditi.html",
+            "name": "Abhay Kumar - 9th - ICSE - V022609014",
+            "link": "./Abhay Kumar - 9th - ICSE - V022609014/AbhayKumar-9th-ICSE-V022609014.html",
+            "subjects": 1,
+            "chapters": 0
+      },
+      {
+            "name": "Abhinav - 9th - ICSE - V022609022",
+            "link": "./Abhinav - 9th - ICSE - V022609022/Abhinav-9th-ICSE-V022609022.html",
+            "subjects": 1,
+            "chapters": 0
+      },
+      {
+            "name": "Aditi Sujan - 8th - ICSE - V012608018",
+            "link": "./Aditi Sujan - 8th - ICSE - V012608018/Aditi.html",
             "subjects": 6,
             "chapters": 52
       },
       {
             "name": "Aditya - 7th - ICSE - V032607003",
             "link": "./Aditya - 7th - ICSE - V032607003/Aditya-7th-ICSE-V032607003.html",
-            "subjects": 2,
+            "subjects": 3,
             "chapters": 8
       },
       {
-            "name": "Advik Kumar Jha - 7th - ICSE - V012608009",
-            "link": "./Advik Kumar Jha - 7th - ICSE - V012608009/AdvikJha.html",
+            "name": "Advik Kumar Jha - 8th - ICSE - V012608009",
+            "link": "./Advik Kumar Jha - 8th - ICSE - V012608009/AdvikJha.html",
             "subjects": 7,
             "chapters": 55
+      },
+      {
+            "name": "Ananya - 12th - CBSE - V022612016",
+            "link": "./Ananya - 12th - CBSE - V022612016/Ananya-12th-CBSE-V022612016.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Ankit Raj Sharmaa - 12th - ICSE - V022612001",
+            "link": "./Ankit Raj Sharmaa - 12th - ICSE - V022612001/AnkitRajSharmaa-12th-ICSE-V022612001.html",
+            "subjects": 0,
+            "chapters": 0
       },
       {
             "name": "Ankush singh - 8th - ICSE - V032608004",
@@ -482,14 +607,32 @@
             "chapters": 0
       },
       {
+            "name": "Anshu kumar - 10th - CBSE - V022610002",
+            "link": "./Anshu kumar - 10th - CBSE - V022610002/Anshukumar-10th-CBSE-V022610002.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
             "name": "Arnav - 8th - CBSE - V012608006",
             "link": "./Arnav - 8th - CBSE - V012608006/ArnavMishra.html",
             "subjects": 3,
             "chapters": 61
       },
       {
-            "name": "Arpit Kumar Singh - 7th - CBSE - V012608016",
-            "link": "./Arpit Kumar Singh - 7th - CBSE - V012608016/ArpitKumarSingh-7th-CBSE-V012608016.html",
+            "name": "Arpit Kumar Singh - 8th - CBSE - V012608016",
+            "link": "./Arpit Kumar Singh - 8th - CBSE - V012608016/ArpitKumarSingh-7th-CBSE-V012608016.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Arsh Sharma - 10th - ICSE - V012610021",
+            "link": "./Arsh Sharma - 10th - ICSE - V012610021/ArshSharma-10th-ICSE-V012610021.html",
+            "subjects": 1,
+            "chapters": 0
+      },
+      {
+            "name": "Arya Pandey - 10th - CBSE - V012610019",
+            "link": "./Arya Pandey - 10th - CBSE - V012610019/AryaPandey-10th-CBSE-V012610019.html",
             "subjects": 0,
             "chapters": 0
       },
@@ -506,8 +649,68 @@
             "chapters": 2
       },
       {
+            "name": "Ayush - 9th - CBSE - V022609031",
+            "link": "./Ayush - 9th - CBSE - V022609031/Ayush-9th-CBSE-V022609031.html",
+            "subjects": 1,
+            "chapters": 0
+      },
+      {
+            "name": "Chahat - 9th - ICSE - V022609021",
+            "link": "./Chahat - 9th - ICSE - V022609021/Chahat-9th-ICSE-V022609021.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Deepika Jha - 12th - CBSE - V022612014",
+            "link": "./Deepika Jha - 12th - CBSE - V022612014/DeepikaJha-12th-CBSE-V022612014.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Dev - 12th - CBSE - V022612019",
+            "link": "./Dev - 12th - CBSE - V022612019/Dev-12th-CBSE-V022612019.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Divya Paira - 12th - CBSE - V022612011",
+            "link": "./Divya Paira - 12th - CBSE - V022612011/DivyaPaira-12th-CBSE-V022612011.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Garima - 12th - CBSE - V022612020",
+            "link": "./Garima - 12th - CBSE - V022612020/Garima-12th-CBSE-V022612020.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
             "name": "Harsh - 8th - CBSE - V012608015",
             "link": "./Harsh - 8th - CBSE - V012608015/Harsh-8th-CBSE-V012608015.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Harshit Anand Pandey - 12th - CBSE - V022612027",
+            "link": "./Harshit Anand Pandey - 12th - CBSE - V022612027/HarshitAnandPandey-12th-CBSE-V022612027.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Mahi Mishra - 10th - CBSE - V022610017",
+            "link": "./Mahi Mishra - 10th - CBSE - V022610017/MahiMishra-10th-CBSE-V022610017.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Mayank Mishra - 10th - ICSE - V012610007",
+            "link": "./Mayank Mishra - 10th - ICSE - V012610007/MayankMishra-10th-ICSE-V012610007.html",
+            "subjects": 1,
+            "chapters": 0
+      },
+      {
+            "name": "muskan kumari - 9th - CBSE - V022609026",
+            "link": "./muskan kumari - 9th - CBSE - V022609026/muskankumari-9th-CBSE-V022609026.html",
             "subjects": 0,
             "chapters": 0
       },
@@ -518,8 +721,14 @@
             "chapters": 42
       },
       {
-            "name": "Porshiya Bhowmick - 6th - ICSE - V012607005",
-            "link": "./Porshiya Bhowmick - 6th - ICSE - V012607005/Porshiya.html",
+            "name": "Nupur Kumari - 10th - CBSE - V012610016",
+            "link": "./Nupur Kumari - 10th - CBSE - V012610016/NupurKumari-10th-CBSE-V012610016.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Porshiya Bhowmick - 7th - ICSE - V012607005",
+            "link": "./Porshiya Bhowmick - 7th - ICSE - V012607005/Porshiya.html",
             "subjects": 3,
             "chapters": 15
       },
@@ -548,10 +757,16 @@
             "chapters": 4
       },
       {
-            "name": "Rudransh Sharma - 6th - ICSE - V012607017",
-            "link": "./Rudransh Sharma - 6th - ICSE - V012607017/RudranshSharma.html",
+            "name": "Rudransh Sharma - 7th - ICSE - V012607017",
+            "link": "./Rudransh Sharma - 7th - ICSE - V012607017/RudranshSharma.html",
             "subjects": 6,
             "chapters": 36
+      },
+      {
+            "name": "Shanvi Tiwary - 12th - CBSE - V022612007",
+            "link": "./Shanvi Tiwary - 12th - CBSE - V022612007/ShanviTiwary-12th-CBSE-V022612007.html",
+            "subjects": 0,
+            "chapters": 0
       },
       {
             "name": "Shourya Anand - 6th - ICSE - V012606015",
@@ -560,10 +775,52 @@
             "chapters": 36
       },
       {
+            "name": "Shreya mishra - 9th - CBSE - V022609018",
+            "link": "./Shreya mishra - 9th - CBSE - V022609018/Shreyamishra-9th-CBSE-V022609018.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Sripad Nayak - 10th - CBSE - V012610018",
+            "link": "./Sripad Nayak - 10th - CBSE - V012610018/SripadNayak-10th-CBSE-V012610018.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Sunidhi Kumari - 10th - CBSE - V012610017",
+            "link": "./Sunidhi Kumari - 10th - CBSE - V012610017/SunidhiKumari-10th-CBSE-V012610017.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
             "name": "Suryansh Pandey - 7th - CBSE - V022607024",
             "link": "./Suryansh Pandey - 7th - CBSE - V022607024/worksheetMathsFractionsLevel1.html",
             "subjects": 2,
             "chapters": 3
+      },
+      {
+            "name": "Tanvi Bharti - 11th - CBSE - V022611025",
+            "link": "./Tanvi Bharti - 11th - CBSE - V022611025/TanviBharti-11th-CBSE-V022611025.html",
+            "subjects": 1,
+            "chapters": 0
+      },
+      {
+            "name": "Tanvi Kumari - 10th - CBSE - V012610015",
+            "link": "./Tanvi Kumari - 10th - CBSE - V012610015/TanviKumari-10th-CBSE-V012610015.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Utkarsh Singh - 9th - CBSE - V022609012",
+            "link": "./Utkarsh Singh - 9th - CBSE - V022609012/UtkarshSingh-9th-CBSE-V022609012.html",
+            "subjects": 1,
+            "chapters": 0
+      },
+      {
+            "name": "VARSHA BISHAI - 10th - CBSE - V012610020",
+            "link": "./VARSHA BISHAI - 10th - CBSE - V012610020/VARSHABISHAI-10th-CBSE-V012610020.html",
+            "subjects": 0,
+            "chapters": 0
       },
       {
             "name": "Vedansh Mishra - 6th - ICSE - V022606018",
@@ -572,14 +829,20 @@
             "chapters": 33
       },
       {
-            "name": "Vidhushi class 8cbse",
-            "link": "./Vidhushi class 8cbse/Vidhushiclass8cbse.html",
+            "name": "Vibhuti - 8th - CBSE - V022608030",
+            "link": "./Vibhuti - 8th - CBSE - V022608030/Vibhuti-8th-CBSE-V022608030.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Vidhushi - 8th - ICSE - V022608029",
+            "link": "./Vidhushi - 8th - ICSE - V022608029/Vidhushiclass8cbse.html",
             "subjects": 1,
             "chapters": 3
       },
       {
-            "name": "Vidyaprakash - 7th - CBSE - V012608008",
-            "link": "./Vidyaprakash - 7th - CBSE - V012608008/AaravKalia.html",
+            "name": "Vidyaprakash - 8th - CBSE - V012608008",
+            "link": "./Vidyaprakash - 8th - CBSE - V012608008/AaravKalia.html",
             "subjects": 3,
             "chapters": 48
       },
@@ -607,25 +870,25 @@
       const grid = document.getElementById('studentGrid');
       const emptyState = document.getElementById('emptyState');
       const countLabel = document.getElementById('countLabel');
-      
+
       grid.innerHTML = '';
-      
+
       if (!list.length) {
         grid.style.display = 'none';
         emptyState.style.display = 'block';
         countLabel.textContent = '0 students';
         return;
       }
-      
+
       grid.style.display = 'grid';
       emptyState.style.display = 'none';
       countLabel.textContent = list.length + ' student' + (list.length === 1 ? '' : 's');
-      
+
       list.forEach(student => {
         const card = document.createElement('a');
         card.className = 'card';
         card.href = student.link;
-        
+
         card.innerHTML = `
           <div class="avatar">${initials(student.name)}</div>
           <div class="name">${student.name}</div>
@@ -649,10 +912,11 @@
     }
 
     document.getElementById('searchInput').addEventListener('input', filterStudents);
-    
+
     // Initialize
     renderStats();
     renderCards(students);
   </script>
 </body>
+
 </html>

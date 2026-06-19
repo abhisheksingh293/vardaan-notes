@@ -1,0 +1,417 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - English Grammar Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Inject based on Level 1/2/3) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">English Grammar Foundation Worksheet</div>
+        <div class="meta-info">
+            <span>Especially designed for: Aarav</span> 
+            <span>Class: 8 (CBSE)</span>
+            <span>Subject: English Grammar</span>
+        </div>
+    </div>
+
+    <!-- SECTION 1: SENTENCES -->
+    <div class="chapter-header">Section A: The Sentence</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">Identify the type of sentence: <em>Please pass me the salt.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">Identify the type of sentence: <em>What a breathtaking view this is!</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">Identify the type of sentence: <em>The stars are shining brightly in the night sky.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">Identify the type of sentence: <em>Have you finished reading the novel?</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">Identify the type of sentence: <em>Do not touch that broken glass.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">Identify the Subject and the Predicate: <em>The old man walked slowly down the street.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">Identify the Subject and the Predicate: <em>Beyond the hills lies a small village.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">Identify the Subject and the Predicate: <em>My sister and I are going to the market.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">Identify the Subject and the Predicate: <em>Barking dogs seldom bite.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">Rewrite as an Interrogative sentence: <em>She is reading an interesting story.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">11.</span>
+            <div class="q-content">Rewrite as an Exclamatory sentence: <em>It is a very cold day.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">12.</span>
+            <div class="q-content">Rewrite as a Declarative sentence: <em>Did they win the championship match?</em></div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: NOUNS -->
+    <div class="chapter-header">Section B: Nouns & Their Kinds</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">13.</span>
+            <div class="q-content">Identify the noun(s) and state their kind: <em>Honesty is the best policy.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">14.</span>
+            <div class="q-content">Identify the noun(s) and state their kind: <em>The committee decided to postpone the meeting.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">15.</span>
+            <div class="q-content">Identify the noun(s) and state their kind: <em>Mt. Everest is the highest peak in the world.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">16.</span>
+            <div class="q-content">Identify the noun(s) and state their kind: <em>A swarm of bees attacked the wild bear.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">17.</span>
+            <div class="q-content">Identify the noun(s) and state their kind: <em>Childhood is considered a time of innocence.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">18.</span>
+            <div class="q-content">Identify the noun(s) and state their kind: <em>My grandmother's ring is made of pure gold.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">19.</span>
+            <div class="q-content">Form an Abstract Noun from the given word: <em>Brave</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">20.</span>
+            <div class="q-content">Form an Abstract Noun from the given word: <em>Friend</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">21.</span>
+            <div class="q-content">Form an Abstract Noun from the given word: <em>Child</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">22.</span>
+            <div class="q-content">Form an Abstract Noun from the given word: <em>Free</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">23.</span>
+            <div class="q-content">Form an Abstract Noun from the given word: <em>Judge</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">24.</span>
+            <div class="q-content">Form an Abstract Noun from the given word: <em>Grow</em></div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: SINGULAR & PLURAL -->
+    <div class="chapter-header">Section C: Singular & Plural Forms</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">25.</span>
+            <div class="q-content">Write the plural form of: <em>Criterion</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">26.</span>
+            <div class="q-content">Write the plural form of: <em>Mouse</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">27.</span>
+            <div class="q-content">Write the plural form of: <em>Syllabus</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">28.</span>
+            <div class="q-content">Write the plural form of: <em>Sheep</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">29.</span>
+            <div class="q-content">Write the plural form of: <em>Loaf</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">30.</span>
+            <div class="q-content">Write the plural form of: <em>Phenomenon</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">31.</span>
+            <div class="q-content">Rewrite the sentence changing singular nouns to plural (make other necessary changes): <em>The child is playing with a toy.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">32.</span>
+            <div class="q-content">Rewrite the sentence in plural form: <em>The leaf fell from the tall tree.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">33.</span>
+            <div class="q-content">Rewrite the sentence in plural form: <em>The woman bought a new dress.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">34.</span>
+            <div class="q-content">Rewrite the sentence in plural form: <em>The goose is swimming in the pond.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">35.</span>
+            <div class="q-content">Rewrite the sentence in plural form: <em>A mouse ran quickly across the floor.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">36.</span>
+            <div class="q-content">Rewrite the sentence in plural form: <em>The thief stole the expensive watch.</em></div>
+        </div>
+    </div>
+
+    <!-- SECTION 4: PRONOUNS -->
+    <div class="chapter-header">Section D: Pronouns</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">37.</span>
+            <div class="q-content">Fill in the blank: _____ are going to the amusement park today. (We / Us)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">38.</span>
+            <div class="q-content">Fill in the blank: The teacher gave _____ a stern warning. (they / them)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">39.</span>
+            <div class="q-content">Fill in the blank: Is this blue notebook _____ or yours? (my / mine)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">40.</span>
+            <div class="q-content">Fill in the blank: The boy _____ won the first prize is my elder brother. (who / whom)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">41.</span>
+            <div class="q-content">Fill in the blank: She prepared the delicious meal entirely by _____. (herself / itself)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">42.</span>
+            <div class="q-content">Fill in the blank: _____ is repeatedly knocking at the front door? (Who / Which)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">43.</span>
+            <div class="q-content">Identify the pronoun and state its kind: <em>I hurt myself while playing football.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">44.</span>
+            <div class="q-content">Identify the pronoun and state its kind: <em>This is the house that Jack built.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">45.</span>
+            <div class="q-content">Identify the pronoun and state its kind: <em>Someone has stolen my fountain pen.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">46.</span>
+            <div class="q-content">Identify the pronoun and state its kind: <em>Those are beautiful flowers in the garden.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">47.</span>
+            <div class="q-content">Identify the pronoun and state its kind: <em>Each of the boys was given a participation certificate.</em></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">48.</span>
+            <div class="q-content">Identify the pronoun and state its kind: <em>What do you want to have for dinner tonight?</em></div>
+        </div>
+    </div>
+
+    <!-- SECTION 5: DETERMINERS -->
+    <div class="chapter-header">Section E: Determiners</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">49.</span>
+            <div class="q-content">Fill in the blank with a suitable article: I need _____ apple and a ripe banana.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">50.</span>
+            <div class="q-content">Fill in the blank with a demonstrative determiner: _____ books lying on the table over there are mine.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">51.</span>
+            <div class="q-content">Fill in the blank with a suitable quantifier: Is there _____ water left in the jug?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">52.</span>
+            <div class="q-content">Fill in the blank with a suitable quantifier: _____ people attended the academic seminar.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">53.</span>
+            <div class="q-content">Fill in the blank with a suitable quantifier: I have _____ money left in my wallet, so I cannot buy it.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">54.</span>
+            <div class="q-content">Fill in the blank with a distributive determiner: _____ student in the class must complete the assignment on time.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">55.</span>
+            <div class="q-content">Fill in the blank with a suitable determiner: Can you pass me _____ sugar, please?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">56.</span>
+            <div class="q-content">Fill in the blank with a suitable article: He is known to be _____ honest man.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">57.</span>
+            <div class="q-content">Choose the correct option: _____ child was given a special present. (Every / Much)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">58.</span>
+            <div class="q-content">Choose the correct option: She doesn't have _____ friends in this new city. (many / much)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">59.</span>
+            <div class="q-content">Fill in the blank with a suitable article: _____ sun rises in the east and sets in the west.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">60.</span>
+            <div class="q-content">Choose the correct option: Do you have _____ idea about how this machine works? (some / any)</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>

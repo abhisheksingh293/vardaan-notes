@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Chemistry Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 Default) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Some Basic Concepts of Chemistry</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 11</span>
+                <span>Subject: Chemistry</span>
+            </div>
+        </div>
+
+        <!-- Section A -->
+        <div class="chapter-header">Section A: Gay Lussac's Law & Avogadro's Law</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">50 mL of hydrogen reacts with 50 mL of chlorine to form hydrogen chloride gas. Calculate the volume of hydrogen chloride gas produced at the same temperature and pressure.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">100 mL of ethene ($\mathrm{C_2H_4}$) is burnt completely in oxygen. Calculate the volume of oxygen required and the volume of carbon dioxide formed under identical conditions.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">If 20 mL of carbon monoxide is mixed with 20 mL of oxygen and the mixture is ignited, what will be the volume of the resulting gases at the same temperature and pressure?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">A vessel contains 2.5 liters of nitrogen gas at STP. Calculate the number of moles and the number of molecules present in the vessel.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">Calculate the volume occupied by 0.5 moles of ammonia gas ($\mathrm{NH_3}$) at Standard Temperature and Pressure (STP).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Find the mass of 11.2 liters of $\mathrm{CO_2}$ gas at STP.</div>
+            </div>
+        </div>
+
+        <!-- Section B -->
+        <div class="chapter-header">Section B: The Mole Concept</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Calculate the number of moles in 90 g of water ($\mathrm{H_2O}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Calculate the mass of 2.5 moles of sulfuric acid ($\mathrm{H_2SO_4}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">How many molecules are present in 8.0 g of oxygen gas ($\mathrm{O_2}$)?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">Calculate the number of atoms present in 0.1 moles of carbon ($\mathrm{C}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">What is the mass of exactly 1 molecule of carbon dioxide ($\mathrm{CO_2}$) in grams?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Calculate the total number of electrons present in 1.6 g of methane ($\mathrm{CH_4}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">Find the number of moles of calcium carbonate ($\mathrm{CaCO_3}$) present in 50 g of the substance.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">Determine the volume occupied by 14 g of nitrogen gas ($\mathrm{N_2}$) at STP.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">How many atoms of hydrogen are there in 34 g of ammonia ($\mathrm{NH_3}$)?</div>
+            </div>
+        </div>
+
+        <!-- Section C -->
+        <div class="chapter-header">Section C: Percentage Composition</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Calculate the mass percentage of carbon and hydrogen in methane ($\mathrm{CH_4}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Determine the mass percentage of water of crystallization in blue vitriol ($\mathrm{CuSO_4 \cdot 5H_2O}$). (Atomic masses: $\mathrm{Cu}=63.5$, $\mathrm{S}=32$, $\mathrm{O}=16$, $\mathrm{H}=1$)</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">Calculate the percentage of nitrogen in urea ($\mathrm{NH_2CONH_2}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">What is the percentage composition of oxygen in potassium chlorate ($\mathrm{KClO_3}$)? (Atomic masses: $\mathrm{K}=39$, $\mathrm{Cl}=35.5$, $\mathrm{O}=16$)</div>
+            </div>
+        </div>
+
+        <!-- Section D -->
+        <div class="chapter-header">Section D: Empirical & Molecular Formula</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">An organic compound contains 80% carbon and 20% hydrogen. Determine its empirical formula.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">A compound contains 40.0% carbon, 6.67% hydrogen, and 53.33% oxygen by mass. Find its empirical formula.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">The empirical formula of a compound is $\mathrm{CH_2O}$. If its molar mass is $180\mathrm{~g/mol}$, determine its molecular formula.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">An oxide of iron contains 69.9% iron and 30.1% oxygen by mass. What is the empirical formula of the oxide? (Atomic masses: $\mathrm{Fe}=55.85$, $\mathrm{O}=16$)</div>
+            </div>
+        </div>
+
+        <!-- Section E -->
+        <div class="chapter-header">Section E: Stoichiometry (Including Limiting Reagent)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Calculate the mass of water produced by the complete combustion of 16 g of methane.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">If 12 g of carbon is burnt in the presence of 32 g of oxygen, calculate the mass of carbon dioxide formed.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">3.0 g of $\mathrm{H_2}$ reacts with 29.0 g of $\mathrm{O_2}$ to yield water. Identify the limiting reagent and calculate the maximum mass of water that can be formed.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">Calculate the volume of $\mathrm{CO_2}$ gas evolved at STP by heating 20 g of pure limestone ($\mathrm{CaCO_3}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">How many grams of $\mathrm{HCl}$ are required to react completely with 8.7 g of $\mathrm{MnO_2}$? (Reaction: $\mathrm{MnO_2} + 4\mathrm{HCl} \rightarrow \mathrm{MnCl_2} + 2\mathrm{H_2O} + \mathrm{Cl_2}$) ($\mathrm{Mn}=55$)</div>
+            </div>
+        </div>
+
+        <!-- Section F -->
+        <div class="chapter-header">Section F: Principle of Atom Conservation (POAC)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">27.6 g of silver carbonate ($\mathrm{Ag_2CO_3}$) is strongly heated. Apply POAC on silver atoms to find the mass of the silver ($\mathrm{Ag}$) residue left behind. (Atomic masses: $\mathrm{Ag}=108$, $\mathrm{C}=12$, $\mathrm{O}=16$)</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">A certain amount of iron ($\mathrm{Fe}$) was completely oxidized to form 160 g of ferric oxide ($\mathrm{Fe_2O_3}$). Using the Principle of Atom Conservation on iron, calculate the initial mass of iron taken. (Atomic mass: $\mathrm{Fe}=56$)</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>
