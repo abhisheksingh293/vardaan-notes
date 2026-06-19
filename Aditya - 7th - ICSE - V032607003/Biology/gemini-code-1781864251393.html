@@ -1,378 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vardaan Learning Institute - Question Paper</title>
-    <style>
-        @page { size: A4; margin: 20mm; }
-        body { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 20mm; box-sizing: border-box; font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; background-color: white; position: relative; }
-        .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; opacity: 0.12; z-index: -1; pointer-events: none; }
-        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-        .institute-name { font-size: 24pt; font-weight: bold; text-transform: uppercase; margin: 0; letter-spacing: 1px; }
-        .test-name { font-size: 14pt; font-weight: bold; margin-top: 5px; text-decoration: underline; }
-        .exam-details { display: flex; justify-content: space-between; margin-top: 15px; font-weight: bold; font-size: 11pt; border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 5px 0; }
-        .instructions { margin-top: 10px; font-size: 10pt; font-style: italic; text-align: left; }
-        .instructions ul { margin: 5px 0; padding-left: 20px; }
-        .section-header { text-align: center; font-weight: bold; margin-top: 25px; margin-bottom: 15px; text-decoration: underline; font-size: 13pt; }
-        .marks-info { font-size: 10pt; font-weight: normal; font-style: italic; display: block; margin-top: 2px; }
-        .question-container { margin-bottom: 15px; display: flex; page-break-inside: avoid; }
-        .q-num { font-weight: bold; width: 40px; flex-shrink: 0; }
-        .q-content { flex-grow: 1; }
-        .sub-question { margin-left: 20px; margin-top: 5px; }
-        .options { display: flex; flex-wrap: wrap; margin-top: 5px; }
-        .option { width: 50%; margin-bottom: 5px; }
-        .footer { margin-top: 40px; text-align: center; font-size: 10pt; font-weight: bold; border-top: 1px solid #ccc; padding-top: 10px; color: #555; }
-        @media print { body { width: 100%; margin: 0; padding: 0; -webkit-print-color-adjust: exact; } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Biology - Chapters Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #F97315;
+      --primary-glow: rgba(249, 115, 21, 0.2);
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-hover: #f9f9fa;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #111827;
+      --text-muted: #6b7280;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(249, 115, 21, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(249, 115, 21, 0.05) 0%, transparent 50%);
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between;
+      align-items: center; padding: 0 40px; height: 80px; background: var(--glass-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--text); transition: transform 0.3s ease; }
+    .brand:hover { transform: scale(1.02); }
+    .logo { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); }
+    .brand span { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
+    .brand em { font-style: normal; color: var(--primary); }
+    .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 60px 24px 100px; }
+    .hero-section { text-align: center; margin-bottom: 60px; animation: fadeInDown 0.8s ease-out forwards; }
+    h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
+    h1 b { background: linear-gradient(135deg, #111827 0%, #6b7280 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    h1 .highlight { background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 10px rgba(249,115,21,0.2)); }
+    .sub { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    .stats { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+    .stat { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .stat .num { font-size: 2.5rem; font-weight: 800; color: var(--text); text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+    .stat .lab { font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+    .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-top: 40px; }
+    .head h2 { font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; color: var(--text); }
+    .count { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 16px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
+    .grid { display: flex; flex-direction: column; gap: 16px; }
+    .card {
+      display: flex; flex-direction: row; align-items: center; justify-content: space-between;
+      text-decoration: none; color: var(--text); background: var(--surface);
+      border: 1px solid var(--border); border-radius: 16px; padding: 16px 24px; 
+      transition: all 0.3s ease; position: relative; overflow: hidden; backdrop-filter: blur(10px);
+    }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(249,115,21,0.1), transparent); opacity: 0; transition: opacity 0.3s ease; }
+    .card:hover { transform: translateX(8px); border-color: rgba(249, 115, 21, 0.3); background: var(--surface-hover); box-shadow: 0 10px 30px rgba(0,0,0,0.2), 0 0 20px rgba(249,115,21,0.1); }
+    .card:hover::before { opacity: 1; }
+    .card-left { display: flex; align-items: center; gap: 20px; }
+    .name-wrapper { display: flex; flex-direction: column; gap: 4px; }
+    .badge { font-size: 0.7rem; font-weight: 700; color: var(--primary); background: rgba(249,115,21,0.1); padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; width: fit-content; }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--primary), #b34e00);
+      display: grid; place-items: center; color: #fff; font-size: 1.1rem; font-weight: 700; flex-shrink: 0; box-shadow: 0 4px 12px rgba(249, 115, 21, 0.2);
+    }
+    .name { font-size: 1.1rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .meta-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-muted); }
+    .meta-icon { width: 16px; height: 16px; opacity: 0.7; }
+    .empty { display: none; text-align: center; padding: 60px 20px; background: var(--surface); border-radius: 24px; border: 1px dashed var(--border); margin-top: 24px; }
+    .empty h3 { font-size: 1.5rem; margin-bottom: 8px; color: var(--text); }
+    .empty p { color: var(--text-muted); }
+    footer { margin-top: 80px; padding: 30px 0; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-muted); font-size: 0.9rem; }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 768px) { .wrap { padding: 20px 12px 60px; } nav { padding: 0 12px; height: 60px; } .logo { height: 32px; } .brand span { font-size: 1.2rem; } h1 { font-size: 1.8rem; margin-bottom: 12px; } .card { padding: 16px; gap: 12px; } .avatar { width: 40px; height: 40px; font-size: 1rem; } .name { font-size: 1.05rem; } .meta-item span { font-size: 0.8rem; } .meta-icon { width: 14px; height: 14px; } }
+  </style>
 </head>
 <body>
-    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Watermark" class="watermark">
-    <div class="header">
-        <h1 class="institute-name">VARDAAN LEARNING INSTITUTE</h1>
-        <div class="test-name">Surprise Test (General Aptitude & Awareness)</div>
-        <div class="exam-details">
-            <span>Class: 6 to 9</span>
-            <span>Subject: Mathematics & Current Affairs</span>
-            <span>Time: 1 Hour</span>
-            <span>Max. Marks: 60</span>
-        </div>
-        <div class="instructions">
-            <strong>General Instructions:</strong>
-            <ul>
-                <li>All questions are compulsory.</li>
-                <li>The paper is divided into two major sections: Section A (Mathematics) and Section B (Current Affairs).</li>
-                <li>Each section is sub-divided into MCQs (1 Mark), Short Answers (2 Marks), and Long Answers (3 Marks).</li>
-                <li>Write down the correct option for Multiple Choice Questions.</li>
-                <li>Write your answers neatly and legibly. Show steps for mathematical calculations.</li>
-            </ul>
-        </div>
+  <nav>
+    <a class="brand" href="#">
+      <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1772276441/Vardaan_Comet-removebg-preview_dsut6f.png" alt="Vardaan Comet Logo" class="logo">
+      <span>Vardaan <em class="highlight">Comet</em></span>
+    </a>
+  </nav>
+
+  <main class="wrap">
+
+    <div class="head">
+      <h2>Chapters Directory</h2>
+      <span id="countLabel" class="count">0 chapters</span>
     </div>
 
-    <!-- Section A: Mathematics -->
-    <div class="section-header">SECTION A: MATHEMATICS (30 Marks)</div>
-    
-    <div style="font-weight: bold; margin-bottom: 10px; font-size: 11pt;">Part I: Multiple Choice Questions (10 &times; 1 = 10 Marks)</div>
-    
-    <div class="question-container">
-        <div class="q-num">1.</div>
-        <div class="q-content">
-            Find the value of <em>x</em> in the equation 2<em>x</em> + 5 = 15.
-            <div class="options">
-                <div class="option">(a) 5</div><div class="option">(b) 10</div>
-                <div class="option">(c) 15</div><div class="option">(d) 20</div>
+    <section class="grid" id="chapterGrid"></section>
+
+    <section class="empty" id="emptyState">
+      <h3>No chapters found</h3>
+      <p>Try adding a new chapter folder.</p>
+    </section>
+
+
+  </main>
+  <script>
+    const chapters = [];
+
+    function formatChapterIcon(name) {
+      const match = name.match(/^Cd+/i);
+      if (match) return match[0].toUpperCase();
+      return name.substring(0, 2).toUpperCase();
+    }
+
+    function formatChapterName(name) {
+      let clean = name.replace(/^Cd+[s_]+/, '').replace(/_/g, ' ');
+      return clean.replace(/w/g, char => char.toUpperCase());
+    }
+
+    function renderCards(list) {
+      const grid = document.getElementById('chapterGrid');
+      const emptyState = document.getElementById('emptyState');
+      const countLabel = document.getElementById('countLabel');
+      
+      grid.innerHTML = '';
+      
+      if (!list.length) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        countLabel.textContent = '0 chapters';
+        return;
+      }
+      
+      grid.style.display = 'grid';
+      emptyState.style.display = 'none';
+      countLabel.textContent = list.length + ' chapter' + (list.length === 1 ? '' : 's');
+      
+      list.forEach(chapter => {
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = chapter.link;
+        
+        card.innerHTML = `
+          <div class="card-left">
+            <div class="avatar">${formatChapterIcon(chapter.name)}</div>
+            <div class="name-wrapper">
+              <div class="name">${formatChapterName(chapter.name)}</div>
             </div>
-        </div>
-    </div>
+          </div>
+          <div class="meta-item">
+            <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
 
-    <div class="question-container">
-        <div class="q-num">2.</div>
-        <div class="q-content">
-            What is the perimeter of a rectangle with length 10 cm and breadth 5 cm?
-            <div class="options">
-                <div class="option">(a) 15 cm</div><div class="option">(b) 30 cm</div>
-                <div class="option">(c) 50 cm</div><div class="option">(d) 60 cm</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">3.</div>
-        <div class="q-content">
-            20% of 150 is equal to:
-            <div class="options">
-                <div class="option">(a) 20</div><div class="option">(b) 25</div>
-                <div class="option">(c) 30</div><div class="option">(d) 35</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">4.</div>
-        <div class="q-content">
-            The sum of all interior angles of a triangle is:
-            <div class="options">
-                <div class="option">(a) 90&deg;</div><div class="option">(b) 180&deg;</div>
-                <div class="option">(c) 270&deg;</div><div class="option">(d) 360&deg;</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">5.</div>
-        <div class="q-content">
-            Which of the following is a prime number?
-            <div class="options">
-                <div class="option">(a) 9</div><div class="option">(b) 15</div>
-                <div class="option">(c) 17</div><div class="option">(d) 21</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">6.</div>
-        <div class="q-content">
-            The square root of 144 is:
-            <div class="options">
-                <div class="option">(a) 10</div><div class="option">(b) 12</div>
-                <div class="option">(c) 14</div><div class="option">(d) 16</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">7.</div>
-        <div class="q-content">
-            If <em>a</em> = 2 and <em>b</em> = 3, what is the value of <em>a</em>&sup2; + <em>b</em>&sup2;?
-            <div class="options">
-                <div class="option">(a) 10</div><div class="option">(b) 13</div>
-                <div class="option">(c) 15</div><div class="option">(d) 25</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">8.</div>
-        <div class="q-content">
-            The fraction 5/8 expressed as a decimal is:
-            <div class="options">
-                <div class="option">(a) 0.625</div><div class="option">(b) 0.58</div>
-                <div class="option">(c) 0.85</div><div class="option">(d) 0.528</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">9.</div>
-        <div class="q-content">
-            The Least Common Multiple (LCM) of 4 and 6 is:
-            <div class="options">
-                <div class="option">(a) 10</div><div class="option">(b) 12</div>
-                <div class="option">(c) 24</div><div class="option">(d) 2</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">10.</div>
-        <div class="q-content">
-            In a right-angled triangle, the side opposite to the right angle is called the:
-            <div class="options">
-                <div class="option">(a) Base</div><div class="option">(b) Perpendicular</div>
-                <div class="option">(c) Hypotenuse</div><div class="option">(d) Altitude</div>
-            </div>
-        </div>
-    </div>
-
-    <div style="font-weight: bold; margin-top: 20px; margin-bottom: 10px; font-size: 11pt;">Part II: Short Answer Type (4 &times; 2 = 8 Marks)</div>
-
-    <div class="question-container">
-        <div class="q-num">11.</div>
-        <div class="q-content">Simplify the algebraic expression: 3(<em>x</em> + 4) - 2(<em>x</em> - 1)</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">12.</div>
-        <div class="q-content">Find the area of a circle with a radius of 7 cm. (Use &pi; = 22/7)</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">13.</div>
-        <div class="q-content">A shopkeeper buys a book for &#8377;200 and sells it for &#8377;250. Calculate his profit percentage.</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">14.</div>
-        <div class="q-content">Solve for <em>y</em>: &nbsp; <em>y</em>/3 + 5 = 11</div>
-    </div>
-
-    <div style="font-weight: bold; margin-top: 20px; margin-bottom: 10px; font-size: 11pt;">Part III: Long Answer Type (4 &times; 3 = 12 Marks)</div>
-
-    <div class="question-container">
-        <div class="q-num">15.</div>
-        <div class="q-content">A car travels at a uniform speed of 60 km/h.<br>
-            (i) How much time will it take to cover a distance of 330 km?<br>
-            (ii) Find the total distance it will cover in 4.5 hours.
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">16.</div>
-        <div class="q-content">The angles of a quadrilateral are in the ratio 2 : 3 : 4 : 6. Find the measure of each angle.</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">17.</div>
-        <div class="q-content">Two supplementary angles differ by 34&deg;. Find the measure of both the angles.</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">18.</div>
-        <div class="q-content">The marks obtained by 15 students in a class test are as follows:<br>
-            10, 15, 12, 10, 20, 15, 12, 10, 18, 20, 15, 10, 12, 18, 15<br>
-            Construct a simple frequency distribution table for the given data.
-        </div>
-    </div>
-
-    <!-- Section B: Current Affairs -->
-    <div class="section-header">SECTION B: CURRENT AFFAIRS & AWARENESS (30 Marks)</div>
-    
-    <div style="font-weight: bold; margin-bottom: 10px; font-size: 11pt;">Part I: Multiple Choice Questions (10 &times; 1 = 10 Marks)</div>
-
-    <div class="question-container">
-        <div class="q-num">19.</div>
-        <div class="q-content">
-            Which organization is primarily responsible for India's space program?
-            <div class="options">
-                <div class="option">(a) DRDO</div><div class="option">(b) ISRO</div>
-                <div class="option">(c) NASA</div><div class="option">(d) BARC</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">20.</div>
-        <div class="q-content">
-            Who is the current Prime Minister of India?
-            <div class="options">
-                <div class="option">(a) Rajnath Singh</div><div class="option">(b) Amit Shah</div>
-                <div class="option">(c) Narendra Modi</div><div class="option">(d) Rahul Gandhi</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">21.</div>
-        <div class="q-content">
-            Which planet in our solar system is known as the "Red Planet"?
-            <div class="options">
-                <div class="option">(a) Venus</div><div class="option">(b) Jupiter</div>
-                <div class="option">(c) Mars</div><div class="option">(d) Saturn</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">22.</div>
-        <div class="q-content">
-            The term "Grand Slam" is predominantly associated with which sport?
-            <div class="options">
-                <div class="option">(a) Cricket</div><div class="option">(b) Football</div>
-                <div class="option">(c) Tennis</div><div class="option">(d) Badminton</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">23.</div>
-        <div class="q-content">
-            What is the capital city of Australia?
-            <div class="options">
-                <div class="option">(a) Sydney</div><div class="option">(b) Melbourne</div>
-                <div class="option">(c) Canberra</div><div class="option">(d) Perth</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">24.</div>
-        <div class="q-content">
-            Which gas is most abundant in the Earth's atmosphere?
-            <div class="options">
-                <div class="option">(a) Oxygen</div><div class="option">(b) Carbon Dioxide</div>
-                <div class="option">(c) Nitrogen</div><div class="option">(d) Hydrogen</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">25.</div>
-        <div class="q-content">
-            In which year did India host the G20 Summit?
-            <div class="options">
-                <div class="option">(a) 2021</div><div class="option">(b) 2022</div>
-                <div class="option">(c) 2023</div><div class="option">(d) 2024</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">26.</div>
-        <div class="q-content">
-            Which is considered the longest river in the world?
-            <div class="options">
-                <div class="option">(a) Amazon</div><div class="option">(b) Nile</div>
-                <div class="option">(c) Ganga</div><div class="option">(d) Yangtze</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">27.</div>
-        <div class="q-content">
-            Who composed the Indian National Anthem?
-            <div class="options">
-                <div class="option">(a) Bankim Chandra Chatterjee</div><div class="option">(b) Rabindranath Tagore</div>
-                <div class="option">(c) Subhash Chandra Bose</div><div class="option">(d) Mahatma Gandhi</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">28.</div>
-        <div class="q-content">
-            The Nobel Prize is awarded across how many main categories?
-            <div class="options">
-                <div class="option">(a) 4</div><div class="option">(b) 5</div>
-                <div class="option">(c) 6</div><div class="option">(d) 7</div>
-            </div>
-        </div>
-    </div>
-
-    <div style="font-weight: bold; margin-top: 20px; margin-bottom: 10px; font-size: 11pt;">Part II: Short Answer Type (4 &times; 2 = 8 Marks)</div>
-
-    <div class="question-container">
-        <div class="q-num">29.</div>
-        <div class="q-content">Name the current President and the Vice President of India.</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">30.</div>
-        <div class="q-content">What was the Chandrayaan-3 mission? State its primary achievement.</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">31.</div>
-        <div class="q-content">Name the four major metro cities of India.</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">32.</div>
-        <div class="q-content">What is the full form of BRICS? Name all the core member countries that make up this acronym.</div>
-    </div>
-
-    <div style="font-weight: bold; margin-top: 20px; margin-bottom: 10px; font-size: 11pt;">Part III: Long Answer Type (4 &times; 3 = 12 Marks)</div>
-
-    <div class="question-container">
-        <div class="q-num">33.</div>
-        <div class="q-content">Explain the Greenhouse Effect in your own words. Mention any two greenhouse gases responsible for global warming.</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">34.</div>
-        <div class="q-content">Write a short note on the importance of renewable sources of energy for our future. Provide at least two examples of renewable energy.</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">35.</div>
-        <div class="q-content">Briefly describe the basic structure of the Indian Parliament, detailing the roles of the Lok Sabha and the Rajya Sabha.</div>
-    </div>
-
-    <div class="question-container">
-        <div class="q-num">36.</div>
-        <div class="q-content">Why is the conservation of water considered a global emergency? Suggest three practical ways you can save water at your home or school.</div>
-    </div>
-
-    <div class="footer">Created by Team Vardaan</div>
+    // Initialize
+    renderCards(chapters);
+  </script>
 </body>
 </html>

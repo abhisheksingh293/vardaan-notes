@@ -1,800 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java Mastery Notes - Vardaan Learning Institute</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
-    <style>
-        /* Document Typography & Spacing */
-        body {
-            background-color: #f3f4f6; 
-            color: #374151;
-            font-family: 'Georgia', serif; 
-            line-height: 1.6;
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: 'Arial', sans-serif; 
-        }
-
-        /* A4 Page Container */
-        .document-container {
-            max-width: 210mm; 
-            margin: 40px auto;
-            background-color: rgba(255, 255, 255, 0.92);
-            padding: 20mm;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Fixed Watermark Image (Repeats on every printed page) */
-        .watermark-img {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 65%;
-            max-width: 650px;
-            opacity: 0.08; /* Made much lighter */
-            z-index: 10; /* Changed from -1 so it sits above the white background */
-            pointer-events: none; /* Allows clicking and selecting text right through it */
-        }
-
-        /* Content Styling */
-        .chapter-title {
-            font-size: 24pt;
-            font-weight: bold;
-            color: #ea580c; /* Orange-600 */
-            border-bottom: 3px solid #ea580c;
-            padding-bottom: 5px;
-            margin-top: 30px;
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            font-size: 16pt;
-            font-weight: bold;
-            margin-top: 25px;
-            margin-bottom: 12px;
-            color: #c2410c; /* Orange-700 */
-        }
-
-        .sub-title {
-            font-size: 13pt;
-            font-weight: bold;
-            margin-top: 15px;
-            margin-bottom: 8px;
-            color: #4b5563;
-        }
-
-        p {
-            margin-bottom: 12px;
-            font-size: 11pt;
-            text-align: justify;
-        }
-
-        .highlight-box {
-            background-color: #fff7ed; /* Orange-50 */
-            border-left: 4px solid #f97316; /* Orange-500 */
-            padding: 10px 15px;
-            margin: 15px 0;
-            font-size: 11pt;
-            border-radius: 0 5px 5px 0;
-        }
-
-        ul, ol {
-            margin-left: 25px;
-            margin-bottom: 15px;
-            font-size: 11pt;
-        }
-
-        li {
-            margin-bottom: 6px;
-        }
-
-        /* Code Blocks */
-        pre {
-            background-color: #fafafa;
-            border: 1px solid #fdba74; /* Orange-300 */
-            border-left: 4px solid #f97316;
-            padding: 12px;
-            border-radius: 4px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 10.5pt;
-            overflow-x: auto;
-            margin-bottom: 15px;
-            white-space: pre-wrap; 
-            word-wrap: break-word;
-        }
-        
-        code {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #fff7ed;
-            padding: 2px 4px;
-            border-radius: 3px;
-            font-size: 0.9em;
-            color: #9a3412;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 10pt;
-            font-family: 'Arial', sans-serif;
-        }
-
-        th, td {
-            border: 1px solid #fdba74;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #ffedd5;
-            font-weight: bold;
-            color: #7c2d12;
-        }
-
-        /* Print Specific CSS */
-        @media print {
-            @page { size: A4; margin: 15mm; }
-            body { background-color: white; }
-            .document-container {
-                margin: 0; padding: 0; box-shadow: none; max-width: 100%;
-                background-color: transparent !important;
-            }
-            .watermark-img {
-                width: 140mm;
-                opacity: 0.08; /* Drastically reduced for lighter print visibility */
-            }
-            .no-print { display: none !important; }
-            pre, table, ul, ol, .highlight-box { page-break-inside: avoid; }
-            h2, h3 { page-break-after: avoid; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Java - Chapters Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #F97315;
+      --primary-glow: rgba(249, 115, 21, 0.2);
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-hover: #f9f9fa;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #111827;
+      --text-muted: #6b7280;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(249, 115, 21, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(249, 115, 21, 0.05) 0%, transparent 50%);
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between;
+      align-items: center; padding: 0 40px; height: 80px; background: var(--glass-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--text); transition: transform 0.3s ease; }
+    .brand:hover { transform: scale(1.02); }
+    .logo { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); }
+    .brand span { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
+    .brand em { font-style: normal; color: var(--primary); }
+    .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 60px 24px 100px; }
+    .hero-section { text-align: center; margin-bottom: 60px; animation: fadeInDown 0.8s ease-out forwards; }
+    h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
+    h1 b { background: linear-gradient(135deg, #111827 0%, #6b7280 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    h1 .highlight { background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 10px rgba(249,115,21,0.2)); }
+    .sub { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    .stats { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+    .stat { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .stat .num { font-size: 2.5rem; font-weight: 800; color: var(--text); text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+    .stat .lab { font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+    .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-top: 40px; }
+    .head h2 { font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; color: var(--text); }
+    .count { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 16px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
+    .grid { display: flex; flex-direction: column; gap: 16px; }
+    .card {
+      display: flex; flex-direction: row; align-items: center; justify-content: space-between;
+      text-decoration: none; color: var(--text); background: var(--surface);
+      border: 1px solid var(--border); border-radius: 16px; padding: 16px 24px; 
+      transition: all 0.3s ease; position: relative; overflow: hidden; backdrop-filter: blur(10px);
+    }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(249,115,21,0.1), transparent); opacity: 0; transition: opacity 0.3s ease; }
+    .card:hover { transform: translateX(8px); border-color: rgba(249, 115, 21, 0.3); background: var(--surface-hover); box-shadow: 0 10px 30px rgba(0,0,0,0.2), 0 0 20px rgba(249,115,21,0.1); }
+    .card:hover::before { opacity: 1; }
+    .card-left { display: flex; align-items: center; gap: 20px; }
+    .name-wrapper { display: flex; flex-direction: column; gap: 4px; }
+    .badge { font-size: 0.7rem; font-weight: 700; color: var(--primary); background: rgba(249,115,21,0.1); padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; width: fit-content; }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--primary), #b34e00);
+      display: grid; place-items: center; color: #fff; font-size: 1.1rem; font-weight: 700; flex-shrink: 0; box-shadow: 0 4px 12px rgba(249, 115, 21, 0.2);
+    }
+    .name { font-size: 1.1rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .meta-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-muted); }
+    .meta-icon { width: 16px; height: 16px; opacity: 0.7; }
+    .empty { display: none; text-align: center; padding: 60px 20px; background: var(--surface); border-radius: 24px; border: 1px dashed var(--border); margin-top: 24px; }
+    .empty h3 { font-size: 1.5rem; margin-bottom: 8px; color: var(--text); }
+    .empty p { color: var(--text-muted); }
+    footer { margin-top: 80px; padding: 30px 0; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-muted); font-size: 0.9rem; }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 768px) { .wrap { padding: 20px 12px 60px; } nav { padding: 0 12px; height: 60px; } .logo { height: 32px; } .brand span { font-size: 1.2rem; } h1 { font-size: 1.8rem; margin-bottom: 12px; } .card { padding: 16px; gap: 12px; } .avatar { width: 40px; height: 40px; font-size: 1rem; } .name { font-size: 1.05rem; } .meta-item span { font-size: 0.8rem; } .meta-icon { width: 14px; height: 14px; } }
+  </style>
 </head>
 <body>
+  <nav>
+    <a class="brand" href="#">
+      <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1772276441/Vardaan_Comet-removebg-preview_dsut6f.png" alt="Vardaan Comet Logo" class="logo">
+      <span>Vardaan <em class="highlight">Comet</em></span>
+    </a>
+  </nav>
 
-    <!-- Watermark Image (Fixed to center, prints on all pages) -->
-    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark-img" alt="Vardaan Watermark">
+  <main class="wrap">
 
-    <!-- Floating Print Button -->
-    <div class="no-print fixed top-4 right-4 z-50">
-        <button onclick="window.print()" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded shadow-lg flex items-center gap-2 transition">
-            <i class="fas fa-print"></i> Print Notes (A4)
-        </button>
+    <div class="head">
+      <h2>Chapters Directory</h2>
+      <span id="countLabel" class="count">0 chapters</span>
     </div>
 
-    <!-- Main Document Container -->
-    <div class="document-container">
+    <section class="grid" id="chapterGrid"></section>
+
+    <section class="empty" id="emptyState">
+      <h3>No chapters found</h3>
+      <p>Try adding a new chapter folder.</p>
+    </section>
+
+
+  </main>
+  <script>
+    const chapters = [];
+
+    function formatChapterIcon(name) {
+      const match = name.match(/^Cd+/i);
+      if (match) return match[0].toUpperCase();
+      return name.substring(0, 2).toUpperCase();
+    }
+
+    function formatChapterName(name) {
+      let clean = name.replace(/^Cd+[s_]+/, '').replace(/_/g, ' ');
+      return clean.replace(/w/g, char => char.toUpperCase());
+    }
+
+    function renderCards(list) {
+      const grid = document.getElementById('chapterGrid');
+      const emptyState = document.getElementById('emptyState');
+      const countLabel = document.getElementById('countLabel');
+      
+      grid.innerHTML = '';
+      
+      if (!list.length) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        countLabel.textContent = '0 chapters';
+        return;
+      }
+      
+      grid.style.display = 'grid';
+      emptyState.style.display = 'none';
+      countLabel.textContent = list.length + ' chapter' + (list.length === 1 ? '' : 's');
+      
+      list.forEach(chapter => {
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = chapter.link;
         
-        <!-- Document Header -->
-        <header class="text-center border-b-4 border-orange-500 pb-8 mb-8">
-            <h1 class="text-4xl font-extrabold text-orange-700 mb-6 uppercase tracking-wide">Vardaan Learning Institute</h1>
-            <div class="flex justify-center gap-8 text-sm font-sans font-bold text-orange-800">
-                <div class="flex items-center gap-2"><i class="fas fa-globe"></i> www.vardaanlearning.com</div>
-                <div class="flex items-center gap-2"><i class="fas fa-phone-alt"></i> +91 95088 41336</div>
+        card.innerHTML = `
+          <div class="card-left">
+            <div class="avatar">${formatChapterIcon(chapter.name)}</div>
+            <div class="name-wrapper">
+              <div class="name">${formatChapterName(chapter.name)}</div>
             </div>
-        </header>
-
-        <!-- CHAPTER 1 -->
-        <section>
-            <h2 class="chapter-title">Chapter 1: The World of Java</h2>
-            
-            <h3 class="section-title">What is Java?</h3>
-            <p>Imagine you want to build a house, a robot, or a video game. To do that, you need a set of instructions. Java is a popular, easy-to-learn language that we use to give instructions to a computer.</p>
-            
-            <div class="highlight-box">
-                <strong>Fun Fact:</strong> Java was created by <strong>James Gosling</strong> at Sun Microsystems in <strong>1995</strong>. At first, it was called "Oak", but they later changed it to Java (inspired by Java coffee!).
-            </div>
-
-            <h3 class="section-title">Where is Java used?</h3>
-            <p>Java is everywhere! Here are some popular things built with Java:</p>
-            <ul>
-                <li><strong>Minecraft:</strong> The original PC version of Minecraft was made entirely in Java.</li>
-                <li><strong>Android Apps:</strong> Almost all apps on Android phones use Java.</li>
-                <li><strong>Space & Banking:</strong> NASA and big banks use Java because it is very safe and reliable.</li>
-            </ul>
-
-            <h3 class="section-title">How does Java work? (JDK, JRE, JVM)</h3>
-            <p>To understand Java, you need to know three important "toolboxes":</p>
-            <table>
-                <tr>
-                    <th width="15%">Name</th>
-                    <th width="35%">What it stands for</th>
-                    <th width="50%">Simple Explanation</th>
-                </tr>
-                <tr>
-                    <td><strong>JDK</strong></td>
-                    <td>Java Development Kit</td>
-                    <td>The <strong>Builder's Toolkit</strong>. It contains everything you need to <em>write</em> and build Java code. If you are coding, you need the JDK.</td>
-                </tr>
-                <tr>
-                    <td><strong>JRE</strong></td>
-                    <td>Java Runtime Environment</td>
-                    <td>The <strong>Playground</strong>. It contains the libraries needed to <em>run</em> a Java program. (If you just want to play Minecraft, you only need the JRE).</td>
-                </tr>
-                <tr>
-                    <td><strong>JVM</strong></td>
-                    <td>Java Virtual Machine</td>
-                    <td>The <strong>Engine/Translator</strong>. Your computer only understands 0s and 1s. The JVM translates your Java code into a language your specific computer understands.</td>
-                </tr>
-            </table>
-
-            <h3 class="section-title">Why is Java called "Robust" and "WORA"?</h3>
-            <ul>
-                <li><strong>Robust (Strong):</strong> Java rarely crashes. It has "Garbage Collection," meaning it automatically cleans up computer memory when you don't need it anymore.</li>
-                <li><strong>WORA (Write Once, Run Anywhere):</strong> If you write Java code on a Windows laptop, you can run that exact same code on an Apple Mac or a Linux computer. You don't have to rewrite it!</li>
-            </ul>
-
-            <h3 class="section-title">How to start coding? (Windows & Mac)</h3>
-            <p>To write Java, you need a special software called an <strong>IDE</strong> (Integrated Development Environment). It is like MS Word, but for coding!</p>
-            <ul>
-                <li><strong>Popular IDEs:</strong> IntelliJ IDEA, Eclipse, or Visual Studio Code (VS Code).</li>
-                <li>You simply download the JDK from the Oracle website, install an IDE, and you are ready to code on both Windows and Mac!</li>
-            </ul>
-        </section>
-
-        <!-- CHAPTER 2 -->
-        <section>
-            <h2 class="chapter-title">Chapter 2: Anatomy of a Java Program</h2>
-            
-            <p>Let's look at the most famous piece of code: The "Hello World" program. We will break it down word-by-word so you understand exactly what is happening.</p>
-
-<pre>public class HelloWorld {
-    public static void main(String[] args) {
-        // This is a comment. It tells the computer to print a message.
-        System.out.println("Hello, Vardaan Students!");
+          </div>
+          <div class="meta-item">
+            <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
     }
-}</pre>
 
-            <h3 class="section-title">Breaking down the magic words:</h3>
-            
-            <table>
-                <tr>
-                    <th width="25%">Word</th>
-                    <th width="75%">What does it mean?</th>
-                </tr>
-                <tr>
-                    <td><code>public</code></td>
-                    <td>Think of this as an "Open Door." It means anyone (or any other program) can see and use this part of the code.</td>
-                </tr>
-                <tr>
-                    <td><code>class</code></td>
-                    <td>A class is a <strong>blueprint</strong>. Just like a blueprint is used to build a house, a class is used to build our program. Our class name here is <code>HelloWorld</code>.</td>
-                </tr>
-                <tr>
-                    <td><code>static</code></td>
-                    <td>Normally, to use something in a class, we have to create an "Object" first. `static` means we <em>don't</em> need an object to run this. It's ready to go immediately!</td>
-                </tr>
-                <tr>
-                    <td><code>void</code></td>
-                    <td>`void` means "empty" or "nothing." It tells the computer: <em>"Hey, when this code finishes running, it won't give back any answer or number."</em></td>
-                </tr>
-                <tr>
-                    <td><code>main</code></td>
-                    <td>This is the <strong>Entry Gate</strong>. When you click "Run", the computer immediately looks for the word `main` and starts executing from there. No `main`, no run!</td>
-                </tr>
-                <tr>
-                    <td><code>String[] args</code></td>
-                    <td>This is a way to pass secret messages to your program right when it starts from the command line.</td>
-                </tr>
-                <tr>
-                    <td><code>// Comments</code></td>
-                    <td>Anything after <code>//</code> is ignored by the computer. It's just a sticky note left by the programmer for humans to read.</td>
-                </tr>
-                <tr>
-                    <td><code>System.out.println</code></td>
-                    <td>
-                        <strong>System:</strong> Means your computer system.<br>
-                        <strong>out:</strong> Means the output screen (monitor).<br>
-                        <strong>println:</strong> Means "print this text, then move to a new line."
-                    </td>
-                </tr>
-            </table>
-        </section>
-
-        <!-- CHAPTER 3 -->
-        <section>
-            <h2 class="chapter-title">Chapter 3: Variables, Data Types & ASCII</h2>
-
-            <h3 class="section-title">What is a Variable?</h3>
-            <p>Imagine a variable as a <strong>labeled box</strong> where you store things. </p>
-            <p>If you want to store Advik's age (12), you need a box labeled "Age" that can hold numbers. If you want to store his name, you need a box labeled "Name" that can hold text.</p>
-
-            <h3 class="section-title">Data Types (The size and shape of the box)</h3>
-            
-            <h4 class="sub-title">1. Primitive Data Types (Simple, basic boxes)</h4>
-            <ul>
-                <li><code>int</code>: Stores whole numbers. Example: <code>int age = 15;</code></li>
-                <li><code>double</code>: Stores decimal numbers. Example: <code>double weight = 45.5;</code></li>
-                <li><code>char</code>: Stores a single character. Example: <code>char grade = 'A';</code> (Always use single quotes).</li>
-                <li><code>boolean</code>: Stores true or false. Example: <code>boolean isStudent = true;</code></li>
-            </ul>
-
-            <h4 class="sub-title">2. Non-Primitive Data Types (Complex boxes)</h4>
-            <p>These boxes can hold complex objects. The most common one is a <code>String</code>.</p>
-            <ul>
-                <li><code>String</code>: Stores a sentence or word. Example: <code>String name = "Mayank";</code> (Always use double quotes).</li>
-            </ul>
-
-            <h3 class="section-title">Type Casting (Changing the box)</h3>
-            <p>Sometimes you need to convert one type to another. Think of pouring water from a cup to a bucket.</p>
-            <ul>
-                <li><strong>Implicit (Automatic):</strong> Pouring a small cup (`int`) into a big bucket (`double`). Java does this automatically safely.</li>
-                <li><strong>Explicit (Manual):</strong> Pouring a big bucket (`double`) into a small cup (`int`). Some water might spill (decimals are lost), so you have to force Java to do it.</li>
-            </ul>
-<pre>double exactMarks = 95.5;
-// Forcing a double to become an int (The .5 is lost forever!)
-int roundedMarks = (int) exactMarks; 
-System.out.println(roundedMarks); // Prints 95</pre>
-
-            <h3 class="section-title">What are ASCII Values?</h3>
-            <p>Computers only understand numbers (0s and 1s). They don't understand letters. So, Java uses <strong>ASCII</strong> (a secret codebook) to turn characters into numbers!</p>
-            <div class="highlight-box">
-                <strong>Important ASCII to remember:</strong><br>
-                Capital 'A' = 65 (B=66, C=67...)<br>
-                Small 'a' = 97 (b=98, c=99...)
-            </div>
-        </section>
-
-        <!-- CHAPTER 4 -->
-        <section>
-            <h2 class="chapter-title">Chapter 4: Operators & User Input</h2>
-
-            <p>Programs are boring if they don't do math or talk to the user! Let's learn how to do both.</p>
-
-            <h3 class="section-title">1. Operators (The Math and Logic Symbols)</h3>
-            <p>Operators are special symbols that perform specific operations on one, two, or three variables, and then return a result. Let's look at the 5 main types!</p>
-            
-            <h4 class="sub-title">A. Arithmetic Operators (Math Time)</h4>
-            <p>Used for basic math: <code>+</code> (Add), <code>-</code> (Subtract), <code>*</code> (Multiply), <code>/</code> (Divide).</p>
-            <div class="highlight-box">
-                <strong>The Modulus Operator `%`:</strong> This is the "Remainder" operator. 
-                <br><code>10 % 3 = 1</code> (Because 10 divided by 3 leaves a remainder of 1). It is super useful to check if a number is Even or Odd!
-            </div>
-
-            <h4 class="sub-title">B. Assignment Operators (Giving Values)</h4>
-            <p>Used to assign or update values in a variable. The most common is <code>=</code>.</p>
-<pre>int score = 50; // Assigns 50 to score
-score += 10;    // Shortcut for: score = score + 10 (Now score is 60)
-score -= 5;     // Shortcut for: score = score - 5 (Now score is 55)</pre>
-
-            <h4 class="sub-title">C. Relational (Comparison) Operators</h4>
-            <p>These compare two values and always answer with a Boolean (<code>true</code> or <code>false</code>). Very useful in decision making!</p>
-            <ul>
-                <li><code>==</code> : Equal to (Notice it is DOUBLE equals. Single <code>=</code> is for assignment!)</li>
-                <li><code>!=</code> : Not equal to</li>
-                <li><code>></code> and <code><</code> : Greater than / Less than</li>
-                <li><code>>=</code> and <code><=</code> : Greater than or equal to / Less than or equal to</li>
-            </ul>
-<pre>int rishavAge = 15;
-System.out.println(rishavAge == 15); // Prints true
-System.out.println(rishavAge > 18);  // Prints false</pre>
-
-            <h4 class="sub-title">D. Logical Operators (Combining Conditions)</h4>
-            <p>Used to check multiple conditions at the exact same time.</p>
-            <ul>
-                <li><code>&&</code> (Logical AND): True ONLY if BOTH sides are true. (e.g., <code>hasTicket && isVIP</code>)</li>
-                <li><code>||</code> (Logical OR): True if AT LEAST ONE side is true. (e.g., <code>isWeekend || isHoliday</code>)</li>
-                <li><code>!</code> (Logical NOT): Reverses the answer. (e.g., <code>!true</code> becomes false).</li>
-            </ul>
-
-            <h4 class="sub-title">E. Unary Operators (Increment/Decrement)</h4>
-            <p>These are super quick shortcuts to add or subtract exactly 1 from a variable. We use them a lot in loops!</p>
-            <ul>
-                <li><code>++</code> (Increment): Adds 1. <code>x++</code> is the exact same as <code>x = x + 1</code></li>
-                <li><code>--</code> (Decrement): Subtracts 1. <code>x--</code> is the exact same as <code>x = x - 1</code></li>
-            </ul>
-
-            <h3 class="section-title">2. Getting User Input (`Scanner`)</h3>
-            <p>How do we ask the user a question and read their answer? We use a built-in Java tool called the <code>Scanner</code> class!</p>
-
-<pre>import java.util.Scanner; // 1. We must import the Scanner tool
-
-public class InputGame {
-    public static void main(String[] args) {
-        // 2. Create the Scanner object (Tells Java to listen to the keyboard)
-        Scanner sc = new Scanner(System.in);
-        
-        System.out.println("Hello! What is your name?");
-        // 3. Wait for the user to type a String and press Enter
-        String studentName = sc.nextLine(); 
-        
-        System.out.println("What class are you in?");
-        // 4. Wait for the user to type a Number
-        int studentClass = sc.nextInt(); 
-        
-        System.out.println("Awesome! Welcome to class " + studentClass + ", " + studentName + "!");
-    }
-}</pre>
-        </section>
-
-        <!-- CHAPTER 5 -->
-        <section>
-            <h2 class="chapter-title">Chapter 5: Control Flow (Decisions & Loops)</h2>
-
-            <p>Control flow allows our program to be smart. It lets the program decide what to do based on the situation.</p>
-
-            <h3 class="section-title">1. Making Decisions</h3>
-            
-            <h4 class="sub-title">The if-else statement</h4>
-<pre>int marks = 85;
-if (marks >= 90) {
-    System.out.println("Aradhya got an A+!");
-} else if (marks >= 80) {
-    System.out.println("Aradhya got an A.");
-} else {
-    System.out.println("Aradhya passed.");
-}</pre>
-
-            <h4 class="sub-title">The switch statement</h4>
-            <p>Use this when you have many exact choices (like a restaurant menu).</p>
-<pre>int day = 3;
-switch(day) {
-    case 1: System.out.println("Monday"); break;
-    case 2: System.out.println("Tuesday"); break;
-    case 3: System.out.println("Wednesday"); break; // This will print!
-    default: System.out.println("Invalid day");
-}</pre>
-
-            <h3 class="section-title">2. Looping (Doing things repeatedly)</h3>
-
-            <h4 class="sub-title">The `for` loop</h4>
-            <p>Use when you know exactly <strong>how many times</strong> you want to repeat.</p>
-<pre>// Start at 1; keep going if <= 5; increase by 1 each time
-for (int i = 1; i <= 5; i++) {
-    System.out.println("Running... " + i);
-}</pre>
-
-            <h4 class="sub-title">The `while` and `do-while` loops</h4>
-            <p><strong>while:</strong> Repeats until a condition becomes false. <br>
-            <strong>do-while:</strong> Runs the code at least ONCE, then checks the condition.</p>
-
-            <h4 class="sub-title">Superpowers: `break` and `continue`</h4>
-            <ul>
-                <li><code>break;</code> - Immediately SMASHES and escapes the loop entirely.</li>
-                <li><code>continue;</code> - Skips the current round and jumps to the next round of the loop.</li>
-            </ul>
-        </section>
-
-        <!-- CHAPTER 6 -->
-        <section>
-            <h2 class="chapter-title">Chapter 6: Arrays and Strings</h2>
-
-            <h3 class="section-title">What is an Array?</h3>
-            <p>Remember how a variable is a single box? An array is like an <strong>egg carton</strong> or a <strong>medicine box</strong> with compartments. It allows you to store many items of the <em>same type</em> under one single name.</p>
-
-<pre>// Creating an array to hold 5 integer scores
-int[] scores = new int[5];
-
-// Putting values in the boxes (Note: Counting starts at 0!)
-scores[0] = 95; // Box 0
-scores[1] = 88; // Box 1
-
-// A faster way to create an array:
-String[] students = {"Parul", "Arnav", "Naitik", "Yoganshika"};
-System.out.println(students[0]); // This prints "Parul"</pre>
-
-            <h3 class="section-title">2D Arrays (Matrices)</h3>
-            <p>If a normal array is a single line of boxes, a 2D Array is a grid, like an Excel Spreadsheet or a Chessboard! It has rows and columns.</p>
-<pre>// Creates a grid with 3 rows and 3 columns
-int[][] grid = new int[3][3];
-grid[0][0] = 1; // Top-left corner
-grid[2][2] = 9; // Bottom-right corner</pre>
-
-            <h3 class="section-title">Working with Strings</h3>
-            <p>A <code>String</code> is essentially a sequence of characters combined together. </p>
-            <div class="highlight-box">
-                <strong>Golden Rule:</strong> In Java, Strings are <strong>Immutable</strong>. This means once you create a String, you cannot change it. If you try to change it, Java actually deletes the old one and creates a brand new one behind the scenes!
-            </div>
-
-<pre>String school = "Vardaan Learning";
-
-// Cool things you can do with Strings:
-System.out.println(school.length());       // Prints 16
-System.out.println(school.toUpperCase());  // Prints "VARDAAN LEARNING"
-System.out.println(school.charAt(0));      // Prints 'V'</pre>
-        </section>
-
-        <!-- CHAPTER 7 -->
-        <section>
-            <h2 class="chapter-title">Chapter 7: Object-Oriented Programming (The Basics)</h2>
-
-            <p>OOP is the most important concept in Java! It changes how we think about code. Instead of writing long lists of instructions, we organize our code into "Objects".</p>
-
-            <h3 class="section-title">Classes vs. Objects</h3>
-            <ul>
-                <li><strong>Class (The Blueprint):</strong> A blueprint for a Car. It says "A car has 4 wheels, a color, and can drive." It's just an idea.</li>
-                <li><strong>Object (The Real Thing):</strong> Using that blueprint, we build a real Red Ferrari. We can also build a Blue BMW. Both are "Objects" from the same class!</li>
-            </ul>
-
-            <h3 class="section-title">Constructors (The Factory Workers)</h3>
-            <p>When we create a new Object using the <code>new</code> keyword, a special method called a <strong>Constructor</strong> is run. Its job is to "set up" the object (like giving the car its color right when it's built).</p>
-
-            <h3 class="section-title">The `this` Keyword</h3>
-            <p><code>this</code> simply means "Myself". It is used inside a class to point to its own variables.</p>
-
-<pre>class Student {
-    String name; // Instance variable
-    
-    // This is the Constructor! It has the exact same name as the Class.
-    public Student(String name) {
-        // "this.name" means the variable of THIS specific object
-        this.name = name; 
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        // The constructor is called here!
-        Student s1 = new Student("Swati Priya");
-    }
-}</pre>
-
-            <h3 class="section-title">Access Modifiers (Security Guards)</h3>
-            <p>We use these to protect our variables from being messed with by other code:</p>
-            <ul>
-                <li><code>public</code>: Like a public park. ANY file in your project can access it.</li>
-                <li><code>private</code>: Like a secret diary. Only the class itself can read or change it. (This is called <strong>Encapsulation</strong>).</li>
-                <li><code>protected</code>: Like a family heirloom. Only the class and its "children" classes can use it.</li>
-                <li><code>default</code> (No keyword): Like a neighborhood group. Only classes in the exact same folder (package) can see it.</li>
-            </ul>
-        </section>
-
-        <!-- CHAPTER 8 -->
-        <section>
-            <h2 class="chapter-title">Chapter 8: Deep Dive into OOP (The 4 Pillars)</h2>
-
-            <h3 class="section-title">1. Encapsulation (Hiding Data)</h3>
-            <p>We wrap our data (variables) inside a class and make them <code>private</code>. If someone wants to change the variable, they must use a public "Setter" method. This stops people from setting an age to -50!</p>
-
-            <h3 class="section-title">2. Inheritance (Parent and Child)</h3>
-            <p>Just like a child inherits traits from their parents, a new Class can inherit variables and methods from an existing Class using the keyword <code>extends</code>. This saves us from rewriting code!</p>
-            
-            <div class="highlight-box">
-                <strong>The `super` Keyword:</strong> Just like `this` means "Myself", the word `super` means "My Parent". A child class uses `super` to talk to its parent class!
-            </div>
-
-<pre>class Animal {
-    void eat() { System.out.println("Eating..."); }
-}
-// Dog "inherits" from Animal
-class Dog extends Animal {
-    void bark() { System.out.println("Woof!"); }
-}</pre>
-
-            <h3 class="section-title">3. Polymorphism (Many Forms)</h3>
-            <p>A person can have many forms: A woman can be a Mother, a Teacher, and a Sister. In Java, methods can do different things based on the situation.</p>
-            <table>
-                <tr>
-                    <th>Method Overloading (Same class)</th>
-                    <th>Method Overriding (Parent-Child)</th>
-                </tr>
-                <tr>
-                    <td>Multiple methods with the <strong>same name</strong>, but different inputs.</td>
-                    <td>A child class writes its <strong>own version</strong> of a parent's method.</td>
-                </tr>
-                <tr>
-                    <td><pre>void add(int a, int b) 
-void add(int a, int b, int c)</pre></td>
-                    <td><pre>Parent: void sound() { print("?"); }
-Child: void sound() { print("Meow"); }</pre></td>
-                </tr>
-            </table>
-
-            <h3 class="section-title">4. Abstraction (Hiding Complexity)</h3>
-            <p>When you drive a car, you press the accelerator, and it moves. You don't need to know how the engine works inside. Abstraction means showing only the essential features. We do this using:</p>
-            <ul>
-                <li><strong>Abstract Classes:</strong> A half-finished blueprint. It cannot be used to make an object directly; a child MUST finish it.</li>
-                <li><strong>Interfaces:</strong> A strict contract. It just provides a list of empty methods that a class `implements` (promises to fulfill).</li>
-            </ul>
-        </section>
-
-        <!-- CHAPTER 9 -->
-        <section>
-            <h2 class="chapter-title">Chapter 9: Handling Errors (Exceptions)</h2>
-
-            <p>Sometimes, things go wrong. Maybe the internet disconnects, or the user types a word when we asked for a number. If we don't handle these "Exceptions", our program will crash!</p>
-
-            <h3 class="section-title">The Try-Catch-Finally Block</h3>
-            <p>We put risky code inside a <code>try</code> block. If an error happens, Java "throws" an exception, and we "catch" it.</p>
-
-<pre>public class ErrorExample {
-    public static void main(String[] args) {
-        try {
-            // Risky code: You cannot divide a number by zero!
-            int answer = 10 / 0; 
-        } catch (Exception e) {
-            // This runs if there is an error
-            System.out.println("Oops! Math error. You can't divide by zero.");
-        } finally {
-            // This ALWAYS runs, no matter what happens! (Good for cleanup)
-            System.out.println("Finished doing math.");
-        }
-    }
-}</pre>
-        </section>
-
-        <!-- CHAPTER 10 -->
-        <section>
-            <h2 class="chapter-title">Chapter 10: The Collections Framework</h2>
-
-            <p>Arrays are great, but their size is fixed. If you create an array of size 5, you cannot add a 6th item. The <strong>Collections Framework</strong> provides special classes that can grow and shrink automatically!</p>
-
-            <div class="highlight-box">
-                <strong>Important: Wrapper Classes!</strong><br>
-                Collections only work with Objects, not primitive data types. So, instead of `int`, we use its object wrapper `Integer`. Instead of `double`, we use `Double`.
-            </div>
-
-            <h3 class="section-title">1. ArrayList (A flexible Array)</h3>
-<pre>import java.util.ArrayList;
-
-public class ListNotes {
-    public static void main(String[] args) {
-        // Notice we use <Integer>, not <int>
-        ArrayList&lt;Integer&gt; scores = new ArrayList&lt;&gt;();
-        scores.add(95);
-        scores.add(100);
-        System.out.println(scores.get(0)); // Prints 95
-    }
-}</pre>
-
-            <h3 class="section-title">2. HashMap (A Dictionary)</h3>
-            <p>A HashMap stores data in <strong>Key-Value pairs</strong>. You use the Key to find the Value.</p>
-<pre>import java.util.HashMap;
-
-public class MapNotes {
-    public static void main(String[] args) {
-        // Key = Roll Number, Value = Name
-        HashMap&lt;Integer, String&gt; register = new HashMap&lt;&gt;();
-        
-        register.put(101, "Sripad");
-        register.put(102, "Shreya");
-        
-        System.out.println(register.get(102)); // Prints Shreya
-    }
-}</pre>
-        </section>
-
-        <!-- CHAPTER 11 -->
-        <section>
-            <h2 class="chapter-title">Chapter 11: File Handling (Saving Data)</h2>
-
-            <p>If you close a Java program, all your variables are erased. If you want to save data permanently (like a high score in a game), you need to write it to a File on your computer.</p>
-
-<pre>import java.io.FileWriter; // Tool to write to a file
-import java.io.IOException; // Tool to handle file errors
-
-public class FileWriteExample {
-    public static void main(String[] args) {
-        try {
-            // Creates a file named secret.txt on your computer
-            FileWriter writer = new FileWriter("secret.txt");
-            
-            // Write a message for Porshiya
-            writer.write("Porshiya says Java is fun!");
-            
-            // Always close the file when done!
-            writer.close(); 
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("An error occurred making the file.");
-        }
-    }
-}</pre>
-        </section>
-
-        <!-- CHAPTER 12 -->
-        <section>
-            <h2 class="chapter-title">Chapter 12: Multithreading (Doing tasks together)</h2>
-
-            <p>Normally, Java executes code line by line. It does Task A, finishes, then does Task B.</p>
-            <p><strong>Multithreading</strong> allows Java to do Task A and Task B <em>at the exact same time</em>. Think of playing a video game: One thread is playing the background music, another thread is moving your character, and another is drawing the enemies.</p>
-
-<pre>// Create a small task (A Thread)
-class MusicTask extends Thread {
-    public void run() {
-        System.out.println("Playing background music...");
-    }
-}
-
-public class Game {
-    public static void main(String[] args) {
-        MusicTask audio = new MusicTask();
-        audio.start(); // This starts the task in the background!
-        
-        System.out.println("Playing the game...");
-    }
-}</pre>
-        </section>
-
-        <!-- CHAPTER 13 -->
-        <section>
-            <h2 class="chapter-title">Chapter 13: Modern Java (Lambdas & Streams)</h2>
-
-            <p>When you get older and start writing complex code, you will use features introduced in modern versions of Java to make your code shorter and cleaner.</p>
-
-            <h3 class="section-title">1. Lambda Expressions `->`</h3>
-            <p>A Lambda is a shortcut for writing a method. It uses the arrow symbol `->` to say "Take this input, and do this with it."</p>
-
-            <h3 class="section-title">2. Streams API</h3>
-            <p>Imagine you have a list of 100 student scores, and you want to find only the scores above 90, and then sort them. Using loops takes many lines of code. <strong>Streams</strong> let you do it in one single, readable sentence like a pipeline!</p>
-
-<pre>import java.util.Arrays;
-import java.util.List;
-
-public class ModernJava {
-    public static void main(String[] args) {
-        List&lt;Integer&gt; scores = Arrays.asList(45, 92, 78, 98, 85);
-        
-        // The Stream Pipeline: Filter high scores, and print them
-        scores.stream()
-              .filter(score -> score >= 90)  // Only keep 90 and above
-              .forEach(s -> System.out.println("Excellent Score: " + s));
-              
-        // Output: 
-        // Excellent Score: 92
-        // Excellent Score: 98
-    }
-}</pre>
-        </section>
-
-        <!-- CHAPTER 14 -->
-        <section>
-            <h2 class="chapter-title">Chapter 14: Practice Challenges</h2>
-
-            <p>Ready to test your skills? Try solving these coding challenges on your computer!</p>
-
-            <h3 class="section-title">Level 1: The Basics</h3>
-            <ol class="list-decimal pl-6 mb-4 font-sans text-[11pt] text-gray-800 space-y-2">
-                <li><strong>The Greeter:</strong> Write a program using <code>Scanner</code> that asks for Shivam's age and prints out how old he will be in 5 years.</li>
-                <li><strong>Even or Odd:</strong> Create a variable <code>int number = 14;</code>. Use the modulus operator (<code>%</code>) and an <code>if-else</code> statement to check if the number is even or odd.</li>
-                <li><strong>Variable Master:</strong> Create variables for Vidyaprakash's math score (integer) and percentage (decimal/double). Print them both on the screen.</li>
-                <li><strong>Simple Calculator:</strong> Write a program that adds two numbers together (e.g., 15 and 20) and prints: "The sum is: 35".</li>
-            </ol>
-
-            <h3 class="section-title">Level 2: Loops & Logic</h3>
-            <ol class="list-decimal pl-6 mb-4 font-sans text-[11pt] text-gray-800 space-y-2" start="5">
-                <li><strong>Table Master:</strong> Write a <code>for</code> loop to print the multiplication table of 7 for Akshita (7 x 1 = 7, 7 x 2 = 14, etc., up to 10).</li>
-                <li><strong>Grade Calculator:</strong> Write a program that checks Tanvi's score. If she scores 90 or above, print "A". If between 75 and 89, print "B". If below 75, print "C".</li>
-                <li><strong>Voting Age:</strong> Write an <code>if-else</code> statement that checks Arnav's age. If he is 18 or older, print "Can Vote". If younger, print "Cannot Vote".</li>
-                <li><strong>Rocket Countdown:</strong> Write a <code>while</code> loop that counts backwards from 10 down to 1, and then prints "Blastoff!"</li>
-            </ol>
-
-            <h3 class="section-title">Level 3: Arrays & Strings</h3>
-            <ol class="list-decimal pl-6 mb-4 font-sans text-[11pt] text-gray-800 space-y-2" start="9">
-                <li><strong>Score Counter:</strong> Create an array of 5 integers representing Piyush's test scores (e.g., 85, 90, 78, 92, 88). Write a loop to calculate and print the <em>total sum</em> of his scores.</li>
-                <li><strong>String Manipulation:</strong> Create a String variable with the text "Vardaan Learning Institute". Print the total number of characters, and then print the whole sentence in UPPERCASE.</li>
-                <li><strong>Favorite Subjects:</strong> Create an array of Strings holding Shreya's 3 favorite school subjects. Print the 2nd subject in the list. (Remember, arrays start counting at 0!).</li>
-                <li><strong>Name Joiner:</strong> Create two Strings: one for Utkarsh's first name, and one for his last name. Join them together with a space in the middle and print the full name.</li>
-            </ol>
-
-            <h3 class="section-title">Level 4: Object-Oriented Master</h3>
-            <ol class="list-decimal pl-6 mb-4 font-sans text-[11pt] text-gray-800 space-y-2" start="13">
-                <li><strong>Build a Class:</strong> Create a class named <code>Book</code>. Give it two variables: <code>String title</code> and <code>String author</code>. Add a method called <code>read()</code> that prints "Reading [title]". Create a <code>Book</code> object for Rudransh in your main method and test it out!</li>
-                <li><strong>Exception Hunter:</strong> Write a program with an array of 3 names. Try to print the 5th name (which doesn't exist). Use a <code>try-catch</code> block to catch the error so the program doesn't crash!</li>
-                <li><strong>Dog Maker:</strong> Create a simple <code>Dog</code> class with a variable <code>String name</code>. Add a method <code>bark()</code> that prints "Woof!". In your main method, create a dog named "Buddy" for Ananya and make it bark.</li>
-                <li><strong>The Adder Method:</strong> Write a new method outside your main method called <code>addNumbers(int a, int b)</code> that returns the sum of a and b. Call this method from <code>main</code> and print the answer.</li>
-            </ol>
-            
-            <div class="highlight-box mt-6">
-                <strong>💡 Tip for Students:</strong> Don't look at the answers right away! Try typing the code out in your IDE first. Making mistakes (bugs) is the best way to learn how to code.
-            </div>
-        </section>
-        
-        <!-- Footer Print Information -->
-        <footer class="mt-12 pt-4 border-t-2 border-orange-500 text-center text-sm text-gray-500 font-sans">
-            <p>&copy; 2026 Vardaan Learning Institute. All Rights Reserved.</p>
-            <p class="mt-1 text-xs italic font-semibold text-orange-600">Powered by Vardaan Comet</p>
-        </footer>
-
-    </div>
-
+    // Initialize
+    renderCards(chapters);
+  </script>
 </body>
 </html>
