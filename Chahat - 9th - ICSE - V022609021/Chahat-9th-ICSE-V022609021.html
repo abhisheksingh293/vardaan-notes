@@ -35,20 +35,20 @@
       align-items: center; padding: 0 40px; height: 80px; background: var(--glass-bg);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
     }
-    .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--text); transition: transform 0.3s ease; }
-    .brand:hover { transform: scale(1.02); }
+    .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--text);  }
+    
     .logo { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); }
     .brand span { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
     .brand em { font-style: normal; color: var(--primary); }
-    .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 60px 24px 100px; }
-    .hero-section { text-align: center; margin-bottom: 60px; animation: fadeInDown 0.8s ease-out forwards; }
+    .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 20px 24px 100px; }
+    .hero-section { text-align: center; margin-bottom: 60px;  }
     .tag {
       display: inline-flex; align-items: center; gap: 10px; background: rgba(249, 115, 21, 0.1);
       border: 1px solid rgba(249, 115, 21, 0.2); color: var(--primary); font-size: 0.85rem;
       font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 8px 20px;
       border-radius: 999px; margin-bottom: 24px; box-shadow: 0 0 20px rgba(249, 115, 21, 0.1);
     }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 10px var(--primary); animation: pulse 2s infinite; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 10px var(--primary);  }
     h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
     h1 b { background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     h1 .highlight { background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 10px rgba(249,115,21,0.2)); }
@@ -59,11 +59,11 @@
     .stat .lab { font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
     .controls { margin: 60px auto 40px; max-width: 600px; position: relative; }
     .search {
-      width: 100%; height: 64px; border-radius: 16px; border: 1px solid var(--border);
+      width: 100%; height: 64px; border-radius: 8px; border: 1px solid var(--border);
       background: var(--surface); color: var(--text); padding: 0 24px 0 60px; font-size: 1.1rem;
-      outline: none; transition: all 0.3s ease; font-family: inherit; backdrop-filter: blur(10px);
+      outline: none;  font-family: inherit; backdrop-filter: blur(10px);
     }
-    .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; color: var(--text-muted); pointer-events: none; transition: color 0.3s ease; }
+    .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; color: var(--text-muted); pointer-events: none;  }
     .search:focus { border-color: var(--primary); background: rgba(255, 255, 255, 0.05); box-shadow: 0 0 0 4px rgba(249, 115, 21, 0.15), 0 10px 30px rgba(0,0,0,0.5); }
     .search:focus + .search-icon { color: var(--primary); }
     .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
@@ -73,28 +73,28 @@
     .card {
       display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
       text-decoration: none; color: var(--text); background: var(--surface);
-      border: 1px solid var(--border); border-radius: 24px; padding: 24px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid var(--border); border-radius: 8px; padding: 24px; 
       position: relative; overflow: hidden; backdrop-filter: blur(10px);
     }
-    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top right, rgba(249,115,21,0.1), transparent 50%); opacity: 0; transition: opacity 0.4s ease; }
-    .card:hover { transform: translateY(-8px) scale(1.02); border-color: rgba(249, 115, 21, 0.3); background: var(--surface-hover); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(249,115,21,0.1); }
-    .card:hover::before { opacity: 1; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top right, rgba(249,115,21,0.1), transparent 50%); opacity: 0;  }
+    
+    
     .badge { align-self: flex-start; font-size: 0.75rem; font-weight: 700; color: var(--primary); background: rgba(249,115,21,0.1); padding: 4px 12px; border-radius: 999px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
     .avatar {
-      width: 80px; height: 80px; border-radius: 20px; background: linear-gradient(135deg, var(--primary), #b34e00);
+      width: 80px; height: 80px; border-radius: 6px; background: linear-gradient(135deg, var(--primary), #b34e00);
       display: grid; place-items: center; color: #fff; font-size: 2rem; font-weight: 700; margin-bottom: 16px; box-shadow: 0 8px 16px rgba(249, 115, 21, 0.2);
     }
     .name { font-size: 1.1rem; font-weight: 600; margin-bottom: 0; color: var(--text); line-height: 1.3; }
     .meta { display: flex; flex-direction: column; gap: 8px; align-items: center; }
     .meta-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-muted); }
     .meta-icon { width: 16px; height: 16px; opacity: 0.7; }
-    .empty { display: none; text-align: center; padding: 60px 20px; background: var(--surface); border-radius: 24px; border: 1px dashed var(--border); margin-top: 24px; }
+    .empty { display: none; text-align: center; padding: 60px 20px; background: var(--surface); border-radius: 8px; border: 1px dashed var(--border); margin-top: 24px; }
     .empty h3 { font-size: 1.5rem; margin-bottom: 8px; color: var(--text); }
     .empty p { color: var(--text-muted); }
     footer { margin-top: 80px; padding: 30px 0; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-muted); font-size: 0.9rem; }
-    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(249, 115, 21, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(249, 115, 21, 0); } 100% { box-shadow: 0 0 0 0 rgba(249, 115, 21, 0); } }
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 768px) { .wrap { padding: 20px 12px 60px; } nav { padding: 0 12px; height: 60px; } .logo { height: 32px; } .brand span { font-size: 1.2rem; } .stats { gap: 12px; } .stat .num { font-size: 1.5rem; } h1 { font-size: 1.8rem; margin-bottom: 12px; } .sub { font-size: 0.95rem; } .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .card { padding: 12px 16px; gap: 12px; } .avatar { width: 72px; height: 72px; font-size: 1.8rem; border-radius: 18px; margin-bottom: 8px; } .name { font-size: 1.05rem; } .meta { flex-direction: column; gap: 4px; align-items: flex-start; } .meta-item span { font-size: 0.8rem; } .meta-icon { width: 14px; height: 14px; } }
+    @media (max-width: 768px) { .wrap { padding: 20px 12px 60px; } nav { padding: 0 12px; height: 60px; } .logo { height: 32px; } .brand span { font-size: 1.2rem; } .stats { gap: 12px; } .stat .num { font-size: 1.5rem; } h1 { font-size: 1.8rem; margin-bottom: 12px; } .sub { font-size: 0.95rem; } .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .card { padding: 12px 16px; gap: 12px; } .avatar { width: 72px; height: 72px; font-size: 1.8rem; border-radius: 6px; margin-bottom: 8px; } .name { font-size: 1.05rem; } .meta { flex-direction: column; gap: 4px; align-items: flex-start; } .meta-item span { font-size: 0.8rem; } .meta-icon { width: 14px; height: 14px; } }
+  
+    .card { aspect-ratio: 1 / 1; justify-content: center; }
   </style>
 </head>
 <body>
@@ -110,7 +110,7 @@
 
     <div class="head">
       <h2>Subjects Directory</h2>
-      <span id="countLabel" class="count">0 subjects</span>
+      <span id="countLabel" class="count">1 subjects</span>
     </div>
 
     <section class="grid" id="subjectGrid"></section>
@@ -123,7 +123,13 @@
 
   </main>
   <script>
-    const subjects = [];
+    const subjects = [
+    {
+        "name": "English",
+        "link": "./English/English.html",
+        "chapters": 1
+    }
+];
 
     function initials(name) {
       return name.split(' ').map(part => part[0]).join('').slice(0, 2).toUpperCase();
@@ -156,7 +162,7 @@
       const lowerName = name.toLowerCase();
       for (const [key, url] of Object.entries(subjectImages)) {
         if (lowerName.includes(key)) {
-          return `<img src="${url}" alt="${name}" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">`;
+          return `<img src="${url}" alt="${name}" style="width:100%; height:100%; object-fit:cover; border-radius: 6px;">`;
         }
       }
       return initials(name);
