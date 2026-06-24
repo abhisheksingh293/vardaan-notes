@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Energy & Simple Machines - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Physics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Energy & Simple Machines</h1>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>A <strong>Simple Machine</strong> is a device that helps us to make our work easier by multiplying our effort, speeding up motion, or changing the direction of force in a desired manner.</p>
+        </div>
+
+        <h2>1. Why We Need Machines</h2>
+        <p>Our hands are not sufficient to perform all kinds of tasks. We use machines to complete work in lesser time with less effort. Machines are primarily employed for:</p>
+        <ul>
+            <li><strong>Lifting Heavy Loads:</strong> Applying a small effort to lift something heavy (e.g., using a spoon to pry open a tight lid).</li>
+            <li><strong>Speeding up Motion:</strong> Making a task happen faster.</li>
+            <li><strong>Changing Direction:</strong> Applying effort in a convenient direction (e.g., a pulley drawing water from a well).</li>
+            <li><strong>Doing Unsafe Work:</strong> Handling tasks that are dangerous with bare hands (e.g., lifting burning charcoal with fire tongs).</li>
+        </ul>
+
+        <h3>Important Machine Terms</h3>
+        <ul>
+            <li><strong>Effort (E):</strong> The force applied on the machine to do mechanical work.</li>
+            <li><strong>Load (L):</strong> The weight moved or the resistance overcome by the machine.</li>
+            <li><strong>Fulcrum (F):</strong> The fixed point or axis around which a machine (like a lever) turns.</li>
+            <li><strong>Input Energy:</strong> The work done <em>on</em> the machine by the user.</li>
+            <li><strong>Output Energy:</strong> The useful work done <em>by</em> the machine on the load.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>An <strong>Ideal Machine</strong> is one where Output Energy = Input Energy (100% Efficiency). However, in real life, no machine is 100% efficient. Some energy is always wasted in overcoming <strong>friction</strong> and moving the weight of the machine's parts.</p>
+        </div>
+
+        <h2>2. Levers and Their Types</h2>
+        <p>A <strong>Lever</strong> is a rigid bar which can rotate about a fixed point (Fulcrum). The distance between the Fulcrum and Effort is the <strong>Effort Arm</strong>, and the distance between the Fulcrum and Load is the <strong>Load Arm</strong>.</p>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Principle of Lever:</strong> Load &times; Load Arm = Effort &times; Effort Arm.<br>
+            The <strong>Mechanical Advantage (M.A.)</strong> tells us how effectively a machine multiplies our force. <br>M.A. = Load / Effort = Effort Arm / Load Arm.</p>
+        </div>
+
+        <h3>The Three Orders of Levers</h3>
+        <ul>
+            <li><strong>First Order Lever (Class I):</strong> The <strong>Fulcrum</strong> is placed between the Load and Effort. M.A. can be &gt;1, &lt;1, or =1. <br><em>Examples:</em> See-saw, scissors, crowbar, claw hammer, water pump handle.</li>
+            <li><strong>Second Order Lever (Class II):</strong> The <strong>Load</strong> is situated between the Fulcrum and Effort. The Effort Arm is always longer than the Load Arm. Therefore, it is a <strong>Force Multiplier</strong> (M.A. &gt; 1). <br><em>Examples:</em> Nut-cracker, wheelbarrow, bottle opener, oars of a boat.</li>
+            <li><strong>Third Order Lever (Class III):</strong> The <strong>Effort</strong> is situated between the Fulcrum and Load. The Load Arm is always longer than the Effort Arm. Therefore, it is a <strong>Speed Multiplier</strong> (M.A. &lt; 1). <br><em>Examples:</em> Sugar tongs, fire tongs, bread knife, fishing rod.</li>
+        </ul>
+
+        <h2>3. Other Simple Machines</h2>
+        
+        <h3>Pulley</h3>
+        <p>A pulley is a flat circular disc with a grooved edge, capable of rotating around an axle.</p>
+        <ul>
+            <li><strong>Single Fixed Pulley:</strong> Attached to a high platform. It only changes the direction of the applied effort to a more convenient one (e.g., pulling downwards to lift water). Ideal M.A. = 1.</li>
+            <li><strong>Single Movable Pulley:</strong> Used to multiply force. The load can be lifted with much less effort (ideal M.A. = 2). Often used in cranes.</li>
+        </ul>
+
+        <h3>Inclined Plane & Wedge</h3>
+        <ul>
+            <li><strong>Inclined Plane:</strong> Any sloping flat surface (like a ramp or gang plank). It requires less effort to push a load up an inclined plane than to lift it directly vertically. A winding hill road is a continuous inclined plane.</li>
+            <li><strong>Wedge:</strong> A double inclined plane. Used to tear or split apart solid objects. The thinner/sharper the wedge, the easier it penetrates. <br><em>Examples:</em> Axe, knife, chisel, nail, plough.</li>
+        </ul>
+
+        <h3>Screw & Wheel and Axle</h3>
+        <ul>
+            <li><strong>Screw:</strong> A spiral (winding) inclined plane cut onto a cylinder. It provides a better grip than a nail and can support larger loads. <br><em>Examples:</em> Nut and bolt, corkscrew, screw jack.</li>
+            <li><strong>Wheel and Axle:</strong> Consists of two cylinders of different diameters joined together. The larger one is the wheel, the smaller is the axle. <br><em>Examples:</em> Door knob, steering wheel, screwdriver, water tap knob.</li>
+        </ul>
+
+        <h2>4. Maintenance and Care of Machines</h2>
+        <p>If a machine is to be used for a long time, it needs proper care:</p>
+        <ul>
+            <li><strong>Lubrication:</strong> Moving parts rub against each other and wear out due to friction. Regular oiling or greasing reduces friction and prevents energy loss.</li>
+            <li><strong>Painting:</strong> Non-movable parts made of iron get rusted easily in moist air. Painting prevents rusting.</li>
+            <li><strong>Covering:</strong> Protect machines from dust (which increases wear and tear) by keeping them covered when not in use.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
