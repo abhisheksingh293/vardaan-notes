@@ -85,7 +85,22 @@ function generateHTML(subjectName, chaptersData, studentName) {
     .empty h3 { font-size: 1.5rem; margin-bottom: 8px; color: var(--text); }
     .empty p { color: var(--text-muted); }
     footer { margin-top: 80px; padding: 30px 0; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-muted); font-size: 0.9rem; }
-    @media (max-width: 768px) { .wrap { padding: 20px 12px 60px; } nav { padding: 0 12px; height: 60px; } .logo { height: 32px; } .brand span { font-size: 1.2rem; } h1 { font-size: 1.8rem; margin-bottom: 12px; } .card { padding: 16px; gap: 12px; } .avatar { width: 40px; height: 40px; font-size: 1rem; } .name { font-size: 1.05rem; } .meta-item span { font-size: 0.8rem; } .meta-icon { width: 14px; height: 14px; } }
+    @media (max-width: 1024px) {
+      .wrap { padding: 20px 20px 80px; }
+      h1 { font-size: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .wrap { padding: 20px 12px 60px; }
+      nav { padding: 0 12px; height: 60px; }
+      .logo { height: 32px; }
+      .brand span { font-size: 1.2rem; }
+      h1 { font-size: 1.8rem; margin-bottom: 12px; }
+      .card { padding: 16px; gap: 12px; }
+      .avatar { width: 40px; height: 40px; font-size: 1rem; }
+      .name { font-size: 1.05rem; }
+      .meta-item span { font-size: 0.8rem; }
+      .meta-icon { width: 14px; height: 14px; }
+    }
   </style>
 </head>
 <body>

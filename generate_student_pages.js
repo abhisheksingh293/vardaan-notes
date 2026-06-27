@@ -100,7 +100,35 @@ function generateHTML(studentName, subjectsData, totalChapters) {
     .empty h3 { font-size: 1.5rem; margin-bottom: 8px; color: var(--text); }
     .empty p { color: var(--text-muted); }
     footer { margin-top: 80px; padding: 30px 0; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-muted); font-size: 0.9rem; }
-    @media (max-width: 768px) { .wrap { padding: 20px 12px 60px; } nav { padding: 0 12px; height: 60px; } .logo { height: 32px; } .brand span { font-size: 1.2rem; } .stats { gap: 12px; } .stat .num { font-size: 1.5rem; } h1 { font-size: 1.8rem; margin-bottom: 12px; } .sub { font-size: 0.95rem; } .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .card { padding: 12px 16px; gap: 12px; } .avatar { width: 72px; height: 72px; font-size: 1.8rem; border-radius: 6px; margin-bottom: 8px; } .name { font-size: 1.05rem; } .meta { flex-direction: column; gap: 4px; align-items: flex-start; } .meta-item span { font-size: 0.8rem; } .meta-icon { width: 14px; height: 14px; } }
+    @media (max-width: 1024px) {
+      .wrap { padding: 20px 20px 80px; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+      h1 { font-size: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .wrap { padding: 20px 12px 60px; }
+      nav { padding: 0 12px; height: 60px; }
+      .logo { height: 32px; }
+      .brand span { font-size: 1.2rem; }
+      .stats { gap: 12px; }
+      .stat .num { font-size: 1.5rem; }
+      h1 { font-size: 1.8rem; margin-bottom: 12px; }
+      .sub { font-size: 0.95rem; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .card { padding: 12px 16px; gap: 12px; }
+      .avatar { width: 72px; height: 72px; font-size: 1.8rem; border-radius: 6px; margin-bottom: 8px; }
+      .name { font-size: 1.05rem; }
+      .meta { flex-direction: column; gap: 4px; align-items: flex-start; }
+      .meta-item span { font-size: 0.8rem; }
+      .meta-icon { width: 14px; height: 14px; }
+    }
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 1.5rem; }
+      .card { padding: 16px; flex-direction: row; align-items: center; justify-content: flex-start; gap: 16px; aspect-ratio: auto; }
+      .avatar { width: 60px; height: 60px; font-size: 1.5rem; margin-bottom: 0; }
+      .name { text-align: left; }
+    }
   
     .card { aspect-ratio: 1 / 1; justify-content: center; }
   </style>

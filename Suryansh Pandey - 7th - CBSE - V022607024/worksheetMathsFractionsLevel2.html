@@ -136,7 +136,31 @@
             .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
             .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
         }
-    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    </style>    <style>
+    /* Injected Responsive Styles */
+    @media (max-width: 1024px) {
+        .container { max-width: 95% !important; padding: 15px !important; }
+        .institute-name { font-size: 20pt !important; }
+    }
+    @media (max-width: 768px) {
+        .container { max-width: 100% !important; padding: 10px !important; margin: 0 !important; }
+        .institute-name { font-size: 16pt !important; }
+        .tagline { font-size: 11pt !important; }
+        .worksheet-title { font-size: 13pt !important; }
+        .meta-info { 
+            flex-direction: column !important; 
+            gap: 8px !important; 
+            font-size: 10pt !important; 
+            padding: 10px !important; 
+            align-items: flex-start !important;
+        }
+        .chapter-header { font-size: 11pt !important; }
+        .question-item { flex-direction: column !important; align-items: flex-start !important; }
+        .q-num { margin-bottom: 4px !important; }
+        .watermark { width: 90% !important; }
+    }
+</style>
+</head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
     <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
     
