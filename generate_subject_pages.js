@@ -183,9 +183,15 @@ for (const item of items) {
   try { studentContents = fs.readdirSync(studentDir, { withFileTypes: true }); } catch(e) {}
 
   for (const subItem of studentContents) {
-    if (subItem.isDirectory() && !subItem.name.startsWith('.') && subItem.name !== 'Worksheets' && subItem.name !== 'Images') {
+    if (subItem.isDirectory() && !subItem.name.startsWith('.') && subItem.name !== 'Images') {
       const subjectName = subItem.name;
       const subjectPath = path.join(studentDir, subjectName);
+      
+      let files = [];
+      try { files = fs.readdirSync(subjectPath); } catch(e) {}
+      
+      let targetHtmlName = files.find(f => f.toLowerCase() === (subjectName.replace(/\s+/g, '') + '.html').toLowerCase());
+      if (!targetHtmlName) targetHtmlName = subjectName.replace(/\s+/g, '') + '.html';
       
       const chaptersData = [];
       let chapterContents = [];
@@ -219,19 +225,16 @@ for (const item of items) {
             name: chapterName,
             link: chapterLink
           });
+        } else if (chapItem.isFile() && chapItem.name.endsWith('.html') && chapItem.name.toLowerCase() !== targetHtmlName.toLowerCase()) {
+          chaptersData.push({
+            name: chapItem.name.replace(/\.html$/i, ''),
+            link: `./${encodeURIComponent(chapItem.name).replace(/%20/g, ' ')}`
+          });
         }
       }
 
       chaptersData.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
       const htmlContent = generateHTML(subjectName, chaptersData, displayStudentName);
-      
-      // Determine what to name the file. Try to overwrite the existing one or create subjectNameWithoutSpaces.html
-      let files = [];
-      try { files = fs.readdirSync(subjectPath); } catch(e) {}
-      
-      let targetHtmlName = files.find(f => f.toLowerCase() === (subjectName.replace(/\s+/g, '') + '.html').toLowerCase());
-      if (!targetHtmlName) targetHtmlName = files.find(f => f.endsWith('.html'));
-      if (!targetHtmlName) targetHtmlName = subjectName.replace(/\s+/g, '') + '.html';
       
       const targetHtmlPath = path.join(subjectPath, targetHtmlName);
       

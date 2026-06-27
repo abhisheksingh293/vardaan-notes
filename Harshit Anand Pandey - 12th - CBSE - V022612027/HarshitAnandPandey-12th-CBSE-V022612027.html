@@ -110,7 +110,7 @@
 
     <div class="head">
       <h2>Subjects Directory</h2>
-      <span id="countLabel" class="count">0 subjects</span>
+      <span id="countLabel" class="count">3 subjects</span>
     </div>
 
     <section class="grid" id="subjectGrid"></section>
@@ -123,7 +123,23 @@
 
   </main>
   <script>
-    const subjects = [];
+    const subjects = [
+    {
+        "name": "Physics",
+        "link": "https://www.vardaancomet.com/CBSE/Class12/Physics.html",
+        "chapters": 0
+    },
+    {
+        "name": "Chemistry",
+        "link": "https://www.vardaancomet.com/CBSE/Class12/Chemistry.html",
+        "chapters": 0
+    },
+    {
+        "name": "Mathematics",
+        "link": "https://www.vardaancomet.com/CBSE/Class12/Mathematics.html",
+        "chapters": 0
+    }
+];
 
     function initials(name) {
       return name.split(' ').map(part => part[0]).join('').slice(0, 2).toUpperCase();

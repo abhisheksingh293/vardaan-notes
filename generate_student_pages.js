@@ -235,7 +235,7 @@ for (const item of items) {
   
   const studentContents = fs.readdirSync(studentDir, { withFileTypes: true });
   for (const subItem of studentContents) {
-    if (subItem.isDirectory() && !subItem.name.startsWith('.') && subItem.name !== 'Worksheets' && subItem.name !== 'Images') {
+    if (subItem.isDirectory() && !subItem.name.startsWith('.') && subItem.name !== 'Images') {
       const subjectName = subItem.name;
       const subjectPath = path.join(studentDir, subjectName);
       
@@ -267,6 +267,41 @@ for (const item of items) {
       });
       totalChapters += chaptersCount;
     }
+  }
+  
+  if (item.name.toLowerCase().includes('12th')) {
+    const class12Links = [
+      { name: 'Physics', link: 'https://www.vardaancomet.com/CBSE/Class12/Physics.html', chapters: 0 },
+      { name: 'Chemistry', link: 'https://www.vardaancomet.com/CBSE/Class12/Chemistry.html', chapters: 0 },
+      { name: 'Mathematics', link: 'https://www.vardaancomet.com/CBSE/Class12/Mathematics.html', chapters: 0 }
+    ];
+
+    class12Links.forEach(customLink => {
+      const existingIndex = subjectsData.findIndex(s => s.name.toLowerCase() === customLink.name.toLowerCase());
+      if (existingIndex !== -1) {
+        subjectsData[existingIndex].link = customLink.link;
+      } else {
+        subjectsData.push(customLink);
+      }
+    });
+  }
+  
+  if (item.name.toLowerCase().includes('11th')) {
+    const class11Links = [
+      { name: 'Physics', link: 'https://www.vardaancomet.com/CBSE/Class%2011/Physics.html', chapters: 0 },
+      { name: 'Chemistry', link: 'https://www.vardaancomet.com/CBSE/Class%2011/Chemistry.html', chapters: 0 },
+      { name: 'Mathematics', link: 'https://www.vardaancomet.com/CBSE/Class%2011/Mathematics.html', chapters: 0 },
+      { name: 'Bridge Course', link: 'https://www.vardaancomet.com/CBSE/Class%2011/BridgeCourse.html', chapters: 0 }
+    ];
+
+    class11Links.forEach(customLink => {
+      const existingIndex = subjectsData.findIndex(s => s.name.toLowerCase() === customLink.name.toLowerCase());
+      if (existingIndex !== -1) {
+        subjectsData[existingIndex].link = customLink.link;
+      } else {
+        subjectsData.push(customLink);
+      }
+    });
   }
   
   let displayStudentName = item.name.split(' - ')[0];

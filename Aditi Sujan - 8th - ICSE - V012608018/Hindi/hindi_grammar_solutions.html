@@ -1,517 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hindi Grammar Solutions - Vardaan Learning Institute</title>
-    <style>
-        /* --- CSS VARIABLES (Vardaan Theming) --- */
-        :root {
-            /* Light Mode Palette */
-            --yellow-bg: #fff9c4;
-            --yellow-border: #fbc02d;
-            --green-bg: #e8f5e9;
-            --green-border: #43a047;
-            --blue-bg: #e3f2fd;
-            --blue-border: #1e88e5;
-            --pink-bg: #fce4ec;
-            --pink-border: #d81b60;
-            --text-main: #000000;
-            --paper-bg: #ffffff;
-            --accent-purple: #7e57c2;
-            --meta-text: #666666;
-            --example-bg: rgba(255,255,255,0.6);
-            --example-text: #444444;
-            --toggle-bg: #eee;
-            --toggle-border: #ccc;
-            --icon-fill: #000;
-        }
-
-        /* --- DARK MODE VARIABLES --- */
-        html.dark-mode {
-            --yellow-bg: #3f3a00;
-            --yellow-border: #fdd835;
-            --green-bg: #0f2e13;
-            --green-border: #81c784;
-            --blue-bg: #0d1b2a;
-            --blue-border: #64b5f6;
-            --pink-bg: #300815;
-            --pink-border: #f06292;
-            --text-main: #e0e0e0;
-            --paper-bg: #121212;
-            --accent-purple: #d1c4e9;
-            --meta-text: #aaaaaa;
-            --example-bg: rgba(255,255,255,0.1);
-            --example-text: #cccccc;
-            --toggle-bg: #333;
-            --toggle-border: #555;
-            --icon-fill: #fff;
-        }
-
-        /* --- GLOBAL LAYOUT --- */
-        body {
-            background-color: var(--paper-bg);
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: var(--text-main);
-            overflow-x: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* --- WATERMARK OVERLAY --- */
-        .watermark-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.3s ease;
-            mix-blend-mode: multiply;
-        }
-
-        .watermark-image {
-            opacity: 0.1;
-            max-width: 80%;
-            transition: all 0.3s ease;
-        }
-
-        /* Dark Mode Watermark Logic */
-        html.dark-mode .watermark-overlay {
-            mix-blend-mode: screen; 
-        }
-
-        html.dark-mode .watermark-image {
-            filter: invert(1); 
-            opacity: 0.15;
-        }
-
-        /* --- PAPER SHEET CONTAINER --- */
-        .paper-sheet {
-            background-color: var(--paper-bg);
-            width: 210mm;
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 20mm;
-            box-sizing: border-box;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-
-        /* --- BRANDING HEADER --- */
-        .branding-header {
-            text-align: center;
-            margin-bottom: 5px; /* TIGHTENED LAYOUT */
-            border-bottom: 3px double var(--blue-border);
-            padding-bottom: 15px;
-        }
-
-        .institute-name {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--blue-border);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .system-name {
-            font-size: 1.1rem;
-            color: var(--meta-text);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        /* --- CONTACT INFO (Updated V2.2) --- */
-        .contact-info {
-            font-size: 0.9rem;
-            color: #666666; 
-            margin-top: 10px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            
-            /* DEFAULT STATE: Hidden on screen */
-            display: none;
-            
-            /* Layout properties (active when visible) */
-            justify-content: center;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .contact-info a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        /* --- BRANDING FOOTER --- */
-        .branding-footer {
-            text-align: center;
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid var(--toggle-border);
-            color: var(--meta-text);
-        }
-
-        .created-by {
-            font-size: 1rem;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .powered-by {
-            font-size: 0.9rem;
-            color: var(--pink-border);
-            font-style: italic;
-        }
-
-        /* --- TYPOGRAPHY & ELEMENTS --- */
-        h1 {
-            font-size: 2.2rem;
-            color: var(--blue-border);
-            text-align: center;
-            
-            /* TIGHTENED LAYOUT */
-            margin-top: 5px; 
-            
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--blue-border);
-            padding-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 1.6rem;
-            color: var(--pink-border);
-            margin-top: 40px;
-            border-left: 5px solid var(--pink-border);
-            padding-left: 15px;
-            font-weight: 700;
-        }
-
-        h3 {
-            font-size: 1.3rem;
-            color: var(--accent-purple);
-            margin-top: 25px;
-            margin-bottom: 10px;
-            text-decoration: underline;
-            text-decoration-color: var(--accent-purple);
-            text-decoration-thickness: 2px;
-            text-underline-offset: 4px;
-        }
-
-        p, li {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        ul {
-            padding-left: 20px;
-        }
-
-        strong {
-            color: var(--pink-border);
-        }
-
-        /* --- INFO BOXES --- */
-        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
-        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
-        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
-
-        .box-label {
-            position: absolute;
-            top: -12px;
-            right: 20px;
-            background: var(--paper-bg);
-            padding: 2px 10px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            border: 2px solid;
-            border-radius: 4px;
-        }
-
-        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
-        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
-        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
-
-        /* --- THEME TOGGLE --- */
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--toggle-bg);
-            border: none;
-            cursor: pointer;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .icon-sun, .icon-moon {
-            position: absolute;
-            transition: all 0.5s ease;
-            stroke: var(--icon-fill);
-        }
-
-        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
-        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
-        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
-
-        /* --- STRICT PRINT CONFIGURATION --- */
-        @media print {
-            /* 1. Reset Colors to Clean White/Black */
-            body { 
-                background-color: #ffffff !important; 
-                color: #000000 !important;
-                -webkit-print-color-adjust: exact; 
-                print-color-adjust: exact;
-            }
-            
-            .paper-sheet { 
-                width: 100% !important; 
-                margin: 0 !important; 
-                padding: 0 !important; 
-                box-shadow: none !important;
-            }
-
-            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
-            .theme-toggle, 
-            .branding-footer {
-                display: none !important;
-            }
-
-            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
-            .contact-info {
-                display: flex !important;
-            }
-
-            /* 4. Force Watermark Visibility in Print */
-            .watermark-overlay {
-                display: flex !important;
-                position: fixed !important;
-                z-index: -1 !important;
-                opacity: 0.1 !important;
-                mix-blend-mode: normal !important; 
-                left: 0 !important;
-                top: 0 !important;
-                width: 100vw !important;
-                height: 100vh !important;
-            }
-
-            .watermark-image {
-                filter: none !important; 
-                max-width: 80% !important;
-            }
-
-            /* 5. Configure PDF/Print Page Numbers */
-            @page {
-                size: A4;
-                margin: 2cm;
-                
-                @bottom-left { content: none; }
-                @bottom-right { content: none; }
-
-                /* The Pink Disc */
-                @bottom-center {
-                    content: counter(page);
-                    display: block;
-                    width: 30px;
-                    height: 30px;
-                    background-color: #d81b60; 
-                    color: #ffffff;
-                    border-radius: 50%;
-                    font-family: 'Segoe UI', sans-serif;
-                    font-size: 11pt;
-                    font-weight: bold;
-                    text-align: center;
-                    line-height: 30px;
-                    margin: 0 auto;
-                }
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Hindi - Chapters Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #F97315;
+      --primary-glow: rgba(249, 115, 21, 0.2);
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-hover: #f9f9fa;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #111827;
+      --text-muted: #6b7280;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(249, 115, 21, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(249, 115, 21, 0.05) 0%, transparent 50%);
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between;
+      align-items: center; padding: 0 40px; height: 80px; background: var(--glass-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--text);  }
+    
+    .logo { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); }
+    .brand span { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
+    .brand em { font-style: normal; color: var(--primary); }
+    .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 20px 24px 100px; }
+    .hero-section { text-align: center; margin-bottom: 60px;  }
+    h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
+    h1 b { background: linear-gradient(135deg, #111827 0%, #6b7280 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    h1 .highlight { background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 10px rgba(249,115,21,0.2)); }
+    .sub { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    .stats { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+    .stat { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .stat .num { font-size: 2.5rem; font-weight: 800; color: var(--text); text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+    .stat .lab { font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+    .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-top: 0px; }
+    .head h2 { font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; color: var(--text); }
+    .count { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 16px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
+    .grid { display: flex; flex-direction: column; gap: 16px; }
+    .card {
+      display: flex; flex-direction: row; align-items: center; justify-content: space-between;
+      text-decoration: none; color: var(--text); background: var(--surface);
+      border: 1px solid var(--border); border-radius: 8px; padding: 16px 24px; 
+       position: relative; overflow: hidden; backdrop-filter: blur(10px);
+    }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(249,115,21,0.1), transparent); opacity: 0;  }
+    
+    
+    .card-left { display: flex; align-items: center; gap: 20px; }
+    .name-wrapper { display: flex; flex-direction: column; gap: 4px; }
+    .badge { font-size: 0.7rem; font-weight: 700; color: var(--primary); background: rgba(249,115,21,0.1); padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; width: fit-content; }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 6px; background: linear-gradient(135deg, var(--primary), #b34e00);
+      display: grid; place-items: center; color: #fff; font-size: 1.1rem; font-weight: 700; flex-shrink: 0; box-shadow: 0 4px 12px rgba(249, 115, 21, 0.2);
+    }
+    .name { font-size: 1.1rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .meta-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-muted); }
+    .meta-icon { width: 16px; height: 16px; opacity: 0.7; }
+    .empty { display: none; text-align: center; padding: 60px 20px; background: var(--surface); border-radius: 8px; border: 1px dashed var(--border); margin-top: 24px; }
+    .empty h3 { font-size: 1.5rem; margin-bottom: 8px; color: var(--text); }
+    .empty p { color: var(--text-muted); }
+    footer { margin-top: 80px; padding: 30px 0; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-muted); font-size: 0.9rem; }
+    @media (max-width: 768px) { .wrap { padding: 20px 12px 60px; } nav { padding: 0 12px; height: 60px; } .logo { height: 32px; } .brand span { font-size: 1.2rem; } h1 { font-size: 1.8rem; margin-bottom: 12px; } .card { padding: 16px; gap: 12px; } .avatar { width: 40px; height: 40px; font-size: 1rem; } .name { font-size: 1.05rem; } .meta-item span { font-size: 0.8rem; } .meta-icon { width: 14px; height: 14px; } }
+  </style>
 </head>
 <body>
+  <nav>
+    <a class="brand" href="#">
+      <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1772276441/Vardaan_Comet-removebg-preview_dsut6f.png" alt="Vardaan Comet Logo" class="logo">
+      <span>Vardaan <em class="highlight">Comet</em></span>
+    </a>
+  </nav>
 
-    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
-    <div class="watermark-overlay">
-        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+  <main class="wrap">
+
+    <div class="head">
+      <h2>Chapters Directory</h2>
+      <span id="countLabel" class="count">0 chapters</span>
     </div>
 
-    <!-- COMPONENT: Dark Mode Toggle -->
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
-        <!-- Moon Icon -->
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <!-- Sun Icon -->
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-    </button>
+    <section class="grid" id="chapterGrid"></section>
 
-    <!-- MAIN CONTAINER -->
-    <div class="paper-sheet">
+    <section class="empty" id="emptyState">
+      <h3>No chapters found</h3>
+      <p>Try adding a new chapter folder.</p>
+    </section>
+
+
+  </main>
+  <script>
+    const chapters = [];
+
+    function formatChapterIcon(name) {
+      let clean = name.replace(/^[cC]\d+[\s_\-]*/, '').replace(/_/g, ' ');
+      return clean.substring(0, 2).toUpperCase();
+    }
+
+    function formatChapterName(name) {
+      let clean = name.replace(/^[cC]\d+[\s_\-]*/, '').replace(/_/g, ' ');
+      return clean.replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+    function renderCards(list) {
+      const grid = document.getElementById('chapterGrid');
+      const emptyState = document.getElementById('emptyState');
+      const countLabel = document.getElementById('countLabel');
+      
+      grid.innerHTML = '';
+      
+      if (!list.length) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        countLabel.textContent = '0 chapters';
+        return;
+      }
+      
+      grid.style.display = 'grid';
+      emptyState.style.display = 'none';
+      countLabel.textContent = list.length + ' chapter' + (list.length === 1 ? '' : 's');
+      
+      list.forEach(chapter => {
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = chapter.link;
         
-        <!-- BRANDING HEADER (MANDATORY) -->
-        <div class="branding-header">
-            <div class="institute-name">Vardaan Learning Institute</div>
-            <div class="system-name">Class 8 Hindi • Chapter Notes</div>
-            
-            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
-            <div class="contact-info">
-                <span>🌐 vardaanlearning.com</span>
-                <span>📞 9508841336</span>
+        card.innerHTML = `
+          <div class="card-left">
+            <div class="avatar">${formatChapterIcon(chapter.name)}</div>
+            <div class="name-wrapper">
+              <div class="name">${formatChapterName(chapter.name)}</div>
             </div>
-        </div>
+          </div>
+          <div class="meta-item">
+            <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
 
-        <!-- DYNAMIC CONTENT STARTS HERE -->
-        <h1>हिंदी व्याकरण अभ्यास-पत्र हल</h1>
-
-        <div class="blue-box">
-            <span class="box-label">Concept</span>
-            <p><strong>व्याकरण (Grammar)</strong> भाषा के शुद्ध रूप का ज्ञान कराता है। इस अभ्यास-पत्र में क्रिया, कारक, पर्यायवाची, अनुस्वार-अनुनासिक, उपसर्ग-प्रत्यय और समास के महत्वपूर्ण प्रश्नों का संपूर्ण हल दिया गया है।</p>
-        </div>
-
-        <h2>अभ्यास-पत्र 1: क्रिया, कारक एवं पर्यायवाची</h2>
-
-        <h3>1. निम्नलिखित वाक्यों में से क्रिया शब्द छाँटिए:</h3>
-        <ul>
-            <li>(क) हम उनका घर देख चुके थे। — <strong>देख चुके थे</strong></li>
-            <li>(ख) एक सिपाही मेरे पास आया। — <strong>आया</strong></li>
-            <li>(ग) वे मुझे धन्यवाद दे रहे थे। — <strong>दे रहे थे</strong></li>
-            <li>(घ) अब चलने का समय हो रहा है। — <strong>हो रहा है</strong></li>
-            <li>(ङ) कुछ पी लीजिए चलकर। — <strong>पी लीजिए, चलकर</strong></li>
-        </ul>
-
-        <div class="yellow-box">
-            <span class="box-label">Important</span>
-            <p>संज्ञा या सर्वनाम के जिस रूप से उसका संबंध क्रिया या वाक्य के अन्य शब्दों के साथ जाना जाए, उसे <strong>'कारक'</strong> कहते हैं।</p>
-        </div>
-
-        <h3>2. निम्नलिखित रिक्त स्थानों में उचित कारक-चिह्न का प्रयोग कीजिए:</h3>
-        <ul>
-            <li>(क) स्कूल <strong>की</strong> छुट्टियाँ थीं।</li>
-            <li>(ख) दीवारों <strong>पर</strong> चार्ट थे।</li>
-            <li>(ग) लोगों <strong>ने</strong> अखबारों <strong>की</strong> टोपियाँ लगा रखी थीं।</li>
-            <li>(घ) अभिवादन <strong>में</strong> उसने सिर हिलाया।</li>
-            <li>(ङ) भीड़ खत्म होने <strong>को</strong> ही नहीं आती।</li>
-        </ul>
-
-        <h3>3. निम्नलिखित शब्दों के तीन-तीन पर्यायवाची शब्द लिखिए:</h3>
-        <ul>
-            <li>(क) नदी — <strong>सरिता, तटिनी, तरंगिणी</strong></li>
-            <li>(ख) पेड़ — <strong>वृक्ष, तरु, पादप</strong></li>
-            <li>(ग) घर — <strong>गृह, आवास, भवन</strong></li>
-            <li>(घ) फूल — <strong>पुष्प, सुमन, कुसुम</strong></li>
-            <li>(ङ) मछली — <strong>मीन, मत्स्य, मकर</strong></li>
-            <li>(च) जंगल — <strong>वन, कानन, अरण्य</strong></li>
-        </ul>
-
-        <h2>अभ्यास-पत्र 2: अनुस्वार और अनुनासिक</h2>
-
-        <h3>3. निम्नलिखित शब्दों में से अनुस्वार और अनुनासिक वाले शब्द अलग-अलग कीजिए:</h3>
-        <p>दिए गए शब्द: श्रृंगार, संसार, हँस, बाँट, मंदिर, जाति-पाँति, पहुँच, जंज़ीर</p>
-        <ul>
-            <li><strong>अनुस्वार (ं):</strong> श्रृंगार, संसार, मंदिर, जंज़ीर</li>
-            <li><strong>अनुनासिक (ँ):</strong> हँस, बाँट, जाति-पाँति, पहुँच</li>
-        </ul>
-
-        <h2>अभ्यास-पत्र 3: प्रत्यय, समास और कारक</h2>
-
-        <h3>2. निम्नलिखित शब्दों के मूल शब्द और प्रत्यय अलग कीजिए:</h3>
-        <ul>
-            <li>सामाजिक — <strong>समाज + इक</strong></li>
-            <li>वैज्ञानिक — <strong>विज्ञान + इक</strong></li>
-            <li>वैमानिक — <strong>विमान + इक</strong></li>
-            <li>यांत्रिक — <strong>यंत्र + इक</strong></li>
-            <li>वैदिक — <strong>वेद + इक</strong></li>
-            <li>पारिश्रमिक — <strong>परिश्रम + इक</strong></li>
-            <li>आर्थिक — <strong>अर्थ + इक</strong></li>
-        </ul>
-
-        <h3>3. 'पल्लवित' शब्द में 'पल्लव' के साथ 'इत' प्रत्यय का प्रयोग हुआ है। इसी तरह के अन्य शब्द बनाइए:</h3>
-        <ul>
-            <li>संबंध + इत — <strong>संबंधित</strong></li>
-            <li>कल्प + इत — <strong>कल्पित</strong></li>
-            <li>प्रतिष्ठा + इत — <strong>प्रतिष्ठित</strong></li>
-            <li>संभावना + इत — <strong>संभावित</strong></li>
-            <li>राजपत्र + इत — <strong>राजपत्रित</strong></li>
-            <li>पुष्प + इत — <strong>पुष्पित</strong></li>
-        </ul>
-
-        <div class="green-box">
-            <span class="box-label">Fact</span>
-            <p><strong>द्वंद्व समास:</strong> इसमें दोनों पद प्रधान होते हैं तथा दोनों पदों के बीच 'और' शब्द का लोप होता है (जैसे- रात-दिन)।<br>
-            <strong>कर्मधारय समास:</strong> इसमें एक पद विशेषण और एक पद विशेष्य होता है (जैसे- शांतचित्त)।</p>
-        </div>
-
-        <h3>4. नीचे कुछ सामासिक पद दिए गए हैं। उन्हें छाँटकर तालिका में भरिए:</h3>
-        <ul>
-            <li><strong>तत्पुरुष समास:</strong> अग्निबाण, मंत्रबाण</li>
-            <li><strong>द्वंद्व समास:</strong> गुरु-शिष्य</li>
-            <li><strong>कर्मधारय समास:</strong> शांतचित्त, पुण्यभूमि</li>
-        </ul>
-
-        <h3>5. निम्नलिखित वाक्यों में प्रयुक्त कारक के चिह्न पहचानकर उनके समक्ष लिखिए:</h3>
-        <ul>
-            <li>(क) दुश्मन के छह आधुनिक विमान सिर पर मँडरा रहे थे। — <strong>के, पर</strong></li>
-            <li>(ख) सफलता के लिए ऊँचे सपने भी देखने चाहिए। — <strong>के लिए</strong></li>
-            <li>(ग) हवाई अड्डे पर शत्रु के विमानों का हमला हुआ। — <strong>पर, के, का</strong></li>
-            <li>(घ) ऐसी हिम्मत आज तक किसी ने नहीं दिखाई थी। — <strong>ने</strong></li>
-            <li>(ङ) हे ईश्वर! सबको सद्बुद्धि दो। — <strong>हे, को</strong></li>
-            <li>(च) गोला ठीक बीच में निशाने पर जाकर लगा। — <strong>में, पर</strong></li>
-            <li>(छ) सभी को बुराई से बचना चाहिए। — <strong>को, से</strong></li>
-        </ul>
-
-        <h2>अभ्यास-पत्र 4: भाषा की बात (उपसर्ग)</h2>
-
-        <h3>1. 'परिवेश' में 'परि' उपसर्ग का प्रयोग हुआ है। नीचे दिए शब्दों में से मूल शब्द और उपसर्ग अलग करके लिखिए:</h3>
-        <ul>
-            <li>परिश्रम — <strong>परि + श्रम</strong></li>
-            <li>परिहास — <strong>परि + हास</strong></li>
-            <li>परिचर्चा — <strong>परि + चर्चा</strong></li>
-            <li>परिभ्रमण — <strong>परि + भ्रमण</strong></li>
-            <li>परिधान — <strong>परि + धान</strong></li>
-            <li>परिजन — <strong>परि + जन</strong></li>
-            <li>परिपूर्ण — <strong>परि + पूर्ण</strong></li>
-        </ul>
-
-        <!-- BRANDING FOOTER (MANDATORY) -->
-        <div class="branding-footer">
-            <p class="created-by">Created by Team Vardaan ❤️</p>
-            <p class="powered-by">Powered by Vardaan Comet</p>
-        </div>
-
-    </div>
-
-    <!-- THEME TOGGLE SCRIPT -->
-    <script>
-        function toggleTheme() {
-            document.documentElement.classList.toggle('dark-mode');
-        }
-    </script>
+    // Initialize
+    renderCards(chapters);
+  </script>
 </body>
 </html>

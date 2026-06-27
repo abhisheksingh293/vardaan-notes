@@ -73,7 +73,7 @@ for (const item of items) {
   try {
     const studentContents = fs.readdirSync(studentDir, { withFileTypes: true });
     for (const subItem of studentContents) {
-      if (subItem.isDirectory() && !subItem.name.startsWith('.') && subItem.name !== 'Worksheets' && subItem.name !== 'Images') {
+      if (subItem.isDirectory() && !subItem.name.startsWith('.') && subItem.name !== 'Images') {
         subjectCount++;
         
         try {
