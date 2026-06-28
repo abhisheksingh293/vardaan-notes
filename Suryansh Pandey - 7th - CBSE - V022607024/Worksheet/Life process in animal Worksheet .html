@@ -1,0 +1,448 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Science Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3 - Hard) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef5350;   /* Lighter red for readability */
+            --bg-color: #3b1a1a;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 5px; }
+        .blank-line { border-bottom: 1px solid var(--text-main); display: inline-block; width: 150px; }
+        .draw-box { border: 2px dashed var(--border-color); height: 250px; margin-top: 10px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-style: italic; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .draw-box { border: 1px solid #000; }
+        }
+    </style></head><body><!-- Theme Toggle --><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button><script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script><img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark"><div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Life Processes in Animals - Advanced Level 3</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 7 (ICSE)</span>
+            <span>Subject: Science (Biology)</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Multiple Choice Questions (Conceptual)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">Which of the following processes requires the presence of $\mathrm{O_2}$ to release energy?
+                <div class="options-grid">
+                    <div>a) Digestion</div><div>b) Internal respiration</div>
+                    <div>c) Breathing</div><div>d) Assimilation</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">Bile juice does not contain any enzymes. Which critical role does it play in digestion?
+                <div class="options-grid">
+                    <div>a) Converts starch to sugar</div><div>b) Emulsification of large fat globules</div>
+                    <div>c) Breakdown of proteins into amino acids</div><div>d) Killing bacteria in food</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">Which of the following parts of the human digestive system is primarily responsible for the absorption of digested nutrients?
+                <div class="options-grid">
+                    <div>a) Large Intestine</div><div>b) Stomach</div>
+                    <div>c) Villi of the Small Intestine</div><div>d) Liver</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">During inhalation in humans, what happens to the diaphragm?
+                <div class="options-grid">
+                    <div>a) It relaxes and moves upwards</div><div>b) It contracts and moves downwards</div>
+                    <div>c) It expands sideways</div><div>d) It remains stationary</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">Why does chewed rice start tasting sweet after 30-60 seconds in the mouth?
+                <div class="options-grid">
+                    <div>a) Sugars are absorbed by the tongue</div><div>b) Starch is converted into simple sugars by saliva</div>
+                    <div>c) Proteins are broken down</div><div>d) Hydrochloric acid mixes with it</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">Birds often swallow small stones and grit. What is the physiological reason behind this?
+                <div class="options-grid">
+                    <div>a) It provides essential minerals</div><div>b) It helps grind the food in the gizzard</div>
+                    <div>c) It cleans the oesophagus</div><div>d) It aids in producing digestive enzymes</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">Which Italian scientist first discovered the tiny air sacs in the lungs called alveoli using an early microscope?
+                <div class="options-grid">
+                    <div>a) Dr. William Beaumont</div><div>b) Marcello Malpighi</div>
+                    <div>c) Robert Hooke</div><div>d) Louis Pasteur</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">In which part of a ruminant's stomach do bacteria begin the digestion of cellulose?
+                <div class="options-grid">
+                    <div>a) Rumen</div><div>b) Intestine</div>
+                    <div>c) Rectum</div><div>d) Oesophagus</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">A frog uses different organs to breathe at different stages and environments. Which of the following is NOT used by a frog for respiration?
+                <div class="options-grid">
+                    <div>a) Gills (as a tadpole)</div><div>b) Moist Skin</div>
+                    <div>c) Lungs</div><div>d) Gizzard</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">What would be the direct consequence if a person suffers from Coeliac disease?
+                <div class="options-grid">
+                    <div>a) They cannot absorb oxygen efficiently</div><div>b) Damage to small intestine preventing nutrient absorption due to gluten</div>
+                    <div>c) The stomach stops producing Hydrochloric acid</div><div>d) Loss of teeth</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section B: Anatomical Drawings & Diagrams (Drawing Section)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">11.</span>
+            <div class="q-content">
+                Draw a neat, well-labeled diagram of the <strong>Human Digestive System</strong>. Ensure you label at least 6 major organs (including Buccal cavity, Liver, Stomach, Pancreas, Small intestine, Large intestine).
+                <div class="draw-box">Space for drawing the Human Digestive System</div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">12.</span>
+            <div class="q-content">
+                Draw a neat diagram of the <strong>Human Respiratory System</strong>. Clearly label the Trachea, Lungs, Bronchi, and Diaphragm.
+                <div class="draw-box">Space for drawing the Human Respiratory System</div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">13.</span>
+            <div class="q-content">
+                Draw an enlarged, labeled diagram of a single <strong>Villus</strong> showing the internal blood capillaries (Artery and Vein). State its main function below the diagram.
+                <div class="draw-box">Space for drawing a Villus</div>
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">14.</span>
+            <div class="q-content">
+                Illustrate the <strong>Respiratory system of a fish</strong>. Label the Gills and Gill filaments, and use arrows to show the direction of flow of $\mathrm{O_2}$ and $\mathrm{CO_2}$.
+                <div class="draw-box">Space for drawing Fish Respiration (Gills)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section C: Fill in the Blanks</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">15.</span>
+            <div class="q-content">The wavy muscular movement that pushes food down the oesophagus is known as <span class="blank-line"></span>.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">16.</span>
+            <div class="q-content">In the stomach, the inner lining called <span class="blank-line"></span> protects it from the acidic effect of hydrochloric acid.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">17.</span>
+            <div class="q-content">The <span class="blank-line"></span> is the largest gland in the human body and secretes bile juice.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">18.</span>
+            <div class="q-content">Pancreatic juice breaks down starch into simple sugars and proteins into simpler compounds called <span class="blank-line"></span>.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">19.</span>
+            <div class="q-content">The partially digested food that ruminants bring back to their mouth for further chewing is called <span class="blank-line"></span>.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">20.</span>
+            <div class="q-content">During internal respiration, the chemical equation is: Glucose + Oxygen $\rightarrow$ Carbon Dioxide + Water + <span class="blank-line"></span>.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">21.</span>
+            <div class="q-content">The trachea divides into two tubes called <span class="blank-line"></span>, which enter the lungs.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">22.</span>
+            <div class="q-content">The tiny air sacs in the lungs where the exchange of gases actually takes place are called <span class="blank-line"></span>.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">23.</span>
+            <div class="q-content">Earthworms and leeches breathe by exchanging gases through their moist <span class="blank-line"></span>.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">24.</span>
+            <div class="q-content">Birds have air-filled <span class="blank-line"></span> near their lungs which make their bodies lighter for flying.</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section D: True or False (Correct the False Statements)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">25.</span>
+            <div class="q-content">The large intestine is longer in length than the small intestine. <br><br>___________________________________________________________________________</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">26.</span>
+            <div class="q-content">Breathing is a chemical process that releases energy inside the cells. <br><br>___________________________________________________________________________</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">27.</span>
+            <div class="q-content">Bile juice is stored in a sac called the gall bladder. <br><br>___________________________________________________________________________</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">28.</span>
+            <div class="q-content">During exhalation, the diaphragm moves upwards and the ribs move downwards and inwards. <br><br>___________________________________________________________________________</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">29.</span>
+            <div class="q-content">Fishes take in oxygen from the air directly through their gills. <br><br>___________________________________________________________________________</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section E: Assertion & Reason (HOTS)</div>
+    <div class="questions-container">
+        <p style="font-size: 10pt; color: var(--text-muted); margin-bottom: 10px;">
+            <em>Directions: For the following questions, two statements are given- one labelled Assertion (A) and the other labelled Reason (R). Select the correct answer from the codes (a), (b), (c) and (d) as given below:</em><br>
+            a) Both A and R are true and R is the correct explanation of A.<br>
+            b) Both A and R are true but R is not the correct explanation of A.<br>
+            c) A is true but R is false.<br>
+            d) A is false but R is true.
+        </p>
+        <div class="question-item">
+            <span class="q-num">30.</span>
+            <div class="q-content"><strong>Assertion (A):</strong> The inner lining of the small intestine has numerous finger-like projections called villi.<br>
+            <strong>Reason (R):</strong> Villi secrete hydrochloric acid to kill bacteria in the food.
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">31.</span>
+            <div class="q-content"><strong>Assertion (A):</strong> Exhaled air is warmer and misty, especially visible during winter.<br>
+            <strong>Reason (R):</strong> Exhaled air is saturated with water vapour and adopts the body's internal temperature.
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">32.</span>
+            <div class="q-content"><strong>Assertion (A):</strong> Herbivores like cows spend hours chewing even when they are not actively eating new grass.<br>
+            <strong>Reason (R):</strong> Ruminants return partially digested cud to their mouths for rumination to break down complex cellulose.
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">33.</span>
+            <div class="q-content"><strong>Assertion (A):</strong> The lungs contain millions of small alveoli instead of one large air sac.<br>
+            <strong>Reason (R):</strong> Millions of small alveoli tremendously increase the surface area for the rapid exchange of gases.
+            </div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">34.</span>
+            <div class="q-content"><strong>Assertion (A):</strong> Food does not get digested in the oesophagus.<br>
+            <strong>Reason (R):</strong> The oesophagus only acts as a passage pushing food via peristalsis.
+            </div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section F: Differentiate Between the Following</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">35.</span>
+            <div class="q-content">Breathing AND Internal Respiration <br><br><br><br></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">36.</span>
+            <div class="q-content">Small Intestine AND Large Intestine <br><br><br><br></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">37.</span>
+            <div class="q-content">Alveoli AND Villi (Compare their primary roles) <br><br><br><br></div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section G: Short Answer Questions</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">38.</span>
+            <div class="q-content">What is emulsification? Which organ secretes the fluid responsible for it? <br><br><br></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">39.</span>
+            <div class="q-content">How does mucus protect the human body in both the stomach and the nasal cavity? <br><br><br></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">40.</span>
+            <div class="q-content">When blowing through a straw into lime water, the water turns milky. What does this experiment prove? <br><br><br></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">41.</span>
+            <div class="q-content">Dr. William Beaumont discovered a link between mood and digestion. Briefly explain how our emotions might influence our digestive process. <br><br><br></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">42.</span>
+            <div class="q-content">How do amphibians like frogs manage to survive and breathe while hibernating underground? <br><br><br></div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section H: Higher Order Thinking Skills (HOTS) & Long Answers</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">43.</span>
+            <div class="q-content">Describe the journey of a bite of bread (starch) from the moment it enters the buccal cavity until its nutrients are assimilated by the cells. Focus on the enzymes and organs involved. <br><br><br><br><br><br><br></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">44.</span>
+            <div class="q-content">Explain the mechanism of breathing in humans. Clearly detail the roles of the diaphragm and the ribcage during both inhalation and exhalation. <br><br><br><br><br><br><br></div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">45.</span>
+            <div class="q-content">Carnivores (like lions) generally have shorter digestive tracts compared to herbivores (like cows). Using your knowledge of the digestive system and cellulose, justify why this structural difference exists. <br><br><br><br><br><br><br></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div></div></body></html>
+```eof
