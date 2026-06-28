@@ -82,7 +82,7 @@ function generateHTML(studentName, subjectsData, totalChapters) {
       display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
       text-decoration: none; color: var(--text); background: var(--surface);
       border: 1px solid var(--border); border-radius: 8px; padding: 24px; 
-      position: relative; overflow: hidden; backdrop-filter: blur(10px);
+      position: relative; overflow: hidden; backdrop-filter: blur(10px); aspect-ratio: 1 / 1;
     }
     .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top right, rgba(249,115,21,0.1), transparent 50%); opacity: 0;  }
     
@@ -129,8 +129,6 @@ function generateHTML(studentName, subjectsData, totalChapters) {
       .avatar { width: 60px; height: 60px; font-size: 1.5rem; margin-bottom: 0; }
       .name { text-align: left; }
     }
-  
-    .card { aspect-ratio: 1 / 1; justify-content: center; }
   </style>
 </head>
 <body>
