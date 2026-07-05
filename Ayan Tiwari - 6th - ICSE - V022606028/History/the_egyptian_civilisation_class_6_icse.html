@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Egyptian Civilisation - Vardaan Learning Institute</title>
+    <style>
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* Dark Mode Variables */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* Global Layout */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Watermark Overlay */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+        html.dark-mode .watermark-overlay { mix-blend-mode: screen; }
+        html.dark-mode .watermark-image { filter: invert(1); opacity: 0.15; }
+
+        /* Paper Sheet Container */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Branding Header */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666;
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: none;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Content Styles */
+        h1 { font-size: 2.2rem; color: var(--blue-border); text-align: center; margin-top: 5px; margin-bottom: 20px; text-transform: uppercase; border-bottom: 2px solid var(--blue-border); padding-bottom: 10px; }
+        h2 { font-size: 1.6rem; color: var(--pink-border); margin-top: 40px; border-left: 5px solid var(--pink-border); padding-left: 15px; font-weight: 700; }
+        h3 { font-size: 1.3rem; color: var(--accent-purple); margin-top: 25px; margin-bottom: 10px; text-decoration: underline; text-decoration-color: var(--accent-purple); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+        p, li { font-size: 1.05rem; line-height: 1.6; margin-bottom: 10px; }
+        ul { padding-left: 20px; }
+        strong { color: var(--pink-border); }
+
+        /* Boxes */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .box-label { position: absolute; top: -12px; right: 20px; background: var(--paper-bg); padding: 2px 10px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; border: 2px solid; border-radius: 4px; }
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* Footer & Toggle */
+        .branding-footer { text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--toggle-border); color: var(--meta-text); }
+        .theme-toggle { position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--toggle-bg); border: none; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; }
+
+        @media print {
+            body { background-color: #ffffff !important; color: #000000 !important; }
+            .theme-toggle, .branding-footer { display: none !important; }
+            .contact-info { display: flex !important; }
+            @page { size: A4; margin: 2cm; }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+
+    <div class="paper-sheet">
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 ICSE • History • Chapter Notes</div>
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <h1>The Egyptian Civilisation</h1>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Civilisation:</strong> Ancient Egypt, a land of mystery, was one of the earliest and most flourishing civilisations in the world, developed along the banks of the <strong>River Nile</strong>.</p>
+        </div>
+
+        <h2>1. Overview and Origins</h2>
+        <p>The Egyptian Civilisation lasted for over 3000 years, from <strong>3200 BCE to 30 BCE</strong>. The River Nile provided fertile soil, water, and transportation, leading to Egypt being famously called the <strong>"Gift of the Nile."</strong> By 3300 BCE, villages had grown into towns ruled by powerful kings or <strong>Pharaohs</strong>.</p>
+
+        <h2>2. Society and Structure</h2>
+        <p>The society was hierarchical, divided into three main classes:</p>
+        <ul>
+            <li><strong>Upper Class:</strong> Royal family, priests, nobles, government officials, scribes, and doctors.</li>
+            <li><strong>Middle Class:</strong> Merchants, manufacturers, and artisans.</li>
+            <li><strong>Lower Class:</strong> Farmers and slaves.</li>
+        </ul>
+        <p>While the society was patriarchal, <strong>women held significant rights</strong>, including the ability to own property, participate in trade, and divorce their husbands.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Did you know?</strong> In ancient Egypt, the make-up helped protect eyes and skin from the hot sun. Wealthy people often wore wigs to signify their status.</p>
+        </div>
+
+        <h2>3. Religion and Beliefs</h2>
+        <p>Religion was central to Egyptian life. The Pharaoh was considered a <strong>representative of God on Earth</strong>. They worshipped many gods and goddesses, often taking animal forms:</p>
+        <ul>
+            <li><strong>Ra:</strong> The Sun God, supreme ruler.</li>
+            <li><strong>Osiris:</strong> God of the Dead and underworld ruler.</li>
+            <li><strong>Isis:</strong> Mother Goddess, protector.</li>
+            <li><strong>Anubis:</strong> Patron god of embalmers and guardian of the dead.</li>
+        </ul>
+        <p>They strongly believed in life after death, leading to the process of <strong>Mummification</strong>—preserving the body using spices and linen—to unite the "ka" (life force) and "ba" (soul) in the afterlife.</p>
+
+        <h2>4. Major Achievements</h2>
+        <h3>Writing and Records</h3>
+        <p>The Egyptians used <strong>Hieroglyphics</strong>, a complex system of "sacred writing" using thousands of symbols. They recorded their lives on <strong>Papyrus</strong>, a paper-like material made from reed plants.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Solar Calendar:</strong> The Egyptians were the first to devise an accurate 365-day solar calendar, called the <strong>'Haab'</strong>, used to track time and agricultural cycles.</p>
+        </div>
+
+        <h3>Medicine and Math</h3>
+        <p>Due to the mummification process, they gained extensive knowledge of human anatomy, leading to advancements in surgery and medicine. They also excelled in mathematics, using fractions and the decimal system for their grand construction projects.</p>
+
+        <h2>5. Art and Architecture</h2>
+        <p>Architecture is best exemplified by the <strong>Pyramids</strong>, built as grand tombs for Pharaohs. The <strong>Great Pyramid of Giza</strong> is the largest, constructed over 20 years by thousands of workers. The <strong>Great Sphinx</strong>, a mythological figure with a man's head and a lion's body, stands as another architectural wonder.</p>
+
+        <h2>6. Decline of the Civilisation</h2>
+        <p>The empire began to decline during the reign of Ramesses-III due to:</p>
+        <ul>
+            <li>Internal corruption and political instability.</li>
+            <li>Severe droughts, famine, and wars.</li>
+            <li>Weak leadership and exploitation of the lower classes.</li>
+            <li>Finally, the empire was captured by the <strong>Roman Empire in 30 BCE</strong>.</li>
+        </ul>
+
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
