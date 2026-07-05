@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>A Period of Transition - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        /* --- RESPONSIVE DESIGN FOR DEVICES --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm 5mm; /* Reduce padding on mobile */
+            }
+            .institute-name {
+                font-size: 1.5rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+                margin-top: 30px;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 History • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>A Period of Transition</h1>
+        
+        <h2>1. Introduction to the Period of Transition</h2>
+        <p>The time gap between the end of the <strong>Medieval Age</strong> and the beginning of the <strong>Modern Age</strong> is known as the Period of Transition. However, this period differs from country to country based on its state of development.</p>
+        <ul>
+            <li>In <strong>Europe</strong>, the Modern Period is generally considered to have begun in the <strong>15th century</strong>.</li>
+            <li>In <strong>India</strong>, the Modern Period began much later, roughly in the <strong>mid-18th century</strong>.</li>
+        </ul>
+
+        <h2>2. Developments in Europe</h2>
+        <p>Several crucial developments in Europe paved the way for the emergence of the modern world:</p>
+        <ul>
+            <li><strong>Decline of Feudalism:</strong> The socio-economic system of the medieval period declined, leading to new freedoms and the growth of <strong>New Learning</strong>.</li>
+            <li><strong>Crusades:</strong> These holy wars increased contact and trade between Eastern and Western countries, boosting the wealth and prosperity of European nations. <strong>Money replaced land as the new measure of wealth</strong>.</li>
+            <li><strong>European Contact with Eastern Civilisations:</strong> As trade grew, Europeans were inspired by Greek and Roman pasts, reviving their art, architecture, and philosophy.</li>
+            <li><strong>Discovery of New Routes:</strong> To increase commercial profits and find Oriental goods without interference, explorers embarked on voyages, discovering new sea routes that changed the course of history.</li>
+            <li><strong>Invention of the Printing Press:</strong> By the mid-15th century, the printing press allowed books to be produced in large numbers, making knowledge accessible to the masses.</li>
+        </ul>
+
+        <h2>3. The Renaissance</h2>
+        <p>The term <strong>Renaissance</strong> means rebirth or revival. It refers to a movement that began in Italy in the 14th century, aimed at reviving the classical heritage of Europe from which it had been separated for centuries.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Humanism:</strong> A fundamental feature of the Renaissance. It refers to a system of thought that considered solving human problems with reason as more important than purely religious beliefs. It shifted the focus of study from spirituality to <strong>worldly affairs and the dignity of man</strong>.</p>
+        </div>
+
+        <h3>Key Features of the Renaissance</h3>
+        <ul>
+            <li><strong>Spirit of Enquiry:</strong> Promoted questioning the 'why' and 'how' of things, leading to scientific approaches and explorations.</li>
+            <li><strong>Rationalism:</strong> Scholars rejected superstitions and blind authority, advocating rational thinking.</li>
+            <li><strong>Glorification of Human Form:</strong> Artists portrayed humans capable of understanding their own happiness, deeply studying anatomy.</li>
+        </ul>
+
+        <h3>Impact of the Renaissance</h3>
+        <ul>
+            <li><strong>Painting & Sculpture:</strong> Artists made realistic artworks. Michelangelo painted directly on plastered walls (<strong>frescoes</strong>) and sculpted the famous <em>Pieta</em>. Leonardo da Vinci and Raphael were also prominent.</li>
+            <li><strong>Literature:</strong> Writers began using local languages instead of Latin, focusing on human life rather than just spiritual themes.</li>
+            <li><strong>Science:</strong> 
+                <ul>
+                    <li><strong>Copernicus:</strong> Proved the Earth revolves around the Sun.</li>
+                    <li><strong>Galileo:</strong> Invented the telescope.</li>
+                    <li><strong>Isaac Newton:</strong> Discovered the laws of gravitation.</li>
+                    <li><strong>William Harvey:</strong> Discovered the circulation of blood.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>4. The Reformation & Counter-Reformation</h2>
+        <p>The <strong>Reformation</strong> was a 16th-century religious movement launched by Christians against the objectionable and corrupt practices of the clergymen, primarily targeting the Pope.</p>
+        <ul>
+            <li><strong>Causes:</strong> People were dissatisfied with paying high taxes (like tithes) and buying pardon certificates called <strong>Indulgences</strong>.</li>
+            <li><strong>Impact:</strong> It split the Christian Church into the Roman Catholics and the Protestants. <strong>Martin Luther</strong> openly criticised the Pope and launched this movement.</li>
+        </ul>
+        <p><strong>Counter-Reformation:</strong> A movement introduced by dedicated Christians (like the Popes) to restore the credibility of the Catholic Church. Ignatious Loyola founded the <strong>Society of Jesus</strong> to win back adherents.</p>
+
+        <h2>5. The Industrial Revolution</h2>
+        <p>The <strong>Industrial Revolution</strong> brought a transition from manual, small-scale home production to large-scale machine production in factories. It began in <strong>England around 1750</strong>.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Major Inventions:</strong> The Industrial Revolution was fueled by groundbreaking inventions, such as the <strong>Flying Shuttle</strong> (John Kay), the <strong>Spinning Jenny</strong> (James Hargreaves), the <strong>Steam Engine</strong> (James Watt), and the <strong>Telegraph</strong> (Alexander Graham Bell).</p>
+        </div>
+
+        <h3>Reasons it Began in England</h3>
+        <ul>
+            <li>England had a <strong>large colonial empire</strong> to provide cheap raw materials and serve as ready markets.</li>
+            <li>Plentiful deposits of <strong>iron and coal</strong> fueled new machines.</li>
+            <li>A long period of domestic peace encouraged economic growth.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Negative Impacts of the Industrial Revolution:</strong> While it created national wealth, it also led to <strong>ruthless exploitation of workers</strong>. Men, women, and children worked 12 to 15 hours a day in miserable living conditions, leading to the rise of slums and unchecked capitalism.</p>
+        </div>
+
+        <h2>6. Imperialism</h2>
+        <p><strong>Imperialism</strong> is a system by which a powerful nation establishes its control over another country, exploiting its resources for economic gain. The conquered country becomes a <strong>colony</strong>.</p>
+        <ul>
+            <li><strong>Causes:</strong> The need for raw materials, markets for finished products, accommodation of surplus population, and national prestige (the so-called "White Man's Burden").</li>
+            <li><strong>Positive Effects:</strong> Imperialist nations built roads, railways, improved sanitation, and introduced new technologies in the colonies.</li>
+            <li><strong>Negative Effects:</strong> Destroyed agrarian economies, evicted farmers, ruined traditional cottage industries, and created widespread poverty among the colonised people.</li>
+        </ul>
+
+        <h2>7. Developments in India & Sources of Information</h2>
+        <p>During this period of transition, India witnessed major shifts including the <strong>decline of the Mughal Empire</strong>, the defeat of the Marathas in the Third Battle of Panipat, and the gradual <strong>conquest of India by the British</strong>.</p>
+        
+        <h3>Sources for Reconstructing History</h3>
+        <ul>
+            <li><strong>Primary Sources:</strong> Direct evidence such as official records (papers of government agencies), historical works, records of European companies, and archaeological sources (buildings, monuments).</li>
+            <li><strong>Secondary Sources:</strong> Works produced using primary sources, involving analysis and interpretation. These include historical works by contemporary historians, novels, and biographies.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
