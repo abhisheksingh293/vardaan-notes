@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Computer Network - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Mobile specific adjustments for paper sheet */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px; /* Reduce padding on smaller screens */
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        /* Responsive Institute Name */
+        @media (max-width: 600px) {
+            .institute-name {
+                font-size: 1.5rem;
+            }
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 600px) {
+            .system-name {
+                font-size: 0.9rem;
+                letter-spacing: 1px;
+            }
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        @media (max-width: 600px) {
+            h2 { font-size: 1.3rem; margin-top: 30px; }
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        @media (max-width: 600px) {
+            h3 { font-size: 1.1rem; }
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Computer Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>COMPUTER NETWORK</h1>
+        
+        <h2>1. Introduction to Network</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>A <strong>Computer network</strong> is basically referred to as a group of computers and devices connected to each other with different communication channels. The purpose of a computer network is to communicate with users and allow them to share information, data, and resources.</p>
+        </div>
+
+        <h2>2. Advantages of Networking</h2>
+        <p>Computer networks are widely used in today's world and provide multiple benefits. Key advantages include:</p>
+        <ul>
+            <li><strong>Communication:</strong> Enables efficient and easy communication through email, instant messaging, chatrooms, voice calls, and videoconferencing. It allows for quick exchange of data and information.</li>
+            <li><strong>Sharing hardware resources:</strong> Users in a networked environment can share devices like printers and scanners. This significantly reduces expenditure as multiple users share single devices.</li>
+            <li><strong>Sharing files, data and information:</strong> Authorized users can access data stored on other computers on the network. A common example is the centralized railway database accessed by employees nationwide, which avoids data duplication and ensures security.</li>
+            <li><strong>Sharing software:</strong> Software can be shared and programs can be run over the network. Users can also install software from other networked machines.</li>
+        </ul>
+
+        <h2>3. Applications of Networking</h2>
+        <p>Computer networks find applications in various fields:</p>
+        <ul>
+            <li><strong>Email:</strong> Electronic distribution of messages from one user to recipients via a network.</li>
+            <li><strong>Website:</strong> A location connected to the internet maintaining web pages.</li>
+            <li><strong>File Sharing:</strong> Making files (e.g., music, video) available to other users over a network.</li>
+            <li><strong>Hardware Sharing:</strong> Allowing multiple computers to access hardware resources like printers and scanners.</li>
+            <li><strong>E-commerce:</strong> Facilitating trading of products or services using computer networks.</li>
+            <li><strong>News Groups:</strong> Internet-based discussion groups focusing on specific topics.</li>
+            <li><strong>Internet Telephony (VoIP):</strong> Technology for delivering voice communications over computer networks.</li>
+            <li><strong>Videoconferencing:</strong> Conducting conferences between remote participants transmitting audio and video data.</li>
+            <li><strong>Chat Groups & Instant Messenger:</strong> Real-time text transmission and online chat platforms.</li>
+            <li><strong>Internet Radio:</strong> Audio broadcasting service transmitted through the internet.</li>
+            <li><strong>Remote Access:</strong> Gaining access to a networked computer from a remote distance.</li>
+        </ul>
+
+        <h2>4. Components of Computer Network</h2>
+        <p>To set up a computer network, specific components are required:</p>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>As soon as a computer is connected to a network, it is formally called a <strong>node</strong> or a <strong>workstation</strong>.</p>
+        </div>
+        <ul>
+            <li><strong>Computers (Server or Client workstations):</strong> At least two computers are needed to form a network.</li>
+            <li><strong>Network Interface Card (NIC):</strong> A crucial component that joins a computer to a network, allowing it to communicate with other networked computers.</li>
+            <li><strong>Connection Medium:</strong> Usually a physical wire or cable. However, wireless communication is also prevalent.</li>
+            <li><strong>Network Devices:</strong> Devices such as Bridges, Routers, Hubs, and Switches are essential for joining smaller networks to create larger ones.</li>
+            <li><strong>Network Operating System Software:</strong> Software like Microsoft Windows, UNIX, or Linux that manages network resources.</li>
+        </ul>
+
+        <h2>5. Types of Networks</h2>
+        <p>Computer networks are classified into different categories based on various factors.</p>
+
+        <h3>5.1 Based on Area Covered</h3>
+        <ul>
+            <li><strong>Personal Area Network (PAN):</strong> Interconnection of IT devices within the environment of an individual user (e.g., connecting a laptop, cellphone, and wearable devices).</li>
+            <li><strong>Local Area Network (LAN):</strong> Confined to a small geographical area, such as a single building or a school (e.g., a school computer lab).</li>
+            <li><strong>Metropolitan Area Network (MAN):</strong> Formed by connecting two or more LANs. It is confined to a city or a metropolitan area (e.g., Delhi Metro network, ATM networks).</li>
+            <li><strong>Wide Area Network (WAN):</strong> Spans a large geographical area like a state, province, or country. It often connects multiple LANs or MANs. The most popular example is the <strong>Internet</strong>.</li>
+        </ul>
+
+        <h3>5.2 Based on Network Architecture</h3>
+        <p>Network architecture refers to the structure and organization of hardware and software.</p>
+        <ul>
+            <li><strong>Client/Server Networks:</strong> A highly efficient, distributed structure. It features a centralized, powerful computer known as the <strong>Server</strong> which runs programs and shares resources. Other computers connected to it are <strong>Clients</strong>, which request server content but do not share their own resources. This setup is expensive but robust.</li>
+            <li><strong>Peer-to-Peer Networks:</strong> There is no dedicated server or hierarchy. All computers are equal (peers) and can act as both client and server. This is less expensive and better suited for smaller networks.</li>
+        </ul>
+
+        <h3>5.3 Based on Network Topology</h3>
+        <p><strong>Topology</strong> refers to the physical or logical arrangement of computers in a network.</p>
+        <ul>
+            <li><strong>Bus topology:</strong> A single main cable (backbone) carries all data. All devices connect to this backbone. It uses less cabling but the entire network fails if the backbone breaks.</li>
+            <li><strong>Star topology:</strong> All computers connect to a central device (Hub or Switch). The central device manages data transfer. It is easy to set up; failure of one node doesn't affect others, but central device failure brings down the network.</li>
+            <li><strong>Ring topology:</strong> Devices are connected in a closed loop or ring. Data travels in one direction. Each device handles messages passing through. Failure of a single link generally disrupts the network.</li>
+            <li><strong>Tree topology:</strong> A combination of Bus and Star topologies. It allows branching out and multiple servers, ideal for widely spread networks. Not suitable for small networks due to cabling waste.</li>
+            <li><strong>Mesh topology:</strong> Every computer is connected to every other computer. Messages take the shortest, easiest route.</li>
+        </ul>
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>The <strong>Internet</strong> uses a <strong>Mesh topology</strong> structure, allowing messages to dynamically find the shortest available route to their destination.</p>
+        </div>
+
+        <h3>5.4 Based on Transmission Media</h3>
+        <p>Transmission media is the pathway data takes from one node to another.</p>
+        <ul>
+            <li><strong>Cables:</strong> Used for shorter distances. Types include Twisted Pair cable, Coaxial cable, and Fibre Optic cable.</li>
+            <li><strong>Satellites:</strong> Used for longer distances where cabling is impossible. They transmit data using radio waves and microwaves.</li>
+        </ul>
+
+        <h2>6. Network Devices</h2>
+        <p>These are hardware components used to connect computers or electronic devices.</p>
+        <ul>
+            <li><strong>Hub:</strong> A non-intelligent device. It takes input data and broadcasts it to all other ports connected to the network. Only one transmission occurs at a time.</li>
+            <li><strong>Switch:</strong> An intelligent device with decision-making capacity. It knows the machine addresses of connected devices and securely sends data only to the intended receiver node.</li>
+            <li><strong>Repeater:</strong> Used to amplify and regenerate input signals over long distances, eliminating noise and preventing data loss.</li>
+            <li><strong>Router:</strong> Forwards messages based on IP addresses. Essential when multiple devices need to connect to the internet using a single connection.</li>
+            <li><strong>Bridge:</strong> A primitive device compared to a switch. It connects network segments but cannot connect to the internet as it lacks IP address knowledge.</li>
+        </ul>
+
+        <h2>7. Wireless Technologies</h2>
+        <p>Communication using electromagnetic waves without physical wires.</p>
+        <ul>
+            <li><strong>Bluetooth:</strong> Used for building a Personal Area Network (PAN) to exchange data over short distances between devices like phones and laptops.</li>
+            <li><strong>Wi-Fi (Wireless Fidelity):</strong> Also known as WLAN. Connects devices to each other and the internet wirelessly. Devices connect via a Wi-Fi hotspot.</li>
+            <li><strong>GPS (Global Positioning System):</strong> A satellite-based navigation system using a network of satellites to determine precise locations. Used in mobiles and cars for tracking.</li>
+            <li><strong>Infrared Communication:</strong> Uses infrared radiations (longer wavelength than visible light) for communication, common in TV remote controls.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

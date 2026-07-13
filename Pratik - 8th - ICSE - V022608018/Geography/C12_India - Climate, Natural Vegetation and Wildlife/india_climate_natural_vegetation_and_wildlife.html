@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>India: Climate, Natural Vegetation and Wildlife - Vardaan Learning Institute</title>
+    
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>India: Climate, Natural Vegetation and Wildlife</h1>
+        
+        <h2>1. Factors Influencing the Climate of India</h2>
+        <p>India's climate displays a wide range of weather conditions due to its large size and varied physical features. The climate is primarily influenced by the following factors:</p>
+        
+        <ul>
+            <li><strong>Latitude:</strong> The <strong>Tropic of Cancer</strong> divides India into two zones. The southern part falls in the tropical zone (warm and moist all year), while the northern part falls in the subtropical zone (warm temperate climate with hot summers and cold winters).</li>
+            <li><strong>Altitude:</strong> Places at higher altitudes are cooler. For example, Srinagar is colder than Delhi because it is situated high in the Himalayan Mountains.</li>
+            <li><strong>Relief Features:</strong> The Himalayas act as a massive barrier. They prevent cold winds from Central Asia from entering India and trap rain-bearing monsoon winds, causing heavy rainfall over the Northern Plains.</li>
+            <li><strong>Distance from the Sea:</strong> Places near the coast (like Chennai or Mumbai) experience an <strong>equable climate</strong> (moderate temperatures year-round). Places far from the sea (like Delhi or Rajasthan) experience an <strong>extreme (continental) climate</strong> with very hot summers and very cold winters.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Important Climatic Principles:</strong></p>
+            <ul>
+                <li><strong>Lapse Rate:</strong> Temperature decreases with an increase in altitude. For every 1,000 meters of ascent, there is a drop of 6.5°C in temperature.</li>
+                <li><strong>Windward vs. Leeward Side:</strong> The mountain slope facing the rain-bearing winds gets heavy rainfall (<strong>windward side</strong>), while the opposite side gets very little rain (<strong>leeward or rain shadow side</strong>). For example, Mumbai is on the windward side and gets heavy rain, while Pune is in the rain shadow area.</li>
+            </ul>
+        </div>
+
+        <h2>2. The Four Major Seasons in India</h2>
+        <p>India is generally characterized by four primary seasons:</p>
+
+        <h3>A. Winter Season (December to February)</h3>
+        <p>North India experiences low temperatures (5°C to 12°C), while South India remains warm (20°C to 25°C) due to the moderating effect of the sea. Dry winds blow from land to sea (North-East direction). However, when these winds cross the Bay of Bengal, they pick up moisture and bring <strong>winter rain to the Coromandel Coast (Tamil Nadu)</strong>.</p>
+        
+        <h3>B. Summer Season (March to May)</h3>
+        <p>The sun's rays are directly over the Tropic of Cancer. The western region can see temperatures shoot up to 50°C. During this time, various local winds affect different parts of the country.</p>
+
+        <h3>C. South-West Monsoon Season (June to September)</h3>
+        <p>Intense heat creates low pressure, attracting moisture-laden winds from the Indian Ocean. These <strong>South-West Monsoon winds</strong> bring heavy rainfall and are crucial for Indian agriculture. Peninsular India divides them into two branches:</p>
+        <ul>
+            <li><strong>The Arabian Sea Branch:</strong> Brings heavy rain to the Western Ghats (Kerala is the first state to receive this rain).</li>
+            <li><strong>The Bay of Bengal Branch:</strong> Moves north-eastwards, bringing extremely heavy rain to the Garo-Khasi-Jaintia Hills and parts of the Gangetic plain.</li>
+        </ul>
+
+        <h3>D. Retreating Monsoon Season (October & November)</h3>
+        <p>The monsoon winds weaken and begin to withdraw from the subcontinent. The weather becomes oppressive due to high humidity and temperature, a phenomenon known as <strong>'October Heat'</strong>. This season is also prone to highly destructive <strong>cyclones</strong> along the eastern coast (Andhra Pradesh, Tamil Nadu).</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Crucial Local Winds and Phenomena:</strong></p>
+            <ul>
+                <li><strong>Loo:</strong> Hot, dry, and gusty winds blowing over the northern plains (UP, Punjab, Haryana) in summer.</li>
+                <li><strong>Kalbaisakhi:</strong> Strong, violent thunderstorms in West Bengal and Assam during summer.</li>
+                <li><strong>Mango Showers:</strong> Pre-monsoon showers in Kerala that help in the early ripening of mangoes.</li>
+                <li><strong>Western Disturbances:</strong> Cyclonic depressions originating over the Mediterranean Sea that bring winter rainfall to Punjab and Haryana (highly beneficial for wheat crops).</li>
+            </ul>
+        </div>
+
+        <h2>3. Distribution of Rainfall</h2>
+        <p>Rainfall in India is irregular and unevenly distributed:</p>
+        <ul>
+            <li><strong>Heavy Rainfall (Over 200 cm):</strong> Western coastal plains, western side of Western Ghats, Meghalaya, Assam, Arunachal Pradesh, and West Bengal.</li>
+            <li><strong>Moderate Rainfall (100 - 200 cm):</strong> Northern Andhra Pradesh, southern Tamil Nadu, middle Ganga valley, eastern Maharashtra, and Odisha.</li>
+            <li><strong>Scanty Rainfall (50 - 100 cm):</strong> Parts of the Deccan Plateau, eastern Rajasthan, Punjab, Haryana, and Kashmir.</li>
+            <li><strong>Desert Regions (Below 50 cm):</strong> Western Rajasthan, southern Punjab, and the rain-shadow regions of the Western Ghats.</li>
+        </ul>
+
+        <h2>4. Natural Vegetation of India</h2>
+        <p>Depending upon the climate and rainfall, India's natural vegetation is divided into five major types:</p>
+
+        <h3>A. Tropical Evergreen Forests</h3>
+        <p>Found in areas with <strong>more than 200 cm</strong> of rainfall (Western Ghats, North-East India, Andaman & Nicobar). These forests are dense, have a thick canopy, and the trees remain green year-round. Important trees: <strong>Ebony, mahogany, rosewood, bamboo, and rubber.</strong></p>
+
+        <h3>B. Tropical Deciduous (Monsoon) Forests</h3>
+        <p>Found in areas with <strong>100 to 200 cm</strong> of rainfall. These trees shed their leaves during the dry season to conserve water. Important trees: <strong>Teak, sal, sandalwood, shisham, peepal, and deodar.</strong></p>
+
+        <h3>C. Thorn Forests</h3>
+        <p>Found in dry areas with <strong>50 to 100 cm</strong> of rainfall (Rajasthan, Gujarat, Haryana). Trees are short, widely scattered, and have deep roots and thorny/waxy leaves to prevent water loss. Important trees: <strong>Acacia, babul, and thorny bushes.</strong></p>
+
+        <h3>D. Tidal or Mangrove Forests</h3>
+        <p>Found in swampy, coastal deltas washed by seawater (Ganga, Mahanadi, Godavari deltas). These trees have specialized <strong>breathing roots</strong> (pneumatophores) and stilted roots to survive in marshy conditions.</p>
+
+        <h3>E. Mountain Forests</h3>
+        <p>Vegetation changes with altitude. The foothills have deciduous trees, higher up (1500m - 3500m) are <strong>coniferous trees</strong> (pine, fir, cedar, spruce), and above 3000m, alpine vegetation (shrubs, grasses) is found.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>The Great Sunderbans:</strong> The largest tidal forest in the world is located in the Ganga-Brahmaputra delta. It is named the <strong>Sunderbans</strong> after the famous <strong>Sundari tree</strong> that grows extensively in this region, which yields durable, water-resistant wood used for making boats.</p>
+        </div>
+
+        <h2>5. Wildlife and its Conservation</h2>
+        <p>India boasts rich biodiversity with over 81,000 species of animals and 1,200 species of birds. The country's diverse terrain provides a natural habitat for iconic species:</p>
+        <ul>
+            <li><strong>Asiatic Lion:</strong> Now confined only to the Gir forests of Gujarat.</li>
+            <li><strong>Bengal Tiger:</strong> Found in the forests of Madhya Pradesh, West Bengal (Sunderbans), and other reserves.</li>
+            <li><strong>One-horned Rhinoceros:</strong> Thrives in the swampy forests of Assam and West Bengal.</li>
+            <li><strong>Elephants:</strong> Found in the dense forests of Assam, Kerala, and Karnataka.</li>
+        </ul>
+
+        <h3>Wildlife Conservation Measures</h3>
+        <p>Due to rampant hunting, poaching (for ivory, horns, skins), and deforestation, many species have become <strong>endangered</strong> (reduced to a critical level). The Government of India implemented the <strong>Wildlife Protection Act in 1972</strong> to ban hunting. To protect flora and fauna, the following protected areas have been established:</p>
+        
+        <ul>
+            <li><strong>National Parks:</strong> Strictly reserved for the betterment of wildlife and the environment. Cultivation, grazing, and private ownership are completely banned. <em>(e.g., Kaziranga, Corbett, Kanha)</em>.</li>
+            <li><strong>Wildlife Sanctuaries:</strong> Areas where animals are protected from hunting. Limited human activities (like collecting firewood) and private ownership are allowed provided they do not harm the wildlife. <em>(e.g., Periyar, Mudumalai)</em>.</li>
+            <li><strong>Biosphere Reserves:</strong> Large areas meant to preserve the biodiversity of flora, fauna, and the traditional lifestyle of the tribal people living in that area. <em>(e.g., Nanda Devi, Nokrek, Simlipal)</em>.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
