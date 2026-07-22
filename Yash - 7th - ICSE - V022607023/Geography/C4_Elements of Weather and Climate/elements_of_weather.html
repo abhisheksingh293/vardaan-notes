@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Elements of Weather - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE DESIGN FOR MOBILE & TABLET --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px;
+                width: 100%;
+            }
+            .institute-name {
+                font-size: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            h3 {
+                font-size: 1.2rem;
+            }
+            p, li {
+                font-size: 1rem;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer requested to be visible) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* Ensure Branding Footer remains visible as requested */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Elements of Weather</h1>
+        
+        <h2>1. Weather and Climate</h2>
+        <p><strong>Weather</strong> is the condition of the atmosphere at a particular place over a short period of time. It depends upon variables such as temperature, moisture, wind, sun, cloud cover, and atmospheric pressure. Weather is unpredictable and changes over a short span of time.</p>
+        <p><strong>Climate</strong> is the average weather pattern of a place prevalent over a large area for a long time, usually 35 years or more. While weather changes day-to-day, climate represents long-term atmospheric conditions.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <ul>
+                <li><strong>Weather</strong> refers to short-term, day-to-day conditions.</li>
+                <li><strong>Climate</strong> refers to long-term averages.</li>
+                <li><strong>Meteorology</strong> is the study of weather, atmosphere, and climate. The people who study it are called Meteorologists.</li>
+            </ul>
+        </div>
+
+        <h2>2. Temperature</h2>
+        <p>Temperature can be defined as the <strong>degree of hotness or coldness</strong>. It is an important element of weather and climate, as changes in temperature affect all other elements, including atmospheric pressure, amount of moisture, and movement of air.</p>
+
+        <h3>Types of Heating</h3>
+        <p>The atmosphere gets heated up due to three primary processes:</p>
+        <ul>
+            <li><strong>Radiation:</strong> Heat transfer from a hot body to a colder body without heating the space between the two. The radiant heat energy received by the Earth from the sun is called <strong>insolation</strong>.</li>
+            <li><strong>Conduction:</strong> The transfer of heat from one body to another through direct contact. The air near the land surface gets heated through this process.</li>
+            <li><strong>Convection:</strong> The transfer of heat from one place to another by the movement of fluids (liquids or gases). Warm air expands, becomes lighter, and rises, while cooler air comes in to take its place.</li>
+        </ul>
+
+        <h3>Factors Determining Temperature</h3>
+        <ul>
+            <li><strong>Latitude:</strong> The sun's rays strike the equator directly at a 90° angle, making lower latitudes hotter. In higher latitudes near the poles, the rays become slanting and pass through a larger atmospheric area, resulting in lower temperatures.</li>
+            <li><strong>Altitude:</strong> The higher one travels into the atmosphere, the lower the temperature becomes because the air is less dense.</li>
+            <li><strong>Distance from the sea:</strong> Places near the sea experience a <strong>maritime (equable) climate</strong>, which is neither too hot nor too cold. Places far from the sea experience an <strong>extreme (continental) climate</strong>.</li>
+            <li><strong>Winds:</strong> Winds carry the characteristics of the regions they blow from. Cold polar winds reduce temperatures, while hot dusty winds (like "Loo") increase temperatures.</li>
+            <li><strong>Ocean currents:</strong> Warm ocean currents raise the temperature of coastal regions, while cold currents reduce it.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Lapse Rate:</strong> The rate at which temperature drops with altitude in the atmosphere is known as the lapse rate. On average, the temperature drops by <strong>6.5°C for every 1000 metres</strong> of ascent.</p>
+        </div>
+
+        <h2>3. Heat Zones on the Earth</h2>
+        <p>There are three distinct climatic or heat zones on the Earth:</p>
+        <ul>
+            <li><strong>The Torrid Zone:</strong> Lies between the Tropic of Cancer and the Tropic of Capricorn. It receives maximum heat as the sun is directly overhead practically throughout the year.</li>
+            <li><strong>The Temperate Zone:</strong> Lies between the tropics and the polar circles in both hemispheres. It receives slanting rays, creating a moderate climate with four distinct seasons.</li>
+            <li><strong>The Frigid Zone:</strong> Lies between the polar circles and the poles. These regions get highly slanting sun rays and are the coldest areas on Earth.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Zone Locations:</strong> Southern India falls in the Torrid Zone. Europe and North America fall primarily in the Temperate Zone. Antarctica and Greenland lie entirely in the Frigid Zone.</p>
+        </div>
+
+        <h2>4. Atmospheric Pressure</h2>
+        <p>Air has weight. The pressure exerted on the surface of the Earth as a result of its weight is known as <strong>atmospheric pressure</strong>. Normal air pressure at sea level is <strong>1013 millibars (mb)</strong>.</p>
+        
+        <h3>Factors Affecting Atmospheric Pressure</h3>
+        <ul>
+            <li><strong>Temperature:</strong> As temperature increases, air expands, becomes lighter, and rises, causing atmospheric pressure to <strong>decrease</strong>. Conversely, cold air is dense and causes higher pressure.</li>
+            <li><strong>Altitude:</strong> Atmospheric pressure is highest at sea level and <strong>decreases</strong> as altitude increases, due to the thinning out of the air column resting upon the surface.</li>
+        </ul>
+
+        <h2>5. Wind</h2>
+        <p>Moving air is called <strong>wind</strong>. It is caused by the uneven heating of the Earth's surface. Warm air rises to create a <strong>low-pressure area</strong>, and cold air moves in from a <strong>high-pressure area</strong> to fill the gap.</p>
+        <ul>
+            <li><strong>Air Currents:</strong> Vertical movement of air.</li>
+            <li><strong>Wind:</strong> Horizontal movement of air.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The Coriolis Force & Ferrell's Law:</strong> The Earth's rotation creates the Coriolis force, which deflects winds to the <strong>right</strong> in the Northern Hemisphere and to the <strong>left</strong> in the Southern Hemisphere. This deflection is known as Ferrell's law.</p>
+        </div>
+
+        <h2>6. Humidity</h2>
+        <p>Water turns into vapor and enters the atmosphere via <strong>evaporation</strong>. The amount of water vapor present in the air is known as <strong>humidity</strong>. Warm air can hold more water vapor than cold air.</p>
+        <ul>
+            <li><strong>Saturated Air:</strong> Air that can no longer hold any more water vapor at a given temperature.</li>
+            <li><strong>Dew Point:</strong> The temperature at which saturation takes place.</li>
+            <li><strong>Absolute Humidity:</strong> The actual amount of water vapor in a unit volume of air, measured in g/cm³.</li>
+            <li><strong>Relative Humidity:</strong> The ratio between the actual amount of water vapor in the air and the maximum amount it could hold at that temperature, expressed as a percentage.</li>
+        </ul>
+
+        <h2>7. Precipitation</h2>
+        <p>When moist air cools, water vapor condenses into droplets. When these droplets in clouds become too heavy to remain suspended, they fall to the Earth as <strong>precipitation</strong>.</p>
+        
+        <h3>Forms of Condensation (Near ground)</h3>
+        <ul>
+            <li><strong>Fog:</strong> Thick suspension of water droplets near the ground reducing visibility.</li>
+            <li><strong>Mist:</strong> Thinner form of fog.</li>
+            <li><strong>Dew:</strong> Moisture condensed into drops on cold surfaces (like grass).</li>
+            <li><strong>Frost:</strong> Ice crystals formed when the temperature falls below freezing.</li>
+        </ul>
+
+        <h3>Forms of Precipitation</h3>
+        <ul>
+            <li><strong>Rain:</strong> The most common form of liquid water droplets.</li>
+            <li><strong>Snowfall:</strong> Raindrops freeze into a powdery mass of ice due to sub-zero temperatures.</li>
+            <li><strong>Hailstones:</strong> Pellets of solid ice formed due to rapid drops in temperature at high altitudes.</li>
+            <li><strong>Sleet:</strong> A mixture of snow and rain, or partially melted snow.</li>
+        </ul>
+
+        <h2>8. Cloud Cover</h2>
+        <p><strong>Clouds</strong> are visible masses of water droplets or frozen ice crystals suspended in the atmosphere. Cloud cover affects weather by reflecting sunshine during the day (cooling effect) and trapping terrestrial radiation at night (warming effect).</p>
+
+        <h3>Types of Clouds</h3>
+        <p>Clouds are classified by height and shape:</p>
+        <ul>
+            <li><strong>High Clouds (6000m to 12000m):</strong> Examples include <strong>Cirrus</strong> (feather-like).</li>
+            <li><strong>Medium Clouds (2400m to 6000m):</strong> Examples include <strong>Alto</strong> clouds.</li>
+            <li><strong>Low Clouds (Below 2400m):</strong> Examples include <strong>Stratus</strong> (layered).</li>
+            <li><strong>Vertical Clouds:</strong> <strong>Cumulus</strong> clouds, characterized by a cauliflower-like, rounded top.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Nimbus</strong> means rain. Any cloud name containing "nimbus" (like Nimbostratus or Cumulonimbus) indicates a low, dark, rain-bearing cloud.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,12 +1,531 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chapter Notes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Judiciary - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px !important;
+                width: 100%;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+                margin-top: 30px;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+            .branding-footer {
+                margin-top: 40px;
+            }
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Chapter Notes</h1>
-  <p>Add your chapter notes here.</p>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Civics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>The Judiciary</h1>
+        
+        <h2>1. Introduction to the Judiciary</h2>
+        <p>The Indian government functions through three main organs: the Legislature, the Executive, and the <strong>Judiciary</strong>. The Judiciary is the independent body responsible for interpreting laws, settling disputes, and ensuring justice for all.</p>
+        <p>It acts as the Guardian of the Constitution, safeguarding the fundamental rights of the people against any violation. It ensures that everyone is treated fairly under the law.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <h3>Independence of the Judiciary</h3>
+            <p>In India, we have an <strong>independent judiciary</strong>. This means the other organs of government (Executive and Legislature) cannot interfere with its functioning. The decisions of the judiciary are respected without fear or favor. However, this independence does not mean it acts arbitrarily; the judiciary remains highly accountable to the Constitution of the country.</p>
+        </div>
+
+        <h2>2. Structure of the Indian Judiciary</h2>
+        <p>The Judiciary in India has a <strong>pyramidal structure</strong>, ensuring that justice is accessible and organized across different levels.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <h3>Levels of the Judicial System</h3>
+            <ul>
+                <li><strong>Supreme Court:</strong> The Apex Court at the national level (located in New Delhi).</li>
+                <li><strong>High Courts:</strong> The highest courts at the state or Union Territory level.</li>
+                <li><strong>Subordinate Courts:</strong> District and Session Courts operating at the lower/local levels.</li>
+            </ul>
+        </div>
+
+        <h2>3. The Supreme Court of India</h2>
+        <p>The Supreme Court is the highest judicial body and the apex court of the country. Its decisions are final and binding on all other courts in India.</p>
+
+        <h3>Composition & Qualifications</h3>
+        <ul>
+            <li><strong>Composition:</strong> It consists of the Chief Justice of India and <strong>33 other judges</strong>. The number is fixed by an Act of Parliament.</li>
+            <li><strong>Qualifications:</strong> To be a judge, a person must be a citizen of India, have been an advocate in a High Court for at least 10 years, or have been a High Court judge for at least 5 years, or be a distinguished jurist in the opinion of the President.</li>
+            <li><strong>Term of Office:</strong> A judge holds office until they reach the <strong>age of 65 years</strong>.</li>
+            <li><strong>Appointment & Removal:</strong> Judges are appointed by the President. They can only be removed through a rigorous process known as <strong>impeachment</strong> on grounds of proven misbehavior or incapacity.</li>
+        </ul>
+
+        <h3>Powers of the Supreme Court</h3>
+        <ul>
+            <li><strong>Original Jurisdiction:</strong> Power to hear cases in the first instance, such as disputes between the Union government and states, or between two or more states.</li>
+            <li><strong>Appellate Jurisdiction:</strong> Power to hear appeals against the judgments of the High Courts.</li>
+            <li><strong>Advisory Jurisdiction:</strong> The President of India can seek the advice of the Supreme Court on questions of law or public importance.</li>
+            <li><strong>Revisory Jurisdiction:</strong> Power to review its own judgments to correct any errors.</li>
+            <li><strong>Court of Record:</strong> Its proceedings, acts, and judgments are recorded as legal precedents.</li>
+        </ul>
+
+        <h2>4. The High Courts of India</h2>
+        <p>The High Court is the highest court in a state. It is empowered to issue writs to enforce fundamental rights and possesses significant authority over subordinate courts.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>There are a total of <strong>25 High Courts</strong> in India covering various states and Union Territories. Some states share a common High Court. The <strong>Calcutta High Court</strong> is the oldest High Court in India.</p>
+        </div>
+
+        <h3>Powers & Tenure</h3>
+        <ul>
+            <li><strong>Tenure:</strong> A High Court judge holds office until they attain the <strong>age of 62 years</strong>.</li>
+            <li><strong>Powers:</strong> Similar to the Supreme Court, the High Court exercises Original and Appellate Jurisdiction. Additionally, it has <strong>Administrative Powers</strong> (controlling all subordinate courts in its jurisdiction) and the power of <strong>Judicial Review</strong> (declaring laws unconstitutional if they violate the Constitution).</li>
+        </ul>
+
+        <h2>5. Subordinate Courts</h2>
+        <p>Each state is divided into various districts or tehsils. The courts that function at these lower levels are called Subordinate Courts.</p>
+        <ul>
+            <li><strong>Civil Courts:</strong> Deal with cases relating to property, breach of contracts, divorce, or landlord-tenant disputes. The court of the <strong>District Judge</strong> is the highest civil court in a district.</li>
+            <li><strong>Criminal Courts:</strong> Deal with cases of theft, robbery, murder, or violence. When a district court exercises criminal jurisdiction, it is called the <strong>Court of Sessions</strong>, presided over by a Sessions Judge.</li>
+            <li><strong>Panchayat Courts:</strong> Deal with civil and criminal cases at the village level (often called Nyaya Panchayat or Gram Katchery).</li>
+            <li><strong>Lok Adalats:</strong> Also known as the 'People's Court', these were established to provide <strong>speedy justice</strong>. They settle disputes through mutual understanding and compromise without expensive legal fees.</li>
+        </ul>
+
+        <h2>6. Writs: Guardians of Fundamental Rights</h2>
+        <p>A writ is a formal written order or direction issued by the court to officials to perform or refrain from performing a specific action. Both the Supreme Court and High Courts have the power to issue writs to enforce the Fundamental Rights of citizens.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <h3>The Five Kinds of Writs</h3>
+            <ul>
+                <li><strong>Habeas Corpus:</strong> Means "to have the body of." It protects individuals from unlawful detention or imprisonment.</li>
+                <li><strong>Mandamus:</strong> Means "We command." Issued to a public official who has failed to perform their duty.</li>
+                <li><strong>Prohibition:</strong> Means "To forbid." Issued by a higher court to a lower court to prevent it from exceeding its jurisdiction.</li>
+                <li><strong>Certiorari:</strong> Means "To be certified" or "To be informed." Issued to transfer a case from a lower court to a higher court or quash an order.</li>
+                <li><strong>Quo-Warranto:</strong> Means "By what authority or warrant." Prevents a person from holding a public office to which they are not entitled.</li>
+            </ul>
+        </div>
+
+        <h2>7. Free Legal Aid</h2>
+        <p>Access to justice should not be limited by financial status. <strong>Article 39A</strong> of the Constitution provides for Free Legal Aid to the deprived and weaker sections of society, ensuring justice on the basis of equal opportunity.</p>
+        <p>In 1987, the <strong>Legal Services Authorities Act</strong> was enacted (came into force in 1995) to create a nationwide network for free legal services. Beneficiaries include:</p>
+        <ul>
+            <li>Members of Scheduled Castes (SC) or Scheduled Tribes (ST).</li>
+            <li>Women and children.</li>
+            <li>Persons who are mentally ill or have physical disabilities.</li>
+            <li>Victims of trafficking or beggars.</li>
+            <li>Persons who are financially unable to pay for legal services.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
 </body>
 </html>

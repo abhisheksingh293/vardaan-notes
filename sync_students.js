@@ -22,7 +22,12 @@ async function syncStudents() {
     }
 
     const students = await response.json();
-    let newFoldersCreated = 0;
+    let changesMade = 0;
+    
+    // Get all existing directories in rootDir to check for existing IDs
+    const existingFolders = fs.readdirSync(rootDir, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
+      .map(dirent => dirent.name);
 
     for (const student of students) {
       if (!student.full_name || !student.class || !student.board || !student.student_code) {
@@ -33,15 +38,33 @@ async function syncStudents() {
       const folderName = `${student.full_name} - ${student.class} - ${student.board} - ${student.student_code}`;
       const folderPath = path.join(rootDir, folderName);
 
-      if (!fs.existsSync(folderPath)) {
-        fs.mkdirSync(folderPath);
-        console.log(`✅ Created new folder: "${folderName}"`);
-        newFoldersCreated++;
+      // Check if a folder already exists with this student code
+      const idSuffix = ` - ${student.student_code}`;
+      const existingMatch = existingFolders.find(f => f.endsWith(idSuffix));
+
+      if (existingMatch) {
+        if (existingMatch !== folderName) {
+          // Folder exists but with a different name, rename it
+          const oldPath = path.join(rootDir, existingMatch);
+          fs.renameSync(oldPath, folderPath);
+          console.log(`🔄 Renamed folder: "${existingMatch}" -> "${folderName}"`);
+          
+          // Update our cache
+          existingFolders[existingFolders.indexOf(existingMatch)] = folderName;
+          changesMade++;
+        }
+      } else {
+        if (!fs.existsSync(folderPath)) {
+          fs.mkdirSync(folderPath);
+          console.log(`✅ Created new folder: "${folderName}"`);
+          existingFolders.push(folderName);
+          changesMade++;
+        }
       }
     }
 
-    if (newFoldersCreated > 0) {
-      console.log(`\n🎉 Successfully created ${newFoldersCreated} new student folder(s).`);
+    if (changesMade > 0) {
+      console.log(`\n🎉 Successfully made ${changesMade} update(s) to student folders.`);
       console.log('Running generators to update the portal...');
       try {
         execSync('node generate_student_pages.js', { stdio: 'inherit' });
@@ -50,7 +73,7 @@ async function syncStudents() {
         console.error('Error running generators:', e.message);
       }
     } else {
-      console.log('✅ All student folders are already up to date. No new students found.');
+      console.log('✅ All student folders are already up to date. No new students or changes found.');
     }
 
   } catch (error) {

@@ -1,11 +1,608 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Chapter 12 — Light</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Light - Science - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE & TABLE DESIGN ADDITIONS --- */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            background-color: var(--paper-bg);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid var(--toggle-border);
+            font-size: 1rem;
+        }
+
+        th {
+            background-color: var(--accent-purple);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* Responsive scaling for mobile devices and tablets */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px !important; /* Reduces large gaps on mobile */
+                width: 100%;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+                margin-top: 30px;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+            .branding-footer {
+                margin-top: 40px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            .contact-info {
+                display: flex !important;
+            }
+
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Light</h1>
-  <p>Notes go here.</p>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Light</h1>
+        
+        <h2>1. Introduction to Reflection</h2>
+        <p>The phenomenon where an object's picture is formed in water, or light bounces back off a surface, is known as the <strong>reflection of light</strong>. A plane mirror can change the direction of light falling on it due to this phenomenon.</p>
+        
+        <ul>
+            <li><strong>Regular Reflection:</strong> Reflection of light from plane, shiny, or polished surfaces (like mirrors or stainless steel) in a well-defined, orderly manner. This often results in a glare.</li>
+            <li><strong>Diffused Reflection:</strong> Reflection of light from non-shiny, non-polished, or irregular surfaces that takes place in an irregular, scattered manner.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <h3>Lateral Inversion</h3>
+            <p>When you look in a plane mirror, the image does not appear upside down but is always erect. However, the 'right' side of the object appears as the 'left' side in the image, and vice-versa. This intriguing phenomenon is called <strong>lateral inversion</strong>.</p>
+        </div>
+
+        <h2>2. Important Terms & Laws of Reflection</h2>
+        <p>The reflection of light from a surface always takes place in a well-defined manner according to two simple rules known as the <strong>Laws of Reflection</strong>. Before stating the laws, we must understand a few key terms:</p>
+        
+        <ul>
+            <li><strong>Point of Incidence:</strong> The point on the surface of the mirror where the incident ray falls.</li>
+            <li><strong>Normal:</strong> A line drawn perpendicular to the surface at the point of incidence.</li>
+            <li><strong>Incident Ray:</strong> The ray of light coming towards the mirror.</li>
+            <li><strong>Reflected Ray:</strong> The ray of light which turns back after reflection from the mirror surface.</li>
+            <li><strong>Angle of Incidence:</strong> The angle between the incident ray and the normal at the point of incidence.</li>
+            <li><strong>Angle of Reflection:</strong> The angle between the normal and the reflected ray at the point of incidence.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <h3>The Two Laws of Reflection</h3>
+            <ul>
+                <li><strong>First Law:</strong> The incident ray, the normal at the point of incidence, and the reflected ray, all lie in the same plane.</li>
+                <li><strong>Second Law:</strong> The angle of incidence is always equal to the angle of reflection.</li>
+            </ul>
+        </div>
+
+        <h2>3. Real and Virtual Images</h2>
+        <p>The laws of reflection help us to understand how images are formed by mirrors.</p>
+        <ul>
+            <li><strong>Virtual Image:</strong> An image that appears to be formed through an apparent intersection of the reflected rays, but there is no actual intersection. It cannot be obtained on a screen (e.g., image formed by a plane mirror).</li>
+            <li><strong>Real Image:</strong> An image that is formed through the actual intersection of the reflected light rays. It can be captured on a screen.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <h3>Properties of an Image Formed by a Plane Mirror</h3>
+            <p>1. The image is as far behind the mirror as the object is in front of it.<br>
+               2. It is always of the same size as the object.<br>
+               3. The line joining the image of a point object and the object itself is normal (perpendicular) to the plane mirror.<br>
+               4. To see the full image of yourself, you need a plane mirror at least <strong>half of your height</strong>.</p>
+        </div>
+
+        <h2>4. Spherical Mirrors</h2>
+        <p>A <strong>spherical mirror</strong> is a special type of mirror whose reflecting surface is a part of a sphere. There are two primary types of spherical mirrors:</p>
+        <ul>
+            <li><strong>Concave Mirror:</strong> A spherical mirror whose reflecting surface is curved inwards (the inner side of the spherical glass section is polished).</li>
+            <li><strong>Convex Mirror:</strong> A spherical mirror whose reflecting surface is curved outwards (the outer side is polished).</li>
+        </ul>
+
+        <h3>Key Terms for Spherical Mirrors</h3>
+        <ul>
+            <li><strong>Centre of Curvature (C):</strong> The centre of the sphere of which the given mirror is a part.</li>
+            <li><strong>Radius of Curvature (r):</strong> The radius of the sphere of which the given mirror is a part.</li>
+            <li><strong>Pole (P):</strong> The mid-point or central point of the mirror's surface.</li>
+            <li><strong>Principal Axis:</strong> The line joining the pole of the mirror and its centre of curvature.</li>
+            <li><strong>Focus (F):</strong> The point on the principal axis where rays parallel to the axis actually meet (concave) or appear to diverge from (convex) after reflection.</li>
+            <li><strong>Focal Length (f):</strong> The distance between the pole and the focus of the mirror.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Formula</span>
+            <p>There is a very simple relationship between the focal length (f) and the radius of curvature (r) of a spherical mirror. The focal length is always half the radius of curvature: <br>
+            <strong>f = r / 2</strong></p>
+        </div>
+
+        <h2>5. Rules for Drawing Ray Diagrams</h2>
+        <p>At every point, a spherical mirror reflects light following the laws of reflection. To find the location of an image, we use a few special rays:</p>
+        <ul>
+            <li>A ray parallel to the principal axis passes through (or appears to diverge from) the <strong>focus</strong> of the mirror after reflection.</li>
+            <li>A ray directed towards the focus of a spherical mirror becomes <strong>parallel to the principal axis</strong> after reflection.</li>
+            <li>A ray directed towards the <strong>centre of curvature</strong> of a spherical mirror retraces its path after reflection because it falls normally on the surface.</li>
+        </ul>
+
+        <h2>6. Summary of Image Formation</h2>
+        <p>Below is the summary of images formed when an object is placed at different distances in front of spherical mirrors.</p>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Object Position</th>
+                        <th>Concave Mirror (Image Nature & Position)</th>
+                        <th>Convex Mirror (Image Nature & Position)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Beyond C</strong></td>
+                        <td>Real, inverted, diminished, formed between F and C</td>
+                        <td>Virtual, erect, diminished, formed between P and F</td>
+                    </tr>
+                    <tr>
+                        <td><strong>At C</strong></td>
+                        <td>Real, inverted, equal in size, formed at C</td>
+                        <td>Virtual, erect, diminished, formed between P and F</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Between C and F</strong></td>
+                        <td>Real, inverted, enlarged, formed beyond C</td>
+                        <td>Virtual, erect, diminished, formed between P and F</td>
+                    </tr>
+                    <tr>
+                        <td><strong>At F</strong></td>
+                        <td>Real, inverted, highly enlarged, formed at infinity</td>
+                        <td>Virtual, erect, diminished, formed between P and F</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Between F and P</strong></td>
+                        <td>Virtual, erect, enlarged, formed behind the mirror</td>
+                        <td>Virtual, erect, diminished, formed between P and F</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Warning</span>
+            <p>When performing experiments with a concave mirror to find its focus using sunlight, <strong>take immense care to protect your eyes</strong>. Never look directly at the sun or the concentrated glare reflected by the mirror, as it can cause permanent eye damage.</p>
+        </div>
+
+        <h2>7. Practical Uses of Mirrors</h2>
+        
+        <h3>Concave Mirrors</h3>
+        <ul>
+            <li><strong>Medical Use:</strong> Used by ENT doctors as 'head mirrors' to focus a lamp's light onto the throat or ear of a patient. Dentists use them to get a magnified image of teeth.</li>
+            <li><strong>Ophthalmoscope:</strong> Eye specialists use an ophthalmoscope fitted with a concave mirror to direct a beam of light into a patient's eye to examine the retina.</li>
+            <li><strong>Reflectors:</strong> Used as reflectors in torches and headlights of vehicles to get a powerful parallel beam of light.</li>
+            <li><strong>Telescopes:</strong> Used in designing large reflector-type astronomical telescopes.</li>
+        </ul>
+
+        <h3>Convex Mirrors</h3>
+        <ul>
+            <li><strong>Rear View Mirrors:</strong> Used as rear-view mirrors in motor vehicles. Because convex mirrors always form an erect, diminished image, they help drivers see the traffic behind them over a much wider range of view than a plane mirror could.</li>
+        </ul>
+
+        <h3>Plane Mirrors</h3>
+        <ul>
+            <li><strong>Daily Life:</strong> Used for dressing up, combing hair, and shaving.</li>
+            <li><strong>Scientific Instruments:</strong> Important parts of scientific meters, the <strong>Periscope</strong> (enabling us to see overhead objects out of direct sight lines), and toys like the <strong>Kaleidoscope</strong> (to form multiple beautiful patterns through repeated reflection).</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
 </body>
 </html>

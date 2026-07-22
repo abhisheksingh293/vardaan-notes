@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Nature of Matter - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive padding for mobile devices */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+            .institute-name {
+                font-size: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid var(--toggle-border);
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--blue-bg);
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>CHAPTER 8: NATURE OF MATTER: ELEMENTS, COMPOUNDS, AND MIXTURES</h1>
+
+        <h2>1. Introduction to Matter</h2>
+        <p>Everything that has mass and takes up space is called <strong>matter</strong>. It exists as solids, liquids, and gases. Examples include water, air, wood, food, metals, and even our bodies. Matter is fundamentally made of elements and compounds, which are the basic building blocks of the material world.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>What is NOT Matter?</strong> Things like light, heat, sound, electricity, thoughts, and emotions do not have weight or volume. They cannot be touched or weighed. These are forms of energy or experiences, not matter.</p>
+        </div>
+
+        <h2>2. Pure Substances</h2>
+        <p>In science, a <strong>pure substance</strong> is something that contains only one kind of particle throughout. This means its composition and properties remain exactly the same everywhere. It cannot be separated into simpler materials by physical methods like filtration or evaporation. Pure substances are divided into <strong>Elements</strong> and <strong>Compounds</strong>.</p>
+
+        <h3>A. Elements</h3>
+        <p>An <strong>element</strong> is a pure substance made up of only one kind of atom. It is the simplest form of matter and cannot be broken down into anything simpler by heat, electricity, or chemical reactions.</p>
+        
+        <h4>Properties of Elements:</h4>
+        <ul>
+            <li><strong>Atoms as the basic unit:</strong> The atom is the smallest unit of an element showing all its characteristic properties.</li>
+            <li><strong>Exist in different states:</strong> Most are solid (iron, copper). Eleven are gases (oxygen, nitrogen). Only two exist as liquids at room temperature: mercury and bromine.</li>
+            <li><strong>Fixed melting and boiling points:</strong> Every pure element changes states at a fixed temperature (e.g., oxygen boils at -183°C).</li>
+            <li><strong>Homogeneous nature:</strong> Elements have uniform composition. A piece of pure gold is identical throughout.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>At present, scientists know about <strong>118 elements</strong>. Out of these, <strong>92 occur naturally</strong> on Earth, while the rest are artificially created in laboratories.</p>
+        </div>
+
+        <h4>Classification of Elements:</h4>
+        <p>Based on physical and chemical properties, elements are grouped into four categories:</p>
+        <table>
+            <tr>
+                <th>Metals</th>
+                <th>Non-metals</th>
+                <th>Metalloids</th>
+                <th>Noble Gases</th>
+            </tr>
+            <tr>
+                <td>Hard, shiny, good conductors of heat and electricity. Malleable (can be beaten into sheets) and ductile (can be drawn into wires).</td>
+                <td>Usually dull, brittle, poor conductors of heat and electricity (except graphite).</td>
+                <td>Show mixed properties of both metals and non-metals. Used as semiconductors.</td>
+                <td>Gaseous elements that are highly stable and do not normally react with other elements.</td>
+            </tr>
+            <tr>
+                <td><em>Examples: Iron, Copper, Gold, Sodium, Aluminium</em></td>
+                <td><em>Examples: Oxygen, Carbon, Sulphur, Chlorine</em></td>
+                <td><em>Examples: Silicon, Boron, Germanium</em></td>
+                <td><em>Examples: Helium, Neon, Argon</em></td>
+            </tr>
+        </table>
+
+        <h3>B. Compounds</h3>
+        <p>A <strong>compound</strong> is a pure substance made up of two or more different elements combined chemically in a fixed ratio by mass. The atoms are strongly bonded together.</p>
+
+        <h4>Properties of Compounds:</h4>
+        <ul>
+            <li><strong>Smallest unit is a molecule:</strong> A single molecule (e.g., one H₂O molecule) shows all properties of that compound.</li>
+            <li><strong>Properties are new and different:</strong> The properties of a compound are completely different from its constituent elements. (e.g., Flammable Hydrogen + Fire-supporting Oxygen = Fire-extinguishing Water).</li>
+            <li><strong>Fixed melting and boiling points:</strong> Pure compounds boil/melt at specific temperatures.</li>
+            <li><strong>Can be separated ONLY chemically:</strong> Cannot be separated by physical methods; requires chemical reactions or electricity (electrolysis).</li>
+            <li><strong>Involves energy changes:</strong> Formation of a compound absorbs or releases heat/energy.</li>
+        </ul>
+
+        <h2>3. Mixtures</h2>
+        <p>A <strong>mixture</strong> is formed when two or more substances are put together in any proportion, and each substance retains its own original identity and properties. They are physically mixed, not chemically joined.</p>
+
+        <h3>Properties of Mixtures:</h3>
+        <ul>
+            <li><strong>Original properties remain:</strong> For example, in saltwater, the salt still tastes salty, and the water is still liquid.</li>
+            <li><strong>Separable by physical methods:</strong> Components can be separated easily by filtration, evaporation, or magnetic separation.</li>
+            <li><strong>No chemical change:</strong> The components mix in any proportion without reacting chemically.</li>
+            <li><strong>Exist in all states:</strong> Mixtures can be solid (alloys), liquid (lemonade), or gas (air).</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Mixture vs. Compound (The Iron & Sulphur Experiment):</strong><br>
+            If you just mix iron filings and sulphur powder, it forms a <strong>mixture</strong>. You can still separate the iron using a magnet. But if you <em>heat</em> them together, a chemical reaction occurs, forming a black solid called <strong>Iron Sulphide</strong>. This is a <strong>compound</strong>, and a magnet will no longer attract the iron in it.</p>
+        </div>
+
+        <h3>Types of Mixtures:</h3>
+        <h4>1. Uniform (Homogeneous) Mixtures</h4>
+        <p>Components are evenly spread out. The mixture looks the same throughout. You cannot see the individual components.</p>
+        <ul>
+            <li><strong>True Solutions:</strong> Solute dissolves completely in a solvent. Transparent. (e.g., salt in water).</li>
+            <li><strong>Alloys:</strong> Uniform mixture of two or more metals (or metal and non-metal). (e.g., Brass, Bronze, Stainless Steel).</li>
+        </ul>
+
+        <h4>2. Non-uniform (Heterogeneous) Mixtures</h4>
+        <p>Components are unevenly spread. Different parts may look different, and particles might settle or be visible.</p>
+        <ul>
+            <li><strong>Suspensions:</strong> Solid particles are large enough to be seen. They do not dissolve and will settle down if left undisturbed. (e.g., Muddy water, chalk in water).</li>
+            <li><strong>Colloids:</strong> Particles are tiny but larger than in a solution. They do not settle easily and scatter light (Tyndall effect). Not fully transparent. (e.g., Milk, ink, fog, blood).</li>
+        </ul>
+
+        <h2>4. Air as a Mixture</h2>
+        <p>Air is a <strong>uniform (homogeneous) mixture</strong> of many different gases and tiny particles. It looks the same everywhere and is essential for life.</p>
+
+        <h3>Properties of Air:</h3>
+        <ul>
+            <li>Air occupies space and has mass/weight.</li>
+            <li>Air can be compressed and stored under pressure.</li>
+            <li>Air exerts pressure in all directions.</li>
+            <li>Air expands when heated and contracts when cooled.</li>
+            <li>Air is transparent, allowing light to pass through.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Composition of Air:</strong> Air consists of roughly <strong>78% Nitrogen</strong>, <strong>21% Oxygen</strong>, and less than 1% of Argon, Carbon dioxide, water vapour, noble gases, and dust particles.</p>
+        </div>
+
+        <h2>5. Separation of Mixtures</h2>
+        <p>The goal of separation is to obtain pure substances, remove unwanted materials, or ensure quality and safety. Common methods include:</p>
+        <ul>
+            <li><strong>Handpicking:</strong> Removing large unwanted materials by hand (e.g., stones from rice).</li>
+            <li><strong>Winnowing:</strong> Using wind to separate lighter substances from heavier ones (e.g., husk from wheat).</li>
+            <li><strong>Sieving:</strong> Using a sieve to separate particles of different sizes.</li>
+            <li><strong>Magnetic Separation:</strong> Using a magnet to separate magnetic substances (iron) from non-magnetic ones.</li>
+            <li><strong>Filtration:</strong> Separating insoluble solids from a liquid using filter paper.</li>
+            <li><strong>Evaporation:</strong> Heating a liquid mixture so the liquid turns to gas, leaving the solid behind (e.g., getting salt from seawater).</li>
+            <li><strong>Distillation:</strong> Boiling a mixture and condensing the vapour to collect pure liquid.</li>
+            <li><strong>Sedimentation and Decantation:</strong> Allowing heavy particles to settle (sedimentation), then carefully pouring off the clear liquid above (decantation).</li>
+        </ul>
+
+        <h2>6. Uses of Elements, Compounds, and Mixtures</h2>
+        <ul>
+            <li><strong>Elements:</strong> Oxygen (breathing, burning), Copper (electric wires), Silicon (computer chips, solar panels), Iron (construction), Gold/Silver (jewellery, electronics).</li>
+            <li><strong>Compounds:</strong> Water (H₂O - life processes), Sodium chloride (NaCl - salt, food preservation), Carbon dioxide (CO₂ - fire extinguishers), Ammonia (NH₃ - fertilisers).</li>
+            <li><strong>Mixtures:</strong> Alloys (Stainless steel for utensils, Bronze for statues), Soil (agriculture), Seawater (source of salt and minerals), Fuels (petrol, LPG).</li>
+        </ul>
+
+        <h2>7. Minerals</h2>
+        <p><strong>Minerals</strong> are naturally occurring solid substances formed by natural processes inside the Earth. They have a definite chemical composition and a regular crystal structure.</p>
+        
+        <ul>
+            <li><strong>Metallic Minerals:</strong> Contain metals that can be melted and shaped. They are hard and shiny. (e.g., Iron ores, Copper ores, Gold, Aluminium).</li>
+            <li><strong>Non-Metallic Minerals:</strong> Dull or glassy appearance, do not contain metals, but are crucial for industry. (e.g., Quartz for glass, Gypsum for cement, Mica for electrical insulators, Graphite for pencils/lubricants).</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

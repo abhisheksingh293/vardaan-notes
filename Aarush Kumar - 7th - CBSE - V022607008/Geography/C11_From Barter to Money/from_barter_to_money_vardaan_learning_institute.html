@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From Barter to Money - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive padding for Mobile & Tablet */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 5mm 15px; 
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Responsive font adjustments */
+        @media (max-width: 480px) {
+            .institute-name { font-size: 1.6rem; }
+            .system-name { font-size: 0.9rem; letter-spacing: 1px; }
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 480px) {
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            .contact-info {
+                display: flex !important;
+            }
+
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Social Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>From Barter to Money</h1>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            The <strong>Barter System</strong> was the earliest form of exchange where people traded goods or services directly for other goods and services without the use of money. Ancient communities used commodities like cowrie shells, salt, tea, tobacco, cloth, and cattle.
+        </div>
+
+        <h2>1. Problems of the Barter System</h2>
+        <p>As societies grew and trade expanded, the barter system presented several major difficulties that made complex exchanges nearly impossible:</p>
+        <ul>
+            <li><strong>Double Coincidence of Wants:</strong> Both people must exactly want what the other person is offering. (e.g., A farmer offering wheat must find a shoemaker who specifically wants wheat).</li>
+            <li><strong>No Common Standard Measure of Value:</strong> It is difficult to determine fair exchanges between vastly different goods without a common unit of measure.</li>
+            <li><strong>Problem of Divisibility:</strong> Some goods cannot be divided without losing their value (e.g., you cannot exchange half an ox).</li>
+            <li><strong>Problem of Durability:</strong> Many goods like fruits, vegetables, and grains spoil quickly and cannot be saved or stored as wealth for the future.</li>
+            <li><strong>Problem of Portability:</strong> Large and heavy items like cattle or bags of grain are very difficult to carry over long distances for trading.</li>
+        </ul>
+
+        <h2>2. The Four Essential Functions of Money</h2>
+        <p>To overcome the limitations of the barter system, society developed money. Money performs four crucial purposes:</p>
+        <ul>
+            <li><strong>Medium of Exchange:</strong> It eliminates the need for direct bartering. You can sell to anyone for money and buy what you need from someone else.</li>
+            <li><strong>Store of Value:</strong> Unlike perishable goods, money preserves purchasing power over time, allowing people to save wealth for the future.</li>
+            <li><strong>Standard of Deferred Payment:</strong> Money makes credit transactions possible. You can buy today and promise to pay later, or lend and receive interest.</li>
+            <li><strong>Measure of Value:</strong> It provides a common unit (price) for comparing the value of diverse goods and services.</li>
+        </ul>
+
+        <h2>3. The Evolution of Money (A Historical Journey)</h2>
+        <p>The form of money has changed significantly throughout history to become more convenient and efficient:</p>
+        
+        <h3>A. Commodity Money</h3>
+        <p>Before coins, valuable commodities were used. This included grains, cattle, cowrie shells, and salt.</p>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            In ancient times, salt was so valuable that it was often used in place of money. The modern English word <strong>"salary"</strong> comes from <em>salarium</em>, the Latin word for salt!
+        </div>
+
+        <h3>B. Metallic Money (Coins)</h3>
+        <ul>
+            <li>The <strong>Lydians</strong> are credited with minting the first coins around the 6th century BCE.</li>
+            <li>In ancient India, early coins were punch-marked pieces of metal known as <strong>karshapanas</strong> or <strong>puranas</strong>.</li>
+            <li>During the medieval period, machine-milled coins replaced hand-hammered coins to prevent counterfeiting.</li>
+            <li>In Colonial India, modern mints like the Calcutta Mint (1757) were established. Today, modern coins are minted by the <strong>Security Printing and Minting Corporation of India Ltd. (SPMCIL)</strong>.</li>
+        </ul>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            Historically, India used the <strong>Anna system</strong> as smaller currency units before decimalization. One anna was equal to 1/16 of a rupee.
+        </div>
+
+        <h3>C. Paper Money</h3>
+        <p>Carrying large quantities of metal became problematic, leading to the invention of paper money.</p>
+        <ul>
+            <li>First used in <strong>China</strong> during the 7th century as merchant receipts.</li>
+            <li>Introduced in India in the late 18th century by the Bank of Bengal and Bank of Bombay.</li>
+            <li>Modern notes feature strict security measures, tactile features for the visually impaired, and cultural motifs.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            The Indian Rupee symbol (<strong>₹</strong>) was adopted in 2010. It was designed by Udaya Kumar from IIT Bombay, blending the Devanagari 'Ra' and Roman 'R'.
+        </div>
+
+        <h2>4. Currency Authority and Control</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            In modern India, the <strong>Reserve Bank of India (RBI)</strong> is the only legal authority that can issue currency. This centralization ensures monetary stability, maintains public confidence, and prevents counterfeiting.
+        </div>
+
+        <h2>5. Digital Revolution: Money in the Modern Age</h2>
+        <p>The 21st century has brought digital money (or e-money), which exists as numbers in a computer system but serves all the same functions as physical cash.</p>
+        
+        <h3>Forms of Digital Payments:</h3>
+        <ul>
+            <li><strong>Bank Accounts & Electronic Transfers:</strong> Moving money securely via cheques or ATMs.</li>
+            <li><strong>Debit and Credit Cards:</strong> Plastic cards that connect directly to bank accounts (debit) or provide borrowed money (credit).</li>
+            <li><strong>Mobile Wallets:</strong> Apps like Paytm and PhonePe that store digital funds.</li>
+            <li><strong>Internet Banking (Net Banking):</strong> Managing funds via a bank's secure website 24/7.</li>
+            <li><strong>UPI (Unified Payments Interface):</strong> India's groundbreaking system for instant bank-to-bank transfers using a phone number or UPI ID.</li>
+            <li><strong>QR Code Payments:</strong> Scanning a Quick Response square to pay vendors directly.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            Digital payments offer major advantages including <strong>speed, unmatched convenience, automated record-keeping, high security</strong>, and <strong>hygiene</strong> (no physical contact required).
+        </div>
+
+        <h2>6. The Importance of Money</h2>
+        <p>Beyond being a medium of exchange, money is essential in modern society because it:</p>
+        <ul>
+            <li>Meets <strong>basic necessities</strong> like food, water, and shelter.</li>
+            <li>Provides <strong>security and stability</strong> against emergencies.</li>
+            <li>Enables <strong>freedom and choice</strong> in how we live, work, and learn.</li>
+            <li>Creates <strong>opportunities</strong> for education and business.</li>
+            <li>Allows us to support and build our <strong>communities</strong>.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

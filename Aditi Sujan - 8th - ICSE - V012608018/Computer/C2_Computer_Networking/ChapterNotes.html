@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 2: Computer Networking - Vardaan Learning Institute</title>
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Computer Networking - Computer - Vardaan Learning Institute</title>
     <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
         :root {
+            /* Light Mode Palette */
             --yellow-bg: #fff9c4;
             --yellow-border: #fbc02d;
             --green-bg: #e8f5e9;
@@ -25,6 +28,7 @@
             --icon-fill: #000;
         }
 
+        /* --- DARK MODE VARIABLES --- */
         html.dark-mode {
             --yellow-bg: #3f3a00;
             --yellow-border: #fdd835;
@@ -45,6 +49,7 @@
             --icon-fill: #fff;
         }
 
+        /* --- GLOBAL LAYOUT --- */
         body {
             background-color: var(--paper-bg);
             margin: 0;
@@ -55,6 +60,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        /* --- WATERMARK OVERLAY --- */
         .watermark-overlay {
             position: fixed;
             top: 0;
@@ -76,9 +82,17 @@
             transition: all 0.3s ease;
         }
 
-        html.dark-mode .watermark-overlay { mix-blend-mode: screen; }
-        html.dark-mode .watermark-image { filter: invert(1); opacity: 0.15; }
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
 
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
         .paper-sheet {
             background-color: var(--paper-bg);
             width: 210mm;
@@ -90,9 +104,10 @@
             transition: background-color 0.3s ease;
         }
 
+        /* --- BRANDING HEADER --- */
         .branding-header {
             text-align: center;
-            margin-bottom: 5px;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
             border-bottom: 3px double var(--blue-border);
             padding-bottom: 15px;
         }
@@ -113,20 +128,29 @@
             text-transform: uppercase;
         }
 
+        /* --- CONTACT INFO (Updated V2.2) --- */
         .contact-info {
             font-size: 0.9rem;
-            color: #666666;
+            color: #666666; 
             margin-top: 10px;
             font-weight: 600;
             letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
             display: none;
+            
+            /* Layout properties (active when visible) */
             justify-content: center;
             gap: 20px;
             align-items: center;
         }
 
-        .contact-info a { color: inherit; text-decoration: none; }
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
 
+        /* --- BRANDING FOOTER --- */
         .branding-footer {
             text-align: center;
             margin-top: 60px;
@@ -135,14 +159,27 @@
             color: var(--meta-text);
         }
 
-        .created-by { font-size: 1rem; margin-bottom: 5px; font-weight: bold; }
-        .powered-by { font-size: 0.9rem; color: var(--pink-border); font-style: italic; }
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
 
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
         h1 {
             font-size: 2.2rem;
             color: var(--blue-border);
             text-align: center;
-            margin-top: 5px;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
             margin-bottom: 20px;
             text-transform: uppercase;
             border-bottom: 2px solid var(--blue-border);
@@ -169,49 +206,163 @@
             text-underline-offset: 4px;
         }
 
-        p, li { font-size: 1.05rem; line-height: 1.6; margin-bottom: 10px; }
-        ul { padding-left: 20px; }
-        strong { color: var(--pink-border); }
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
 
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
         .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
         .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
         .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
 
         .box-label {
-            position: absolute; top: -12px; right: 20px; background: var(--paper-bg); padding: 2px 10px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; border: 2px solid; border-radius: 4px;
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
         }
 
         .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
         .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
         .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
 
-        .theme-toggle {
-            position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--toggle-bg); border: none; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px !important;
+                width: 100%;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+                margin-top: 30px;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+            .branding-footer {
+                margin-top: 40px;
+            }
         }
 
-        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; stroke: var(--icon-fill); }
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
         .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
         html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
         html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
 
+        /* --- STRICT PRINT CONFIGURATION --- */
         @media print {
-            body { background-color: #ffffff !important; color: #000000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .paper-sheet { width: 100% !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; }
-            .theme-toggle, .branding-footer { display: none !important; }
-            .contact-info { display: flex !important; }
-            .watermark-overlay { display: flex !important; position: fixed !important; z-index: 9999 !important; opacity: 0.15 !important; mix-blend-mode: multiply !important; pointer-events: none !important; left: 0 !important; top: 0 !important; width: 100vw !important; height: 100vh !important; }
-            .watermark-image { filter: none !important; max-width: 80% !important; }
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
             @page {
                 size: A4;
                 margin: 2cm;
+                
                 @bottom-left { content: none; }
                 @bottom-right { content: none; }
+
+                /* The Pink Disc */
                 @bottom-center {
                     content: counter(page);
                     display: block;
                     width: 30px;
                     height: 30px;
-                    background-color: #d81b60;
+                    background-color: #d81b60; 
                     color: #ffffff;
                     border-radius: 50%;
                     font-family: 'Segoe UI', sans-serif;
@@ -224,107 +375,178 @@
             }
         }
     </style>
-    <style>
-    /* Injected Responsive Styles */
-    @media (max-width: 1024px) {
-        .paper-sheet { padding: 25px !important; }
-        .institute-name { font-size: 1.8rem !important; }
-    }
-    @media (max-width: 768px) {
-        .paper-sheet { padding: 15px !important; width: 100% !important; }
-        .institute-name { font-size: 1.4rem !important; }
-        .system-name { font-size: 0.9rem !important; }
-        h1 { font-size: 1.5rem !important; margin-top: 15px !important; margin-bottom: 15px !important; }
-        h2 { font-size: 1.2rem !important; margin-top: 20px !important; }
-        h3 { font-size: 1.1rem !important; margin-top: 15px !important; }
-        p, li { font-size: 0.95rem !important; }
-        .blue-box, .green-box, .yellow-box { padding: 15px !important; margin: 15px 0 !important; }
-        .box-label { font-size: 0.7rem !important; top: -10px !important; right: 10px !important; }
-        .watermark-image { max-width: 95% !important; }
-        .theme-toggle { top: 10px !important; right: 10px !important; width: 36px !important; height: 36px !important; }
-    }
-</style>
 </head>
 <body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
     <div class="watermark-overlay">
         <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
     </div>
 
+    <!-- COMPONENT: Dark Mode Toggle -->
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
     </button>
 
+    <!-- MAIN CONTAINER -->
     <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
         <div class="branding-header">
             <div class="institute-name">Vardaan Learning Institute</div>
             <div class="system-name">Class 8 Computer • Chapter Notes</div>
-            <div class="contact-info"><span>🌐 vardaanlearning.com</span><span>📞 9508841336</span></div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
         </div>
 
+        <!-- DYNAMIC CONTENT STARTS HERE -->
         <h1>Computer Networking</h1>
-
-        <div class="blue-box"><span class="box-label">Concept</span><p>A <strong>computer network</strong> is a group of two or more computers connected together so that they can share data, software, printers, and an internet connection.</p></div>
-
-        <h2>1. Why Networks Are Needed</h2>
-        <ul>
-            <li>To share resources like printers, files, and internet.</li>
-            <li>To communicate quickly using email, chat, or video calls.</li>
-            <li>To save time and money by reducing duplicate work.</li>
-            <li>To manage data in schools, offices, banks, and homes.</li>
-        </ul>
+        
+        <h2>1. Introduction to Computer Networking</h2>
+        <p><strong>Computer networking</strong> is the interconnection of various computers for the purpose of communication. This communication includes the exchange of data, file transfer with the help of computer systems, software applications, and users.</p>
+        <p>A network can exist between just two computers or between hundreds and thousands of computers. Two devices are said to be networked when a process in one device is able to exchange information with a process in another device.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <h3>What is a Node?</h3>
+            <p>The computers that are involved in the network that originate, route, and terminate the data are called <strong>nodes</strong>. The interconnection of these computers is accomplished with a combination of cable or wireless media and networking hardware.</p>
+        </div>
 
         <h2>2. Components of a Network</h2>
+        <p>Networking two or more computers together requires a basic understanding of computer hardware and software. The primary components involved in data communication include:</p>
         <ul>
-            <li><strong>Nodes:</strong> Devices such as computers, printers, and servers.</li>
-            <li><strong>Transmission Media:</strong> The path used to send data, such as cables or wireless signals.</li>
-            <li><strong>Network Interface Card (NIC):</strong> The hardware that connects a device to a network.</li>
-            <li><strong>Protocols:</strong> Rules that control how data is sent and received.</li>
+            <li><strong>Sender:</strong> A device that sends a message (text, numbers, pictures, etc.). It is also called the source or transmitter. Normally, a computer is used as a sender.</li>
+            <li><strong>Receiver:</strong> A device that receives the message. It is also called the sink. A receiver can be a computer, printer, or another computer-related device.</li>
+            <li><strong>Medium:</strong> The physical path that connects the sender and receiver used to transmit data. Examples include copper wire, fiber optic cable, or microwaves. It is also known as a <strong>communication channel</strong>.</li>
         </ul>
 
-        <h2>3. Types of Networks</h2>
-        <h3>A. LAN</h3>
-        <p>A <strong>Local Area Network</strong> connects computers within a small area like a room, school, or office.</p>
-        <h3>B. MAN</h3>
-        <p>A <strong>Metropolitan Area Network</strong> covers a city or a large campus.</p>
-        <h3>C. WAN</h3>
-        <p>A <strong>Wide Area Network</strong> covers a very large area such as a country or the whole world. The internet is the largest WAN.</p>
+        <h2>3. Network Topology</h2>
+        <p>A network topology is the arrangement of the various elements (nodes) of a computer network. It indicates how data flows within a network, regardless of its physical design.</p>
 
-        <div class="green-box"><span class="box-label">Fact</span><p>In a <strong>client-server network</strong>, the server stores and controls data while the clients request and use the services.</p></div>
-
-        <h2>4. Topologies</h2>
-        <p><strong>Network topology</strong> means the arrangement of computers in a network.</p>
+        <h3>Common Network Topologies</h3>
         <ul>
-            <li><strong>Bus:</strong> All computers share one main cable.</li>
-            <li><strong>Star:</strong> All computers connect to a central hub or switch.</li>
-            <li><strong>Ring:</strong> Computers are connected in a circle.</li>
-            <li><strong>Mesh:</strong> Every device is connected to many others.</li>
+            <li><strong>Star Topology:</strong> One of the most common network setups where each of the devices on a network connects to a <strong>central hub or switch</strong>. Data transferred first comes to the central hub and then goes to the respective system. Easy to install and manage.</li>
+            <li><strong>Ring Topology:</strong> All devices are connected to one another in the shape of a closed loop. Each device is connected directly to two other devices. They offer high bandwidth but are on the verge of extinction.</li>
+            <li><strong>Bus Topology:</strong> All devices are connected to a central cable called the <strong>bus or backbone</strong>. It is simple, relatively inexpensive, and easy to install for small networks.</li>
+            <li><strong>Tree Topology:</strong> Connects multiple star networks to other star networks along a linear bus backbone. Also referred to as <strong>star bus topology</strong>.</li>
+            <li><strong>Hybrid Topology:</strong> Uses a combination of any two or more basic topologies in a way that the resulting network does not exhibit one of the standard topologies.</li>
         </ul>
 
-        <h2>5. Networking Hardware</h2>
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <h3>Single Point of Failure</h3>
+            <p>In a <strong>Star Topology</strong>, the hub represents a single point of failure; if the central hub fails, all connected computers disconnect. Similarly, in a <strong>Bus Topology</strong>, if the main cable fails, all the other connected computers will die.</p>
+        </div>
+
+        <h2>4. Networking Hardware</h2>
+        <p>Networking hardware includes the important physical components required to create a computer network.</p>
         <ul>
-            <li><strong>Hub:</strong> Sends data to all devices.</li>
-            <li><strong>Switch:</strong> Sends data only to the correct device.</li>
-            <li><strong>Router:</strong> Connects different networks and shares internet.</li>
-            <li><strong>Modem:</strong> Converts signals for communication over telephone lines.</li>
-            <li><strong>Repeater:</strong> Extends signal strength over long distances.</li>
+            <li><strong>Network Interface Cards (NIC):</strong> Provides the physical connection between the network and the computer workstation. It determines the speed and performance of a network connection for that specific system.</li>
+            <li><strong>Hub:</strong> A network device that sends one signal to all of the stations connected to it. It takes data coming into a port and sends it out to all the other ports.</li>
+            <li><strong>Switch:</strong> Splits large networks into small segments, decreasing the number of users sharing the same network resources and bandwidth. It gives two communicating devices a switched connection and helps prevent data collisions.</li>
+            <li><strong>Router:</strong> A device that connects any number of LANs. It uses standardized protocols to forward data efficiently to their destination based on the <strong>Network Address (IP)</strong>, not the Hardware (MAC) address.</li>
         </ul>
 
-        <h2>6. Internet Terms</h2>
+        <h2>5. Types of Networks</h2>
+        <p>Networks can be characterized by their physical capacity, organizational purpose, scale, and scope.</p>
         <ul>
-            <li><strong>IP Address:</strong> A unique number used to identify a device on a network.</li>
-            <li><strong>URL:</strong> The web address of a resource on the internet.</li>
-            <li><strong>WWW:</strong> The World Wide Web, a collection of web pages linked together.</li>
-            <li><strong>Browser:</strong> Software used to access websites.</li>
+            <li><strong>LAN (Local Area Network):</strong> Designed to operate over a small physical area such as an office, factory, or a group of buildings. Privately owned.</li>
+            <li><strong>PAN (Personal Area Network):</strong> Used for communication among computer devices in proximity to an individual's body (a few metres). It can be wired (USB) or wireless (Bluetooth).</li>
+            <li><strong>MAN (Metropolitan Area Network):</strong> Connects two or more computers that are geographically separated but located in the same metropolitan city.</li>
+            <li><strong>WAN (Wide Area Network):</strong> Covers a large geographic area such as a country, continent, or the whole world. It is two or more LANs connected together (e.g., an airline reservation system).</li>
+            <li><strong>CAN (Campus Area Network):</strong> An interconnection of LANs within a limited geographical area, usually established in a university campus.</li>
         </ul>
 
-        <div class="yellow-box"><span class="box-label">Important</span><p><strong>Protocol</strong> is a very important networking concept. It defines the rules for communication, so different computers can understand each other correctly.</p></div>
+        <h2>6. Network Protocols</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <h3>What is a Protocol?</h3>
+            <p>A protocol is a system of rules that defines how data is transmitted over a network. It is a standardized method for establishing communications between different devices.</p>
+        </div>
+        
+        <ul>
+            <li><strong>IP (Internet Protocol):</strong> A network-layer protocol that contains addressing information enabling packets to be routed. It represents the heart of internet protocols.</li>
+            <li><strong>TCP (Transmission Control Protocol):</strong> Provides reliable transmission of data in an IP environment. It ensures reliable end-to-end packet delivery.</li>
+            <li><strong>HTTP (Hyper Text Transfer Protocol):</strong> Controls how Web servers and Web browsers communicate. It is a stateless protocol.</li>
+            <li><strong>FTP (File Transfer Protocol):</strong> Provides a method for copying files over a network from one computer to another (uploading and downloading).</li>
+            <li><strong>SMTP (Simple Mail Transfer Protocol):</strong> Used for sending e-mail messages between servers across the Internet.</li>
+            <li><strong>IMAP (Internet Message Access Protocol):</strong> A standard e-mail protocol that stores e-mail messages on a mail server but allows the user to view and organize them as though they were stored locally.</li>
+        </ul>
 
-        <div class="branding-footer"><p class="created-by">Created by Team Vardaan ❤️</p><p class="powered-by">Powered by Vardaan Comet</p></div>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <h3>The Inventors of TCP/IP</h3>
+            <p><strong>Robert Elliot "Bob" Kahn</strong>, an American Internet pioneer, engineer, and computer scientist, along with <strong>Vint Cerf</strong>, invented the Transmission Control Protocol (TCP) and the Internet Protocol (IP), the fundamental communication protocols at the heart of the Internet.</p>
+        </div>
+
+        <h2>7. Important Internet Terms</h2>
+        <ul>
+            <li><strong>Intranet:</strong> A private network based on TCP/IP protocols belonging to an organization, accessible only by its authorized members.</li>
+            <li><strong>URL:</strong> Stands for Uniform Resource Locator. The fundamental network identification address on the World Wide Web.</li>
+            <li><strong>IP Address:</strong> An identifier for a computer or device on a TCP/IP network.</li>
+            <li><strong>ISP:</strong> Internet Service Provider. A company that provides customers with internet access (e.g., BSNL, Airtel, Jio).</li>
+            <li><strong>DNS:</strong> Domain Name System. Translates domain names (which computers understand) into IP addresses.</li>
+            <li><strong>Web Portal:</strong> A website offering a broad range of resources and services like emails, forums, and search engines (e.g., Yahoo).</li>
+            <li><strong>Modem:</strong> A network device that modulates and demodulates analog carrier signals for encoding and decoding digital information.</li>
+            <li><strong>Hyperlink / Link:</strong> An HTML object attached to text or images that allows a user to jump to a new location.</li>
+            <li><strong>Gateway:</strong> A communication device that acts as a "gate" between two networks, allowing traffic to flow in and out.</li>
+            <li><strong>Bandwidth:</strong> The capacity of a communications link to transmit the maximum amount of data in a given amount of time (measured in bps).</li>
+            <li><strong>Website & Web Page:</strong> A website is a collection of related pages. A web page is a single document/file containing information.</li>
+        </ul>
+
+        <h2>8. Cloud Computing</h2>
+        <p>In computer terminology, <strong>Cloud</strong> refers to a Network or Internet. <strong>Cloud Computing</strong> refers to accessing and manipulating hardware and software resources remotely. Instead of using your local system's hardware, it is provided to you as a service over the internet (e.g., Google Docs, Gmail).</p>
+
+        <h3>Characteristics of Cloud Computing</h3>
+        <ul>
+            <li><strong>On-demand self-service:</strong> Consumers can use facilities without requiring human interaction.</li>
+            <li><strong>Broad Network Access:</strong> Completely web-based; accessible from anywhere at any time.</li>
+            <li><strong>Resource Pooling:</strong> Provider pools IT resources to serve multiple consumers dynamically.</li>
+            <li><strong>Rapid Elasticity:</strong> The ability to deal with increasing or decreasing demand quickly.</li>
+            <li><strong>Measured Usage Service:</strong> Keeps track of resource usage and bills consumers accordingly.</li>
+        </ul>
+
+        <h3>Advantages and Disadvantages</h3>
+        <ul>
+            <li><strong>Benefits:</strong> Highly cost-effective (lowers hardware/software costs), regular automated software updates, better computing power, and virtually unlimited storage capacity.</li>
+            <li><strong>Disadvantages:</strong> Greater dependency on service providers, privacy and security risks (data is on someone else's system), and a reliable internet connection is strictly required.</li>
+        </ul>
+
+        <h3>Web 2.0</h3>
+        <p><strong>Web 2.0</strong> is a collective term for web-based technologies that allow people to collaborate and share information online via social media, blogging, and social network sites.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
     </div>
 
+    <!-- THEME TOGGLE SCRIPT -->
     <script>
-        function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
     </script>
 </body>
 </html>
