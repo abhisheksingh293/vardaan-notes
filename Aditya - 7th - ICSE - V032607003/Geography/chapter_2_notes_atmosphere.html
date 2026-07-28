@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Chapter 2: Atmosphere - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px; /* Adjusted padding for better mobile view */
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2rem; /* Adjusted for smaller screens */
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem; /* Adjusted for smaller screens */
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.2rem; /* Adjusted for smaller screens */
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- MEDIA QUERIES FOR RESPONSIVENESS --- */
+        @media (min-width: 768px) {
+            .paper-sheet {
+                padding: 40px; /* Larger padding for tablets and up */
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+            h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer needs to show) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            /* Ensure branding footer is shown */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Chapter 2: Atmosphere</h1>
+        
+        <h2>1. Introduction to Atmosphere</h2>
+        <p>The Earth is a unique planet because of the presence of life. <strong>Air</strong> is one of the essential conditions for life to exist.</p>
+        
+        <div class="blue-box"><span class="box-label">Concept</span>
+            <p><strong>Atmosphere:</strong> The air surrounding the Earth is called the atmosphere. It is a mixture of different gases, water vapour, and dust particles. It envelops the Earth and is held in place by Earth's <strong>gravity</strong>.</p>
+        </div>
+
+        <p>It extends up to about <strong>1600 km</strong> from the Earth's surface, but <strong>99%</strong> of its total mass is confined within <strong>32 km</strong> from the surface.</p>
+
+        <h2>2. Composition of the Atmosphere</h2>
+        <p>The composition is not static; it changes according to time and place. 99% of the atmosphere consists of Nitrogen and Oxygen.</p>
+        
+        <ul>
+            <li><strong>Nitrogen:</strong> 78.09%</li>
+            <li><strong>Oxygen:</strong> 20.95%</li>
+            <li><strong>Argon:</strong> 0.93%</li>
+            <li><strong>Carbon dioxide:</strong> 0.039%</li>
+            <li><strong>Neon:</strong> 0.0018%</li>
+            <li><strong>Helium:</strong> 0.0005%</li>
+            <li><strong>Ozone:</strong> 0.00006%</li>
+            <li><strong>Hydrogen:</strong> 0.00005%</li>
+            <li><strong>Krypton:</strong> 0.0001%</li>
+            <li><strong>Xenon:</strong> 0.000009%</li>
+        </ul>
+
+        <h3>Importance of Atmospheric Components</h3>
+        
+        <div class="green-box"><span class="box-label">Fact</span>
+            <p><strong>Nitrogen</strong> is present in all living organisms and is crucial for their growth.</p>
+        </div>
+
+        <ul>
+            <li><strong>Oxygen:</strong> Essential for breathing and survival of living beings.</li>
+            <li><strong>Carbon dioxide:</strong> Produced during respiration by humans, animals, and microorganisms, and used by plants during <strong>photosynthesis</strong>. It is also a key contributor to the greenhouse effect.</li>
+            <li><strong>Ozone:</strong> Found mainly between 10 to 50 km above the surface. It acts as a filter, absorbing harmful <strong>ultraviolet (UV) radiation</strong> from the Sun.</li>
+            <li><strong>Water Vapour:</strong> The gaseous form of water, the source of all precipitation. It decreases with altitude. It absorbs insolation and preserves radiated heat, acting like a blanket to regulate Earth's temperature.</li>
+            <li><strong>Dust Particles:</strong> Found in the lower layers (sand, smoke, soot, salt, ash, pollen). They act as nuclei around which water vapour condenses to form droplets and <strong>clouds</strong>.</li>
+        </ul>
+
+        <h2>3. Structure of the Atmosphere</h2>
+        <p>The atmosphere is divided into five layers based on temperature and density diversity.</p>
+
+        <h3>i. Troposphere</h3>
+        <ul>
+            <li>The lowest layer.</li>
+            <li>Height: ~18 km at the Equator and ~8 km at the poles (thicker at the Equator due to strong convectional currents).</li>
+            <li>Contains dust particles and water vapour.</li>
+            <li>All weather changes happen here, hence the air is never static (also called the <strong>changing sphere</strong>).</li>
+            <li>Temperature decreases with increasing height.</li>
+        </ul>
+        
+        <div class="blue-box"><span class="box-label">Concept</span>
+            <p><strong>Normal Lapse Rate:</strong> The rate at which temperature decreases with height in the troposphere, which is <strong>1 degree Celsius for every 165 meters</strong> of height.</p>
+        </div>
+        
+        <p>The zone separating the troposphere from the stratosphere is the <strong>tropopause</strong>.</p>
+
+        <h3>ii. Stratosphere</h3>
+        <ul>
+            <li>Found just above the tropopause, extending up to <strong>50 km</strong>.</li>
+            <li>Temperature remains almost constant up to 20 km, then increases due to the presence of <strong>ozone gas</strong>.</li>
+            <li>Weather-related incidents do not occur here, making it ideal for flying aircraft.</li>
+            <li>The upper limit is the <strong>stratopause</strong>.</li>
+        </ul>
+
+        <div class="yellow-box"><span class="box-label">Important</span>
+            <p><strong>Ozonosphere:</strong> The lower portion of the stratosphere (20 to 30 km above the surface) contains a high concentration of ozone. This layer is crucial as it absorbs most of the Sun's harmful <strong>UV radiation</strong>.</p>
+        </div>
+
+        <h3>iii. Mesosphere</h3>
+        <ul>
+            <li>Extends from 50 km to <strong>80 km</strong>.</li>
+            <li>Temperature decreases with altitude, reaching up to <strong>-100 degrees Celsius</strong> at 80 km, making it the <strong>coldest layer</strong>.</li>
+            <li>Meteors (falling stars) burn up in this layer due to friction.</li>
+            <li>The upper limit is the <strong>mesopause</strong>.</li>
+        </ul>
+
+        <h3>iv. Thermosphere (Ionosphere)</h3>
+        <ul>
+            <li>Located between 80 and <strong>400 km</strong>.</li>
+            <li>Contains electrically charged particles called <strong>ions</strong>, hence it's also known as the Ionosphere.</li>
+            <li>Crucial for radio broadcasting as it reflects radio waves back to Earth.</li>
+            <li>Temperature increases with height; absorption of solar energy makes it the <strong>hottest layer</strong>.</li>
+        </ul>
+
+        <h3>v. Exosphere</h3>
+        <ul>
+            <li>The uppermost layer.</li>
+            <li>Density of gases is extremely low due to a lack of gravitational force.</li>
+            <li>The atmosphere here is very thin and rarefied.</li>
+        </ul>
+
+        <h2>4. The Ozone Layer</h2>
+        <p>Discovered in 1913 by French physicists Charles Fabry and Henri Buisson. It absorbs 97-99% of harmful UV radiation.</p>
+
+        <h3>Ozone Depletion</h3>
+        <p>Scientific studies confirm that depletion is caused by human activities, specifically chemicals containing <strong>chlorine or bromine</strong>. A significant thinning over Antarctica in spring has led to the <strong>ozone hole</strong>.</p>
+
+        <h3>Effects of Ozone Depletion</h3>
+        <ul>
+            <li>Overexposure to UV light causes skin cancer, cataracts, sunburns, weakened immune systems, and quick ageing in humans.</li>
+            <li>Crops (barley, wheat, corn, rice, etc.) face minimal growth and reduced photosynthesis.</li>
+            <li>Marine life, especially <strong>planktons</strong> (base of the aquatic food chain), are greatly impacted, disrupting the marine ecosystem.</li>
+            <li>Excess UV radiation can degrade materials like plastics, wood, and rubber.</li>
+        </ul>
+
+        <h2>5. The Greenhouse Effect</h2>
+        
+        <div class="blue-box"><span class="box-label">Concept</span>
+            <p><strong>Greenhouse Effect:</strong> A process where certain gases in the atmosphere (like carbon dioxide) let in sunlight but trap the radiating heat from escaping, similar to the glass walls of a greenhouse. This keeps the Earth's climate livable.</p>
+        </div>
+
+        <p>Discovered mathematically by Joseph Fourier in 1824 and linked to human enhancement (by increasing carbon dioxide) by Svante Arrhenius in 1896.</p>
+
+        <h3>Impact of Greenhouse Gases (Global Warming)</h3>
+        <p>A rapid rise in these gases changes the climate faster than some living things can adapt. It causes:</p>
+        <ul>
+            <li>Melting of ice sheets (Greenland, Antarctica), potentially raising sea levels significantly.</li>
+            <li>More extreme weather: intense storms, heavy rains followed by longer droughts.</li>
+        </ul>
+
+        <h2>6. Global Warming</h2>
+        
+        <div class="yellow-box"><span class="box-label">Important</span>
+            <p><strong>Global Warming</strong> occurs when carbon dioxide, other air pollutants, and greenhouse gases collect in the atmosphere, trapping sunlight and solar radiation that has bounced off the Earth's surface, causing the planet to get hotter.</p>
+        </div>
+
+        <h3>Impacts:</h3>
+        <ul>
+            <li>Extreme heat waves causing deaths worldwide.</li>
+            <li>Rapid loss of ice in Antarctica.</li>
+            <li>Water shortages and increased risk of wildfires due to melting glaciers and severe droughts.</li>
+            <li>Coastal flooding due to rising sea levels.</li>
+            <li>Damage to agriculture, fisheries, and disruption of habitats (like coral reefs).</li>
+            <li>Increase in allergies, asthma, and infectious diseases.</li>
+            <li>Shifts in plant and animal ranges, threatening some with extinction.</li>
+        </ul>
+
+        <h3>Ways to Reduce Global Warming</h3>
+        <ul>
+            <li>Replace incandescent bulbs with <strong>CFLs</strong> (consume 70% less energy).</li>
+            <li>Reduce fuel consumption by driving less, carpooling, walking, or cycling.</li>
+            <li>Follow the 3 R's: Reduce, <strong>Reuse</strong> (bottles, containers), and Recycle to minimize landfill waste (which produces methane).</li>
+            <li>Use eco-friendly products and minimize packaging waste.</li>
+            <li>Switch to energy-efficient appliances and renewable energy like <strong>solar power</strong>.</li>
+            <li>Turn off lights and electronics when not in use.</li>
+            <li><strong>Plant trees:</strong> They absorb carbon dioxide during photosynthesis.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

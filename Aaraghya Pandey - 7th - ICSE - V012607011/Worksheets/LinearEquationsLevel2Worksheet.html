@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* Level 2: Medium / Standard (Blue) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .institute-name { font-size: 18pt !important; }
+            .tagline { font-size: 12pt !important; }
+            .worksheet-title { font-size: 14pt !important; }
+            .meta-info { flex-direction: column; gap: 8px; text-align: center; font-size: 10pt !important; }
+            .meta-info span { display: block; }
+            .chapter-header { font-size: 11pt !important; }
+            .questions-grid { grid-template-columns: 1fr !important; }
+            .question-item { margin-bottom: 12px; }
+            .answer-table { font-size: 9pt !important; }
+            .answer-table th, .answer-table td { padding: 4px !important; }
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .questions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+
+        /* --- ANSWER TABLE STYLING --- */
+        .answer-section { margin-top: 40px; page-break-before: always; }
+        .answer-table { 
+            width: 100%; border-collapse: collapse; margin-top: 15px; 
+            background-color: var(--body-bg); color: var(--text-main);
+        }
+        .answer-table th, .answer-table td { 
+            border: 1px solid var(--border-color); padding: 8px; text-align: center; font-size: 11pt; 
+        }
+        .answer-table th { background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 600px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .answer-table th { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Level 2 Worksheet: Linear Equations in One Variable</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span> 
+                <span>Class: 7 ICSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Solving Simple Linear Equations</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Solve the following equations using the method of transposition.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">$x + 5 = 12$</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">$y - 3 = 8$</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">$4x = 20$</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">$\frac{a}{3} = 7$</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">$2x + 3 = 11$</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">$5y - 2 = 18$</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">$3m - 7 = 14$</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">$4p + 5 = 21$</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">$7x - 4 = 3x + 16$</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">$5a + 2 = 2a + 17$</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">$8y - 3 = 5y + 12$</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">$2(x - 3) = 10$</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">$3(2y - 1) = 15$</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">$4(m + 2) = 2(m + 8)$</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">$5(p - 1) = 3(p + 3)$</div></div>
+        </div>
+
+        <div class="chapter-header">Section B: Equations with Fractions and Decimals</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Find the value of the unknown variable in the given equations.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">$\frac{x}{2} + \frac{x}{3} = 5$</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">$\frac{y}{4} - \frac{y}{5} = 2$</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">$\frac{2a}{3} + 1 = 5$</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">$\frac{3m}{4} - 2 = 7$</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">$\frac{x+1}{2} = 4$</div></div>
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">$\frac{2y-3}{5} = 3$</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">$\frac{a}{2} + \frac{a}{4} = 6$</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">$\frac{3p}{5} - \frac{p}{2} = 1$</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">$2(x - \frac{1}{2}) = 3$</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">$\frac{x}{3} + 5 = \frac{x}{2}$</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">$\frac{3x - 1}{4} = 2$</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">$\frac{5y + 2}{3} = y + 4$</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">$\frac{x-2}{3} = \frac{x+1}{4}$</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">$0.5x + 1.2 = 3.2$</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">$1.5y - 2 = 0.5y + 4$</div></div>
+        </div>
+
+        <div class="chapter-header">Section C: Advanced Solving & Cross-Multiplication</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Solve the following equations by utilizing brackets expansion and cross-multiplication.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">$\frac{2x+1}{3x-2} = \frac{5}{4}$</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">$\frac{x+3}{x-3} = 2$</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">$\frac{3a-2}{2a+1} = \frac{4}{3}$</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">$\frac{5m-1}{2m+3} = 2$</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">$\frac{4y+1}{3y-1} = \frac{9}{5}$</div></div>
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">$\frac{x-1}{x+1} = \frac{2}{3}$</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">$\frac{2p+5}{p+4} = 1$</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">$\frac{7x-2}{5x+4} = 1$</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">$3(x-2) - 2(x-3) = 4$</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">$5(y-1) - 4(y-2) = 6$</div></div>
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">$\frac{x}{2} - \frac{1}{4} = \frac{x}{3} + \frac{1}{2}$</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">$\frac{2x}{3} + 1 = \frac{7x}{15} + 3$</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">$0.25(4x - 12) = 2x - 9$</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">$2x - (3x - 4) = 3x - 12$</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">$x - [2x - (3x - 4)] = 5$</div></div>
+        </div>
+
+        <div class="chapter-header">Section D: Practical Application & Word Problems</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">Twice a number added to 5 gives 17. Find the number.</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">A number decreased by 8 is 22. Find the number.</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">The sum of two consecutive integers is 35. Find the integers.</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">The sum of three consecutive even numbers is 42. Find the numbers.</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">A father is 30 years older than his son. In 12 years, the man will be three times as old as his son. Find their present ages.</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">The length of a rectangle is 5 cm more than its breadth. If the perimeter is 50 cm, find its length and breadth.</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">The sum of two numbers is 45. One number is 4 times the other. Find the numbers.</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">A purse contains ₹1 and ₹2 coins. The total number of coins is 20 and their total value is ₹35. Find the number of ₹2 coins.</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">The denominator of a fraction is 3 more than its numerator. If 2 is added to both, the fraction becomes $\frac{1}{2}$. Find the original fraction.</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">In an isosceles triangle, the base angles are equal. The vertex angle is 40°. Find the measure of the base angles.</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">Two angles are supplementary. One angle is 30° more than the other. Find the angles.</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">A number when multiplied by 5 and reduced by 3 gives 32. Find the number.</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">The ages of Rahul and Haroon are in the ratio 5:7. Four years later the sum of their ages will be 56 years. What are their present ages?</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">I have a total of ₹300 in coins of denomination ₹1, ₹2 and ₹5. The number of ₹2 coins is 3 times the number of ₹5 coins. The total number of coins is 160. How many coins of each denomination are with me?</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">One-fifth of a number minus 4 gives 3. Find the number.</div></div>
+        </div>
+
+        <div class="answer-section">
+            <div class="chapter-header">Solution Key</div>
+            <table class="answer-table">
+                <thead>
+                    <tr>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>$x = 7$</td><td>16</td><td>$x = 6$</td><td>31</td><td>$x = 2$</td><td>46</td><td>6</td></tr>
+                    <tr><td>2</td><td>$y = 11$</td><td>17</td><td>$y = 40$</td><td>32</td><td>$x = 9$</td><td>47</td><td>30</td></tr>
+                    <tr><td>3</td><td>$x = 5$</td><td>18</td><td>$a = 6$</td><td>33</td><td>$a = 10$</td><td>48</td><td>17 and 18</td></tr>
+                    <tr><td>4</td><td>$a = 21$</td><td>19</td><td>$m = 12$</td><td>34</td><td>$m = 7$</td><td>49</td><td>12, 14, 16</td></tr>
+                    <tr><td>5</td><td>$x = 4$</td><td>20</td><td>$x = 7$</td><td>35</td><td>$y = 2$</td><td>50</td><td>Son: 3 yrs, Father: 33 yrs</td></tr>
+                    <tr><td>6</td><td>$y = 4$</td><td>21</td><td>$y = 9$</td><td>36</td><td>$x = 5$</td><td>51</td><td>b = 10 cm, l = 15 cm</td></tr>
+                    <tr><td>7</td><td>$m = 7$</td><td>22</td><td>$a = 8$</td><td>37</td><td>$p = -1$</td><td>52</td><td>9 and 36</td></tr>
+                    <tr><td>8</td><td>$p = 4$</td><td>23</td><td>$p = 10$</td><td>38</td><td>$x = 3$</td><td>53</td><td>15 coins</td></tr>
+                    <tr><td>9</td><td>$x = 5$</td><td>24</td><td>$x = 2$</td><td>39</td><td>$x = 4$</td><td>54</td><td>$1/4$</td></tr>
+                    <tr><td>10</td><td>$a = 5$</td><td>25</td><td>$x = 30$</td><td>40</td><td>$y = 3$</td><td>55</td><td>70° each</td></tr>
+                    <tr><td>11</td><td>$y = 5$</td><td>26</td><td>$x = 3$</td><td>41</td><td>$x = 4.5$</td><td>56</td><td>75° and 105°</td></tr>
+                    <tr><td>12</td><td>$x = 8$</td><td>27</td><td>$y = 5$</td><td>42</td><td>$x = 10$</td><td>57</td><td>7</td></tr>
+                    <tr><td>13</td><td>$y = 3$</td><td>28</td><td>$x = 11$</td><td>43</td><td>$x = 6$</td><td>58</td><td>20 yrs and 28 yrs</td></tr>
+                    <tr><td>14</td><td>$m = 4$</td><td>29</td><td>$x = 4$</td><td>44</td><td>$x = 4$</td><td>59</td><td>₹5=20, ₹2=60, ₹1=80</td></tr>
+                    <tr><td>15</td><td>$p = 7$</td><td>30</td><td>$y = 6$</td><td>45</td><td>$x = 4.5$</td><td>60</td><td>35</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

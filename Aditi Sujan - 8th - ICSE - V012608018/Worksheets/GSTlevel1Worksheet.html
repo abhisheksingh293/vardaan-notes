@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - GST Worksheet (Level 1)</title>
+    
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* Level 1: Easy / Foundation (Green) */
+            --primary-color: #2e7d32; 
+            --bg-color: #e8f5e9;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #81c784;   /* Lighter green for readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .institute-name { font-size: 18pt !important; }
+            .tagline { font-size: 12pt !important; }
+            .worksheet-title { font-size: 14pt !important; }
+            .meta-info { flex-direction: column; gap: 8px; text-align: center; font-size: 10pt !important; }
+            .meta-info span { display: block; }
+            .chapter-header { font-size: 11pt !important; }
+            .questions-grid { grid-template-columns: 1fr !important; }
+            .question-item { margin-bottom: 12px; }
+            .answer-table { font-size: 9pt !important; }
+            .answer-table th, .answer-table td { padding: 4px !important; }
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .questions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+
+        /* --- ANSWER TABLE STYLING --- */
+        .answer-section { margin-top: 40px; page-break-before: always; }
+        .answer-table { 
+            width: 100%; border-collapse: collapse; margin-top: 15px; 
+            background-color: var(--body-bg); color: var(--text-main);
+        }
+        .answer-table th, .answer-table td { 
+            border: 1px solid var(--border-color); padding: 8px; text-align: center; font-size: 11pt; 
+        }
+        .answer-table th { background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 600px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .answer-table th { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Level 1 Worksheet: Goods and Services Tax (GST)</div>
+            <div class="meta-info">
+                <span>Especially designed for: Aditi Sujan</span> 
+                <span>Class: 8 ICSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- SECTION A -->
+        <div class="chapter-header">Section A: Basic Concepts & Definitions</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Answer the following basic questions based on the concepts of GST.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">What is the full form of GST?</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">What does CGST stand for?</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">What does SGST stand for?</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">What does IGST stand for?</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">For intra-state sales (within the same state), GST is divided into _________ and _________.</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">For inter-state sales (between two different states), which tax is collected?</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">If the total GST rate is 18%, what is the CGST rate?</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">If the total GST rate is 12%, what is the SGST rate?</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">GST is always calculated on the (Selling Price / Marked Price) after a discount is applied.</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">Is IGST shared half-and-half between the State and the Centre? (Yes / No)</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">A transaction where goods are sold within the same state is called an ___________ transaction.</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">A transaction where goods are sold from one state to another is called an ___________ transaction.</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">If IGST is 28%, what is the total GST rate on the product?</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">If CGST is 2.5%, what is the total GST rate?</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">If SGST is 9%, what is the CGST rate?</div></div>
+        </div>
+
+        <!-- SECTION B -->
+        <div class="chapter-header">Section B: Calculating GST Amount</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Calculate the required tax amount based on the given Selling Price (S.P.) and total GST percentage.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">S.P. = ₹1000, GST = 5%. Find total GST.</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">S.P. = ₹2000, GST = 12%. Find total GST.</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">S.P. = ₹500, GST = 18%. Find CGST.</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">S.P. = ₹800, GST = 5%. Find SGST.</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">S.P. = ₹1500, GST = 12%. Find IGST.</div></div>
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">S.P. = ₹4000, GST = 18%. Find CGST.</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">S.P. = ₹300, GST = 5%. Find SGST.</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">S.P. = ₹1200, GST = 28%. Find total GST.</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">S.P. = ₹2500, GST = 12%. Find CGST.</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">S.P. = ₹10000, GST = 18%. Find IGST.</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">S.P. = ₹50, GST = 12%. Find total GST.</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">S.P. = ₹600, GST = 18%. Find SGST.</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">S.P. = ₹750, GST = 5%. Find IGST.</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">S.P. = ₹5000, GST = 28%. Find CGST.</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">S.P. = ₹3500, GST = 12%. Find total GST.</div></div>
+        </div>
+
+        <!-- SECTION C -->
+        <div class="chapter-header">Section C: Calculating Total Bill Amount</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Calculate the Total Bill Amount (Selling Price + GST) for the following transactions.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">S.P. = ₹100, GST = 5%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">S.P. = ₹200, GST = 12%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">S.P. = ₹500, GST = 18%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">S.P. = ₹1000, GST = 5%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">S.P. = ₹1500, GST = 12%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">S.P. = ₹2000, GST = 18%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">S.P. = ₹400, GST = 5%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">S.P. = ₹800, GST = 12%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">S.P. = ₹2500, GST = 18%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">S.P. = ₹3000, GST = 28%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">S.P. = ₹50, GST = 12%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">S.P. = ₹700, GST = 18%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">S.P. = ₹1200, GST = 5%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">S.P. = ₹5000, GST = 18%. Bill = ?</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">S.P. = ₹10000, GST = 28%. Bill = ?</div></div>
+        </div>
+
+        <!-- SECTION D -->
+        <div class="chapter-header">Section D: Word Problems</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">Aditi Sujan bought a school bag for ₹800. The GST rate on the bag is 12%. What is the total GST amount she has to pay?</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">Aditi bought a pair of shoes for ₹1500 (selling price). If the GST charged is 18%, find the total final amount paid by her.</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">A shopkeeper in Delhi sells a textbook to Aditi (who also lives in Delhi) for ₹400. If GST is 5%, calculate the CGST amount.</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">Aditi orders a dress from a store in Mumbai to her home in Pune (Intra-state). The price of the dress is ₹2000 and GST is 12%. Find the SGST she pays.</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">Aditi buys a laptop for ₹30,000 from a store in another state. The IGST rate is 18%. Find the IGST amount collected.</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">Aditi purchased stationary worth ₹500. The GST applied is 5%. What is her final bill amount?</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">Aditi bought a mobile phone whose selling price is ₹10,000. If the GST is 18%, find the total bill she receives.</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">Aditi goes to a restaurant for dinner. The food bill before tax is ₹1200. If CGST is 2.5% and SGST is 2.5%, find the total tax she paid.</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">Aditi buys a watch marked at ₹2500. The shop gives her a discount of ₹500. On the discounted price, a 12% GST is applied. Find the GST amount she pays.</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">Aditi purchased a bicycle for ₹4000 from a seller in a neighboring state. The IGST applied is 12%. Find the total amount Aditi has to pay.</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">Aditi buys cosmetics worth ₹800 within her city. The GST rate is 18%. Find the individual CGST and SGST amounts.</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">For her birthday, Aditi buys premium chocolates worth ₹600. The GST on chocolates is 18%. What is the final amount she pays?</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">Aditi buys a smart TV for ₹20,000. If the shopkeeper tells her the CGST is 9%, what is the total GST percentage on the TV?</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">Aditi purchased a winter jacket for ₹1500 with a 5% GST. How much money went towards the GST?</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">Aditi bought a video game console for ₹3000 from a seller in her own state. If the GST is 28%, what is the final bill amount?</div></div>
+        </div>
+
+        <!-- Answer Key Section -->
+        <div class="answer-section">
+            <div class="chapter-header">Solution Key</div>
+            <table class="answer-table">
+                <thead>
+                    <tr>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Goods and Services Tax</td><td>16</td><td>₹50</td><td>31</td><td>₹105</td><td>46</td><td>₹96</td></tr>
+                    <tr><td>2</td><td>Central Goods and Services Tax</td><td>17</td><td>₹240</td><td>32</td><td>₹224</td><td>47</td><td>₹1770</td></tr>
+                    <tr><td>3</td><td>State Goods and Services Tax</td><td>18</td><td>₹45</td><td>33</td><td>₹590</td><td>48</td><td>₹10</td></tr>
+                    <tr><td>4</td><td>Integrated Goods and Services Tax</td><td>19</td><td>₹20</td><td>34</td><td>₹1050</td><td>49</td><td>₹120</td></tr>
+                    <tr><td>5</td><td>CGST and SGST</td><td>20</td><td>₹180</td><td>35</td><td>₹1680</td><td>50</td><td>₹5400</td></tr>
+                    <tr><td>6</td><td>IGST</td><td>21</td><td>₹360</td><td>36</td><td>₹2360</td><td>51</td><td>₹525</td></tr>
+                    <tr><td>7</td><td>9%</td><td>22</td><td>₹7.50</td><td>37</td><td>₹420</td><td>52</td><td>₹11,800</td></tr>
+                    <tr><td>8</td><td>6%</td><td>23</td><td>₹336</td><td>38</td><td>₹896</td><td>53</td><td>₹60</td></tr>
+                    <tr><td>9</td><td>Selling Price</td><td>24</td><td>₹150</td><td>39</td><td>₹2950</td><td>54</td><td>₹240</td></tr>
+                    <tr><td>10</td><td>No (Collected by Centre)</td><td>25</td><td>₹1800</td><td>40</td><td>₹3840</td><td>55</td><td>₹4480</td></tr>
+                    <tr><td>11</td><td>Intra-state</td><td>26</td><td>₹6</td><td>41</td><td>₹56</td><td>56</td><td>CGST=₹72, SGST=₹72</td></tr>
+                    <tr><td>12</td><td>Inter-state</td><td>27</td><td>₹54</td><td>42</td><td>₹826</td><td>57</td><td>₹708</td></tr>
+                    <tr><td>13</td><td>28%</td><td>28</td><td>₹37.50</td><td>43</td><td>₹1260</td><td>58</td><td>18%</td></tr>
+                    <tr><td>14</td><td>5%</td><td>29</td><td>₹700</td><td>44</td><td>₹5900</td><td>59</td><td>₹75</td></tr>
+                    <tr><td>15</td><td>9%</td><td>30</td><td>₹420</td><td>45</td><td>₹12,800</td><td>60</td><td>₹3840</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

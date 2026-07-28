@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Profit and Loss Worksheet (Level 2)</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* Level 2: Medium / Standard (Blue) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue for readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .institute-name { font-size: 18pt !important; }
+            .tagline { font-size: 12pt !important; }
+            .worksheet-title { font-size: 14pt !important; }
+            .meta-info { flex-direction: column; gap: 8px; text-align: center; font-size: 10pt !important; }
+            .meta-info span { display: block; }
+            .chapter-header { font-size: 11pt !important; }
+            .questions-grid { grid-template-columns: 1fr !important; }
+            .question-item { margin-bottom: 12px; }
+            .answer-table { font-size: 9pt !important; }
+            .answer-table th, .answer-table td { padding: 4px !important; }
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .questions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+
+        /* --- ANSWER TABLE STYLING --- */
+        .answer-section { margin-top: 40px; page-break-before: always; }
+        .answer-table { 
+            width: 100%; border-collapse: collapse; margin-top: 15px; 
+            background-color: var(--body-bg); color: var(--text-main);
+        }
+        .answer-table th, .answer-table td { 
+            border: 1px solid var(--border-color); padding: 8px; text-align: center; font-size: 11pt; 
+        }
+        .answer-table th { background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 600px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .answer-table th { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Level 2 Worksheet: Profit and Loss</div>
+            <div class="meta-info">
+                <span>Especially designed for: Porshiya</span> 
+                <span>Class: 7 ICSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- SECTION A -->
+        <div class="chapter-header">Section A: Find Profit % or Loss %</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Calculate the percentage of profit or loss in the following cases. (Note: Percentage is always calculated on the C.P.)</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">C.P. = ₹200, S.P. = ₹250</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">C.P. = ₹400, S.P. = ₹360</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">C.P. = ₹500, S.P. = ₹600</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">C.P. = ₹1200, S.P. = ₹900</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">C.P. = ₹150, S.P. = ₹180</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">C.P. = ₹800, Loss = ₹160</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">C.P. = ₹1000, Profit = ₹50</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">C.P. = ₹250, S.P. = ₹200</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">C.P. = ₹600, S.P. = ₹630</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">C.P. = ₹300, S.P. = ₹360</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">C.P. = ₹750, S.P. = ₹600</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">C.P. = ₹2000, S.P. = ₹2500</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">C.P. = ₹50, S.P. = ₹40</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">C.P. = ₹1600, S.P. = ₹1680</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">C.P. = ₹100, S.P. = ₹150</div></div>
+        </div>
+
+        <!-- SECTION B -->
+        <div class="chapter-header">Section B: Find the Selling Price (S.P.)</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Calculate the Selling Price given the Cost Price and the Profit or Loss percentage.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">C.P. = ₹400, Profit = 10%</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">C.P. = ₹500, Loss = 20%</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">C.P. = ₹800, Profit = 25%</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">C.P. = ₹1200, Loss = 10%</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">C.P. = ₹250, Profit = 20%</div></div>
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">C.P. = ₹1500, Profit = 5%</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">C.P. = ₹2000, Loss = 15%</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">C.P. = ₹600, Profit = 12%</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">C.P. = ₹300, Loss = 5%</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">C.P. = ₹1000, Profit = 18%</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">C.P. = ₹450, Profit = 20%</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">C.P. = ₹750, Loss = 4%</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">C.P. = ₹350, Profit = 10%</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">C.P. = ₹5000, Loss = 20%</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">C.P. = ₹900, Profit = 15%</div></div>
+        </div>
+
+        <!-- SECTION C -->
+        <div class="chapter-header">Section C: Find the Cost Price (C.P.)</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Calculate the Cost Price given the Selling Price and the Profit or Loss percentage.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">S.P. = ₹440, Profit = 10%</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">S.P. = ₹810, Loss = 10%</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">S.P. = ₹600, Profit = 20%</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">S.P. = ₹450, Loss = 10%</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">S.P. = ₹1250, Profit = 25%</div></div>
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">S.P. = ₹1900, Loss = 5%</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">S.P. = ₹230, Profit = 15%</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">S.P. = ₹160, Loss = 20%</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">S.P. = ₹840, Profit = 5%</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">S.P. = ₹680, Loss = 15%</div></div>
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">S.P. = ₹1050, Profit = 50%</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">S.P. = ₹360, Loss = 10%</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">S.P. = ₹1430, Profit = 10%</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">S.P. = ₹1140, Loss = 5%</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">S.P. = ₹390, Profit = 30%</div></div>
+        </div>
+
+        <!-- SECTION D -->
+        <div class="chapter-header">Section D: Word Problems (Medium)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">A man bought a watch for ₹1200 and spent ₹300 on its repairs. If he sold it for ₹1800, find his profit percentage.</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">By selling a book for ₹250, a shopkeeper gains 25%. Find the cost price of the book.</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">A man buys a radio for ₹800 and sells it at a loss of 15%. What is the selling price?</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">The cost price of an article is ₹450. Find the selling price if it is sold at a 20% profit.</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">Amit sold his bicycle for ₹3200 at a loss of 20%. What was the original cost price?</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">A vendor bought 100 apples at ₹5 each. 20 of them were found to be rotten. He sold the rest at ₹8 each. Find his overall profit or loss percentage.</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">Rahul bought a second-hand scooter for ₹15,000 and spent ₹3,000 on repairing it. He then sold it for ₹21,600. Find his profit %.</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">The selling price of an item is ₹600 and the profit made is 20%. Calculate the cost price.</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">A shopkeeper sells an article for ₹540 and incurs a loss of 10%. Find the cost price.</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">A painting was bought for ₹2000 and sold at a 15% profit. Find the selling price.</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">A man sold his car for ₹1,80,000 facing a 10% loss. What was the original cost price of the car?</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">Calculate the selling price required to gain 10% on an electronic item costing ₹850.</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">A chair was bought for ₹1200 and sold for ₹1320. Find the profit percentage.</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">Selling an antique for ₹920 results in a 15% profit. Find its cost price.</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">Porshiya bought a bag for ₹400 and decided to sell it at a loss of 5% to her friend. What is the selling price?</div></div>
+        </div>
+
+        <!-- Answer Key Section -->
+        <div class="answer-section">
+            <div class="chapter-header">Solution Key</div>
+            <table class="answer-table">
+                <thead>
+                    <tr>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Profit 25%</td><td>16</td><td>₹440</td><td>31</td><td>₹400</td><td>46</td><td>Profit 20%</td></tr>
+                    <tr><td>2</td><td>Loss 10%</td><td>17</td><td>₹400</td><td>32</td><td>₹900</td><td>47</td><td>₹200</td></tr>
+                    <tr><td>3</td><td>Profit 20%</td><td>18</td><td>₹1000</td><td>33</td><td>₹500</td><td>48</td><td>₹680</td></tr>
+                    <tr><td>4</td><td>Loss 25%</td><td>19</td><td>₹1080</td><td>34</td><td>₹500</td><td>49</td><td>₹540</td></tr>
+                    <tr><td>5</td><td>Profit 20%</td><td>20</td><td>₹300</td><td>35</td><td>₹1000</td><td>50</td><td>₹4000</td></tr>
+                    <tr><td>6</td><td>Loss 20%</td><td>21</td><td>₹1575</td><td>36</td><td>₹2000</td><td>51</td><td>Profit 28%</td></tr>
+                    <tr><td>7</td><td>Profit 5%</td><td>22</td><td>₹1700</td><td>37</td><td>₹200</td><td>52</td><td>Profit 20%</td></tr>
+                    <tr><td>8</td><td>Loss 20%</td><td>23</td><td>₹672</td><td>38</td><td>₹200</td><td>53</td><td>₹500</td></tr>
+                    <tr><td>9</td><td>Profit 5%</td><td>24</td><td>₹285</td><td>39</td><td>₹800</td><td>54</td><td>₹600</td></tr>
+                    <tr><td>10</td><td>Profit 20%</td><td>25</td><td>₹1180</td><td>40</td><td>₹800</td><td>55</td><td>₹2300</td></tr>
+                    <tr><td>11</td><td>Loss 20%</td><td>26</td><td>₹540</td><td>41</td><td>₹700</td><td>56</td><td>₹2,00,000</td></tr>
+                    <tr><td>12</td><td>Profit 25%</td><td>27</td><td>₹720</td><td>42</td><td>₹400</td><td>57</td><td>₹935</td></tr>
+                    <tr><td>13</td><td>Loss 20%</td><td>28</td><td>₹385</td><td>43</td><td>₹1300</td><td>58</td><td>Profit 10%</td></tr>
+                    <tr><td>14</td><td>Profit 5%</td><td>29</td><td>₹4000</td><td>44</td><td>₹1200</td><td>59</td><td>₹800</td></tr>
+                    <tr><td>15</td><td>Profit 50%</td><td>30</td><td>₹1035</td><td>45</td><td>₹300</td><td>60</td><td>₹380</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>
