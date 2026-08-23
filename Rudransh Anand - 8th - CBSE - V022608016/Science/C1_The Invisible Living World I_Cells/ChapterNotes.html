@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 1 - The Invisible Living World I: Cells</title>
+  <style>
+    body { font-family: Segoe UI, Tahoma, sans-serif; margin: 0; padding: 40px; background: #f8fafc; color: #111827; }
+    main { max-width: 900px; margin: 0 auto; }
+    h1 { margin-bottom: 12px; }
+    p { line-height: 1.6; color: #374151; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Chapter 1 - The Invisible Living World I: Cells</h1>
+    <p>Chapter notes placeholder.</p>
+  </main>
+</body>
+</html>

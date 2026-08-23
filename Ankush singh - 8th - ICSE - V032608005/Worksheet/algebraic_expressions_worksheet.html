@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 - Medium/Standard) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 10px; box-sizing: border-box; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        
+        .meta-info { 
+            display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+            font-weight: bold; margin-top: 15px; font-size: 11pt; 
+            background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* Responsive adjustments for mobile/tablet */
+        @media screen and (max-width: 768px) {
+            .meta-info { flex-direction: column; align-items: flex-start; }
+            .institute-name { font-size: 18pt; }
+            .tagline { font-size: 12pt; }
+            .worksheet-title { font-size: 14pt; }
+            .watermark { width: 90% !important; }
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+            font-size: 11pt; page-break-inside: avoid;
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; display: inline-block; width: 40px;}
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+        
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Comprehensive Algebraic Expressions & Identities</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 8 (ICSE)</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Terminology & Basics (10 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">Identify the degree of the polynomial: $3x^4 - 2x^2y^3 + 5xy - 7$.</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">Write the numerical coefficient of $-15x^2yz$.</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">Classify the expression $4a^2 - 3b + 7$ as a monomial, binomial, or trinomial.</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">Find the value of $2a^2 - 3b^2 + 4ab$ when $a = 3, b = -2$.</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">Evaluate the algebraic expression $x^3 - 3x^2 + 2x - 1$ for $x = -1$.</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">Write the literal coefficient of $-9p^2q^3$.</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">Identify the like terms in the group: $3x^2y, -2xy^2, 5yx^2, \frac{1}{2}x^2y^2$.</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">What is the degree of the expression $7$ (a non-zero constant)?</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">If $P = x^2 - y^2$, evaluate $P$ when $x = 5$ and $y = 4$.</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">Determine the number of terms in the expression $5x^2y - \frac{3}{xy} + 8$ (Note: simplify if needed to check if it's a polynomial).</div></div>
+        </div>
+
+        <div class="chapter-header">Section B: Addition & Subtraction (10 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">Add: $5a^2 - 3ab + 2b^2$ and $2a^2 + 5ab - b^2$.</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">Simplify: $(4x^2 - 3y^2) + (3x^2 + 2y^2) - (2x^2 - 5y^2)$.</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">Subtract $3p^2 - 4q^2 + 5r^2$ from $5p^2 + 2q^2 - 3r^2$.</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">What must be added to $2x^3 - 3x^2 + 5x - 7$ to get $x^3 + 2x^2 - x + 1$?</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">What must be subtracted from $a^3 - 3a^2 + 5a - 2$ to yield $2a^3 + a^2 - 3a + 4$?</div></div>
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">Simplify: $2x - [3y - \{2x - (y - x)\}]$.</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">Subtract the sum of $2a - 3b + c$ and $-3a + 2b - 4c$ from $a - b + c$.</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">Add the algebraic expressions: $\frac{2}{3}x^2 - \frac{1}{2}x + 1$ and $-\frac{1}{3}x^2 + \frac{3}{2}x - 2$.</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">Simplify: $5m^2 - [2m^2 - (m^2 - 3m - 2)] - 4m$.</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">From the sum of $4x^4 - 3x^3 + 6x^2$ and $4x^3 + 4x - 3$, subtract $5x^4 - 5x^2 - 2x + 1$.</div></div>
+        </div>
+
+        <div class="chapter-header">Section C: Multiplication (15 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">Multiply: $(3x^2y) \times (-4xy^2)$.</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">Find the product: $(-\frac{1}{2}a^2b) \times (\frac{4}{3}ab^2c)$.</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">Multiply: $2x(3x^2 - 5x + 2)$.</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">Expand: $-3p^2q(p^2 - 2pq + q^2)$.</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">Multiply the binomials: $(2x + 3y)$ and $(4x - 5y)$.</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">Find the product: $(a - 2b)(a^2 + 2ab + 4b^2)$.</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">Multiply: $(x^2 - x + 1)(x + 1)$.</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">Simplify: $2x(x - y) + 2y(x + y)$.</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">Find the product of $(3m - 2n)$ and $(3m + 2n)$.</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">Multiply: $(p + q + r)(p - q)$.</div></div>
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">Evaluate $(2.5a - 1.5b)(2.5a + 1.5b)$.</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">Multiply: $(x^2 + y^2)(x^2 - y^2)$.</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">Find the product: $(a^2 - ab + b^2)(a^2 + ab + b^2)$.</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">Simplify: $x(y - z) + y(z - x) + z(x - y)$.</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">Multiply: $(2x - \frac{1}{x})(3x + \frac{2}{x})$.</div></div>
+        </div>
+
+        <div class="chapter-header">Section D: Division (10 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">Divide: $15x^3y^2z$ by $-3xyz$.</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">Divide: $(24a^3b^2 - 16a^2b^3 + 8ab)$ by $8ab$.</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">Divide the polynomial $9m^5 - 6m^4 + 12m^3$ by $3m^2$.</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">Divide: $(x^2 + 7x + 12)$ by $(x + 3)$.</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">Divide: $(a^2 - 5a + 6)$ by $(a - 2)$.</div></div>
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">Find the quotient: $(2x^2 + 5x - 3) \div (2x - 1)$.</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">Divide: $(y^3 - 8)$ by $(y - 2)$.</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">Divide: $(14x^3 - 5x^2 + 9x - 1)$ by $(2x - 1)$.</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">Divide: $p^4 - q^4$ by $p - q$.</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">Determine the remainder when $x^3 - 4x^2 + x + 6$ is divided by $x - 3$.</div></div>
+        </div>
+
+        <div class="chapter-header">Section E: Algebraic Identities (15 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">Expand using a suitable identity: $(3a + 5b)^2$.</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">Expand using a suitable identity: $(2x - 7y)^2$.</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">Evaluate using an identity: $(104)^2$.</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">Evaluate using an identity: $(98)^2$.</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">Find the product using an identity: $(4m - 5n)(4m + 5n)$.</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">Evaluate using an identity: $105 \times 95$.</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">Expand: $(\frac{x}{2} + \frac{2}{y})^2$.</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">If $a + b = 7$ and $ab = 12$, find the value of $a^2 + b^2$.</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">If $x - y = 4$ and $xy = 21$, find the value of $x^2 + y^2$.</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">If $x + \frac{1}{x} = 4$, find the value of $x^2 + \frac{1}{x^2}$.</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">If $x - \frac{1}{x} = 3$, find the value of $x^2 + \frac{1}{x^2}$.</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">Find the product using identity $(x+a)(x+b)$: $(x + 5)(x + 3)$.</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">Find the product using identity $(x+a)(x+b)$: $(y - 4)(y + 7)$.</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">Evaluate using $(x+a)(x+b)$ identity: $102 \times 106$.</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">If $a^2 + b^2 = 29$ and $ab = 10$, find the value of $a - b$.</div></div>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+        <div class="chapter-header">Answer Key</div>
+        <div class="answer-grid">
+            <div class="solution-item"><span class="ans-label">Ans 1:</span> 5</div>
+            <div class="solution-item"><span class="ans-label">Ans 2:</span> -15</div>
+            <div class="solution-item"><span class="ans-label">Ans 3:</span> Trinomial</div>
+            <div class="solution-item"><span class="ans-label">Ans 4:</span> -18</div>
+            <div class="solution-item"><span class="ans-label">Ans 5:</span> -7</div>
+            <div class="solution-item"><span class="ans-label">Ans 6:</span> $p^2q^3$</div>
+            <div class="solution-item"><span class="ans-label">Ans 7:</span> $3x^2y$ & $5yx^2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 8:</span> 0</div>
+            <div class="solution-item"><span class="ans-label">Ans 9:</span> 9</div>
+            <div class="solution-item"><span class="ans-label">Ans 10:</span> 3 (It is an algebraic expression, not a polynomial)</div>
+            
+            <div class="solution-item"><span class="ans-label">Ans 11:</span> $7a^2 + 2ab + b^2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 12:</span> $5x^2 + 4y^2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 13:</span> $2p^2 + 6q^2 - 8r^2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 14:</span> $-x^3 + 5x^2 - 6x + 8$</div>
+            <div class="solution-item"><span class="ans-label">Ans 15:</span> $-a^3 - 4a^2 + 8a - 6$</div>
+            <div class="solution-item"><span class="ans-label">Ans 16:</span> $-x + 4y$</div>
+            <div class="solution-item"><span class="ans-label">Ans 17:</span> $2a + 4c$</div>
+            <div class="solution-item"><span class="ans-label">Ans 18:</span> $\frac{1}{3}x^2 + x - 1$</div>
+            <div class="solution-item"><span class="ans-label">Ans 19:</span> $4m^2 - 7m - 2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 20:</span> $-x^4 + x^3 + 11x^2 + 6x - 4$</div>
+
+            <div class="solution-item"><span class="ans-label">Ans 21:</span> $-12x^3y^3$</div>
+            <div class="solution-item"><span class="ans-label">Ans 22:</span> $-\frac{2}{3}a^3b^3c$</div>
+            <div class="solution-item"><span class="ans-label">Ans 23:</span> $6x^3 - 10x^2 + 4x$</div>
+            <div class="solution-item"><span class="ans-label">Ans 24:</span> $-3p^4q + 6p^3q^2 - 3p^2q^3$</div>
+            <div class="solution-item"><span class="ans-label">Ans 25:</span> $8x^2 + 2xy - 15y^2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 26:</span> $a^3 - 8b^3$</div>
+            <div class="solution-item"><span class="ans-label">Ans 27:</span> $x^3 + 1$</div>
+            <div class="solution-item"><span class="ans-label">Ans 28:</span> $2x^2 + 2y^2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 29:</span> $9m^2 - 4n^2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 30:</span> $p^2 - q^2 + pr - qr$</div>
+
+            <div class="solution-item"><span class="ans-label">Ans 31:</span> $6.25a^2 - 2.25b^2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 32:</span> $x^4 - y^4$</div>
+            <div class="solution-item"><span class="ans-label">Ans 33:</span> $a^4 + a^2b^2 + b^4$</div>
+            <div class="solution-item"><span class="ans-label">Ans 34:</span> $0$</div>
+            <div class="solution-item"><span class="ans-label">Ans 35:</span> $6x^2 + 1 - \frac{2}{x^2}$</div>
+            <div class="solution-item"><span class="ans-label">Ans 36:</span> $-5x^2y$</div>
+            <div class="solution-item"><span class="ans-label">Ans 37:</span> $3a^2b - 2ab^2 + 1$</div>
+            <div class="solution-item"><span class="ans-label">Ans 38:</span> $3m^3 - 2m^2 + 4m$</div>
+            <div class="solution-item"><span class="ans-label">Ans 39:</span> $x + 4$</div>
+            <div class="solution-item"><span class="ans-label">Ans 40:</span> $a - 3$</div>
+
+            <div class="solution-item"><span class="ans-label">Ans 41:</span> $x + 3$</div>
+            <div class="solution-item"><span class="ans-label">Ans 42:</span> $y^2 + 2y + 4$</div>
+            <div class="solution-item"><span class="ans-label">Ans 43:</span> Quotient: $7x^2 + x + 5$, Rem: $4$</div>
+            <div class="solution-item"><span class="ans-label">Ans 44:</span> $p^3 + p^2q + pq^2 + q^3$</div>
+            <div class="solution-item"><span class="ans-label">Ans 45:</span> Remainder = $0$</div>
+            <div class="solution-item"><span class="ans-label">Ans 46:</span> $9a^2 + 30ab + 25b^2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 47:</span> $4x^2 - 28xy + 49y^2$</div>
+            <div class="solution-item"><span class="ans-label">Ans 48:</span> $10816$</div>
+            <div class="solution-item"><span class="ans-label">Ans 49:</span> $9604$</div>
+            <div class="solution-item"><span class="ans-label">Ans 50:</span> $16m^2 - 25n^2$</div>
+
+            <div class="solution-item"><span class="ans-label">Ans 51:</span> $9975$</div>
+            <div class="solution-item"><span class="ans-label">Ans 52:</span> $\frac{x^2}{4} + \frac{2x}{y} + \frac{4}{y^2}$</div>
+            <div class="solution-item"><span class="ans-label">Ans 53:</span> $25$</div>
+            <div class="solution-item"><span class="ans-label">Ans 54:</span> $58$</div>
+            <div class="solution-item"><span class="ans-label">Ans 55:</span> $14$</div>
+            <div class="solution-item"><span class="ans-label">Ans 56:</span> $11$</div>
+            <div class="solution-item"><span class="ans-label">Ans 57:</span> $x^2 + 8x + 15$</div>
+            <div class="solution-item"><span class="ans-label">Ans 58:</span> $y^2 + 3y - 28$</div>
+            <div class="solution-item"><span class="ans-label">Ans 59:</span> $10812$</div>
+            <div class="solution-item"><span class="ans-label">Ans 60:</span> $\pm 3$</div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

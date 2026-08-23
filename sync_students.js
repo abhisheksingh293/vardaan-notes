@@ -67,6 +67,7 @@ async function syncStudents() {
       console.log(`\n🎉 Successfully made ${changesMade} update(s) to student folders.`);
       console.log('Running generators to update the portal...');
       try {
+        execSync('node generate_subject_pages.js', { stdio: 'inherit' });
         execSync('node generate_student_pages.js', { stdio: 'inherit' });
         execSync('node auto_update_index.js', { stdio: 'inherit' });
       } catch (e) {

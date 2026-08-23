@@ -7,18 +7,79 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const urlTheme = params.get('theme');
+      if (urlTheme === 'dark' || urlTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', urlTheme);
+        if (urlTheme === 'dark') {
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        try { localStorage.setItem('vardaan_theme', urlTheme); } catch(e) {}
+      } else {
+        try {
+          const saved = localStorage.getItem('vardaan_theme');
+          if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+            if (saved === 'dark') document.documentElement.classList.add('dark-mode', 'dark');
+          }
+        } catch(e) {}
+      }
+    })();
+  </script>
   <style>
     :root {
       --primary: #F97315;
       --primary-glow: rgba(249, 115, 21, 0.2);
       --bg: #f5f7fb;
       --surface: #ffffff;
-      --surface-hover: #f9f9fa;
+      --surface-hover: #fcfcfd;
       --border: rgba(0, 0, 0, 0.08);
       --text: #111827;
       --text-muted: #6b7280;
       --glass-bg: rgba(255, 255, 255, 0.85);
+      --heading-color: #111827;
+      --heading-sub: #6b7280;
+      --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      --radial-1: rgba(249, 115, 21, 0.08);
+      --radial-2: rgba(249, 115, 21, 0.05);
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0d1117;
+        --surface: #161b22;
+        --surface-hover: #1f2633;
+        --border: rgba(255, 255, 255, 0.1);
+        --text: #f0f6fc;
+        --text-muted: #8b949e;
+        --glass-bg: rgba(13, 17, 23, 0.85);
+        --heading-color: #ffffff;
+        --heading-sub: #a0a0b0;
+        --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+        --radial-1: rgba(249, 115, 21, 0.06);
+        --radial-2: rgba(249, 115, 21, 0.02);
+      }
+    }
+
+    [data-theme="dark"], html.dark-mode {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-hover: #1f2633;
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f0f6fc;
+      --text-muted: #8b949e;
+      --glass-bg: rgba(13, 17, 23, 0.85);
+      --heading-color: #ffffff;
+      --heading-sub: #a0a0b0;
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      --radial-1: rgba(249, 115, 21, 0.06);
+      --radial-2: rgba(249, 115, 21, 0.02);
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Outfit', sans-serif;
@@ -27,8 +88,9 @@
       min-height: 100vh;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 15% 50%, rgba(249, 115, 21, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 85% 30%, rgba(249, 115, 21, 0.05) 0%, transparent 50%);
+        radial-gradient(circle at 15% 50%, var(--radial-1) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, var(--radial-2) 0%, transparent 50%);
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
     nav {
       position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between;
@@ -37,7 +99,18 @@
     }
     .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--text);  }
     
-    .logo { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); }
+    .logo { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); transition: filter 0.25s ease; }
+    
+    [data-theme="dark"] .logo, html.dark-mode .logo, html.dark .logo {
+      filter: brightness(0) invert(1) drop-shadow(0 2px 12px var(--primary-glow));
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .logo,
+      html:not([data-theme="light"]) .logo {
+        filter: brightness(0) invert(1) drop-shadow(0 2px 12px var(--primary-glow));
+      }
+    }
+
     .brand span { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
     .brand em { font-style: normal; color: var(--primary); }
     .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 20px 24px 100px; }
@@ -50,7 +123,7 @@
     }
     .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 10px var(--primary);  }
     h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
-    h1 b { background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    h1 b { background: linear-gradient(135deg, var(--heading-color) 0%, var(--heading-sub) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     h1 .highlight { background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 10px rgba(249,115,21,0.2)); }
     .sub { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
     .stats { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
@@ -64,62 +137,57 @@
       outline: none;  font-family: inherit; backdrop-filter: blur(10px);
     }
     .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; color: var(--text-muted); pointer-events: none;  }
-    .search:focus { border-color: var(--primary); background: rgba(255, 255, 255, 0.05); box-shadow: 0 0 0 4px rgba(249, 115, 21, 0.15), 0 10px 30px rgba(0,0,0,0.5); }
+    .search:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 4px rgba(249, 115, 21, 0.15), 0 10px 30px rgba(0,0,0,0.5); }
     .search:focus + .search-icon { color: var(--primary); }
     .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
     .head h2 { font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; color: var(--text); }
     .count { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 16px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; perspective: 1000px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; perspective: 1000px; }
     .card {
       display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-      text-decoration: none; color: var(--text); background: var(--surface);
-      border: 1px solid var(--border); border-radius: 8px; padding: 24px; 
-      position: relative; overflow: hidden; backdrop-filter: blur(10px); aspect-ratio: 1 / 1;
+      text-decoration: none; background: transparent; border: none; padding: 0;
+      position: relative; overflow: visible; aspect-ratio: 1 / 1;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
     }
-    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top right, rgba(249,115,21,0.1), transparent 50%); opacity: 0;  }
+    .card:hover {
+      transform: translateY(-4px) scale(1.03);
+    }
+    .card:active {
+      transform: scale(0.96);
+    }
     
-    
-    .badge { align-self: flex-start; font-size: 0.75rem; font-weight: 700; color: var(--primary); background: rgba(249,115,21,0.1); padding: 4px 12px; border-radius: 999px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
     .avatar {
-      width: 80px; height: 80px; border-radius: 6px; background: linear-gradient(135deg, var(--primary), #b34e00);
-      display: grid; place-items: center; color: #fff; font-size: 2rem; font-weight: 700; margin-bottom: 16px; box-shadow: 0 8px 16px rgba(249, 115, 21, 0.2);
+      width: 100%; height: 100%; border-radius: 22px; background: linear-gradient(135deg, var(--primary), #b34e00);
+      display: grid; place-items: center; color: #fff; font-size: 2.2rem; font-weight: 700; margin-bottom: 0;
+      box-shadow: var(--card-shadow);
+      overflow: hidden; aspect-ratio: 1 / 1;
     }
-    .name { font-size: 1.1rem; font-weight: 600; margin-bottom: 0; color: var(--text); line-height: 1.3; }
-    .meta { display: flex; flex-direction: column; gap: 8px; align-items: center; }
-    .meta-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-muted); }
-    .meta-icon { width: 16px; height: 16px; opacity: 0.7; }
     .empty { display: none; text-align: center; padding: 60px 20px; background: var(--surface); border-radius: 8px; border: 1px dashed var(--border); margin-top: 24px; }
     .empty h3 { font-size: 1.5rem; margin-bottom: 8px; color: var(--text); }
     .empty p { color: var(--text-muted); }
     footer { margin-top: 80px; padding: 30px 0; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-muted); font-size: 0.9rem; }
     @media (max-width: 1024px) {
       .wrap { padding: 20px 20px 80px; }
-      .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
       h1 { font-size: 3rem; }
     }
     @media (max-width: 768px) {
-      .wrap { padding: 20px 12px 60px; }
-      nav { padding: 0 12px; height: 60px; }
-      .logo { height: 32px; }
+      .wrap { padding: 20px 16px 60px; }
+      nav { padding: 0 16px; height: 60px; }
+      .logo { height: 36px; }
       .brand span { font-size: 1.2rem; }
       .stats { gap: 12px; }
       .stat .num { font-size: 1.5rem; }
       h1 { font-size: 1.8rem; margin-bottom: 12px; }
       .sub { font-size: 0.95rem; }
-      .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .card { padding: 12px 16px; gap: 12px; }
-      .avatar { width: 72px; height: 72px; font-size: 1.8rem; border-radius: 6px; margin-bottom: 8px; }
-      .name { font-size: 1.05rem; }
-      .meta { flex-direction: column; gap: 4px; align-items: flex-start; }
-      .meta-item span { font-size: 0.8rem; }
-      .meta-icon { width: 14px; height: 14px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .avatar { border-radius: 20px; }
     }
     @media (max-width: 480px) {
-      .grid { grid-template-columns: 1fr; }
-      h1 { font-size: 1.5rem; }
-      .card { padding: 16px; flex-direction: row; align-items: center; justify-content: flex-start; gap: 16px; aspect-ratio: auto; }
-      .avatar { width: 60px; height: 60px; font-size: 1.5rem; margin-bottom: 0; }
-      .name { text-align: left; }
+      .wrap { padding: 16px 14px 60px; }
+      .head { margin-bottom: 18px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .avatar { border-radius: 18px; }
     }
   </style>
 </head>
@@ -136,7 +204,7 @@
 
     <div class="head">
       <h2>Subjects Directory</h2>
-      <span id="countLabel" class="count">2 subjects</span>
+      <span id="countLabel" class="count">7 subjects</span>
     </div>
 
     <section class="grid" id="subjectGrid"></section>
@@ -151,9 +219,34 @@
   <script>
     const subjects = [
     {
+        "name": "Biology",
+        "link": "./Biology/Biology.html",
+        "chapters": 6
+    },
+    {
+        "name": "Chemistry",
+        "link": "./Chemistry/Chemistry.html",
+        "chapters": 4
+    },
+    {
+        "name": "Civics",
+        "link": "./Civics/Civics.html",
+        "chapters": 0
+    },
+    {
+        "name": "Geography",
+        "link": "./Geography/Geography.html",
+        "chapters": 13
+    },
+    {
         "name": "History",
         "link": "./History/History.html",
         "chapters": 12
+    },
+    {
+        "name": "Physics",
+        "link": "./Physics/Physics.html",
+        "chapters": 2
     },
     {
         "name": "Worksheets",
@@ -167,33 +260,44 @@
     }
 
     const subjectImages = {
+      'hindi literature': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880787/Hindi_Literature_c4nowe.png',
+      'hindi grammar': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880786/Hindi_Grammar_dfq848.png',
+      'english literature': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880786/English_Literature_b9kukx.png',
+      'english grammar': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/English_Grammar_h2mtiy.png',
       'current affairs': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1759763329/current_affairs_q12cip.png',
-      'civics and history': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757176494/civics_and_history_nl6lnm.jpg',
-      'histry and civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757176494/civics_and_history_nl6lnm.jpg',
+      'civics and history': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'histry and civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'history and civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'social science': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'socialscience': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'sst': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
       'extra resources': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757013643/extra_resources_gl2vba.jpg',
       'worksheet': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757013643/extra_resources_gl2vba.jpg',
-      'economics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1755455100/conomics_jwb2wv.jpg',
-      'science': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363614/science_cjdndm.png',
-      'physics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363614/science_cjdndm.png',
-      'chemistry': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363614/science_cjdndm.png',
-      'biology': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363614/science_cjdndm.png',
-      'pc': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363613/pc_qzuswm.png',
-      'computer': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363613/pc_qzuswm.png',
-      'maths': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363612/maths_u9nmij.png',
-      'mathematics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363612/maths_u9nmij.png',
-      'history': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363611/history_f9lgfe.png',
-      'grammar': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363610/GrammarLanguage_w7qszs.png',
-      'geography': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363609/geography_shfqrc.png',
-      'english': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363608/English_Language_x7iejs.png',
-      'civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363607/civics_mnw9ja.png',
-      'sst': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757176494/civics_and_history_nl6lnm.jpg'
+      'woksheet': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757013643/extra_resources_gl2vba.jpg',
+      'economics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/economics_fr9kqg.png',
+      'biology': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880791/Biology_mn1wji.png',
+      'physics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880789/Physics_ur48yf.png',
+      'chemistry': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/Chemistry_odhnox.png',
+      'science': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880789/Science_rig2hp.png',
+      'computer': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/computer_gxzco2.png',
+      'pc': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/computer_gxzco2.png',
+      'robotics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/computer_gxzco2.png',
+      'java': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/computer_gxzco2.png',
+      'maths': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/Maths_smrppm.png',
+      'mathematics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/Maths_smrppm.png',
+      'history': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/history_e9k8gx.png',
+      'geography': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/geography_r5w9ok.png',
+      'civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880786/civics_vtn9eu.png',
+      'hindi': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880787/Hindi_Literature_c4nowe.png',
+      'english': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880786/English_Literature_b9kukx.png',
+      'grammar': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/English_Grammar_h2mtiy.png'
     };
 
     function getSubjectIcon(name) {
       const lowerName = name.toLowerCase();
       for (const [key, url] of Object.entries(subjectImages)) {
         if (lowerName.includes(key)) {
-          return `<img src="${url}" alt="${name}" style="width:100%; height:100%; object-fit:cover; border-radius: 6px;">`;
+          return `<img src="${url}" alt="${name}" style="width:100%; height:100%; object-fit:cover; border-radius:inherit; transform:scale(1.08); display:block;">`;
         }
       }
       return initials(name);
@@ -217,14 +321,22 @@
       emptyState.style.display = 'none';
       countLabel.textContent = list.length + ' subject' + (list.length === 1 ? '' : 's');
       
+      function formatLink(url) {
+        const theme = document.documentElement.getAttribute('data-theme');
+        if (!theme || url === '#' || url.startsWith('javascript:')) return url;
+        const separator = url.includes('?') ? '&' : '?';
+        return url + separator + 'theme=' + encodeURIComponent(theme);
+      }
+
       list.forEach(subject => {
         const card = document.createElement('a');
         card.className = 'card';
-        card.href = subject.link;
+        card.href = formatLink(subject.link);
+        card.title = subject.name;
+        card.setAttribute('aria-label', subject.name);
         
         card.innerHTML = `
           <div class="avatar">${getSubjectIcon(subject.name)}</div>
-          <div class="name">${subject.name}</div>
         `;
         grid.appendChild(card);
       });

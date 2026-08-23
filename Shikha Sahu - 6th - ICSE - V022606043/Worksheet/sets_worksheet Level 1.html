@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Sets Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { 
+        tex: { 
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        },
+        svg: {
+          fontCache: 'global'
+        },
+        chtml: {
+          matchFontHeight: false
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 1: Easy/Foundation) */
+            --primary-color: #2e7d32; 
+            --bg-color: #e8f5e9;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #66bb6a;   
+            --bg-color: #1b3320;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.6; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 210mm; 
+            margin: 0 auto; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt;
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+            flex-wrap: wrap; gap: 10px;
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: flex-start;
+            margin-bottom: 8px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); padding-top: 2px;} 
+        .q-content { flex: 1; word-wrap: break-word; } 
+        
+        /* Answer Key Grid Styling */
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Increased from 130px */
+            gap: 15px; /* Increased gap slightly for better readability */
+            font-size: 11pt;
+        }
+        .answer-item {
+            display: flex;
+            align-items: flex-start; /* Changed to flex-start in case text wraps */
+            word-wrap: break-word; /* Ensure long words/math can break if necessary */
+        }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; flex-shrink: 0;} /* Prevent label from squishing */
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 600px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .meta-info { flex-direction: column; text-align: center; }
+            .institute-name { font-size: 18pt; }
+            .tagline { font-size: 11pt; }
+            .worksheet-title { font-size: 14pt; }
+            .watermark { width: 90%; }
+            .answer-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } /* Adjusted for mobile */
+        }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .container { padding: 0; }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Sets Worksheet (Level 1 - Foundation)</div>
+            <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 6 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Identifying Sets</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">State whether the following collections form a set or not (Answer Yes or No):</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">The collection of all vowels in the English alphabet.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">The collection of the top $5$ best actors in India.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">The collection of odd natural numbers less than $10$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">The collection of delicious fruits in the market.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">The collection of months of a year starting with the letter 'J'.</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section B: Elements of a Set & Notations</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">Let $A = \{1, 3, 5, 7, 9\}$. Fill in the blanks with the correct symbol $\in$ (belongs to) or $\notin$ (does not belong to):</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">$3$ ______ $A$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">$4$ ______ $A$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">$9$ ______ $A$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">$12$ ______ $A$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">$0$ ______ $A$</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section C: Roster (Tabular) Form</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">Write the following sets in Roster (Tabular) form:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">11.</span>
+            <div class="q-content">The set of days in a week starting with the letter 'T'.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">12.</span>
+            <div class="q-content">The set of prime numbers less than $15$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">13.</span>
+            <div class="q-content">The set of even natural numbers up to $10$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">14.</span>
+            <div class="q-content">The set of distinct letters in the word "MATHEMATICS".</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">15.</span>
+            <div class="q-content">The set of integers between $-3$ and $3$.</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section D: Set-Builder Form</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">Write the following sets in Set-builder (Rule) form:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">16.</span>
+            <div class="q-content">$A = \{a, e, i, o, u\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">17.</span>
+            <div class="q-content">$B = \{2, 4, 6, 8, \dots\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">18.</span>
+            <div class="q-content">$C = \{\text{January, June, July}\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">19.</span>
+            <div class="q-content">$D = \{1, 2, 3, 4, 5, 6\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">20.</span>
+            <div class="q-content">$E = \{3, 6, 9, 12, 15\}$</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section E: Types of Sets</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">State whether the following sets are Finite, Infinite, Empty, or Singleton:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">21.</span>
+            <div class="q-content">The set of leaves on a large banyan tree.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">22.</span>
+            <div class="q-content">The set of natural numbers greater than $100$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">23.</span>
+            <div class="q-content">The set of odd numbers divisible by $2$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">24.</span>
+            <div class="q-content">The set of even prime numbers.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">25.</span>
+            <div class="q-content">The set of multiples of $5$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">26.</span>
+            <div class="q-content">The set of factors of $24$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">27.</span>
+            <div class="q-content">The set of triangles with four sides.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">28.</span>
+            <div class="q-content">The set of the current President of India.</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section F: Cardinal Number of a Set</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">Find the cardinal number $n(A)$ of the following sets:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">29.</span>
+            <div class="q-content">$A = \{10, 20, 30, 40\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">30.</span>
+            <div class="q-content">$B = \{x \mid x \text{ is a distinct letter in the word "APPLE"}\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">31.</span>
+            <div class="q-content">$C = \emptyset$ (The Empty Set)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">32.</span>
+            <div class="q-content">$D = \{0\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">33.</span>
+            <div class="q-content">$E = \{x \mid x \text{ is a composite number between } 1 \text{ and } 10\}$</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section G: Equal and Equivalent Sets</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">State whether the given pairs of sets are Equal, Equivalent, or Neither:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">34.</span>
+            <div class="q-content">$A = \{1, 2, 3\}$ and $B = \{a, b, c\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">35.</span>
+            <div class="q-content">$P = \{p, q, r, s\}$ and $Q = \{q, p, s, r\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">36.</span>
+            <div class="q-content">$X = \{2, 4, 6\}$ and $Y = \{1, 3, 5, 7\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">37.</span>
+            <div class="q-content">$M = \{\text{letters of 'WOLF'}\}$ and $N = \{\text{letters of 'FLOW'}\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">38.</span>
+            <div class="q-content">$E = \{10, 20, 30\}$ and $F = \{5, 15, 25\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">39.</span>
+            <div class="q-content">$G = \{0\}$ and $H = \emptyset$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">40.</span>
+            <div class="q-content">$C = \{x \mid x \text{ is a vowel}\}$ and $D = \{1, 2, 3, 4, 5\}$</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Answer Key</div>
+    <div class="answer-grid">
+        <div class="answer-item"><span class="ans-label">1.</span> Yes</div>
+        <div class="answer-item"><span class="ans-label">2.</span> No</div>
+        <div class="answer-item"><span class="ans-label">3.</span> Yes</div>
+        <div class="answer-item"><span class="ans-label">4.</span> No</div>
+        <div class="answer-item"><span class="ans-label">5.</span> Yes</div>
+        
+        <div class="answer-item"><span class="ans-label">6.</span> $\in$</div>
+        <div class="answer-item"><span class="ans-label">7.</span> $\notin$</div>
+        <div class="answer-item"><span class="ans-label">8.</span> $\in$</div>
+        <div class="answer-item"><span class="ans-label">9.</span> $\notin$</div>
+        <div class="answer-item"><span class="ans-label">10.</span> $\notin$</div>
+        
+        <div class="answer-item"><span class="ans-label">11.</span> $\{\text{Tuesday, Thursday}\}$</div>
+        <div class="answer-item"><span class="ans-label">12.</span> $\{2, 3, 5, 7, 11, 13\}$</div>
+        <div class="answer-item"><span class="ans-label">13.</span> $\{2, 4, 6, 8, 10\}$</div>
+        <div class="answer-item"><span class="ans-label">14.</span> $\{\text{M, A, T, H, E, I, C, S}\}$</div>
+        <div class="answer-item"><span class="ans-label">15.</span> $\{-2, -1, 0, 1, 2\}$</div>
+        
+        <div class="answer-item"><span class="ans-label">16.</span> $\{x \mid x \text{ is a vowel}\}$</div>
+        <div class="answer-item"><span class="ans-label">17.</span> $\{x \mid x \text{ is an even natural number}\}$</div>
+        <div class="answer-item"><span class="ans-label">18.</span> $\{x \mid x \text{ is a month starting with J}\}$</div>
+        <div class="answer-item"><span class="ans-label">19.</span> $\{x \mid x \text{ is a natural no. } \le 6\}$</div>
+        <div class="answer-item"><span class="ans-label">20.</span> $\{x \mid x \text{ is a multiple of } 3 \text{ up to } 15\}$</div>
+        
+        <div class="answer-item"><span class="ans-label">21.</span> Finite</div>
+        <div class="answer-item"><span class="ans-label">22.</span> Infinite</div>
+        <div class="answer-item"><span class="ans-label">23.</span> Empty</div>
+        <div class="answer-item"><span class="ans-label">24.</span> Singleton</div>
+        <div class="answer-item"><span class="ans-label">25.</span> Infinite</div>
+        <div class="answer-item"><span class="ans-label">26.</span> Finite</div>
+        <div class="answer-item"><span class="ans-label">27.</span> Empty</div>
+        <div class="answer-item"><span class="ans-label">28.</span> Singleton</div>
+        
+        <div class="answer-item"><span class="ans-label">29.</span> $4$</div>
+        <div class="answer-item"><span class="ans-label">30.</span> $4$</div>
+        <div class="answer-item"><span class="ans-label">31.</span> $0$</div>
+        <div class="answer-item"><span class="ans-label">32.</span> $1$</div>
+        <div class="answer-item"><span class="ans-label">33.</span> $4$ (4, 6, 8, 9)</div>
+        
+        <div class="answer-item"><span class="ans-label">34.</span> Equivalent</div>
+        <div class="answer-item"><span class="ans-label">35.</span> Equal</div>
+        <div class="answer-item"><span class="ans-label">36.</span> Neither</div>
+        <div class="answer-item"><span class="ans-label">37.</span> Equal</div>
+        <div class="answer-item"><span class="ans-label">38.</span> Equivalent</div>
+        <div class="answer-item"><span class="ans-label">39.</span> Neither</div>
+        <div class="answer-item"><span class="ans-label">40.</span> Equivalent</div>
+    </div>
+
+    <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

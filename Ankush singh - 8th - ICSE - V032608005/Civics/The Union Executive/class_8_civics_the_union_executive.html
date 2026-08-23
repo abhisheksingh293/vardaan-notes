@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Union Executive - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVENESS FOR DEVICES --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .paper-sheet {
+                padding: 5mm;
+            }
+            .institute-name {
+                font-size: 1.3rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer visible per instructions) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Civics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>The Union Executive</h1>
+        
+        <h2>1. Introduction</h2>
+        <p>One of the most important organs of the Indian government is the <strong>Union Executive</strong>. Its primary function is to ensure that the laws passed by the Parliament are properly <strong>enforced</strong> and administered.</p>
+        <ul>
+            <li>The Union Executive consists of the <strong>President</strong>, the <strong>Vice-President</strong>, the <strong>Prime Minister</strong>, and the <strong>Council of Ministers</strong>.</li>
+            <li>Together, they form the <strong>Political Executive</strong>, who are assisted in their day-to-day operations by a body of <strong>Permanent Executives</strong> (civil servants).</li>
+        </ul>
+
+        <h2>2. The President of India</h2>
+        <p>The President of India is the <strong>constitutional head</strong> of the Republic of India and is regarded as the <strong>first citizen</strong> of the country. All executive actions of the Union Government are formally taken in the President's name.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Dr. Rajendra Prasad</strong> was the first President of India (1950–1962). He was deeply influenced by Mahatma Gandhi, played a major role in the making of the Indian Constitution, and was awarded the Bharat Ratna in 1962.
+        </div>
+
+        <h3>Qualifications</h3>
+        <p>To be eligible for the office of the President, a candidate must meet the following criteria:</p>
+        <ul>
+            <li>Must be a <strong>citizen of India</strong>.</li>
+            <li>Must be at least <strong>35 years of age</strong>.</li>
+            <li>Must not hold any <strong>office of profit</strong> under the Central or State government, or any public authority.</li>
+            <li>Must be qualified for election as a member of the <strong>Lok Sabha</strong>.</li>
+            <li>Must not be a member of the Parliament or any State Legislature.</li>
+        </ul>
+
+        <h3>Presidential Election and Term</h3>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Electoral College:</strong> The President is elected indirectly by a temporary body called the Electoral College. It consists of the elected members of both the <strong>Lok Sabha and Rajya Sabha</strong>, the Legislative Assemblies of the states, and the Union Territories of Delhi and Puducherry.
+        </div>
+        <ul>
+            <li><strong>Term:</strong> The President is elected for a term of <strong>five years</strong> and is eligible for re-election.</li>
+            <li><strong>Resignation:</strong> Can resign from office at any time by addressing a letter of resignation to the <strong>Vice President</strong>.</li>
+            <li><strong>Impeachment:</strong> Can be removed before the term ends strictly for the <strong>violation of the Constitution</strong> through a detailed process called impeachment.</li>
+        </ul>
+
+        <h3>Powers of the President</h3>
+        <ul>
+            <li><strong>Executive Powers:</strong> Appoints the Prime Minister, Council of Ministers, Attorney General, CAG, Election Commissioners, UPSC members, State Governors, and Ambassadors.</li>
+            <li><strong>Financial Powers:</strong> Ensures the annual budget is placed before Parliament. Money Bills can only be introduced with the President's prior recommendation.</li>
+            <li><strong>Judicial Powers:</strong> Appoints the Chief Justice of the Supreme Court and High Courts. Possesses the power to grant <strong>pardon</strong> (Article 72) or reduce sentences. Enjoys <strong>judicial immunity</strong> (no criminal proceedings during the term).</li>
+            <li><strong>Diplomatic Powers:</strong> Represents India in international forums. All international treaties and agreements are negotiated and concluded in the President's name.</li>
+            <li><strong>Military Powers:</strong> Serves as the <strong>Supreme Commander</strong> of the Armed Forces. Appoints the chiefs of the Army, Navy, and Air Force, and has the authority to declare war or conclude peace.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Emergency Powers:</strong> The President deals with three types of emergencies: <strong>National Emergency</strong> (Article 352), <strong>State Emergency / President's Rule</strong> (Article 356 & 365), and <strong>Financial Emergency</strong> (Article 360).
+        </div>
+
+        <h3>Limitations of the President</h3>
+        <p>The President is the nominal head (head of the State, not the government) and exercises powers <strong>on the advice of the Council of Ministers</strong>. While the President can send a bill or piece of advice back for reconsideration once, they are <strong>bound to act</strong> according to it if the Parliament or Council passes it a second time.</p>
+
+        <h2>3. The Vice-President of India</h2>
+        <p>The Vice-President is the <strong>ex-officio Chairman</strong> of the Rajya Sabha and cannot hold any other office of profit.</p>
+        
+        <h3>Qualifications and Term</h3>
+        <ul>
+            <li>Must be a citizen of India and at least <strong>35 years old</strong>.</li>
+            <li>Must be qualified to be elected as a <strong>Rajya Sabha</strong> member.</li>
+            <li>Elected by an electoral college consisting of members of <strong>both Houses of Parliament</strong>.</li>
+            <li>Holds office for a <strong>five-year term</strong>.</li>
+            <li>Can be removed by a resolution passed by a majority in the Rajya Sabha and agreed to by the Lok Sabha.</li>
+        </ul>
+
+        <h3>Powers and Functions</h3>
+        <ul>
+            <li><strong>Presiding Officer:</strong> Presides over Rajya Sabha sessions, maintaining order, and exercises a <strong>casting vote</strong> in the case of a tie.</li>
+            <li><strong>Acting President:</strong> Takes over as the Acting President in the absence of the President due to death, resignation, or removal. During this period, they enjoy all the <strong>emoluments and immunities</strong> of the President.</li>
+        </ul>
+
+        <h2>4. The Prime Minister of India</h2>
+        <p>The Prime Minister is the <strong>head of the government</strong> and the real executive authority. Appointed by the President, the PM advises the President on the appointment of all other ministers.</p>
+
+        <h3>Relations with the President</h3>
+        <ul>
+            <li><strong>Article 74:</strong> Mandates a Council of Ministers to aid and advise the President, working under the leadership of the PM.</li>
+            <li><strong>Article 75:</strong> The PM is appointed by the President, and other ministers are appointed by the President on the PM's advice.</li>
+            <li>The PM acts as the vital link of <strong>communication</strong> between the President and the Council of Ministers regarding all administrative decisions.</li>
+        </ul>
+
+        <h3>Relations with the Council of Ministers</h3>
+        <ul>
+            <li>The PM allocates <strong>portfolios</strong> among ministers and coordinates the work of various departments.</li>
+            <li>Has the authority to change Cabinet members or demand a minister's <strong>resignation</strong> at any time.</li>
+        </ul>
+
+        <h3>Relations with the Parliament</h3>
+        <ul>
+            <li>Acts as the <strong>leader of the Lok Sabha</strong> and the chief spokesperson of the government on the floor of the house.</li>
+            <li>Advises the President on <strong>summoning and proroguing</strong> Parliament sessions and can recommend the dissolution of the Lok Sabha.</li>
+        </ul>
+
+        <h3>Role in Foreign Affairs</h3>
+        <p>The PM plays a critical role in shaping the nation's <strong>foreign policy</strong>. They represent India in international forums (like the UN, SAARC, Commonwealth) and hold vital talks with world leaders to negotiate issues related to the welfare of the nation.</p>
+
+        <h2>5. Working of the Council of Ministers</h2>
+        <ul>
+            <li><strong>Collective Responsibility:</strong> The Council is collectively responsible to the Lok Sabha. A vote of <strong>no-confidence</strong> against one minister is treated as a vote against the entire Council of Ministers.</li>
+            <li><strong>Cabinet Solidarity:</strong> Ministers must function together as a team. If a minister strongly disagrees with a Cabinet decision, their only honorable option is to leave gracefully.</li>
+        </ul>
+
+        <h2>6. Permanent Executives (Civil Servants)</h2>
+        <p>While the PM and ministers act as temporary <strong>political executives</strong>, the ongoing, day-to-day administration is handled by <strong>Permanent Executives</strong>.</p>
+        <ul>
+            <li>They are highly trained government employees who do not belong to any political party.</li>
+            <li>Candidates are recruited through the rigorous <strong>UPSC examinations</strong> to join services like the IAS, IFS, and IPS.</li>
+            <li>They provide expert administrative guidance and assist the political executives at both the central and state levels.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

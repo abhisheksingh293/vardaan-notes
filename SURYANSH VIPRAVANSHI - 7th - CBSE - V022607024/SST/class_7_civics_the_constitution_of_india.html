@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Constitution of India - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE DESIGN (Mobile & Tablet) --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet { padding: 15mm; }
+            .institute-name { font-size: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; }
+        }
+
+        @media screen and (max-width: 480px) {
+            .paper-sheet { padding: 8mm; }
+            .institute-name { font-size: 1.5rem; }
+            .system-name { font-size: 0.9rem; }
+            h1 { font-size: 1.5rem; }
+            p, li { font-size: 1rem; }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Per user request, footer remains) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            .branding-footer {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Civics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>THE CONSTITUTION OF INDIA - AN INTRODUCTION</h1>
+        
+        <h2>1. What is a Constitution?</h2>
+        <p>The Constitution is the <strong>supreme law of the land</strong>. It acts as a special guiding document or instruction manual for a country. It lays down the basic structure of how our country is governed.</p>
+        <ul>
+            <li>It explains how the government will function.</li>
+            <li>It defines what powers the government will have.</li>
+            <li>It details what rights and duties citizens will enjoy.</li>
+        </ul>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Constitution:</strong> The supreme rulebook of a nation that establishes the framework for its government, laws, and the rights of its people, preventing confusion and maintaining justice.
+        </div>
+
+        <h2>2. Why Do We Need a Constitution?</h2>
+        <p>A country without rules would face confusion and chaos. The Constitution keeps everything in order by deciding what kind of government the country will have. It lays out the framework for the three main organs of the government:</p>
+        <ul>
+            <li><strong>The Legislature:</strong> The body that makes laws.</li>
+            <li><strong>The Executive:</strong> The body that enforces or implements laws.</li>
+            <li><strong>The Judiciary:</strong> The body that interprets laws and ensures justice.</li>
+        </ul>
+        <p>By defining their roles, the Constitution ensures a system of <strong>checks and balances</strong> so no single branch becomes too powerful. It also lists the rights (like freedom) and duties of every citizen, reflecting the nation's core values such as justice, equality, liberty, and fraternity.</p>
+
+        <h2>3. Making of the Indian Constitution</h2>
+        <p>As India fought for freedom, leaders formed a special body called the <strong>Constituent Assembly</strong> in 1946 to answer crucial questions about governance. It originally had 389 members, later reduced to 299 after Partition, and included people from various backgrounds and 15 women.</p>
+        <ul>
+            <li><strong>Dr. Rajendra Prasad</strong> served as the Chairman of the Constituent Assembly.</li>
+            <li>A smaller <strong>Drafting Committee</strong> wrote the original draft. This was chaired by <strong>Dr. B.R. Ambedkar</strong>, a respected social reformer and India's first Law and Justice Minister.</li>
+            <li>The Assembly spent almost three years discussing, debating, and drafting.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            The Indian Constitution was adopted on <strong>26 November 1949</strong> and officially came into effect on <strong>26 January 1950</strong>. We celebrate this day every year as <strong>Republic Day</strong>. India has the world's longest written constitution!
+        </div>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Just like a textbook is divided into chapters, the Constitution is organized into Parts and Schedules. When enacted in 1950, it had 22 Parts and 8 Schedules. Today, after amendments to suit changing needs, it has <strong>25 Parts and 12 Schedules</strong>.
+        </div>
+
+        <h2>4. The Preamble to the Constitution</h2>
+        <p>The Preamble is the introduction to the Constitution of India. It expresses the essence of guiding values and explains the purpose and goals of the Constitution. It begins with the words, <strong>"We, the People of India..."</strong> indicating that citizens are the real source of power.</p>
+        <p>The Preamble declares India to be a:</p>
+        <ul>
+            <li><strong>Sovereign:</strong> Free to make its own decisions without external control.</li>
+            <li><strong>Socialist:</strong> Aims for the welfare of all, working to reduce the gap between the rich and poor.</li>
+            <li><strong>Secular:</strong> Respects all religions equally; the government has no official religion.</li>
+            <li><strong>Democratic:</strong> People have the right to vote and elect leaders. A government by the people, for the people.</li>
+            <li><strong>Republic:</strong> The head of the state (President) is elected, not a king or queen.</li>
+        </ul>
+
+        <h2>5. Factors That Influenced the Constitution</h2>
+        <p>Our Constitution makers drew inspiration from various sources to build a fair and united country:</p>
+        <ul>
+            <li><strong>The Indian Freedom Movement:</strong> Instilled values like equality, justice, freedom of speech, and fraternity (brotherhood).</li>
+            <li><strong>Ancient Indian Civilisation:</strong> Inspired by ancient forms of governance like <em>Janapadas</em>, <em>Rajasabhas</em>, and Kautilya's <em>Saptanga Theory</em>. It also drew from ideals like <em>vasudhaiva kutumbakam</em> (the world is one family).</li>
+            <li><strong>Ideas from Around the World:</strong> 
+                <ul>
+                    <li>Liberty, Equality, Fraternity from the <strong>French Constitution</strong>.</li>
+                    <li>Directive Principles of State Policy (DPSPs) from the <strong>Irish Constitution</strong>.</li>
+                    <li>Independent Judiciary from the <strong>U.S. Constitution</strong>.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>6. Main Features of the Indian Constitution</h2>
+        <p>The core features reflect the vision of a just and caring society for all:</p>
+        
+        <h3>1. Fundamental Rights</h3>
+        <p>The Constitution gives six important rights to every citizen to protect their freedom and dignity:</p>
+        <ul>
+            <li><strong>Right to Equality:</strong> Equal treatment for all; no discrimination.</li>
+            <li><strong>Right to Freedom:</strong> Freedom of speech, movement, and work.</li>
+            <li><strong>Right against Exploitation:</strong> Protection from child labour and human trafficking.</li>
+            <li><strong>Right to Freedom of Religion:</strong> Freedom to practice, follow, or not follow any religion.</li>
+            <li><strong>Cultural and Educational Rights:</strong> Rights of minorities to preserve their culture.</li>
+            <li><strong>Right to Constitutional Remedies:</strong> Right to go to court if any fundamental right is denied.</li>
+        </ul>
+
+        <h3>2. Other Core Features</h3>
+        <ul>
+            <li><strong>Federal System:</strong> Power is divided between the central (Union) government and state governments.</li>
+            <li><strong>Parliamentary Form of Government:</strong> People elect representatives; the Prime Minister is the real head of the government, while the President is the constitutional head.</li>
+            <li><strong>Separation of Powers:</strong> Clearly defines boundaries between the Legislature, Executive, and Judiciary to prevent misuse of power.</li>
+            <li><strong>Directive Principles of State Policy (DPSPs):</strong> Guidelines for the government to make laws promoting justice, equality, and welfare (though not enforceable by law).</li>
+            <li><strong>Independent Judiciary:</strong> Courts operate free from government influence. The Supreme Court is the highest court.</li>
+            <li><strong>Single Citizenship:</strong> Every person is a citizen of one nation—India. There is no separate state citizenship.</li>
+        </ul>
+
+        <h3>The Constitution: A Living Document</h3>
+        <p>The makers of the Constitution knew society would change over time. Therefore, they designed it to be flexible. Changes made to the Constitution are called <strong>amendments</strong>. For example:</p>
+        <ul>
+            <li>In 1976, <strong>Fundamental Duties</strong> (Part IV-A) were added to remind citizens of their responsibilities.</li>
+            <li>In 1992, the <strong>73rd Amendment</strong> introduced the Panchayati Raj system to strengthen grassroots democracy.</li>
+            <li>In 2002, the <strong>86th Amendment</strong> made the Right to Education (Article 21A) a Fundamental Right for children aged 6 to 14.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

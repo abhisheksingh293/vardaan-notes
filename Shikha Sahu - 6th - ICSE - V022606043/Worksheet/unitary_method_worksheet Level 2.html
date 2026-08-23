@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { 
+        tex: { 
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        },
+        svg: {
+          fontCache: 'global'
+        },
+        chtml: {
+          matchFontHeight: false
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2: Medium/Standard) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 210mm; 
+            margin: 0 auto; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt;
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+            flex-wrap: wrap; gap: 10px;
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: flex-start;
+            margin-bottom: 8px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+            line-height: 1.6; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); padding-top: 2px;} 
+        .q-content { flex: 1; word-wrap: break-word; } 
+        
+        /* Answer Key Grid Styling */
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            font-size: 11pt;
+        }
+        .answer-item {
+            display: flex;
+            align-items: center;
+        }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 600px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .meta-info { flex-direction: column; text-align: center; }
+            .institute-name { font-size: 18pt; }
+            .tagline { font-size: 11pt; }
+            .worksheet-title { font-size: 14pt; }
+            .watermark { width: 90%; }
+            .answer-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+        }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .container { padding: 0; }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Unitary Method Worksheet (Level 2)</div>
+            <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 6 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Multi-Step Direct Variation & Rates</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">If $15 \text{ meters}$ of cloth cost ₹ $1350$, find the cost of $28 \text{ meters}$ of the same cloth.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">A car travels $280 \text{ km}$ on $20 \text{ litres}$ of petrol. How many litres of petrol are required to cover $560 \text{ km}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">The cost of $3 \text{ dozen}$ oranges is ₹ $180$. Find the cost of $25$ oranges.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">A train covers $420 \text{ km}$ in $6 \text{ hours}$. How much distance will it cover in $4.5 \text{ hours}$ at the same uniform speed?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">If $18$ workers can weave $90 \text{ meters}$ of carpet in a day, how many meters of carpet can $24$ workers weave in a day?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">A factory manufactures $1200$ toys in $6 \text{ days}$. How many toys will it manufacture in the month of April ($30 \text{ days}$)?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">If $3.5 \text{ kg}$ of sugar costs ₹ $140$, find the cost of $8 \text{ kg}$ of sugar.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">A high-speed printer prints $450$ pages in $15 \text{ minutes}$. How many pages can it print in $1 \text{ hour}$ ($60 \text{ minutes}$)?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">If $12$ books weigh $4.2 \text{ kg}$, find the weight of $20$ such books.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">A motorcycle consumes $2.5 \text{ litres}$ of petrol to travel $125 \text{ km}$. How far will it go on $6 \text{ litres}$ of petrol?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">11.</span>
+            <div class="q-content">An army camp has food stock for $200$ soldiers for $30 \text{ days}$. If $50$ more soldiers join the camp, how many days will the food last?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">12.</span>
+            <div class="q-content">If $16$ workers can complete a painting job in $15 \text{ days}$, how many workers are required to finish the same job in $10 \text{ days}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">13.</span>
+            <div class="q-content">A car travelling at an average speed of $60 \text{ km/h}$ takes $4 \text{ hours}$ to reach a destination. How long will it take if the speed is increased to $80 \text{ km/h}$?</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section B: Best Buy Comparisons & Inverse Variation</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">14.</span>
+            <div class="q-content">Store A sells $5 \text{ kg}$ of rice for ₹ $225$. Store B sells $8 \text{ kg}$ of the same rice for ₹ $344$. Which store offers a better deal, and by how much per kg?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">15.</span>
+            <div class="q-content">Brand X offers $6 \text{ pens}$ for ₹ $72$, while Brand Y offers $8 \text{ pens}$ for ₹ $104$. Which brand is cheaper per pen?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">16.</span>
+            <div class="q-content">A $250 \text{ mL}$ bottle of juice costs ₹ $35$, and a $1 \text{ litre}$ carton of the same juice costs ₹ $130$. Which package is more economical?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">17.</span>
+            <div class="q-content">If $8$ men can build a boundary wall in $12 \text{ days}$, how many days will $6$ men take to build the same wall working at the same rate?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">18.</span>
+            <div class="q-content">$12$ pipes of equal diameter can fill a water tank in $40 \text{ minutes}$. How long will $15$ such pipes take to fill the same tank?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">19.</span>
+            <div class="q-content">A typist types $1800 \text{ words}$ in $45 \text{ minutes}$. How many words can she type in $1 \text{ hour } 15 \text{ minutes}$ ($75 \text{ minutes}$)?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">20.</span>
+            <div class="q-content">If $24 \text{ meters}$ of decorative ribbon cost ₹ $360$, find the cost of $15 \text{ meters}$ of ribbon.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">21.</span>
+            <div class="q-content">A contractor deployed $25$ laborers to complete a road project in $18 \text{ days}$. If he wants to finish the project in $15 \text{ days}$, how many additional laborers must he hire?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">22.</span>
+            <div class="q-content">A car uses $12 \text{ litres}$ of petrol for a journey of $180 \text{ km}$. How much petrol is needed for a journey of $420 \text{ km}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">23.</span>
+            <div class="q-content">A garrison of $150 \text{ men}$ has provisions for $45 \text{ days}$. After $10 \text{ days}$, $25 \text{ men}$ left the garrison. How many days will the remaining provisions last for the remaining men?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">24.</span>
+            <div class="q-content">If $14 \text{ cans}$ of paint are needed to paint $7 \text{ identical rooms}$, how many cans are required to paint $12 \text{ such rooms}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">25.</span>
+            <div class="q-content">A runner covers a distance of $12 \text{ km}$ in $48 \text{ minutes}$. At the same pace, how long will he take to run $18 \text{ km}$?</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section C: Advanced Applied Word Problems</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">26.</span>
+            <div class="q-content">If $15 \text{ men}$ can earn ₹ $18000$ in $6 \text{ days}$, how much will $20 \text{ men}$ earn in $9 \text{ days}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">27.</span>
+            <div class="q-content">A school bus travels at a uniform speed of $45 \text{ km/h}$ and reaches destination in $40 \text{ minutes}$. How fast should the bus travel to reach in $30 \text{ minutes}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">28.</span>
+            <div class="q-content">If $12 \text{ men}$ working $8 \text{ hours}$ a day can complete a piece of work in $10 \text{ days}$, how many days will $16 \text{ men}$ working $6 \text{ hours}$ a day take to complete the same work?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">29.</span>
+            <div class="q-content">$6 \text{ meters}$ of a uniform copper rod weighs $2.7 \text{ kg}$. What will be the weight of an $11 \text{ meter}$ long rod of the same material?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">30.</span>
+            <div class="q-content">If $40 \text{ workers}$ can build a wall in $15 \text{ days}$, how many fewer workers are needed if the time allowed is increased to $20 \text{ days}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">31.</span>
+            <div class="q-content">A car travels $195 \text{ km}$ on $13 \text{ litres}$ of fuel. How far can it travel on a full fuel tank of $35 \text{ litres}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">32.</span>
+            <div class="q-content">The cost of $4 \text{ kg}$ of cashew nuts is ₹ $2800$. What quantity of cashew nuts can be purchased for ₹ $4900$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">33.</span>
+            <div class="q-content">If $28 \text{ men}$ can harvest a crop field in $15 \text{ days}$, in how many days can $21 \text{ men}$ harvest the same field?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">34.</span>
+            <div class="q-content">A train $150 \text{ meters}$ long passes a telegraph post in $9 \text{ seconds}$. What is the speed of the train in $\text{km/h}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">35.</span>
+            <div class="q-content">If $9 \text{ uniform steel bars}$ weigh $67.5 \text{ kg}$, how many such bars will weigh $105 \text{ kg}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">36.</span>
+            <div class="q-content">A hostel mess has food provisions for $80 \text{ students}$ for $30 \text{ days}$. How many students should leave so that the food lasts for $40 \text{ days}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">37.</span>
+            <div class="q-content">If $18 \text{ identical dolls}$ cost ₹ $630$, how many dolls can be bought for ₹ $1050$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">38.</span>
+            <div class="q-content">A wheel makes $360 \text{ revolutions}$ in $6 \text{ minutes}$. How many revolutions will it make in $14 \text{ minutes}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">39.</span>
+            <div class="q-content">A hosteler pays ₹ $10800$ as mess charges for $3 \text{ months}$. How much mess charge will he pay for an academic session of $10 \text{ months}$?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">40.</span>
+            <div class="q-content">If $16 \text{ men}$ can complete a construction project in $25 \text{ days}$, how many days will $20 \text{ men}$ take to complete the same project working at the same pace?</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Answer Key</div>
+    <div class="answer-grid">
+        <div class="answer-item"><span class="ans-label">1.</span> ₹ $2520$</div>
+        <div class="answer-item"><span class="ans-label">2.</span> $40 \text{ L}$</div>
+        <div class="answer-item"><span class="ans-label">3.</span> ₹ $125$</div>
+        <div class="answer-item"><span class="ans-label">4.</span> $315 \text{ km}$</div>
+        <div class="answer-item"><span class="ans-label">5.</span> $120 \text{ m}$</div>
+        <div class="answer-item"><span class="ans-label">6.</span> $6000$</div>
+        <div class="answer-item"><span class="ans-label">7.</span> ₹ $320$</div>
+        <div class="answer-item"><span class="ans-label">8.</span> $1800 \text{ pgs}$</div>
+        <div class="answer-item"><span class="ans-label">9.</span> $7 \text{ kg}$</div>
+        <div class="answer-item"><span class="ans-label">10.</span> $300 \text{ km}$</div>
+        
+        <div class="answer-item"><span class="ans-label">11.</span> $24 \text{ days}$</div>
+        <div class="answer-item"><span class="ans-label">12.</span> $24 \text{ workers}$</div>
+        <div class="answer-item"><span class="ans-label">13.</span> $3 \text{ hours}$</div>
+        <div class="answer-item"><span class="ans-label">14.</span> Store B (₹ $2/\text{kg}$)</div>
+        <div class="answer-item"><span class="ans-label">15.</span> Brand X</div>
+        <div class="answer-item"><span class="ans-label">16.</span> $1\text{-litre carton}$</div>
+        <div class="answer-item"><span class="ans-label">17.</span> $16 \text{ days}$</div>
+        <div class="answer-item"><span class="ans-label">18.</span> $32 \text{ mins}$</div>
+        <div class="answer-item"><span class="ans-label">19.</span> $3000 \text{ words}$</div>
+        <div class="answer-item"><span class="ans-label">20.</span> ₹ $225$</div>
+        
+        <div class="answer-item"><span class="ans-label">21.</span> $5 \text{ workers}$</div>
+        <div class="answer-item"><span class="ans-label">22.</span> $28 \text{ L}$</div>
+        <div class="answer-item"><span class="ans-label">23.</span> $42 \text{ days}$</div>
+        <div class="answer-item"><span class="ans-label">24.</span> $24 \text{ cans}$</div>
+        <div class="answer-item"><span class="ans-label">25.</span> $72 \text{ mins}$</div>
+        <div class="answer-item"><span class="ans-label">26.</span> ₹ $36000$</div>
+        <div class="answer-item"><span class="ans-label">27.</span> $60 \text{ km/h}$</div>
+        <div class="answer-item"><span class="ans-label">28.</span> $10 \text{ days}$</div>
+        <div class="answer-item"><span class="ans-label">29.</span> $4.95 \text{ kg}$</div>
+        <div class="answer-item"><span class="ans-label">30.</span> $10 \text{ workers}$</div>
+        
+        <div class="answer-item"><span class="ans-label">31.</span> $525 \text{ km}$</div>
+        <div class="answer-item"><span class="ans-label">32.</span> $7 \text{ kg}$</div>
+        <div class="answer-item"><span class="ans-label">33.</span> $20 \text{ days}$</div>
+        <div class="answer-item"><span class="ans-label">34.</span> $60 \text{ km/h}$</div>
+        <div class="answer-item"><span class="ans-label">35.</span> $14 \text{ bars}$</div>
+        <div class="answer-item"><span class="ans-label">36.</span> $20 \text{ students}$</div>
+        <div class="answer-item"><span class="ans-label">37.</span> $30 \text{ dolls}$</div>
+        <div class="answer-item"><span class="ans-label">38.</span> $840 \text{ revs}$</div>
+        <div class="answer-item"><span class="ans-label">39.</span> ₹ $36000$</div>
+        <div class="answer-item"><span class="ans-label">40.</span> $20 \text{ days}$</div>
+    </div>
+
+    <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>
+```
+
+The Level 2 worksheet is now generated and ready in the artifact panel.

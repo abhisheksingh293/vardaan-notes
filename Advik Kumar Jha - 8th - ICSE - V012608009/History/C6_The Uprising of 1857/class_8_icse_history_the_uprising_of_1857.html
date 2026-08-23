@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Uprising of 1857 - Class 8 History - Vardaan Learning Institute</title>
+    
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Mobile responsiveness adjustments */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+            .institute-name {
+                font-size: 1.5rem !important;
+            }
+            h1 {
+                font-size: 1.8rem !important;
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; /* TIGHTENED LAYOUT */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- STREAMING_CHUNK:Styling Theme Toggle and Print Configuration... --- */
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (User requested Footer visible in print) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 History • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>The Uprising of 1857</h1>
+        
+        <h2>1. Nature of the Uprising</h2>
+        <p>The <strong>Uprising of 1857</strong> was a widespread expression of resistance against British authority that shook the foundations of British rule in India. It began with the army but soon spread across northern and central India, involving peasants, soldiers, artisans, nobles, and rulers.</p>
+        <ul>
+            <li>British writers (like Sir James Outram and PE Roberts) viewed it as a mere <strong>Sepoy Mutiny</strong> caused by the introduction of greased cartridges, arguing it lacked mass participation.</li>
+            <li>Indian nationalists (like Veer Savarkar and A. Mehta) called it the <strong>'First War of National Independence'</strong> due to the combined participation of Hindus and Muslims united by their shared hatred for British rule.</li>
+        </ul>
+
+        <h2>2. Causes of the Uprising</h2>
+        
+        <h3>Political Causes</h3>
+        <p>The expansionist policies of the British East India Company severely threatened the Indian rulers:</p>
+        <ul>
+            <li><strong>Subsidiary Alliance:</strong> Introduced by Lord Wellesley, it forced Indian rulers to accept the British as the supreme power, maintain British troops at their own expense, and place a British resident in their court.</li>
+            <li><strong>Doctrine of Lapse:</strong> Introduced by Lord Dalhousie, this policy dictated that if a ruler died without a natural heir, their kingdom would be annexed. <strong>Jhansi</strong> was annexed under this policy.</li>
+            <li><strong>Awadh</strong> was annexed by Lord Dalhousie on the pretext of misgovernance.</li>
+            <li>The British declared that <strong>Bahadur Shah II</strong> would be the last Mughal ruler, denying his successors imperial titles or the use of the Red Fort.</li>
+            <li>Pensions and titles of Indian rulers were discontinued. <strong>Nana Saheb</strong> (adopted son of Baji Rao II) was deprived of his pension.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Expansionist Policies:</strong> Strategies used by the British to systematically swallow independent Indian territories. By using both outright wars (like the Battle of Buxar) and cunning legal tools (like the Doctrine of Lapse), the British eliminated local sovereignty.</p>
+        </div>
+
+        <h3>Economic Causes</h3>
+        <ul>
+            <li>Peasants suffered under oppressive revenue policies, excessive taxation, and dominance of <strong>zamindars</strong> and moneylenders.</li>
+            <li>Artisans and craftsmen faced ruin due to the large-scale import of <strong>cheap British goods</strong>, which displaced Indian handmade products. Conversely, Indian goods faced heavy duties in England.</li>
+            <li>Confiscation of lands of old zamindars (especially in Awadh) added to anti-British sentiment.</li>
+            <li>The constant <strong>drain of wealth</strong> and a slow pace of industrialisation caused widespread economic misery.</li>
+        </ul>
+
+        <h3>Social and Religious Causes</h3>
+        <ul>
+            <li>British interference in customs, such as the <strong>abolition of sati</strong> and the <strong>legalisation of widow remarriage</strong>, angered orthodox sections of society.</li>
+            <li>Missionary efforts to convert Indians to <strong>Christianity</strong> added to the fear of losing cultural identity.</li>
+            <li>Lands owned by temples and mosques were heavily taxed.</li>
+            <li><strong>Racial discrimination:</strong> Indians were denied promotions, subjected to humiliation, and traditional caste marks (tilaks, turbans) were banned in the army.</li>
+        </ul>
+
+        <h3>Military Causes</h3>
+        <ul>
+            <li>Indian sepoys formed the bulk of the British army but were paid much less and given fewer promotions than their British counterparts. An Indian could not rise beyond the rank of <strong>subedar</strong>.</li>
+            <li><strong>General Service Enlistment Act (1856):</strong> Issued by Lord Canning, it forced new recruits to serve overseas, violating Hindu religious norms where overseas travel was considered a caste taboo.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The Immediate Cause:</strong> In 1856, the British introduced the <strong>Enfield rifle</strong>. The cartridges were coated with animal fat (believed to be cow and pig fat), which was deeply offensive to both Hindus and Muslims. Soldiers had to bite off the ends before loading. On <strong>29 March 1857</strong>, <strong>Mangal Pandey</strong> called upon fellow sepoys in Barrackpore to revolt. He was hanged on 8 April, providing the final spark for the Uprising.</p>
+        </div>
+
+        <h2>3. Main Centres and Leaders of the Uprising</h2>
+        <p>The Uprising formally spread when 85 soldiers in <strong>Meerut</strong> mutinied in May 1857, freed their colleagues, and marched to Delhi.</p>
+        <ul>
+            <li><strong>Delhi:</strong> The sepoys proclaimed the ageing Mughal Emperor <strong>Bahadur Shah Zafar</strong> as the leader of the Uprising.</li>
+            <li><strong>Jhansi & Gwalior:</strong> Led by <strong>Rani Lakshmibai</strong> and <strong>Tatya Tope</strong>. The Rani fought fiercely after the British refused to recognize her adopted son as the heir.</li>
+            <li><strong>Kanpur:</strong> Led by <strong>Nana Saheb</strong> (who declared himself Peshwa), supported by Tatya Tope and Azimullah.</li>
+            <li><strong>Arrah (Bihar):</strong> Led by an old chieftain, <strong>Kunwar Singh</strong> of Jagdishpur, who organised armed groups and freed parts of Bihar.</li>
+        </ul>
+
+        <h2>4. Suppression and Causes for Failure</h2>
+        <p>The British responded with extreme brutality. Villages were burnt, and rebels were publicly executed or tied to the mouths of cannons. Top military leaders like <strong>John Lawrence, Campbell, Outram, and Havelock</strong> were called in. By mid-1858, the Uprising was crushed.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Why Did It Fail?</strong> The Uprising failed to spread across the entire country, remaining limited to northern and central India. It suffered from a <strong>lack of centralized planning</strong>, uncoordinated leadership, and <strong>outdated weapons</strong> compared to the sophisticated British arsenal. Furthermore, many native rulers (Scindias, Holkars, Nizam) and educated Indians stayed loyal to the British.</p>
+        </div>
+
+        <h2>5. Effects and Conclusion</h2>
+        <p>Despite its failure, the Uprising of 1857 was a major turning point in modern Indian history:</p>
+        <ul>
+            <li><strong>End of Company Rule:</strong> The rule of the English East India Company ended, and administration was taken over directly by the British Crown (Queen Victoria) in <strong>1858</strong>.</li>
+            <li>The Board of Control was replaced by the <strong>Secretary of State</strong> for India.</li>
+            <li>The Governor General was given the new title of <strong>Viceroy</strong> (Lord Canning was the first).</li>
+            <li>The Queen's Proclamation promised no further territorial annexations and pledged not to interfere in the religious practices of Indians.</li>
+            <li>The army was thoroughly reorganised to prevent future mutinies.</li>
+        </ul>
+        <p>Ultimately, the Uprising sowed the seeds of <strong>Indian nationalism</strong>, serving as a massive inspiration for future generations in the struggle for freedom.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

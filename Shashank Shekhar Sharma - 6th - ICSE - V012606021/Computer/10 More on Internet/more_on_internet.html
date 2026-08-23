@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>More on Internet - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- RESPONSIVE DESIGN FOR MOBILE, TABLET, LAPTOP --- */
+        @media (max-width: 1024px) {
+            .paper-sheet {
+                width: 90%;
+                padding: 15mm;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .paper-sheet {
+                width: 95%;
+                padding: 10mm;
+            }
+            .institute-name { font-size: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; }
+            .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+        }
+
+        @media (max-width: 480px) {
+            .paper-sheet {
+                width: 100%;
+                padding: 5mm;
+                border-radius: 0;
+            }
+            .institute-name { font-size: 1.5rem; }
+            .system-name { font-size: 0.9rem; letter-spacing: 1px; }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; }
+            p, li { font-size: 1rem; }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer kept visible per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* Ensure Footer displays block in print to override any generic hidden states */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+                display: block !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Computer • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>MORE ON INTERNET</h1>
+        
+        <h2>1. Introduction</h2>
+        <p>Apart from basic communication, the Internet provides some advanced and highly useful features. These include the ability to store data online, conduct business transactions, share personal journals, and broadcast audio programs. The major services we will explore are <strong>Cloud Storage (Google Drive)</strong>, <strong>E-Commerce</strong>, <strong>Blogging</strong>, and <strong>Podcasting</strong>.</p>
+        
+        <h2>2. Google Drive</h2>
+        <p><strong>Google Drive</strong> is one of the most popular cloud storage services. It allows us to create, edit, save, and share documents, spreadsheets, and presentations online. To use Google Drive, you must have a <strong>Gmail account</strong>.</p>
+        
+        <h3>Organising Files and Folders</h3>
+        <p>Once you open Google Drive, you can easily manage your data using the <strong>New</strong> button. Options include:</p>
+        <ul>
+            <li><strong>New Folder:</strong> Creates a new folder to organise your data.</li>
+            <li><strong>File upload / Folder upload:</strong> Allows you to upload files or entire folders from your local computer to the cloud.</li>
+            <li><strong>Google Docs / Sheets / Slides:</strong> Allows you to create new documents, spreadsheets, and presentations directly on the Drive.</li>
+            <li><strong>Duplicating a File:</strong> You can create a copy of an existing file by right-clicking (or clicking More Actions) and selecting <strong>Make a copy</strong>.</li>
+            <li><strong>Removing a file:</strong> Unwanted files can be deleted by selecting the <strong>Remove</strong> (Move to trash) option.</li>
+        </ul>
+
+        <h3>Sharing a File or Folder</h3>
+        <p>Google Drive allows us to share uploaded files with others so they can access or collaborate on them. You simply need to enter the email addresses of the people you want to share the file with.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Google Drive Permissions:</strong> When sharing a file, you can assign different levels of access:</p>
+            <ul>
+                <li><strong>Viewer:</strong> Can only view the file.</li>
+                <li><strong>Commenter:</strong> Can view the file and leave comments.</li>
+                <li><strong>Editor:</strong> Can view, comment, and make changes to the file.</li>
+                <li><strong>Owner:</strong> Has full control over the file and its sharing settings.</li>
+            </ul>
+        </div>
+
+        <h2>3. E-Commerce</h2>
+        <p>Internet is becoming extremely popular as a place to carry out businesses without having to visit a physical store.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>E-commerce</strong> (Electronic Commerce) is the activity of buying and selling products and services over the Internet. Popular examples include <em>Amazon, Flipkart,</em> and <em>Myntra</em>.</p>
+        </div>
+
+        <h3>Advantages and Disadvantages</h3>
+        <ul>
+            <li><strong>Advantages:</strong> Operational round the clock (24/7), saves time and travel expenses, allows customers to compare prices and features online, and often provides easy exchange policies.</li>
+            <li><strong>Disadvantages:</strong> There is no physical assurance of product quality before buying, and there are high possibilities of online fraud.</li>
+        </ul>
+
+        <h3>Modes of Payment</h3>
+        <p>E-commerce websites offer various modes to make payments for products or services:</p>
+        <ul>
+            <li><strong>Credit Card / Debit Card:</strong> Payments are made using cards issued by banks. To prevent fraud, cards have a 3-digit secret <strong>CVV (Card Verification Value)</strong> number on the back.</li>
+            <li><strong>Net Banking:</strong> Uses a unique Customer ID (or Net Banking ID) and a PIN provided by the bank to make direct payments.</li>
+            <li><strong>E-Wallet:</strong> A digital wallet where you add money from your bank account to make payments. Examples include <em>GooglePay, Paytm, PayPal,</em> and <em>PhonePe</em>. These are also known as <strong>Payment Service Providers (PSP)</strong>.</li>
+            <li><strong>Cash on Delivery (COD):</strong> Making the payment by cash only when you physically receive the product at your residence.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>OTP (One Time Password):</strong> A special, temporary code sent to your registered mobile phone or email. It is used once to prove your identity when logging in, verifying a transaction, or buying something online to ensure security.</p>
+        </div>
+
+        <h2>4. Blogging</h2>
+        <p>A <strong>Blog</strong> is a short form of <strong>WEBLOG</strong>. It refers to a website where new information about a topic is updated regularly, with the latest posts appearing first. It functions like a personal diary or journal shared publicly online.</p>
+
+        <ul>
+            <li><strong>Blogging:</strong> The act of writing, maintaining, and publishing content (including photography and media) on a blog.</li>
+            <li><strong>Blogger:</strong> A person who owns a blog and keeps it updated by posting new stories, news, or opinions.</li>
+            <li><strong>Popular Platforms:</strong> <em>Blogger, WordPress,</em> and <em>Tumblr</em>.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>The term "Weblog" was coined by an American blogger named <strong>Jorn Barger in 1997</strong>. Later, in 1999, Peter Merholz rearranged the words "Web log" to read as <strong>"We Blog"</strong>, giving us the modern term "blog".</p>
+        </div>
+
+        <h2>5. Podcasting</h2>
+        <p>While a blog is primarily text and images, a podcast is focused on audio content.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>A <strong>Podcast</strong> is like an online, on-demand radio show. It is a medium through which recorded audio information is distributed over the Internet. Unlike live radio, you can listen to these audio files whenever you want.</p>
+        </div>
+        
+        <p>There are thousands of podcasts covering topics like entertainment, education, and technology. You can listen to them directly on websites or subscribe to and download them using software like <em>iTunes</em> and <em>iPodder</em> so you can listen on your mobile devices later.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

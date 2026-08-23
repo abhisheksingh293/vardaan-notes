@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 Default) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        /* Mobile responsive container adjustment */
+        .container { width: 95%; max-width: 210mm; margin: 0 auto; padding: 10px 0; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        /* Responsive font sizes for header */
+        .institute-name { 
+            font-size: clamp(18pt, 4vw, 24pt); font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: clamp(10pt, 2vw, 14pt); 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: clamp(12pt, 2.5vw, 16pt); font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        /* Flex-wrap added for mobile responsiveness */
+        .meta-info { 
+            display: flex; flex-wrap: wrap; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: clamp(9pt, 2vw, 11pt); background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); gap: 10px;
+        }
+        @media (max-width: 600px) {
+            .meta-info span { width: 100%; text-align: left; }
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: clamp(11pt, 2vw, 13pt); text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 14px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: clamp(10pt, 2vw, 11pt); page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        
+        .sub-questions { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; padding-left: 5px; }
+        .sub-q-item { display: flex; align-items: baseline; word-wrap: break-word; }
+        .sub-q-num { font-weight: bold; margin-right: 8px; flex-shrink: 0; }
+
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- ANSWER KEY STYLING --- */
+        .answer-key {
+            margin-top: 40px; padding: 20px;
+            border-top: 3px double var(--primary-color);
+            background-color: var(--bg-color); border-radius: 8px;
+            font-size: 9.5pt; page-break-before: always;
+        }
+        .answer-key h2 {
+            text-align: center; color: var(--primary-color);
+            font-size: 14pt; margin-top: 0; margin-bottom: 15px; text-transform: uppercase;
+        }
+        .answer-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 15px;
+        }
+        .ans-item { display: flex; align-items: flex-start; }
+        .ans-num { font-weight: bold; color: var(--primary-color); margin-right: 6px; flex-shrink: 0; min-width: 20px; }
+        .ans-text { word-break: break-word; flex: 1; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+<!-- Theme Toggle -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+</button>
+<script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+
+<img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+
+<div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Mathematics Practice Worksheet: Sets</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8</span>
+            <span>Subject: Mathematics (ICSE)</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Representation and Types of Sets</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">Write the following sets in the Roster (Tabular) form:
+                <div class="sub-questions">
+                    <div class="sub-q-item"><span class="sub-q-num">(a)</span> $A = \{x \mid x \text{ is an odd natural number less than 12}\}$</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(b)</span> $B = \{x \mid x \in \mathbb{W}, x^2 < 30\}$</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(c)</span> $C = \{\text{Letters of the word "MATHEMATICS"}\}$</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(d)</span> $D = \{x \mid x \text{ is a factor of 24}\}$</div>
+                </div></div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">Write the following sets in the Set-Builder form:
+                <div class="sub-questions">
+                    <div class="sub-q-item"><span class="sub-q-num">(a)</span> $P = \{2, 4, 6, 8, 10\}$</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(b)</span> $Q = \{1, 4, 9, 16, 25, 36\}$</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(c)</span> $R = \{5, 10, 15, 20, \dots\}$</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(d)</span> $S = \{\frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \frac{4}{5}\}$</div>
+                </div></div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">State whether the following sets are Empty, Singleton, Finite, or Infinite:
+                <div class="sub-questions">
+                    <div class="sub-q-item"><span class="sub-q-num">(a)</span> Set of triangles having four sides.</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(b)</span> $A = \{x \mid x \in \mathbb{N}, x \text{ is an even prime number}\}$</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(c)</span> $B = \{x \mid x \text{ is a multiple of } 7\}$</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(d)</span> $C = \{x \mid x \in \mathbb{Z}, -3 < x < 5\}$</div>
+                </div></div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">If $A = \{1, 3, 5\}$ and $B = \{5, 3, 1\}$, are sets A and B equal? Give a reason.</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">Are the sets $P = \{\text{vowels in the English alphabet}\}$ and $Q = \{1, 2, 3, 4, 5\}$ equivalent? Explain.</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">Write the cardinal number of the set $M = \{x \mid x \text{ is a letter in the word "ALGEBRA"}\}$.</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">Identify if the given pairs of sets are disjoint: $A = \{1, 2, 3\}$, $B = \{4, 5, 6\}$ and $C = \{2, 4, 6\}$, $D = \{1, 3, 5\}$.</div></div>
+    </div>
+
+    <div class="chapter-header">Section B: Subsets, Proper Subsets, and Universal Set</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Fill in the blanks with the appropriate symbol ($\subset$ or $\not\subset$):
+                <div class="sub-questions">
+                    <div class="sub-q-item"><span class="sub-q-num">(a)</span> $\{2, 3, 4\} \dots \{1, 2, 3, 4, 5\}$</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(b)</span> $\{a, b, c\} \dots \{b, c, d, e\}$</div>
+                </div></div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">Write all the possible subsets of the set $A = \{p, q\}$. How many proper subsets does it have?</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Find the total number of subsets for a set having exactly $5$ elements.</div></div>
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">Let the Universal Set $\xi = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\}$. Write the elements of the subsets:
+                <div class="sub-questions">
+                    <div class="sub-q-item"><span class="sub-q-num">(a)</span> $A = \{x \mid x \text{ is a prime number}\}$</div>
+                    <div class="sub-q-item"><span class="sub-q-num">(b)</span> $B = \{x \mid x \text{ is a perfect square}\}$</div>
+                </div></div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">If $A = \{2, 4, 6\}$, $B = \{1, 3, 5\}$, and $C = \{2, 3, 5, 7\}$, propose a suitable Universal Set $\xi$ for these three sets.</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">If $X = \{x \mid x \text{ is a multiple of } 4, x < 20\}$ and $Y = \{x \mid x \text{ is an even number}, x < 20\}$. Is $X \subset Y$? Give a reason.</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">State True or False: For any set $A$, the empty set $\emptyset$ is a subset of $A$ ($\emptyset \subset A$).</div></div>
+    </div>
+
+    <div class="chapter-header">Section C: Operations on Sets</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">Let $A = \{1, 2, 3, 4\}$ and $B = \{3, 4, 5, 6\}$. Find: $A \cup B$, $A \cap B$, $A - B$, and $B - A$.</div></div>
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">If $\xi = \{a, b, c, d, e, f, g\}$, $P = \{a, b, c, d\}$, and $Q = \{c, d, e, f\}$, find the complement sets: $P'$, $Q'$, and $(P \cup Q)'$.</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">From Question 16, find $P' \cap Q'$ and hence verify De Morgan's Law: $(P \cup Q)' = P' \cap Q'$.</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">Let $M = \{x \mid x \text{ is a multiple of 3, } x < 15\}$ and $N = \{x \mid x \text{ is a multiple of 5, } x < 20\}$. Find $M \cup N$ and $M \cap N$.</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">If $X \subset Y$, then what is the value of $X \cap Y$?</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">If $A \cup B = A$, what relationship exists between sets A and B?</div></div>
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">Find the symmetric difference $(A - B) \cup (B - A)$ for sets $A = \{1, 2, 3\}$ and $B = \{3, 4, 5\}$.</div></div>
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">Simplify the following set expressions: (a) $A \cap A'$ and (b) $A \cup A'$.</div></div>
+    </div>
+
+    <div class="chapter-header">Section D: Venn Diagrams and Cardinal Properties</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">Draw a Venn diagram and shade the region representing $A \cup B$ for intersecting sets.</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">Draw a Venn diagram and shade the region representing $A \cap B$ for intersecting sets.</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Draw a Venn diagram and shade the region representing $A - B$.</div></div>
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">Given $n(A) = 25$, $n(B) = 15$, and $n(A \cap B) = 8$. Find $n(A \cup B)$.</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">If $n(\xi) = 50$, $n(P) = 30$, $n(Q) = 20$, and $n(P \cap Q) = 10$. Find $n(P \cup Q)$.</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">Based on the data in Question 27, calculate $n(P - Q)$ and $n(Q - P)$.</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">Based on the data in Question 27, calculate $n((P \cup Q)')$.</div></div>
+    </div>
+
+    <div class="chapter-header">Section E: Application Based Word Problems</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">In a class of 45 students, 22 can speak Hindi and 18 can speak English. If 10 students can speak both languages, how many can speak at least one of these two languages?</div></div>
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">From the data in Question 30, how many students speak neither Hindi nor English?</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">Out of a group of 60 people, 40 like tea, 25 like coffee, and 15 like both. Find how many people like only Tea.</div></div>
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">From the data in Question 32, find how many people like only Coffee.</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">In a school survey of 100 students, 55 study Mathematics, 40 study Science, and 20 study both. Calculate the number of students who study exactly one subject.</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">In an examination, 65% of students passed in History and 55% passed in Geography. If 25% passed in both subjects, what percentage of students failed in both subjects?</div></div>
+    </div>
+
+    <!-- COMPACT ANSWER KEY -->
+    <div class="answer-key">
+        <h2>Answer Key</h2>
+        <div class="answer-grid">
+            <div class="ans-item"><span class="ans-num">1.</span><span class="ans-text">(a) {1,3,5,7,9,11} (b) {0,1,2,3,4,5} (c) {M,A,T,H,E,I,C,S} (d) {1,2,3,4,6,8,12,24}</span></div>
+            <div class="ans-item"><span class="ans-num">2.</span><span class="ans-text">(a) {x | x is even, 2$\le$x$\le$10} (b) {x | x=n², n$\in$N, n$\le$6} (c) {x | x=5n, n$\in$N} (d) {x | x=n/(n+1), n$\le$4}</span></div>
+            <div class="ans-item"><span class="ans-num">3.</span><span class="ans-text">(a) Empty (b) Singleton (c) Infinite (d) Finite</span></div>
+            <div class="ans-item"><span class="ans-num">4.</span><span class="ans-text">Yes, they contain exactly the same elements.</span></div>
+            <div class="ans-item"><span class="ans-num">5.</span><span class="ans-text">Yes, both have cardinal number 5.</span></div>
+            <div class="ans-item"><span class="ans-num">6.</span><span class="ans-text">M = {A, L, G, E, B, R} $\implies n(M) = 6$</span></div>
+            <div class="ans-item"><span class="ans-num">7.</span><span class="ans-text">A & B are disjoint. C & D are disjoint.</span></div>
+            <div class="ans-item"><span class="ans-num">8.</span><span class="ans-text">(a) $\subset$ (b) $\not\subset$</span></div>
+            <div class="ans-item"><span class="ans-num">9.</span><span class="ans-text">$\emptyset$, {p}, {q}, {p, q}. Proper subsets = 3.</span></div>
+            <div class="ans-item"><span class="ans-num">10.</span><span class="ans-text">$2^5 = 32$ subsets.</span></div>
+            <div class="ans-item"><span class="ans-num">11.</span><span class="ans-text">(a) {2, 3, 5, 7} (b) {1, 4, 9}</span></div>
+            <div class="ans-item"><span class="ans-num">12.</span><span class="ans-text">$\xi = \{1, 2, 3, 4, 5, 6, 7\}$ (or any superset)</span></div>
+            <div class="ans-item"><span class="ans-num">13.</span><span class="ans-text">Yes, all multiples of 4 are even.</span></div>
+            <div class="ans-item"><span class="ans-num">14.</span><span class="ans-text">True</span></div>
+            <div class="ans-item"><span class="ans-num">15.</span><span class="ans-text">$\cup$: {1..6}, $\cap$: {3,4}, A-B: {1,2}, B-A: {5,6}</span></div>
+            <div class="ans-item"><span class="ans-num">16.</span><span class="ans-text">P'={e,f,g}, Q'={a,b,g}, $(P \cup Q)'=\{g\}$</span></div>
+            <div class="ans-item"><span class="ans-num">17.</span><span class="ans-text">$P' \cap Q' = \{g\}$. Verified.</span></div>
+            <div class="ans-item"><span class="ans-num">18.</span><span class="ans-text">$M \cup N=\{3,5,6,9,10,12,15\}$, $M \cap N=\emptyset$</span></div>
+            <div class="ans-item"><span class="ans-num">19.</span><span class="ans-text">$X$</span></div>
+            <div class="ans-item"><span class="ans-num">20.</span><span class="ans-text">$B \subset A$</span></div>
+            <div class="ans-item"><span class="ans-num">21.</span><span class="ans-text">$\{1, 2, 4, 5\}$</span></div>
+            <div class="ans-item"><span class="ans-num">22.</span><span class="ans-text">(a) $\emptyset$ (Empty Set) (b) $\xi$ (Universal Set)</span></div>
+            <div class="ans-item"><span class="ans-num">23.</span><span class="ans-text">Shade entire region of both circles A & B.</span></div>
+            <div class="ans-item"><span class="ans-num">24.</span><span class="ans-text">Shade only the overlapping middle region.</span></div>
+            <div class="ans-item"><span class="ans-num">25.</span><span class="ans-text">Shade only circle A, excluding the overlap.</span></div>
+            <div class="ans-item"><span class="ans-num">26.</span><span class="ans-text">$25 + 15 - 8 = 32$</span></div>
+            <div class="ans-item"><span class="ans-num">27.</span><span class="ans-text">$30 + 20 - 10 = 40$</span></div>
+            <div class="ans-item"><span class="ans-num">28.</span><span class="ans-text">$n(P-Q) = 20$, $n(Q-P) = 10$</span></div>
+            <div class="ans-item"><span class="ans-num">29.</span><span class="ans-text">$50 - 40 = 10$</span></div>
+            <div class="ans-item"><span class="ans-num">30.</span><span class="ans-text">$22 + 18 - 10 = 30$ students</span></div>
+            <div class="ans-item"><span class="ans-num">31.</span><span class="ans-text">$45 - 30 = 15$ students</span></div>
+            <div class="ans-item"><span class="ans-num">32.</span><span class="ans-text">$40 - 15 = 25$ people</span></div>
+            <div class="ans-item"><span class="ans-num">33.</span><span class="ans-text">$25 - 15 = 10$ people</span></div>
+            <div class="ans-item"><span class="ans-num">34.</span><span class="ans-text">Only Math(35) + Only Sci(20) = 55 students</span></div>
+            <div class="ans-item"><span class="ans-num">35.</span><span class="ans-text">$100\% - (65\%+55\%-25\%) = 5\%$</span></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div>
+</div>
+
+</body>
+</html>

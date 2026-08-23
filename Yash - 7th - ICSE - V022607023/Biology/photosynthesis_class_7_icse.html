@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Photosynthesis - Class 7 ICSE Biology - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVENESS (MOBILE/TABLET) --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px !important;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer visible as per request) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+    <!-- MathJax for rendering LaTeX formulas properly -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Biology • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>PHOTOSYNTHESIS</h1>
+        
+        <!-- Content from Gem Protocol goes here -->
+        
+        <h2>1. Introduction to Plant Nutrition</h2>
+        <p>All living organisms need a regular supply of energy to grow, survive, and function continuously. These organisms obtain this energy in the form of food. While animals depend on plants for food, green plants have the unique ability to synthesize their own food.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Autotrophic Nutrition</strong> is the process by which organisms (like green plants) obtain their own food by synthesizing it from simple inorganic materials like carbon dioxide and water in the presence of sunlight. Organisms exhibiting this mode of nutrition are called <strong>autotrophs</strong> or <strong>producers</strong>.
+        </div>
+
+        <h2>2. What is Photosynthesis?</h2>
+        <p><strong>Photosynthesis</strong> is the biological process by which green plants use energy from the sun to convert carbon dioxide and water into sugars (glucose) in the presence of a green-coloured pigment called <strong>chlorophyll</strong>.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            The chemical equation for photosynthesis is summarized as:
+            <br><br>
+            $$6CO_{2} + 12H_{2}O \xrightarrow{\text{Sunlight / Chlorophyll}} C_{6}H_{12}O_{6} + 6O_{2} + 6H_{2}O$$
+            <br>
+            (Carbon dioxide + Water $\rightarrow$ Glucose + Oxygen + Water)
+        </div>
+
+        <h3>Key Events During Photosynthesis:</h3>
+        <ul>
+            <li><strong>Absorption</strong> of solar energy by the chlorophyll pigment.</li>
+            <li><strong>Conversion</strong> of solar energy to chemical energy, accompanied by the splitting of water molecules into hydrogen and oxygen.</li>
+            <li><strong>Reduction</strong> of carbon dioxide by hydrogen to form glucose, utilizing the transformed chemical energy.</li>
+        </ul>
+        <p>During this process, <strong>oxygen gas</strong> is produced as a vital by-product and released into the atmosphere.</p>
+
+        <h2>3. Requirements for Photosynthesis</h2>
+        <p>The process of photosynthesis strictly depends on the availability of four essential raw materials:</p>
+        <ul>
+            <li><strong>Chlorophyll:</strong> Found in the <strong>chloroplasts</strong> of leaves. It acts as the primary trap for absorbing the solar energy necessary for food synthesis.</li>
+            <li><strong>Carbon dioxide ($CO_{2}$):</strong> Plants absorb $CO_{2}$ from the atmosphere. It enters the leaves through microscopic pores called stomata via diffusion.</li>
+            <li><strong>Water ($H_{2}O$):</strong> Absorbed from the soil by plant roots. It travels upward through the plant stem to the leaves via the <strong>xylem tissue</strong>, along with dissolved mineral salts.</li>
+            <li><strong>Sunlight:</strong> The principal source of light energy driving the entire chemical reaction.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            A very small fraction of sunlight (about $2\%$) is actually required and utilized for photosynthesis out of the total amount of sunlight received by the earth!
+        </div>
+
+        <h2>4. Stomata - The Site of Exchange Gases</h2>
+        <p><strong>Stomata</strong> (singular: stoma) are minute pores located primarily on the lower surface (epidermis) of plant leaves. They facilitate the easy passage of water vapour, carbon dioxide, and oxygen.</p>
+        
+        <h3>Opening and Closing Mechanism:</h3>
+        <p>Each stomatal pore is surrounded by a pair of bean-shaped <strong>guard cells</strong> that control its opening and closing.</p>
+        <ul>
+            <li><strong>During Daytime:</strong> Water flows into the guard cells, making them swell and bulge outward (turgid). This action pulls the pore open, allowing $CO_{2}$ to enter for photosynthesis.</li>
+            <li><strong>During Night / Water Scarcity:</strong> Guard cells lose water and shrink, losing their turgidity. This causes the stomatal pore to close, preventing excess water loss via transpiration.</li>
+        </ul>
+
+        <h2>5. Factors Affecting Photosynthesis</h2>
+        <p>Several environmental and internal factors dictate the rate at which a plant photosynthesizes:</p>
+        <ul>
+            <li><strong>Intensity of Sunlight:</strong> The rate of photosynthesis increases with a rise in light intensity up to a certain point, after which other limiting factors take over.</li>
+            <li><strong>Carbon dioxide concentration:</strong> An increase in $CO_{2}$ concentration boosts the photosynthetic rate, but only up to a certain threshold limit.</li>
+            <li><strong>Temperature:</strong> Photosynthesis depends on an optimal temperature range of <strong>$20^{\circ}C - 35^{\circ}C$</strong>. The rate increases with temperature up to this limit; beyond it, the rate rapidly decreases as plant enzymes get damaged.</li>
+            <li><strong>Water:</strong> A decrease in water availability quickly reduces the rate of photosynthesis.</li>
+            <li><strong>Chlorophyll content:</strong> Higher amounts of chlorophyll in the leaves lead to an increased rate of photosynthesis.</li>
+        </ul>
+
+        <h2>6. Internal Structure of a Leaf</h2>
+        <p>Leaves are perfectly equipped with the necessary biological machinery to act as the "kitchens" of the plant.</p>
+        <ul>
+            <li><strong>Epidermis:</strong> The outermost protective layer of the leaf.</li>
+            <li><strong>Mesophyll Tissue:</strong> Located just below the epidermis. It is differentiated into two parts: <strong>palisade</strong> and <strong>spongy parenchyma</strong> tissue.</li>
+            <li><strong>Chloroplasts:</strong> The cells in the palisade layer contain a large number of disc-like cellular organelles called chloroplasts. Because of the high concentration of chlorophyll here, these cells are the main site of photosynthesis.</li>
+        </ul>
+
+        <h2>7. Significance of Photosynthesis</h2>
+        <p>Photosynthesis is arguably the most important biological process on Earth. Without it, life as we know it would not exist. Its primary contributions include:</p>
+        <ul>
+            <li><strong>Providing Food:</strong> It is the primary source of organic food and energy for all life forms, supporting all food chains.</li>
+            <li><strong>Life-Supporting Oxygen:</strong> It releases oxygen gas as a by-product, which is essential for the respiration and survival of almost all living organisms.</li>
+            <li><strong>Atmospheric Balance:</strong> It maintains the crucial balance of oxygen and carbon dioxide levels in the air.</li>
+            <li><strong>Fossil Fuels:</strong> Fuels like coal, petroleum, and natural gas were formed by the decomposition of photosynthetic plants buried deep under the earth millions of years ago.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

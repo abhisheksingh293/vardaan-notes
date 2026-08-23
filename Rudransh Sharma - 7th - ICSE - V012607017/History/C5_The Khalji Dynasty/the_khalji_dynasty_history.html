@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Khalji Dynasty - History - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES (Mobile, Tablet, Laptop) --- */
+        @media screen and (max-width: 1024px) {
+            .paper-sheet { padding: 15mm; }
+        }
+
+        @media screen and (max-width: 768px) {
+            .paper-sheet { padding: 10mm; }
+            .institute-name { font-size: 1.8rem; }
+            h1 { font-size: 1.8rem; margin-top: 15px; }
+            h2 { font-size: 1.4rem; margin-top: 30px; }
+            h3 { font-size: 1.2rem; }
+            p, li { font-size: 1rem; }
+            .branding-footer { margin-top: 40px; }
+            .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+        }
+
+        @media screen and (max-width: 480px) {
+            .paper-sheet { padding: 5mm; }
+            .institute-name { font-size: 1.4rem; }
+            .system-name { font-size: 0.9rem; letter-spacing: 1px; }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; margin-top: 25px; padding-left: 10px; border-left-width: 3px; }
+            .box-label { font-size: 0.7rem; top: -10px; right: 10px; }
+            .blue-box, .green-box, .yellow-box { padding: 15px; margin: 20px 0; }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer visibility retained as per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* Footer text visibility forced for print */
+            .branding-footer {
+                display: block !important; 
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class VII History • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>The Khalji Dynasty</h1>
+        
+        <h2>1. Background & Introduction</h2>
+        <p>After the death of Balban, the Delhi Sultanate entered a period of instability due to weak successors. This disorder opened the door for a new ruling family to seize power—the <strong>Khaljis</strong>.</p>
+        <p>The Khaljis were originally Turks who had settled in Afghanistan. They adopted Afghan customs and manners before Mongol invasions pushed them into Hindustan. They established the second dynasty of the Delhi Sultanate, ruling from <strong>1290 CE to 1320 CE</strong>.</p>
+
+        <h2>2. Jalaluddin Firoz Khalji (1290-1296 CE)</h2>
+        <p>Jalaluddin Firoz Khalji was the founder of the Khalji Dynasty. He ascended the throne in 1290 CE at the advanced age of seventy. He inherited a completely disordered kingdom where the authority of the Sultan was no longer feared or respected.</p>
+        <ul>
+            <li>To win over the nobles, he distributed wealth brought from Devagiri by his nephew, Alauddin.</li>
+            <li>Despite his generosity, he was assassinated by his own nephew and son-in-law, <strong>Alauddin Khalji</strong>, who subsequently captured the throne.</li>
+        </ul>
+
+        <h2>3. Alauddin Khalji (1296-1316 CE)</h2>
+        <p>Alauddin had earlier served as the governor of Awadh and Kara under Jalaluddin. After executing his uncle, he became the Sultan in 1296 CE. His reign is famous for extreme military expansion and strict administrative reforms.</p>
+        
+        <h3>Military Expansion & Conquests</h3>
+        <p>Alauddin Khalji's empire was the largest in India since the time of Ashoka. It stretched from the Brahmaputra in the East to the Arabian Sea in the West, and from the Himalayas in the North up to Madurai in the South.</p>
+        <ul>
+            <li><strong>North India:</strong> He conquered Gujarat and Malwa in 1297 CE. He also successfully captured Ranthambore and Chittor in Rajasthan.</li>
+            <li><strong>South India:</strong> He launched major expeditions into the Deccan and the far South, capturing Dwarasamudra and Madurai.</li>
+            <li><strong>Mongol Defense:</strong> Alauddin faced over a dozen Mongol invasions. He responded by strengthening border forts and assigning defence duties to highly capable generals like Zafar Khan.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            Alauddin's successful South Indian campaigns were led by his trusted general, <strong>Malik Kafur</strong>. Also known as <em>'hazar dinari'</em>, Kafur was bought as a slave for a thousand dinars and rose to become a leading military commander.
+        </div>
+
+        <p>Realising that the South was too far off to be ruled directly from Delhi, Alauddin made the southern rajas his <strong>vassals</strong> (subordinate rulers) and demanded heavy annual tributes from them to maintain his vast army.</p>
+
+        <h3>Administration & Control</h3>
+        <p>Alauddin was a strict and highly efficient administrator. To prevent conspiracies and revolts among the nobility, he took extreme measures:</p>
+        <ul>
+            <li>He curbed the power of nobles and took back all lands and gifts previously granted to them.</li>
+            <li>Social gatherings, extravagant marriages, and the public drinking of wine were strictly discouraged.</li>
+            <li>A strong, wide-reaching network of spies was established to report any signs of rebellion directly to the Sultan.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Military Reforms:</strong> To strengthen his massive standing army, Alauddin introduced <strong>Dagh</strong> (the branding of horses to prevent substitution) and <strong>Chehra</strong> (detailed identity cards for soldiers).
+        </div>
+
+        <h3>Economic Reforms</h3>
+        <p>To maintain his large standing army without increasing the soldiers' salaries, Alauddin implemented a series of severe economic and market reforms.</p>
+        <ul>
+            <li>Special officers were appointed to collect taxes directly in cash.</li>
+            <li>The state's share of agricultural produce was raised from one-third to <strong>half</strong>, particularly in the fertile Doab region (between the Ganga and Yamuna rivers).</li>
+            <li><strong>Market Control:</strong> Essential goods had rigidly fixed prices. Markets were supervised by officials, grain was stored in government granaries to deal with shortages, and harsh punishments were given to defaulters and hoarders.</li>
+        </ul>
+
+        <h3>Cultural Contributions & Architecture</h3>
+        <p>Despite his ruthless policies, Alauddin's reign was marked by significant cultural growth. Though religious-minded, he ensured that religion did not interfere with state affairs.</p>
+        <ul>
+            <li>He built several grand structures including the <strong>Alai Darwaza</strong> (gateway to the Qutb Minar), a madrasa near the Qutb Minar, the Siri Fort, the Palace of a Thousand Pillars, and Hauz Khas (a royal water reservoir).</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Alauddin patronised many scholars and poets, the most famous being <strong>Amir Khusrau</strong>. Khusrau was a renowned poet and musician, widely celebrated as the <em>'Father of Qawwali'</em>.
+        </div>
+
+        <h2>4. Decline of the Dynasty</h2>
+        <p>After Alauddin's death in 1316 CE, his successors were unable to hold the vast empire together. His son, Qutb-ud-din Mubarak Shah, ruled for four years but proved to be weak and incompetent. This instability led to the ultimate fall of the Khalji Dynasty in 1320 CE, paving the way for the rise of the <strong>Tughluq Dynasty</strong>.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

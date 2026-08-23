@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- FORMAT: Chapter Name - Subject -->
@@ -242,31 +259,6 @@
         .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
         .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
 
-        /* --- IMAGE PLACEHOLDER --- */
-        .img-placeholder {
-            border: 2px dashed var(--meta-text);
-            background-color: var(--example-bg);
-            padding: 20px;
-            margin: 25px 0;
-            text-align: center;
-            border-radius: 8px;
-            color: var(--example-text);
-            font-size: 0.95rem;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-        }
-        .img-placeholder strong {
-            color: var(--blue-border);
-            display: block;
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-        }
-        .img-placeholder em {
-            color: var(--pink-border);
-            font-size: 0.9rem;
-            display: block;
-            margin-bottom: 5px;
-        }
-
         /* --- THEME TOGGLE --- */
         .theme-toggle {
             position: absolute;
@@ -369,6 +361,51 @@
                 }
             }
         }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
     </style>
     <style>
     /* Injected Responsive Styles */
@@ -437,10 +474,6 @@
         <h1>Electric Current and Its Chemical Effects</h1>
 
         <h2>1. Conduction through Liquids</h2>
-        <div class="img-placeholder">
-            <strong>📸 IMAGE PLACEHOLDER</strong>
-            <em>Prompt for Image Generator:</em> Landscape orientation. A simple, minimalist 2D flat vector illustration on a pure white background. It shows a basic electrical continuity tester: a small battery connected to a brightly glowing yellow LED bulb. The two wire ends are dipped into a transparent glass beaker filled with a blue liquid (saltwater). Clean educational style, no complex shading.
-        </div>
         <p>In previous classes, we learned that materials which allow electric current to pass through them easily are called <strong>conductors</strong> (like copper, aluminium, and most metals). Materials which do not allow electric current to pass through them easily are called <strong>insulators</strong> or poor conductors (like plastic, wood, and rubber).</p>
         <p>But what about liquids? Do liquids conduct electricity? Yes, some liquids do conduct electricity. We can check this using a simple circuit containing a battery, wires, and a bulb (a continuity tester).</p>
         
@@ -455,10 +488,6 @@
         </div>
 
         <h2>2. Chemical Effects of Electric Current</h2>
-        <div class="img-placeholder">
-            <strong>📸 IMAGE PLACEHOLDER</strong>
-            <em>Prompt for Image Generator:</em> Landscape orientation. A clean 2D vector diagram on a pure white background. Show a glass beaker filled with liquid. Inside the liquid are two dark grey rectangular blocks (carbon rods/electrodes) connected by wires to a battery symbol above. Tiny, distinct bubbles are rising from the surfaces of the rods into the liquid. Flat, vibrant colors.
-        </div>
         <p>When an electric current passes through a conducting liquid (an electrolyte), it does not just pass through silently; it causes a chemical reaction. The resulting effects are called the <strong>chemical effects of electric current</strong>.</p>
         
         <h3>Key Terms to Remember:</h3>
@@ -486,10 +515,6 @@
         </div>
 
         <h2>3. Electroplating</h2>
-        <div class="img-placeholder">
-            <strong>📸 IMAGE PLACEHOLDER</strong>
-            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector graphic on a pure white background showing the electroplating process. A glass container filled with blue copper sulphate solution. On the left (+), a thick, rough copper plate. On the right (-), a shiny silver-colored spoon getting a smooth orange-brown coating of copper. Wires connect both to a battery. Minimalist and highly readable.
-        </div>
         <p>One of the most common and widely used applications of the chemical effects of electric current is <strong>electroplating</strong>.</p>
         <p><strong>Definition:</strong> The process of depositing a thin, even layer of any desired metal on another material by means of electricity is called electroplating.</p>
         
@@ -503,10 +528,6 @@
         <p>When the current is switched on, copper from the copper sulphate solution is drawn to the negative electrode (spoon) and gets deposited on it. To make up for this loss in the solution, an equal amount of copper dissolves into the solution from the pure copper plate (anode). Thus, the copper is effectively transferred from the pure plate to the spoon.</p>
 
         <h2>4. Applications of Electroplating</h2>
-        <div class="img-placeholder">
-            <strong>📸 IMAGE PLACEHOLDER</strong>
-            <em>Prompt for Image Generator:</em> Landscape orientation. A simple 2D vector illustration on a pure white background showing three everyday items that use electroplating, arranged neatly. Left: A shiny silver bathroom tap. Middle: A sparkling gold-plated necklace. Right: A sturdy, silver-colored tin food can. Flat, bright, modern educational design.
-        </div>
         <p>Electroplating is a very useful process widely used in industry for coating metal objects with a thin layer of a different metal. This is done for various reasons:</p>
 
         <ul>

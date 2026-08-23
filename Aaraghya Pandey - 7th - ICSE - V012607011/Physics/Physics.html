@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Physics - Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const urlTheme = params.get('theme');
+      if (urlTheme === 'dark' || urlTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', urlTheme);
+        if (urlTheme === 'dark') {
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        try { localStorage.setItem('vardaan_theme', urlTheme); } catch(e) {}
+      } else {
+        try {
+          const saved = localStorage.getItem('vardaan_theme');
+          if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+            if (saved === 'dark') document.documentElement.classList.add('dark-mode', 'dark');
+          }
+        } catch(e) {}
+      }
+    })();
+  </script>
+  <style>
+    :root {
+      --primary: #F97315;
+      --primary-glow: rgba(249, 115, 21, 0.2);
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-hover: #fcfcfd;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #111827;
+      --text-muted: #6b7280;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --heading-color: #111827;
+      --heading-sub: #6b7280;
+      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+      --card-shadow-hover: 0 12px 28px rgba(249, 115, 21, 0.14);
+      --avatar-bg: linear-gradient(135deg, rgba(249, 115, 21, 0.12), rgba(249, 115, 21, 0.05));
+      --avatar-border: rgba(249, 115, 21, 0.2);
+      --radial-1: rgba(249, 115, 21, 0.08);
+      --radial-2: rgba(249, 115, 21, 0.05);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0d1117;
+        --surface: #161b22;
+        --surface-hover: #1f2633;
+        --border: rgba(255, 255, 255, 0.1);
+        --text: #f0f6fc;
+        --text-muted: #8b949e;
+        --glass-bg: rgba(13, 17, 23, 0.85);
+        --heading-color: #ffffff;
+        --heading-sub: #a0a0b0;
+        --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        --card-shadow-hover: 0 12px 28px rgba(249, 115, 21, 0.22);
+        --avatar-bg: linear-gradient(135deg, rgba(249, 115, 21, 0.2), rgba(249, 115, 21, 0.08));
+        --avatar-border: rgba(249, 115, 21, 0.35);
+        --radial-1: rgba(249, 115, 21, 0.06);
+        --radial-2: rgba(249, 115, 21, 0.02);
+      }
+    }
+
+    [data-theme="dark"], html.dark-mode {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-hover: #1f2633;
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f0f6fc;
+      --text-muted: #8b949e;
+      --glass-bg: rgba(13, 17, 23, 0.85);
+      --heading-color: #ffffff;
+      --heading-sub: #a0a0b0;
+      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      --card-shadow-hover: 0 12px 28px rgba(249, 115, 21, 0.22);
+      --avatar-bg: linear-gradient(135deg, rgba(249, 115, 21, 0.2), rgba(249, 115, 21, 0.08));
+      --avatar-border: rgba(249, 115, 21, 0.35);
+      --radial-1: rgba(249, 115, 21, 0.06);
+      --radial-2: rgba(249, 115, 21, 0.02);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, var(--radial-1) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, var(--radial-2) 0%, transparent 50%);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between;
+      align-items: center; padding: 0 40px; height: 80px; background: var(--glass-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--text); }
+    .logo { height: 44px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); transition: filter 0.25s ease; }
+    
+    [data-theme="dark"] .logo, html.dark-mode .logo, html.dark .logo {
+      filter: brightness(0) invert(1) drop-shadow(0 2px 12px var(--primary-glow));
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .logo,
+      html:not([data-theme="light"]) .logo {
+        filter: brightness(0) invert(1) drop-shadow(0 2px 12px var(--primary-glow));
+      }
+    }
+
+    .brand span { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
+    .brand em { font-style: normal; color: var(--primary); }
+    
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text);
+      font-size: 0.9rem; font-weight: 600; padding: 8px 16px; border-radius: 999px;
+      background: var(--surface); border: 1px solid var(--border);
+      transition: all 0.2s ease; cursor: pointer;
+    }
+    .nav-back:hover {
+      border-color: var(--primary); color: var(--primary);
+      transform: translateX(-2px); box-shadow: 0 4px 12px rgba(249, 115, 21, 0.15);
+    }
+    .nav-back svg { width: 16px; height: 16px; transition: transform 0.2s ease; }
+    .nav-back:hover svg { transform: translateX(-2px); }
+
+    .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 30px 24px 100px; }
+    
+    .hero-header {
+      margin-bottom: 36px;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.5px;
+      line-height: 1.2; margin-bottom: 8px; color: var(--text);
+    }
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub { color: var(--text-muted); font-size: 1rem; }
+
+    .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    .head h2 { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.5px; color: var(--text); }
+    .count { font-size: 0.85rem; font-weight: 600; color: var(--primary); padding: 6px 14px; border: 1px solid rgba(249, 115, 21, 0.25); border-radius: 999px; background: rgba(249, 115, 21, 0.08); }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      display: flex; flex-direction: row; align-items: center; justify-content: space-between;
+      text-decoration: none; color: var(--text); background: var(--surface);
+      border: 1px solid var(--border); border-radius: 18px; padding: 18px 20px; 
+      position: relative; overflow: hidden; backdrop-filter: blur(10px);
+      box-shadow: var(--card-shadow);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+      background: linear-gradient(to bottom, var(--primary), #ea580c); opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: var(--card-shadow-hover);
+      border-color: rgba(249, 115, 21, 0.35);
+      background: var(--surface-hover);
+    }
+    .card:hover::before { opacity: 1; }
+    .card:active { transform: scale(0.98); }
+    
+    .card-left { display: flex; align-items: center; gap: 16px; min-width: 0; flex: 1; }
+    .name-wrapper { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    
+    .avatar {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--avatar-bg);
+      border: 1px solid var(--avatar-border);
+      display: grid; place-items: center; color: var(--primary); font-size: 1.15rem; font-weight: 800;
+      flex-shrink: 0; transition: all 0.2s ease;
+    }
+    .card:hover .avatar {
+      background: linear-gradient(135deg, var(--primary), #ea580c);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 14px rgba(249, 115, 21, 0.3);
+    }
+    
+    .name {
+      font-size: 1.05rem; font-weight: 600; color: var(--text);
+      line-height: 1.4; word-break: break-word;
+      transition: color 0.2s ease;
+    }
+    .card:hover .name { color: var(--primary); }
+    
+    .arrow-btn {
+      width: 36px; height: 36px; border-radius: 50%; background: var(--bg);
+      display: grid; place-items: center; flex-shrink: 0; margin-left: 12px;
+      transition: all 0.2s ease; border: 1px solid var(--border);
+    }
+    .arrow-icon { width: 16px; height: 16px; color: var(--text-muted); transition: all 0.2s ease; }
+    .card:hover .arrow-btn {
+      background: var(--primary); border-color: var(--primary);
+      transform: translateX(3px); box-shadow: 0 4px 10px rgba(249, 115, 21, 0.3);
+    }
+    .card:hover .arrow-icon { color: #fff; }
+
+    .empty { display: none; text-align: center; padding: 60px 20px; background: var(--surface); border-radius: 16px; border: 1px dashed var(--border); margin-top: 24px; }
+    .empty h3 { font-size: 1.4rem; margin-bottom: 8px; color: var(--text); }
+    .empty p { color: var(--text-muted); }
+    footer { margin-top: 80px; padding: 30px 0; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-muted); font-size: 0.9rem; }
+    
+    @media (max-width: 1024px) {
+      .wrap { padding: 24px 20px 80px; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    }
+    @media (max-width: 768px) {
+      .wrap { padding: 20px 16px 60px; }
+      nav { padding: 0 16px; height: 64px; }
+      .logo { height: 36px; }
+      .brand span { font-size: 1.2rem; }
+      .grid { grid-template-columns: 1fr; gap: 12px; }
+      .card { padding: 14px 16px; border-radius: 16px; }
+      .avatar { width: 44px; height: 44px; font-size: 1rem; border-radius: 12px; }
+      .name { font-size: 1rem; }
+      .hero-title { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="#">
+      <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1772276441/Vardaan_Comet-removebg-preview_dsut6f.png" alt="Vardaan Comet Logo" class="logo">
+      <span>Vardaan <em class="highlight">Comet</em></span>
+    </a>
+    <a class="nav-back" href="javascript:history.back()">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+      </svg>
+      <span>Back</span>
+    </a>
+  </nav>
+
+  <main class="wrap">
+    <div class="hero-header">
+      <h1 class="hero-title">Physics <span class="highlight">Notes</span></h1>
+      <p class="hero-sub">Select any chapter to start studying and view detailed notes</p>
+    </div>
+
+    <div class="head">
+      <h2>All Chapters</h2>
+      <span id="countLabel" class="count">2 chapters</span>
+    </div>
+
+    <section class="grid" id="chapterGrid"></section>
+
+    <section class="empty" id="emptyState">
+      <h3>No items found</h3>
+      <p>Try adding a new chapter folder.</p>
+    </section>
+  </main>
+
+  <script>
+    const chapters = [
+    {
+        "name": "Energy",
+        "link": "./Energy/class_7_physics_energy.html"
+    },
+    {
+        "name": "Light Energy",
+        "link": "./Light Energy/light_energy_vardaan_learning_institute.html"
+    }
+];
+
+    function formatChapterNumber(name, index) {
+      const match = name.match(/^[cC](\d+)/i) || name.match(/chapter[-_\s]*(\d+)/i);
+      if (match && match[1]) {
+        return match[1].padStart(2, '0');
+      }
+      return String(index + 1).padStart(2, '0');
+    }
+
+    function formatChapterName(name) {
+      let clean = name.replace(/^[cC]\d+[\s_\-]*/i, '')
+                      .replace(/^chapter[-_\s]*\d+[\s_\-]*/i, '')
+                      .replace(/\.html$/i, '')
+                      .replace(/[_-]+/g, ' ');
+
+      // Split PascalCase / camelCase (e.g. AdvancedMathematicsWorksheet -> Advanced Mathematics Worksheet)
+      clean = clean.replace(/([a-z])([A-Z])/g, '$1 $2');
+      clean = clean.replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2');
+
+      // Split digits from letters (e.g. Class8 -> Class 8, Level1 -> Level 1)
+      clean = clean.replace(/([a-zA-Z])(\d+)/g, '$1 $2');
+      clean = clean.replace(/(\d+)([a-zA-Z])/g, '$1 $2');
+
+      // Fix common typos
+      clean = clean.replace(/\bAlgebric\b/gi, 'Algebraic');
+
+      // Standardize Title Case
+      clean = clean.split(/\s+/).filter(Boolean).map(word => {
+        if (/^(ii|iii|iv|v|vi|vii|viii|ix|x|xi|xii)$/i.test(word)) return word.toUpperCase();
+        if (word.toUpperCase() === 'SOLUTION') return 'Solution';
+        if (word.toUpperCase() === 'WORKSHEET') return 'Worksheet';
+        if (word.toUpperCase() === 'CBSE' || word.toUpperCase() === 'ICSE' || word.toUpperCase() === 'SST') return word.toUpperCase();
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      }).join(' ');
+
+      return clean.trim();
+    }
+
+    function renderCards(list) {
+      const grid = document.getElementById('chapterGrid');
+      const emptyState = document.getElementById('emptyState');
+      const countLabel = document.getElementById('countLabel');
+      
+      grid.innerHTML = '';
+      
+      if (!list.length) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        countLabel.textContent = '0 chapters';
+        return;
+      }
+      
+      grid.style.display = 'grid';
+      emptyState.style.display = 'none';
+      countLabel.textContent = list.length + ' ' + (list.length === 1 ? 'chapter' : 'chapters');
+      
+      function formatLink(url) {
+        const theme = document.documentElement.getAttribute('data-theme');
+        if (!theme || url === '#' || url.startsWith('javascript:')) return url;
+        const separator = url.includes('?') ? '&' : '?';
+        return url + separator + 'theme=' + encodeURIComponent(theme);
+      }
+
+      list.forEach((chapter, index) => {
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = formatLink(chapter.link);
+        card.title = formatChapterName(chapter.name);
+        
+        card.innerHTML = `
+          <div class="card-left">
+            <div class="avatar">${formatChapterNumber(chapter.name, index)}</div>
+            <div class="name-wrapper">
+              <div class="name">${formatChapterName(chapter.name)}</div>
+            </div>
+          </div>
+          <div class="arrow-btn">
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Initialize
+    renderCards(chapters);
+  </script>
+</body>
+</html>

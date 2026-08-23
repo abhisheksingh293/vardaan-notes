@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Digestive System - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px; /* Reduced padding for mobile */
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive padding for larger screens */
+        @media (min-width: 768px) {
+            .paper-sheet {
+                padding: 20mm;
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 1.8rem; /* Responsive font size */
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        @media (min-width: 768px) {
+            .institute-name {
+                font-size: 2.2rem;
+            }
+        }
+
+        .system-name {
+            font-size: 0.9rem; /* Responsive font size */
+            color: var(--meta-text);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @media (min-width: 768px) {
+            .system-name {
+                font-size: 1.1rem;
+                letter-spacing: 3px;
+            }
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 1.8rem; /* Responsive font size */
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        h2 {
+            font-size: 1.4rem; /* Responsive font size */
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        @media (min-width: 768px) {
+            h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        h3 {
+            font-size: 1.2rem; /* Responsive font size */
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        @media (min-width: 768px) {
+            h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+        p, li {
+            font-size: 1rem; /* Responsive font size */
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        @media (min-width: 768px) {
+            p, li {
+                font-size: 1.05rem;
+            }
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            /* FORCE SHOW Footer */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">[Class 6] [Biology] • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Human Digestive System</h1>
+
+        <h2>1. Nutrition in Humans</h2>
+        <p>The food we eat provides essential <strong>nutrients</strong> required for the growth, maintenance, and repair of our body. Nutrients are substances that help maintain body functions. Important nutrients include carbohydrates, proteins, fats, minerals, and vitamins. Water and roughage are also crucial for nutrition, though they don't supply nutrients themselves.</p>
+        
+        <h3>Key Nutrients and Sources</h3>
+        <ul>
+            <li><strong>Carbohydrates:</strong> Main energy-giving nutrients (compounds of carbon, hydrogen, and oxygen). Found in apples, bananas, potatoes, dry fruits, and green vegetables.</li>
+            <li><strong>Proteins:</strong> Essential for growth (consist of carbon, hydrogen, oxygen, and nitrogen). Insoluble in water. Found in eggs, nuts, pulses, milk, curd, and cheese.</li>
+            <li><strong>Fats:</strong> Energy-giving nutrients (lower oxygen content than carbohydrates). Found in ghee, butter, fish liver oil, and vegetable oils.</li>
+            <li><strong>Minerals:</strong> Needed for good health and growth (e.g., iron for haemoglobin, calcium/phosphorus for bones). Required in small quantities.</li>
+            <li><strong>Vitamins:</strong> Necessary for maintenance and growth, but do not provide energy. Required in very small quantities. Found in carrots, sweet potatoes, spinach, meat, eggs, fish, nuts, seeds, and vegetables.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Nutrition:</strong> The process by which an organism obtains and utilizes nutrients. Humans perform <strong>holozoic</strong> nutrition, which involves taking in solid and complex food substances.
+        </div>
+
+        <h2>2. Steps of Nutrition in Humans</h2>
+        <p>The process of nutrition involves five main steps:</p>
+        <ol>
+            <li><strong>Ingestion:</strong> Taking food into the body.</li>
+            <li><strong>Digestion:</strong> Breaking down large, insoluble food substances into small, water-soluble substances.</li>
+            <li><strong>Absorption:</strong> Passing of digested food through the intestinal wall into the bloodstream.</li>
+            <li><strong>Assimilation:</strong> Taking in absorbed nutrients by body cells for energy, growth, and repair.</li>
+            <li><strong>Egestion (Defecation):</strong> Removing undigested food in the form of faeces from the body.</li>
+        </ol>
+
+        <h2>3. Digestive System in Humans</h2>
+        <p>The human digestive system breaks down food into simple molecules. It consists of two main parts:</p>
+        <ul>
+            <li><strong>Alimentary Canal:</strong> A long muscular tube (about 6 to 9 metres long) starting from the mouth and ending at the anus.</li>
+            <li><strong>Digestive Glands:</strong> Glands that make and store digestive juices (e.g., salivary glands, liver, and pancreas).</li>
+        </ul>
+
+        <h2>4. The Alimentary Canal</h2>
+        
+        <h3>Mouth or Oral Cavity</h3>
+        <p>The beginning of the alimentary canal. It includes lips, cheeks, tongue, gums, teeth, palate, and salivary glands. Saliva contains the enzyme <strong>ptyalin (salivary amylase)</strong>, which converts starch into maltose.</p>
+        
+        <p><strong>Tongue:</strong> A muscular organ covered by a mucous membrane. It has taste buds for identifying tastes, helps mix food with saliva, pushes food for chewing and swallowing, and aids in voice production.</p>
+        
+        <p><strong>Teeth:</strong> Hard structures consisting of a crown, neck, and root. Covered by <strong>enamel</strong> (the hardest substance in the body), under which lies dentine and a pulp cavity with blood vessels.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Humans have two sets of teeth in their lifetime: <strong>Milk teeth</strong> (20 in number, appear at 6-7 months) and <strong>Permanent teeth</strong> (32 in number, replace milk teeth).
+        </div>
+
+        <p>Types of permanent teeth:</p>
+        <ul>
+            <li><strong>Incisors (8):</strong> Chisel-shaped front teeth for cutting and biting.</li>
+            <li><strong>Canines (4):</strong> Pointed teeth for piercing and tearing.</li>
+            <li><strong>Premolars (8):</strong> For chewing and grinding.</li>
+            <li><strong>Molars (12):</strong> Larger teeth for crushing and grinding (includes wisdom teeth).</li>
+        </ul>
+
+        <h3>Pharynx and Oesophagus</h3>
+        <p>The <strong>pharynx</strong> is a funnel-shaped passage where the food and air channels cross. The <strong>oesophagus (food pipe)</strong> is a 25 cm long tube that transports food to the stomach through muscular contractions called <strong>peristalsis</strong>.</p>
+
+        <h3>Stomach</h3>
+        <p>A thick-walled, sac-like structure located below the diaphragm. It is the widest part of the alimentary canal. Gastric glands in the stomach wall secrete gastric juice, containing:</p>
+        <ul>
+            <li><strong>Pepsin:</strong> Digests proteins.</li>
+            <li><strong>Rennin:</strong> Digests milk protein (found only in infants).</li>
+            <li><strong>Hydrochloric Acid (HCl):</strong> Provides an acidic medium and kills bacteria.</li>
+            <li><strong>Mucus:</strong> Protects the stomach lining from HCl.</li>
+        </ul>
+
+        <h3>Small Intestine</h3>
+        <p>A coiled tube about 7.5 metres long. It is the site of complete digestion and absorption. It has three parts:</p>
+        <ol>
+            <li><strong>Duodenum:</strong> C-shaped upper part. Receives bile and pancreatic juice.</li>
+            <li><strong>Jejunum:</strong> Narrower middle part (about 2 metres long).</li>
+            <li><strong>Ileum:</strong> Longest and last part. Its inner lining has finger-like projections called <strong>villi</strong>, which increase surface area for absorption.</li>
+        </ol>
+        
+        <p>The small intestine receives <strong>bile</strong> (from the liver) and <strong>pancreatic juice</strong> (from the pancreas). Its own walls secrete intestinal juice containing enzymes like erepsin, maltase, sucrase, and lactase.</p>
+
+        <h3>Large Intestine</h3>
+        <p>About 1.5 to 1.8 metres long, divided into four parts: caecum, vermiform appendix, colon, and rectum. It reabsorbs excess water from undigested food. The <strong>rectum</strong> stores faecal matter, which is expelled through the <strong>anus</strong>.</p>
+
+        <h2>5. Digestive Glands</h2>
+        
+        <ul>
+            <li><strong>Salivary Glands:</strong> Three pairs (parotid, sub-mandibular, sublingual) secrete saliva containing enzymes.</li>
+            <li><strong>Liver:</strong> The largest gland in the body. Secretes <strong>bile</strong>, a yellowish-green fluid that emulsifies fats (breaks them into smaller droplets). Bile is stored in the <strong>gall bladder</strong>.</li>
+            <li><strong>Pancreas:</strong> A leaf-shaped gland behind the stomach. Secretes <strong>pancreatic juice</strong> containing amylase (digests starch), trypsin (digests proteins), and lipase (digests fats).</li>
+        </ul>
+
+        <h2>6. Process of Digestion</h2>
+        <p>Digestion involves both mechanical and chemical processes.</p>
+        <ul>
+            <li><strong>Mechanical Digestion:</strong> Breaking and churning food (e.g., chewing in the mouth, churning in the stomach).</li>
+            <li><strong>Chemical Digestion:</strong> Processing food using enzymes secreted by digestive organs.</li>
+        </ul>
+        
+        <p>The partially digested food leaving the stomach is called <strong>chyme</strong>. Complete digestion yields simple absorbable substances: amino acids (from proteins), fatty acids and glycerol (from fats), and glucose (from carbohydrates).</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Indigestion:</strong> A common condition (dyspepsia) caused by overeating, eating too fast, anxiety, junk food, or excessive spicy food. Maintaining healthy eating habits, like a balanced diet and regular meals, prevents this.
+        </div>
+        
+        <h2>7. Assimilation</h2>
+        <p>Absorbed nutrients are processed in the body:</p>
+        <ul>
+            <li>Glucose is converted to <strong>glycogen</strong> and stored in the liver. Excess glucose becomes fat.</li>
+            <li>Fatty acids provide energy or are stored as fat under the skin.</li>
+            <li>Amino acids synthesize proteins. Excess amino acids are converted into <strong>urea</strong> by the liver and excreted in urine.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

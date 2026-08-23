@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Matter and Its Composition - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid var(--meta-text);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+            font-weight: bold;
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        
+        /* --- RESPONSIVE DESIGN FOR LAPTOP, TABLET, AND MOBILE --- */
+        @media (max-width: 1024px) {
+            .paper-sheet {
+                width: 95%;
+                padding: 15mm;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+            .institute-name {
+                font-size: 1.8rem;
+            }
+            .system-name {
+                font-size: 0.95rem;
+            }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; margin-top: 30px; }
+            h3 { font-size: 1.2rem; }
+            p, li { font-size: 1rem; }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .paper-sheet {
+                padding: 5mm;
+                border-radius: 0;
+            }
+            .institute-name {
+                font-size: 1.4rem;
+                letter-spacing: 0px;
+            }
+            .system-name {
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; margin-top: 20px;}
+            h3 { font-size: 1.1rem; }
+            p, li { font-size: 0.95rem; }
+            .blue-box, .green-box, .yellow-box {
+                padding: 15px;
+            }
+            .contact-info {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            /* Responsive Table for Mobile */
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            th {
+                display: none;
+            }
+            td {
+                border: none;
+                border-bottom: 1px solid var(--meta-text);
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+            td:before {
+                position: absolute;
+                top: 12px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+                content: attr(data-label); 
+            }
+            tr {
+                margin-bottom: 15px;
+                border: 1px solid var(--meta-text);
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Web Footer is shown per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+            
+            /* FORCE SHOW BRANDING FOOTER (Per User Request) */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Chemistry • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Matter and Its Composition</h1>
+        
+        <h2>1. Material and Matter</h2>
+        <p>If you look around, you will find a wide variety of objects like chairs, tables, pens, and notebooks. These objects come in different shapes, sizes, and colours. A substance from which an object is made is called a <strong>material</strong> (e.g., wood, plastic, glass, leather, steel).</p>
+        
+        <p>To make the study of various objects easier, we group them based on certain criteria like their material, appearance, texture, or solubility. This process of grouping things is known as <strong>classification</strong>.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Matter:</strong> Anything that occupies space and has mass is called matter. The amount of matter contained in an object is called its <strong>mass</strong>, and the amount of space occupied by it is called its <strong>volume</strong>.</p>
+        </div>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Air and Water are Matter:</strong> We cannot see air, but it has mass (a balloon filled with air is heavier than an empty one) and occupies space (it inflates the balloon). Similarly, water also has mass and occupies space inside a container.</p>
+        </div>
+
+        <h2>2. Composition of Matter</h2>
+        <p>Every substance or material around us is made up of an extraordinarily large number of tiny particles called <strong>molecules</strong>. These particles are incredibly small, beyond human imagination, and cannot be seen even with a microscope.</p>
+
+        <p>A <strong>molecule</strong> is the smallest particle of a substance that can independently exist in nature. A molecule may be made up of even smaller building blocks called <strong>atoms</strong>. For example, a single water molecule consists of two atoms of hydrogen and one atom of oxygen bonded together. A single atom generally cannot exist independently in nature.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>About two thousand years ago, the great Indian philosopher <strong>Maharishi Kanada</strong> suggested that all forms of matter are composed of very small particles called <em>anu</em>. He further suggested that each <em>anu</em> may be made up of still smaller particles called <em>parmanu</em>.</p>
+        </div>
+
+        <h2>3. Characteristics of Particles of Matter</h2>
+        <p>The particles that make up matter exhibit certain fundamental properties:</p>
+        <ul>
+            <li><strong>Particles are in Continuous Motion:</strong> The tiny molecules are never at rest. They are moving continuously and are said to possess <strong>kinetic energy</strong> (energy due to motion).</li>
+            <li><strong>Particles Attract Each Other:</strong> The molecules of matter attract each other with a certain force which holds them together. This is called the <strong>intermolecular force of attraction</strong>.</li>
+            <li><strong>Particles have Space Between Them:</strong> The empty space existing between the molecules of matter is called <strong>intermolecular space</strong>.</li>
+        </ul>
+
+        <h2>4. States of Matter</h2>
+        <p>Matter can be classified into three main categories based on its physical state: <strong>Solid</strong>, <strong>Liquid</strong>, and <strong>Gas</strong>. Because of the difference in molecular arrangement, these states exhibit different properties.</p>
+
+        <h3>Solids</h3>
+        <p>In solids, the molecules are <strong>very closely packed</strong>. They have fixed positions and can only vibrate about their fixed positions. The intermolecular forces of attraction are very strong, and the intermolecular space is negligible. Because of this arrangement, solids possess very little kinetic energy.</p>
+
+        <h3>Liquids</h3>
+        <p>In liquids, the molecules are <strong>not very closely packed</strong>. They are free to move around within the boundary of the liquid. The intermolecular forces are weaker than in solids, and the intermolecular space is greater. Due to their ability to move, liquid molecules possess more kinetic energy than solid molecules.</p>
+
+        <h3>Gases</h3>
+        <p>In gases, the molecules are <strong>very loosely packed</strong>. The intermolecular forces of attraction are extremely weak or negligible. The intermolecular space is maximum, allowing the molecules to move around freely in all directions. Thus, gaseous molecules possess the maximum kinetic energy.</p>
+
+        <h3>Comparison of Properties</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Solid</th>
+                    <th>Liquid</th>
+                    <th>Gas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Property"><strong>Arrangement of molecules</strong></td>
+                    <td data-label="Solid">Very tightly packed</td>
+                    <td data-label="Liquid">Loosely packed</td>
+                    <td data-label="Gas">Very loosely packed</td>
+                </tr>
+                <tr>
+                    <td data-label="Property"><strong>Intermolecular forces</strong></td>
+                    <td data-label="Solid">Very strong</td>
+                    <td data-label="Liquid">Strong (but weaker than solid)</td>
+                    <td data-label="Gas">Negligible</td>
+                </tr>
+                <tr>
+                    <td data-label="Property"><strong>Intermolecular space</strong></td>
+                    <td data-label="Solid">Negligible</td>
+                    <td data-label="Liquid">Medium</td>
+                    <td data-label="Gas">Maximum</td>
+                </tr>
+                <tr>
+                    <td data-label="Property"><strong>Shape & Volume</strong></td>
+                    <td data-label="Solid">Definite shape & volume</td>
+                    <td data-label="Liquid">Definite volume, takes container's shape</td>
+                    <td data-label="Gas">No definite shape or volume</td>
+                </tr>
+                <tr>
+                    <td data-label="Property"><strong>Rigidity & Flow</strong></td>
+                    <td data-label="Solid">Rigid, cannot flow</td>
+                    <td data-label="Liquid">Not rigid, can flow</td>
+                    <td data-label="Gas">Not rigid, can flow easily</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>5. Compressibility of Matter</h2>
+        <p>Compressibility refers to how much a substance can be squeezed into a smaller volume by applying pressure.</p>
+        <ul>
+            <li><strong>Solids:</strong> Generally non-compressible. Because the particles are already tightly packed, pushing them closer is nearly impossible.</li>
+            <li><strong>Liquids:</strong> Can be compressed slightly.</li>
+            <li><strong>Gases:</strong> Can be compressed easily. The large intermolecular spaces allow the gas molecules to be pushed much closer together under pressure.</li>
+        </ul>
+
+        <h2>6. Change of States of Matter (Interconversion)</h2>
+        <p>The process by which one state of matter gets converted into another state and comes back to its original state without any change in its chemical composition is called the <strong>interconversion of states of matter</strong>.</p>
+        <p>Matter can be changed from one state to another in two main ways: by changing temperature or by applying pressure.</p>
+
+        <h3>By Changing Temperature</h3>
+        <ul>
+            <li><strong>Melting (Fusion):</strong> The process of changing a solid into a liquid on heating (e.g., Ice to Water). The heat provides kinetic energy, overcoming the strong intermolecular forces.</li>
+            <li><strong>Vaporisation (Boiling):</strong> The process of changing a liquid into a gas on heating (e.g., Water to Steam). The molecules gain even more energy and break free from each other.</li>
+            <li><strong>Condensation:</strong> The process of changing a gas into a liquid on cooling (e.g., Steam to Water). Molecules lose kinetic energy and come closer together.</li>
+            <li><strong>Freezing (Solidification):</strong> The process of changing a liquid into a solid on cooling (e.g., Water to Ice).</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Sublimation & Deposition:</strong> Some substances do not pass through the liquid phase. The direct conversion of a solid into a gas on heating is called <strong>sublimation</strong>. Examples include <strong>ammonium chloride, camphor, dry ice, iodine, and naphthalene</strong>. The reverse process (gas directly to solid on cooling) is called <strong>deposition</strong>.</p>
+        </div>
+
+        <h3>By Applying Pressure</h3>
+        <p>A gas can be <strong>liquefied</strong> by applying high pressure and simultaneously lowering its temperature. When high pressure is applied, the gas molecules are pushed closer together. Lowering the temperature reduces their kinetic energy, increasing the intermolecular attraction until the gas condenses into a liquid.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

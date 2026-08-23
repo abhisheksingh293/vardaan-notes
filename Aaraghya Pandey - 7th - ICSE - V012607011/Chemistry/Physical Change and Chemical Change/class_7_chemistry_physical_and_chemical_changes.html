@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Physical and Chemical Changes - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid var(--meta-text);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+            font-weight: bold;
+        }
+
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        
+        /* --- RESPONSIVE DESIGN FOR LAPTOP, TABLET, AND MOBILE --- */
+        @media (max-width: 1024px) {
+            .paper-sheet {
+                width: 95%;
+                padding: 15mm;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+            .institute-name {
+                font-size: 1.8rem;
+            }
+            .system-name {
+                font-size: 0.95rem;
+            }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; margin-top: 30px; }
+            h3 { font-size: 1.2rem; }
+            p, li { font-size: 1rem; }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .paper-sheet {
+                padding: 5mm;
+                border-radius: 0;
+            }
+            .institute-name {
+                font-size: 1.4rem;
+                letter-spacing: 0px;
+            }
+            .system-name {
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; margin-top: 20px;}
+            h3 { font-size: 1.1rem; }
+            p, li { font-size: 0.95rem; }
+            .blue-box, .green-box, .yellow-box {
+                padding: 15px;
+            }
+            .contact-info {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            /* Responsive Table for Mobile */
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            th {
+                display: none; /* Hide table headers on very small screens */
+            }
+            td {
+                border: none;
+                border-bottom: 1px solid var(--meta-text);
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+            td:before {
+                position: absolute;
+                top: 12px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+                /* Extract header content via data attribute (requires HTML modification if used) */
+                content: attr(data-label); 
+            }
+            tr {
+                margin-bottom: 15px;
+                border: 1px solid var(--meta-text);
+            }
+        }
+
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Web Footer is shown per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+            
+            /* FORCE SHOW BRANDING FOOTER (Per User Request) */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Chemistry • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Physical and Chemical Changes</h1>
+
+        <p><strong>Change</strong> is the transition of any substance from one form to another form. In our day-to-day life, we observe many changes taking place around us.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Desirable vs Undesirable Changes:</strong> Changes which make our life better and are useful (e.g., milk changing to curd, cooking of food) are <strong>desirable changes</strong>. Changes which are harmful to us (e.g., earthquakes, spoiling of food) are <strong>undesirable changes</strong>.</p>
+        </div>
+        
+        <p>Changes can also be categorised on the basis of how quickly they happen:</p>
+        <ul>
+            <li><strong>Fast changes:</strong> Changes in which a substance gets converted into another form quickly (e.g., burning of paper).</li>
+            <li><strong>Slow changes:</strong> Changes in which a substance gets converted into another form slowly (e.g., germination of a seed, rusting of iron).</li>
+        </ul>
+        
+        <p>Changes are broadly classified into two main types based on whether they are temporary or permanent: <strong>Physical changes</strong> and <strong>Chemical changes</strong>.</p>
+
+        <h2>1. Physical Changes</h2>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>A change in which a substance undergoes a change in its physical properties (like shape, size, colour, or physical state) but <strong>no new substance is formed</strong> is called a <strong>physical change</strong>.</p>
+        </div>
+
+        <p>In a physical change, the chemical composition of the substance remains exactly the same. Most physical changes are <strong>reversible</strong>, meaning the original substance can be obtained back.</p>
+
+        <h3>Examples of Physical Changes</h3>
+        <ul>
+            <li><strong>Change of State:</strong> Melting of ice into water, boiling water into steam, and freezing water back to ice.</li>
+            <li><strong>Dissolving:</strong> Dissolving sugar or salt in water. (The sugar can be recovered by evaporating the water).</li>
+            <li><strong>Change in Shape/Size:</strong> Stretching a rubber band, crushing a can, tearing paper, cutting a log of wood.</li>
+            <li><strong>Other examples:</strong> Sublimation of ammonium chloride, melting of butter, drying of clothes.</li>
+        </ul>
+
+        <h3>Processes Involved in Physical Changes</h3>
+        <ul>
+            <li><strong>Dissolving:</strong> The process in which a solute completely mixes with a solvent to form a homogeneous mixture.</li>
+            <li><strong>Melting:</strong> The process of changing a solid into a liquid at a particular temperature (melting point).</li>
+            <li><strong>Boiling:</strong> The process of changing a liquid into a gas at a particular temperature (boiling point).</li>
+            <li><strong>Evaporation:</strong> The process of changing a liquid into a gas at any temperature below its boiling point.</li>
+            <li><strong>Condensation:</strong> The process of changing a gas into a liquid on cooling.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>Physical changes are highly useful in daily life. For example, <strong>evaporating sea water</strong> helps us obtain common salt, and preparing <strong>alloys</strong> (mixing metals) improves their properties (like mixing gold with silver to make jewellery).</p>
+        </div>
+
+        <h2>2. Chemical Changes</h2>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>A change in which a substance undergoes a change to produce <strong>one or more new substances</strong> with entirely different properties is called a <strong>chemical change</strong> (or a chemical reaction).</p>
+        </div>
+
+        <p>Chemical changes are generally permanent and <strong>irreversible</strong>. You cannot easily get the original substances back.</p>
+
+        <h3>Examples of Chemical Changes</h3>
+        <ul>
+            <li><strong>Rusting of Iron:</strong> A shiny iron nail kept in moist air develops a brown layer of rust. You cannot get the iron back from the rust.</li>
+            <li><strong>Burning (Combustion):</strong> Burning of coal, wood, or paper. Burning coal produces carbon dioxide gas and ash.</li>
+            <li><strong>Curdling of Milk:</strong> Milk turning sour or into curd.</li>
+            <li><strong>Cooking and Digestion:</strong> Cooking food and the digestion of food in our bodies.</li>
+            <li><strong>Other examples:</strong> Ripening of fruits, bursting of a firecracker, respiration, photosynthesis in plants.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>A chemical change is often accompanied by visual or sensory clues, such as the <strong>release or absorption of heat or light</strong>, the <strong>evolution of a gas</strong> (producing a hissing sound), or a <strong>change in smell or colour</strong>.</p>
+        </div>
+
+        <h3>Uses of Chemical Changes</h3>
+        <p>Chemical changes are essential for many modern conveniences:</p>
+        <ul>
+            <li>Producing heat and electricity by burning fuels like coal and petrol.</li>
+            <li>Extracting useful metals (like iron and aluminium) from their ores.</li>
+            <li>Manufacturing daily use items like soaps, detergents, plastics, and medicines.</li>
+        </ul>
+
+        <h2>3. Differences Between Physical and Chemical Changes</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Physical Change</th>
+                    <th style="width: 50%;">Chemical Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Physical Change">No new substance is formed. The chemical composition remains the same.</td>
+                    <td data-label="Chemical Change">One or more new substances are formed with entirely different properties.</td>
+                </tr>
+                <tr>
+                    <td data-label="Physical Change">It is usually accompanied by a change in colour, shape, size, or physical state.</td>
+                    <td data-label="Chemical Change">It is usually accompanied by the release/absorption of heat or light, evolution of gas, or change in smell.</td>
+                </tr>
+                <tr>
+                    <td data-label="Physical Change">Most physical changes are <strong>reversible</strong>.</td>
+                    <td data-label="Chemical Change">Most chemical changes are <strong>irreversible</strong>.</td>
+                </tr>
+                <tr>
+                    <td data-label="Physical Change">Examples: Melting ice, tearing paper, dissolving salt in water.</td>
+                    <td data-label="Chemical Change">Examples: Rusting iron, burning coal, spoiling food.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>4. Reversible and Irreversible Changes</h2>
+
+        <ul>
+            <li><strong>Reversible Change:</strong> A change which can be undone or reversed to get the original substance back. (e.g., melting of ice, dissolving salt).</li>
+            <li><strong>Irreversible Change:</strong> A change which cannot be undone or reversed. (e.g., burning a matchstick, cooking an egg).</li>
+        </ul>
+
+        <h2>5. Change of States in Matter</h2>
+
+        <p>Matter can exist in three physical states: solid, liquid, or gas. The physical state of a substance can be changed by altering the temperature (heating or cooling). This is a classic example of a physical, reversible change.</p>
+
+        <ul>
+            <li><strong>Fusion (Melting):</strong> Solid to Liquid (Heating ice to 0°C turns it into water).</li>
+            <li><strong>Vaporisation (Boiling):</strong> Liquid to Gas (Heating water to 100°C turns it into steam).</li>
+            <li><strong>Condensation:</strong> Gas to Liquid (Cooling steam turns it back into water).</li>
+            <li><strong>Solidification (Freezing):</strong> Liquid to Solid (Cooling water turns it into ice).</li>
+            <li><strong>Sublimation:</strong> The process of changing a solid <strong>directly into a gas</strong> on heating, without passing through the liquid state (e.g., heating Ammonium Chloride, Iodine, or Naphthalene).</li>
+            <li><strong>Deposition:</strong> The process of changing a gas directly into a solid on cooling.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

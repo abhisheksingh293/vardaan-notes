@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Physics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2 - Medium/Standard) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { 
+            width: 100%; max-width: 210mm; margin: 0 auto; 
+            padding: 0 15px; box-sizing: border-box; /* Responsive padding */
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+            padding-top: 20px;
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; /* Prominent Size */
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+            font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 15px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11.5pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; margin-bottom: 20px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 600px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); /* Inverts White BG to Black */
+            opacity: 0.05;     /* Blends black box into dark background */
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* --- RESPONSIVE DESIGN FOR MOBILE/TABLET --- */
+        @media (max-width: 768px) {
+            .institute-name { font-size: 20pt; }
+            .tagline { font-size: 12pt; }
+            .meta-info { flex-direction: column; text-align: left; gap: 8px; font-size: 10.5pt; }
+            .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+            .watermark { width: 90%; }
+        }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; border-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
+            .header { border-bottom-color: var(--primary-color) !important; }
+            .footer { border-top-color: var(--primary-color) !important; }
+            .q-num, .ans-label { color: var(--primary-color) !important; }
+            body { background-color: #fff !important; color: #000 !important; }
+            .watermark { filter: none !important; opacity: 0.08 !important; }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>
+        function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }
+    </script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Force and Friction - Numerical Problem Bank</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 11th</span>
+                <span>Subject: Physics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Newton's Laws & Basic Force</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">A constant force acting on a body of mass $3.0 \text{ kg}$ changes its speed from $2.0 \text{ m/s}$ to $3.5 \text{ m/s}$ in $25 \text{ s}$. The direction of the motion of the body remains unchanged. What is the magnitude and direction of the force?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">A bullet of mass $0.04 \text{ kg}$ moving with a speed of $90 \text{ m/s}$ enters a heavy wooden block and is stopped after a distance of $60 \text{ cm}$. Calculate the average resistive force exerted by the block on the bullet.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">A machine gun fires a bullet of mass $40 \text{ g}$ with a velocity of $1200 \text{ m/s}$. The man holding it can exert a maximum force of $144 \text{ N}$ on the gun. How many bullets can he fire per second at the most?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">A car of mass $1000 \text{ kg}$ is moving with a velocity of $10 \text{ m/s}$. If the velocity-time graph for this car is a horizontal line parallel to the time axis, what is the net force acting on the car? Explain your answer.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">A passenger of mass $72 \text{ kg}$ is standing in an elevator. Find the apparent weight of the passenger when the elevator is (a) accelerating upwards at $2 \text{ m/s}^2$, and (b) accelerating downwards at $2 \text{ m/s}^2$. (Take $g = 10 \text{ m/s}^2$)</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Two masses of $8 \text{ kg}$ and $12 \text{ kg}$ are connected at the two ends of a light inextensible string that goes over a frictionless pulley. Find the acceleration of the masses and the tension in the string when the masses are released. (Take $g = 10 \text{ m/s}^2$)</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section B: Impulse & Conservation of Momentum</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">A batsman deflects a ball by an angle of $45^\circ$ without changing its initial speed which is equal to $54 \text{ km/h}$. What is the impulse imparted to the ball? (Mass of the ball is $0.15 \text{ kg}$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">A rocket with a lift-off mass $20,000 \text{ kg}$ is blasted upwards with an initial acceleration of $5.0 \text{ m/s}^2$. Calculate the initial thrust (force) of the blast. (Take $g = 9.8 \text{ m/s}^2$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">A shell of mass $0.020 \text{ kg}$ is fired by a gun of mass $100 \text{ kg}$. If the muzzle speed of the shell is $80 \text{ m/s}$, what is the recoil speed of the gun?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">Two identical billiard balls strike a rigid wall with the same speed but at different angles, and get reflected without any change in speed. Ball A strikes perpendicularly, while Ball B strikes at an angle of $30^\circ$ with the wall. Calculate the ratio of the magnitudes of impulses imparted to the balls by the wall.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">A force acting on a particle of mass $2 \text{ kg}$ varies with time $t$ as $F = (3t^2 - 2t) \text{ N}$. Find the impulse delivered to the particle between $t = 0$ to $t = 2 \text{ s}$, and the corresponding change in momentum.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section C: Static and Kinetic Friction</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">A block of mass $10 \text{ kg}$ is placed on a rough horizontal surface. The coefficient of static friction is $\mu_s = 0.5$ and kinetic friction is $\mu_k = 0.4$. Find the frictional force when a horizontal force of (a) $30 \text{ N}$, and (b) $60 \text{ N}$ is applied on the block. (Take $g = 10 \text{ m/s}^2$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">A heavy box of mass $20 \text{ kg}$ is pulled on a horizontal surface by applying a horizontal force. If the coefficient of kinetic friction between the box and the surface is $0.25$, calculate the force required to keep the box moving with a constant velocity.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">An automobile vehicle has a mass of $1500 \text{ kg}$. What must be the force between the vehicle and road if the vehicle is to be stopped with a negative acceleration of $1.7 \text{ m/s}^2$? Does this force depend on the coefficient of friction?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">A mass of $4 \text{ kg}$ rests on a horizontal plane. The plane is gradually inclined until at an angle $\theta = 15^\circ$ with the horizontal, the mass just begins to slide. What is the coefficient of static friction between the block and the surface?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">A block of mass $5 \text{ kg}$ is sliding on a rough horizontal surface with an initial velocity of $10 \text{ m/s}$. If the coefficient of kinetic friction is $0.2$, how much distance will it cover before coming to rest?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">A worker pushes a $50 \text{ kg}$ crate horizontally with a force of $250 \text{ N}$. The coefficient of kinetic friction is $0.3$. Calculate the acceleration of the crate. (Take $g = 9.8 \text{ m/s}^2$).</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section D: Motion on an Inclined Plane</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">A block is released from rest at the top of a smooth inclined plane of inclination $30^\circ$. Find its acceleration down the plane. If the length of the incline is $5 \text{ m}$, find the time taken to reach the bottom.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">A block of mass $2 \text{ kg}$ is placed on a rough inclined plane making an angle of $30^\circ$ with the horizontal. The coefficient of static friction is $0.7$ and kinetic friction is $0.6$. Calculate the frictional force acting on the block. Will the block slide?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">Calculate the minimum force required to push a block of mass $10 \text{ kg}$ up a rough inclined plane of angle $45^\circ$ with constant velocity. The coefficient of kinetic friction between the block and the plane is $0.2$. (Take $g = 10 \text{ m/s}^2$).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">A body of mass $m$ slides down a rough inclined plane of inclination $\theta$ with constant velocity. Prove that the coefficient of kinetic friction $\mu_k = \tan \theta$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">An object takes twice as long to slide down a $45^\circ$ rough inclined plane as it takes to slide down a perfectly smooth $45^\circ$ incline of the same length. Calculate the coefficient of kinetic friction between the object and the rough incline.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section E: Connected Bodies & Complex Friction</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">Two blocks of masses $m_1 = 4 \text{ kg}$ and $m_2 = 2 \text{ kg}$ are in contact with each other on a frictionless horizontal surface. A horizontal force of $30 \text{ N}$ is applied to $m_1$. Find the contact force between the two blocks.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">Repeat the previous problem (Q23) assuming the horizontal surface is rough, and the coefficient of kinetic friction for both blocks is $0.2$. Does the contact force change? Calculate the new contact force and the acceleration of the system.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">A block A of mass $2 \text{ kg}$ rests on a block B of mass $8 \text{ kg}$ which rests on a horizontal table. The coefficient of friction between A and B is $0.2$ and between B and the table is $0.1$. A horizontal force of $25 \text{ N}$ is applied to block B. Will block A slip over block B? Find the acceleration of both blocks.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">A mass of $10 \text{ kg}$ is placed on an inclined plane of angle $30^\circ$. It is connected by a string passing over a frictionless pulley at the top of the incline to a hanging mass of $8 \text{ kg}$. If the coefficient of kinetic friction on the incline is $0.1$, find the acceleration of the system and the tension in the string.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">A small coin is placed on a flat horizontal turntable. The turntable is observed to make $3$ revolutions in $3.14 \text{ s}$. What is the coefficient of static friction between the coin and the turntable if the coin is observed to slide off when it is more than $10 \text{ cm}$ from the center?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">A uniform chain of length $L$ and mass $M$ is lying on a smooth table and one-third of its length is hanging vertically down over the edge of the table. If $g$ is acceleration due to gravity, calculate the work required to pull the hanging part on to the table.</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

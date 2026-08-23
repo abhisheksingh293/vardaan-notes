@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2: Medium/Standard) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 15px; box-sizing: border-box; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; flex-wrap: wrap; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; gap: 10px;
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        
+        /* Answer Key Grid specific style */
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            font-size: 10pt;
+        }
+
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* --- RESPONSIVENESS FOR MOBILE & TABLETS --- */
+        @media screen and (max-width: 768px) {
+            .institute-name { font-size: 18pt; }
+            .tagline { font-size: 11pt; }
+            .worksheet-title { font-size: 13pt; }
+            .meta-info { flex-direction: column; align-items: flex-start; gap: 8px; font-size: 10pt; }
+            .container { padding: 10px; }
+            .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+            .watermark { width: 90%; }
+        }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .container { padding: 0; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Comprehensive Worksheet: Whole Numbers & Integers</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 6</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Properties of Whole Numbers</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">What is the smallest whole number?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Write the predecessor of \(10,000\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">Write the successor of \(20,999\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">Are all natural numbers also whole numbers? (Yes/No)</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">Are all whole numbers also natural numbers? (Yes/No)</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Find the sum by suitable rearrangement: \(837 + 208 + 363\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">Find the product by suitable rearrangement: \(4 \times 166 \times 25\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">Find the value of the following using properties: \(297 \times 17 + 297 \times 3\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">Which property is illustrated by the equation: \(a + b = b + a\)?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">What is the multiplicative identity for whole numbers?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">Find the product using distributive property: \(728 \times 101\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">Division of a whole number by \(0\) is ____________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">Solve: \((15 \times 8) \times 0 \times 12\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">If the product of two whole numbers is zero, can we say that one or both of them will be zero?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">State the property used in: \((12 \times 5) \times 8 = 12 \times (5 \times 8)\).</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section B: Introduction & Comparison of Integers</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">Write the opposite of: A deposit of ₹\(500\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">Represent the following as an integer: A submarine is moving at a depth, \(800\) metres below sea level.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">Which number is to the right of the other on the number line? \(2\) or \(-5\)</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">Which is greater: \(-15\) or \(-8\)?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">Write all the integers between \(-4\) and \(2\) in increasing order.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">Write four negative integers greater than \(-20\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">True or False: Zero is a positive integer.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">Evaluate the absolute value: \(|-45|\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">Compare using \(<\), \(>\) or \(=\) : \(-7 \_\_\_ -12\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">Arrange in ascending order: \(-5, 8, -2, 0, 4, -10\).</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section C: Operations on Integers (Addition & Subtraction)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">Add the integers: \(15 + (-8)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">Find the sum of: \(-10\) and \(-19\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">Calculate: \(-32 + 47\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">Find the sum: \((-7) + (-9) + 4 + 16\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">Find the additive inverse of \(-83\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">Subtract: \(4\) from \(-10\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">Subtract: \(-15\) from \(25\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">Find the value of: \((-13) - (-18)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">Fill in the blank: \(-8 + \_\_\_ = 0\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">Solve: \(50 - (-40) - (-2)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">Find the value of: \(37 + (-2) + (-65) + (-8)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">37.</span>
+                <div class="q-content">Compare using \(<\), \(>\) or \(=\) : \((-3) + (-6) \_\_\_ (-3) - (-6)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">38.</span>
+                <div class="q-content">What must be added to \(-15\) to get \(10\)?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">39.</span>
+                <div class="q-content">The sum of two integers is \(-16\). If one of them is \(5\), find the other.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">40.</span>
+                <div class="q-content">Simplify: \(12 - (-7) + 5 - 10\).</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section D: Operations on Integers (Multiplication & Division)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">41.</span>
+                <div class="q-content">Multiply: \(3 \times (-1)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">42.</span>
+                <div class="q-content">Find the product: \((-21) \times (-30)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">43.</span>
+                <div class="q-content">Evaluate: \((-1) \times (-1) \times (-1) \times (-1)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">44.</span>
+                <div class="q-content">Calculate: \((-15) \times 0 \times (-18)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">45.</span>
+                <div class="q-content">Determine the integer whose product with \(-1\) is \(-22\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">46.</span>
+                <div class="q-content">Divide: \((-30) \div 10\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">47.</span>
+                <div class="q-content">Find the quotient: \(50 \div (-5)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">48.</span>
+                <div class="q-content">Calculate: \((-36) \div (-9)\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">49.</span>
+                <div class="q-content">Fill in the blank: \(369 \div \_\_\_ = 369\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">50.</span>
+                <div class="q-content">Evaluate: \([(-36) \div 12] \div 3\).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">51.</span>
+                <div class="q-content">Is division commutative for integers? (Yes/No)</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">52.</span>
+                <div class="q-content">Fill in the blank: \(\_\_\_ \div (4) = -3\).</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section E: Word Problems</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">53.</span>
+                <div class="q-content">At Srinagar, temperature was \(-5^\circ \text{C}\) on Monday and then it dropped by \(2^\circ \text{C}\) on Tuesday. What was the temperature of Srinagar on Tuesday?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">54.</span>
+                <div class="q-content">A plane is flying at a height of \(5000 \text{ m}\) above sea level. At a particular point, it is exactly above a submarine floating \(1200 \text{ m}\) below sea level. What is the vertical distance between them?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">55.</span>
+                <div class="q-content">Mohan deposits ₹\(2,000\) in his bank account and withdraws ₹\(1,642\) from it, the next day. Find the balance in Mohan's account after the withdrawal.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">56.</span>
+                <div class="q-content">In a quiz, positive marks are given for correct answers and negative marks are given for incorrect answers. If Jack's scores in five successive rounds were \(25, -5, -10, 15,\) and \(10\), what was his total at the end?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">57.</span>
+                <div class="q-content">A certain freezing process requires that room temperature be lowered from \(40^\circ \text{C}\) at the rate of \(5^\circ \text{C}\) every hour. What will be the room temperature \(10\) hours after the process begins?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">58.</span>
+                <div class="q-content">An elevator descends into a mine shaft at the rate of \(6 \text{ m/min}\). If the descent starts from \(10 \text{ m}\) above the ground level, how long will it take to reach \(-350 \text{ m}\)?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">59.</span>
+                <div class="q-content">Rita goes \(20 \text{ km}\) towards east from point A to point B. From B, she moves \(30 \text{ km}\) towards west along the same road. By which integer will you represent her final position from A?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">60.</span>
+                <div class="q-content">A merchant on selling rice earns a profit of ₹\(10\) per bag of basmati rice sold and a loss of ₹\(5\) per bag of non-basmati rice. He sells \(3,000\) bags of basmati rice and \(5,000\) bags of non-basmati rice in a month. What is his profit or loss?</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Answer Key</div>
+        <div class="questions-container">
+            <div class="answer-grid">
+                <div><span class="ans-label">1.</span> \(0\)</div>
+                <div><span class="ans-label">2.</span> \(9,999\)</div>
+                <div><span class="ans-label">3.</span> \(21,000\)</div>
+                <div><span class="ans-label">4.</span> Yes</div>
+                <div><span class="ans-label">5.</span> No (0 is not)</div>
+                <div><span class="ans-label">6.</span> \(1,408\)</div>
+                <div><span class="ans-label">7.</span> \(16,600\)</div>
+                <div><span class="ans-label">8.</span> \(5,940\)</div>
+                <div><span class="ans-label">9.</span> Commutative</div>
+                <div><span class="ans-label">10.</span> \(1\)</div>
+                <div><span class="ans-label">11.</span> \(73,528\)</div>
+                <div><span class="ans-label">12.</span> Not defined</div>
+                <div><span class="ans-label">13.</span> \(0\)</div>
+                <div><span class="ans-label">14.</span> Yes</div>
+                <div><span class="ans-label">15.</span> Associative</div>
+                <div><span class="ans-label">16.</span> Withdrawal of ₹500</div>
+                <div><span class="ans-label">17.</span> \(-800\)</div>
+                <div><span class="ans-label">18.</span> \(2\)</div>
+                <div><span class="ans-label">19.</span> \(-8\)</div>
+                <div><span class="ans-label">20.</span> \(-3, -2, -1, 0, 1\)</div>
+                <div><span class="ans-label">21.</span> e.g. \(-19, -18, -17, -16\)</div>
+                <div><span class="ans-label">22.</span> False</div>
+                <div><span class="ans-label">23.</span> \(45\)</div>
+                <div><span class="ans-label">24.</span> \(>\)</div>
+                <div><span class="ans-label">25.</span> \(-10, -5, -2, 0, 4, 8\)</div>
+                <div><span class="ans-label">26.</span> \(7\)</div>
+                <div><span class="ans-label">27.</span> \(-29\)</div>
+                <div><span class="ans-label">28.</span> \(15\)</div>
+                <div><span class="ans-label">29.</span> \(4\)</div>
+                <div><span class="ans-label">30.</span> \(83\)</div>
+                <div><span class="ans-label">31.</span> \(-14\)</div>
+                <div><span class="ans-label">32.</span> \(40\)</div>
+                <div><span class="ans-label">33.</span> \(5\)</div>
+                <div><span class="ans-label">34.</span> \(8\)</div>
+                <div><span class="ans-label">35.</span> \(92\)</div>
+                <div><span class="ans-label">36.</span> \(-38\)</div>
+                <div><span class="ans-label">37.</span> \(<\) </div>
+                <div><span class="ans-label">38.</span> \(25\)</div>
+                <div><span class="ans-label">39.</span> \(-21\)</div>
+                <div><span class="ans-label">40.</span> \(14\)</div>
+                <div><span class="ans-label">41.</span> \(-3\)</div>
+                <div><span class="ans-label">42.</span> \(630\)</div>
+                <div><span class="ans-label">43.</span> \(1\)</div>
+                <div><span class="ans-label">44.</span> \(0\)</div>
+                <div><span class="ans-label">45.</span> \(22\)</div>
+                <div><span class="ans-label">46.</span> \(-3\)</div>
+                <div><span class="ans-label">47.</span> \(-10\)</div>
+                <div><span class="ans-label">48.</span> \(4\)</div>
+                <div><span class="ans-label">49.</span> \(1\)</div>
+                <div><span class="ans-label">50.</span> \(-1\)</div>
+                <div><span class="ans-label">51.</span> No</div>
+                <div><span class="ans-label">52.</span> \(-12\)</div>
+                <div><span class="ans-label">53.</span> \(-7^\circ \text{C}\)</div>
+                <div><span class="ans-label">54.</span> \(6200 \text{ m}\)</div>
+                <div><span class="ans-label">55.</span> ₹\(358\)</div>
+                <div><span class="ans-label">56.</span> \(35\)</div>
+                <div><span class="ans-label">57.</span> \(-10^\circ \text{C}\)</div>
+                <div><span class="ans-label">58.</span> \(60 \text{ minutes}\) (\(1 \text{ hour}\))</div>
+                <div><span class="ans-label">59.</span> \(-10 \text{ km}\)</div>
+                <div><span class="ans-label">60.</span> Profit of ₹\(5000\)</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

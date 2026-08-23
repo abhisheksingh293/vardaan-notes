@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Physics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* Level 2: Medium / Standard */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue/adjust based on readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* Responsive Container */
+        .container { 
+            width: 100%; 
+            max-width: 210mm; 
+            margin: 0 auto; 
+            padding: 15px; 
+            box-sizing: border-box; 
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: clamp(18pt, 5vw, 24pt); /* Responsive font size */
+            font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: clamp(10pt, 3vw, 14pt);
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: clamp(12pt, 3.5vw, 16pt); 
+            font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        
+        /* Responsive Meta Info */
+        .meta-info { 
+            display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;
+            font-weight: bold; margin-top: 15px; 
+            font-size: clamp(9pt, 2.5vw, 11pt); 
+            background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: clamp(200px, 70%, 600px); opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* Print and Responsive Adjustments */
+        @media print { 
+            body { background: none; }
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .container { padding: 0; }
+        }
+
+        @media (max-width: 600px) {
+            .meta-info span { display: block; width: 100%; margin-bottom: 5px; }
+            .question-item { flex-direction: column; }
+            .q-num { margin-bottom: 5px; }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Practice Worksheet: Physical Quantities and Measurement</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 9 (Foundation)</span>
+                <span>Subject: Physics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Multiple Choice Questions (MCQs)</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Which of the following is a fundamental physical quantity?<br>
+                (a) Velocity &nbsp;&nbsp; (b) Force &nbsp;&nbsp; (c) Mass &nbsp;&nbsp; (d) Density</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">The SI unit of density is:<br>
+                (a) $\text{g/cm}^3$ &nbsp;&nbsp; (b) $\text{kg/m}^3$ &nbsp;&nbsp; (c) $\text{N/m}^2$ &nbsp;&nbsp; (d) $\text{kg/m}^2$</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">The least count of a standard Vernier Caliper in the laboratory is typically:<br>
+                (a) $0.1 \text{ cm}$ &nbsp;&nbsp; (b) $0.01 \text{ cm}$ &nbsp;&nbsp; (c) $0.001 \text{ cm}$ &nbsp;&nbsp; (d) $1 \text{ mm}$</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">Which instrument is used to measure the internal diameter of a hollow cylinder?<br>
+                (a) Screw Gauge &nbsp;&nbsp; (b) Vernier Caliper &nbsp;&nbsp; (c) Meter Scale &nbsp;&nbsp; (d) Measuring Tape</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">Relative density of a substance is defined as the ratio of its density to the density of:<br>
+                (a) Air &nbsp;&nbsp; (b) Water at $4^\circ\text{C}$ &nbsp;&nbsp; (c) Mercury &nbsp;&nbsp; (d) Ice</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">The unit of relative density is:<br>
+                (a) $\text{kg/m}^3$ &nbsp;&nbsp; (b) $\text{g/cm}^3$ &nbsp;&nbsp; (c) $\text{N/m}^3$ &nbsp;&nbsp; (d) It has no unit</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">One light year is a unit of:<br>
+                (a) Time &nbsp;&nbsp; (b) Light &nbsp;&nbsp; (c) Distance &nbsp;&nbsp; (d) Speed</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">If the pitch of a screw gauge is $1 \text{ mm}$ and there are $100$ divisions on the circular scale, the least count is:<br>
+                (a) $0.01 \text{ mm}$ &nbsp;&nbsp; (b) $0.1 \text{ mm}$ &nbsp;&nbsp; (c) $0.001 \text{ mm}$ &nbsp;&nbsp; (d) $10 \text{ mm}$</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">The volume of an irregular solid can be measured using a:<br>
+                (a) Measuring cylinder &nbsp;&nbsp; (b) Vernier Caliper &nbsp;&nbsp; (c) Screw gauge &nbsp;&nbsp; (d) Spring balance</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">The time period of a simple pendulum depends directly on the:<br>
+                (a) Mass of the bob &nbsp;&nbsp; (b) Amplitude of swing &nbsp;&nbsp; (c) Square root of its length &nbsp;&nbsp; (d) Material of the thread</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">Which among the following is equivalent to $1 \text{ m}^3$?<br>
+                (a) $100 \text{ L}$ &nbsp;&nbsp; (b) $1000 \text{ L}$ &nbsp;&nbsp; (c) $10 \text{ L}$ &nbsp;&nbsp; (d) $10,000 \text{ L}$</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">Zero error in a measuring instrument is an example of:<br>
+                (a) Random error &nbsp;&nbsp; (b) Systematic error &nbsp;&nbsp; (c) Gross error &nbsp;&nbsp; (d) Environmental error</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">The mass of a body is measured using a:<br>
+                (a) Spring balance &nbsp;&nbsp; (b) Beam balance &nbsp;&nbsp; (c) Hydrometer &nbsp;&nbsp; (d) Barometer</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">If the density of iron is $7.8 \text{ g/cm}^3$, its density in SI system is:<br>
+                (a) $78 \text{ kg/m}^3$ &nbsp;&nbsp; (b) $780 \text{ kg/m}^3$ &nbsp;&nbsp; (c) $7800 \text{ kg/m}^3$ &nbsp;&nbsp; (d) $0.78 \text{ kg/m}^3$</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">Which is NOT a unit of length?<br>
+                (a) Angstrom &nbsp;&nbsp; (b) Micron &nbsp;&nbsp; (c) Radian &nbsp;&nbsp; (d) Parsec</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">The value of $1 \text{ Angstrom} (\text{\AA})$ is:<br>
+                (a) $10^{-8} \text{ m}$ &nbsp;&nbsp; (b) $10^{-10} \text{ m}$ &nbsp;&nbsp; (c) $10^{-12} \text{ m}$ &nbsp;&nbsp; (d) $10^{-6} \text{ m}$</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">To measure the thickness of a human hair, the most suitable instrument is:<br>
+                (a) Meter scale &nbsp;&nbsp; (b) Vernier Caliper &nbsp;&nbsp; (c) Screw Gauge &nbsp;&nbsp; (d) Measuring tape</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">The prefix 'micro' stands for the multiplier:<br>
+                (a) $10^6$ &nbsp;&nbsp; (b) $10^{-3}$ &nbsp;&nbsp; (c) $10^{-6}$ &nbsp;&nbsp; (d) $10^{-9}$</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">A physical quantity that completely specifies both magnitude and direction is known as a:<br>
+                (a) Scalar quantity &nbsp;&nbsp; (b) Vector quantity &nbsp;&nbsp; (c) Tensor quantity &nbsp;&nbsp; (d) Derived quantity</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">The dimensional formula for area is:<br>
+                (a) $[M^0 L^1 T^0]$ &nbsp;&nbsp; (b) $[M^0 L^2 T^0]$ &nbsp;&nbsp; (c) $[M^1 L^2 T^0]$ &nbsp;&nbsp; (d) $[M^0 L^3 T^0]$</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section B: Fill in the Blanks</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">The standard system of units accepted globally for scientific measurements is called the __________ System.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">The mass per unit volume of a substance is known as its __________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">An instrument used to measure the relative density of liquids directly is called a __________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">The distance moved by the screw along its axis in one complete rotation is called its __________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">The time taken by a pendulum to complete one full oscillation is called its __________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">$1$ metric ton is equal to __________ kilograms.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">Quantities that are derived from the fundamental quantities are known as __________ quantities.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">The smallest measurement that can be taken accurately with an instrument is its __________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">To find the volume of a liquid, we typically pour it into a graduated __________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">The SI unit of temperature is the __________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">When the zero of the vernier scale is ahead of the zero of the main scale, the zero error is __________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">Density of water is maximum at __________ $^\circ\text{C}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">$1 \text{ nm}$ (nanometer) = __________ meters.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">A spring balance is primarily used to measure the __________ of an object.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">Luminous intensity is a fundamental quantity and its SI unit is __________.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section C: True or False</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">Weight is a scalar quantity whereas mass is a vector quantity. ______________</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">37.</span>
+                <div class="q-content">The density of a substance remains constant irrespective of its size or shape. ______________</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">38.</span>
+                <div class="q-content">A Vernier Caliper can measure the depth of a small beaker. ______________</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">39.</span>
+                <div class="q-content">Relative density is expressed in $\text{kg/m}^3$. ______________</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">40.</span>
+                <div class="q-content">The SI unit of electric current is the Ampere. ______________</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">41.</span>
+                <div class="q-content">The time period of a simple pendulum depends on the mass of the bob. ______________</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">42.</span>
+                <div class="q-content">The volume of an irregular stone can be found using the water displacement method. ______________</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">43.</span>
+                <div class="q-content">$1 \text{ liter}$ is equal to $100 \text{ cm}^3$. ______________</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">44.</span>
+                <div class="q-content">Zero error must always be subtracted from the observed reading to get the correct reading. ______________</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">45.</span>
+                <div class="q-content">A screw gauge is more precise than a vernier caliper. ______________</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section D: Very Short Answer Type Questions</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">46.</span>
+                <div class="q-content">Define a physical quantity. Give two examples.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">47.</span>
+                <div class="q-content">State the principle used in measuring the volume of an irregular solid.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">48.</span>
+                <div class="q-content">What is meant by the 'Least Count' of an instrument?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">49.</span>
+                <div class="q-content">Write the relation between the SI unit and CGS unit of density.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">50.</span>
+                <div class="q-content">Define the time period of a simple pendulum.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">51.</span>
+                <div class="q-content">Name the seven fundamental quantities in the SI system.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">52.</span>
+                <div class="q-content">How is relative density different from absolute density?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">53.</span>
+                <div class="q-content">Mention one use of the ratchet in a screw gauge.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">54.</span>
+                <div class="q-content">What is a negative zero error in a vernier caliper?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">55.</span>
+                <div class="q-content">Convert a speed of $72 \text{ km/h}$ into $\text{m/s}$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section E: Numerical Problems</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">56.</span>
+                <div class="q-content">A solid metallic block has a mass of $250 \text{ g}$ and a volume of $50 \text{ cm}^3$. Calculate its density in (i) $\text{g/cm}^3$ and (ii) $\text{kg/m}^3$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">57.</span>
+                <div class="q-content">The main scale reading of a vernier caliper is $3.2 \text{ cm}$ and the 4th division of the vernier scale coincides with a main scale division. If the least count is $0.01 \text{ cm}$, what is the total reading? (Assume no zero error).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">58.</span>
+                <div class="q-content">A simple pendulum completes $40$ oscillations in $80$ seconds. Calculate its (i) frequency and (ii) time period.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">59.</span>
+                <div class="q-content">An empty relative density bottle weighs $25 \text{ g}$. When filled completely with water, it weighs $75 \text{ g}$. When filled with an unknown liquid, it weighs $65 \text{ g}$. Calculate the relative density of the liquid.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">60.</span>
+                <div class="q-content">A screw gauge has a pitch of $0.5 \text{ mm}$ and $50$ divisions on its circular scale. Calculate its least count. If the main scale reading is $2.5 \text{ mm}$ and the 24th circular division coincides with the baseline, calculate the diameter of the wire being measured.</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

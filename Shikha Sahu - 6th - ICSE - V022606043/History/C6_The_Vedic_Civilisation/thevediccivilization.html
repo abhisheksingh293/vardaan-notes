@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Vedic Civilisation - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive Design Adjustments */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 5mm 10mm;
+            }
+            .institute-name {
+                font-size: 1.5rem !important;
+            }
+            h1 {
+                font-size: 1.8rem !important;
+            }
+            h2 {
+                font-size: 1.4rem !important;
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle */
+            .theme-toggle {
+                display: none !important;
+            }
+            /* Note: .branding-footer is left visible as per user request */
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 History • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>The Vedic Civilisation</h1>
+        
+        <h2>1. Introduction & Origin of the Aryans</h2>
+        <p>The Vedic Civilisation flourished in India from <strong>1500 BCE to 600 BCE</strong>. It is the earliest civilisation in Indian history for which written records are available. The people who developed this civilisation were known as the <strong>Aryans</strong>.</p>
+        
+        <h3>Origin of the Aryans</h3>
+        <ul>
+            <li>There are multiple theories about their origin (India, Arctic region, Central Europe).</li>
+            <li>The most widely accepted theory by historians is that they migrated from <strong>Central Asia</strong> around 1500 BCE.</li>
+            <li>They first settled in the region of seven rivers known as <strong>Sapta Sindhu</strong> (Indus, Jhelum, Chenab, Ravi, Beas, Satluj, and Saraswati). They called this land <strong>Brahmavarta</strong> (land of gods).</li>
+            <li>Later, they moved towards the Gangetic valley and southwards to the Vindhya mountains. They called this new settled land <strong>Aryavarta</strong>.</li>
+        </ul>
+
+        <h2>2. Sources of Information</h2>
+        <p>We learn about the Vedic Age through two main sources: Literary and Archaeological.</p>
+        
+        <h3>Literary Sources</h3>
+        <ul>
+            <li><strong>The Four Vedas:</strong> Rig Veda (the oldest, composed ~1500 BCE), Sama Veda, Yajur Veda, and Atharva Veda.</li>
+            <li><strong>Other Texts:</strong> Upanishads, Brahmanas, Puranas, and Aranyakas.</li>
+            <li><strong>The Epics:</strong> The <strong>Ramayana</strong> (written by Sage Valmiki) and the <strong>Mahabharata</strong> (written by Sage Ved Vyas).</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>What does "Veda" mean?</strong> The word 'Veda' means knowledge. Initially, hymns were composed in praise of gods and passed on orally from generation to generation before being written down.</p>
+        </div>
+
+        <h3>Archaeological Sources</h3>
+        <ul>
+            <li>Excavations at sites like Hastinapura and Atranjikhera.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Painted Grey Ware (PGW):</strong> A highly distinctive type of pottery found during archaeological excavations that provides major evidence about the lifestyle of the Vedic Age people.</p>
+        </div>
+
+        <h2>3. Early Vedic Period (1500 BCE - 1000 BCE)</h2>
+        
+        <h3>Political Organisation</h3>
+        <ul>
+            <li>The Aryans were divided into <strong>tribes</strong>.</li>
+            <li>The head of the tribe was a king called the <strong>Rajan</strong>, selected for his bravery and wisdom.</li>
+            <li>The Rajan was assisted by the <strong>Senani</strong> (commander of the army) and the <strong>Purohit</strong> (chief priest).</li>
+            <li>The village head was known as the <strong>Gramini</strong>.</li>
+            <li><strong>Assemblies:</strong> The King's power was kept in check by two assemblies: the <strong>Sabha</strong> (senior citizens and elders) and the <strong>Samiti</strong> (general assembly of all village people).</li>
+        </ul>
+
+        <h3>Social Life & Status of Women</h3>
+        <ul>
+            <li>The society was patriarchal. The eldest male member was the head of the family, known as the <strong>Grihapati</strong> or <strong>Gahapati</strong>. A family was known as a <strong>Kul</strong>.</li>
+            <li><strong>Status of Women:</strong> Women were highly respected, educated, and treated on par with men.</li>
+            <li>They actively participated in assemblies and debates. Famous women scholars of this time include <strong>Gargi</strong>, <strong>Maitreyi</strong>, <strong>Lopamudra</strong>, and <strong>Ghosha</strong>.</li>
+            <li>Practices like Sati and the purdah system did not exist. Widow remarriage was accepted.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The Flexible Varna System:</strong> In the Early Vedic Period, society was divided into four varnas based on <em>occupation</em>, not birth. Brahmins (teachers/priests), Kshatriyas (rulers/warriors), Vaishyas (farmers/merchants), and Shudras (artisans/labourers). It was highly flexible.</p>
+        </div>
+
+        <h3>Religion</h3>
+        <ul>
+            <li>Aryans worshipped forces of nature (Sun, Earth, Sky, Wind, Rain, Fire).</li>
+            <li><strong>Important Gods:</strong> <strong>Indra</strong> (God of Rain/Storm/War - the most important god), <strong>Agni</strong> (Fire), <strong>Varun</strong> (Water), and <strong>Surya</strong> (Sun).</li>
+            <li>There were no temples or idols. <strong>Yajnas</strong> (sacrifices) were performed in the open with simple offerings and chanting of hymns.</li>
+        </ul>
+
+        <h3>Economic Life</h3>
+        <ul>
+            <li>Initially, they were pastoral (cattle herders). The <strong>cow</strong> was considered a symbol of wealth and status. A person owning many cows was called a <strong>Gopati</strong>.</li>
+            <li>Agriculture, weaving, carpentry, and chariot making were major occupations.</li>
+            <li><strong>Transport:</strong> The Aryans introduced the <strong>horse</strong> to India, using them to draw chariots.</li>
+        </ul>
+
+        <h2>4. Later Vedic Period (1000 BCE - 600 BCE)</h2>
+        
+        <h3>Political Changes</h3>
+        <ul>
+            <li>Small tribes expanded into large kingdoms like <strong>Kuru</strong>, <strong>Kosala</strong>, <strong>Magadha</strong>, and <strong>Kashi</strong>.</li>
+            <li>The <strong>Rajan</strong> gained absolute power and his position became hereditary. He assumed titles like <strong>Samrat</strong> and performed grand sacrifices like <strong>Ashwamedha</strong> and <strong>Rajasuya</strong>.</li>
+            <li>The assemblies (Sabha and Samiti) lost their importance and were dominated by the rich aristocracy.</li>
+            <li>A new officer, the <strong>Sangrihitri</strong> (tax collector), gained importance.</li>
+        </ul>
+
+        <h3>Social Changes</h3>
+        <ul>
+            <li><strong>Decline in Women's Status:</strong> Women were considered inferior to men. They were denied education, restricted to household duties, and widow remarriage was looked down upon.</li>
+            <li><strong>Rigid Varna System:</strong> The Varna system became strictly based on <strong>birth (hereditary)</strong>. Brahmins and Kshatriyas became privileged classes (paying no taxes), while Shudras faced severe discrimination and untouchability.</li>
+        </ul>
+
+        <h3>Religious & Economic Changes</h3>
+        <ul>
+            <li><strong>Religion:</strong> Early gods lost importance. <strong>Brahma</strong> (Creator), <strong>Vishnu</strong> (Preserver), and <strong>Shiva</strong> (Destroyer) became the supreme deities. Religion became complex, and priests gained immense power.</li>
+            <li><strong>Economy:</strong> <strong>Iron</strong> was discovered (around 1000 BCE), leading to better agricultural tools and weapons. Trade flourished, and cities began to grow.</li>
+        </ul>
+
+        <h2>5. Education: The Gurukul System</h2>
+        <p>Education was transmitted orally through the <strong>Guru-Shishya tradition</strong>. A student (Brahmachari) lived with his Guru in a <strong>Gurukul</strong>.</p>
+        
+        <h3>Subjects Taught & The 4 Stages of Life</h3>
+        <p>Students learned Vedic literature, mathematics (Anka ganita, Rekha ganita, Beej ganita), astronomy, medicine, and martial arts (archery, sword fighting). Human life was divided into four distinct stages (Ashramas):</p>
+        <ul>
+            <li><strong>1. Brahmacharya:</strong> The first stage dedicated to receiving education and attaining knowledge.</li>
+            <li><strong>2. Grihastha:</strong> The second stage focusing on marriage and fulfilling family responsibilities.</li>
+            <li><strong>3. Vanprastha:</strong> The third stage of retiring to the forest for meditation, giving up materialistic life.</li>
+            <li><strong>4. Sanyasa:</strong> The final stage of giving up all worldly ties to preach moral values.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
+```eof

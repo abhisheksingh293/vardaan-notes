@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>swastika sharma - Study Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const urlTheme = params.get('theme');
+      if (urlTheme === 'dark' || urlTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', urlTheme);
+        if (urlTheme === 'dark') {
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        try { localStorage.setItem('vardaan_theme', urlTheme); } catch(e) {}
+      } else {
+        try {
+          const saved = localStorage.getItem('vardaan_theme');
+          if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+            if (saved === 'dark') document.documentElement.classList.add('dark-mode', 'dark');
+          }
+        } catch(e) {}
+      }
+    })();
+  </script>
+  <style>
+    :root {
+      --primary: #F97315;
+      --primary-glow: rgba(249, 115, 21, 0.2);
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-hover: #fcfcfd;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #111827;
+      --text-muted: #6b7280;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --heading-color: #111827;
+      --heading-sub: #6b7280;
+      --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      --radial-1: rgba(249, 115, 21, 0.08);
+      --radial-2: rgba(249, 115, 21, 0.05);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0d1117;
+        --surface: #161b22;
+        --surface-hover: #1f2633;
+        --border: rgba(255, 255, 255, 0.1);
+        --text: #f0f6fc;
+        --text-muted: #8b949e;
+        --glass-bg: rgba(13, 17, 23, 0.85);
+        --heading-color: #ffffff;
+        --heading-sub: #a0a0b0;
+        --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+        --radial-1: rgba(249, 115, 21, 0.06);
+        --radial-2: rgba(249, 115, 21, 0.02);
+      }
+    }
+
+    [data-theme="dark"], html.dark-mode {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-hover: #1f2633;
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f0f6fc;
+      --text-muted: #8b949e;
+      --glass-bg: rgba(13, 17, 23, 0.85);
+      --heading-color: #ffffff;
+      --heading-sub: #a0a0b0;
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      --radial-1: rgba(249, 115, 21, 0.06);
+      --radial-2: rgba(249, 115, 21, 0.02);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, var(--radial-1) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, var(--radial-2) 0%, transparent 50%);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between;
+      align-items: center; padding: 0 40px; height: 80px; background: var(--glass-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--text);  }
+    
+    .logo { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px var(--primary-glow)); transition: filter 0.25s ease; }
+    
+    [data-theme="dark"] .logo, html.dark-mode .logo, html.dark .logo {
+      filter: brightness(0) invert(1) drop-shadow(0 2px 12px var(--primary-glow));
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .logo,
+      html:not([data-theme="light"]) .logo {
+        filter: brightness(0) invert(1) drop-shadow(0 2px 12px var(--primary-glow));
+      }
+    }
+
+    .brand span { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
+    .brand em { font-style: normal; color: var(--primary); }
+    .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 20px 24px 100px; }
+    .hero-section { text-align: center; margin-bottom: 60px;  }
+    .tag {
+      display: inline-flex; align-items: center; gap: 10px; background: rgba(249, 115, 21, 0.1);
+      border: 1px solid rgba(249, 115, 21, 0.2); color: var(--primary); font-size: 0.85rem;
+      font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 8px 20px;
+      border-radius: 999px; margin-bottom: 24px; box-shadow: 0 0 20px rgba(249, 115, 21, 0.1);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 10px var(--primary);  }
+    h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
+    h1 b { background: linear-gradient(135deg, var(--heading-color) 0%, var(--heading-sub) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    h1 .highlight { background: linear-gradient(135deg, var(--primary) 0%, #ff9d4d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 10px rgba(249,115,21,0.2)); }
+    .sub { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    .stats { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+    .stat { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .stat .num { font-size: 2.5rem; font-weight: 800; color: var(--text); text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+    .stat .lab { font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+    .controls { margin: 60px auto 40px; max-width: 600px; position: relative; }
+    .search {
+      width: 100%; height: 64px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text); padding: 0 24px 0 60px; font-size: 1.1rem;
+      outline: none;  font-family: inherit; backdrop-filter: blur(10px);
+    }
+    .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; color: var(--text-muted); pointer-events: none;  }
+    .search:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 4px rgba(249, 115, 21, 0.15), 0 10px 30px rgba(0,0,0,0.5); }
+    .search:focus + .search-icon { color: var(--primary); }
+    .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    .head h2 { font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; color: var(--text); }
+    .count { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 16px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; perspective: 1000px; }
+    .card {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+      text-decoration: none; background: transparent; border: none; padding: 0;
+      position: relative; overflow: visible; aspect-ratio: 1 / 1;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px) scale(1.03);
+    }
+    .card:active {
+      transform: scale(0.96);
+    }
+    
+    .avatar {
+      width: 100%; height: 100%; border-radius: 22px; background: linear-gradient(135deg, var(--primary), #b34e00);
+      display: grid; place-items: center; color: #fff; font-size: 2.2rem; font-weight: 700; margin-bottom: 0;
+      box-shadow: var(--card-shadow);
+      overflow: hidden; aspect-ratio: 1 / 1;
+    }
+    .empty { display: none; text-align: center; padding: 60px 20px; background: var(--surface); border-radius: 8px; border: 1px dashed var(--border); margin-top: 24px; }
+    .empty h3 { font-size: 1.5rem; margin-bottom: 8px; color: var(--text); }
+    .empty p { color: var(--text-muted); }
+    footer { margin-top: 80px; padding: 30px 0; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-muted); font-size: 0.9rem; }
+    @media (max-width: 1024px) {
+      .wrap { padding: 20px 20px 80px; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+      h1 { font-size: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .wrap { padding: 20px 16px 60px; }
+      nav { padding: 0 16px; height: 60px; }
+      .logo { height: 36px; }
+      .brand span { font-size: 1.2rem; }
+      .stats { gap: 12px; }
+      .stat .num { font-size: 1.5rem; }
+      h1 { font-size: 1.8rem; margin-bottom: 12px; }
+      .sub { font-size: 0.95rem; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .avatar { border-radius: 20px; }
+    }
+    @media (max-width: 480px) {
+      .wrap { padding: 16px 14px 60px; }
+      .head { margin-bottom: 18px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .avatar { border-radius: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="#">
+      <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1772276441/Vardaan_Comet-removebg-preview_dsut6f.png" alt="Vardaan Comet Logo" class="logo">
+      <span>Vardaan <em class="highlight">Comet</em></span>
+    </a>
+  </nav>
+
+  <main class="wrap">
+
+
+    <div class="head">
+      <h2>Subjects Directory</h2>
+      <span id="countLabel" class="count">1 subjects</span>
+    </div>
+
+    <section class="grid" id="subjectGrid"></section>
+
+    <section class="empty" id="emptyState">
+      <h3>No subjects found</h3>
+      <p>Try searching for a different name.</p>
+    </section>
+
+
+  </main>
+  <script>
+    const subjects = [
+    {
+        "name": "Science",
+        "link": "./Science/Science.html",
+        "chapters": 4
+    }
+];
+
+    function initials(name) {
+      return name.split(' ').map(part => part[0]).join('').slice(0, 2).toUpperCase();
+    }
+
+    const subjectImages = {
+      'hindi literature': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880787/Hindi_Literature_c4nowe.png',
+      'hindi grammar': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880786/Hindi_Grammar_dfq848.png',
+      'english literature': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880786/English_Literature_b9kukx.png',
+      'english grammar': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/English_Grammar_h2mtiy.png',
+      'current affairs': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1759763329/current_affairs_q12cip.png',
+      'civics and history': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'histry and civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'history and civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'social science': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'socialscience': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'sst': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'extra resources': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757013643/extra_resources_gl2vba.jpg',
+      'worksheet': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757013643/extra_resources_gl2vba.jpg',
+      'woksheet': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757013643/extra_resources_gl2vba.jpg',
+      'economics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/economics_fr9kqg.png',
+      'biology': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880791/Biology_mn1wji.png',
+      'physics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880789/Physics_ur48yf.png',
+      'chemistry': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/Chemistry_odhnox.png',
+      'science': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880789/Science_rig2hp.png',
+      'computer': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/computer_gxzco2.png',
+      'pc': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/computer_gxzco2.png',
+      'robotics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/computer_gxzco2.png',
+      'java': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/computer_gxzco2.png',
+      'maths': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/Maths_smrppm.png',
+      'mathematics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/Maths_smrppm.png',
+      'history': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/history_e9k8gx.png',
+      'geography': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/geography_r5w9ok.png',
+      'civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880786/civics_vtn9eu.png',
+      'hindi': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880787/Hindi_Literature_c4nowe.png',
+      'english': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880786/English_Literature_b9kukx.png',
+      'grammar': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/English_Grammar_h2mtiy.png'
+    };
+
+    function getSubjectIcon(name) {
+      const lowerName = name.toLowerCase();
+      for (const [key, url] of Object.entries(subjectImages)) {
+        if (lowerName.includes(key)) {
+          return `<img src="${url}" alt="${name}" style="width:100%; height:100%; object-fit:cover; border-radius:inherit; transform:scale(1.08); display:block;">`;
+        }
+      }
+      return initials(name);
+    }
+
+    function renderCards(list) {
+      const grid = document.getElementById('subjectGrid');
+      const emptyState = document.getElementById('emptyState');
+      const countLabel = document.getElementById('countLabel');
+      
+      grid.innerHTML = '';
+      
+      if (!list.length) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        countLabel.textContent = '0 subjects';
+        return;
+      }
+      
+      grid.style.display = 'grid';
+      emptyState.style.display = 'none';
+      countLabel.textContent = list.length + ' subject' + (list.length === 1 ? '' : 's');
+      
+      function formatLink(url) {
+        const theme = document.documentElement.getAttribute('data-theme');
+        if (!theme || url === '#' || url.startsWith('javascript:')) return url;
+        const separator = url.includes('?') ? '&' : '?';
+        return url + separator + 'theme=' + encodeURIComponent(theme);
+      }
+
+      list.forEach(subject => {
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = formatLink(subject.link);
+        card.title = subject.name;
+        card.setAttribute('aria-label', subject.name);
+        
+        card.innerHTML = `
+          <div class="avatar">${getSubjectIcon(subject.name)}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+
+    
+    // Initialize
+    renderCards(subjects);
+  </script>
+</body>
+</html>

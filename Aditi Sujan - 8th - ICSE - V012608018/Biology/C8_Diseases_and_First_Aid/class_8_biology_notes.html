@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseases and First Aid - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid var(--toggle-border);
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        
+        /* --- RESPONSIVE DESIGN (Mobile & Tablet) --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px; /* Smaller padding for mobile screens */
+                width: 100%;
+            }
+            .institute-name {
+                font-size: 1.5rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            h3 {
+                font-size: 1.1rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+            table, thead, tbody, th, td, tr {
+                display: block; /* Stack tables on mobile */
+            }
+            th {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            td {
+                border: none;
+                border-bottom: 1px solid var(--toggle-border);
+                position: relative;
+                padding-left: 50%;
+            }
+            td:before {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+                color: var(--blue-border);
+            }
+            td:nth-of-type(1):before { content: "Disease:"; }
+            td:nth-of-type(2):before { content: "Causative Agent:"; }
+            td:nth-of-type(3):before { content: "Symptoms:"; }
+            td:nth-of-type(4):before { content: "Prevention:"; }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+            
+            /* (USER OVERRIDE) FORCE SHOW Branding Footer in Print */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Biology • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>DISEASES AND FIRST AID</h1>
+        
+        <h2>1. Health and Disease</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Health</strong> is defined as a state of complete physical, mental, and social well-being, and not merely an absence of disease or infirmity. Physical health and mental health are inter-related.</p>
+        </div>
+        <p>A person is considered healthy if they are not suffering from any disease, can work hard, interact well with people, enjoy leisure, and can adapt to the stresses of life. Conversely, <strong>Disease</strong> is a departure from normal health through structural or functional disorders of the body.</p>
+        
+        <h2>2. Categories of Diseases</h2>
+        <p>Diseases are broadly classified into two major categories:</p>
+        <ul>
+            <li><strong>Communicable or Infectious Diseases:</strong> These diseases spread from an infected person to a healthy one. They are caused by disease-causing microorganisms called <strong>pathogens</strong> (such as viruses, bacteria, fungi, worms, and protozoa). Examples: Cholera, viral fever, chickenpox, malaria.</li>
+            <li><strong>Non-communicable or Non-infectious Diseases:</strong> These diseases are not caused by germs and cannot spread from person to person (they are non-transmissible). They usually occur due to improper functioning of body organs. Examples: Diabetes, heart attack.</li>
+        </ul>
+
+        <h2>3. Spread of Communicable Diseases</h2>
+        <p>Pathogens try to transfer from a patient to a healthy host to survive and multiply. They spread generally through two methods:</p>
+        
+        <h3>A. Direct Method</h3>
+        <p>Diseases spread through direct physical contact with an infected person. Examples include measles, chickenpox, and fungal infections.</p>
+        
+        <h3>B. Indirect Method</h3>
+        <p>This method involves the transmission of germs without direct physical contact:</p>
+        <ul>
+            <li><strong>Touching and Sharing Items:</strong> Using the same towel, handkerchief, bed, or utensils handled by a patient.</li>
+            <li><strong>Contaminated Food and Water:</strong> Unwashed fruits/vegetables or food washed with contaminated water carry germs to the alimentary canal.</li>
+            <li><strong>Droplet Infection:</strong> Germs of respiratory diseases pass into the air during coughing or sneezing. A healthy person inhales the same air. Examples: Tuberculosis (TB), common cold, measles, diphtheria.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Vectors</strong> are organisms that carry germs from a source of infection but themselves do not get the infection. For example, <strong>mosquitoes</strong> pick up germs while feeding on an infected person and transfer them to the next person they bite. Similarly, <strong>houseflies</strong> carry germs from garbage to human food.</p>
+        </div>
+
+        <h2>4. Important Communicable Diseases</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name of Disease</th>
+                    <th>Causative Agent</th>
+                    <th>Symptoms</th>
+                    <th>Prevention / Treatment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Influenza</strong></td>
+                    <td>Virus</td>
+                    <td>Cold, fever, and chills.</td>
+                    <td>Rest and isolation of the patient.</td>
+                </tr>
+                <tr>
+                    <td><strong>Measles</strong></td>
+                    <td>Virus</td>
+                    <td>Nasal discharge, red watery eyes, fever, red papules on skin.</td>
+                    <td>Vaccination.</td>
+                </tr>
+                <tr>
+                    <td><strong>Malaria</strong></td>
+                    <td>Protozoan (<strong>Plasmodium</strong>). Spreads via female <strong>Anopheles</strong> mosquito.</td>
+                    <td>Intermittent high fever, profuse sweating, headache, shivering.</td>
+                    <td>Prevent breeding of mosquitoes, wear full clothes.</td>
+                </tr>
+                <tr>
+                    <td><strong>Dengue</strong></td>
+                    <td>Virus. Spreads via <strong>Aedes aegypti</strong> mosquito.</td>
+                    <td>Fever, headache, muscle/joint pain, skin rash.</td>
+                    <td>Prevent water stagnation, use mosquito repellents.</td>
+                </tr>
+                <tr>
+                    <td><strong>Chikungunya</strong></td>
+                    <td>Virus. Spreads via <strong>Aedes</strong> mosquito.</td>
+                    <td>Fever, headache, and acute pain in joints.</td>
+                    <td>Mosquito control, avoid visiting common disease areas.</td>
+                </tr>
+                <tr>
+                    <td><strong>AIDS</strong></td>
+                    <td><strong>HIV</strong> (Human Immunodeficiency Virus).</td>
+                    <td>Loss of weight, destruction of the body's normal defense system against infection.</td>
+                    <td>Avoid sexual contact with infected persons, always use disposable syringes.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>5. Preventive Measures, Vaccination & Immunization</h2>
+        <p><strong>Public Hygiene:</strong> Crucial for preventing diseases. It involves the proper disposal of domestic waste and human excreta. Sewage must be chemically treated before release into water bodies to prevent water-borne diseases.</p>
+        <p><strong>Healthy Environment:</strong> Keep garbage in covered bins and do not allow water to stagnate around homes to stop vectors like flies and mosquitoes from breeding.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>The concept of <strong>Vaccination</strong> was conceived by <strong>Edward Jenner (1749-1823)</strong>. He observed that milkmaids who got cowpox never contracted the deadly smallpox. He successfully tested this by injecting a boy with cowpox, which made him immune to smallpox. The term comes from the Latin word <em>'vacca'</em> meaning cow.</p>
+        </div>
+
+        <p><strong>Vaccination</strong> is the practice of artificially introducing germs or germ substances into the body to develop resistance to particular diseases (scientifically called prophylaxis). The substance introduced is called a <strong>Vaccine</strong>.</p>
+        <p>When injected, the vaccine stimulates White Blood Cells (WBCs) to produce antibodies against specific germs. Vaccines are prepared using four methods:</p>
+        <ol>
+            <li><strong>Using Killed Germs:</strong> TAB vaccine for typhoid, Salk's vaccine for poliomyelitis, rabies vaccine.</li>
+            <li><strong>Using Living Weakened Germs:</strong> BCG vaccine for tuberculosis, measles vaccine.</li>
+            <li><strong>Using Fully Virulent Living Germs:</strong> Cowpox virus used for smallpox vaccination (smallpox is now eradicated).</li>
+            <li><strong>Using Toxoids:</strong> Extracts of toxins secreted by bacteria made harmless by formalin (used for diphtheria and tetanus).</li>
+        </ol>
+
+        <p><strong>Immunization</strong> is the process by which an individual's body is made resistant to a specific disease by vaccination. Examples include the Pulse Polio programme aiming to eradicate polio from India.</p>
+
+        <h2>6. First Aid Guidelines</h2>
+        <p><strong>First Aid</strong> is the immediate care or help given to a patient during a medical emergency before they are taken to a doctor.</p>
+        <ul>
+            <li><strong>Burns:</strong>
+                <ul>
+                    <li><em>Superficial:</em> Pour cold water over the area, dry, and cover with sterile dressing. Apply oily substances (ointment, vaseline).</li>
+                    <li><em>Deep Burns:</em> Never use water. Cover directly with a sterile dressing.</li>
+                    <li><em>Chemical Burns:</em> Wash with running water for 10 minutes, then cover.</li>
+                </ul>
+            </li>
+            <li><strong>Bleeding:</strong> Raise the affected body part to minimize blood flow. Wash the cut, press with clean cotton, and apply mild antiseptic.</li>
+            <li><strong>Fractures:</strong> Lay the victim down. Loosen clothing. <strong>Do not move the fractured part.</strong> Use a sling if the arm is fractured.</li>
+            <li><strong>Objects in the Eye:</strong> Do not rub. Wash gently with clean water.</li>
+            <li><strong>Unconsciousness:</strong> Lay the person comfortably. Loosen clothes and ensure fresh air circulation.</li>
+            <li><strong>Swallowing Poison:</strong> Make the patient drink lots of salt water and try to induce vomiting.</li>
+            <li><strong>Snake Bite:</strong> Squeeze out some blood. Tie a tourniquet tightly above the spot to prevent venom from spreading in the bloodstream.</li>
+            <li><strong>Insect Stings (Bee/Wasp):</strong> Pull out the sting if visible. Squeeze out some blood and apply an alkali like <strong>baking soda</strong>.</li>
+        </ul>
+
+        <h2>7. Harmful Effects of Bad Habits</h2>
+        <ul>
+            <li><strong>Tobacco:</strong> Smoking and chewing tobacco products increase the risk of mouth and lung cancer, high blood pressure, and heart attacks. It also harms non-smokers sitting nearby (passive smoking).</li>
+            <li><strong>Alcohol:</strong> A slow poison that impairs judgment, damages the nervous system, blood vessels, stomach, and causes severe liver damage.</li>
+            <li><strong>Drugs:</strong> Narcotic/psychotropic drugs (like morphine, cocaine, heroin) cause a loss of sensation, severe nervous system damage, respiratory issues, and often lead to early death due to addiction.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minerals - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        
+        /* --- RESPONSIVE DESIGN (Mobiles & Tablets) --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm 5mm; /* Reduce padding for smaller screens */
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            h3 {
+                font-size: 1.15rem;
+            }
+            p, li {
+                font-size: 0.95rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 38px;
+                height: 38px;
+            }
+            .box-label {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer left visible as per request) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            /* Ensure Footer Prints properly */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>MINERALS</h1>
+        
+        <h2>1. Introduction to Minerals</h2>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Minerals</strong> are naturally occurring substances that make up rocks in the earth's crust. They have definite chemical composition and physical properties such as colour, hardness, lustre, and texture.
+        </div>
+        
+        <p>Minerals are formed by natural processes and are <strong>non-renewable</strong>, meaning once they are exhausted, they cannot be replenished. Human bodies need certain minerals like iron, calcium, and zinc to stay healthy (e.g., calcium is needed for healthy bones and teeth).</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            An <strong>Ore</strong> is a mineral in its natural, unmined form. Ores have a high concentration of metallic minerals.
+        </div>
+
+        <h2>2. Types of Minerals</h2>
+        <p>Based on their chemical and physical properties, minerals are divided into two main categories: Metallic and Non-Metallic.</p>
+        
+        <h3>A. Metallic Minerals</h3>
+        <p>These are minerals that contain metals. Examples include iron ore and manganese ore. Their characteristics are:</p>
+        <ul>
+            <li>They are associated with metamorphic and igneous rocks.</li>
+            <li>They are very hard.</li>
+            <li>They are <strong>malleable</strong> (can be beaten into thin sheets) and <strong>ductile</strong> (can be drawn into wires).</li>
+            <li>They have a lustre or shine.</li>
+            <li>They are good conductors of heat and electricity.</li>
+        </ul>
+        <p>Metallic minerals can be further grouped into <strong>ferrous</strong> (containing iron, like iron ore) and <strong>non-ferrous</strong> (no iron content, like copper and bauxite) minerals.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            When two or more metals are combined, <strong>Alloys</strong> are formed. For example, <strong>Bronze</strong> is an alloy of copper and tin, whereas <strong>Steel</strong> is an alloy of iron, nickel, chromium, and manganese!
+        </div>
+
+        <h3>B. Non-Metallic Minerals</h3>
+        <p>These are minerals that do not contain metals. Examples include limestone, mica, and gypsum. Their characteristics are:</p>
+        <ul>
+            <li>They are associated with sedimentary rocks.</li>
+            <li>They are not as hard as metallic minerals.</li>
+            <li>They are brittle (neither malleable nor ductile).</li>
+            <li>They lack shine and have a dull appearance.</li>
+            <li>They are poor conductors of heat and electricity.</li>
+        </ul>
+
+        <h2>3. Distribution and Uses of Major Minerals</h2>
+        <p>Minerals are not evenly distributed over space; their presence depends on landforms and rock types.</p>
+        
+        <h3>Important Metallic Minerals</h3>
+        <ul>
+            <li><strong>Iron Ore:</strong> The backbone of modern civilisation. It is used to make steel and manufacture automobiles, machinery, and ships. <em>Leading producers:</em> China, India, Russia. In India, it is found in Jharkhand, Karnataka, Odisha, etc.</li>
+            <li><strong>Uranium:</strong> A silvery-white radioactive mineral used to generate nuclear power. <em>Leading producers:</em> Kazakhstan, Canada, Australia. In India, obtained from monazite sands in Kerala, and found in Jharkhand and Andhra Pradesh.</li>
+            <li><strong>Bauxite:</strong> The main source of aluminium. It is used in manufacturing aircraft, wagons, and household appliances. <em>Leading producers:</em> Australia, China, Brazil. In India, found in Odisha, Gujarat, etc.</li>
+            <li><strong>Manganese:</strong> A black metal used to make steel tough and rust-resistant. <em>Leading producers:</em> South Africa, Australia.</li>
+            <li><strong>Gold & Silver:</strong> Precious metals used for making jewellery, coins, and in electronics and medicine.</li>
+            <li><strong>Copper:</strong> Highly ductile and a good conductor of electricity. Used in making electrical wires and alloys like brass and bronze.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            In India, most of the gold mines are located in <strong>Kolar (Karnataka)</strong>. These mines are among the deepest mines in the world!
+        </div>
+
+        <h3>Important Non-Metallic Minerals</h3>
+        <ul>
+            <li><strong>Limestone:</strong> Formed from the shells and skeletons of dead animals in the sea. Used for making cement and in the glass/fertilizer industries.</li>
+            <li><strong>Mica:</strong> A bad conductor of electricity, making it an excellent insulating material for the electrical industry.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>India</strong> is the largest producer and exporter of Mica in the entire world!
+        </div>
+
+        <h2>4. Fuel Minerals (Fossil Fuels)</h2>
+        <p>Fuel minerals are organic, non-metallic minerals formed from the remains of dead animals and plants that got buried under the earth's surface millions of years ago.</p>
+        
+        <h3>Coal</h3>
+        <p>Used as a raw material for thermal power plants and as fuel for running machines and trains.</p>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            The process of intense heat and pressure converting buried plants into coal is called <strong>destructive distillation</strong> or <strong>carbonification</strong>.
+        </div>
+
+        <h3>Petroleum & Natural Gas</h3>
+        <p>Petroleum is found in sedimentary rock formations (like sandstone and limestone). Natural gas is often found along with petroleum in oil wells.</p>
+        <ul>
+            <li><strong>Petroleum:</strong> Used as fuel for vehicles, aeroplanes, ships, and as a lubricant in machinery.</li>
+            <li><strong>Natural Gas:</strong> Used to heat homes and generate power. <strong>CNG (Compressed Natural Gas)</strong> is used as an eco-friendly alternative to petrol or diesel.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Petroleum is highly valuable and is often referred to as <strong>Liquid Gold</strong>. The liquid form is called crude oil.
+        </div>
+
+        <h2>5. Types of Mining</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Mining</strong> is the process of extracting useful minerals from below the surface of the earth, including the sea bed.
+        </div>
+        <ul>
+            <li><strong>Quarrying:</strong> Ores found just below the surface of the earth are simply dug out.</li>
+            <li><strong>Open-cast Mining:</strong> Minerals found at shallow depths are extracted by removing the top layer of rocks and soil.</li>
+            <li><strong>Shaft Mining:</strong> Deep vertical shafts or tunnels are dug to extract minerals found at great depths.</li>
+            <li><strong>Drilling:</strong> Deep wells are dug to extract mineral fuels like petroleum and natural gas.</li>
+        </ul>
+
+        <h2>6. Conservation of Minerals</h2>
+        <p>Mineral resources are limited. With the rapidly increasing global population and modern society's heavy reliance on minerals, demand is accelerating.</p>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            Once a mineral is mined, it is lost forever without any chance of replenishment. Some minerals are on the verge of extinction in the next 20-100 years!
+        </div>
+        
+        <p>To ensure sustainability, the following measures must be taken:</p>
+        <ul>
+            <li>Reduce wastage of minerals by adopting efficient methods of mining.</li>
+            <li><strong>Recycling</strong> metals and reusing them efficiently.</li>
+            <li>Using alternate, renewable resources of energy like solar power, wind energy, and biomass.</li>
+            <li>Replace scarce minerals with those available in plenty (e.g., substituting copper with aluminium for electrical goods).</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

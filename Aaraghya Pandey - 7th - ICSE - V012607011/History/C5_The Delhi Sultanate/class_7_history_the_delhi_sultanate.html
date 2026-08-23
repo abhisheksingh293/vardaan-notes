@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Delhi Sultanate - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE DESIGN (Mobile, Tablet, Laptop) --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 5vw; /* Fluid padding for smaller devices */
+            }
+            .institute-name {
+                font-size: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            h3 {
+                font-size: 1.15rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer is forced to show per user prompt) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            .branding-footer {
+                display: block !important; /* User override: always show footer text on print */
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 History • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>THE DELHI SULTANATE</h1>
+        
+        <h2>1. Introduction to the Delhi Sultanate</h2>
+        <p>The establishment of the Delhi Sultanate marked a new era in Indian history following the defeat of <strong>Prithviraj Chauhan</strong> by <strong>Muhammad Ghori</strong> in the <strong>Second Battle of Tarain (1192 CE)</strong>. This victory laid the foundation for Turkish and Afghan rule in India.</p>
+        <p>From 1206 to 1526, the subcontinent was governed by five powerful dynasties, collectively known as the <strong>Delhi Sultanate</strong>:</p>
+        <ul>
+            <li>The Slave Dynasty (1206-1290)</li>
+            <li>The Khalji Dynasty (1290-1320)</li>
+            <li>The Tughlaq Dynasty (1320-1414)</li>
+            <li>The Sayyid Dynasty (1414-1451)</li>
+            <li>The Lodi Dynasty (1451-1526)</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The Turning Point:</strong> The Second Battle of Tarain (1192 CE) was the crucial event that enabled the foundation of Islamic empires in Northern India.</p>
+        </div>
+
+        <h2>2. The Slave Dynasty (1206-1290)</h2>
+        <p>Also known as the <strong>Mamluk Dynasty</strong> (meaning 'slave' or 'owned' in Arabic), this was the first dynasty of the Delhi Sultanate, established after the death of Muhammad Ghori in 1206.</p>
+
+        <h3>Qutb-ud-din Aibak (1206-1210)</h3>
+        <p>A former slave of Muhammad Ghori, he became the first independent Muslim ruler of northern India with Lahore as his capital.</p>
+        <ul>
+            <li><strong>Titles & Charity:</strong> Earned the title of <strong>Lakh Baksh</strong> (giver of lakhs) due to his immense generosity.</li>
+            <li><strong>Architecture:</strong> Started the construction of the <strong>Qutub Minar</strong> (named after Sufi saint Khwaja Qutb-ud-din Bakhtiyar Kaki) and the <strong>Quwwat-ul-Islam mosque</strong>.</li>
+            <li><strong>Death:</strong> Died accidentally in 1210 while playing polo (chaugan).</li>
+        </ul>
+
+        <h3>Shams-ud-din Iltutmish (1211-1236)</h3>
+        <p>Iltutmish, Aibak’s son-in-law, is considered the <strong>real founder</strong> of the Delhi Sultanate because he shifted the capital from Lahore to Delhi and firmly consolidated the empire.</p>
+        <ul>
+            <li><strong>Amir-i-Chahalgani:</strong> Created a loyal group of forty Turkish nobles known as 'The Forty' to protect his rule.</li>
+            <li><strong>Mongol Threat:</strong> Saved India from the invasion of Genghis Khan by refusing shelter to the Shah of Persia.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>The Iqta System:</strong> Introduced by Iltutmish, this was a system where land assignments (Iqtas) were given to military officers in lieu of a cash salary, along with military responsibilities.</p>
+        </div>
+
+        <h3>Raziya Sultan (1236-1240)</h3>
+        <p>She was the <strong>first and only Muslim woman</strong> to rule over the Delhi Sultanate. Despite being an efficient, just, and brave ruler, she faced severe opposition from Turkish nobles who refused to take orders from a woman.</p>
+
+        <h3>Ghiyas-ud-din Balban (1266-1286)</h3>
+        <p>Balban ruled the empire with an <strong>"iron hand"</strong> (policy of blood and iron) to crush rebellions and secure the state.</p>
+        <ul>
+            <li>Propagated the theory of <strong>Divine Rights</strong>, claiming the Sultan was God's representative on Earth.</li>
+            <li>Introduced the practice of <strong>Zaminbosi / Sijda</strong>, where people had to kneel and touch their forehead to the ground to greet the Sultan.</li>
+            <li>Created a dedicated military department called <strong>Diwan-i-Arz</strong> to counter Mongol threats.</li>
+        </ul>
+
+        <h2>3. The Khalji Dynasty (1290-1320)</h2>
+        <p>Founded by <strong>Jalal-ud-din Firuz Khalji</strong> in 1290 after overthrowing the weak successors of Balban.</p>
+
+        <h3>Ala-ud-din Khalji (1296-1316)</h3>
+        <p>The greatest ruler of the Khalji dynasty and the first Sultan to expand his empire to the extreme South of India with the help of his trusted general, <strong>Malik Kafur</strong>.</p>
+        
+        <h3>Key Reforms of Ala-ud-din Khalji</h3>
+        <ul>
+            <li><strong>Land Revenue Policy:</strong> Abolished small iqtas and brought lands under the Crown (Khalsa). Fixed revenue at 50% for the fertile Ganga-Yamuna Doab and 33% for other lands.</li>
+            <li><strong>Market Regulations:</strong> Fixed the prices of daily commodities to maintain his large standing army at a low cost. Appointed a superintendent called <strong>Shahna-i-Mandi</strong> to ensure strict compliance.</li>
+            <li><strong>Art & Architecture:</strong> A great patron of education and arts. Built the <strong>Siri Fort</strong> and the famous <strong>Alai Darwaza</strong>. The renowned Persian poet <strong>Amir Khusrau</strong> was his court poet.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Military Innovations:</strong> To maintain army efficiency, Ala-ud-din introduced <strong>Dagh</strong> (the branding of horses to prevent substitution) and <strong>Chehra / Huliya</strong> (descriptive identity rolls of soldiers).</p>
+        </div>
+
+        <h2>4. The Tughlaq Dynasty (1320-1414)</h2>
+        <p>Founded by <strong>Ghiyas-ud-din Tughlaq</strong>, this dynasty saw massive territorial expansion but also catastrophic administrative failures.</p>
+
+        <h3>Muhammad-bin-Tughlaq (1325-1351)</h3>
+        <p>A brilliant scholar of philosophy, mathematics, and logic, but known to historians as a <strong>"mixture of opposites"</strong> due to his visionary but poorly executed schemes.</p>
+        <ul>
+            <li><strong>Transfer of Capital (1327):</strong> Ordered the capital moved from Delhi to <strong>Devagiri (renamed Daulatabad)</strong> to control the South better and avoid Mongol attacks. It caused massive suffering, and the capital was later shifted back to Delhi.</li>
+            <li><strong>Taxation in Doab:</strong> Increased taxes twenty-fold during a terrible famine. Peasants revolted, forcing him to withdraw the orders.</li>
+            <li><strong>Khurasan Expedition:</strong> Raised and paid a massive army a year in advance to conquer Central Asia, only to abandon the costly plan later.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Token Currency:</strong> Muhammad-bin-Tughlaq introduced copper coins (<strong>jital</strong>) to replace silver coins (<strong>tanka</strong>). The plan failed disastrously because common people started forging the copper coins at home, bankrupting the treasury.</p>
+        </div>
+
+        <h3>Firoz Shah Tughlaq (1351-1388)</h3>
+        <p>Succeeded his cousin and adopted a policy to appease the ulemas (religious scholars) and nobles by making the <em>iqta</em> system hereditary.</p>
+        <ul>
+            <li><strong>Welfare Measures:</strong> Built canals, rest houses, and a special department (<strong>Diwan-i-Khairat</strong>) to help the poor and arrange marriages.</li>
+            <li><strong>New Towns:</strong> Established Jaunpur, Firozabad, Firozpur, and Hissar.</li>
+            <li><strong>Taxation:</strong> Abolished heavy burdens and levied only Islamic taxes: <strong>Kharaj</strong> (land tax), <strong>Zakat</strong> (religious tax), <strong>Khams</strong> (booty share), and <strong>Jizya</strong> (tax on non-Muslims).</li>
+        </ul>
+
+        <h2>5. Invasion of Timur (1398)</h2>
+        <p>The Mongol conqueror Timur invaded a weakening Delhi Sultanate in 1398, plundering Delhi and leaving it utterly devastated. He did not stay in India but left behind Khizr Khan as his viceroy.</p>
+
+        <h2>6. The Sayyid Dynasty (1414-1451)</h2>
+        <p>Established by <strong>Khizr Khan</strong>, who acted as a representative of Timur. The Sayyid rulers (Mubarak Shah, Muhammad Shah, Alam Shah) were generally weak, and their reigns were plagued by constant rebellions by powerful nobles.</p>
+
+        <h2>7. The Lodi Dynasty (1451-1526)</h2>
+        <p>The Lodis were the last ruling family of the Sultanate and the <strong>first Afghan dynasty</strong> to rule Delhi.</p>
+
+        <h3>Bahlul Lodi (1451-1489)</h3>
+        <p>The founder of the Lodi dynasty who suppressed local revolts and conquered Jaunpur.</p>
+
+        <h3>Sikandar Lodi (1489-1517)</h3>
+        <p>Considered the greatest and wisest of the Lodi rulers. He moved the capital from Delhi to <strong>Agra</strong>, introduced welfare measures, and lowered commodity prices to support the people.</p>
+
+        <h3>Ibrahim Lodi (1517-1526)</h3>
+        <p>His arrogant behavior caused his nobles to revolt. Daulat Khan Lodi, the governor of Punjab, invited the Mughal ruler Babur from Kabul to invade India.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The End of the Sultanate:</strong> In <strong>1526</strong>, Babur defeated Ibrahim Lodi in the <strong>First Battle of Panipat</strong>. This historic victory marked the definitive end of the Delhi Sultanate and birthed the majestic <strong>Mughal Empire</strong>.</p>
+        </div>
+        
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

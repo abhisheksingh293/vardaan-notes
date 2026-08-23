@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Force - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive Adjustments for Mobile & Tablet */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 5vw; /* Fluid padding for smaller devices */
+            }
+            .institute-name {
+                font-size: 1.6rem !important; /* Scale down title on mobile */
+            }
+            .system-name {
+                font-size: 0.9rem !important;
+            }
+            h1 { font-size: 1.8rem !important; }
+            h2 { font-size: 1.4rem !important; }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (User Requested Footer stays) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            /* User specified rule: always show footer text during print */
+            .branding-footer {
+                display: block !important;
+                border-top: 1px solid #ccc !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print (User Requested to always show) */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+                display: block !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Physics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Force</h1>
+        
+        <h2>1. Introduction to Force</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            A <strong>force</strong> is that cause which changes the state of a body (either the state of rest or the state of motion or the direction of motion) or changes the size or shape of the body. Force is a push or pull.
+        </div>
+        <p>It is important to remember that a force cannot be seen; we can only see or feel the <em>effect</em> of a force. A force does not change the mass of the body on which it is applied.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            The S.I. unit of force is <strong>Newton (N)</strong>. Its gravitational units are <strong>kgf</strong> and <strong>gf</strong>. 
+            <br><br>
+            <strong>1 kgf = 1000 gf</strong> and <strong>1 kgf = 10 N (nearly)</strong>.
+        </div>
+
+        <h2>2. Effects of a Force</h2>
+        <p>When a force is applied on a body, it can have the following main effects:</p>
+        <ul>
+            <li><strong>Can move a body originally at rest:</strong> A stationary ball on the ground moves when it is kicked.</li>
+            <li><strong>Can stop a moving body:</strong> A moving bicycle is stopped by applying the brakes, which act in a direction opposite to the motion.</li>
+            <li><strong>Can make a moving body move faster:</strong> The speed of a bicycle increases when more force is applied to the pedals.</li>
+            <li><strong>Can slow down a moving body:</strong> A moving vehicle slows down when a force is applied in the opposite direction.</li>
+            <li><strong>Can change the direction of motion:</strong> A hockey player applies force with a stick to change the direction of the ball.</li>
+            <li><strong>Can change the shape or size:</strong> Stretching a rubber string increases its length (force as a stretch). Squeezing an inflated balloon changes its shape (force as a squeeze).</li>
+        </ul>
+
+        <h2>3. Kinds of Forces</h2>
+        <p>Depending upon the application of forces, they are classified into two broad categories:</p>
+
+        <h3>A. Contact Forces</h3>
+        <p>The force which acts on bodies by making actual physical contact is called a contact force. Examples include:</p>
+        <ul>
+            <li><strong>Muscular Force:</strong> Force applied manually as a push or a pull.</li>
+            <li><strong>Frictional Force:</strong> Force exerted by a surface on a body in contact with it, acting in the direction opposite to motion.</li>
+            <li><strong>Tension Force:</strong> Force in a string when a load is suspended from it.</li>
+            <li><strong>Force of Reaction:</strong> The upward force normal to the surface when a body is placed on a table.</li>
+        </ul>
+
+        <h3>B. Non-Contact Forces (Forces from a distance)</h3>
+        <p>Forces which act on bodies with absolutely no physical contact are called non-contact forces. Examples include:</p>
+        <ul>
+            <li><strong>Gravitational Force:</strong> The attractive force between two bodies at a distance. For instance, the Earth attracts all objects. The weight of a body is the force by which the Earth attracts it.</li>
+            <li><strong>Electrostatic Force:</strong> The force between two charged bodies (like charges repel, unlike charges attract).</li>
+            <li><strong>Magnetic Force:</strong> The force acting between the poles of two magnets.</li>
+        </ul>
+
+        <h2>4. Force of Friction</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Friction</strong> is the force that opposes the relative motion between the two surfaces in contact with each other. The word friction is derived from the Latin word "fricare" which means "to rub".
+        </div>
+        
+        <h3>Key Characteristics and Effects of Friction</h3>
+        <ul>
+            <li><strong>Friction opposes motion:</strong> It makes it difficult to push heavy objects over rough surfaces.</li>
+            <li><strong>Acts in the opposite direction:</strong> Friction always acts in a direction opposite to the direction of motion.</li>
+            <li><strong>Produces heat:</strong> When you rub your palms together or when machine parts move against each other, heat is produced.</li>
+            <li><strong>Causes wear and tear:</strong> The soles of our shoes and tyres of vehicles wear out over time due to friction.</li>
+        </ul>
+
+        <h3>Factors Affecting Friction</h3>
+        <ul>
+            <li><strong>Smoothness of the Surface:</strong> Friction is higher on rough surfaces and lower on smooth surfaces.</li>
+            <li><strong>Nature of Medium:</strong> The friction between two solids is maximum. It is less between a solid and liquid, and least between a solid and a gas.</li>
+            <li><strong>Weight of the moving body:</strong> The greater the weight of the moving body on a surface, the more the force of friction.</li>
+        </ul>
+
+        <h2>5. Kinds of Friction</h2>
+        <ul>
+            <li><strong>Static Friction:</strong> The maximum opposing force exerted by a surface on a stationary body when an external force is applied, just before the body begins to slide.</li>
+            <li><strong>Sliding Friction:</strong> The force exerted by a surface when a body is actively sliding over it.</li>
+            <li><strong>Rolling Friction:</strong> The force that opposes the rolling motion of an object over a surface.</li>
+        </ul>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            Always remember the relationship between the magnitudes of these frictions: <br>
+            <strong>Static Friction > Sliding Friction > Rolling Friction</strong>.
+        </div>
+
+        <h2>6. Advantages and Disadvantages of Friction</h2>
+        <h3>Disadvantages</h3>
+        <ul>
+            <li>It opposes the motion of a body and decreases efficiency.</li>
+            <li>It causes wear and tear in the moving parts of machinery.</li>
+            <li>It produces unnecessary heat, wasting energy.</li>
+        </ul>
+
+        <h3>Advantages (Why friction is necessary)</h3>
+        <ul>
+            <li>Without friction, we would not be able to <strong>walk</strong> on a road.</li>
+            <li>Vehicles would fail to move as wheels would spin in place without moving ahead.</li>
+            <li>Friction helps in <strong>supporting a ladder</strong> against a wall.</li>
+            <li>Brakes in vehicles function solely because of friction.</li>
+            <li>It is essential for simple tasks like <strong>lighting a matchstick</strong> or writing on a blackboard with chalk.</li>
+        </ul>
+
+        <h2>7. Methods to Change Friction</h2>
+        <h3>Ways of Reducing Friction</h3>
+        <ul>
+            <li><strong>Making surfaces smooth:</strong> By polishing or cementing surfaces.</li>
+            <li><strong>Using lubricants:</strong> Oil, grease, or fine powder fill the fine pores on a surface to decrease interlocking.</li>
+            <li><strong>Using ball bearings:</strong> Replaces sliding friction with rolling friction (which is much lower) in axles and hubs.</li>
+            <li><strong>Streamlining:</strong> Designing bodies (like airplanes, boats, birds) with sharp or pointed front ends to easily cut through air or water.</li>
+        </ul>
+
+        <h3>Ways of Increasing Friction</h3>
+        <ul>
+            <li><strong>Making surfaces rough:</strong> Sand is often sprinkled on slippery roads.</li>
+            <li><strong>Using dry surfaces:</strong> Wet surfaces reduce friction; keeping them dry maintains a better grip.</li>
+            <li><strong>Increasing weight:</strong> A heavier body develops a stronger grip with the surface it moves on.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

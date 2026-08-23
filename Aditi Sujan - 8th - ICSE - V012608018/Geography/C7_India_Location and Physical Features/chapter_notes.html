@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>India-Location and Physical Features - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex; /* Always visible on screen */
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; /* TIGHTENED LAYOUT */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE DESIGN FOR DEVICES --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm; /* Reduced padding for tablets and mobiles */
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+                margin-top: 30px;
+            }
+            h3 {
+                font-size: 1.15rem;
+            }
+            p, li {
+                font-size: 1rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer is kept visible per request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            .branding-footer {
+                display: block !important; /* Overridden to SHOW footer text in print */
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>India-Location and Physical Features</h1>
+        
+        <h2>1. Location and Identity</h2>
+        <p>India is the seventh largest country in the world and the second most populous country after China. Despite having diverse physical features, stark climatic contrasts, and varied vegetation, India possesses a distinct geographical identity.</p>
+        <p>India and some of her neighbouring countries together form the <strong>Indian subcontinent</strong>.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Strategic Position:</strong> India is situated at the head of the Indian Ocean (the only ocean named after a country). The mainland is a large peninsula bound by the Arabian Sea in the west, the Bay of Bengal in the east, and the Indian Ocean in the south. This facilitates trade with both eastern and western countries.</p>
+        </div>
+
+        <h2>2. Extent and Standard Meridian</h2>
+        <ul>
+            <li><strong>Latitudinal Extent:</strong> 8°4'N to 37°6'N.</li>
+            <li><strong>Longitudinal Extent:</strong> 68°7'E to 97°25'E.</li>
+            <li><strong>Hemispheres:</strong> It lies entirely in the Northern and Eastern hemispheres. The <strong>Tropic of Cancer</strong> passes through the middle of the country.</li>
+            <li><strong>Dimensions:</strong> North to South (Kashmir to Kanyakumari) is about 3,200 km. West to East (Gujarat to Arunachal Pradesh) is about 2,900 km.</li>
+            <li><strong>Extreme Points:</strong> The southernmost point of the country is <strong>Indira Point</strong> (submerged during the 2004 tsunami), while the northernmost point is <strong>Indira Col</strong> in Kashmir.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Indian Standard Time (IST):</strong> A longitudinal difference of 29° leads to a time variation of almost 2 hours between Arunachal Pradesh (east) and Gujarat (west). For uniformity, the local time of <strong>82°30'E longitude</strong> (Standard Meridian of India) is used across the entire country.</p>
+        </div>
+
+        <h2>3. Neighbouring Countries & Political Divisions</h2>
+        <p>India shares its boundaries with several nations:</p>
+        <ul>
+            <li><strong>North-west:</strong> Pakistan and Afghanistan.</li>
+            <li><strong>North:</strong> China, Nepal, and Bhutan.</li>
+            <li><strong>East:</strong> Bangladesh and Myanmar.</li>
+            <li><strong>South (across the sea):</strong> Sri Lanka and Maldives.</li>
+        </ul>
+        <p>For administrative purposes, India is divided into <strong>28 states and 8 union territories</strong>. The capital of India is New Delhi. States have been primarily divided based on the languages spoken.</p>
+
+        <h2>4. Physical Divisions of India</h2>
+        <p>India has six major physical divisions which shape its geography and economy.</p>
+
+        <h3>A. The Northern Mountains</h3>
+        <p>An arc-shaped chain stretching for 2,500 km, serving as the highest mountain chain in the world.</p>
+        <ul>
+            <li><strong>Karakoram Range:</strong> Northernmost range. Contains <strong>K2 (Mount Godwin Austen)</strong>, the second-highest peak globally, and large glaciers like Siachen and Baltoro.</li>
+            <li><strong>The Himalayas:</strong> Consist of three parallel ranges:
+                <ul>
+                    <li><strong>Greater Himalayas (Himadri):</strong> Average height of 6,000 m. Contains the highest peaks like Mt. Everest, Kanchenjunga, Nanda Devi. Source of rivers like Ganga and Yamuna.</li>
+                    <li><strong>Lesser Himalayas (Himachal):</strong> Average height of 4,500 m. Known for hill stations (Shimla, Manali, Darjeeling).</li>
+                    <li><strong>Outer Himalayas (Shivalik):</strong> Height less than 1,250 m. Made of loose rocks, prone to earthquakes. Contains broad valleys known as <strong>duns</strong> (e.g., Dehradun).</li>
+                </ul>
+            </li>
+        </ul>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>The Purvachal Mountains:</strong> The eastern extensions of the Himalayas in North-east India. They include the Patkai Bum, Naga, Garo, Khasi, Jaintia, Mizo, and Lushai Hills.</p>
+        </div>
+
+        <h3>B. The Northern Plains</h3>
+        <p>Also known as the Indo-Gangetic Plain, it lies south of the mountains. Formed by alluvium deposits, it is extremely fertile and divided into three sections:</p>
+        <ul>
+            <li><strong>Indus Plain:</strong> Drained by the Indus and its tributaries (Chenab, Jhelum, Ravi, Beas, Satluj). Mainly located in Punjab and Haryana in India.</li>
+            <li><strong>Ganga Plain:</strong> Covers UP, MP, Bihar, and West Bengal. Drained by Ganga and tributaries like Yamuna, Ghaghra, Kosi, and Son.</li>
+            <li><strong>Brahmaputra Plain:</strong> Located in Assam. Drained by the Brahmaputra (called <strong>Tsangpo</strong> in Tibet).</li>
+        </ul>
+        <p>The Ganga and Brahmaputra rivers form the <strong>Sunderban delta</strong>, the largest delta in the world, before flowing into the Bay of Bengal.</p>
+
+        <h3>C. The Peninsular Plateau</h3>
+        <p>The oldest landmass of the Indian subcontinent, made of hard igneous and metamorphic rocks, rich in minerals.</p>
+        <ul>
+            <li><strong>Malwa Plateau:</strong> Bound by Aravalli (NW) and Vindhyas (S). Rivers like Chambal and Betwa originate here.</li>
+            <li><strong>Deccan Plateau:</strong> South of the Narmada Valley. Bordered by the <strong>Western Ghats</strong> (continuous hills, source of Narmada/Tapi) and <strong>Eastern Ghats</strong> (broken hills, source of Mahanadi, Godavari, Krishna, Kaveri).</li>
+            <li><strong>Deccan Trap:</strong> North-western part made of lava sheets. Rich in black soil, excellent for <strong>cotton cultivation</strong>.</li>
+        </ul>
+
+        <h3>D. The Thar Desert</h3>
+        <p>Located north-west of the Malwa Plateau and west of the Aravalli Hills in Rajasthan. It is a region of <strong>inland drainage</strong> (rivers disappear into the sand or salt lakes). The Luni is the only large river, and Lake Sambhar is an important saltwater lake.</p>
+
+        <h3>E. The Coastal Plains</h3>
+        <ul>
+            <li><strong>Western Coastal Plain:</strong> Narrow strip bordering the Arabian Sea. Divided into the Konkan Coast (north) and Malabar Coast (south). Contains estuaries and lagoons (backwaters).</li>
+            <li><strong>Eastern Coastal Plain:</strong> Wider plain bordering the Bay of Bengal. Divided into Northern Circars (north) and Coromandel Coast (south). Features large river deltas.</li>
+        </ul>
+
+        <h3>F. The Islands</h3>
+        <ul>
+            <li><strong>Lakshadweep Islands:</strong> Located in the Arabian Sea, these are a group of <strong>coral islands</strong>.</li>
+            <li><strong>Andaman and Nicobar Islands:</strong> Located in the Bay of Bengal, separated by the Ten Degree Channel. These are <strong>volcanic islands</strong>. They house <strong>Barren Island</strong>, India's only active volcano.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -9,17 +9,80 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const urlTheme = params.get('theme');
+      if (urlTheme === 'dark' || urlTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', urlTheme);
+        if (urlTheme === 'dark') {
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        try { localStorage.setItem('vardaan_theme', urlTheme); } catch(e) {}
+      } else {
+        try {
+          const saved = localStorage.getItem('vardaan_theme');
+          if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+            if (saved === 'dark') document.documentElement.classList.add('dark-mode', 'dark');
+          }
+        } catch(e) {}
+      }
+    })();
+  </script>
   <style>
     :root {
       --primary: #F97315;
       --primary-glow: rgba(249, 115, 21, 0.2);
       --bg: #f5f7fb;
       --surface: #ffffff;
-      --surface-hover: #f9f9fa;
+      --surface-hover: #fcfcfd;
       --border: rgba(0, 0, 0, 0.08);
       --text: #111827;
       --text-muted: #6b7280;
       --glass-bg: rgba(255, 255, 255, 0.85);
+      --heading-color: #111827;
+      --heading-sub: #6b7280;
+      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+      --card-shadow-hover: 0 12px 28px rgba(249, 115, 21, 0.14);
+      --radial-1: rgba(249, 115, 21, 0.08);
+      --radial-2: rgba(249, 115, 21, 0.05);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0d1117;
+        --surface: #161b22;
+        --surface-hover: #1f2633;
+        --border: rgba(255, 255, 255, 0.1);
+        --text: #f0f6fc;
+        --text-muted: #8b949e;
+        --glass-bg: rgba(13, 17, 23, 0.85);
+        --heading-color: #ffffff;
+        --heading-sub: #a0a0b0;
+        --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        --card-shadow-hover: 0 12px 28px rgba(249, 115, 21, 0.22);
+        --radial-1: rgba(249, 115, 21, 0.06);
+        --radial-2: rgba(249, 115, 21, 0.02);
+      }
+    }
+
+    [data-theme="dark"], html.dark-mode {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-hover: #1f2633;
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f0f6fc;
+      --text-muted: #8b949e;
+      --glass-bg: rgba(13, 17, 23, 0.85);
+      --heading-color: #ffffff;
+      --heading-sub: #a0a0b0;
+      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      --card-shadow-hover: 0 12px 28px rgba(249, 115, 21, 0.22);
+      --radial-1: rgba(249, 115, 21, 0.06);
+      --radial-2: rgba(249, 115, 21, 0.02);
     }
 
     * {
@@ -35,8 +98,9 @@
       min-height: 100vh;
       overflow-x: hidden;
       background-image:
-        radial-gradient(circle at 15% 50%, rgba(249, 115, 21, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 85% 30%, rgba(249, 115, 21, 0.05) 0%, transparent 50%);
+        radial-gradient(circle at 15% 50%, var(--radial-1) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, var(--radial-2) 0%, transparent 50%);
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     nav {
@@ -70,6 +134,17 @@
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 4px 12px var(--primary-glow));
+      transition: filter 0.25s ease;
+    }
+
+    [data-theme="dark"] .logo, html.dark-mode .logo, html.dark .logo {
+      filter: brightness(0) invert(1) drop-shadow(0 2px 12px var(--primary-glow));
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .logo,
+      html:not([data-theme="light"]) .logo {
+        filter: brightness(0) invert(1) drop-shadow(0 2px 12px var(--primary-glow));
+      }
     }
 
     .brand span {
@@ -483,14 +558,14 @@
       {
             "name": "Aaraghya Pandey - 7th - ICSE - V012607011",
             "link": "./Aaraghya Pandey - 7th - ICSE - V012607011/AaraghyaPandey-7th-ICSE-V012607011.html",
-            "subjects": 2,
-            "chapters": 12
+            "subjects": 7,
+            "chapters": 37
       },
       {
             "name": "Aarush Kumar - 7th - CBSE - V022607008",
             "link": "./Aarush Kumar - 7th - CBSE - V022607008/AarushKumar-7th-CBSE-V022607008.html",
-            "subjects": 2,
-            "chapters": 12
+            "subjects": 3,
+            "chapters": 13
       },
       {
             "name": "Abhay Kumar - 9th - ICSE - V022609014",
@@ -517,16 +592,28 @@
             "chapters": 0
       },
       {
+            "name": "Adhya kumari - 6th - ICSE - V012606025",
+            "link": "./Adhya kumari - 6th - ICSE - V012606025/Adhyakumari-6th-ICSE-V012606025.html",
+            "subjects": 2,
+            "chapters": 7
+      },
+      {
             "name": "Aditi Sujan - 8th - ICSE - V012608018",
             "link": "./Aditi Sujan - 8th - ICSE - V012608018/Aditi.html",
-            "subjects": 8,
-            "chapters": 52
+            "subjects": 9,
+            "chapters": 53
       },
       {
             "name": "Aditya - 7th - ICSE - V032607003",
             "link": "./Aditya - 7th - ICSE - V032607003/Aditya-7th-ICSE-V032607003.html",
             "subjects": 4,
             "chapters": 15
+      },
+      {
+            "name": "Aditya kumar Sharma - 9th - ICSE - V022609041",
+            "link": "./Aditya kumar Sharma - 9th - ICSE - V022609041/AdityakumarSharma-9th-ICSE-V022609041.html",
+            "subjects": 0,
+            "chapters": 0
       },
       {
             "name": "Advik Kumar Jha - 8th - ICSE - V012608009",
@@ -559,6 +646,12 @@
             "chapters": 0
       },
       {
+            "name": "Ankit Raj Sharma - 12th - ICSE - V111111111",
+            "link": "./Ankit Raj Sharma - 12th - ICSE - V111111111/AnkitRajSharma-12th-ICSE-V111111111.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
             "name": "Ankit Raj Sharmaa - 12th - ICSE - V022612001",
             "link": "./Ankit Raj Sharmaa - 12th - ICSE - V022612001/AnkitRajSharmaa-12th-ICSE-V022612001.html",
             "subjects": 0,
@@ -567,8 +660,8 @@
       {
             "name": "Ankush singh - 8th - ICSE - V032608005",
             "link": "./Ankush singh - 8th - ICSE - V032608005/Ankushsingh-8th-ICSE-V032608005.html",
-            "subjects": 4,
-            "chapters": 31
+            "subjects": 6,
+            "chapters": 43
       },
       {
             "name": "Anmol Kumar - 11th - CBSE - V022611033",
@@ -579,8 +672,14 @@
       {
             "name": "Ansh - 8th - ICSE - V022608019",
             "link": "./Ansh - 8th - ICSE - V022608019/Ansh-8th-ICSE-V022608019.html",
-            "subjects": 2,
-            "chapters": 13
+            "subjects": 7,
+            "chapters": 48
+      },
+      {
+            "name": "Anshjeet - 8th - ICSE - V022608042",
+            "link": "./Anshjeet - 8th - ICSE - V022608042/Anshjeet-8th-ICSE-V022608042.html",
+            "subjects": 7,
+            "chapters": 48
       },
       {
             "name": "Anshu kumar - 10th - CBSE - V022610002",
@@ -589,10 +688,22 @@
             "chapters": 0
       },
       {
+            "name": "Aradhya Kumari - 8th - CBSE - V032608004",
+            "link": "./Aradhya Kumari - 8th - CBSE - V032608004/AradhyaKumari-8th-CBSE-V032608004.html",
+            "subjects": 1,
+            "chapters": 4
+      },
+      {
             "name": "Arnav  - 8th - CBSE - V012608006",
             "link": "./Arnav  - 8th - CBSE - V012608006/Arnav-8th-CBSE-V012608006.html",
             "subjects": 4,
             "chapters": 61
+      },
+      {
+            "name": "Arnav Kumar paikroy - 6th - CBSE - V032606003",
+            "link": "./Arnav Kumar paikroy - 6th - CBSE - V032606003/ArnavKumarpaikroy-6th-CBSE-V032606003.html",
+            "subjects": 0,
+            "chapters": 0
       },
       {
             "name": "Arpit Kumar Singh - 8th - CBSE - V012608016",
@@ -615,19 +726,25 @@
       {
             "name": "Astuti Jha  - 6th - ICSE - V022606013",
             "link": "./Astuti Jha  - 6th - ICSE - V022606013/AstutiJha-6th-ICSE-V022606013.html",
-            "subjects": 4,
+            "subjects": 5,
             "chapters": 22
       },
       {
             "name": "Ayan Tiwari - 6th - ICSE - V022606028",
             "link": "./Ayan Tiwari - 6th - ICSE - V022606028/landforms.html",
             "subjects": 5,
-            "chapters": 17
+            "chapters": 25
       },
       {
             "name": "Ayush - 9th - CBSE - V022609031",
             "link": "./Ayush - 9th - CBSE - V022609031/Ayush-9th-CBSE-V022609031.html",
             "subjects": 1,
+            "chapters": 0
+      },
+      {
+            "name": "AYUSH MISHRA - 9th - CBSE - V012609024",
+            "link": "./AYUSH MISHRA - 9th - CBSE - V012609024/AYUSHMISHRA-9th-CBSE-V012609024.html",
+            "subjects": 0,
             "chapters": 0
       },
       {
@@ -691,6 +808,12 @@
             "chapters": 0
       },
       {
+            "name": "MANYA MISHRA - 10th - CBSE - V012610023",
+            "link": "./MANYA MISHRA - 10th - CBSE - V012610023/MANYAMISHRA-10th-CBSE-V012610023.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
             "name": "Mayank Mishra  - 10th - ICSE - V012610007",
             "link": "./Mayank Mishra  - 10th - ICSE - V012610007/MayankMishra-10th-ICSE-V012610007.html",
             "subjects": 2,
@@ -703,16 +826,28 @@
             "chapters": 0
       },
       {
+            "name": "Muskan Kumari - 9th - ICSE - V022609044",
+            "link": "./Muskan Kumari - 9th - ICSE - V022609044/MuskanKumari-9th-ICSE-V022609044.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Nickhill Mahato - 8th - CBSE - V022608045",
+            "link": "./Nickhill Mahato - 8th - CBSE - V022608045/NickhillMahato-8th-CBSE-V022608045.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
             "name": "Nikhil Kumar - 8th - ICSE - V022608006",
             "link": "./Nikhil Kumar - 8th - ICSE - V022608006/NikhilKumar-8th-ICSE-V022608006.html",
-            "subjects": 6,
+            "subjects": 7,
             "chapters": 48
       },
       {
             "name": "Nishant Raj - 6th - ICSE - V022606035",
             "link": "./Nishant Raj - 6th - ICSE - V022606035/landforms.html",
-            "subjects": 5,
-            "chapters": 17
+            "subjects": 6,
+            "chapters": 33
       },
       {
             "name": "Nupur Kumari - 10th - CBSE - V012610016",
@@ -729,8 +864,8 @@
       {
             "name": "Porshiya Bhowmick - 7th - ICSE - V012607005",
             "link": "./Porshiya Bhowmick - 7th - ICSE - V012607005/Porshiya.html",
-            "subjects": 3,
-            "chapters": 15
+            "subjects": 4,
+            "chapters": 22
       },
       {
             "name": "Pratik - 8th - ICSE - V022608018",
@@ -747,8 +882,8 @@
       {
             "name": "Ridhyam  - 8th - ICSE - V022608005",
             "link": "./Ridhyam  - 8th - ICSE - V022608005/Ridhyam-8th-ICSE-V022608005.html",
-            "subjects": 5,
-            "chapters": 24
+            "subjects": 6,
+            "chapters": 33
       },
       {
             "name": "Rishav kumar - 11th - CBSE - V022611035",
@@ -766,7 +901,7 @@
             "name": "Rudransh Anand - 8th - CBSE - V022608016",
             "link": "./Rudransh Anand - 8th - CBSE - V022608016/RudranshAnand-8th-CBSE-V022608016.html",
             "subjects": 5,
-            "chapters": 4
+            "chapters": 15
       },
       {
             "name": "Rudransh Sharma - 7th - ICSE - V012607017",
@@ -783,18 +918,30 @@
       {
             "name": "Shashank Shekhar Sharma - 6th - ICSE - V012606021",
             "link": "./Shashank Shekhar Sharma - 6th - ICSE - V012606021/ShashankShekharSharma-6th-ICSE-V012606021.html",
-            "subjects": 3,
-            "chapters": 13
-      },
-      {
-            "name": "Shourya Anand - 6th - ICSE - V012606015",
-            "link": "./Shourya Anand - 6th - ICSE - V012606015/SouryaAnand.html",
             "subjects": 6,
             "chapters": 41
       },
       {
+            "name": "Shikha Sahu - 6th - ICSE - V022606043",
+            "link": "./Shikha Sahu - 6th - ICSE - V022606043/ShikhaSahu-6th-ICSE-V022606043.html",
+            "subjects": 5,
+            "chapters": 34
+      },
+      {
+            "name": "Shourya Anand - 6th - ICSE - V012606015",
+            "link": "./Shourya Anand - 6th - ICSE - V012606015/SouryaAnand.html",
+            "subjects": 7,
+            "chapters": 50
+      },
+      {
             "name": "Shreya mishra - 10th - CBSE - V022609018",
             "link": "./Shreya mishra - 10th - CBSE - V022609018/Shreyamishra-10th-CBSE-V022609018.html",
+            "subjects": 0,
+            "chapters": 0
+      },
+      {
+            "name": "Soumika Routh - 11th - CBSE - V022611046",
+            "link": "./Soumika Routh - 11th - CBSE - V022611046/SoumikaRouth-11th-CBSE-V022611046.html",
             "subjects": 0,
             "chapters": 0
       },
@@ -814,7 +961,13 @@
             "name": "SURYANSH VIPRAVANSHI - 7th - CBSE - V022607024",
             "link": "./SURYANSH VIPRAVANSHI - 7th - CBSE - V022607024/SURYANSHVIPRAVANSHI-7th-CBSE-V022607024.html",
             "subjects": 3,
-            "chapters": 3
+            "chapters": 12
+      },
+      {
+            "name": "swastika sharma - 8th - CBSE - V032608006",
+            "link": "./swastika sharma - 8th - CBSE - V032608006/swastikasharma-8th-CBSE-V032608006.html",
+            "subjects": 1,
+            "chapters": 4
       },
       {
             "name": "Tanvi Kumari - 10th - CBSE - V012610015",
@@ -843,7 +996,7 @@
       {
             "name": "Vedansh Mishra - 6th - ICSE - V022606018",
             "link": "./Vedansh Mishra - 6th - ICSE - V022606018/VedanshMishra-6th-ICSE-V022606018.html",
-            "subjects": 6,
+            "subjects": 7,
             "chapters": 33
       },
       {
@@ -873,8 +1026,8 @@
       {
             "name": "Yash - 7th - ICSE - V022607023",
             "link": "./Yash - 7th - ICSE - V022607023/Yash-7th-ICSE-V022607023.html",
-            "subjects": 7,
-            "chapters": 45
+            "subjects": 8,
+            "chapters": 54
       }
 ];
     function initials(name) {
@@ -885,10 +1038,6 @@
       const totalStudents = students.length;
       const totalSubjects = students.reduce((sum, s) => sum + s.subjects, 0);
       const totalChapters = students.reduce((sum, s) => sum + s.chapters, 0);
-      
-      const elStudents = document.getElementById('statStudents');
-      const elSubjects = document.getElementById('statSubjects');
-      const elChapters = document.getElementById('statChapters');
       
       if (elStudents) elStudents.textContent = totalStudents;
       if (elSubjects) elSubjects.textContent = totalSubjects;
@@ -913,10 +1062,17 @@
       emptyState.style.display = 'none';
       countLabel.textContent = list.length + ' student' + (list.length === 1 ? '' : 's');
 
+      function formatLink(url) {
+        const theme = document.documentElement.getAttribute('data-theme');
+        if (!theme || url === '#' || url.startsWith('javascript:')) return url;
+        const separator = url.includes('?') ? '&' : '?';
+        return `${url}${separator}theme=${encodeURIComponent(theme)}`;
+      }
+
       list.forEach(student => {
         const card = document.createElement('a');
         card.className = 'card';
-        card.href = student.link;
+        card.href = formatLink(student.link);
 
         card.innerHTML = `
           <div class="avatar">${initials(student.name)}</div>

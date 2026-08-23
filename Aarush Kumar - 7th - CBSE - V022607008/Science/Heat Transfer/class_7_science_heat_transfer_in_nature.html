@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Heat Transfer in Nature - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Mobile responsiveness improvements */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px; /* Smaller padding on small devices */
+            }
+            .institute-name {
+                font-size: 1.8rem !important;
+            }
+            h1 {
+                font-size: 1.8rem !important;
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            /* FORCE SHOW Footer on Print as requested */
+            .branding-footer {
+                display: block !important; 
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Heat Transfer in Nature</h1>
+        
+        <h2>1. Introduction to Heat</h2>
+        <p><strong>Heat</strong> is a form of energy that causes the sensation of hotness and coldness. The sun is the primary source of heat and light on the Earth. Heat can be transferred from one body to another (or from a hotter region to a colder region) through three primary modes:</p>
+        <ul>
+            <li><strong>Conduction</strong></li>
+            <li><strong>Convection</strong></li>
+            <li><strong>Radiation</strong></li>
+        </ul>
+
+        <h2>2. Modes of Heat Transfer</h2>
+        
+        <h3>2.1 Conduction (In Solids)</h3>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Conduction</strong> is the process of transfer of heat from the hotter to the colder end of a body, or between two bodies at different temperatures which are in contact with each other. It mainly takes place in <strong>solids</strong>.
+        </div>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            For conduction to take place, two conditions must be met:
+            <ul>
+                <li>The two objects must be in <strong>direct contact</strong>.</li>
+                <li>There must be a <strong>difference in temperature</strong> between them.</li>
+            </ul>
+        </div>
+        
+        <p>Materials are classified based on their ability to conduct heat:</p>
+        <ul>
+            <li><strong>Conductors:</strong> Substances that allow heat to flow through them easily (e.g., metals like iron, copper, aluminum).</li>
+            <li><strong>Insulators:</strong> Substances that do not allow heat to pass through them (e.g., wood, plastic, Bakelite, water, air).</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Mercury</strong> is the only metal that exists as a liquid at room temperature. It is a good conductor of heat and expands on heating, which is why it is used in clinical and laboratory thermometers.
+        </div>
+
+        <h3>Applications of Conduction in Daily Life</h3>
+        <ul>
+            <li>Cooking utensils are made of metals to efficiently transfer heat to the food, while their handles are made of insulators (plastic/wood) to prevent our hands from burning.</li>
+            <li><strong>Wool</strong> acts as an insulator by trapping air between its fibres. This trapped air prevents body heat from escaping, keeping us warm in winter.</li>
+            <li>Two thin blankets keep us warmer than one thick blanket because the layer of air trapped between the two blankets acts as a poor conductor of heat.</li>
+        </ul>
+
+        <h3>2.2 Convection (In Liquids and Gases)</h3>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Convection</strong> is the transfer of heat in liquids and gases from the hotter part of a substance to the colder part by the <strong>actual movement of particles</strong>. It is not possible in solids because molecules in solids are held together by strong intermolecular forces.
+        </div>
+
+        <h3>Applications of Convection in Daily Life</h3>
+        <ul>
+            <li><strong>Ventilators:</strong> Placed near the ceiling because the warm air we breathe out is lighter and rises to escape, while fresh, cool air enters through windows and doors below.</li>
+            <li><strong>Room Heaters:</strong> Placed near the ground so the hot air rises, heating the entire room by setting up continuous convection currents.</li>
+            <li><strong>Air Conditioners:</strong> Placed at a higher level because cold air is heavy and naturally comes down to cool the entire room.</li>
+            <li><strong>Fire Safety:</strong> Firemen crawl while entering a burning building because hot air and toxic smoke rise, making the air cleanest near the ground.</li>
+            <li>Birds can rise high in the air and glide effortlessly due to upward convection currents of air.</li>
+        </ul>
+
+        <h3>Sea Breeze and Land Breeze</h3>
+        <ul>
+            <li><strong>Sea Breeze (Daytime):</strong> Land heats up faster than water. The air above the land gets heated and rises. Cooler air from above the sea rushes in to take its place. This creates a cool breeze blowing from the sea towards the land.</li>
+            <li><strong>Land Breeze (Nighttime):</strong> Land cools down faster than water. The air above the sea is still warm and rises. Cooler air from the land rushes to take its place, creating a breeze blowing from the land towards the sea.</li>
+        </ul>
+
+        <h3>2.3 Radiation (Requires No Medium)</h3>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Radiation</strong> is the transfer of heat directly from a hotter body to a colder body <strong>without requiring any material medium</strong>. Heat transmitted this way is called <strong>radiant heat</strong>, and it can travel even through a vacuum.
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Black and dark-coloured</strong> objects absorb more radiant heat, while <strong>white and light-coloured</strong> objects reflect more heat. Shiny and smooth surfaces reflect heat, whereas dark and rough surfaces absorb it.
+        </div>
+
+        <h3>Applications of Radiation in Daily Life</h3>
+        <ul>
+            <li>The massive amount of heat from the sun reaches the Earth entirely through radiation.</li>
+            <li>We prefer wearing <strong>dark-coloured clothes in winter</strong> because they absorb more heat, and <strong>light-coloured clothes in summer</strong> because they reflect heat.</li>
+            <li>The bases of cooking utensils are painted black so they absorb more heat energy, cooking food faster.</li>
+            <li>Electric room heaters have shiny, polished metal surfaces behind the heating coil to reflect and direct all the radiant heat forward into the room.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            In the extremely cold Himalayan regions, traditional room heaters called <strong>'bukhari'</strong> are used. It consists of an iron stove burning charcoal with a long chimney pipe. It uses <strong>all three modes of heat transfer</strong> (Conduction through the metal, Convection of warm air, and Radiation from the hot surface) to keep rooms incredibly warm.
+        </div>
+
+        <h2>3. Water Cycle in Nature</h2>
+        <p>Water constantly escapes from the Earth and returns in a continuous loop. This continuous movement of water upward as water vapour and downward through precipitation is called the <strong>water cycle</strong>.</p>
+        <ul>
+            <li><strong>Evaporation & Transpiration:</strong> Sun's radiation converts water from oceans and lakes into vapour. Plants also release water vapour into the air.</li>
+            <li><strong>Condensation:</strong> As water vapour rises, it meets cool air and condenses into millions of tiny droplets, forming clouds.</li>
+            <li><strong>Precipitation:</strong> When clouds become too heavy, the droplets fall back to Earth as rain, hail, or snow.</li>
+            <li><strong>Infiltration:</strong> The process of surface rainwater seeping down into the ground through pores in the soil and rocks.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Groundwater:</strong> The water that infiltrates the ground and is stored in the cracks and pore spaces of sediments beneath the Earth's surface.<br><br>
+            <strong>Aquifer:</strong> A layer of rock or sediment that can hold and allow a significant flow of groundwater. These are tapped for wells and springs.
+        </div>
+
+        <h2>4. Depletion and Conservation of Groundwater</h2>
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            The decline in the level of the water table is known as <strong>depletion of the water table</strong>. Major causes include:
+            <ul>
+                <li>Excessive pumping and extraction for agriculture/industry.</li>
+                <li>Deforestation, which reduces the soil's ability to hold water.</li>
+                <li>Concretization of land (roads and buildings) which prevents rainwater seepage.</li>
+                <li>Increasing population demands.</li>
+            </ul>
+        </div>
+
+        <h3>How to Recharge Groundwater</h3>
+        <ul>
+            <li><strong>Rainwater Harvesting:</strong> Collecting and storing rainwater from rooftops to let it slowly seep into the ground, recharging the water table.</li>
+            <li><strong>Check Dams:</strong> Small dams built across rivers and streams to slow down water flow and encourage deep infiltration.</li>
+            <li><strong>Percolation Tanks:</strong> Specifically designed structures that collect rainwater to artificially accelerate groundwater recharge.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            In Ladakh, mountain streams are diverted through underground pipes during winter and sprayed into the freezing air to build <strong>"ice stupas"</strong>. In spring, these artificial glaciers melt slowly, providing a steady supply of water for farming!
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Buddhism and Jainism - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- MOBILE RESPONSIVENESS (Adaptations for Tablets & Phones) --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            p, li {
+                font-size: 1rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Web Footer is shown as requested by user) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            /* Per user request: Show the footer text during print */
+            .branding-footer {
+                display: block !important;
+                border-top: 1px solid #ccc !important;
+                color: #000 !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60 !important; 
+                    color: #ffffff !important;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">[Class 6] [History] • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Buddhism and Jainism</h1>
+        
+        <h2>1. The Rise of New Beliefs</h2>
+        <p>The 6th century BCE was a period of great social turmoil and growing inequalities in India. The Vedic religion had become overly complicated due to the rigidities of the <strong>caste system</strong> and an increasing focus on expensive, elaborate rituals and sacrifices. This social inequality created deep dissatisfaction among the common people and the lower classes.</p>
+        <p>In response to this discontent, new belief systems emerged around <strong>500 BCE</strong>. These new paths challenged existing superstitions and inequalities, profoundly influencing Indian philosophy, art, architecture, and culture.</p>
+
+        <h2>2. Buddhism</h2>
+        <p>The founder of Buddhism was a Sakya prince named <strong>Gautama Siddhartha</strong>. He was born around <strong>563 BCE</strong> in Lumbini, near Kapilavastu in Nepal. Raised in luxury, it was predicted at his birth that he would become either a universal monarch or an enlightened soul.</p>
+
+        <h3>The Four Great Sights</h3>
+        <p>Married at 16 to Princess Yasodhara and father to a son named Rahul, Gautama lived a sheltered life until a pivotal chariot ride. He witnessed four sights that deeply disturbed him and changed his life forever:</p>
+        <ul>
+            <li>An <strong>old man</strong> (revealing the reality of aging).</li>
+            <li>A <strong>sick man</strong> (showing the pain of illness).</li>
+            <li>A <strong>dead body</strong> (demonstrating the certainty of death).</li>
+            <li>An <strong>ascetic</strong> (a holy man with a calm, peaceful expression amidst the suffering).</li>
+        </ul>
+        <p>Realizing that aging, sickness, and death are inescapable, he renounced his princely life, leaving his family behind to seek the truth about overcoming suffering.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>The Enlightenment:</strong> After six years of severe and unsuccessful penance, Gautama meditated under a peepal tree at <strong>Bodh Gaya</strong> for 49 days. It was here that he attained enlightenment and became known as the <strong>Buddha</strong> (the enlightened one) or Shakyamuni.</p>
+        </div>
+
+        <h3>Teachings of Buddha</h3>
+        <p>Buddha delivered his first sermon, known as <em>Dharmachakra Pravartana</em> (Turning the Wheel of Dharma), at the Deer Park in <strong>Sarnath</strong>. He preached in <strong>Pali</strong>, the simple language spoken by the common masses.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>The Four Noble Truths:</strong> The core foundation of Buddhist philosophy states that: (1) The world is full of suffering. (2) Suffering arises from desire. (3) Giving up desire ends suffering. (4) Salvation (nirvana) is attained by following the Eight-Fold Path.</p>
+        </div>
+
+        <p>The <strong>Eight-Fold Path (Ashtangika Marga)</strong> consists of: Right belief, Right thought, Right speech, Right action, Right livelihood, Right effort, Right memory, and Right meditation.</p>
+        <p>Furthermore, Buddha strongly emphasized <strong>ahimsa</strong> (non-violence) against all people and animals. He did not mention a supreme God and firmly rejected the caste system, preaching that a person's deeds, not their birth, defined their worth.</p>
+
+        <h3>Spread, Divisions, and Literature</h3>
+        <p>Buddhism spread rapidly across India and to countries like Sri Lanka, Myanmar, and China, aided by dedicated monks, trade routes, and royal patronage from kings like <strong>Ashoka</strong> and <strong>Kanishka</strong>.</p>
+        <ul>
+            <li><strong>Divisions:</strong> During Kanishka's reign (1st century CE), Buddhism split into two major sects: <strong>Mahayana</strong> (Greater Vehicle) and <strong>Hinayana</strong> (Lesser Vehicle).</li>
+            <li><strong>Literature:</strong> Key Buddhist texts include the <strong>Tripitakas</strong> (rules for monks and nuns) and the <strong>Jataka Tales</strong> (moral stories written in Pali about the previous lives of Buddha).</li>
+        </ul>
+
+        <h2>3. Jainism</h2>
+        <p>Jainism was popularized by <strong>Mahavira</strong>, the 24th and last <strong>Tirthankara</strong> (spiritual teacher). He was born in <strong>540 BCE</strong> in Kundagrama, near Vaishali, as the son of Siddhartha, a tribal chief.</p>
+
+        <p>At the age of 30, Mahavira renounced his family life to become an ascetic. After 12 years of deep meditation and severe penance, he attained enlightenment.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>Upon attaining supreme knowledge, Mahavira was called <strong>Jina</strong>, meaning "the conqueror" (one who has conquered his inner desires). His followers subsequently became known as <strong>Jains</strong>. He passed away at the age of 72, attaining complete liberation (parinirvana).</p>
+        </div>
+
+        <h3>Teachings of Mahavira</h3>
+        <p>Like Buddha, Mahavira rejected the authority of the Vedas and meaningless rituals. He believed in <strong>Karma</strong> (actions of past lives determine present conditions) and <strong>Moksha</strong> (liberation from the cycle of birth and death).</p>
+        <p>His philosophy was centered around the <strong>Three Jewels (Triratnas)</strong>:</p>
+        <ul>
+            <li><strong>Right faith</strong></li>
+            <li><strong>Right knowledge</strong></li>
+            <li><strong>Right conduct</strong></li>
+        </ul>
+        <p>Mahavira was a strict promoter of <strong>ahimsa</strong>, believing that absolutely every living being—including plants and tiny insects—possessed a soul and must never be harmed.</p>
+
+        <h3>Divisions and Literature</h3>
+        <p>Over time, Jainism largely split into two main sects based on their strictness regarding physical possessions:</p>
+        <ul>
+            <li><strong>Digambaras</strong> ("sky-clad"): Monks who renounced all clothes.</li>
+            <li><strong>Svetambaras</strong> ("white-clad"): Monks who wore simple white robes.</li>
+        </ul>
+        <p>The teachings of Mahavira were initially passed down orally in texts called Purvas and Angas, and were written in <strong>Prakrit</strong>, another language of the common people.</p>
+
+        <h2>4. Why Buddhism and Jainism Became Popular</h2>
+        <p>Both religions gained massive followings quickly because they shared several highly appealing similarities that contrasted with the Later Vedic religion:</p>
+        <ul>
+            <li><strong>Equality:</strong> They entirely rejected the rigid caste system imposed by the brahmins, allowing anyone to join regardless of birth.</li>
+            <li><strong>Language of the Masses:</strong> They preached in <strong>Pali</strong> and <strong>Prakrit</strong>, making their teachings easily understandable to commoners, unlike Sanskrit which was restricted to priests.</li>
+            <li><strong>Simplicity:</strong> They did away with costly, complex rituals and animal sacrifices, offering a clear, simple code of conduct for a better life.</li>
+            <li><strong>Non-Violence (Ahimsa):</strong> Both placed a heavy emphasis on respecting all forms of life.</li>
+        </ul>
+        <p>Due to the emphasis on equality, <strong>merchants and traders</strong> were heavily attracted to these religions, providing immense wealth and donations to build monasteries and stupas. Powerful emperors acting as patrons secured the survival and spread of these great teachings across the world.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

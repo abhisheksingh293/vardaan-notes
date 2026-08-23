@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Soil - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVENESS (Mobile & Tablet) --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px; /* Reduced padding for smaller screens */
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer is explicitly kept per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print (Always Show per User Request) */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>SOIL</h1>
+        
+        <h2>1. Introduction to Soil</h2>
+        <p>Soil is one of the most important natural resources on Earth. Most life forms depend on it either directly or indirectly. It acts as a primary source of nutrients for plants and provides habitat for many living organisms. It is also known as <strong>earth</strong>.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Soil Definition:</strong> Soil is the naturally occurring, loose covering of broken rock particles and decaying organic matter (<strong>humus</strong>) found on the surface of the Earth. It is capable of supporting life.</p>
+        </div>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>It takes almost <strong>500 years</strong> to produce just less than an inch of top soil, which is considered the most productive layer for plant growth.</p>
+        </div>
+
+        <h2>2. Formation of Soil</h2>
+        <p>Soil is continuously formed over time through the decay of plant and animal matter, as well as weathering and erosion.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Weathering:</strong> It is the combined effect of physical, chemical, and biological processes on its parent material, the rocks. Weathering can be primarily divided into <strong>Physical</strong> and <strong>Chemical</strong> weathering.</p>
+        </div>
+
+        <h3>Agents of Physical Weathering</h3>
+        <ul>
+            <li><strong>Temperature:</strong> Expansions and contractions due to temperature variations create weaker zones, breaking rocks apart.</li>
+            <li><strong>Water:</strong> Torrential rains and flowing water dislocate soluble particles. High mountain glaciers exert an erosive influence, depositing alluvium.</li>
+            <li><strong>Wind:</strong> Strong winds and sandstorms have an erosive and transporting action on rocks.</li>
+            <li><strong>Plants and Animals:</strong> Mosses and lichens can cause gradual disintegration. Roots of growing grasses and shrubs further extend existing cracks in rocks.</li>
+        </ul>
+
+        <h3>Agents of Chemical Weathering</h3>
+        <ul>
+            <li>Organic acids released during the decomposition of organic matter.</li>
+            <li>The solvent action of water, which dissolves soluble salts to form solutions, hastening the breakdown process.</li>
+        </ul>
+
+        <h2>3. Soil Profile and Horizons</h2>
+        <p>If you look at an excavated site or a roadside cut, you will see distinct layers of soil. These layers are called <strong>soil horizons</strong>, and their vertical arrangement is known as the <strong>soil profile</strong>.</p>
+
+        <ul>
+            <li><strong>O Horizon:</strong> The top organic layer composed primarily of leaf litter and humus (decomposed organic matter).</li>
+            <li><strong>A Horizon (Top Soil):</strong> Found below the O horizon. It consists of humus mixed with mineral particles. This is the dark-colored layer where seeds germinate and roots grow. <em>Eluviation</em> (leaching of minerals and clay) occurs in its lower parts.</li>
+            <li><strong>B Horizon (Sub Soil):</strong> Contains clay and mineral deposits (iron, aluminium oxide, calcium carbonate) received from the layers above as mineralised water drips down.</li>
+            <li><strong>C Horizon:</strong> Consists of slightly broken-up bedrocks. It contains very little organic material and plant roots generally do not penetrate here.</li>
+            <li><strong>R Horizon (Bed Rock):</strong> The solid, unweathered base rock layer existing beneath all the other horizons.</li>
+        </ul>
+
+        <h2>4. Properties of Soil</h2>
+        <p>The texture of soil is determined by the relative size of its particles. Based on this texture, soil is broadly classified into three categories:</p>
+
+        <ul>
+            <li><strong>Sandy Soil:</strong> Made of coarse, bigger particles. It is well-aerated but cannot retain water easily since it drains quickly through the large spaces. Requires frequent irrigation for crops.</li>
+            <li><strong>Clayey Soil:</strong> Has a higher proportion of fine, smooth particles. It retains a lot of water but contains very little air. Its high water-holding capacity can sometimes cause water-logging.</li>
+            <li><strong>Loamy Soil:</strong> A balanced mixture of sand, silt, and clay. It holds an adequate amount of both air and water, and contains humus. It is considered the <strong>best soil for growing most crops</strong>.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Plasticity and Cohesion:</strong> <br>
+            <em>Plasticity:</em> Enables moist soil to change its shape on the application of force and retain it (used to make terracotta toys).<br>
+            <em>Cohesion:</em> The tendency of similar particles to stick to one another. Clayey soils are highly cohesive, while sandy soils are relatively structureless.</p>
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Infiltration vs. Percolation:</strong><br>
+            <em>Infiltration:</em> The rate at which water enters the surface of the soil.<br>
+            <em>Percolation:</em> The rate at which water travels or trickles down through the porous soil.</p>
+        </div>
+
+        <h2>5. Composition of Soil</h2>
+        <p>The composition largely depends on the parent rock and organic material present. Major components include:</p>
+        <ul>
+            <li><strong>Inorganic Substances:</strong> Derived mainly from parent rocks (and fertilizers).</li>
+            <li><strong>Organic Material (Humus):</strong> Dead/decaying plants, animals, and residues. It boosts productivity and water retention.</li>
+            <li><strong>Soil Water:</strong> Held in the spaces between particles. Highly affects plant growth.</li>
+            <li><strong>Soil Air:</strong> Fills the remaining spaces. Essential for the respiration of roots.</li>
+            <li><strong>Living Organisms:</strong> Bacteria, fungi, and algae.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Earthworms</strong> are often called <em>nature's ploughmen</em>. They burrow deep, consume organic matter, and excrete casts (vermicompost) that make the soil exceptionally fertile while improving drainage.</p>
+        </div>
+
+        <h2>6. Soil and Crops</h2>
+        <p>The choice of crop highly depends on the soil profile, humus content, and climatic factors.</p>
+        <ul>
+            <li><strong>Cereal crops (Wheat) and Legumes (Gram):</strong> Grow well in clayey and loamy soils because of good water-retaining capacity.</li>
+            <li><strong>Paddy (Rice):</strong> Requires clayey soils rich in organic matter that retain a lot of standing water.</li>
+            <li><strong>Pulses:</strong> Best suited for loamy soils that drain water easily.</li>
+            <li><strong>Cotton:</strong> Requires well-aerated sandy-loam or loam soils that do not water-log.</li>
+            <li><strong>Coconut Trees:</strong> Thrive best in sandy coastal soils.</li>
+        </ul>
+
+        <h2>7. Soil Pollution and Erosion</h2>
+        
+        <h3>Soil Pollution</h3>
+        <p>Defined as the build-up of toxic compounds, excess chemicals, radioactive materials, or disease-causing agents in the soil. Causes include the excessive use of fertilizers and pesticides, oil dumping, and direct discharge of industrial wastes.</p>
+
+        <h3>Soil Erosion</h3>
+        <p>It is the removal of the top soil by environmental agents such as wind and flowing water. Human activities like agriculture, deforestation, overgrazing, and careless cultivation speed up the erosion process greatly by destroying the vegetative canopy.</p>
+        
+        <p><strong>Preventing Erosion:</strong> It can be controlled through extensive <strong>afforestation</strong> (planting trees), avoiding overgrazing, and preventing the overuse of lands.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

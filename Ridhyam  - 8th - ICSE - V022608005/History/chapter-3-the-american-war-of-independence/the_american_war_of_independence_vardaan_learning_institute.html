@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The American War of Independence - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+            .institute-name {
+                font-size: 1.8rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            h3 {
+                font-size: 1.2rem;
+            }
+            p, li {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .paper-sheet {
+                padding: 5mm;
+            }
+            .institute-name {
+                font-size: 1.5rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            /* SHOW Web Footer */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 History • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>The American War of Independence</h1>
+
+        <h2>1. Introduction: The Age of Enlightenment</h2>
+        <p>The 17th and 18th centuries in Europe are known as the <strong>Age of Enlightenment</strong> or the 'Age of Reason'. During this period, people began to free themselves from superstition and prejudice, prioritizing reason and human freedom.</p>
+        <ul>
+            <li>Thinkers and philosophers criticized everything that was unreasonable and fostered a spirit of <strong>humanism</strong>.</li>
+            <li>Prominent philosophers like <strong>Montesquieu, John Locke, Rousseau, Voltaire, Immanuel Kant, and Thomas Paine</strong> advocated for individual freedom and political independence.</li>
+            <li>Their ideas deeply influenced the political developments in America and France in the late 18th century, paving the way for the <strong>Age of Revolution</strong>.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>The American Revolution:</strong> Considered one of the greatest movements in human history for attaining freedom and equality. It was the first political revolution where people overthrew foreign rule, won the right to self-government, and established the <strong>United States of America (USA)</strong>.</p>
+        </div>
+
+        <h2>2. The Thirteen American Colonies</h2>
+        <p>The history of the American Revolution is the story of the struggle by the American colonies against the stringent colonial policies of England.</p>
+        <ul>
+            <li>In <strong>1607</strong>, Britain established its first colony in <strong>Virginia</strong>.</li>
+            <li>Within 100 years, <strong>13 colonies</strong> were established along the eastern coast of North America.</li>
+            <li>The population comprised about 90% British, with the rest being Dutch, Germans, French, and Portuguese.</li>
+            <li>The main occupation was <strong>agriculture-based plantations</strong> managed by slaves.</li>
+            <li>Each colony had an elected <strong>Legislative Assembly</strong>, a Council, and its own militia, managing local matters independently.</li>
+            <li>However, the colonists had no say in important matters like economic development, trade with other European countries, and the levying of extra taxes by the <strong>British Crown</strong>.</li>
+        </ul>
+
+        <h2>3. Causes of the American War of Independence</h2>
+        <p>While primarily a conflict of economic interests between Britain and her colonies, several other crucial factors led to the revolution:</p>
+        
+        <h3>a. Influence of Philosophers</h3>
+        <p>Philosophers like John Locke and Thomas Paine advocated for political independence and justified resistance against the mother country. They inspired colonists to demand self-government, equality, and autonomous rule.</p>
+        
+        <h3>b. Mercantilist Policy of the British</h3>
+        <p>Britain followed a <strong>mercantilist policy</strong>, treating the colonies as existing solely to serve the mother country. The colonies provided raw materials and served as a market for British finished goods, which the colonists heavily resisted.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>British Restrictions:</strong> The British imposed strict restrictions on the manufacture and sale of certain items in the colonies (e.g., ironworks, woollen goods). Colonists were forced to import these goods from Britain and could only export products like cotton, sugar, and tobacco to England at prices fixed by the British government.</p>
+        </div>
+
+        <h3>c. Removal of the French Danger</h3>
+        <p>Before the <strong>Seven Years' War (1756-63)</strong>, colonists needed British military protection against the French. After England defeated France, this threat was removed, emboldening the colonists to oppose British rule.</p>
+
+        <h3>d. British Attitude</h3>
+        <p>The British believed the colonists were English subjects who must serve the mother country. They tried to bring colonial governments under tighter royal control. However, the Americans had developed their own identity and wanted <strong>home rule</strong>, leading to a clash between imperialism and colonial autonomy.</p>
+
+        <h3>e. Unpopular Acts and "No Taxation Without Representation"</h3>
+        <p>To manage the financial burden of the war with France, the British Parliament passed several unpopular Acts to tax the Americans:</p>
+        <ul>
+            <li><strong>The Quartering Act (1765):</strong> Obliged colonies to pay a portion of the expenditure for maintaining British troops in America.</li>
+            <li><strong>The Currency Act:</strong> Banned colonial paper currency, forcing the use of English currency for business.</li>
+            <li><strong>The Sugar Act (1764):</strong> Banned the import of rum from non-English overseas countries.</li>
+            <li><strong>The Stamp Act (1765):</strong> Imposed a tax on legal documents, newspapers, and other items.</li>
+        </ul>
+        <p>The colonists strongly protested, claiming the British Parliament had no right to tax them as they were not represented in it. They raised the famous slogan: <strong>"No taxation without representation."</strong></p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The Declaratory Act:</strong> After protests led by groups like the <strong>Sons of Liberty</strong>, the British Parliament withdrew the Stamp Act but passed the Declaratory Act, asserting their right to levy internal and external taxes on the colonies.</p>
+        </div>
+
+        <h2>4. The Spark: The Boston Tea Party (1773)</h2>
+        <p>The trigger for the revolution was the passing of the <strong>Tea Act</strong> in 1773, which permitted the British East India Company to sell tea directly to the colonies. The colonists demanded the withdrawal of the tax on tea.</p>
+        <ul>
+            <li>When the British government refused, colonists in Boston took action.</li>
+            <li>Under the guidance of <strong>Samuel Adams</strong>, colonists disguised as Native Americans boarded ships docked at Boston port.</li>
+            <li>They picked up <strong>340 boxes of tea</strong> and threw them into the sea. This event became known as the <strong>Boston Tea Party</strong>.</li>
+        </ul>
+
+        <h2>5. The Outbreak of War</h2>
+        <p>The British retaliated to the Boston Tea Party by passing the <strong>Intolerable Acts (1774)</strong> to punish the colonists (e.g., closing the port of Boston). This led to organized opposition across the colonies.</p>
+        
+        <h3>The Continental Congresses</h3>
+        <ul>
+            <li><strong>First Continental Congress (1774):</strong> Met in Philadelphia. Drafted a Declaration of Rights, demanding autonomous internal affairs and threatening to boycott British goods.</li>
+            <li><strong>Second Continental Congress (May 1775):</strong> Met after fighting broke out in April 1775. It assumed the powers of a government and organized a colonial army led by <strong>George Washington</strong>. In August 1775, King George III declared the colonies to be in rebellion.</li>
+        </ul>
+
+        <h2>6. Birth of the United States of America</h2>
+        <p>On <strong>July 4, 1776</strong>, the Continental Congress adopted the <strong>Declaration of Independence</strong>, drafted mainly by <strong>Thomas Jefferson</strong>.</p>
+        <ul>
+            <li>It emphasized that all men are created equal and are endowed with unalienable rights, including Life, Liberty, and the pursuit of Happiness.</li>
+            <li>It asserted the right of the people to form their own government and declared the American colonies as free and independent states.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Treaty of Paris (1783):</strong> The war continued until 1781 when British forces led by <strong>Lord Cornwallis</strong> surrendered to George Washington. The war officially ended in 1783 with the Treaty of Paris, where Britain recognized the independence of the 13 colonies and fixed the boundaries of the new nation.</p>
+        </div>
+
+        <h3>The US Constitution</h3>
+        <p>In 1787, a Constitutional Convention met in Philadelphia under George Washington's chairmanship. They framed a <strong>federal Constitution</strong> which was signed on September 17, 1787, and came into force in 1788, establishing the USA as a republic.</p>
+
+        <h2>7. Significance of the American Revolution</h2>
+        <p>The American War of Independence was a landmark event with global implications:</p>
+        <ul>
+            <li><strong>Birth of a Nation:</strong> It led to the creation of the United States of America from the 13 former colonies.</li>
+            <li><strong>Democratic Principles:</strong> It affirmed the principles of freedom, democracy, and equality, asserting that people have the right to choose their government.</li>
+            <li><strong>Federalism:</strong> It introduced a novel system of government—federalism—with a clear separation of powers between the Central and State governments.</li>
+            <li><strong>First Written Constitution:</strong> The American Constitution provided practical lessons in Constitution-making, establishing a system of checks and balances and a Presidential form of government.</li>
+            <li><strong>Fundamental Rights:</strong> It gave Americans written rights, including freedom of speech, press, religion, and the right to justice.</li>
+            <li><strong>Inspiration for Others:</strong> It inspired revolutionaries worldwide, notably fueling anti-colonial struggles in South America against Spain and Portugal, and providing a massive impetus to the <strong>French Revolution</strong>.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

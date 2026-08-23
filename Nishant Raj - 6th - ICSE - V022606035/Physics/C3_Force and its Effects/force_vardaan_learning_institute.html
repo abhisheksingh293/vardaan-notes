@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Force - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive padding for mobile & tablet */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; }
+            .institute-name { font-size: 1.8rem; }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer visible per prompt override) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            .branding-footer {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+                display: block !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Physics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Force</h1>
+        
+        <h2>1. What is Force?</h2>
+        <p>In simple terms, the word force is associated with either a <strong>pull or push</strong> which causes a change in the state of rest or motion of a body. Based on "PDF Gallery_20260726_215420.pdf", force is applied continuously in our daily activities.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Force</strong> is an external agent which changes or tends to change the state of rest or uniform motion of a body, or changes its direction or shape.
+        </div>
+
+        <h3>Effects of Force</h3>
+        <p>From the effects of force, we mean what force can do or what changes a force can bring about. A force can:</p>
+        <ul>
+            <li><strong>Cause motion in a stationary object:</strong> For example, pushing a book placed on a table makes it move.</li>
+            <li><strong>Stop moving objects or slow them down:</strong> Applying brakes to a moving bicycle slows it down and eventually stops it. A cricket fielder stops a ball by applying force in the opposite direction.</li>
+            <li><strong>Make a moving object move faster:</strong> Pressing the accelerator of a moving vehicle or hitting a moving football makes it travel faster.</li>
+            <li><strong>Change the direction of moving objects:</strong> A cricket player hitting a ball with a bat changes its speed and direction.</li>
+            <li><strong>Change the shape of objects:</strong> Pulling a spring stretches it. Crumpling a piece of paper or shaping plasticine changes their forms.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            A force <strong>cannot</strong> cause any effect on the <strong>mass</strong> of an object. Mass is an inherent property of a matter and is a constant quantity.
+        </div>
+
+        <h2>2. Classification of Forces</h2>
+        <p>Forces in nature basically act on a body directly, through a connector, or from a distance.</p>
+
+        <h3>Contact Forces</h3>
+        <p>All forces which act on a body <strong>directly or through a connector</strong> are called contact forces. A push can act through a rigid connector only, while a pull can act through both rigid (metal handle) and non-rigid (rope) connectors.</p>
+        <ul>
+            <li><strong>Muscular Forces:</strong> Also called biological force. It is the force produced by the muscles of living beings (e.g., pulling a cart, lifting a heavy weight, animals ploughing fields).</li>
+            <li><strong>Mechanical Forces:</strong> Forces generated by a machine. Machines need energy (petrol, electrical, wind, flowing water) to produce this force.</li>
+        </ul>
+
+        <h3>Non-Contact Forces (Forces at a Distance)</h3>
+        <p>The forces which do not make direct contact with a body but act through space are called non-contact forces.</p>
+        <ul>
+            <li><strong>Gravitational Force:</strong> The Earth pulls all objects towards its centre. This pull is called the force of gravity. It is always <strong>attractive</strong> and gives an object its <strong>weight</strong>.</li>
+            <li><strong>Electrical Force (Electrostatic):</strong> The force with which an electrically charged object can pull or push other charged objects. It can be <strong>attractive as well as repulsive</strong>.</li>
+            <li><strong>Magnetic Force:</strong> The strange property of a magnet attracting iron, steel, cobalt, or nickel towards itself. Magnetic force can easily pass through substances like wood or glass.</li>
+        </ul>
+
+        <h3>Consequential Forces</h3>
+        <p>These forces do not exist on their own. They are called into play <strong>when a force is applied</strong> on a given body.</p>
+        <ul>
+            <li>Example 1: When a cricket ball rolls on the ground, the force of friction is called into play, acting in the opposite direction to stop it.</li>
+            <li>Example 2: Stretching a spring calls into play the consequential force of <strong>tension</strong>, which tends to bring the spring back to its original shape.</li>
+        </ul>
+
+        <h2>3. Force of Friction</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Friction</strong> refers to the resistance to motion that occurs whenever two bodies are in contact with each other. A force which acts at the surface of contact, when one body moves upon another body, is called the <strong>force of friction</strong>.
+        </div>
+
+        <h3>Types of Friction</h3>
+        <ul>
+            <li><strong>Static friction:</strong> The frictional force that comes into play when one body tends to move over another, but the actual motion has <strong>yet not started</strong>.</li>
+            <li><strong>Sliding friction:</strong> The force that comes into play when one body is <strong>actually sliding</strong> over the surface of another. It is less than static friction.</li>
+            <li><strong>Rolling friction:</strong> The force that comes into play when a wheel, sphere, or cylinder <strong>rolls</strong> over a surface without slipping.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            For the same weight, <strong>rolling friction is much smaller</strong> than static or sliding friction. This is why the discovery of the wheel has been a major milestone in human history!
+        </div>
+
+        <h3>Effects of Friction</h3>
+        <ul>
+            <li><strong>Opposes motion:</strong> It always acts in the direction opposite to the applied force.</li>
+            <li><strong>Produces heat:</strong> Rubbing palms together or a coin on a table generates heat energy.</li>
+            <li><strong>Causes wear and tear:</strong> Soles of shoes and tyres of vehicles wear out over time due to friction.</li>
+        </ul>
+
+        <h2>4. Friction in Daily Life</h2>
+        
+        <h3>Advantages of Friction</h3>
+        <ul>
+            <li>It helps us to <strong>walk</strong> without slipping by pushing the ground backwards.</li>
+            <li>Deep <strong>grooves in tyres</strong> offer large friction to prevent vehicles from skidding on wet roads.</li>
+            <li>It holds <strong>knots</strong> tight (e.g., jute thread offers more friction than silk).</li>
+            <li>It holds nails and screws in wooden furniture.</li>
+            <li>It saves us from meteors; the friction between the meteor and the earth's atmosphere generates enough heat to burn them up before they reach the ground.</li>
+            <li>It allows <strong>writing</strong> on paper with a pencil or pen.</li>
+        </ul>
+
+        <h3>Disadvantages of Friction</h3>
+        <ul>
+            <li>Wears out the soles of shoes and vehicle tyres.</li>
+            <li>Wears out the moving parts of machinery.</li>
+            <li>Generates heat, resulting in the <strong>wastage of energy</strong> (about 20% of an automobile's fuel is wasted overcoming friction).</li>
+            <li>Requires a lot of energy to move heavy objects.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Friction: A Necessary Evil.</strong> It brings wear, tear, and wasted energy (evil), but without it, bodies wouldn't move, stop, or even allow us to walk safely (necessary).
+        </div>
+
+        <h2>5. Methods of Modifying Friction</h2>
+
+        <h3>Reducing Friction</h3>
+        <ul>
+            <li><strong>Streamlining:</strong> Shaping an object so that it experiences minimum friction in air or water (e.g., fish, birds, aeroplanes, ships).</li>
+            <li><strong>Polishing:</strong> Smoothens surface irregularities (e.g., carrom boards).</li>
+            <li><strong>Lubrication:</strong> Applying light oil (for light parts), grease (for heavy parts), graphite, or talc powder to moving parts.</li>
+            <li><strong>Using Wheels:</strong> Attaching wheels to a heavy suitcase dramatically decreases friction.</li>
+            <li><strong>Ball Bearings:</strong> Small steel balls placed between cylindrical moving surfaces in bicycles and motors to convert sliding friction into rolling friction.</li>
+        </ul>
+
+        <h3>Increasing Friction</h3>
+        <ul>
+            <li>Providing <strong>deep grooves</strong> on vehicle tyres.</li>
+            <li>Providing <strong>spikes</strong> on the soles of athletic and mountaineering shoes.</li>
+            <li>Making industrial belts and grinding stones with <strong>rough surfaces</strong>.</li>
+        </ul>
+
+        <h2>6. Units and Measurement of Force</h2>
+        <p>A unit is required to describe whether a force is small or big. We measure force using a <strong>spring balance</strong>, which stretches based on gravitational pull to indicate weight/force on a scale.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            The Standard International (SI) unit of force is the <strong>newton (N)</strong>. The force required to lift 100g of mass vertically upward is called one newton.
+        </div>
+
+        <ul>
+            <li><strong>Kilogram force (kgf):</strong> The force required to lift a body of mass 1 kg vertically upward.</li>
+            <li><strong>Gram force (gf):</strong> The force required to lift a mass of 1 g vertically upward.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Since 1 kg mass is equal to 1000g, <strong>1 kgf = 1000 gf</strong>. Additionally, one kilogram force is equal to ten newtons: <strong>1 kgf = 10 N</strong>.
+        </div>
+
+        <h2>7. Magnitude, Direction, and Addition of Forces</h2>
+        <p>A force has both <strong>magnitude</strong> (amount or strength, represented by the length of a straight line) and <strong>direction</strong> (represented by an arrow head).</p>
+        
+        <ul>
+            <li><strong>Addition:</strong> When two forces are applied at the same point and in the <strong>same direction</strong>, the resultant force (net force) is equal to the <strong>sum</strong> of the separate forces.</li>
+            <li><strong>Subtraction:</strong> When two forces are applied at the same point but in <strong>opposite directions</strong>, the resultant force is the <strong>difference</strong> of the forces and acts in the direction of the larger force.</li>
+            <li><strong>Cancellation:</strong> If equal forces act in opposite directions, the net force is <strong>zero</strong>.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

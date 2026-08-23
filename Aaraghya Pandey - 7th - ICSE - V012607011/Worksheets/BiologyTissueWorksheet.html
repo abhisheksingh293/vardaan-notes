@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Aaraghya Pandey - Study Portal</title>
@@ -136,25 +153,25 @@
 
     const subjectImages = {
       'current affairs': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1759763329/current_affairs_q12cip.png',
-      'civics and history': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757176494/civics_and_history_nl6lnm.jpg',
-      'histry and civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757176494/civics_and_history_nl6lnm.jpg',
+      'civics and history': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
+      'histry and civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png',
       'extra resources': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757013643/extra_resources_gl2vba.jpg',
       'worksheet': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757013643/extra_resources_gl2vba.jpg',
-      'economics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1755455100/conomics_jwb2wv.jpg',
-      'science': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363614/science_cjdndm.png',
-      'physics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363614/science_cjdndm.png',
-      'chemistry': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363614/science_cjdndm.png',
-      'biology': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363614/science_cjdndm.png',
-      'pc': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363613/pc_qzuswm.png',
-      'computer': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363613/pc_qzuswm.png',
-      'maths': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363612/maths_u9nmij.png',
-      'mathematics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363612/maths_u9nmij.png',
-      'history': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363611/history_f9lgfe.png',
-      'grammar': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363610/GrammarLanguage_w7qszs.png',
-      'geography': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363609/geography_shfqrc.png',
-      'english': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363608/English_Language_x7iejs.png',
-      'civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1751363607/civics_mnw9ja.png',
-      'sst': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1757176494/civics_and_history_nl6lnm.jpg'
+      'economics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/economics_fr9kqg.png',
+      'science': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880789/Science_rig2hp.png',
+      'physics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880789/Physics_ur48yf.png',
+      'chemistry': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/Chemistry_odhnox.png',
+      'biology': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880791/Biology_mn1wji.png',
+      'pc': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/computer_gxzco2.png',
+      'computer': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/computer_gxzco2.png',
+      'maths': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/Maths_smrppm.png',
+      'mathematics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/Maths_smrppm.png',
+      'history': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/history_e9k8gx.png',
+      'grammar': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880785/English_Grammar_h2mtiy.png',
+      'geography': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/geography_r5w9ok.png',
+      'english': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880786/English_Literature_b9kukx.png',
+      'civics': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880786/civics_vtn9eu.png',
+      'sst': 'https://res.cloudinary.com/dxwszplz7/image/upload/v1786880788/social_science_mvcrxf.png'
     };
 
     function getSubjectIcon(name) {
@@ -192,8 +209,7 @@
         
         card.innerHTML = `
           <div class="avatar">${getSubjectIcon(subject.name)}</div>
-          <div class="name">${subject.name}</div>
-        `;
+`;
         grid.appendChild(card);
       });
     }

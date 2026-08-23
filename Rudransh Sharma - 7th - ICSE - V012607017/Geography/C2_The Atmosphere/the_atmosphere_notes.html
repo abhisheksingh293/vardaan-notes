@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Atmosphere - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVENESS FOR MOBILE & TABLETS --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px; /* Reduced padding for mobile */
+            }
+            .institute-name {
+                font-size: 1.5rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+                margin-top: 30px;
+            }
+            p, li {
+                font-size: 1rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Modified to explicitly keep footer visible per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print (Enhanced per user request) */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+                display: block !important;
+            }
+
+            /* 5. Force Branding Footer to show in Print (Overrides SOP V2.2 default behavior) */
+            .branding-footer {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+
+            /* 6. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>The Atmosphere</h1>
+        
+        <h2>1. Introduction to the Atmosphere</h2>
+        <p>The <strong>atmosphere</strong> is made up of a mixture of gases that forms a vital gaseous realm surrounding the Earth. It is held in place by the gravitational force of our planet. The atmosphere makes Earth unique among all other planets in the solar system as its layer of gases sustains life.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>Although the atmosphere extends beyond 1500 km above the Earth's surface, <strong>99 per cent of its mass lies within a height of 32 km</strong> from the ground. This occurs because the density of the atmosphere is greater in the lower layers, as the upper layers compress them into a dense mass.</p>
+        </div>
+
+        <h2>2. Composition of the Atmosphere</h2>
+        <p>The atmosphere is a mixture of several key gases, along with varying amounts of water vapour, and suspended solid particles such as dust, salt, and pollen in its lower layers.</p>
+        <ul>
+            <li><strong>Nitrogen:</strong> The most abundant gas, accounting for <strong>78%</strong> of the total volume. It is essential for plant survival and maintaining atmospheric pressure.</li>
+            <li><strong>Oxygen:</strong> Forms <strong>21%</strong> of the atmosphere and is absolutely essential to humans and animals for respiration.</li>
+            <li><strong>Trace Gases:</strong> The remaining <strong>1%</strong> consists of minute quantities of gases such as Argon (0.93%), Carbon dioxide (0.03%), Hydrogen, Helium, and Ozone.</li>
+        </ul>
+
+        <h2>3. Structure of the Atmosphere</h2>
+        <p>The atmosphere is divided into five distinct layers based on differences in composition, temperature, density, and other properties. Each layer varies in thickness and height from the surface of the Earth.</p>
+
+        <h3>I. Troposphere</h3>
+        <ul>
+            <li>It is the <strong>lowest and densest layer</strong> of the atmosphere, containing 75% of the total atmospheric mass.</li>
+            <li>Its thickness varies—it is higher above the Equator (16 km) and lower above the poles (8 km).</li>
+            <li>All changes in <strong>weather conditions</strong> (clouds, rain, snow, fog, storms) occur here due to the presence of water vapour.</li>
+            <li>It acts as a blanket, protecting Earth from extreme heat during the day and trapping terrestrial heat to keep it warm at night.</li>
+            <li>High-speed winds called <strong>jet streams</strong> blow near its upper limit, bringing changes in weather (e.g., western disturbances in India).</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Normal Lapse Rate:</strong> In the troposphere, there is a decrease in temperature with every 165 metres of ascent. This is known as the Normal Lapse Rate. As air density also decreases with height, mountaineers must carry oxygen cylinders when climbing high altitudes.</p>
+        </div>
+
+        <h3>II. Stratosphere</h3>
+        <ul>
+            <li>Extends from the tropopause up to about 50 km from the Earth's surface.</li>
+            <li>Provides <strong>ideal flying conditions for aircraft</strong> because the absence of water vapour makes it free from weather disturbances and turbulence.</li>
+            <li>The upper limit of this layer is marked by the stratopause.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>The Ozonosphere:</strong> Within the stratosphere lies a layer rich in ozone concentration. This layer is vital for survival as it <strong>absorbs harmful ultraviolet (UV) radiations</strong> emitted by the Sun, preventing them from reaching the Earth.</p>
+        </div>
+
+        <h3>III. Mesosphere</h3>
+        <ul>
+            <li>Lies above the stratosphere, resting at a height of 50 km to 85 km.</li>
+            <li>It is the <strong>coldest atmospheric layer</strong>, with temperatures dipping to -90°C.</li>
+            <li>It is of vital importance because <strong>meteors slow down and burn up</strong> here due to friction and frictional heat when they enter from space.</li>
+        </ul>
+
+        <h3>IV. Thermosphere (Ionosphere)</h3>
+        <ul>
+            <li>Extends up to 640 km. Temperature increases with height here due to the absorption of solar radiation, making it the <strong>hottest layer</strong>.</li>
+            <li>Molecules of gases break into electrically charged particles called <strong>ions</strong>. These ions reflect radio waves back to Earth, enabling <strong>radio broadcasts and wireless communication</strong>.</li>
+            <li>Bright and beautiful moving light bands known as <strong>Auroras</strong> (Aurora Borealis and Aurora Australis) occur in this layer due to the interaction of high-energy solar particles with ions.</li>
+        </ul>
+
+        <h3>V. Exosphere</h3>
+        <ul>
+            <li>The <strong>uppermost layer</strong> of the atmosphere that eventually merges with interplanetary space.</li>
+            <li>The air here is extremely thin and rarefied, causing the lowest atmospheric pressure.</li>
+            <li>Composed of traces of very light gases such as hydrogen and helium.</li>
+        </ul>
+
+        <h2>4. The Greenhouse Effect and Global Warming</h2>
+        <p>The atmosphere not only provides essential gases like Oxygen for respiration and Carbon Dioxide for plants, but it also heavily regulates the Earth's climate.</p>
+        
+        <h3>The Greenhouse Effect</h3>
+        <p>During the day, solar radiation heats the Earth. At night, the Earth cools by releasing heat in the form of <strong>terrestrial radiation</strong>. Certain heat-trapping gases in the atmosphere, known as <strong>Greenhouse Gases (GHGs)</strong> like Carbon dioxide, Water vapour, and Methane, absorb this heat. This prevents the heat from escaping into outer space and keeps the Earth from freezing at night. This life-saving natural phenomenon is called the <strong>greenhouse effect</strong>.</p>
+
+        <h3>Global Warming</h3>
+        <p>Over the years, human activities have drastically increased the concentration of GHGs and Ozone Depleting Substances (ODS) in the atmosphere. This high concentration traps excessive heat, leading to a gradual rise in global temperatures known as <strong>global warming</strong>.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Carbon Sink:</strong> A carbon sink is a natural reservoir (like forests or oceans) that absorbs and stores carbon dioxide from the atmosphere, primarily through the process of photosynthesis.</p>
+        </div>
+
+        <h3>Causes of Global Warming</h3>
+        <ul>
+            <li><strong>Burning Fossil Fuels:</strong> Industries, power plants, and vehicles release massive amounts of carbon dioxide, oxides of nitrogen, and sulphur.</li>
+            <li><strong>Deforestation:</strong> Clearing forests removes critical carbon sinks, increasing atmospheric CO2 levels.</li>
+            <li><strong>Rearing Farm Animals:</strong> Digestion by farm animals (goats, sheep) produces methane, a potent GHG, which is released through dung.</li>
+            <li><strong>Artificial Fertilisers:</strong> Release nitrogen oxides into the air during agricultural activities.</li>
+        </ul>
+
+        <h3>Impact of Global Warming</h3>
+        <ul>
+            <li>High evaporation rates lead to dry soil, crop failure, and frequent <strong>droughts</strong>.</li>
+            <li>Increased occurrences of <strong>forest fires</strong>, heatwaves, and vector-borne diseases like malaria and dengue.</li>
+            <li><strong>Melting of glaciers</strong> in the Arctic, Antarctic, and snow-capped mountains leads to rising sea levels, flooding, and submergence of coastal islands.</li>
+            <li>Destruction of <strong>coral reefs</strong> and loss of habitat, driving species toward extinction.</li>
+            <li>Creation of <strong>climate refugees</strong>—people forced to flee their homes due to climate-related disasters.</li>
+        </ul>
+
+        <h3>Ways to Reduce Global Warming</h3>
+        <ul>
+            <li>Switch from polluting fossil fuels to <strong>renewable energy sources</strong> (wind, solar, water, tides).</li>
+            <li><strong>Afforestation:</strong> Plant more trees to increase forest cover and absorb excessive CO2.</li>
+            <li>Use eco-friendly gadgets, such as electric cars and energy-efficient CFL/LED bulbs.</li>
+            <li>Promote the development of <strong>Green Cities</strong> that focus on reducing waste and lowering emission levels.</li>
+            <li>Adopt the <strong>3Rs Strategy</strong>: Reduce, Recycle, and Reuse to achieve sustainable development.</li>
+        </ul>
+
+        <h2>5. Depletion of the Ozone Layer</h2>
+        <p><strong>Ozone (O3)</strong> in the stratosphere acts as a crucial shield, stopping harmful ultraviolet (UV) radiations from reaching the Earth. However, human activities are depleting this layer.</p>
+
+        <h3>Causes of Depletion</h3>
+        <p>Emission of harmful chemicals known as <strong>Ozone Depleting Substances (ODS)</strong>, particularly <strong>Chlorofluorocarbons (CFCs)</strong>, heavily damages the ozone layer. These are released by old junk refrigerators, air conditioners, aerosol spray cans, fire extinguishers, and industrial solvent cleaners. When UV radiation hits a CFC molecule, it causes a chlorine atom to break away. This free chlorine atom hits an ozone molecule and rips an oxygen atom away, thereby destroying the ozone structure.</p>
+
+        <h3>Impacts of Depletion</h3>
+        <ul>
+            <li>Increased UV rays cause human health hazards such as <strong>skin cancer, cataracts in the eyes, and suppressed immunity</strong>.</li>
+            <li>Adversely affects plant life, leading to stunted growth.</li>
+            <li>UV rays can penetrate water, destroying vital aquatic plants and marine animals.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>The Montreal Protocol:</strong> In 1987, several countries signed a global agreement in Montreal, Canada, to reduce the production of ODS. Due to this, the ozone layer is slowly recovering. September 16 is globally celebrated as <strong>World Ozone Day</strong> to spread awareness.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

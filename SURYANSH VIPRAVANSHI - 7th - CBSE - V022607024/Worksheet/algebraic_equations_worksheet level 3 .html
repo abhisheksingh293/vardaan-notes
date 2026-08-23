@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { 
+        tex: { 
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        },
+        svg: {
+          fontCache: 'global'
+        },
+        chtml: {
+          matchFontHeight: false
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3: Hard/Challenger) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef5350;   
+            --bg-color: #2c1a1a;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.6; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 210mm; 
+            margin: 0 auto; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt;
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+            flex-wrap: wrap; gap: 10px;
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: flex-start;
+            margin-bottom: 8px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); padding-top: 2px;} 
+        .q-content { flex: 1; word-wrap: break-word; } 
+        
+        /* Answer Key Grid Styling */
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            font-size: 11pt;
+        }
+        .answer-item {
+            display: flex;
+            align-items: center;
+        }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 600px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .meta-info { flex-direction: column; text-align: center; }
+            .institute-name { font-size: 18pt; }
+            .tagline { font-size: 11pt; }
+            .worksheet-title { font-size: 14pt; }
+            .watermark { width: 90%; }
+            .answer-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+        }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .container { padding: 0; }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Algebraic Equations Worksheet (Level 3 - Challenger)</div>
+            <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 7 (CBSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Solving Complex Linear Equations</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">Solve for $x$: $\frac{2x - 1}{3} - \frac{6x - 2}{5} = \frac{1}{3}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">Solve for $x$: $\frac{x+2}{6} - \left( \frac{11-x}{3} - \frac{1}{4} \right) = \frac{3x-4}{12}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">Solve for $x$: $0.25(4x - 3) = 0.5x - 9$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">Solve for $t$: $\frac{3t - 2}{4} - \frac{2t + 3}{3} = \frac{2}{3} - t$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">Solve for $y$: $15(y - 4) - 2(y - 9) + 5(y + 6) = 0$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">Solve for $x$: $\frac{2}{3}(x - 5) - \frac{1}{4}(x - 2) = \frac{9}{2}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">Solve for $x$: $x - \frac{x - 1}{2} = 1 - \frac{x - 2}{3}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">Solve for $x$: $\frac{0.5x - 0.8}{0.2x + 0.3} = \frac{4}{5}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">Solve for $z$: $3(5z - 7) - 2(9z - 11) = 4(8z - 13) - 17$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">Solve for $x$: $\frac{x}{2} - \frac{1}{4}\left( x - \frac{1}{3} \right) = \frac{1}{6}(x + 1) + \frac{1}{12}$</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section B: Applied Word Problems (Numbers & Ages)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">11.</span>
+            <div class="q-content">The sum of three consecutive multiples of $8$ is $888$. Find the three multiples.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">12.</span>
+            <div class="q-content">Two numbers are in the ratio $5:3$. If they differ by $18$, what are the two numbers?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">13.</span>
+            <div class="q-content">A rational number is such that when you multiply it by $\frac{5}{2}$ and add $\frac{2}{3}$ to the product, you get $-\frac{7}{12}$. What is the number?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">14.</span>
+            <div class="q-content">A father is $30$ years older than his son. In $12$ years, the man will be three times as old as his son. Find their present ages.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">15.</span>
+            <div class="q-content">The sum of the ages of a father and his son is $50$ years. Five years ago, the father's age was $7$ times the son's age. Find their present ages.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">16.</span>
+            <div class="q-content">In a two-digit number, the unit's digit is $3$ more than the ten's digit. If the sum of the digits is $11$, find the original number.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">17.</span>
+            <div class="q-content">The numerator of a fraction is $4$ less than the denominator. If $1$ is added to both its numerator and denominator, it becomes $\frac{1}{2}$. Find the fraction.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">18.</span>
+            <div class="q-content">Divide $184$ into two parts such that one-third of one part may exceed one-seventh of the other part by $8$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">19.</span>
+            <div class="q-content">A number is $56$ greater than the average of its third, quarter, and one-twelfth. Find the number.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">20.</span>
+            <div class="q-content">Ten years ago, Person A was half of Person B in age. If the ratio of their present ages is $3:4$, what is the sum total of their present ages?</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section C: Money, Distance, & Geometry</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">21.</span>
+            <div class="q-content">I have a total of ₹ $300$ in coins of denomination ₹ $1$, ₹ $2$, and ₹ $5$. The number of ₹ $2$ coins is $3$ times the number of ₹ $5$ coins. The total number of coins is $160$. How many coins of each denomination are with me?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">22.</span>
+            <div class="q-content">A purse has only ₹ $2$ and ₹ $5$ coins. The total value of the coins is ₹ $136$. If the number of ₹ $2$ coins is one-third the number of ₹ $5$ coins, find the number of each type of coin.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">23.</span>
+            <div class="q-content">The perimeter of a rectangular swimming pool is $154 \text{ m}$. Its length is $2 \text{ m}$ more than twice its breadth. What are the length and the breadth of the pool?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">24.</span>
+            <div class="q-content">The base of an isosceles triangle is $\frac{4}{3} \text{ cm}$. The perimeter of the triangle is $4 \frac{2}{15} \text{ cm}$. What is the length of either of the remaining equal sides?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">25.</span>
+            <div class="q-content">A steamer goes downstream and covers the distance between two ports in $4 \text{ hours}$ while it covers the same distance upstream in $5 \text{ hours}$. If the speed of the stream is $2 \text{ km/h}$, find the speed of the steamer in still water.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">26.</span>
+            <div class="q-content">The distance between two stations A and B is $340 \text{ km}$. Two trains start simultaneously from these stations on parallel tracks to cross each other. The speed of one of them is greater than that of the other by $5 \text{ km/h}$. If the distance between the two trains after $2 \text{ hours}$ of their start is $30 \text{ km}$, find the speed of each train.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">27.</span>
+            <div class="q-content">A wire of length $86 \text{ cm}$ is bent in the form of a rectangle such that its length is $7 \text{ cm}$ more than its breadth. Find the length and the breadth of the rectangle so formed.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">28.</span>
+            <div class="q-content">The angles of a triangle are in the ratio $2:3:4$. Form an algebraic equation and find the measure of each angle.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">29.</span>
+            <div class="q-content">In a class of $42$ students, the number of boys is $\frac{2}{5}$ of the girls. Find the number of boys and girls in the class.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">30.</span>
+            <div class="q-content">A man leaves half his property to his wife, one-third to his son and the remaining ₹ $60000$ to his daughter. Find the total value of his property.</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section D: Higher Order Thinking Skills (HOTS)</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">31.</span>
+            <div class="q-content">A total of ₹ $80000$ is to be distributed among $200$ persons as prizes. A prize is either of ₹ $500$ or ₹ $100$. Find the number of each prize awarded.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">32.</span>
+            <div class="q-content">Half of a herd of deer are grazing in the field and three-fourths of the remaining are playing nearby. The rest $9$ are drinking water from the pond. Find the total number of deer in the herd.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">33.</span>
+            <div class="q-content">An examination consists of $160$ questions. $4$ marks are given for every correct option, and $1$ mark is deducted for every incorrect option. If a student attempts all questions and scores $340$ marks, how many questions did he answer correctly?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">34.</span>
+            <div class="q-content">There are some benches in a classroom. If $4$ students sit on each bench, then $3$ benches are left unoccupied. If however, $3$ students sit on each bench, then $3$ students are left standing. How many students are there in the class?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">35.</span>
+            <div class="q-content">Solve for $p$: $\frac{p + 1}{2} - \frac{p - 2}{3} = \frac{p + 4}{5} + \frac{7}{15}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">36.</span>
+            <div class="q-content">The digits of a two-digit number differ by $3$. If the digits are interchanged, and the resulting number is added to the original number, we get $143$. What can be the original number?</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">37.</span>
+            <div class="q-content">The difference between two positive integers is $36$. The quotient when the larger integer is divided by the smaller integer is $4$. Find the two integers.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">38.</span>
+            <div class="q-content">A car covers a certain distance at a uniform speed of $60 \text{ km/h}$. If it travels at $50 \text{ km/h}$, it is late by $1 \text{ hour}$. Find the total distance.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">39.</span>
+            <div class="q-content">In a fraction, twice the numerator is $2$ more than the denominator. If $3$ is added to both the numerator and the denominator, the new fraction becomes $\frac{2}{3}$. Find the original fraction.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">40.</span>
+            <div class="q-content">Solve for $x$: $\frac{2x - 3}{4} + \frac{x + 1}{6} - \frac{5x - 2}{3} = \frac{1}{12}$</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Answer Key</div>
+    <div class="answer-grid">
+        <div class="answer-item"><span class="ans-label">1.</span> $x = -1/2$</div>
+        <div class="answer-item"><span class="ans-label">2.</span> $x = 11$</div>
+        <div class="answer-item"><span class="ans-label">3.</span> $x = -16.5$</div>
+        <div class="answer-item"><span class="ans-label">4.</span> $t = 2$</div>
+        <div class="answer-item"><span class="ans-label">5.</span> $y = 2/3$</div>
+        <div class="answer-item"><span class="ans-label">6.</span> $x = 17.6$ (or $88/5$)</div>
+        <div class="answer-item"><span class="ans-label">7.</span> $x = 1.4$ (or $7/5$)</div>
+        <div class="answer-item"><span class="ans-label">8.</span> $x = 52/17$</div>
+        <div class="answer-item"><span class="ans-label">9.</span> $z = 2$</div>
+        <div class="answer-item"><span class="ans-label">10.</span> $x = 2$</div>
+        
+        <div class="answer-item"><span class="ans-label">11.</span> $288, 296, 304$</div>
+        <div class="answer-item"><span class="ans-label">12.</span> $45$ and $27$</div>
+        <div class="answer-item"><span class="ans-label">13.</span> $-1/2$</div>
+        <div class="answer-item"><span class="ans-label">14.</span> Son: $3$, Father: $33$</div>
+        <div class="answer-item"><span class="ans-label">15.</span> Son: $10$, Father: $40$</div>
+        <div class="answer-item"><span class="ans-label">16.</span> $47$</div>
+        <div class="answer-item"><span class="ans-label">17.</span> $3/7$</div>
+        <div class="answer-item"><span class="ans-label">18.</span> $72$ and $112$</div>
+        <div class="answer-item"><span class="ans-label">19.</span> $168$</div>
+        <div class="answer-item"><span class="ans-label">20.</span> $35$ years</div>
+        
+        <div class="answer-item"><span class="ans-label">21.</span> ₹1:$80$, ₹2:$60$, ₹5:$20$</div>
+        <div class="answer-item"><span class="ans-label">22.</span> ₹2:$8$, ₹5:$24$</div>
+        <div class="answer-item"><span class="ans-label">23.</span> L: $52\text{m}$, B: $25\text{m}$</div>
+        <div class="answer-item"><span class="ans-label">24.</span> $2.8\text{ cm}$ (or $14/5$)</div>
+        <div class="answer-item"><span class="ans-label">25.</span> $18\text{ km/h}$</div>
+        <div class="answer-item"><span class="ans-label">26.</span> $75\text{ km/h}$ & $80\text{ km/h}$</div>
+        <div class="answer-item"><span class="ans-label">27.</span> L: $25\text{cm}$, B: $18\text{cm}$</div>
+        <div class="answer-item"><span class="ans-label">28.</span> $40^\circ, 60^\circ, 80^\circ$</div>
+        <div class="answer-item"><span class="ans-label">29.</span> Boys: $12$, Girls: $30$</div>
+        <div class="answer-item"><span class="ans-label">30.</span> ₹ $360,000$</div>
+        
+        <div class="answer-item"><span class="ans-label">31.</span> ₹500:$150$, ₹100:$50$</div>
+        <div class="answer-item"><span class="ans-label">32.</span> $72$ deer</div>
+        <div class="answer-item"><span class="ans-label">33.</span> $100$ questions</div>
+        <div class="answer-item"><span class="ans-label">34.</span> $48$ students</div>
+        <div class="answer-item"><span class="ans-label">35.</span> $p = -3$</div>
+        <div class="answer-item"><span class="ans-label">36.</span> $85$ or $58$</div>
+        <div class="answer-item"><span class="ans-label">37.</span> $48$ and $12$</div>
+        <div class="answer-item"><span class="ans-label">38.</span> $300\text{ km}$</div>
+        <div class="answer-item"><span class="ans-label">39.</span> $7/12$</div>
+        <div class="answer-item"><span class="ans-label">40.</span> $x = 0$</div>
+    </div>
+
+    <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

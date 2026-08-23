@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Fundamental Rights and Duties - Civics -->
+    <title>Fundamental Rights and Duties - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES (Mobile, Tablet, Laptop) --- */
+        @media screen and (max-width: 1024px) {
+            .paper-sheet { padding: 15mm; }
+        }
+
+        @media screen and (max-width: 768px) {
+            .paper-sheet { padding: 10mm; }
+            .institute-name { font-size: 1.8rem; }
+            h1 { font-size: 1.8rem; margin-top: 15px; }
+            h2 { font-size: 1.4rem; margin-top: 30px; }
+            h3 { font-size: 1.2rem; }
+            p, li { font-size: 1rem; }
+            .branding-footer { margin-top: 40px; }
+            .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+        }
+
+        @media screen and (max-width: 480px) {
+            .paper-sheet { padding: 5mm; }
+            .institute-name { font-size: 1.4rem; }
+            .system-name { font-size: 0.9rem; letter-spacing: 1px; }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; margin-top: 25px; padding-left: 10px; border-left-width: 3px; }
+            .box-label { font-size: 0.7rem; top: -10px; right: 10px; }
+            .blue-box, .green-box, .yellow-box { padding: 15px; margin: 20px 0; }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* Footer text visibility forced for print */
+            .branding-footer {
+                display: block !important; 
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class VII Civics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Fundamental Rights and Duties</h1>
+        
+        <h2>1. Citizenship & The Concerned Citizen</h2>
+        <p><strong>Citizenship</strong> is a legal relationship between an individual and the State. An Indian citizen belongs solely to India and cannot simultaneously hold the citizenship of another country (India follows a system of single citizenship).</p>
+        <p>A <strong>concerned citizen</strong> is someone who is socially aware, committed, responsible, and actively participates in public life. In a democracy, the right to freedom of speech and expression is very important for functioning as a concerned citizen, allowing them to express views publicly and hold the government accountable.</p>
+        
+        <h2>2. Understanding Fundamental Rights</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Fundamental Rights</strong> are the basic rights absolutely essential for the all-round development of an individual, making life worth living. They cannot be altered or removed by any simple process.
+        </div>
+        <p>These rights are essential for the smooth functioning of a democratic republic and lead to the development of the nation. In a diverse country like India—where caste, gender, and class-based inequalities still persist—the effective enforcement of Fundamental Rights empowers weaker sections and ensures social dignity.</p>
+
+        <h2>3. The Six Fundamental Rights</h2>
+        <p>The Constitution of India guarantees six fundamental rights to its citizens:</p>
+
+        <h3>I. Right to Equality</h3>
+        <p>This right guarantees that all citizens living in India are equal before the law.</p>
+        <ul>
+            <li>The State cannot discriminate against anyone on the basis of <strong>gender, religion, caste, race, or place of birth</strong>.</li>
+            <li>Everyone has equal access to shops, restaurants, public places, wells, tanks, and public transport.</li>
+            <li>All citizens have equal opportunities for employment in government offices based on merit and qualification.</li>
+            <li>The heinous practice of <strong>untouchability</strong> is abolished and made a punishable offence.</li>
+            <li>Titles conferred by the British (like Rai Bahadur, Maharaja) are abolished to promote social equality. Only military and academic titles (like Major or Doctor) can be awarded.</li>
+        </ul>
+
+        <h3>II. Right to Freedom</h3>
+        <p>This right protects individuals from oppressive government actions and guarantees civil liberties. It encompasses six specific types of freedom:</p>
+        <ul>
+            <li><strong>Freedom of Profession:</strong> To practise any lawful profession, trade, or business.</li>
+            <li><strong>Freedom of Speech & Expression:</strong> To express views via press, books, public speeches, etc. (Cannot be misused to incite violence or threaten national security).</li>
+            <li><strong>Freedom to Assemble:</strong> To hold peaceful public meetings without arms.</li>
+            <li><strong>Freedom to Form Associations:</strong> To form unions to voice concerns or safeguard interests.</li>
+            <li><strong>Freedom of Movement:</strong> To travel freely across the country.</li>
+            <li><strong>Freedom of Residence:</strong> To reside and settle in any part of India.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Right to Education (Article 21-A):</strong> Added by the Right to Education Act of 2009. Every child between 6 and 14 years of age is entitled to <strong>free education</strong>. Private schools must reserve seats for children from economically weaker sections.
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Right to Property:</strong> Till 1978, we had a seventh Fundamental Right—the Right to Property. It was removed from the list by the <strong>44th Amendment Act</strong>.
+        </div>
+
+        <h3>III. Right Against Exploitation</h3>
+        <p>This protects citizens from being forced to work against their will or without proper payment.</p>
+        <ul>
+            <li>Children under the age of <strong>14</strong> cannot be employed in any form of labour.</li>
+            <li>Adolescents (ages 15 to 18) cannot be employed in hazardous occupations, such as mines and factories.</li>
+        </ul>
+
+        <h3>IV. Right to Freedom of Religion</h3>
+        <p>India is a multi-religious society. The government maintains a <strong>secular approach</strong>, meaning the State does not treat any religion as an official state religion.</p>
+        <p>This right allows individuals to freely profess, practice, and propagate any religion of their choice.</p>
+
+        <h3>V. Cultural and Educational Rights</h3>
+        <p>To safeguard India’s vast cultural diversity, minorities are given the right to preserve and promote their unique language, script, and traditions. They can also establish and administer their own educational institutions.</p>
+
+        <h3>VI. Right to Constitutional Remedies</h3>
+        <p>Fundamental Rights are meaningless unless there is a mechanism to enforce them. This right grants citizens the power to move directly to the court, even the <strong>Supreme Court</strong>, to seek protection if any of their Fundamental Rights are violated by a state, group, or person.</p>
+
+        <h2>4. Limitations to Exercising Our Rights</h2>
+        <p>While Fundamental Rights are essential, they are <strong>not absolute</strong>. They must be exercised responsibly without harming others.</p>
+        <ul>
+            <li>Rights can be restricted during emergencies (e.g., the right to form associations) for public safety.</li>
+            <li>Special laws like the <strong>Essential Services Maintenance Act (ESMA)</strong> may allow the temporary detention of individuals to maintain public order.</li>
+        </ul>
+
+        <h2>5. Fundamental Duties</h2>
+        <p>Rights and duties go hand-in-hand—they are two sides of the same coin. While enjoying our rights, we have corresponding obligations towards society and the state.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Initially, the Constitution only listed Rights. A list of 10 <strong>Fundamental Duties</strong> (Article 51A) was added by the <strong>42nd Amendment</strong> in 1976. The 11th duty was added by the 86th Amendment Act in 2002.
+        </div>
+
+        <p>Under Article 51A, it is the duty of every citizen of India to:</p>
+        <ul>
+            <li>Abide by the Constitution and respect its ideals, the <strong>National Flag</strong>, and the <strong>National Anthem</strong>.</li>
+            <li>Cherish and follow the noble ideals of the freedom struggle.</li>
+            <li>Uphold and protect the sovereignty, unity, and integrity of India.</li>
+            <li>Defend the country and render national service when called upon.</li>
+            <li>Promote harmony and common brotherhood, and renounce practices derogatory to the dignity of women.</li>
+            <li>Value and preserve our rich heritage and composite culture.</li>
+            <li>Protect the natural environment (forests, lakes, rivers, wildlife) and have compassion for living creatures.</li>
+            <li>Develop a scientific temper, humanism, and the spirit of inquiry and reform.</li>
+            <li>Safeguard public property and abjure (reject) violence.</li>
+            <li>Strive towards excellence in all individual and collective activities.</li>
+            <li>Provide opportunities for education to their child/ward between the age of <strong>6 and 14 years</strong> (added in 2002).</li>
+        </ul>
+        <p>Though these duties are <strong>not legally enforceable</strong> by courts, it is the moral obligation of every responsible citizen to perform them sincerely.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

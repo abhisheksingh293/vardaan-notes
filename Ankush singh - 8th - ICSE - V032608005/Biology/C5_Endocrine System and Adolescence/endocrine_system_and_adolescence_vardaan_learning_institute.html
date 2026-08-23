@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Endocrine System and Adolescence - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Mobile Responsiveness enhancement within standard */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+            .institute-name {
+                font-size: 1.5rem !important;
+            }
+            h1 {
+                font-size: 1.8rem !important;
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer overridden to show as per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Biology • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Endocrine System and Adolescence</h1>
+        
+        <h2>1. Types of Glands in the Human Body</h2>
+        <p>Our body has two fundamental types of glands based on how they deliver their secretions to the target organs:</p>
+        <ul>
+            <li><strong>Exocrine Glands:</strong> These are glands <strong>with ducts</strong>. They send their secretions (like enzymes) through small tubes directly to the target organs. Example: Salivary glands, sweat glands.</li>
+            <li><strong>Endocrine Glands:</strong> These are <strong>ductless glands</strong>. They pour their secretions directly into the bloodstream, which then carries them to target organs across the body.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <h3>What is a Hormone?</h3>
+            <p>A <strong>hormone</strong> is a chemical substance secreted by an endocrine gland, directly poured into the blood stream, which acts on specific target organs or cells to regulate various bodily functions.</p>
+        </div>
+
+        <h2>2. Major Endocrine Glands</h2>
+        <p>The human body relies heavily on several vital endocrine glands. The primary ones include the thyroid, adrenal, pancreas, and pituitary glands.</p>
+
+        <h3>A. Thyroid Gland</h3>
+        <ul>
+            <li><strong>Location:</strong> Bilobed gland situated on either side of the windpipe (trachea), just below the larynx.</li>
+            <li><strong>Secretion:</strong> <strong>Thyroxine</strong> (an iodine-containing protein).</li>
+            <li><strong>Function:</strong> Speeds up the body's metabolic rate and stimulates growth in infants.</li>
+        </ul>
+        <p>Abnormal secretions of the thyroid gland lead to several ailments:</p>
+        <ul>
+            <li><strong>Simple Goitre:</strong> Caused by insufficient iodine in the diet, resulting in the enlargement of the thyroid gland (swelling in the neck).</li>
+            <li><strong>Cretinism:</strong> Found in infants due to low thyroxine, leading to physical and mental retardation.</li>
+            <li><strong>Myxoedema:</strong> Found in adults due to insufficient thyroxine, resulting in general sluggishness and swelling of the face and hands.</li>
+            <li><strong>Oversecretion:</strong> Leads to increased metabolic rate, increased heart beat, weight loss, and restlessness.</li>
+        </ul>
+
+        <h3>B. Adrenal Glands</h3>
+        <ul>
+            <li><strong>Location:</strong> Situated like caps over the top of both kidneys. It has a central medulla and a peripheral cortex.</li>
+            <li><strong>Secretion (Medulla):</strong> <strong>Adrenaline</strong> (also known as the emergency hormone).</li>
+            <li><strong>Secretion (Cortex):</strong> Cortical hormones, notably <strong>Cortisone</strong>.</li>
+            <li><strong>Function of Adrenaline:</strong> Prepares the body for a "fight or flight" response during physical or emotional stress, fear, or anger. It increases heartbeat, breathing rate, and blood pressure.</li>
+            <li><strong>Function of Cortisone:</strong> Influences carbohydrate, fat, and protein metabolism, regulates salt/water balance, and adapts the body to extreme stresses like heat and infection.</li>
+        </ul>
+
+        <h3>C. Pancreas</h3>
+        <ul>
+            <li><strong>Location:</strong> Situated behind the stomach. While it is mainly a digestive gland, it possesses clusters of hormone-secreting cells (Islets of Langerhans).</li>
+            <li><strong>Secretion:</strong> <strong>Insulin</strong> and <strong>Glucagon</strong>.</li>
+            <li><strong>Function of Insulin:</strong> Lowers blood glucose levels by converting extra glucose to stored glycogen in the liver, inducing cells to burn glucose, and converting glucose to fat.</li>
+            <li><strong>Function of Glucagon:</strong> Raises blood sugar levels by stimulating the breakdown of glycogen back into glucose.</li>
+        </ul>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Diabetes Mellitus</strong> occurs when there is an insufficient secretion of insulin. A diabetic person has high blood sugar levels, frequently excretes sugar-loaded urine, feels excessive thirst, and often experiences weight loss and weakness.</p>
+        </div>
+
+        <h3>D. Pituitary Gland</h3>
+        <ul>
+            <li><strong>Location:</strong> A pea-sized gland located just below the brain.</li>
+            <li><strong>Secretions include:</strong> <strong>Growth Hormone (GH)</strong>, <strong>Thyroid-stimulating hormone (TSH)</strong>, and <strong>Follicle-stimulating hormone (FSH)</strong>.</li>
+            <li><strong>Functions:</strong> GH regulates growth (imbalance causes dwarfism or gigantism), TSH stimulates the thyroid, and FSH influences the production of sperms in males and eggs in females.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>The pituitary gland is commonly referred to as the <strong>"Master Gland"</strong> because many of the hormones it secretes regulate the activities of other endocrine glands in the body.</p>
+        </div>
+
+        <h2>3. Adolescence and Physical Changes</h2>
+        <p>Growing up is a natural process. The period of life when the body undergoes development leading to reproductive maturity is called <strong>adolescence</strong>. This transition between childhood and adulthood usually begins around the age of 12 and lasts up to 18 or 19 years.</p>
+
+        <h3>Physical Changes During Adolescence</h3>
+        <ul>
+            <li><strong>Increase in Height:</strong> Sudden elongation of bones in arms and legs. Girls initially grow faster, but both reach maximum height towards the end of teenage years.</li>
+            <li><strong>Change in Body Shape:</strong> Boys develop broader shoulders and narrow hips with more muscle mass. Girls develop a curvaceous body and broader hips.</li>
+            <li><strong>Change in Voice:</strong> The larynx (voice box) begins to grow. Boys develop a deep, hoarse voice, while girls generally have a high-pitched voice.</li>
+            <li><strong>Increased Glandular Activity:</strong> Secretion of sweat glands and sebaceous (oil) glands increases, frequently resulting in acne or pimples.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>During puberty, the protruding part of a growing boy's throat (the enlarged voice box) becomes highly visible and is commonly referred to as the <strong>Adam's Apple</strong>.</p>
+        </div>
+
+        <h3>Secondary Sexual Characteristics</h3>
+        <p>At puberty, sex organs mature due to sex hormones—<strong>androgens</strong> (testosterone) in boys and <strong>oestrogens</strong> in girls.</p>
+        <ul>
+            <li><strong>In Boys:</strong> Enlargement of testes and penis; sudden spurt in growth (shoulder girdle grows); development of beard, moustache, pubic, and chest hair; voice becomes deep and low-pitched.</li>
+            <li><strong>In Girls:</strong> Ovaries mature and release eggs; uterus and vagina grow in size; menstruation cycle starts; breasts develop; high-pitched voice; no hair on chest/abdomen.</li>
+        </ul>
+
+        <h2>4. Psychological Changes & Personal Hygiene</h2>
+        
+        <h3>Psychological and Emotional Changes</h3>
+        <p>Adolescence involves rapid emotional shifts alongside physical growth. Key psychological traits include:</p>
+        <ul>
+            <li>Heightened body consciousness, shyness, and spending substantial time on grooming.</li>
+            <li>Worrying about the future, which can sometimes lead to anxiety or depression (caused scientifically by dramatic hormonal fluctuations).</li>
+            <li>Strong reliance on <strong>peer groups</strong> for safety, often imitating group behavior.</li>
+        </ul>
+
+        <h3>Importance of Personal Hygiene</h3>
+        <p>Maintaining health during adolescence is critical. Key practices include:</p>
+        <ul>
+            <li><strong>Proper Food:</strong> Consume a balanced diet rich in proteins, carbohydrates, fats, vitamins, and minerals. Avoid excessive fast food.</li>
+            <li><strong>Proper Lifestyle:</strong> Ensure adequate sleep and avoid continuous table work or excessive screen time. Avoid smoking, alcohol, and drugs.</li>
+            <li><strong>Cleanliness:</strong> Wash hands with soap, clean teeth regularly, bathe daily, change clothes (especially undergarments) daily, and keep hair and eyes clean to prevent bacterial infections.</li>
+            <li><strong>Physical Exercise:</strong> Walk, exercise, and play outdoor games regularly to combat stress and keep the body fit.</li>
+        </ul>
+
+        <h2>5. Stress Management</h2>
+        <p><strong>Stress</strong> is a state of mental or emotional strain or tension resulting from adverse or very demanding circumstances. When stressed, your body reacts by releasing hormones that increase heart rate and breathing.</p>
+        
+        <h3>Ways to Manage Stress Effectively</h3>
+        <ul>
+            <li><strong>Yoga:</strong> Combines physical poses, controlled breathing, and relaxation to increase flexibility and reduce stress.</li>
+            <li><strong>Meditation:</strong> Sitting quietly for 15-20 minutes, focusing on breathing to clear the mind of stressful thoughts.</li>
+            <li><strong>Time Management:</strong> Getting organized helps give a better sense of what needs to be done and prevents feeling overwhelmed.</li>
+            <li><strong>Hobbies & Reading:</strong> Taking time out to read, play music, or do puzzles diverts the mind from negative thoughts.</li>
+            <li><strong>Exercise & Sleep:</strong> Regular physical activity and improving sleep schedules greatly reduce tension.</li>
+            <li><strong>Positive Thinking & Laughing:</strong> Smiling, laughing, and focusing on positive interactions improve mood and well-being.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
