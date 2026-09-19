@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Questions & Solutions - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">English Literature • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>SOLUTIONS OF CHAPTER 1, 2, AND 3</h1>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            This document contains the complete and exact solutions to all the questions and language practice exercises present at the end of the Kalia English textbook PDF for Chapters 1, 2, 3, and 4.
+        </div>
+
+        <!-- CHAPTER 1 SOLUTIONS -->
+        <h2>Chapter 1: The Star Ducks</h2>
+        
+        <h3>Questions</h3>
+        <ol>
+            <li><strong>What surprise awaited Rafferty on his arrival at Mr. Alsop's farm?</strong><br> Rafferty expected to see a crowd, police, and an ambulance responding to an airplane crash, but instead, he was surprised to find a peaceful, neglected farmyard with no one around.</li>
+            <li><strong>What was there inside the barn?</strong><br> Inside the barn, there was an object that looked like an enormous, half-blown-up plastic balloon resting on the straw-covered floor.</li>
+            <li><strong>What did Mr. Alsop tell Rafferty about his friends?</strong><br> Mr. Alsop told Rafferty that his friends did not speak in a way he could understand and communicated only through thoughts (telepathy) which translated their name to "bending iron with a hammer." He also stated they had come six years prior for chicken eggs.</li>
+            <li><strong>What did Rafferty see when he entered the living-room?</strong><br> He saw two alien strangers sitting side by side on a couch. They had purple, expressionless painted-on faces, large round eyes, and slender antennae waving to and fro.</li>
+            <li><strong>What was the reporter speaking about when he said, "It's the biggest story that ever was."?</strong><br> Rafferty was referring to his discovery of real extraterrestrial life arriving on Earth in a spaceship, which would be the most monumental news story in human history.</li>
+            <li><strong>What evidence did Rafferty try to get to prove that his story was true? How far did he succeed?</strong><br> Rafferty desperately tried to get photographs of the spaceship and aliens, but Mr. Alsop's old camera had no film. He then asked for the skeletons of the alien "star ducks," but learned the Alsops had eaten them for Christmas years ago and fed the bones to their dog. He did not succeed in getting any evidence.</li>
+        </ol>
+
+        <h3>Language Practice</h3>
+        <p><em>Fill in each space with the right word formed from the verb in the brackets:</em></p>
+        <ol>
+            <li>She picked up the pieces of <strong>broken</strong> glass. (break)</li>
+            <li>He lit his cigarette with a <strong>trembling</strong> hand. (tremble)</li>
+            <li>Mary has mended her <strong>torn</strong> stocking. (tear)</li>
+            <li>Mother bent down and kissed her <strong>sleeping</strong> baby. (sleep)</li>
+            <li>The dog was digging up its <strong>buried</strong> bone. (bury)</li>
+            <li>The <strong>dying</strong> man could hardly breathe. (die)</li>
+        </ol>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Participles are used as adjectives in the exercise above. Present participles end in <em>-ing</em> (trembling, sleeping, dying), while past participles usually end in <em>-en</em>, <em>-ed</em>, or <em>-n</em> (broken, torn, buried).
+        </div>
+
+        <!-- CHAPTER 2 SOLUTIONS -->
+        <h2>Chapter 2: The Stolen Bacillus</h2>
+
+        <h3>Questions</h3>
+        <ol>
+            <li><strong>What was the pale-faced man keenly interested in?</strong><br> He was keenly and obsessively interested in the cholera bacillus (germs) and its potential to multiply and kill thousands of people.</li>
+            <li><strong>What did Minnie see from the window?</strong><br> Minnie saw a thin, dark man getting into a cab, and her husband running hatless and in his slippers towards the cab, shouting and waving his arms wildly.</li>
+            <li><strong>What were the "mad thoughts" of the terrorist?</strong><br> The terrorist was filled with pride, thinking of how clever he had been to steal the germs. He planned to poison the city's water supply to kill millions, believing this would make him a mighty man and a martyr whom the world could no longer ignore.</li>
+            <li><strong>What happened to the sealed tube?</strong><br> When the cab swayed violently, the terrorist lost his balance and accidentally cracked the tube against the side of the cab, spilling the liquid inside.</li>
+            <li><strong>What was the story that the scientist told his wife?</strong><br> The scientist explained that the man was a terrorist who stole what he thought were cholera germs. However, to give the visitor a "surprise," the scientist had actually given him a harmless germ that simply makes animals break out in blue patches.</li>
+            <li><strong>What do you think, happened to the terrorist?</strong><br> Since he swallowed the remaining drops of the liquid to ensure his "martyrdom," the terrorist would likely not die, but instead break out in embarrassing bright blue patches all over his skin, just like the animals in the lab.</li>
+        </ol>
+
+        <h3>Language Practice (Conditionals)</h3>
+        <p><em>Make these sentences express a more unlikely condition:</em></p>
+        <ol>
+            <li>If the taxi <strong>were</strong> late, we <strong>would</strong> miss the train.</li>
+            <li>If I <strong>were</strong> late, I <strong>would</strong> get into trouble.</li>
+            <li>If father <strong>bought</strong> a car, he <strong>would</strong> bring me to school.</li>
+            <li>If she <strong>had</strong> an atlas, she <strong>would</strong> lend it to me.</li>
+            <li>If you <strong>lost</strong> your ticket, you <strong>would</strong> have to buy another.</li>
+            <li>If they <strong>flew</strong> to London, it <strong>would</strong> cost them a lot of money.</li>
+        </ol>
+
+        <!-- CHAPTER 3 SOLUTIONS -->
+        <h2>Chapter 3: The Model Millionaire</h2>
+
+        <h3>Questions</h3>
+        <ol>
+            <li><strong>Was Hughie Erskine attractive or unattractive?</strong><br> Hughie Erskine was a very attractive, handsome, and charming young man.</li>
+            <li><strong>How much money had Hughie to live on?</strong><br> He lived on two hundred pounds a year, given to him as an allowance by his old aunt.</li>
+            <li><strong>a. What jobs had he tried to do? b. Had he succeeded in them?</strong><br> a. He had tried working as a stockbroker, a tea-merchant, and a wine-merchant. b. No, he did not succeed in any of them and found them boring.</li>
+            <li><strong>What had Hughie become?</strong><br> He had become a useless young man with delightful manners, a perfect profile, but absolutely no profession and no money.</li>
+            <li><strong>Why did Laura's father not allow Hughie to marry Laura?</strong><br> Laura's father, a retired army Colonel, refused to allow the marriage because Hughie was broke. He demanded that Hughie have ten thousand pounds of his own before he would consider it.</li>
+            <li><strong>Who was Alan Trevor?</strong><br> Alan Trevor was an artist and a well-known portrait painter who was a close friend of Hughie.</li>
+            <li><strong>Describe Trevor's model.</strong><br> The model looked like a pathetic, miserable old beggar. He was bent with age, his face lined with sorrow, and he was dressed in dirty rags and broken boots while leaning on a rough stick for support.</li>
+            <li><strong>What made Hughie pity the old beggar?</strong><br> Hughie pitied the old beggar because his face and clothes showed utter misery and hopelessness, and Hughie felt it was terrible that an old man should be living in such condition while only earning a shilling an hour.</li>
+            <li><strong>What did Hughie give to the beggar?</strong><br> Hughie gave the beggar a sovereign (one pound), which was all the money he had left.</li>
+            <li><strong>Was the model really poor?</strong><br> No, the model was actually Baron Hausberg, one of the richest multi-millionaires in Europe.</li>
+            <li><strong>Why did Hughie call himself "an unlucky devil"?</strong><br> Hughie called himself this because he felt deeply embarrassed and foolish for having given his only pound to a multi-millionaire, believing he had made a complete fool of himself.</li>
+            <li><strong>Why was Hughie angry with his friend?</strong><br> Hughie was angry with Trevor because Trevor had told the Baron all about Hughie's private financial troubles, his lack of money, and his love for Laura Merton.</li>
+            <li><strong>Who was Hughie's visitor at breakfast-time?</strong><br> An old gentleman with gold glasses and grey hair named Monsieur Gustave Naudin, who was a representative for Baron Hausberg.</li>
+            <li><strong>What was the purpose of the visit?</strong><br> The purpose of the visit was to deliver a sealed envelope containing a letter and a gift from the Baron.</li>
+            <li><strong>How did the "beggar" show that he was grateful to Hughie?</strong><br> The Baron showed his gratitude by sending a wedding present consisting of a cheque for ten thousand pounds, which allowed Hughie to marry Laura.</li>
+        </ol>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Language Rule:</strong> In the exercise below, we convert adjectives into plural nouns by placing the definite article "the" before them (e.g., "the wicked" instead of "wicked people"). This is a common structure in English grammar to refer to an entire group of people.
+        </div>
+
+        <h3>Language Practice</h3>
+        <p><em>A. Change in the same way the bold words in these sentences:</em></p>
+        <ol>
+            <li><strong>The young</strong> have little respect for <strong>the old</strong> nowadays.</li>
+            <li><strong>The rich</strong> should help <strong>the poor</strong>.</li>
+            <li>A hospital is a place for <strong>the sick</strong>.</li>
+            <li><strong>The proud</strong> are often punished for their pride.</li>
+        </ol>
+
+        <p><em>B. From each pair of sentences make one sentence (using 'so... that'):</em></p>
+        <ol>
+            <li>She felt <strong>so</strong> happy <strong>that</strong> she burst out singing.</li>
+            <li>They were <strong>so</strong> poor <strong>that</strong> they had nothing to eat.</li>
+            <li>We were <strong>so</strong> hungry <strong>that</strong> we ate everything on the table.</li>
+            <li>I am <strong>so</strong> disappointed <strong>that</strong> I feel like crying.</li>
+            <li>The piano is <strong>so</strong> big <strong>that</strong> it won't go through the door.</li>
+        </ol>
+
+        <!-- CHAPTER 4 SOLUTIONS -->
+        <h2>Chapter 4: The Vacation</h2>
+
+        <h3>Questions</h3>
+        <ol>
+            <li><strong>Describe the scene before the railroad truck appeared.</strong><br> The scene was perfectly silent and empty. It was a completely abandoned world devoid of human presence, where nature had begun to take over the mechanical structures left behind.</li>
+            <li><strong>What had the man wished for?</strong><br> The man had wished for a thirty-year vacation where every other person in the world would simply disappear, leaving only him, his wife, and their young son alone.</li>
+            <li><strong>How did the man and his wife feel on the morning when the wish came true?</strong><br> They felt a mixture of profound shock, eerie disbelief, and a bittersweet sense of freedom upon realizing that the bustling, noisy world had completely vanished.</li>
+            <li><strong>Where did the man plan to go?</strong><br> The man planned to take his family on an endless holiday, traveling freely across the country on the railway tracks using a motorized handcar.</li>
+            <li><strong>Why was the man crying?</strong><br> He was crying because he realized the crushing weight of total isolation. The initial joy of the "vacation" was replaced by a deep regret and longing for the human companionship he had foolishly wished away.</li>
+            <li><strong>What, do you think, were the feelings of the woman and the boy in their new world?</strong><br> The woman likely felt an overwhelming sense of loneliness and sorrow for the lost world, while the young boy, though perhaps initially excited by the adventure, would eventually feel the unnatural absence of playmates and a normal society.</li>
+        </ol>
+
+        <h3>Language Practice</h3>
+        <p><em>Fill in each space with the right word:</em></p>
+        <ol>
+            <li>The room was filled <strong>with</strong> the scent of roses.</li>
+            <li>The child was not aware <strong>of</strong> the danger.</li>
+            <li>Although it was raining hard, the boys went <strong>on</strong> with the game.</li>
+            <li>Teacher told them to be quiet but they kept <strong>on</strong> talking.</li>
+        </ol>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

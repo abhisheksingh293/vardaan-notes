@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Learning Institute - Question Paper</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 20mm; }
+        :root {
+            --primary-yellow: #fbc02d;
+            --text-main: #000000;
+        }
+        body { 
+            width: 210mm; 
+            min-height: 297mm; 
+            margin: 0 auto; 
+            padding: 20mm; 
+            box-sizing: border-box; 
+            font-family: "Times New Roman", Times, serif; 
+            font-size: 12pt; 
+            line-height: 1.5; 
+            color: var(--text-main); 
+            background-color: white; 
+            position: relative; 
+        }
+        .watermark { 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 70%; 
+            opacity: 0.05; 
+            z-index: -1; 
+            pointer-events: none; 
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            border-top: 3px solid var(--primary-yellow);
+            border-bottom: 3px solid var(--primary-yellow); 
+            padding: 15px 0; 
+        }
+        .institute-name { 
+            font-size: 24pt; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            margin: 0; 
+            letter-spacing: 1px; 
+        }
+        .test-name { 
+            font-size: 14pt; 
+            font-weight: bold; 
+            margin-top: 5px; 
+            text-decoration: underline; 
+        }
+        .exam-details { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-top: 15px; 
+            font-weight: bold; 
+            font-size: 11pt; 
+            padding: 5px 0; 
+        }
+        .instructions { 
+            margin-top: 15px; 
+            font-size: 10pt; 
+            font-style: italic; 
+            text-align: left;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fafafa;
+        }
+        .instructions ul { 
+            margin: 5px 0 0 0; 
+            padding-left: 20px; 
+        }
+        .section-header { 
+            text-align: center; 
+            font-weight: bold; 
+            margin-top: 25px; 
+            margin-bottom: 15px; 
+            text-decoration: underline; 
+            font-size: 13pt; 
+        }
+        .marks-info { 
+            font-size: 10pt; 
+            font-weight: normal; 
+            font-style: italic; 
+            display: block; 
+            margin-top: 2px; 
+        }
+        .question-container { 
+            margin-bottom: 15px; 
+            display: flex; 
+            page-break-inside: avoid;
+        }
+        .q-num { 
+            font-weight: bold; 
+            width: 40px; 
+            flex-shrink: 0; 
+        }
+        .q-content { 
+            flex-grow: 1; 
+            overflow-x: auto;
+        }
+        .marks-right {
+             float: right;
+             font-weight: bold;
+        }
+        .mcq-container {
+            column-count: 2;
+            column-gap: 40px;
+            column-rule: 1.5px solid var(--primary-yellow);
+        }
+        .question-block {
+            break-inside: avoid;
+            margin-bottom: 18px;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 10px;
+            padding-left: 25px;
+        }
+        .footer { 
+            margin-top: 40px; 
+            text-align: center; 
+            font-size: 10pt; 
+            font-weight: bold; 
+            border-top: 1px solid #ccc; 
+            padding-top: 10px; 
+            color: #555; 
+        }
+        @media screen and (max-width: 1024px) {
+            body { width: 90%; padding: 15mm; margin: 20px auto; min-height: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+            .institute-name { font-size: 20pt; }
+        }
+        @media screen and (max-width: 768px) {
+            body { width: 95%; padding: 10mm; font-size: 11pt; }
+            .exam-details { flex-direction: column; align-items: center; gap: 5px; }
+            .institute-name { font-size: 18pt; }
+            .watermark { width: 90%; }
+            .mcq-container { column-count: 1; column-rule: none; }
+            .options-grid { grid-template-columns: 1fr; }
+        }
+        @media screen and (max-width: 480px) {
+            body { width: 100%; padding: 10px; margin: 0; box-shadow: none; border-radius: 0; font-size: 11pt;}
+            .q-num { width: 25px; }
+            .institute-name { font-size: 16pt; }
+            .math { overflow-x: auto; display: block; }
+        }
+        @media print { 
+            body { width: 100%; margin: 0; padding: 0; -webkit-print-color-adjust: exact; box-shadow: none; } 
+            .watermark { opacity: 0.12 !important; }
+            .mcq-container { column-count: 2; }
+        }
+    </style>
+</head>
+<body>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Watermark" class="watermark">
+    
+    <div class="header">
+        <h1 class="institute-name">VARDAAN LEARNING INSTITUTE</h1>
+        <div class="test-name">Physics Mock Test 02</div>
+        <div class="exam-details">
+            <span>Class: 8 ICSE</span>
+            <span>Subject: Physics</span>
+            <span>Time: 1 Hour</span>
+            <span>Max. Marks: 40</span>
+        </div>
+        <div class="instructions">
+            <strong>General Instructions:</strong>
+            <ul>
+                <li>All questions are compulsory.</li>
+                <li>The paper is divided into three sections: A, B, and C.</li>
+                <li>Write your answers neatly and legibly. Draw diagrams wherever necessary.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-header">SECTION A (10 Marks)<span class="marks-info">(Objective Type - Attempt all questions)</span></div>
+    
+    <div class="question-container" style="display: block;">
+        <div class="mcq-container">
+            <div class="question-block">
+                <strong>Q1.</strong> The SI unit of moment of force is:
+                <span class="marks-right">[2]</span>
+                <div class="options-grid">
+                    <div>(a) Newton</div>
+                    <div>(b) Newton-metre</div>
+                    <div>(c) Joule</div>
+                    <div>(d) Pascal</div>
+                </div>
+            </div>
+            
+            <div class="question-block">
+                <strong>Q2.</strong> When a ray of light passes obliquely from an optically denser medium to a rarer medium, it:
+                <span class="marks-right">[2]</span>
+                <div class="options-grid">
+                    <div>(a) bends towards the normal</div>
+                    <div>(b) bends away from the normal</div>
+                    <div>(c) goes undeviated</div>
+                    <div>(d) reflects back completely</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <strong>Q3.</strong> The anomalous expansion of water dictates that the density of water is maximum at:
+                <span class="marks-right">[2]</span>
+                <div class="options-grid">
+                    <div>(a) 0°C</div>
+                    <div>(b) 100°C</div>
+                    <div>(c) 4°C</div>
+                    <div>(d) -4°C</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <strong>Q4.</strong> A substance has a mass of 50 g and a volume of 20 cm³. If placed in water, it will:
+                <span class="marks-right">[2]</span>
+                <div class="options-grid">
+                    <div>(a) float on water</div>
+                    <div>(b) sink in water</div>
+                    <div>(c) suspend exactly in middle</div>
+                    <div>(d) dissolve instantly</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <strong>Q5.</strong> According to the Kinetic Theory, which state of matter has the highest kinetic energy among its particles?
+                <span class="marks-right">[2]</span>
+                <div class="options-grid" style="grid-template-columns: 1fr;">
+                    <div>(a) Solid</div>
+                    <div>(b) Liquid</div>
+                    <div>(c) Gas</div>
+                    <div>(d) Equal in all states</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">SECTION B (15 Marks)<span class="marks-info">(Short Answer Type - 3 Marks Each)</span></div>
+
+    <div class="question-container">
+        <div class="q-num">Q6.</div>
+        <div class="q-content">
+            Define atmospheric pressure. Why do deep-sea divers have to wear specially designed heavy-duty suits?
+            <span class="marks-right">[3]</span>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">Q7.</div>
+        <div class="q-content">
+            State three fundamental differences between a real image and a virtual image.
+            <span class="marks-right">[3]</span>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">Q8.</div>
+        <div class="q-content">
+            A force of 50 N is applied at a perpendicular distance of 0.2 m from the pivot of a door. Calculate the moment of force. What happens to the turning effect if the distance from the pivot is doubled while keeping the force same?
+            <span class="marks-right">[3]</span>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">Q9.</div>
+        <div class="q-content">
+            Explain the phenomenon of dispersion of white light. Name the colors of the visible spectrum obtained in the correct order.
+            <span class="marks-right">[3]</span>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">Q10.</div>
+        <div class="q-content">
+            Give scientific reasons for the following:<br>
+            (a) A partially inflated balloon expands when placed in hot water.<br>
+            (b) Liquids exert pressure on the walls of the container holding them.
+            <span class="marks-right">[1.5+1.5]</span>
+        </div>
+    </div>
+
+    <div class="section-header">SECTION C (15 Marks)<span class="marks-info">(Long Answer Type - 5 Marks Each)</span></div>
+
+    <div class="question-container">
+        <div class="q-num">Q11.</div>
+        <div class="q-content">
+            (a) Describe an experiment using a Eureka can to measure the volume and density of an irregular solid (e.g., a stone) that sinks in water. <br>
+            (b) A solid of mass 120 g displaces 40 cm³ of water. Find its density in SI units (kg/m³).
+            <span class="marks-right">[3+2]</span>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">Q12.</div>
+        <div class="q-content">
+            (a) Draw a neat, labelled ray diagram showing the refraction of light through a rectangular glass slab. Clearly mark the incident ray, refracted ray, emergent ray, angle of incidence (\(i\)), and angle of emergence (\(e\)).<br>
+            (b) Define lateral displacement and state one factor on which its magnitude depends.
+            <span class="marks-right">[3+2]</span>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">Q13.</div>
+        <div class="q-content">
+            (a) Differentiate between Density and Relative Density. <br>
+            (b) Explain the principle of floatation. Using this principle, explain why a massive ship made of iron and steel floats on water, whereas a small solid iron nail sinks.
+            <span class="marks-right">[2+3]</span>
+        </div>
+    </div>
+
+    <div class="footer">Created by Team Vardaan | Senior Academics Division</div>
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTheme = params.get('theme');
+        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
+        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark-mode', 'dark');
+        } else if (urlTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark-mode', 'dark');
+        }
+        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
+      } catch(e) {}
+    })();
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Sets Worksheet (Level 2)</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { 
+        tex: { 
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        },
+        svg: {
+          fontCache: 'global'
+        },
+        chtml: {
+          matchFontHeight: false
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2: Medium/Standard) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.6; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 210mm; 
+            margin: 0 auto; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt;
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+            flex-wrap: wrap; gap: 10px;
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: flex-start;
+            margin-bottom: 8px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); padding-top: 2px;} 
+        .q-content { flex: 1; word-wrap: break-word; } 
+        
+        /* Answer Key Grid Styling (Fixed for wide content) */
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 15px; 
+            font-size: 11pt;
+        }
+        .answer-item {
+            display: flex;
+            align-items: flex-start; 
+            word-wrap: break-word; 
+        }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; flex-shrink: 0;}
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 600px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .meta-info { flex-direction: column; text-align: center; }
+            .institute-name { font-size: 18pt; }
+            .tagline { font-size: 11pt; }
+            .worksheet-title { font-size: 14pt; }
+            .watermark { width: 90%; }
+            .answer-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+        }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .container { padding: 0; }
+        }
+    
+    /* Vardaan App Dark Mode Compatibility */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+      }
+      html:not([data-theme="light"]) {
+        --paper-bg: #121212;
+        --text-main: #e0e0e0;
+        --meta-text: #aaaaaa;
+        --yellow-bg: #3f3a00;
+        --yellow-border: #fdd835;
+        --green-bg: #0f2e13;
+        --green-border: #81c784;
+        --blue-bg: #0d1b2a;
+        --blue-border: #64b5f6;
+        --pink-bg: #300815;
+        --pink-border: #f06292;
+        --example-bg: rgba(255,255,255,0.1);
+        --example-text: #cccccc;
+        --toggle-bg: #333;
+        --toggle-border: #555;
+        --icon-fill: #fff;
+      }
+    }
+    [data-theme="dark"], html.dark-mode {
+      color-scheme: dark;
+      --paper-bg: #121212;
+      --text-main: #e0e0e0;
+      --meta-text: #aaaaaa;
+      --yellow-bg: #3f3a00;
+      --yellow-border: #fdd835;
+      --green-bg: #0f2e13;
+      --green-border: #81c784;
+      --blue-bg: #0d1b2a;
+      --blue-border: #64b5f6;
+      --pink-bg: #300815;
+      --pink-border: #f06292;
+      --example-bg: rgba(255,255,255,0.1);
+      --example-text: #cccccc;
+      --toggle-bg: #333;
+      --toggle-border: #555;
+      --icon-fill: #fff;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Sets Worksheet (Level 2 - Standard)</div>
+            <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 6 (ICSE)</span>
+            <span>Subject: Mathematics</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Advanced Set Formats</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">Write the following sets in Roster Form:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">1.</span>
+            <div class="q-content">The set of all integers $x$ such that $-3 < x \le 2$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">2.</span>
+            <div class="q-content">The set of two-digit natural numbers whose sum of digits is $6$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">3.</span>
+            <div class="q-content">$A = \{x \mid x \in \mathbb{N} \text{ and } x^2 < 20\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">4.</span>
+            <div class="q-content">$B = \{x \mid x \text{ is a factor of } 28\}$</div>
+        </div>
+    </div>
+    
+    <p style="margin-top: 15px; margin-bottom: 15px; font-size: 11pt;">Write the following sets in Set-builder Form:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">5.</span>
+            <div class="q-content">$C = \{5, 10, 15, 20, 25\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">6.</span>
+            <div class="q-content">$D = \{1, 4, 9, 16, 25, 36\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">7.</span>
+            <div class="q-content">$E = \{17, 18, 19, 20, \dots\}$</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section B: Subsets ($\subset, \subseteq, \not\subset$)</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">Let $P = \{1, 2, 3, 4, 5\}$, $Q = \{2, 4\}$, $R = \{1, 3, 5\}$, and $S = \{6\}$. Fill in the blanks with $\subset$ (is a proper subset of) or $\not\subset$ (is not a subset of):</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">8.</span>
+            <div class="q-content">$Q$ ______ $P$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">9.</span>
+            <div class="q-content">$R$ ______ $Q$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">10.</span>
+            <div class="q-content">$S$ ______ $P$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">11.</span>
+            <div class="q-content">$\emptyset$ ______ $R$ (where $\emptyset$ is the empty set)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">12.</span>
+            <div class="q-content">$\{1, 5\}$ ______ $P$</div>
+        </div>
+    </div>
+    
+    <p style="margin-top: 15px; margin-bottom: 15px; font-size: 11pt;">Answer the following:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">13.</span>
+            <div class="q-content">Write all the possible subsets of the set $M = \{a, b\}$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">14.</span>
+            <div class="q-content">How many subsets in total does a set with $3$ elements have?</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section C: Disjoint vs. Overlapping Sets</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">State whether the following pairs of sets are Disjoint or Overlapping:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">15.</span>
+            <div class="q-content">$A = \{1, 3, 5, 7\}$ and $B = \{2, 4, 6, 8\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">16.</span>
+            <div class="q-content">$C = \{x \mid x \text{ is a prime number}\}$ and $D = \{x \mid x \text{ is an even number}\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">17.</span>
+            <div class="q-content">$E = \{\text{Letters of the word 'TABLE'}\}$ and $F = \{\text{Letters of the word 'CHAIR'}\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">18.</span>
+            <div class="q-content">$G = \{\text{Multiples of } 3\}$ and $H = \{\text{Multiples of } 5\}$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">19.</span>
+            <div class="q-content">$X = \{10, 20, 30\}$ and $Y = \{15, 25, 35\}$</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section D: Operations on Sets ($\cup, \cap$)</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">Let $A = \{1, 2, 3, 4\}$, $B = \{3, 4, 5, 6\}$, and $C = \{5, 6, 7\}$. Find the following:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">20.</span>
+            <div class="q-content">$A \cup B$ (A Union B)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">21.</span>
+            <div class="q-content">$A \cap B$ (A Intersection B)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">22.</span>
+            <div class="q-content">$B \cap C$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">23.</span>
+            <div class="q-content">$A \cup C$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">24.</span>
+            <div class="q-content">$A \cap C$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">25.</span>
+            <div class="q-content">Find the cardinal number $n(A \cup B)$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">26.</span>
+            <div class="q-content">Find the cardinal number $n(B \cap C)$.</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section E: Universal Set and Complements</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">Let the Universal Set $\xi = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\}$.<br>Let $P = \{1, 3, 5, 7, 9\}$ and $Q = \{2, 3, 5, 7\}$. Find:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">27.</span>
+            <div class="q-content">$P'$ (Complement of Set P)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">28.</span>
+            <div class="q-content">$Q'$ (Complement of Set Q)</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">29.</span>
+            <div class="q-content">$(P \cup Q)$</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">30.</span>
+            <div class="q-content">$(P \cap Q)'$ (The complement of $P \text{ intersection } Q$)</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section F: Venn Diagram Concepts</div>
+    <p style="margin-top: -5px; margin-bottom: 15px; font-size: 11pt;">Imagine a Venn diagram with a Universal set $\xi = \{a, b, c, d, e, f, g\}$. Set $X$ contains $\{a, b, c, d\}$ and Set $Y$ contains $\{c, d, e, f\}$. Element '$g$' lies outside both sets. Find the elements belonging to:</p>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">31.</span>
+            <div class="q-content">The region representing $X \cap Y$ (elements common to both).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">32.</span>
+            <div class="q-content">The region representing $X \cup Y$.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">33.</span>
+            <div class="q-content">The region containing elements strictly in $X$ only (i.e., $X - Y$).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">34.</span>
+            <div class="q-content">The region containing elements strictly in $Y$ only (i.e., $Y - X$).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">35.</span>
+            <div class="q-content">The region representing $(X \cup Y)'$ (elements outside both sets).</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section G: True or False</div>
+    <div class="questions-container">
+        <div class="question-item">
+            <span class="q-num">36.</span>
+            <div class="q-content">The empty set is a subset of every set.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">37.</span>
+            <div class="q-content">$\{0\}$ is an example of an empty set.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">38.</span>
+            <div class="q-content">If $A \subseteq B$ and $B \subseteq A$, then sets $A$ and $B$ are equal ($A = B$).</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">39.</span>
+            <div class="q-content">The set of all triangles in a 2D plane is a finite set.</div>
+        </div>
+        <div class="question-item">
+            <span class="q-num">40.</span>
+            <div class="q-content">Equivalent sets must always contain the exact same elements.</div>
+        </div>
+    </div>
+
+    <div class="chapter-header">Answer Key</div>
+    <div class="answer-grid">
+        <div class="answer-item"><span class="ans-label">1.</span> $\{-2, -1, 0, 1, 2\}$</div>
+        <div class="answer-item"><span class="ans-label">2.</span> $\{15, 24, 33, 42, 51, 60\}$</div>
+        <div class="answer-item"><span class="ans-label">3.</span> $\{1, 2, 3, 4\}$</div>
+        <div class="answer-item"><span class="ans-label">4.</span> $\{1, 2, 4, 7, 14, 28\}$</div>
+        
+        <div class="answer-item"><span class="ans-label">5.</span> $\{x \mid x \text{ is a multiple of } 5, x \le 25\}$</div>
+        <div class="answer-item"><span class="ans-label">6.</span> $\{x \mid x = n^2, n \in \mathbb{N}, n \le 6\}$</div>
+        <div class="answer-item"><span class="ans-label">7.</span> $\{x \mid x \in \mathbb{N}, x \ge 17\}$</div>
+        
+        <div class="answer-item"><span class="ans-label">8.</span> $\subset$</div>
+        <div class="answer-item"><span class="ans-label">9.</span> $\not\subset$</div>
+        <div class="answer-item"><span class="ans-label">10.</span> $\not\subset$</div>
+        <div class="answer-item"><span class="ans-label">11.</span> $\subset$</div>
+        <div class="answer-item"><span class="ans-label">12.</span> $\subset$</div>
+        
+        <div class="answer-item"><span class="ans-label">13.</span> $\emptyset, \{a\}, \{b\}, \{a, b\}$</div>
+        <div class="answer-item"><span class="ans-label">14.</span> $8$</div>
+        
+        <div class="answer-item"><span class="ans-label">15.</span> Disjoint</div>
+        <div class="answer-item"><span class="ans-label">16.</span> Overlapping (2 is common)</div>
+        <div class="answer-item"><span class="ans-label">17.</span> Overlapping ('A' is common)</div>
+        <div class="answer-item"><span class="ans-label">18.</span> Overlapping (15, 30... common)</div>
+        <div class="answer-item"><span class="ans-label">19.</span> Disjoint</div>
+        
+        <div class="answer-item"><span class="ans-label">20.</span> $\{1, 2, 3, 4, 5, 6\}$</div>
+        <div class="answer-item"><span class="ans-label">21.</span> $\{3, 4\}$</div>
+        <div class="answer-item"><span class="ans-label">22.</span> $\{5, 6\}$</div>
+        <div class="answer-item"><span class="ans-label">23.</span> $\{1, 2, 3, 4, 5, 6, 7\}$</div>
+        <div class="answer-item"><span class="ans-label">24.</span> $\emptyset$</div>
+        <div class="answer-item"><span class="ans-label">25.</span> $6$</div>
+        <div class="answer-item"><span class="ans-label">26.</span> $2$</div>
+        
+        <div class="answer-item"><span class="ans-label">27.</span> $\{2, 4, 6, 8, 10\}$</div>
+        <div class="answer-item"><span class="ans-label">28.</span> $\{1, 4, 6, 8, 9, 10\}$</div>
+        <div class="answer-item"><span class="ans-label">29.</span> $\{1, 2, 3, 5, 7, 9\}$</div>
+        <div class="answer-item"><span class="ans-label">30.</span> $\{1, 2, 4, 6, 8, 9, 10\}$</div>
+        
+        <div class="answer-item"><span class="ans-label">31.</span> $\{c, d\}$</div>
+        <div class="answer-item"><span class="ans-label">32.</span> $\{a, b, c, d, e, f\}$</div>
+        <div class="answer-item"><span class="ans-label">33.</span> $\{a, b\}$</div>
+        <div class="answer-item"><span class="ans-label">34.</span> $\{e, f\}$</div>
+        <div class="answer-item"><span class="ans-label">35.</span> $\{g\}$</div>
+        
+        <div class="answer-item"><span class="ans-label">36.</span> True</div>
+        <div class="answer-item"><span class="ans-label">37.</span> False</div>
+        <div class="answer-item"><span class="ans-label">38.</span> True</div>
+        <div class="answer-item"><span class="ans-label">39.</span> False</div>
+        <div class="answer-item"><span class="ans-label">40.</span> False</div>
+    </div>
+
+    <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

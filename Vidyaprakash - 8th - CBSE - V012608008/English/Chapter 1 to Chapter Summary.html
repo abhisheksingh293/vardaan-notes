@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Literature - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: none; /* Hidden on screen, shown in print */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE DESIGN (Mobile & Tablet) --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+                width: 100%;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            h3 {
+                font-size: 1.2rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .paper-sheet {
+                padding: 5mm;
+            }
+            .institute-name {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* FORCE HIDE Toggle ONLY */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* FORCE SHOW Contact Info & Footer in Print */
+            .contact-info, .branding-footer {
+                display: flex !important;
+            }
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">English Literature • Chapter Notes</div>
+            
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <h1>SUMMARY OF CHAPTER 1,2, AND 3</h1>
+
+        <h2>1. The Star Ducks by Bill Brown</h2>
+        <p>This science-fiction story follows an American reporter named <strong>Rafferty</strong>, the top reporter for "The Times". He arrives at the rural farm of Mr. and Mrs. Alsop, expecting to cover a standard airplane crash, but instead stumbles upon an event of monumental historical significance.</p>
+
+        <h3>The Arrival and Discovery</h3>
+        <ul>
+            <li><strong>The Reporter's Expectations:</strong> Rafferty drives to the Alsop farm expecting crowds, police, and an ambulance. Instead, he finds a peaceful, somewhat neglected farmyard. He assumes the report was a "phony message".</li>
+            <li><strong>The Strange Ship:</strong> Mr. Alsop casually mentions a machine without wings came down. In the barn, Rafferty discovers an object resembling an enormous, half-inflated plastic balloon. Rafferty immediately envisions a massive front-page headline about a local farmer building a rocket ship.</li>
+            <li><strong>The Aliens' Nature:</strong> The Alsops explain that the ship belongs to friends. The aliens look bizarre: purple faces painted on without expression, large round eyes, and slender antennae. Mr. Alsop reveals they communicate by "bending iron with a hammer," which is their translation of the aliens' telepathic name.</li>
+        </ul>
+
+        <h3>The Telepathic Encounter</h3>
+        <ul>
+            <li><strong>Communication:</strong> The aliens do not speak aloud. They communicate by projecting thoughts and images directly into the human brain. Mrs. Alsop demonstrates this, warning Rafferty that it is "pretty hard at first".</li>
+            <li><strong>Rafferty's Experience:</strong> When Rafferty tries to ask where they are from, the female alien points her antennae directly at his forehead. He experiences a terrifying sensation of his brain turning to rubber, followed by a vision of flying through space past stars and meteors to a dazzlingly bright star. The experience leaves him shaking and weak.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>The Motive for the Visit:</strong> The aliens have come to Earth simply to collect eggs. Mr. Alsop explains they visited six years prior, took eggs to raise chickens in space, but the eggs spoiled on the three-year journey home. They returned for more, and this time Mr. Alsop provided a nesting box.
+        </div>
+
+        <h3>The Climax and Frustration</h3>
+        <ul>
+            <li><strong>The Departure:</strong> The aliens suddenly realize they must leave immediately (Mr. Alsop notes it has to do with the position of the moon). They fly out of the house like fireflies, enter the ship, and vanish into the clouds with a hissing sound, leaving a burnt circle in the mud.</li>
+            <li><strong>Desperate Search for Evidence:</strong> Realizing the "greatest story that ever was" has flown away, Rafferty desperately seeks proof. He begs for a camera, but Mr. Alsop only has an old box camera with no film.</li>
+            <li><strong>The Tragic Fate of the "Star Ducks":</strong> Rafferty learns that during their first visit, the aliens traded some of their own star-shaped eggs for the chickens. These hatched into "star ducks" (resembling a mix of a hippopotamus and a swallow with six legs). Rafferty desperately asks for the skeletons, but Mr. Alsop calmly reveals they ate the creatures for Christmas and fed the bones to their dog years ago, leaving Rafferty with absolutely no evidence.</li>
+        </ul>
+
+        <h2>2. The Stolen Bacillus by H.G. Wells</h2>
+        <p>This story describes an exciting event in the life of a scientist whose conventional world is disrupted by a radical visitor.</p>
+
+        <h3>The Visitor and the Threat</h3>
+        <ul>
+            <li><strong>The Laboratory:</strong> A bacteriologist is showing a pale-faced visitor with long hair and sad grey eyes through his laboratory. He shows the visitor a preparation of the cholera bacillus under a microscope.</li>
+            <li><strong>The Live Germs:</strong> The visitor asks if they have live germs. The bacteriologist proudly holds up a sealed tube, claiming it contains "bottled cholera." He dramatically explains that if the tube were broken into a reservoir, it would cause swift, terrible death and destroy most of the people in the city.</li>
+            <li><strong>The Visitor's Intent:</strong> The visitor's eyes shine with a wild gleam. He mutters that terrorists are "fools to use bombs when they could use this kind of thing".</li>
+        </ul>
+
+        <h3>The Theft and the Chase</h3>
+        <ul>
+            <li><strong>The Distraction:</strong> The bacteriologist is called away momentarily by his wife, Minnie. The visitor quickly excuses himself, claiming he has an appointment, and leaves.</li>
+            <li><strong>The Realization:</strong> Returning to the lab, the bacteriologist notices the sealed tube of "cholera" is missing. He rushes into the street without his hat or shoes.</li>
+            <li><strong>The Pursuit:</strong> The bacteriologist chases the terrorist's cab down the street. Minnie, thinking her husband has gone mad from "that dreadful science," takes his shoes, hat, and coat, and jumps into another cab to chase her husband.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>The Terrorist's Plan:</strong> The pale-faced man is an anarchist who forged a letter of introduction to steal the germs. He believes he is a hero and a mighty man who will show the world his importance by wiping out the city's population with the cholera bacillus.
+        </div>
+
+        <h3>The Climax and the Twist</h3>
+        <ul>
+            <li><strong>The Accident:</strong> As the terrorist urges his cab driver to go faster, the cab sways, and he accidentally breaks the tube against the side of the cab.</li>
+            <li><strong>The Sacrifice:</strong> Realizing he can no longer poison the reservoir, he decides to become a martyr. He drinks the remaining drops from the broken tube, fully expecting to die a painful death.</li>
+            <li><strong>The Truth Revealed:</strong> The bacteriologist finally catches up, but instead of being angry, he smiles when he learns the man drank the contents. He explains to his confused wife that the tube did not contain cholera at all. It contained a harmless germ that simply makes monkeys and kittens break out in blue patches. His only annoyance is the trouble of preparing a new batch of the blue-patch germs.</li>
+        </ul>
+
+        <h2>3. The Model Millionaire by Oscar Wilde</h2>
+        <p>This light-hearted story explores themes of wealth, appearance, and generosity, demonstrating that people are often more than they appear.</p>
+
+        <h3>Hughie Erskine's Predicament</h3>
+        <ul>
+            <li><strong>The Protagonist:</strong> Hughie Erskine is a handsome, charming, and highly popular young man, but he is completely broke. He lives on a small allowance from an aunt and has failed at various professions (broker, tea-merchant, wine-merchant).</li>
+            <li><strong>The Romance:</strong> He is deeply in love with Laura Merton. However, Laura's father, a retired army Colonel, refuses to let them marry until Hughie has ten thousand pounds of his own.</li>
+        </ul>
+
+        <h3>The Encounter at the Studio</h3>
+        <ul>
+            <li><strong>The Artist:</strong> Hughie visits his friend Alan Trevor, a master portrait painter who loves Hughie for his good looks and cheerful nature.</li>
+            <li><strong>The Model:</strong> Trevor is painting a life-size portrait of a beggar. The model is an old man looking utterly miserable, dressed in dirty rags and broken boots, leaning on a stick and holding out a hat for money.</li>
+            <li><strong>Hughie's Sympathy:</strong> Hughie feels deep pity for the "poor old chap." He believes models, who make only a shilling an hour, should get a percentage of the large sum (two thousand guineas) the artist receives.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>The Donation:</strong> When Trevor leaves the room briefly, Hughie checks his pockets. He finds he only has a pound and some pennies. Despite knowing it means he will have nothing left for the rest of the month, he generously slips his only pound into the beggar's hand.
+        </div>
+
+        <h3>The Revelation and Reward</h3>
+        <ul>
+            <li><strong>The Truth:</strong> Later at the Artists' Club, Trevor reveals that the "beggar" was actually Baron Hausberg, one of the richest men in Europe who could "buy the whole of London tomorrow". The Baron had commissioned Trevor to paint him in rags as a strange fancy.</li>
+            <li><strong>Hughie's Embarrassment:</strong> Hughie is mortified that he gave a sovereign to a multi-millionaire. He is further annoyed to learn that Trevor told the Baron all about Hughie's financial troubles and his love for Laura.</li>
+            <li><strong>The Wedding Present:</strong> The next morning, a representative of Baron Hausberg visits Hughie. Instead of demanding an apology, he hands Hughie an envelope. Inside is a cheque for ten thousand pounds, labeled as a wedding present to Hughie and Laura from "an old beggar".</li>
+        </ul>
+
+        <!-- BRANDING FOOTER -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

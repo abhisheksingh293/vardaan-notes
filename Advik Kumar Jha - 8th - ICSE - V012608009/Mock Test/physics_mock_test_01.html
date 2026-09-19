@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Learning Institute - Question Paper</title>
+    <!-- MathJax for rendering equations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 20mm; }
+        :root {
+            --primary-yellow: #fbc02d;
+            --text-main: #000000;
+        }
+        body { 
+            width: 210mm; 
+            min-height: 297mm; 
+            margin: 0 auto; 
+            padding: 20mm; 
+            box-sizing: border-box; 
+            font-family: "Times New Roman", Times, serif; 
+            font-size: 12pt; 
+            line-height: 1.5; 
+            color: var(--text-main); 
+            background-color: white; 
+            position: relative; 
+        }
+        .watermark { 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 70%; 
+            opacity: 0.05; 
+            z-index: -1; 
+            pointer-events: none; 
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            border-top: 3px solid var(--primary-yellow);
+            border-bottom: 3px solid var(--primary-yellow); 
+            padding: 15px 0; 
+        }
+        .institute-name { 
+            font-size: 24pt; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            margin: 0; 
+            letter-spacing: 1px; 
+        }
+        .test-name { 
+            font-size: 14pt; 
+            font-weight: bold; 
+            margin-top: 5px; 
+            text-decoration: underline; 
+        }
+        .exam-details { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-top: 15px; 
+            font-weight: bold; 
+            font-size: 11pt; 
+            padding: 5px 0; 
+        }
+        .instructions { 
+            margin-top: 15px; 
+            font-size: 10pt; 
+            font-style: italic; 
+            text-align: left;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fafafa;
+        }
+        .instructions ul { 
+            margin: 5px 0 0 0; 
+            padding-left: 20px; 
+        }
+        .section-header { 
+            text-align: center; 
+            font-weight: bold; 
+            margin-top: 25px; 
+            margin-bottom: 15px; 
+            text-decoration: underline; 
+            font-size: 13pt; 
+        }
+        .marks-info { 
+            font-size: 10pt; 
+            font-weight: normal; 
+            font-style: italic; 
+            display: block; 
+            margin-top: 2px; 
+        }
+        .question-container { 
+            margin-bottom: 15px; 
+            display: flex; 
+            page-break-inside: avoid;
+        }
+        .q-num { 
+            font-weight: bold; 
+            width: 30px; 
+            flex-shrink: 0; 
+        }
+        .q-content { 
+            flex-grow: 1; 
+            overflow-x: auto;
+        }
+        .sub-question { 
+            margin-left: 20px; 
+            margin-top: 5px; 
+        }
+        .marks-right {
+             float: right;
+             font-weight: bold;
+        }
+        .footer { 
+            margin-top: 40px; 
+            text-align: center; 
+            font-size: 10pt; 
+            font-weight: bold; 
+            border-top: 1px solid #ccc; 
+            padding-top: 10px; 
+            color: #555; 
+        }
+
+        /* MCQ Specific Styles */
+        .mcq-container {
+            column-count: 2;
+            column-gap: 40px;
+            column-rule: 1.5px solid var(--primary-yellow);
+        }
+        .question-block {
+            break-inside: avoid;
+            margin-bottom: 18px;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 10px;
+            padding-left: 25px;
+        }
+        
+        /* Match the following Styles */
+        .match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        /* Responsive styling */
+        @media screen and (max-width: 1024px) {
+            body { width: 90%; padding: 15mm; margin: 20px auto; min-height: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+            .institute-name { font-size: 20pt; }
+        }
+        @media screen and (max-width: 768px) {
+            body { width: 95%; padding: 10mm; font-size: 11pt; }
+            .exam-details { flex-direction: column; align-items: center; gap: 5px; }
+            .institute-name { font-size: 18pt; }
+            .watermark { width: 90%; }
+            .mcq-container { column-count: 1; column-rule: none; }
+            .options-grid { grid-template-columns: 1fr; }
+        }
+        @media screen and (max-width: 480px) {
+            body { width: 100%; padding: 10px; margin: 0; box-shadow: none; border-radius: 0; font-size: 11pt;}
+            .q-num { width: 25px; }
+            .institute-name { font-size: 16pt; }
+            .math { overflow-x: auto; display: block; }
+        }
+        @media print { 
+            body { width: 100%; margin: 0; padding: 0; -webkit-print-color-adjust: exact; box-shadow: none; } 
+            .watermark { opacity: 0.12 !important; }
+            .mcq-container { column-count: 2; }
+        }
+    </style>
+</head>
+<body>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Watermark" class="watermark">
+    
+    <div class="header">
+        <h1 class="institute-name">VARDAAN LEARNING INSTITUTE</h1>
+        <div class="test-name">Physics Mock Test 01</div>
+        <div class="exam-details">
+            <span>Class: 8 ICSE</span>
+            <span>Subject: Physics</span>
+            <span>Time: 1 Hour</span>
+            <span>Max. Marks: 40</span>
+        </div>
+        <div class="instructions">
+            <strong>General Instructions:</strong>
+            <ul>
+                <li>Answer to this paper must be written on the paper provided separately.</li>
+                <li>You will not be allowed to write during the first 10 minutes.</li>
+                <li>This time is to be spent in reading the question paper.</li>
+                <li>The time given at the head of this paper is the time allowed for writing the answers.</li>
+                <li>Attempt all questions from all sections.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="question-container" style="display: block;">
+        <div><strong>Question 1</strong><span class="marks-right">(5)</span></div>
+        <div>Choose the correct answers to the questions from the given options.</div>
+        <br>
+        <div class="mcq-container">
+            <div class="question-block">
+                (i) If the mass of an object is doubled while its velocity remains constant, its kinetic energy becomes:
+                <div class="options-grid">
+                    <div>(a) half</div>
+                    <div>(b) double</div>
+                    <div>(c) four times</div>
+                    <div>(d) no change</div>
+                </div>
+            </div>
+            <div class="question-block">
+                (ii) A boy A does 500 J of work in 20 seconds, and a boy B does the same amount of work in 10 seconds. The power spent is:
+                <div class="options-grid">
+                    <div>(a) same by both boys</div>
+                    <div>(b) more by boy A than by boy B</div>
+                    <div>(c) less by boy A than by boy B</div>
+                    <div>(d) nothing can be said</div>
+                </div>
+            </div>
+            <div class="question-block">
+                (iii) A ray of light passing parallel to the principal axis of a concave mirror, after reflection:
+                <div class="options-grid">
+                    <div>(a) passes through the centre of curvature</div>
+                    <div>(b) passes through the pole</div>
+                    <div>(c) becomes parallel to the principal axis</div>
+                    <div>(d) passes through the principal focus</div>
+                </div>
+            </div>
+            <div class="question-block">
+                (iv) Evaporation of a liquid happens:
+                <div class="options-grid">
+                    <div>(a) at its boiling point only</div>
+                    <div>(b) at all temperatures below its boiling point</div>
+                    <div>(c) only above its boiling point</div>
+                    <div>(d) when pressure is increased</div>
+                </div>
+            </div>
+            <div class="question-block">
+                (v) Assertion (A): A concave mirror can be used as a doctor's head mirror.<br>
+                Reason (R): A concave mirror reflects light rays and converges them to a focus to illuminate the examined area.
+                <div class="options-grid" style="grid-template-columns: 1fr;">
+                    <div>(a) Both A and R are true and R is the correct explanation of A.</div>
+                    <div>(b) Both A and R are true and R is not the correct explanation of A.</div>
+                    <div>(c) Assertion is true but reason is false.</div>
+                    <div>(d) Assertion is false but reason is true.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-container" style="display: block; margin-top: 20px;">
+        <div><strong>Question 2</strong><span class="marks-right">(5)</span></div>
+        <div>Fill in the blanks :</div>
+        <div style="line-height: 2;">
+            (i) The centre of the hollow sphere of which a spherical mirror is a part is called its ..........................................<br>
+            (ii) The process in which a solid directly changes into its gaseous state on heating is called ..........................................<br>
+            (iii) A convex mirror always forms a .......................................... image for an object placed anywhere in front of it.<br>
+            (iv) 1 Kilowatt (kW) = .......................................... W<br>
+            (v) A person carrying a heavy load on his head and standing stationary does .......................................... work.
+        </div>
+    </div>
+
+    <div class="question-container" style="display: block; margin-top: 20px;">
+        <div><strong>Question 3</strong><span class="marks-right">(5)</span></div>
+        <div>Write true or false for each statement :</div>
+        <div style="line-height: 2;">
+            (i) Evaporation is a rapid phenomenon.<br>
+            (ii) A concave mirror is used as a rear-view mirror in vehicles.<br>
+            (iii) The angle of incidence is always equal to the angle of reflection.<br>
+            (iv) A moving bullet possesses potential energy.<br>
+            (v) Boiling takes place at a specific, constant temperature.
+        </div>
+    </div>
+
+    <div class="question-container" style="display: block; margin-top: 20px;">
+        <div><strong>Question 4</strong><span class="marks-right">(5)</span></div>
+        <div>Match the following :</div>
+        <div class="match-grid">
+            <div style="text-align: center; font-weight: bold; text-decoration: underline;">Column A</div>
+            <div style="text-align: center; font-weight: bold; text-decoration: underline;">Column B</div>
+            
+            <div>(a) Water stored in a dam</div>
+            <div>(i) Joule / second</div>
+            
+            <div>(b) Used by dentists</div>
+            <div>(ii) Potential energy</div>
+            
+            <div>(c) Used in street lamps to diverge light</div>
+            <div>(iii) Concave mirror</div>
+            
+            <div>(d) Watt</div>
+            <div>(iv) Melting point</div>
+            
+            <div>(e) Solid to Liquid</div>
+            <div>(v) Convex mirror</div>
+        </div>
+    </div>
+
+    <div class="question-container" style="display: block; margin-top: 30px;">
+        <div><strong>Question 5</strong><span class="marks-right">(3x2=6)</span></div>
+        <div>Solve the following numericals :</div>
+        <div class="sub-question">
+            (i) An object of mass 50 kg is lifted to a height of 10 m above the ground. Calculate its potential energy. If the object falls, what is its kinetic energy just before hitting the ground? (Take \(g = 10 \text{ m/s}^2\)).
+        </div>
+        <div class="sub-question" style="margin-top: 15px;">
+            (ii) A machine raises a load of 750 N through a height of 16 m in 5 seconds. Calculate the power at which the machine works.
+        </div>
+    </div>
+
+    <div class="question-container" style="display: block; margin-top: 30px;">
+        <div><strong>Question 6</strong><span class="marks-right">(3x2=6)</span></div>
+        <div class="sub-question">
+            (i) Draw a ray diagram to show the formation of an image of an object placed at the centre of curvature (C) of a concave mirror. State the position, size, and nature of the image.
+        </div>
+        <div class="sub-question" style="margin-top: 15px;">
+            (ii) Why does a convex mirror always form a virtual, erect, and diminished image? Draw a ray diagram to illustrate your answer for an object placed anywhere in front of it.
+        </div>
+    </div>
+
+    <div class="question-container" style="display: block; margin-top: 30px;">
+        <div><strong>Question 7</strong><span class="marks-right">(2x4=8)</span></div>
+        <div class="sub-question">
+            (i) State two differences between boiling and evaporation.
+        </div>
+        <div class="sub-question" style="margin-top: 10px;">
+            (ii) A boy throws a stone vertically upwards. Describe the energy transformations taking place as it goes up and then falls back down.
+        </div>
+        <div class="sub-question" style="margin-top: 10px;">
+            (iii) Define the principal focus of a concave mirror.
+        </div>
+        <div class="sub-question" style="margin-top: 10px;">
+            (iv) In what two ways can we increase the kinetic energy of a moving body?
+        </div>
+    </div>
+
+    <div class="footer">Created by Team Vardaan with ♥ | Powered by VARDAAN COMET</div>
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Physics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 2: Standard/Medium) */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 0 15px;}
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt;
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+            flex-wrap: wrap; 
+            gap: 10px; 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .solution-item { 
+            border-bottom: 1px dashed var(--bg-color); padding-bottom: 5px; margin-bottom: 8px; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 5px; }
+        
+        /* Multiple Choice Options Grid */
+        .mcq-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+            padding-bottom: 20px;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1024px) {
+            .container { padding: 0 20px; }
+            .institute-name { font-size: 22pt; }
+        }
+
+        @media (max-width: 768px) {
+            .institute-name { font-size: 18pt; }
+            .tagline { font-size: 11pt; }
+            .worksheet-title { font-size: 13pt; }
+            .meta-info { flex-direction: column; font-size: 10pt; gap: 8px; text-align: left; align-items: flex-start; }
+            .chapter-header { font-size: 11pt; padding: 6px 8px; margin-top: 15px; }
+            .question-item { font-size: 10pt; align-items: flex-start; margin-bottom: 10px; }
+            .q-content { overflow-x: auto; overflow-y: hidden; padding-bottom: 4px; max-width: 100%; }
+            .mcq-options { grid-template-columns: 1fr; } /* Stack MCQs on smaller tablets */
+            .watermark { width: 85%; }
+        }
+
+        @media (max-width: 480px) {
+            .institute-name { font-size: 15pt; }
+            .tagline { font-size: 10pt; }
+            .worksheet-title { font-size: 11pt; }
+            .q-num { min-width: 18px; margin-right: 5px; }
+            .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+            .container { padding: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>
+        function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }
+    </script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Exploring the Wonders of Light</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 8th ICSE</span>
+                <span>Subject: Physics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Multiple Choice Questions</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">
+                    The angle of incidence is equal to the angle of reflection:
+                    <div class="mcq-options">
+                        <div>(a) Always</div>
+                        <div>(b) Sometimes</div>
+                        <div>(c) Under special conditions</div>
+                        <div>(d) Never</div>
+                    </div>
+                </div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">
+                    The splitting of white light into its seven constituent colors is called:
+                    <div class="mcq-options">
+                        <div>(a) Reflection</div>
+                        <div>(b) Refraction</div>
+                        <div>(c) Dispersion</div>
+                        <div>(d) Scattering</div>
+                    </div>
+                </div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">
+                    An image that can be obtained on a screen is called a:
+                    <div class="mcq-options">
+                        <div>(a) Virtual image</div>
+                        <div>(b) Real image</div>
+                        <div>(c) Erect image</div>
+                        <div>(d) Inverted image</div>
+                    </div>
+                </div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">
+                    A spherical mirror whose reflecting surface is curved inwards is called a:
+                    <div class="mcq-options">
+                        <div>(a) Convex mirror</div>
+                        <div>(b) Concave mirror</div>
+                        <div>(c) Plane mirror</div>
+                        <div>(d) Plano-convex mirror</div>
+                    </div>
+                </div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">
+                    What is the approximate speed of light in a vacuum?
+                    <div class="mcq-options">
+                        <div>(a) $3 \times 10^8 \text{ m/s}$</div>
+                        <div>(b) $3 \times 10^5 \text{ m/s}$</div>
+                        <div>(c) $3 \times 10^6 \text{ m/s}$</div>
+                        <div>(d) $3 \times 10^4 \text{ m/s}$</div>
+                    </div>
+                </div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">
+                    Which mirror is used by dentists to see an enlarged image of teeth?
+                    <div class="mcq-options">
+                        <div>(a) Plane mirror</div>
+                        <div>(b) Convex mirror</div>
+                        <div>(c) Concave mirror</div>
+                        <div>(d) Cylindrical mirror</div>
+                    </div>
+                </div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">
+                    The phenomenon of bending of light when it passes from one medium to another is:
+                    <div class="mcq-options">
+                        <div>(a) Reflection</div>
+                        <div>(b) Refraction</div>
+                        <div>(c) Dispersion</div>
+                        <div>(d) Diffraction</div>
+                    </div>
+                </div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">
+                    If the angle of incidence is $30^\circ$, what is the angle of reflection?
+                    <div class="mcq-options">
+                        <div>(a) $15^\circ$</div>
+                        <div>(b) $30^\circ$</div>
+                        <div>(c) $60^\circ$</div>
+                        <div>(d) $90^\circ$</div>
+                    </div>
+                </div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">
+                    A virtual, erect and diminished image is always formed by:
+                    <div class="mcq-options">
+                        <div>(a) Plane mirror</div>
+                        <div>(b) Concave mirror</div>
+                        <div>(c) Convex mirror</div>
+                        <div>(d) None of these</div>
+                    </div>
+                </div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">
+                    The band of seven colors is called:
+                    <div class="mcq-options">
+                        <div>(a) VIBGYOR</div>
+                        <div>(b) Spectrum</div>
+                        <div>(c) Dispersion</div>
+                        <div>(d) Reflection</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section B: Fill in the Blanks</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">The perpendicular drawn to the reflecting surface at the point of incidence is called the ____________________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">A convex mirror always forms a ____________________, erect, and diminished image.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">The phenomenon of bending of light when it travels from one optical medium to another is known as ____________________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">The band of seven colors obtained due to the dispersion of white light through a prism is called a ____________________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">According to the laws of reflection, the incident ray, the reflected ray, and the normal all lie in the same ____________________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">An image formed by a plane mirror is laterally ____________________.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">The midpoint of a spherical mirror is called its ____________________.</div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">A ____________________ mirror can form both real and virtual images depending on the position of the object.</div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">Light travels in a ____________________ line.</div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">The distance between the pole and the principal focus of a spherical mirror is called its ____________________.</div>
+            </div>
+        </div>
+        
+        <div class="chapter-header">Section C: True or False</div>
+        <p style="font-style: italic; margin-top: 0; margin-bottom: 10px; font-size: 10.5pt; color: var(--text-muted);">State whether the following statements are True or False. If False, write the correct statement.</p>
+         <div class="questions-container">
+             <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">
+                    A plane mirror forms a real and inverted image.
+                </div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">
+                    Light travels faster in water than it does in air.
+                </div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">
+                    A convex mirror is used as a rear-view mirror in vehicles because it provides a wider field of view.
+                </div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">
+                    During refraction, the angle of refraction is always exactly equal to the angle of incidence.
+                </div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">
+                    Red light bends the least when white light passes through a glass prism.
+                </div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">
+                    The image formed by a convex mirror is always smaller than the object.
+                </div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">
+                    A real image cannot be obtained on a screen.
+                </div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">
+                    The focus of a convex mirror is situated behind the mirror.
+                </div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">
+                    In regular reflection, parallel incident rays are reflected as parallel rays.
+                </div>
+            </div>
+             <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">
+                    The laws of reflection are not applicable to spherical mirrors.
+                </div>
+            </div>
+         </div>
+
+         <div class="chapter-header">Section D: Short Answer Questions</div>
+         <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">State the two laws of reflection of light.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">Differentiate between a real image and a virtual image (write at least two points of difference).</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">Define 'Lateral Inversion'. Give one practical example where it is observed.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">Why do stars appear to twinkle in the night sky? Briefly explain the phenomenon responsible for it.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">Define the 'Principal Focus' of a concave mirror. How is it different from the focus of a convex mirror?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">What is meant by the 'Center of Curvature' of a spherical mirror?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">37.</span>
+                <div class="q-content">Explain the phenomenon of dispersion of light using a prism.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">38.</span>
+                <div class="q-content">Give two uses of concave mirrors.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">39.</span>
+                <div class="q-content">Why is the word 'AMBULANCE' written laterally inverted on the vehicle?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">40.</span>
+                <div class="q-content">Define refractive index. What does a higher refractive index signify?</div>
+            </div>
+         </div>
+
+        <div class="chapter-header">Section E: Give Reasons</div>
+         <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">41.</span>
+                <div class="q-content">A pencil partly immersed in water appears bent at the surface.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">42.</span>
+                <div class="q-content">We cannot see our image in a piece of white paper, even though it reflects light.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">43.</span>
+                <div class="q-content">Concave mirrors are used in solar furnaces.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">44.</span>
+                <div class="q-content">The sun appears reddish at sunrise and sunset.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">45.</span>
+                <div class="q-content">A pool of water appears shallower than it actually is.</div>
+            </div>
+         </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

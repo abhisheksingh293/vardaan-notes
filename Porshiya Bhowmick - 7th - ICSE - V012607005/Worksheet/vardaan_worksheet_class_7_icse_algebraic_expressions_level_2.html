@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Class 7 ICSE Algebraic Expressions Level 2 Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES (Level 2: Medium / Standard - Blue Theme) --- */
+        :root {
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   /* Lighter blue for readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles & Responsive Adjustments */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.5; margin: 0; padding: 10px; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 210mm; 
+            margin: 0 auto; 
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 22pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 13pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 15pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+            font-weight: bold; margin-top: 15px; 
+            font-size: 10.5pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 6px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+        .meta-info span { flex: 1 1 auto; text-align: left; }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 12px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 12pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 4px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); flex-shrink: 0; }
+        .q-content { flex: 1; word-break: break-word; }
+
+        /* --- TABLE STYLING FOR ANSWER KEY --- */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        .answer-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10pt;
+            margin-top: 10px;
+            background-color: var(--body-bg);
+            color: var(--text-main);
+        }
+        .answer-table th, .answer-table td {
+            border: 1px solid var(--border-color);
+            padding: 6px 8px;
+            text-align: left;
+        }
+        .answer-table th {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 400px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1);
+            opacity: 0.05;
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 15px; right: 15px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* Responsive Media Queries for Mobile/Tablet */
+        @media screen and (max-width: 768px) {
+            body { padding: 5px; font-size: 10.5pt; }
+            .institute-name { font-size: 18pt; }
+            .tagline { font-size: 11pt; }
+            .worksheet-title { font-size: 13pt; }
+            .meta-info { flex-direction: column; gap: 5px; }
+            .theme-toggle { top: 10px; right: 10px; width: 38px; height: 38px; }
+        }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            body { background-color: #fff !important; color: #000 !important; padding: 0; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .answer-table th { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Level 2 Worksheet: Algebraic Expressions (ICSE Class 7)</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: VII (ICSE)</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Intermediate Terminology & Degree Analysis</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">1.</span>
+                <div class="q-content">Find the degree of the multi-variable algebraic expression: $5x^4y^2 - 3x^3y^4 + 2xy^5 - 7$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">2.</span>
+                <div class="q-content">Identify the coefficient of $x^2$ in the expansion of $(x - 3)(2x + 5)(x - 1)$. *(Hint: Multiply out or isolate terms)*</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">3.</span>
+                <div class="q-content">Write the sum of the coefficients of all terms in the expression: $3x^3 - 5x^2 + 7x - 9$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">4.</span>
+                <div class="q-content">If $A = 3x^2 - 5x + 2$, $B = -x^2 + 4x - 6$, and $C = 2x^2 - 3x + 5$, find $2A - B + 3C$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">5.</span>
+                <div class="q-content">Write an algebraic expression for: "Three times the sum of $x$ and $y$ decreased by twice the product of $x$ and $y$."</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">6.</span>
+                <div class="q-content">Determine whether the expression $\frac{3x^2 - 5x + 2}{x}$ is a polynomial. Give a brief reason.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">7.</span>
+                <div class="q-content">Find the literal coefficient and numerical coefficient of the term $-\frac{3}{4}a^3b^2c$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">8.</span>
+                <div class="q-content">How many terms are there in the simplified form of $(x+y+z)^2$ after completely expanding and combining like terms?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">9.</span>
+                <div class="q-content">Classify the expression $x^2y - xy^2 + 3xy$ based on the number of terms and its total degree.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">10.</span>
+                <div class="q-content">If the degree of $px^a y^b$ is 7 and $a = 3$, find the value of $b$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section B: Advanced Value Substitution</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">11.</span>
+                <div class="q-content">Evaluate $\frac{x^3 + y^3 + z^3 - 3xyz}{x + y + z}$ when $x = 2, y = 3, z = 4$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">12.</span>
+                <div class="q-content">If $x - \frac{1}{x} = 3$, find the value of $x^2 + \frac{1}{x^2}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">13.</span>
+                <div class="q-content">Calculate the value of $2a^2b - 3ab^2 + 5abc$ when $a = -2, b = 3, c = -1$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">14.</span>
+                <div class="q-content">Find the numerical value of $x^4 - 4x^3 + 6x^2 - 4x + 1$ when $x = 2$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">15.</span>
+                <div class="q-content">If $p = 3, q = -2, r = 4$, evaluate $\frac{p^2 + q^2 - r^2}{pq + qr - rp}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">16.</span>
+                <div class="q-content">Evaluate $(2x - 3y)^2 - (2x + 3y)^2$ for $x = 5$ and $y = 2$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">17.</span>
+                <div class="q-content">Find the value of $x^3 - 8y^3$ when $x = 4$ and $y = 1$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">18.</span>
+                <div class="q-content">If $a + b + c = 10$ and $ab + bc + ca = 30$, find the value of $a^2 + b^2 + c^2$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">19.</span>
+                <div class="q-content">Evaluate $\frac{a^3 - b^3}{a^2 + ab + b^2}$ when $a = 7$ and $b = 4$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">20.</span>
+                <div class="q-content">Find the value of $5(x - 2)^2 - 3(x + 1) + 4$ when $x = 3$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section C: Addition, Subtraction & Bracket Simplification</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">21.</span>
+                <div class="q-content">Subtract the sum of $2x^2 - 3x + 5$ and $-x^2 + 4x - 2$ from $5x^2 - 2x + 10$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">22.</span>
+                <div class="q-content">Simplify the nested bracket expression: $3x - [5y - \{2x - (3x - 2y - z) + z\}]$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">23.</span>
+                <div class="q-content">What expression must be subtracted from $4x^3 - 3x^2 + 5x - 1$ to obtain $3x^3 + x^2 - 2x + 7$?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">24.</span>
+                <div class="q-content">Simplify: $2a^2 - [3a - \{4a^2 - (2a - 3)\} + 5a]$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">25.</span>
+                <div class="q-content">Add the product of $(x+2)$ and $(x+3)$ to the sum of $3x^2 - 5x + 1$ and $-x^2 + 2x - 4$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">26.</span>
+                <div class="q-content">Simplify: $7xy - [3x^2 - \{2xy - (x^2 - 3xy)\} + 4y^2]$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">27.</span>
+                <div class="q-content">What should be added to $2a^2 + 3ab - b^2$ to get $5a^2 - ab + 2b^2$?</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">28.</span>
+                <div class="q-content">Simplify: $5x - [4x - \{3x - (2x - x)\}]$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">29.</span>
+                <div class="q-content">Subtract $3m^2 - 4mn + 5n^2$ from the sum of $m^2 + mn - n^2$ and $2m^2 - 5mn + 4n^2$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">30.</span>
+                <div class="q-content">Simplify: $2\{x - 3(y - x) + 4y\} - 3\{x + 2(y - x)\}$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section D: Advanced Multiplication & Identities</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">31.</span>
+                <div class="q-content">Multiply the trinomial by a binomial: $(2x^2 - 3x + 5)(3x - 2)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">32.</span>
+                <div class="q-content">Find the product: $(3x - 2y)(3x + 2y)(9x^2 + 4y^2)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">33.</span>
+                <div class="q-content">Expand and simplify: $(2a + 3b - c)(2a - 3b + c)$ by grouping.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">34.</span>
+                <div class="q-content">Find the product of three binomials: $(x - 1)(x + 2)(x - 3)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">35.</span>
+                <div class="q-content">Simplify using algebraic identities: $(5x + 3y)^2 - (5x - 3y)^2$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">36.</span>
+                <div class="q-content">Find the product: $(x^2 - xy + y^2)(x + y)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">37.</span>
+                <div class="q-content">Evaluate the continuous product: $(2x - 3)(2x + 3)(4x^2 + 9)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">38.</span>
+                <div class="q-content">Multiply: $\left(\frac{1}{2}x - \frac{1}{3}y\right)\left(\frac{1}{2}x + \frac{1}{3}y\right)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">39.</span>
+                <div class="q-content">Expand: $(3x - 2y + 4)^2$. *(Using trinomial square identity)*</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">40.</span>
+                <div class="q-content">Simplify: $(x + y)(x^2 - xy + y^2) + (x - y)(x^2 + xy + y^2)$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section E: Division, Word Problems & Complex Simplification</div>
+        <div class="questions-container">
+            <div class="question-item">
+                <span class="q-num">41.</span>
+                <div class="q-content">Divide the polynomial by a binomial: $(x^3 - 6x^2 + 11x - 6) \div (x - 1)$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">42.</span>
+                <div class="q-content">Simplify: $\frac{12x^4y^3 - 18x^3y^2 + 24x^2y}{6x^2y}$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">43.</span>
+                <div class="q-content">The side of a square field is represented by $(3x - 2) \text{ m}$. Find its perimeter and area as algebraic expressions.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">44.</span>
+                <div class="q-content">The length of a rectangle is $(5x + 3) \text{ cm}$ and its breadth is $(2x - 1) \text{ cm}$. Find its area when $x = 3$.</div>
+            </div>
+            <div class="question-item">
+                <span class="q-num">45.</span>
+                <div class="q-content">Simplify completely: $4x[3x - 2(x - 3)] - 5x(2x - 1)$.</div>
+            </div>
+        </div>
+
+        <div class="chapter-header">Comprehensive Answer Key (Tabular Format)</div>
+        <div class="table-responsive">
+            <table class="answer-table">
+                <thead>
+                    <tr>
+                        <th>Q.No</th>
+                        <th>Answer / Solution</th>
+                        <th>Q.No</th>
+                        <th>Answer / Solution</th>
+                        <th>Q.No</th>
+                        <th>Answer / Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1</strong></td>
+                        <td>Degree = $7$ (from $3x^3y^4$)</td>
+                        <td><strong>16</strong></td>
+                        <td>$-120$</td>
+                        <td><strong>31</strong></td>
+                        <td>$6x^3 - 13x^2 + 21x - 10$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2</strong></td>
+                        <td>$-14$</td>
+                        <td><strong>17</strong></td>
+                        <td>$61$</td>
+                        <td><strong>32</strong></td>
+                        <td>$81x^4 - 16y^4$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3</strong></td>
+                        <td>$-4$</td>
+                        <td><strong>18</strong></td>
+                        <td>$40$</td>
+                        <td><strong>33</strong></td>
+                        <td>$4a^2 - (3b-c)^2 = 4a^2 - 9b^2 + 6bc - c^2$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4</strong></td>
+                        <td>$10x^2 - 18x + 23$</td>
+                        <td><strong>19</strong></td>
+                        <td>$3$</td>
+                        <td><strong>34</strong></td>
+                        <td>$x^3 - 2x^2 - 5x + 6$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5</strong></td>
+                        <td>$3(x + y) - 2xy$</td>
+                        <td><strong>20</strong></td>
+                        <td>$33$</td>
+                        <td><strong>35</strong></td>
+                        <td>$60xy$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>6</strong></td>
+                        <td>No (variable in denominator has negative exponent)</td>
+                        <td><strong>21</strong></td>
+                        <td>$4x^2 - 9x + 7$</td>
+                        <td><strong>36</strong></td>
+                        <td>$x^3 + y^3$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>7</strong></td>
+                        <td>Num: $-\frac{3}{4}$, Lit: $a^3b^2c$</td>
+                        <td><strong>22</strong></td>
+                        <td>$4x - 4y$</td>
+                        <td><strong>37</strong></td>
+                        <td>$16x^4 - 81$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>8</strong></td>
+                        <td>$6$ terms ($x^2+y^2+z^2+2xy+2yz+2zx$)</td>
+                        <td><strong>23</strong></td>
+                        <td>$x^3 - 4x^2 + 7x - 8$</td>
+                        <td><strong>38</strong></td>
+                        <td>$\frac{1}{4}x^2 - \frac{1}{9}y^2$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>9</strong></td>
+                        <td>Trinomial, Degree = $3$</td>
+                        <td><strong>24</strong></td>
+                        <td>$6a^2 - 8a + 3$</td>
+                        <td><strong>39</strong></td>
+                        <td>$9x^2 + 4y^2 + 16 - 12xy - 16y + 24x$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>10</strong></td>
+                        <td>$b = 4$</td>
+                        <td><strong>25</strong></td>
+                        <td>$3x^2 + 10x + 11$</td>
+                        <td><strong>40</strong></td>
+                        <td>$2x^3$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>11</strong></td>
+                        <td>$9$</td>
+                        <td><strong>26</strong></td>
+                        <td>$-2x^2 + 4xy - 4y^2$</td>
+                        <td><strong>41</strong></td>
+                        <td>$x^2 - 5x + 6$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>12</strong></td>
+                        <td>$11$</td>
+                        <td><strong>27</strong></td>
+                        <td>$3a^2 - 4ab + 3b^2$</td>
+                        <td><strong>42</strong></td>
+                        <td>$2x^2y^2 - 3xy + 4$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>13</strong></td>
+                        <td>$-72$</td>
+                        <td><strong>28</strong></td>
+                        <td>$3x$</td>
+                        <td><strong>43</strong></td>
+                        <td>Perimeter: $12x - 8$, Area: $9x^2 - 12x + 4$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>14</strong></td>
+                        <td>$1$</td>
+                        <td><strong>29</strong></td>
+                        <td>$-3mn$</td>
+                        <td><strong>44</strong></td>
+                        <td>Area = $330 \text{ cm}^2$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>15</strong></td>
+                        <td>$-\frac{3}{32}$</td>
+                        <td><strong>30</strong></td>
+                        <td>$-2x + 10y$</td>
+                        <td><strong>45</strong></td>
+                        <td>$-6x^2 + 29x$</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Properties of Triangles - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        
+        /* SVG Diagram Responsiveness */
+        .svg-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            padding: 15px;
+            background-color: var(--example-bg);
+            border-radius: 8px;
+            border: 1px dashed var(--toggle-border);
+        }
+        svg.math-diagram {
+            max-width: 100%;
+            height: auto;
+            color: var(--text-main);
+        }
+
+        /* --- RESPONSIVENESS (Mobile/Tablet Adjustments) --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm 15px;
+            }
+            .institute-name { font-size: 1.5rem; }
+            .system-name { font-size: 0.9rem; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+            .theme-toggle {
+                top: 10px; right: 10px; width: 36px; height: 36px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* HIDE Toggle ONLY (Web Footer is shown per user request) */
+            .theme-toggle { display: none !important; }
+
+            /* FORCE SHOW Contact Info & Footer in Print */
+            .contact-info, .branding-footer { display: flex !important; flex-direction: column;}
+            
+            /* Footer specific print fixes */
+            .branding-footer {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+
+            /* Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.15 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important; top: 0 !important;
+                width: 100vw !important; height: 100vh !important;
+            }
+            .watermark-image { filter: none !important; max-width: 80% !important; }
+
+            /* Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+                @bottom-center {
+                    content: counter(page);
+                    display: block; width: 30px; height: 30px;
+                    background-color: #d81b60; color: #ffffff;
+                    border-radius: 50%; font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt; font-weight: bold; text-align: center;
+                    line-height: 30px; margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Mathematics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Properties of Triangles</h1>
+
+        <h2>1. Introduction to Triangles</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>A <strong>Triangle</strong> is a simple closed two-dimensional figure bounded by three line segments. It is the simplest polygon. A triangle has <strong>three vertices</strong>, <strong>three sides</strong>, and <strong>three interior angles</strong>.</p>
+        </div>
+
+        <!-- Basic Triangle SVG -->
+        <div class="svg-container">
+            <svg class="math-diagram" width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Triangle Sides -->
+                <polygon points="150,30 50,160 250,160" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                
+                <!-- Vertices (Points) -->
+                <circle cx="150" cy="30" r="4" fill="var(--pink-border)"/>
+                <circle cx="50" cy="160" r="4" fill="var(--pink-border)"/>
+                <circle cx="250" cy="160" r="4" fill="var(--pink-border)"/>
+                
+                <!-- Labels -->
+                <text x="145" y="20" font-size="18" font-family="sans-serif" font-weight="bold" fill="currentColor">A</text>
+                <text x="30" y="170" font-size="18" font-family="sans-serif" font-weight="bold" fill="currentColor">B</text>
+                <text x="260" y="170" font-size="18" font-family="sans-serif" font-weight="bold" fill="currentColor">C</text>
+
+                <!-- Angle Arcs -->
+                <path d="M 135 60 Q 150 75 165 60" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M 75 160 Q 80 145 65 130" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M 225 160 Q 220 145 235 130" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+        </div>
+
+        <p>In the figure above, ∆ABC has:</p>
+        <ul>
+            <li><strong>Vertices:</strong> A, B, and C.</li>
+            <li><strong>Sides:</strong> AB, BC, and CA.</li>
+            <li><strong>Angles:</strong> ∠BAC, ∠ABC, and ∠BCA (often written simply as ∠A, ∠B, and ∠C).</li>
+        </ul>
+
+        <h2>2. Angle Sum Property of a Triangle</h2>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>The Angle Sum Theorem</strong> states that the sum of the lengths of the three interior angles of any triangle is exactly <strong>180°</strong>.</p>
+            <p style="text-align: center; font-size: 1.2rem; margin-top: 10px;"><strong>∠A + ∠B + ∠C = 180°</strong></p>
+        </div>
+
+        <p>This is one of the most fundamental properties used in geometry to find missing angles. If you know any two angles of a triangle, you can easily calculate the third by subtracting their sum from 180°.</p>
+
+        <h2>3. Exterior Angle Property</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>If any side of a triangle is extended, the angle formed outside the triangle is called an <strong>Exterior Angle</strong>. The interior angles opposite to it are called <strong>Interior Opposite Angles</strong>.</p>
+        </div>
+
+        <div class="svg-container">
+            <svg class="math-diagram" width="350" height="200" viewBox="0 0 350 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Extended Base Line -->
+                <line x1="50" y1="160" x2="320" y2="160" stroke="currentColor" stroke-width="2"/>
+                
+                <!-- Triangle Sides -->
+                <polygon points="120,40 50,160 220,160" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                
+                <!-- Labels for Vertices -->
+                <text x="115" y="30" font-size="16" font-family="sans-serif" font-weight="bold" fill="currentColor">A</text>
+                <text x="35" y="175" font-size="16" font-family="sans-serif" font-weight="bold" fill="currentColor">B</text>
+                <text x="210" y="180" font-size="16" font-family="sans-serif" font-weight="bold" fill="currentColor">C</text>
+                <text x="310" y="180" font-size="16" font-family="sans-serif" font-weight="bold" fill="currentColor">D</text>
+
+                <!-- Interior Opposite Angles (A and B) -->
+                <path d="M 105 65 Q 120 80 135 65" fill="none" stroke="var(--blue-border)" stroke-width="2"/>
+                <path d="M 75 160 Q 80 145 65 130" fill="none" stroke="var(--blue-border)" stroke-width="2"/>
+                <text x="120" y="90" font-size="12" fill="var(--blue-border)">x</text>
+                <text x="85" y="145" font-size="12" fill="var(--blue-border)">y</text>
+
+                <!-- Exterior Angle (ACD) -->
+                <path d="M 220 130 A 30 30 0 0 1 250 160" fill="none" stroke="var(--pink-border)" stroke-width="2.5"/>
+                <text x="245" y="140" font-size="14" font-weight="bold" fill="var(--pink-border)">Ext ∠</text>
+            </svg>
+        </div>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Theorem:</strong> An exterior angle of a triangle is equal to the sum of its two interior opposite angles.</p>
+            <p style="text-align: center; font-size: 1.1rem; margin-top: 10px;"><strong>∠ACD = ∠A + ∠B</strong></p>
+        </div>
+
+        <h2>4. Triangle Inequality Properties</h2>
+        <p>Not every three lengths can form a triangle. The lengths of the sides must satisfy specific mathematical rules.</p>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Rule 1 (Sum):</strong> The sum of the lengths of any two sides of a triangle is always <strong>greater than</strong> the length of the third side.<br>
+            <em>AB + BC > AC</em> | <em>BC + CA > AB</em> | <em>CA + AB > BC</em></p>
+            
+            <hr style="border: 1px solid var(--yellow-border); margin: 15px 0; opacity: 0.5;">
+            
+            <p><strong>Rule 2 (Difference):</strong> The difference between the lengths of any two sides is always <strong>less than</strong> the length of the third side.</p>
+        </div>
+        <p><em>ICSE Tip: You will often be given three numbers (e.g., 3cm, 4cm, 8cm) and asked if they can form a triangle. Check the sum of the two smallest numbers (3+4=7). Since 7 is NOT greater than 8, these lengths cannot form a triangle.</em></p>
+
+        <h2>5. Properties of Right-Angled Triangles</h2>
+        <p>In a right-angled triangle, the side opposite to the right angle (90°) is the longest side and is called the <strong>Hypotenuse</strong>. The other two sides are called the legs (Base and Perpendicular).</p>
+
+        <div class="svg-container">
+            <svg class="math-diagram" width="250" height="220" viewBox="0 0 250 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Right Triangle -->
+                <polygon points="50,40 50,180 190,180" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="miter"/>
+                
+                <!-- Right Angle Symbol -->
+                <polyline points="50,160 70,160 70,180" fill="none" stroke="currentColor" stroke-width="2"/>
+                
+                <!-- Labels -->
+                <text x="40" y="30" font-size="16" font-family="sans-serif" font-weight="bold" fill="currentColor">A</text>
+                <text x="35" y="195" font-size="16" font-family="sans-serif" font-weight="bold" fill="currentColor">B</text>
+                <text x="200" y="195" font-size="16" font-family="sans-serif" font-weight="bold" fill="currentColor">C</text>
+
+                <text x="15" y="115" font-size="14" font-family="sans-serif" font-weight="bold" fill="var(--blue-border)" transform="rotate(-90 15,115)">Perpendicular</text>
+                <text x="100" y="205" font-size="14" font-family="sans-serif" font-weight="bold" fill="var(--blue-border)">Base</text>
+                
+                <!-- Hypotenuse text along the slope -->
+                <text x="135" y="100" font-size="14" font-family="sans-serif" font-weight="bold" fill="var(--pink-border)" transform="rotate(45 135,100)">Hypotenuse</text>
+            </svg>
+        </div>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Pythagoras Theorem:</strong> In a right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides.</p>
+            <p style="text-align: center; font-size: 1.2rem; margin-top: 10px;"><strong>(Hypotenuse)² = (Base)² + (Perpendicular)²</strong><br>
+            <em>AC² = AB² + BC²</em></p>
+        </div>
+
+        <h2>6. Medians and Altitudes</h2>
+        <ul>
+            <li><strong>Median:</strong> A line segment joining a vertex of a triangle to the <strong>mid-point</strong> of its opposite side. A triangle has 3 medians, and they intersect at a point called the <em>Centroid</em>.</li>
+            <li><strong>Altitude (Height):</strong> A perpendicular line segment drawn from a vertex to its opposite side. A triangle has 3 altitudes, and they intersect at a point called the <em>Orthocenter</em>.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

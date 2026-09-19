@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Integers Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* Level 1: Easy / Foundation (Green) */
+            --primary-color: #2e7d32; 
+            --bg-color: #e8f5e9;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #81c784;   /* Lighter green for readability */
+            --bg-color: #1e2a38;        /* Dark container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       /* Off-white text */
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .institute-name { font-size: 18pt !important; }
+            .tagline { font-size: 12pt !important; }
+            .worksheet-title { font-size: 14pt !important; }
+            .meta-info { flex-direction: column; gap: 8px; text-align: center; font-size: 10pt !important; }
+            .meta-info span { display: block; }
+            .chapter-header { font-size: 11pt !important; }
+            .questions-grid { grid-template-columns: 1fr !important; }
+            .question-item { margin-bottom: 12px; }
+            .answer-table { font-size: 9pt !important; }
+            .answer-table th, .answer-table td { padding: 4px !important; }
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .questions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: 11pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+
+        /* --- ANSWER TABLE STYLING --- */
+        .answer-section { margin-top: 40px; page-break-before: always; }
+        .answer-table { 
+            width: 100%; border-collapse: collapse; margin-top: 15px; 
+            background-color: var(--body-bg); color: var(--text-main);
+        }
+        .answer-table th, .answer-table td { 
+            border: 1px solid var(--border-color); padding: 8px; text-align: center; font-size: 11pt; 
+        }
+        .answer-table th { background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 600px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .answer-table th { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Level 1 Worksheet: Integers</div>
+            <div class="meta-info">
+                <span>Student Name: ________________</span>
+                <span>Class: 6 ICSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- SECTION A -->
+        <div class="chapter-header">Section A: Introduction to Integers</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Q1-Q4: Write the opposite of the following statements. Q5-Q8: Write integers with appropriate signs. Q9-Q15: Answer the following basic integer questions.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">Increase in weight.</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">50 km towards South.</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">A loss of ₹500.</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">20 degrees above freezing point.</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">A deposit of ₹2000 in a bank account.</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">A withdrawal of ₹700 from an ATM.</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">100 m below sea level.</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">Winning a game by 5 goals.</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">Write the integer lying between -2 and 0.</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">Write the greatest negative integer.</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">Write the integer for: 3 steps to the right of zero.</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">Write the integer for: 5 steps to the left of zero.</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">What is the absolute value of -15? ($|-15|$)</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">What is the absolute value of 8? ($|8|$)</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">Write the additive inverse of -12.</div></div>
+        </div>
+
+        <!-- SECTION B -->
+        <div class="chapter-header">Section B: Comparison and Ordering</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Compare using >, < or = for Q16-Q23. Answer ordering questions for Q24-Q30.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">$-5$ _____ $-3$</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">$0$ _____ $-8$</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">$7$ _____ $-7$</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">$-10$ _____ $-12$</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">$-25$ _____ $25$</div></div>
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">$|-4|$ _____ $|4|$</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">$-1$ _____ $0$</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">$-15$ _____ $-20$</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">Write in ascending order: -5, 2, -1, 0</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">Write in ascending order: -10, -15, 3, -1</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">Write in descending order: -4, 5, -8, 2</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">Write in descending order: 0, -6, -2, 4</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">Which integer is greater: -18 or -8?</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">Which integer is smaller: -99 or -100?</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">Is -1 to the right or left of 0 on the number line?</div></div>
+        </div>
+
+        <!-- SECTION C -->
+        <div class="chapter-header">Section C: Addition and Subtraction</div>
+        <p style="font-size: 11pt; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Simplify the following operations with integers.</p>
+        <div class="questions-grid">
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">$5 + (-3)$</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">$(-7) + 2$</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">$(-4) + (-5)$</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">$10 + (-10)$</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">$(-15) + 8$</div></div>
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">$12 - 5$</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">$8 - (-4)$</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">$(-6) - 3$</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">$(-9) - (-5)$</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">$0 - (-12)$</div></div>
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">$15 + (-6) + 4$</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">$(-8) + (-2) + 5$</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">$20 - 15 - (-5)$</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">$(-10) - (-10)$</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">$7 + (-12) - (-3)$</div></div>
+        </div>
+
+        <!-- SECTION D -->
+        <div class="chapter-header">Section D: Word Problems</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">Nishant has ₹500 in his bank account. He deposits ₹200 today. What is his new balance?</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">Ayan's score in a video game was -50. In the next round, he scored 120 points. What is his final score?</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">The temperature in Shimla was -4°C. Nishant observed that it dropped by 3°C the next day. What is the new temperature?</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">A submarine is 50m below sea level. Ayan dives down another 20m. What is his position now with respect to sea level?</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">Nishant walks 5 km East from point A, then turns and walks 8 km West. Where is he relative to point A? (Assume East is positive).</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">Ayan borrowed ₹100 from Nishant to buy a pen. How can Ayan's financial status be represented using an integer?</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">Nishant was playing a math quiz. He got +10 for a correct answer and -5 for a wrong answer. What is his total score for 1 correct and 1 wrong answer?</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">An elevator goes down 4 floors from the ground floor (Level 0). Ayan gets in and goes up 7 floors. Which floor is he on now?</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">Nishant is standing at -3 on a giant number line drawn on the playground. He takes 5 steps to the right. Which number does he land on?</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">Ayan earns a profit of ₹50 on Monday and suffers a loss of ₹20 on Tuesday. Express his net profit or loss as an integer.</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">An airplane is flying at a height of 5000m. Nishant is in a submarine exactly below it at a depth of -800m. What is the vertical distance between them?</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">Ayan had 20 marbles. He lost 5 in a game to Nishant, then won 8 back in the next game. Express Ayan's final number of marbles.</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">The temperature early morning was -2°C. By noon, it rose by 8°C. What was the temperature at noon?</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">Nishant has a debt of ₹50. He pays back ₹30 to his friend. What is his outstanding debt? (Express as an integer).</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">Ayan took a lift from the 2nd floor to the parking lot 3 levels underground (Level -3). How many levels in total did he go down?</div></div>
+        </div>
+
+        <!-- Answer Key Section -->
+        <div class="answer-section">
+            <div class="chapter-header">Solution Key</div>
+            <table class="answer-table">
+                <thead>
+                    <tr>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                        <th>Q.No</th><th>Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Decrease in weight</td><td>16</td><td>&lt;</td><td>31</td><td>2</td><td>46</td><td>₹700</td></tr>
+                    <tr><td>2</td><td>50 km North</td><td>17</td><td>&gt;</td><td>32</td><td>-5</td><td>47</td><td>70 points</td></tr>
+                    <tr><td>3</td><td>Profit of ₹500</td><td>18</td><td>&gt;</td><td>33</td><td>-9</td><td>48</td><td>-7°C</td></tr>
+                    <tr><td>4</td><td>20 degrees below freezing</td><td>19</td><td>&gt;</td><td>34</td><td>0</td><td>49</td><td>-70m</td></tr>
+                    <tr><td>5</td><td>+2000</td><td>20</td><td>&lt;</td><td>35</td><td>-7</td><td>50</td><td>-3 km (3km West)</td></tr>
+                    <tr><td>6</td><td>-700</td><td>21</td><td>=</td><td>36</td><td>7</td><td>51</td><td>-100</td></tr>
+                    <tr><td>7</td><td>-100</td><td>22</td><td>&lt;</td><td>37</td><td>12</td><td>52</td><td>5</td></tr>
+                    <tr><td>8</td><td>+5</td><td>23</td><td>&gt;</td><td>38</td><td>-9</td><td>53</td><td>3rd floor (+3)</td></tr>
+                    <tr><td>9</td><td>-1</td><td>24</td><td>-5, -1, 0, 2</td><td>39</td><td>-4</td><td>54</td><td>2</td></tr>
+                    <tr><td>10</td><td>-1</td><td>25</td><td>-15, -10, -1, 3</td><td>40</td><td>12</td><td>55</td><td>Profit of ₹30 (+30)</td></tr>
+                    <tr><td>11</td><td>+3</td><td>26</td><td>5, 2, -4, -8</td><td>41</td><td>13</td><td>56</td><td>5800m</td></tr>
+                    <tr><td>12</td><td>-5</td><td>27</td><td>4, 0, -2, -6</td><td>42</td><td>-5</td><td>57</td><td>23</td></tr>
+                    <tr><td>13</td><td>15</td><td>28</td><td>-8</td><td>43</td><td>10</td><td>58</td><td>6°C</td></tr>
+                    <tr><td>14</td><td>8</td><td>29</td><td>-100</td><td>44</td><td>0</td><td>59</td><td>-20</td></tr>
+                    <tr><td>15</td><td>12</td><td>30</td><td>Left</td><td>45</td><td>-2</td><td>60</td><td>5 levels</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

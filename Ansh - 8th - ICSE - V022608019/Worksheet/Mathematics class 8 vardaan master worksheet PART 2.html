@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Class 8 Master Math Worksheet Part 2</title>
+    
+    <!-- MathJax for rendering mathematical formulas beautifully -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        :root {
+            /* DYNAMIC LEVEL COLORS (Pink Theme) */
+            --primary-color: #d81b60; /* Deep Pink */
+            --bg-color: #fce4ec;      /* Very Light Pink Background */
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #f8bbd0;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #f48fb1;   /* Lighter pink for dark mode visibility */
+            --bg-color: #4a148c;        /* Deep purple/pink container background */
+            --body-bg: #121212;         /* Very dark body background */
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #555;
+        }
+
+        * { box-sizing: border-box; }
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 15px; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 24pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 14pt; font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 16pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); text-transform: uppercase;
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: 11pt; background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        body { counter-reset: qnum; }
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 13pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        
+        .questions-container { 
+            column-count: 2; 
+            column-gap: 30px; 
+        }
+        
+        /* The crucial fix for spacing and alignment */
+        .q { 
+            display: block; 
+            margin-bottom: 12px; 
+            font-size: 11pt; 
+            break-inside: avoid; 
+            page-break-inside: avoid; 
+            text-align: left; 
+            padding-left: 38px; 
+            text-indent: -38px;
+            line-height: 1.5;
+        }
+        .q::before { 
+            counter-increment: qnum; 
+            content: counter(qnum) ". "; 
+            font-weight: bold; 
+            display: inline-block;
+            width: 38px;
+            text-indent: 0; 
+            color: var(--primary-color); 
+        }
+
+        .answers-container {
+            margin-top: 30px;
+            border: 2px solid var(--primary-color);
+            padding: 15px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            font-size: 9.5pt;
+        }
+        .answers-title {
+            text-align: center; font-weight: bold; font-size: 14pt; 
+            color: var(--primary-color); margin-bottom: 10px; text-decoration: underline;
+        }
+        .answer-block { margin-bottom: 8px; line-height: 1.6; }
+        .answer-block span { font-weight: bold; color: var(--primary-color); }
+
+        .footer { 
+            margin-top: 40px; padding-top: 15px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 10pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & THEME CONTROLS --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; max-width: 600px; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle { filter: invert(1) hue-rotate(180deg); background: #e0e0e0; }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media screen and (max-width: 768px) {
+            .questions-container { column-count: 1; }
+            .meta-info { flex-direction: column; text-align: center; gap: 8px; }
+            .institute-name { font-size: 20pt; }
+            .tagline { font-size: 12pt; }
+            .worksheet-title { font-size: 14pt; }
+            .container { padding: 10px; margin-top: 60px; }
+        }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info, .answers-container { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+            .container { margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">MASTER PRACTICE BANK: PART 2</div>
+            <div class="meta-info">
+                <span>Student Name: ____________________________________</span>
+                <span>Class: 8</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Profit, Loss & Discount (Advanced Set)</div>
+        <div class="questions-container">
+            <div class="q">Find the Selling Price if CP = ₹ $3400$ and Profit = $17.5\%$.</div>
+            <div class="q">Find the Cost Price if SP = ₹ $5400$ and Loss is $10\%$.</div>
+            <div class="q">A shopkeeper buys 80 articles for ₹ $2400$ and sells them for a profit of $16\%$. Find the selling price of one article.</div>
+            <div class="q">The cost of an article was ₹ $15500$. ₹ $450$ was spent on its repairs. If it is sold for a profit of $15\%$, find the selling price.</div>
+            <div class="q">A VCR and TV were bought for ₹ $8000$ each. The shopkeeper made a loss of $4\%$ on the VCR and a profit of $8\%$ on the TV. Find the gain or loss percent on the whole transaction.</div>
+            <div class="q">During a sale, a shop offered a discount of $10\%$ on the marked prices of all the items. What would a customer have to pay for a pair of jeans marked at ₹ $1450$ and two shirts marked at ₹ $850$ each?</div>
+            <div class="q">A milkman sold two of his buffaloes for ₹ $20000$ each. On one he made a gain of $5\%$ and on the other a loss of $10\%$. Find his overall gain or loss.</div>
+            <div class="q">The price of a TV is ₹ $13000$. The sales tax charged on it is at the rate of $12\%$. Find the amount that Vinod will have to pay if he buys it.</div>
+            <div class="q">Arun bought a pair of skates at a sale where the discount given was $20\%$. If the amount he pays is ₹ $1600$, find the marked price.</div>
+            <div class="q">I purchased a hair-dryer for ₹ $5400$ including $8\%$ VAT. Find the price before VAT was added.</div>
+            <div class="q">An article was purchased for ₹ $1239$ including GST of $18\%$. Find the price of the article before GST was added.</div>
+            <div class="q">If the CP of 25 chairs is equal to the SP of 30 chairs, find the loss percent.</div>
+            <div class="q">By selling 144 hens, a woman loses the SP of 6 hens. Find her loss percent.</div>
+            <div class="q">A dealer marks his goods $40\%$ above the cost price and allows a discount of $15\%$. Find his gain percent.</div>
+            <div class="q">Find the single equivalent discount for successive discounts of $15\%$ and $20\%$.</div>
+            <div class="q">Which is a better offer: successive discounts of $20\%$ and $15\%$ OR a single discount of $33\%$?</div>
+            <div class="q">A tradesman allows a discount of $15\%$ on the marked price. How much above the cost price must he mark his goods to gain $19\%$?</div>
+            <div class="q">A table marked at ₹ $15000$ is available for ₹ $14400$. Find the discount given and the discount percent.</div>
+            <div class="q">A man sells an article at a profit of $25\%$. If he had bought it at $20\%$ less and sold it for ₹ $10.50$ less, he would have gained $30\%$. Find the CP of the article.</div>
+            <div class="q">An item marked at ₹ $840$ is sold for ₹ $714$. What is the discount percent?</div>
+            <div class="q">Ravi bought a car for ₹ $3,50,000$. Next year, the price went up to ₹ $3,70,000$. What was the percentage of price increase?</div>
+            <div class="q">By selling an article for ₹ $240$, a man incurs a loss of $10\%$. At what price should he sell it to make a profit of $20\%$?</div>
+            <div class="q">If SP is tripled and CP is doubled, the profit becomes $65\%$. What was the original profit percentage?</div>
+            <div class="q">A grocer buys eggs at 10 for ₹ 8 and sells at 8 for ₹ 10. Find his gain or loss percent.</div>
+            <div class="q">A manufacturer sells an item to a wholesale dealer at a profit of $18\%$. The wholesaler sells the same to a retailer at a profit of $20\%$. The retailer in turn sells it to a customer for ₹ $3009$, earning a profit of $25\%$. Find the CP for the manufacturer.</div>
+        </div>
+
+        <div class="chapter-header">Section B: Factorisation (Advanced Set)</div>
+        <div class="questions-container">
+            <div class="q">Factorise completely: $12x^2 - 27$</div>
+            <div class="q">Factorise: $a^2 - 2ab + b^2 - c^2$</div>
+            <div class="q">Factorise: $x^4 - (x-z)^4$</div>
+            <div class="q">Factorise: $p^2 - 10p + 21$</div>
+            <div class="q">Factorise: $4x^2 - 8x + 4$</div>
+            <div class="q">Factorise: $15xy - 6x + 5y - 2$</div>
+            <div class="q">Factorise: $ax + bx - ay - by$</div>
+            <div class="q">Factorise: $m^4 - 256$</div>
+            <div class="q">Factorise: $x^2 + xy + 8x + 8y$</div>
+            <div class="q">Factorise: $3x^2 - 12x$</div>
+            <div class="q">Factorise: $10ab + 4a + 5b + 2$</div>
+            <div class="q">Factorise: $x^2 - y^2 - 2y - 1$</div>
+            <div class="q">Factorise: $25a^2 - 4b^2 + 28bc - 49c^2$</div>
+            <div class="q">Factorise: $9x^2 - 16y^2$</div>
+            <div class="q">Factorise: $l^2m^2 - 1$</div>
+            <div class="q">Factorise: $(x+y)^2 - (a-b)^2$</div>
+            <div class="q">Factorise: $a^4 - 2a^2b^2 + b^4$</div>
+            <div class="q">Factorise: $y^2 + 7y + 12$</div>
+            <div class="q">Factorise: $z^2 - 4z - 12$</div>
+            <div class="q">Factorise: $3m^2 + 9m + 6$</div>
+            <div class="q">Factorise: $5x^2 - 20x + 20$</div>
+            <div class="q">Divide: $24(x^2yz + xy^2z + xyz^2)$ by $8xyz$</div>
+            <div class="q">Divide: $44(x^4 - 5x^3 - 24x^2)$ by $11x(x-8)$</div>
+            <div class="q">Divide: $39y^3(50y^2 - 98)$ by $26y^2(5y+7)$</div>
+            <div class="q">Factorise: $x^2 - 11x - 42$</div>
+            <div class="q">Factorise: $14p^2 - 11p - 15$</div>
+            <div class="q">Factorise by grouping: $ab(x^2 + y^2) + xy(a^2 + b^2)$</div>
+            <div class="q">Factorise: $x^8 - y^8$</div>
+        </div>
+
+        <div class="chapter-header">Section C: Ratio, Proportion & Variation (Advanced Set)</div>
+        <div class="questions-container">
+            <div class="q">If $x$ and $y$ are directly proportional, and $y=36$ when $x=12$. Find $y$ when $x=5$.</div>
+            <div class="q">A machine in a soft drink factory fills 840 bottles in 6 hours. How many bottles will it fill in 5 hours?</div>
+            <div class="q">A photograph of a bacteria enlarged 50,000 times attains a length of 5 cm. What is the actual length of the bacteria?</div>
+            <div class="q">In a model of a ship, the mast is 9 cm high, while the mast of the actual ship is 12 m high. If the length of the ship is 28 m, how long is the model ship?</div>
+            <div class="q">Suppose 2 kg of sugar contains $9 \times 10^6$ crystals. How many sugar crystals are there in 5 kg of sugar?</div>
+            <div class="q">A loaded truck travels 14 km in 25 minutes. If the speed remains the same, how far can it travel in 5 hours?</div>
+            <div class="q">If $x$ and $y$ are inversely proportional, and $y=8$ when $x=15$. Find $y$ when $x=10$.</div>
+            <div class="q">6 pipes are required to fill a tank in 1 hour 20 minutes. How long will it take if only 5 pipes of the same type are used?</div>
+            <div class="q">There are 100 students in a hostel. Food provision for them is for 20 days. How long will these provisions last, if 25 more students join the group?</div>
+            <div class="q">A contractor estimates that 3 persons could rewire Jasminder’s house in 4 days. If he uses 4 persons instead of 3, how long should they take to complete the job?</div>
+            <div class="q">A batch of bottles was packed in 25 boxes with 12 bottles in each box. If the same batch is packed using 20 bottles in each box, how many boxes would be filled?</div>
+            <div class="q">A school has 8 periods a day each of 45 minutes duration. How long would each period be, if the school has 9 periods a day, assuming the number of school hours to be the same?</div>
+            <div class="q">If 15 workers can build a wall in 48 hours, how many workers will be required to do the same work in 30 hours?</div>
+            <div class="q">Find the ratio of 3 km to 300 m.</div>
+            <div class="q">Two numbers are in the ratio 3:5. If each number is increased by 10, the ratio becomes 5:7. Find the numbers.</div>
+            <div class="q">Divide ₹ 14,000 among A, B, and C such that A gets twice as much as B and B gets thrice as much as C.</div>
+            <div class="q">The ratio of copper and zinc in an alloy is 9:5. If the mass of copper in the alloy is 48.6 g, find the mass of zinc.</div>
+            <div class="q">Find the fourth proportional to 4, 9, and 12.</div>
+            <div class="q">Find the mean proportional between 0.08 and 0.18.</div>
+            <div class="q">If $A:B = 2:3$, $B:C = 4:5$ and $C:D = 6:7$, find $A:D$.</div>
+            <div class="q">A mixture contains milk and water in the ratio 5:1. On adding 5 liters of water, the ratio becomes 5:2. The quantity of milk in the mixture is?</div>
+            <div class="q">An amount of ₹ 735 was divided between A, B, C. If each had received ₹ 25 less, their shares would have been in the ratio 1:3:2. The money received by C was?</div>
+            <div class="q">The incomes of two persons are in the ratio 5:3 and their expenditures are in the ratio 9:5. If they save ₹ 2600 and ₹ 1800 respectively, find their incomes.</div>
+            <div class="q">In a bag, there are coins of 25p, 10p, and 5p in the ratio 1:2:3. If there is ₹ 30 in all, how many 5p coins are there?</div>
+        </div>
+
+        <div class="chapter-header">Section D: Linear Equations in One Variable (Advanced Set)</div>
+        <div class="questions-container">
+            <div class="q">Solve for $x$: $\frac{x}{2} - \frac{1}{5} = \frac{x}{3} + \frac{1}{4}$</div>
+            <div class="q">Solve for $n$: $\frac{n}{2} - \frac{3n}{4} + \frac{5n}{6} = 21$</div>
+            <div class="q">Solve for $x$: $x + 7 - \frac{8x}{3} = \frac{17}{6} - \frac{5x}{2}$</div>
+            <div class="q">Solve for $x$: $\frac{x-5}{3} = \frac{x-3}{5}$</div>
+            <div class="q">Solve for $t$: $3(t - 3) = 5(2t + 1)$</div>
+            <div class="q">Solve for $m$: $15(m - 4) - 2(m - 9) + 5(m + 6) = 0$</div>
+            <div class="q">Solve for $y$: $3(5y - 7) - 2(9y - 11) = 4(8y - 13) - 17$</div>
+            <div class="q">Solve for $f$: $0.25(4f - 3) = 0.05(10f - 9)$</div>
+            <div class="q">Solve for $x$: $\frac{8x-3}{3x} = 2$</div>
+            <div class="q">Solve for $x$: $\frac{9x}{7-6x} = 15$</div>
+            <div class="q">Solve for $z$: $\frac{z}{z+15} = \frac{4}{9}$</div>
+            <div class="q">Solve for $y$: $\frac{3y+4}{2-6y} = \frac{-2}{5}$</div>
+            <div class="q">Solve for $x$: $\frac{7x+4}{x+2} = \frac{-4}{3}$</div>
+            <div class="q">Aminah thinks of a number and subtracts $\frac{5}{2}$ from it. She multiplies the result by 8. The result now obtained is 3 times the same number she thought of. What is the number?</div>
+            <div class="q">A positive number is 5 times another number. If 21 is added to both the numbers, then one of the new numbers becomes twice the other new number. What are the numbers?</div>
+            <div class="q">Sum of the digits of a two-digit number is 9. When we interchange the digits, it is found that the resulting new number is greater than the original number by 27. What is the two-digit number?</div>
+            <div class="q">One of the two digits of a two-digit number is three times the other digit. If you interchange the digits of this two-digit number and add the resulting number to the original number, you get 88. What is the original number?</div>
+            <div class="q">Shobo's mother's present age is six times Shobo's present age. Shobo's age five years from now will be one-third of his mother's present age. What are their present ages?</div>
+            <div class="q">There is a narrow rectangular plot, reserved for a school, in Mahuli village. The length and breadth of the plot are in the ratio 11:4. At the rate ₹100 per metre it will cost the village panchayat ₹75000 to fence the plot. What are the dimensions of the plot?</div>
+            <div class="q">Hasan buys two kinds of cloth materials for school uniforms. Shirt material that costs him ₹50 per metre and trouser material that costs him ₹90 per metre. For every 2 meters of the trouser material he buys 3 meters of the shirt material. He sells the materials at $12\%$ and $10\%$ profit respectively. His total sale is ₹36,600. How much trouser material did he buy?</div>
+            <div class="q">Half of a herd of deer are grazing in the field and three fourths of the remaining are playing nearby. The rest 9 are drinking water from the pond. Find the number of deer in the herd.</div>
+            <div class="q">A grandfather is ten times older than his granddaughter. He is also 54 years older than her. Find their present ages.</div>
+            <div class="q">Aman's age is three times his son's age. 10 years ago he was five times his son's age. Find their present ages.</div>
+            <div class="q">The denominator of a rational number is greater than its numerator by 8. If the numerator is increased by 17 and the denominator is decreased by 1, the number obtained is 3/2. Find the rational number.</div>
+            <div class="q">The ages of Hari and Harry are in the ratio 5:7. Four years from now the ratio of their ages will be 3:4. Find their present ages.</div>
+            <div class="q">Bansi has 3 times as many two-rupee coins as he has five-rupee coins. If he has in all a sum of ₹77, how many coins of each denomination does he have?</div>
+        </div>
+
+        <div class="chapter-header">Section E: Mensuration (Area, Perimeter & Volume)</div>
+        <div class="questions-container">
+            <div class="q">The shape of the top surface of a table is a trapezium. Find its area if its parallel sides are 1 m and 1.2 m and perpendicular distance between them is 0.8 m.</div>
+            <div class="q">The area of a trapezium is $34$ cm$^2$ and the length of one of the parallel sides is $10$ cm and its height is $4$ cm. Find the length of the other parallel side.</div>
+            <div class="q">Length of the fence of a trapezium shaped field ABCD is 120 m. If BC = 48 m, CD = 17 m and AD = 40 m, find the area of this field. Side AB is perpendicular to the parallel sides AD and BC.</div>
+            <div class="q">The diagonal of a quadrilateral shaped field is 24 m and the perpendiculars dropped on it from the remaining opposite vertices are 8 m and 13 m. Find the area of the field.</div>
+            <div class="q">The diagonals of a rhombus are 7.5 cm and 12 cm. Find its area.</div>
+            <div class="q">Find the area of a rhombus whose side is 5 cm and whose altitude is 4.8 cm. If one of its diagonals is 8 cm long, find the length of the other diagonal.</div>
+            <div class="q">The floor of a building consists of 3000 tiles which are rhombus shaped and each of its diagonals are 45 cm and 30 cm in length. Find the total cost of polishing the floor, if the cost per m$^2$ is ₹ 4.</div>
+            <div class="q">Mohan wants to buy a trapezium shaped field. Its side along the river is parallel to and twice the side along the road. If the area of this field is $10500$ m$^2$ and the perpendicular distance between the two parallel sides is $100$ m, find the length of the side along the river.</div>
+            <div class="q">Top surface of a raised platform is in the shape of a regular octagon of side 5m. Find the area of the octagonal surface.</div>
+            <div class="q">There is a pentagonal shaped park. For finding its area Jyoti and Kavita divided it in two different ways. Find the area of this park using both ways. (Assume standard dimensions if missing, or represent method).</div>
+            <div class="q">A suitcase with measures 80 cm $\times$ 48 cm $\times$ 24 cm is to be covered with a tarpaulin cloth. How many metres of tarpaulin of width 96 cm is required to cover 100 such suitcases?</div>
+            <div class="q">Find the side of a cube whose surface area is $600$ cm$^2$.</div>
+            <div class="q">Rukhsar painted the outside of the cabinet of measure 1 m $\times$ 2 m $\times$ 1.5 m. How much surface area did she cover if she painted all except the bottom of the cabinet?</div>
+            <div class="q">Daniel is painting the walls and ceiling of a cuboidal hall with length, breadth and height of 15 m, 10 m and 7 m respectively. From each can of paint 100 m$^2$ of area is painted. How many cans of paint will he need to paint the room?</div>
+            <div class="q">Describe how a cylinder and a cube are alike and how they are different. Which box has larger lateral surface area: a cylinder with radius 7cm and height 7cm, or a cube of side 7cm?</div>
+            <div class="q">A closed cylindrical tank of radius 7 m and height 3 m is made from a sheet of metal. How much sheet of metal is required?</div>
+            <div class="q">The lateral surface area of a hollow cylinder is 4224 cm$^2$. It is cut along its height and formed a rectangular sheet of width 33 cm. Find the perimeter of rectangular sheet.</div>
+            <div class="q">A road roller takes 750 complete revolutions to move once over to level a road. Find the area of the road if the diameter of a road roller is 84 cm and length is 1 m.</div>
+            <div class="q">A company packages its milk powder in cylindrical container whose base has a diameter of 14 cm and height 20 cm. Company places a label around the surface of the container. If the label is placed 2 cm from top and bottom, what is the area of the label?</div>
+            <div class="q">A cuboid is of dimensions 60 cm $\times$ 54 cm $\times$ 30 cm. How many small cubes with side 6 cm can be placed in the given cuboid?</div>
+            <div class="q">Find the height of the cylinder whose volume is 1.54 m$^3$ and diameter of the base is 140 cm.</div>
+            <div class="q">A milk tank is in the form of cylinder whose radius is 1.5 m and length is 7 m. Find the quantity of milk in litres that can be stored in the tank.</div>
+            <div class="q">If each edge of a cube is doubled, (i) how many times will its surface area increase? (ii) how many times will its volume increase?</div>
+            <div class="q">Water is pouring into a cubiodal reservoir at the rate of 60 litres per minute. If the volume of reservoir is 108 m$^3$, find the number of hours it will take to fill the reservoir.</div>
+        </div>
+
+        <div class="chapter-header">Section F: Algebraic Expressions & Identities (Advanced Set)</div>
+        <div class="questions-container">
+            <div class="q">Add the following: $ab - bc$, $bc - ca$, $ca - ab$</div>
+            <div class="q">Add: $2p^2q^2 - 3pq + 4$, $5 + 7pq - 3p^2q^2$</div>
+            <div class="q">Subtract $4a - 7ab + 3b + 12$ from $12a - 9ab + 5b - 3$</div>
+            <div class="q">Subtract $3xy + 5yz - 7zx$ from $5xy - 2yz - 2zx + 10xyz$</div>
+            <div class="q">Find the product: $(4p) \times (q+r)$</div>
+            <div class="q">Find the product: $(a^2 - 9) \times (4a)$</div>
+            <div class="q">Find the product: $(pq + qr + rp) \times 0$</div>
+            <div class="q">Obtain the volume of rectangular boxes with length, breadth and height: $2ax, 3by, 5cz$</div>
+            <div class="q">Multiply: $(2x + 5)$ and $(4x - 3)$</div>
+            <div class="q">Multiply: $(y - 8)$ and $(3y - 4)$</div>
+            <div class="q">Multiply: $(2.5l - 0.5m)$ and $(2.5l + 0.5m)$</div>
+            <div class="q">Multiply: $(a + 3b)$ and $(x + 5)$</div>
+            <div class="q">Simplify: $(x^2 - 5) (x + 5) + 25$</div>
+            <div class="q">Simplify: $(a^2 + 5) (b^3 + 3) + 5$</div>
+            <div class="q">Simplify: $(t + s^2) (t^2 - s)$</div>
+            <div class="q">Simplify: $(a + b) (c - d) + (a - b) (c + d) + 2(ac + bd)$</div>
+            <div class="q">Simplify: $(x + y)(x^2 - xy + y^2)$</div>
+            <div class="q">Use a suitable identity to get the product: $(x + 3)(x + 3)$</div>
+            <div class="q">Use a suitable identity to get the product: $(2a - 7)(2a - 7)$</div>
+            <div class="q">Use a suitable identity to get the product: $(3a - \frac{1}{2})(3a - \frac{1}{2})$</div>
+            <div class="q">Use a suitable identity to get the product: $(1.1m - 0.4)(1.1m + 0.4)$</div>
+            <div class="q">Use a suitable identity to get the product: $(a^2 + b^2)(-a^2 + b^2)$</div>
+            <div class="q">Evaluate using identities: $71^2$</div>
+            <div class="q">Evaluate using identities: $99^2$</div>
+            <div class="q">Evaluate using identities: $102 \times 103$</div>
+            <div class="q">Evaluate using identities: $5.1^2$</div>
+            <div class="q">Evaluate using identities: $297 \times 303$</div>
+            <div class="q">Evaluate using identities: $78 \times 82$</div>
+            <div class="q">Show that: $(3x + 7)^2 - 84x = (3x - 7)^2$</div>
+            <div class="q">Show that: $(9p - 5q)^2 + 180pq = (9p + 5q)^2$</div>
+            <div class="q">Using $a^2 - b^2 = (a+b)(a-b)$, find: $51^2 - 49^2$</div>
+            <div class="q">Using $(x+a)(x+b) = x^2 + (a+b)x + ab$, find: $103 \times 104$</div>
+            <div class="q">If $x - \frac{1}{x} = 5$, find the value of $x^2 + \frac{1}{x^2}$.</div>
+            <div class="q">If $a+b=7$ and $ab=12$, find $a^2+b^2$.</div>
+        </div>
+
+        <div class="chapter-header">Section G: Exponents & Powers (Advanced Set)</div>
+        <div class="questions-container">
+            <div class="q">Evaluate: $3^{-2}$</div>
+            <div class="q">Evaluate: $(-4)^{-2}$</div>
+            <div class="q">Evaluate: $(\frac{1}{2})^{-5}$</div>
+            <div class="q">Simplify and express the result in power notation with positive exponent: $(-4)^5 \div (-4)^8$</div>
+            <div class="q">Simplify: $(\frac{1}{2^3})^2$</div>
+            <div class="q">Simplify: $(-3)^4 \times (\frac{5}{3})^4$</div>
+            <div class="q">Simplify: $(3^{-7} \div 3^{-10}) \times 3^{-5}$</div>
+            <div class="q">Find the value of: $(3^0 + 4^{-1}) \times 2^2$</div>
+            <div class="q">Find the value of: $(2^{-1} \times 4^{-1}) \div 2^{-2}$</div>
+            <div class="q">Find the value of: $(\frac{1}{2})^{-2} + (\frac{1}{3})^{-2} + (\frac{1}{4})^{-2}$</div>
+            <div class="q">Find the value of: $(3^{-1} + 4^{-1} + 5^{-1})^0$</div>
+            <div class="q">Evaluate: $\frac{8^{-1} \times 5^3}{2^{-4}}$</div>
+            <div class="q">Find the value of $m$ for which $5^m \div 5^{-3} = 5^5$.</div>
+            <div class="q">Evaluate: $[(\frac{1}{3})^{-1} - (\frac{1}{4})^{-1}]^{-1}$</div>
+            <div class="q">Simplify: $\frac{25 \times t^{-4}}{5^{-3} \times 10 \times t^{-8}}$</div>
+            <div class="q">Simplify: $\frac{3^{-5} \times 10^{-5} \times 125}{5^{-7} \times 6^{-5}}$</div>
+            <div class="q">Express in standard form: $0.0000000000085$</div>
+            <div class="q">Express in standard form: $0.00000000000942$</div>
+            <div class="q">Express in standard form: $6020000000000000$</div>
+            <div class="q">Express in standard form: $31860000000$</div>
+            <div class="q">Express in usual form: $3.02 \times 10^{-6}$</div>
+            <div class="q">Express in usual form: $4.5 \times 10^4$</div>
+            <div class="q">Express in usual form: $3 \times 10^{-8}$</div>
+            <div class="q">Express in usual form: $1.0001 \times 10^9$</div>
+            <div class="q">In a stack there are 5 books each of thickness 20mm and 5 paper sheets each of thickness 0.016mm. What is the total thickness of the stack?</div>
+            <div class="q">The size of a plant cell is $0.00001275$ m. Express it in standard form.</div>
+            <div class="q">Thickness of a thick paper is $0.07$ mm. Express it in standard form.</div>
+            <div class="q">If $2^x - 2^{x-1} = 16$, find the value of $x^2$.</div>
+            <div class="q">By what number should $(-15)^{-1}$ be divided so that the quotient may be equal to $(-5)^{-1}$?</div>
+        </div>
+
+        <div class="answers-container">
+            <div class="answers-title">ANSWER KEY: PART 2</div>
+            
+            <div class="answer-block">
+                <span>Sec A:</span> 1. ₹3995 | 2. ₹6000 | 3. ₹34.80 | 4. ₹18342 | 5. 2% gain | 6. ₹2835 | 7. Overall loss of ₹1052.63 | 8. ₹14560 | 9. ₹2000 | 10. ₹5000 | 11. ₹1050 | 12. 16.67% loss | 13. 4% | 14. 19% | 15. 32% | 16. Single 33% | 17. 40% | 18. ₹600, 4% | 19. ₹50 | 20. 15% | 21. 5.71% | 22. ₹320 | 23. 10% | 24. 56.25% gain | 25. ₹1700
+            </div>
+            <div class="answer-block">
+                <span>Sec B:</span> 1. $3(2x-3)(2x+3)$ | 2. $(a-b-c)(a-b+c)$ | 3. $z(2x-z)(x^2+(x-z)^2)$ | 4. $(p-3)(p-7)$ | 5. $4(x-1)^2$ | 6. $(3x+1)(5y-2)$ | 7. $(x-y)(a+b)$ | 8. $(m^2+16)(m-4)(m+4)$ | 9. $(x+y)(x+8)$ | 10. $3x(x-4)$ | 11. $(2a+1)(5b+2)$ | 12. $(x-y-1)(x+y+1)$ | 13. $(5a-2b+7c)(5a+2b-7c)$ | 14. $(3x-4y)(3x+4y)$ | 15. $(lm-1)(lm+1)$ | 16. $(x+y-a+b)(x+y+a-b)$ | 17. $(a-b)^2(a+b)^2$ | 18. $(y+3)(y+4)$ | 19. $(z-6)(z+2)$ | 20. $3(m+1)(m+2)$ | 21. $5(x-2)^2$ | 22. $3(x+y+z)$ | 23. $4(x+3)$ | 24. $1.5y(10y-14)$ | 25. $(x-14)(x+3)$ | 26. $(7p+5)(2p-3)$ | 27. $(ax+by)(bx+ay)$ | 28. $(x^4+y^4)(x^2+y^2)(x-y)(x+y)$
+            </div>
+            <div class="answer-block">
+                <span>Sec C:</span> 1. 15 | 2. 700 | 3. $10^{-4}$ cm | 4. 21 cm | 5. $2.25 \times 10^7$ | 6. 168 km | 7. 12 | 8. 96 mins | 9. 16 days | 10. 3 days | 11. 15 | 12. 40 mins | 13. 24 | 14. 10:1 | 15. 15, 25 | 16. A=8400, B=4200, C=1400 | 17. 27 g | 18. 27 | 19. 0.12 | 20. 16:35 | 21. 25 L | 22. ₹245 | 23. A=₹10000, B=₹6000 | 24. 150 coins
+            </div>
+            <div class="answer-block">
+                <span>Sec D:</span> 1. $2.7$ | 2. 36 | 3. $-1$ | 4. $8$ | 5. $-2$ | 6. $0.625$ | 7. $2$ | 8. $0.6$ | 9. $1.5$ | 10. $1.06$ | 11. $12$ | 12. $-24/3$ | 13. $-16/25$ | 14. $4$ | 15. $7, 35$ | 16. $36$ | 17. $26$ or $62$ | 18. S=5, M=30 | 19. 275m, 100m | 20. 200m | 21. 72 | 22. 6, 60 | 23. 20, 60 | 24. $13/21$ | 25. 20, 28 | 26. ₹5 coins=7, ₹2 coins=21
+            </div>
+            <div class="answer-block">
+                <span>Sec E:</span> 1. 0.88 m$^2$ | 2. 7 cm | 3. 660 m$^2$ | 4. 252 m$^2$ | 5. 45 cm$^2$ | 6. 6 cm | 7. ₹810 | 8. 140 m | 9. $50(1+\sqrt{2})$ m$^2$ | 10. Method dependent | 11. 144 m | 12. 10 cm | 13. 11 m$^2$ | 14. 5 cans | 15. Cylinder (215.6 vs 196) | 16. 440 m$^2$ | 17. 322 cm | 18. 1980 m$^2$ | 19. 704 cm$^2$ | 20. 450 | 21. 1 m | 22. 49500 L | 23. (i) 4 times (ii) 8 times | 24. 30 hours
+            </div>
+            <div class="answer-block">
+                <span>Sec F:</span> 1. 0 | 2. $4pq-p^2q^2+9$ | 3. $8a-2ab+2b-15$ | 4. $2xy-7yz+5zx+10xyz$ | 5. $4pq+4pr$ | 6. $4a^3-36a$ | 7. 0 | 8. $30abcxyz$ | 9. $8x^2+14x-15$ | 10. $3y^2-28y+32$ | 11. $6.25l^2-0.25m^2$ | 12. $ax+5a+3bx+15b$ | 13. $x^3+5x^2-5x$ | 14. $a^2b^3+3a^2+5b^3+20$ | 15. $t^3-ts+s^2t^2-s^3$ | 16. $4ac$ | 17. $x^3+y^3$ | 18. $x^2+6x+9$ | 19. $4a^2-28a+49$ | 20. $9a^2-3a+0.25$ | 21. $1.21m^2-0.16$ | 22. $b^4-a^4$ | 23. 5041 | 24. 9801 | 25. 10506 | 26. 26.01 | 27. 89991 | 28. 6396 | 29. Proved | 30. Proved | 31. 200 | 32. 10712 | 33. 27 | 34. 25
+            </div>
+            <div class="answer-block">
+                <span>Sec G:</span> 1. 1/9 | 2. 1/16 | 3. 32 | 4. $1/(-4)^3$ | 5. $1/64$ | 6. 625 | 7. $1/9$ | 8. 5 | 9. $1/2$ | 10. 29 | 11. 1 | 12. 250 | 13. m=2 | 14. 1 | 15. $3125t^4/2$ | 16. $125 \times 3^5$ | 17. $8.5 \times 10^{-12}$ | 18. $9.42 \times 10^{-12}$ | 19. $6.02 \times 10^{15}$ | 20. $3.186 \times 10^{10}$ | 21. 0.00000302 | 22. 45000 | 23. 0.00000003 | 24. 1000100000 | 25. 100.08 mm | 26. $1.275 \times 10^{-5}$ | 27. $7 \times 10^{-2}$ mm | 28. x=5, so 25 | 29. 3
+            </div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan with ❤️ | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cell: Fundamental Unit of Life - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive Design Adjustments */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm 5mm;
+                width: 100%;
+            }
+            .institute-name { font-size: 1.6rem !important; }
+            h1 { font-size: 1.8rem !important; }
+            h2 { font-size: 1.4rem !important; }
+            .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul { padding-left: 20px; }
+
+        strong { color: var(--pink-border); }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer visible as requested) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Biology • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Cell: Fundamental Unit of Life</h1>
+        
+        <h2>1. Introduction to the Cell</h2>
+        <p>All plants and animals are made up of tiny living units known as cells. The cell is essentially an accumulation of living substance, called <strong>protoplasm</strong>, bounded by an outer membrane (plasma membrane).</p>
+        
+        <ul>
+            <li><strong>Protoplasm</strong> is a jelly-like, transparent, and granular substance that is the basis of life. It responds to stimuli like light, temperature, and chemicals. If protoplasm is removed, the cell dies.</li>
+            <li>In the nucleus, it is called nucleoplasm. Outside the nucleus, it is called cytoplasm.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>The Cell Theory</strong><br>
+            Proposed by scientists to explain cellular life, it states:<br>
+            1. All living organisms are made up of cells.<br>
+            2. Cells are the basic structural unit of all organisms.<br>
+            3. All cells arise from pre-existing cells.</p>
+        </div>
+
+        <h2>2. Size and Shape of Cells</h2>
+        <p>Cells are primarily <strong>microscopic</strong>, varying in size from 1/10th to 1/1000th of a millimetre. However, their size and shape are closely related to the specific tasks they perform within the organism.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>While most cells are microscopic, <strong>eggs are giant cells</strong>. The largest single cell in a living organism is the egg of an ostrich, which can measure up to 25 cm long and weigh up to 1.5 kg!</p>
+        </div>
+
+        <p>There is no standard shape for cells. Depending on their function, they can be:</p>
+        <ul>
+            <li><strong>Nerve cells:</strong> Irregular, elongated, and tree-like to carry messages from one part of the body to another.</li>
+            <li><strong>Guard cells (in leaves):</strong> Bean-shaped to open and close stomata.</li>
+            <li>Other shapes include spherical, rectangular, oval, polygonal, or spindle-shaped.</li>
+        </ul>
+
+        <h2>3. Structure of the Cell</h2>
+        <p>Every cell is basically composed of three main parts: the cell membrane, the nucleus, and the cytoplasm.</p>
+
+        <h3>3.1 Cell Membrane & Cell Wall</h3>
+        <p>The <strong>cell membrane (plasma membrane)</strong> is a living, elastic, selectively permeable layer that encloses the protoplasm. It controls the entry and exit of substances.</p>
+        <p>In plant cells, an additional rigid layer called the <strong>cell wall</strong> is present outside the membrane, providing strength and shape.</p>
+
+        <h3>3.2 The Nucleus</h3>
+        <p>The <strong>nucleus</strong> is a dense structure that controls and regulates all metabolic activities of the cell.</p>
+        <ul>
+            <li>It contains a jelly-like matrix called the <strong>nucleoplasm</strong>.</li>
+            <li>Inside the nucleus is a dense <strong>nucleolus</strong> and a network of <strong>chromatin</strong> threads.</li>
+            <li>Chromatin condenses into chromosomes, which contain <strong>DNA</strong> (Deoxyribonucleic acid) and carry hereditary genes from parent to offspring.</li>
+        </ul>
+
+        <h3>3.3 The Cytoplasm & Organelles</h3>
+        <p>The <strong>cytoplasm</strong> is the portion of protoplasm between the nucleus and the cell membrane. It contains a transparent, semi-fluid matrix where living specialized structures called <strong>organelles</strong> are suspended. Each organelle performs a specific function.</p>
+        <ul>
+            <li><strong>Mitochondria:</strong> Produce chemical energy for the cell.</li>
+            <li><strong>Ribosomes:</strong> Responsible for making proteins.</li>
+        </ul>
+
+        <h2>4. The Plant Cell</h2>
+        <p>Plant cells have specific features designed to help them stay rigid, photosynthesize, and store large amounts of nutrients.</p>
+        <ul>
+            <li><strong>Cell Wall:</strong> Non-living, freely permeable, and made of complex chemical cellulose.</li>
+            <li><strong>Plastids:</strong> Organelles found only in plant cells.
+                <ul>
+                    <li><em>Chloroplasts:</em> Contain the green pigment chlorophyll to trap solar energy for food.</li>
+                    <li><em>Chromoplasts:</em> Give red and yellow colours to flowers and fruits to attract insects.</li>
+                    <li><em>Leucoplasts:</em> Colourless pigments that store starch, fats, and proteins.</li>
+                </ul>
+            </li>
+            <li><strong>Vacuole:</strong> A large, central bubble-like organelle bound by a membrane called the <strong>tonoplast</strong>. It contains cell sap and makes the cell <strong>turgid</strong> (firm), helping the plant stand upright.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Permeable vs. Selectively Permeable</strong><br>
+            The cell wall is a sieve (freely permeable), but the cell membrane is selectively permeable. If you place raisins in plain water, they swell (absorb water). If you place plump grapes in salt water, they shrivel (lose water). This demonstrates how cell membranes selectively control the movement of molecules based on outside conditions.</p>
+        </div>
+
+        <h2>5. The Animal Cell</h2>
+        <p>Animal cells are uniquely structured to allow mobility and function without the need to produce their own food.</p>
+        <ul>
+            <li><strong>No Cell Wall:</strong> Animals are mobile. The absence of a rigid cell wall allows animal cells (like white blood cells or Amoeba) to change shape and squeeze through tight spaces.</li>
+            <li><strong>No Plastids:</strong> Animals obtain food by hunting or grazing; they do not synthesize food through photosynthesis, so they lack chlorophyll and chloroplasts.</li>
+            <li><strong>Vacuoles:</strong> Usually absent. If present, they are small and temporary (e.g., a food vacuole in Amoeba that forms to digest food and then is thrown out).</li>
+            <li><strong>Centrosome:</strong> Found just outside the nucleus in animal cells. It contains cylindrical structures called <strong>centrioles</strong> which initiate cell division.</li>
+        </ul>
+
+        <h2>6. Key Differences at a Glance</h2>
+        <ul>
+            <li><strong>Cell Wall:</strong> Present in Plants (Cellulose) | Absent in Animals.</li>
+            <li><strong>Vacuoles:</strong> Large and permanent in Plants | Small, temporary, or absent in Animals.</li>
+            <li><strong>Plastids:</strong> Present in Plants | Absent in Animals.</li>
+            <li><strong>Centrosome:</strong> Absent in Plants | Present in Animals (initiates cell division).</li>
+            <li><strong>Stored Food:</strong> Plants store starch | Animals store glycogen.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

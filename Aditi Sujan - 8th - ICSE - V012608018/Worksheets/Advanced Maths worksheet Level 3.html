@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Level 3 Worksheet</title>
+    <!-- MathJax for formula rendering -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 10mm; }
+        
+        /* --- THEME VARIABLES: Level 3 (Challenger/Hard - Red) --- */
+        :root {
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef5350;   
+            --bg-color: #2c1a1a;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.3; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 10px; box-sizing: border-box;}
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 10px; margin-bottom: 10px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: 20pt; font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: 11pt; font-weight: bold; margin-bottom: 6px; margin-top: 3px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: 13pt; font-weight: bold; text-decoration: underline; 
+            margin-top: 2px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 8px; 
+            font-size: 10pt; background-color: var(--bg-color); padding: 6px 10px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 4px 8px; margin-top: 12px; margin-bottom: 8px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 10.5pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        
+        /* Grid layout for dense packing */
+        .questions-container { 
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 6px 10px;
+        }
+        
+        /* Responsive Breakpoints */
+        @media (min-width: 500px) { .questions-container { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 768px) { .questions-container { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1024px) { .questions-container { grid-template-columns: repeat(4, 1fr); } }
+
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 2px; 
+            font-size: 10pt; page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 5px; min-width: 22px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 20px; padding-top: 6px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 8pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.3;
+        }
+
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle { filter: invert(1) hue-rotate(180deg); background: #e0e0e0; }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* HYPER-DENSE PRINT CSS */
+        @media print { 
+            @page { margin: 6mm; }
+            body { font-size: 9pt; }
+            .theme-toggle { display: none; }
+            .header { padding-bottom: 5px; margin-bottom: 5px; }
+            .institute-name { font-size: 16pt; }
+            .worksheet-title { font-size: 11pt; }
+            .chapter-header { 
+                background-color: var(--bg-color) !important; 
+                border-left-color: var(--primary-color) !important; 
+                -webkit-print-color-adjust: exact; print-color-adjust: exact; 
+                margin-top: 8px; margin-bottom: 4px; padding: 3px 6px; font-size: 9.5pt;
+            }
+            .meta-info { 
+                background-color: var(--bg-color) !important; 
+                -webkit-print-color-adjust: exact; print-color-adjust: exact; 
+                padding: 4px 8px; font-size: 9pt; margin-top: 5px;
+            }
+            .questions-container { 
+                display: grid;
+                grid-template-columns: repeat(4, 1fr); 
+                gap: 2px 6px;
+            }
+            .question-item { font-size: 8.5pt; margin-bottom: 1px; }
+            .footer { margin-top: 15px; font-size: 7pt; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">LEVEL 3: Advanced Challenger Practice</div>
+            <div class="meta-info">
+                <span>Student Name: __________________________</span> 
+                <span>Class: ____</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Advanced Rational Numbers</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">$ \frac{-3}{8} + \frac{5}{12} - \frac{1}{6} $</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">$ \frac{4}{15} - \left(\frac{-2}{5}\right) + \frac{1}{3} $</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">$ \left(\frac{-2}{3} \times \frac{5}{4}\right) + \frac{1}{6} $</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">$ \frac{7}{9} \times \left(\frac{-18}{35}\right) \times \frac{-5}{2} $</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">$ \left(\frac{-4}{5} \div \frac{8}{15}\right) \times \frac{-2}{3} $</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">$ \frac{3}{7} \div \left(\frac{9}{14} \times \frac{2}{3}\right) $</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">$ 2\frac{1}{3} + 3\frac{1}{4} - 1\frac{5}{6} $</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">$ \left(4\frac{1}{5} \times \frac{10}{21}\right) \div 2 $</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">$ \frac{-5}{12} \times \frac{4}{15} + \frac{3}{10} $</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">$ \frac{8}{21} \div \frac{-16}{35} - \frac{1}{4} $</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">$ \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \frac{1}{5} $</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">$ \frac{-3}{4} \times \left(\frac{2}{3} - \frac{5}{6}\right) $</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">$ \frac{5}{6} \div \left(\frac{1}{2} + \frac{1}{3}\right) $</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">$ \left(\frac{-2}{5}\right)^2 \times \frac{25}{8} $</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">$ \frac{-11}{18} \div \frac{22}{27} \times \frac{4}{3} $</div></div>
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">Multiplicative inverse of $ \frac{-3}{7} \times \frac{14}{9} $</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">Additive inverse of $ \frac{2}{3} - \frac{3}{4} $</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">$ 1 \div \left(1 \div \frac{3}{4}\right) $</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">What should be added to $\frac{-5}{8}$ to get $\frac{1}{4}$?</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">What should $\frac{-3}{5}$ be multiplied by to get $\frac{9}{10}$?</div></div>
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">$ \frac{2}{5} $ of a number is $16$. Number?</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">Rational number exactly between $\frac{1}{3}$ and $\frac{1}{2}$.</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">$ \frac{3}{8} $ of $64$ minus $\frac{1}{4}$ of $48$.</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">$ \left( \frac{1}{2} - \frac{1}{4} \right) \div \left( \frac{1}{2} + \frac{1}{4} \right) $</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">$ \frac{-4}{9} \times \left( \frac{27}{-16} \right) \times \frac{-2}{3} $</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">$ 3.5 \times 0.2 + 1.4 $</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">$ \frac{1.44}{1.2} - 0.5 $</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">$ \frac{2}{3} + 0.5 $ (as fraction)</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">$ 0.75 \div \frac{3}{4} $</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">$ \left(\frac{-1}{2}\right)^3 + \frac{1}{8} $</div></div>
+        </div>
+
+        <div class="chapter-header">Section B: Complex Algebra & Factorization</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">Expand: $ (3x - 4y)^2 $</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">Expand: $ (2a + 5b)(2a - 5b) $</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">Expand: $ (x + \frac{1}{x})^2 $</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">Expand: $ (2y - \frac{1}{2y})^2 $</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">Evaluate using identity: $ 103 \times 97 $</div></div>
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">Evaluate using identity: $ (99.5)^2 $</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">Simplify: $ (x+y)^2 - (x-y)^2 $</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">If $x+\frac{1}{x} = 4$, find $x^2+\frac{1}{x^2}$</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">If $a-\frac{1}{a} = 3$, find $a^2+\frac{1}{a^2}$</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">Factorize: $ 16x^2 - 81y^2 $</div></div>
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">Factorize: $ a^4 - b^4 $</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">Factorize: $ 25 - (x+y)^2 $</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">Factorize: $ x^2 + 7x + 12 $</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">Factorize: $ y^2 - y - 20 $</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">Factorize: $ a^2 - 11a + 30 $</div></div>
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">Factorize: $ p^2 + 2p - 35 $</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">Factorize: $ 2x^2 + 7x + 5 $</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">Factorize: $ 3y^2 - 10y + 8 $</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">Factorize: $ 4m^2 + 8m + 3 $</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">Factorize: $ x^2 - 14x + 49 $</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">Factorize: $ ab + ac + xb + xc $</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">Factorize: $ mx - my - nx + ny $</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">Divide: $ (x^2 + 5x + 6) \div (x+2) $</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">Divide: $ (16x^2 - 9) \div (4x-3) $</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">Simplify: $ (2x+3)^2 - 12x $</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">Expand: $ (x-2)(x+3)(x-4) $</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">Factorize: $ x^3 - 4x $</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">Factorize: $ 3a^2b - 12ab^2 $</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">If $x-y = 5, xy = 6$, find $x^2+y^2$</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">If $a+b = 7, ab = 10$, find $a-b$</div></div>
+        </div>
+
+        <div class="chapter-header">Section C: Hard Linear Equations</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">61.</span><div class="q-content">$ \frac{2x}{3} + \frac{x}{2} = 7 $</div></div>
+            <div class="question-item"><span class="q-num">62.</span><div class="q-content">$ \frac{y-2}{4} = \frac{y+1}{3} $</div></div>
+            <div class="question-item"><span class="q-num">63.</span><div class="q-content">$ 3(m-2) - 2(m-3) = 5 $</div></div>
+            <div class="question-item"><span class="q-num">64.</span><div class="q-content">$ \frac{2p-1}{3} - \frac{p+2}{4} = 1 $</div></div>
+            <div class="question-item"><span class="q-num">65.</span><div class="q-content">$ \frac{x}{2} - \frac{1}{5} = \frac{x}{3} + \frac{1}{4} $</div></div>
+            <div class="question-item"><span class="q-num">66.</span><div class="q-content">$ 0.15x + 0.25 = 0.5x - 0.1 $</div></div>
+            <div class="question-item"><span class="q-num">67.</span><div class="q-content">$ 4(2y-3) + 5(3y-4) = 14 $</div></div>
+            <div class="question-item"><span class="q-num">68.</span><div class="q-content">$ \frac{3a-2}{4} - \frac{2a+3}{3} = \frac{2}{3} - a $</div></div>
+            <div class="question-item"><span class="q-num">69.</span><div class="q-content">$ \frac{x+1}{x-1} = \frac{3}{2} $</div></div>
+            <div class="question-item"><span class="q-num">70.</span><div class="q-content">$ \frac{2x-3}{3x+2} = \frac{1}{4} $</div></div>
+            <div class="question-item"><span class="q-num">71.</span><div class="q-content">$ 5(x-3) = 3(x+2) - 4 $</div></div>
+            <div class="question-item"><span class="q-num">72.</span><div class="q-content">$ \frac{1}{2}(x-1) - \frac{1}{3}(x+2) = 1 $</div></div>
+            <div class="question-item"><span class="q-num">73.</span><div class="q-content">$ 0.3(2x-1) = 0.2(3x+1) + 0.1 $</div></div>
+            <div class="question-item"><span class="q-num">74.</span><div class="q-content">$ 1.5x - 0.7 = 0.5x + 1.3 $</div></div>
+            <div class="question-item"><span class="q-num">75.</span><div class="q-content">$ \frac{3}{x+1} = \frac{2}{x-2} $</div></div>
+            <div class="question-item"><span class="q-num">76.</span><div class="q-content">Sum of 3 consecutive even integers is 48. Find them.</div></div>
+            <div class="question-item"><span class="q-num">77.</span><div class="q-content">Numerator is 3 less than denominator. If 2 is added to both, it becomes 1/2. Find fraction.</div></div>
+            <div class="question-item"><span class="q-num">78.</span><div class="q-content">A's age is twice B's. 5 years ago, A was 3 times B. Find A's age.</div></div>
+            <div class="question-item"><span class="q-num">79.</span><div class="q-content">Perimeter of rectangle is 40cm. Length is 4 more than breadth. Find Area.</div></div>
+            <div class="question-item"><span class="q-num">80.</span><div class="q-content">Two numbers ratio 3:5. If 8 is added to both, ratio is 2:3. Find numbers.</div></div>
+            <div class="question-item"><span class="q-num">81.</span><div class="q-content">$ \frac{x}{4} + \frac{x}{6} = x - 7 $</div></div>
+            <div class="question-item"><span class="q-num">82.</span><div class="q-content">$ \frac{2(x-5)}{3} = \frac{x-3}{2} $</div></div>
+            <div class="question-item"><span class="q-num">83.</span><div class="q-content">$ 8x - [4x - (2x+1)] = 9 $</div></div>
+            <div class="question-item"><span class="q-num">84.</span><div class="q-content">$ \frac{3x+5}{2x+1} = \frac{1}{3} $</div></div>
+            <div class="question-item"><span class="q-num">85.</span><div class="q-content">Digits of a 2-digit number add to 9. Reversing digits increases value by 27. Number?</div></div>
+            <div class="question-item"><span class="q-num">86.</span><div class="q-content">$ \frac{y-1}{3} - \frac{y-2}{4} = 1 $</div></div>
+            <div class="question-item"><span class="q-num">87.</span><div class="q-content">$ 0.25(4x-3) = 0.05(10x-9) $</div></div>
+            <div class="question-item"><span class="q-num">88.</span><div class="q-content">$ \frac{m}{m+15} = \frac{4}{9} $</div></div>
+            <div class="question-item"><span class="q-num">89.</span><div class="q-content">Price of 3 pens, 5 pencils is ₹40. Pen costs ₹5 more than pencil. Price of pen?</div></div>
+            <div class="question-item"><span class="q-num">90.</span><div class="q-content">$ \frac{3}{4}x - 2 = \frac{1}{2}x + 1 $</div></div>
+        </div>
+
+        <div class="chapter-header">Section D: Advanced Exponents</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">91.</span><div class="q-content">Evaluate: $ (3^{-2} + 4^{-2})^{-1} $</div></div>
+            <div class="question-item"><span class="q-num">92.</span><div class="q-content">Evaluate: $ \left(\frac{-1}{3}\right)^{-3} \div \left(\frac{1}{2}\right)^{-3} $</div></div>
+            <div class="question-item"><span class="q-num">93.</span><div class="q-content">Solve for x: $ 2^{x+3} = 32 $</div></div>
+            <div class="question-item"><span class="q-num">94.</span><div class="q-content">Solve for y: $ 3^{2y-1} = 27 $</div></div>
+            <div class="question-item"><span class="q-num">95.</span><div class="q-content">Solve for m: $ 5^{m} \times 5^{3} = 5^{7} $</div></div>
+            <div class="question-item"><span class="q-num">96.</span><div class="q-content">Evaluate: $ \left(\frac{2}{3}\right)^{-4} \times \left(\frac{2}{3}\right)^{2} $</div></div>
+            <div class="question-item"><span class="q-num">97.</span><div class="q-content">Simplify: $ \frac{8^3 \times 2^4}{4^5} $</div></div>
+            <div class="question-item"><span class="q-num">98.</span><div class="q-content">Simplify: $ (x^a / x^b)^{a+b} $</div></div>
+            <div class="question-item"><span class="q-num">99.</span><div class="q-content">Evaluate: $ (-2)^3 \times (-2)^{-5} $</div></div>
+            <div class="question-item"><span class="q-num">100.</span><div class="q-content">Find x: $ (2/5)^3 \times (2/5)^{-6} = (2/5)^{2x-1} $</div></div>
+            <div class="question-item"><span class="q-num">101.</span><div class="q-content">Simplify: $ \frac{25 \times t^{-4}}{5^{-3} \times 10 \times t^{-8}} $</div></div>
+            <div class="question-item"><span class="q-num">102.</span><div class="q-content">Evaluate: $ (6^0 - 7^0) \times (6^0 + 7^0) $</div></div>
+            <div class="question-item"><span class="q-num">103.</span><div class="q-content">Standard Form: $ 0.0000000425 $</div></div>
+            <div class="question-item"><span class="q-num">104.</span><div class="q-content">Usual Form: $ 3.02 \times 10^{-6} $</div></div>
+            <div class="question-item"><span class="q-num">105.</span><div class="q-content">Solve: $ 4^x = 1/64 $</div></div>
+            <div class="question-item"><span class="q-num">106.</span><div class="q-content">Find m: $ (-3)^{m+1} \times (-3)^5 = (-3)^7 $</div></div>
+            <div class="question-item"><span class="q-num">107.</span><div class="q-content">Simplify: $ (2^{-1} \times 3^{-1})^2 $</div></div>
+            <div class="question-item"><span class="q-num">108.</span><div class="q-content">Evaluate: $ [ (1/3)^{-2} - (1/2)^{-3} ] \div (1/4)^{-2} $</div></div>
+            <div class="question-item"><span class="q-num">109.</span><div class="q-content">Write $ 8 \times 10^4 + 6 \times 10^2 + 5 $ in standard form.</div></div>
+            <div class="question-item"><span class="q-num">110.</span><div class="q-content">Simplify: $ (a^{-2} b^3)^4 $</div></div>
+            <div class="question-item"><span class="q-num">111.</span><div class="q-content">Evaluate: $ \frac{2^5 \times 15^4}{6^3 \times 10^4} $</div></div>
+            <div class="question-item"><span class="q-num">112.</span><div class="q-content">Solve for x: $ 10^{2x-1} = 1000 $</div></div>
+            <div class="question-item"><span class="q-num">113.</span><div class="q-content">Evaluate: $ 100^{1/2} $</div></div>
+            <div class="question-item"><span class="q-num">114.</span><div class="q-content">Evaluate: $ 27^{2/3} $</div></div>
+            <div class="question-item"><span class="q-num">115.</span><div class="q-content">Evaluate: $ 16^{-3/4} $</div></div>
+            <div class="question-item"><span class="q-num">116.</span><div class="q-content">By what number should $5^{-1}$ be multiplied to get $10^{-1}$?</div></div>
+            <div class="question-item"><span class="q-num">117.</span><div class="q-content">By what number should $(-4)^{-2}$ be divided to get $(-4)^{-3}$?</div></div>
+            <div class="question-item"><span class="q-num">118.</span><div class="q-content">Value of $ (3^2 - 2^2) \times (2/3)^{-3} $</div></div>
+            <div class="question-item"><span class="q-num">119.</span><div class="q-content">Find x: $ 3^x \times 3^{x+1} = 81 $</div></div>
+            <div class="question-item"><span class="q-num">120.</span><div class="q-content">Evaluate: $ \frac{5^{n+2} - 5^{n}}{5^{n+1}} $</div></div>
+        </div>
+
+        <div class="chapter-header">Section E: Advanced Commercial Mathematics</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">121.</span><div class="q-content">Successive discounts of 20% and 10% equals what single discount?</div></div>
+            <div class="question-item"><span class="q-num">122.</span><div class="q-content">CP = 800, Overhead = 200, SP = 1200. Find Profit %.</div></div>
+            <div class="question-item"><span class="q-num">123.</span><div class="q-content">By selling for ₹810, a man loses 10%. At what price to sell to gain 10%?</div></div>
+            <div class="question-item"><span class="q-num">124.</span><div class="q-content">MP = 1500. Discount = 12%. Find SP.</div></div>
+            <div class="question-item"><span class="q-num">125.</span><div class="q-content">SP = 880, Discount = 12%. Find MP.</div></div>
+            <div class="question-item"><span class="q-num">126.</span><div class="q-content">Price includes 8% VAT is ₹5400. Find original price.</div></div>
+            <div class="question-item"><span class="q-num">127.</span><div class="q-content">CI on ₹5000 at 10% p.a. for 2 years (compounded annually)?</div></div>
+            <div class="question-item"><span class="q-num">128.</span><div class="q-content">Amount of ₹4000 at 5% p.a. for 2 years (CI)?</div></div>
+            <div class="question-item"><span class="q-num">129.</span><div class="q-content">Diff between CI and SI on ₹1000 at 10% for 2 yrs?</div></div>
+            <div class="question-item"><span class="q-num">130.</span><div class="q-content">A sum doubles in 8 yrs at SI. Rate of interest?</div></div>
+            <div class="question-item"><span class="q-num">131.</span><div class="q-content">Population is 10,000. Increases 10% annually. Pop after 2 yrs?</div></div>
+            <div class="question-item"><span class="q-num">132.</span><div class="q-content">Machine depreciates 20% annually. Present value 8000. Value after 1 yr?</div></div>
+            <div class="question-item"><span class="q-num">133.</span><div class="q-content">Vendor bought lemons at 6 for ₹5, sold at 5 for ₹6. Gain %?</div></div>
+            <div class="question-item"><span class="q-num">134.</span><div class="q-content">Find CI on ₹8000 for 1 yr at 10% p.a. compounded half-yearly.</div></div>
+            <div class="question-item"><span class="q-num">135.</span><div class="q-content">Sum amounts to ₹5760 in 2 yrs at 20% CI. Find Sum.</div></div>
+            <div class="question-item"><span class="q-num">136.</span><div class="q-content">What % above CP should MP be to gain 20% after 10% discount?</div></div>
+            <div class="question-item"><span class="q-num">137.</span><div class="q-content">Salary increased by 20% then decreased by 20%. Net change %?</div></div>
+            <div class="question-item"><span class="q-num">138.</span><div class="q-content">In an election, winner gets 60% votes and wins by 400 votes. Total votes?</div></div>
+            <div class="question-item"><span class="q-num">139.</span><div class="q-content">A student needs 40% to pass. Gets 150, fails by 10 marks. Max marks?</div></div>
+            <div class="question-item"><span class="q-num">140.</span><div class="q-content">Fresh grapes contain 80% water, dry grapes 20% water. From 50kg fresh, how much dry?</div></div>
+            <div class="question-item"><span class="q-num">141.</span><div class="q-content">A does work in 10 days, B in 15. Together in how many days?</div></div>
+            <div class="question-item"><span class="q-num">142.</span><div class="q-content">A and B together take 6 days. A alone takes 10 days. B alone?</div></div>
+            <div class="question-item"><span class="q-num">143.</span><div class="q-content">Pipe A fills in 4h, B in 6h. Both open, time to fill?</div></div>
+            <div class="question-item"><span class="q-num">144.</span><div class="q-content">Speed 72 km/hr in m/s?</div></div>
+            <div class="question-item"><span class="q-num">145.</span><div class="q-content">Train 100m long crosses pole in 10s. Speed in km/hr?</div></div>
+            <div class="question-item"><span class="q-num">146.</span><div class="q-content">15 men do work in 20 days. How many days for 10 men?</div></div>
+            <div class="question-item"><span class="q-num">147.</span><div class="q-content">Cost of 12 pens is ₹84. Cost of 8 pens?</div></div>
+            <div class="question-item"><span class="q-num">148.</span><div class="q-content">If $x$ and $y$ are inversely proportional, $x=4$ when $y=6$. Find $x$ when $y=12$.</div></div>
+            <div class="question-item"><span class="q-num">149.</span><div class="q-content">Map scale 1:500000. 4cm on map is how many km in reality?</div></div>
+            <div class="question-item"><span class="q-num">150.</span><div class="q-content">Ratio of boys to girls 5:3. Total 40. How many boys?</div></div>
+        </div>
+        
+        <div class="chapter-header">Section F: Advanced Geometry & Mensuration</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">151.</span><div class="q-content">Area of trapezium: parallel sides 10 & 14, height 5.</div></div>
+            <div class="question-item"><span class="q-num">152.</span><div class="q-content">Area of rhombus: diagonals 12 and 16.</div></div>
+            <div class="question-item"><span class="q-num">153.</span><div class="q-content">Perimeter of rhombus whose diagonals are 12 & 16.</div></div>
+            <div class="question-item"><span class="q-num">154.</span><div class="q-content">TSA of cylinder: r=7, h=10.</div></div>
+            <div class="question-item"><span class="q-num">155.</span><div class="q-content">Volume of cylinder: r=7, h=10.</div></div>
+            <div class="question-item"><span class="q-num">156.</span><div class="q-content">CSA of cylinder: r=14, h=5.</div></div>
+            <div class="question-item"><span class="q-num">157.</span><div class="q-content">Volume of cube is 512. Surface area?</div></div>
+            <div class="question-item"><span class="q-num">158.</span><div class="q-content">Dimensions of cuboid 4x5x6. Volume?</div></div>
+            <div class="question-item"><span class="q-num">159.</span><div class="q-content">Longest pole in room 10x8x6?</div></div>
+            <div class="question-item"><span class="q-num">160.</span><div class="q-content">Area of square field is 2.25 hectares. Side in meters?</div></div>
+            <div class="question-item"><span class="q-num">161.</span><div class="q-content">Circumference is 88cm. Find Area of circle.</div></div>
+            <div class="question-item"><span class="q-num">162.</span><div class="q-content">Radius of wheel is 0.35m. Distance covered in 500 revs?</div></div>
+            <div class="question-item"><span class="q-num">163.</span><div class="q-content">Area of ring: outer R=14, inner r=7.</div></div>
+            <div class="question-item"><span class="q-num">164.</span><div class="q-content">Sum of interior angles of an Octagon?</div></div>
+            <div class="question-item"><span class="q-num">165.</span><div class="q-content">Each exterior angle of regular decagon (10 sides)?</div></div>
+            <div class="question-item"><span class="q-num">166.</span><div class="q-content">Number of diagonals in a Hexagon?</div></div>
+            <div class="question-item"><span class="q-num">167.</span><div class="q-content">Interior angle of regular polygon is $144^\circ$. No. of sides?</div></div>
+            <div class="question-item"><span class="q-num">168.</span><div class="q-content">In parallelogram ABCD, $\angle A = 70^\circ$. Find $\angle B$.</div></div>
+            <div class="question-item"><span class="q-num">169.</span><div class="q-content">Diagonals of rectangle are $2x+1$ and $3x-2$. Find x.</div></div>
+            <div class="question-item"><span class="q-num">170.</span><div class="q-content">Base of $\triangle$ is twice height. Area is 36. Find height.</div></div>
+            <div class="question-item"><span class="q-num">171.</span><div class="q-content">Three angles of quad are 60, 80, 100. Fourth angle?</div></div>
+            <div class="question-item"><span class="q-num">172.</span><div class="q-content">Hypotenuse of right $\triangle$ is 25, one side is 7. Other side?</div></div>
+            <div class="question-item"><span class="q-num">173.</span><div class="q-content">Side of equilateral $\triangle$ is 4. Altitude length?</div></div>
+            <div class="question-item"><span class="q-num">174.</span><div class="q-content">Two adjacent angles of parallelogram are $3x$ and $2x$. Find angles.</div></div>
+            <div class="question-item"><span class="q-num">175.</span><div class="q-content">Cost of painting cuboid $5 \times 4 \times 3$ at ₹10 per sq unit?</div></div>
+            <div class="question-item"><span class="q-num">176.</span><div class="q-content">Volume of metal in hollow cylinder: R=5, r=3, h=10? ($\pi=3.14$)</div></div>
+            <div class="question-item"><span class="q-num">177.</span><div class="q-content">Number of 2cm cubes cut from a 10cm cube?</div></div>
+            <div class="question-item"><span class="q-num">178.</span><div class="q-content">A rectangular sheet $44 \times 10$ is rolled along length to form cylinder. Find r.</div></div>
+            <div class="question-item"><span class="q-num">179.</span><div class="q-content">Two circles touch externally. Radii 5 and 3. Distance between centers?</div></div>
+            <div class="question-item"><span class="q-num">180.</span><div class="q-content">Euler's Formula: Faces=6, Edges=12. Vertices?</div></div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

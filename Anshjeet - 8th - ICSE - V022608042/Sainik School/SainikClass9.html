@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sainik School Class 9 Entrance Exam 2027 - Complete Study Notes | Vardaan Learning Institute</title>
+    <meta name="description" content="Comprehensive study notes for Sainik School Class 9 entrance exam covering Mathematics, Science, and Social Science by Vardaan Learning Institute.">
+
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            chtml: { mtextInheritFont: true, scale: 1.02 }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #0a0a0a;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.05);
+            --example-text: #cccccc;
+            --toggle-bg: #222222;
+            --toggle-border: #444444;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT & RESPONSIVENESS --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- MATHJAX FIX (NO SCROLLBARS) --- */
+        mjx-container {
+            max-width: 100% !important;
+            padding: 2px 0 !important;
+            overflow: visible !important;
+        }
+
+        mjx-container[display="true"] {
+            margin: 0.8em auto !important;
+            display: block !important;
+            text-align: center;
+        }
+
+        mjx-assistive-mml {
+            display: none !important;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        html.dark-mode .watermark-overlay { mix-blend-mode: screen; }
+        html.dark-mode .watermark-image { filter: invert(1); opacity: 0.15; }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 24px;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            white-space: nowrap;
+        }
+
+        .system-name {
+            font-size: 1rem;
+            color: var(--meta-text);
+            margin-top: 5px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .top-branding-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0 12px;
+            padding: 8px 0 0;
+            white-space: nowrap;
+            color: var(--meta-text);
+        }
+
+        .heart-red {
+            color: #d32f2f;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by { font-size: 1rem; margin-bottom: 5px; font-weight: normal; }
+        .powered-by { font-size: 0.9rem; color: var(--pink-border); font-style: italic; }
+
+        .powered-by-label {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-style: italic;
+            color: var(--pink-border);
+            letter-spacing: 0.3px;
+        }
+
+        .powered-by-brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-style: italic;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: 0.4px;
+        }
+
+        html.dark-mode .powered-by-brand {
+            color: #fff;
+        }
+
+        html.dark-mode .vardaan-logo {
+            filter: brightness(0) invert(1);
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.1rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+            word-break: break-word;
+        }
+
+        h2 { font-size: 1.55rem; color: var(--pink-border); margin-top: 36px; border-left: 5px solid var(--pink-border); padding-left: 14px; font-weight: 700; word-break: break-word; }
+        h3 { font-size: 1.25rem; color: var(--accent-purple); margin-top: 22px; margin-bottom: 10px; text-decoration: underline; text-decoration-color: var(--accent-purple); text-decoration-thickness: 2px; text-underline-offset: 4px; word-break: break-word; }
+        h4 { font-size: 1.1rem; color: var(--green-border); margin-top: 18px; margin-bottom: 8px; font-weight: 600; }
+        p, li { font-size: 1.02rem; line-height: 1.65; margin-bottom: 10px; word-break: break-word; }
+        ul, ol { padding-left: 24px; }
+        strong { color: var(--pink-border); }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 22px 20px 18px 20px; margin: 34px 0 24px 0; position: relative; width: 100%; box-sizing: border-box; overflow: visible; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 22px 20px 18px 20px; margin: 34px 0 24px 0; position: relative; width: 100%; box-sizing: border-box; overflow: visible; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 22px 20px 18px 20px; margin: 34px 0 24px 0; position: relative; width: 100%; box-sizing: border-box; overflow: visible; }
+        .pink-box { background-color: var(--pink-bg); border: 2px solid var(--pink-border); border-radius: 8px; padding: 22px 20px 18px 20px; margin: 34px 0 24px 0; position: relative; width: 100%; box-sizing: border-box; overflow: visible; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 18px;
+            background: var(--paper-bg);
+            padding: 2px 12px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+            max-width: 90%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            z-index: 5;
+            line-height: 1.4;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+        .pink-box .box-label { color: var(--pink-border); border-color: var(--pink-border); }
+
+        /* --- PRACTICE PROBLEM STYLING --- */
+        .practice-box {
+            background-color: var(--example-bg);
+            border: 2px dashed var(--accent-purple);
+            border-radius: 8px;
+            padding: 22px 20px 18px 20px;
+            margin: 34px 0 24px 0;
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: visible;
+        }
+        
+        .practice-box .box-label { color: var(--accent-purple); border-color: var(--accent-purple); }
+        .solution {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dotted var(--toggle-border);
+            font-size: 0.98rem;
+            line-height: 1.6;
+            overflow: visible !important;
+        }
+        
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+        th, td { border: 1px solid var(--toggle-border); padding: 10px 12px; text-align: left; }
+        th { background-color: var(--blue-bg); color: var(--blue-border); font-weight: bold; text-align: center; }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; stroke: var(--icon-fill); }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 20px 14px;
+            }
+            .institute-name {
+                font-size: 1.45rem;
+                letter-spacing: 0.5px;
+            }
+            .system-name {
+                font-size: 0.95rem;
+                letter-spacing: 1.5px;
+            }
+            h1 {
+                font-size: 1.55rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+                padding-left: 10px;
+                border-left-width: 4px;
+            }
+            h3 {
+                font-size: 1.12rem;
+            }
+            p, li {
+                font-size: 0.98rem;
+            }
+            .box-label {
+                font-size: 0.72rem;
+                right: 12px;
+                top: -10px;
+                padding: 2px 6px;
+            }
+            .blue-box, .green-box, .yellow-box, .pink-box, .practice-box {
+                padding: 16px 12px;
+                margin: 20px 0;
+            }
+            .theme-toggle {
+                top: 12px;
+                right: 12px;
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body {
+                background-color: #fff !important;
+                color: #000 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .branding-header {
+                background-color: white !important;
+                border-bottom: 2px solid var(--blue-border) !important;
+                padding: 10px 0 !important;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .paper-sheet {
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+            }
+
+            .theme-toggle,
+            .branding-footer {
+                display: none !important;
+            }
+
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: 999 !important;
+                opacity: 0.8 !important;
+                mix-blend-mode: multiply !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                pointer-events: none !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .watermark-image {
+                filter: none !important;
+                max-width: 70% !important;
+                opacity: 0.2 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            @page {
+                size: A4;
+                margin: 2cm;
+
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #1e88e5;
+                    color: #fff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+
+    <div class="paper-sheet">
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+        </div>
+        <div class="top-branding-note">
+            <span class="created-by">Created by <strong>Team Vardaan</strong> with <span class="heart-red" aria-hidden="true">&hearts;</span></span>
+            <span aria-hidden="true">|</span>
+            <span class="powered-by-label">Powered by</span>
+            <a href="https://vardaancomet.com" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1783346988/Vardaan_Comet_bg_removed_hpjuhv.png" alt="Vardaan Comet Logo" class="vardaan-logo" style="height: 24px; width: auto;">
+                <span class="powered-by-brand">VARDAAN COMET</span>
+            </a>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Sainik School Class 9 Entrance Exam 2027 - Complete Study Notes</h1>
+
+        <p><em>Comprehensive study material covering Mathematics, Science, and Social Science syllabus for Sainik School entrance examination, meticulously prepared according to the latest Arihant publication guidelines and CBSE Class 8 curriculum.</em></p>
+
+        <!-- ========================================
+             PART A: MATHEMATICS
+        ======================================== -->
+        <h1 style="margin-top: 50px;">PART A: MATHEMATICS</h1>
+
+        <!-- ========================================
+             CHAPTER 1: NUMBER SYSTEM
+        ======================================== -->
+        <h2>Chapter 1: Number System</h2>
+
+        <h3>1.1 Types of Numbers</h3>
+        <div class="blue-box">
+            <span class="box-label">Number Classification</span>
+            <ul>
+                <li><strong>Natural Numbers (N):</strong> $\mathbb{N} = \{1, 2, 3, 4, 5, \ldots\}$ - Counting numbers starting from 1.</li>
+                <li><strong>Whole Numbers (W):</strong> $\mathbb{W} = \{0, 1, 2, 3, 4, \ldots\}$ - Natural numbers including zero.</li>
+                <li><strong>Integers (Z):</strong> $\mathbb{Z} = \{\ldots, -3, -2, -1, 0, 1, 2, 3, \ldots\}$ - Positive and negative whole numbers including zero.</li>
+                <li><strong>Rational Numbers (Q):</strong> Numbers that can be expressed as $\frac{p}{q}$ where $p, q \in \mathbb{Z}$ and $q \neq 0$.</li>
+                <li><strong>Irrational Numbers:</strong> Numbers that cannot be expressed as $\frac{p}{q}$. Examples: $\sqrt{2}, \sqrt{3}, \pi, e$.</li>
+                <li><strong>Real Numbers (R):</strong> Union of rational and irrational numbers.</li>
+            </ul>
+        </div>
+
+        <h3>1.2 Properties of Rational Numbers</h3>
+        <div class="green-box">
+            <span class="box-label">Important Properties</span>
+            <ul>
+                <li><strong>Closure Property:</strong> 
+                    <ul>
+                        <li>Addition: $a + b$ is rational if $a, b$ are rational</li>
+                        <li>Subtraction: $a - b$ is rational if $a, b$ are rational</li>
+                        <li>Multiplication: $a \times b$ is rational if $a, b$ are rational</li>
+                        <li>Division: $\frac{a}{b}$ is rational if $a, b$ are rational and $b \neq 0$</li>
+                    </ul>
+                </li>
+                <li><strong>Commutative Property:</strong>
+                    $$a + b = b + a \quad \text{and} \quad a \times b = b \times a$$
+                </li>
+                <li><strong>Associative Property:</strong>
+                    $$(a + b) + c = a + (b + c) \quad \text{and} \quad (a \times b) \times c = a \times (b \times c)$$
+                </li>
+                <li><strong>Distributive Property:</strong>
+                    $$a \times (b + c) = a \times b + a \times c$$
+                </li>
+                <li><strong>Identity Elements:</strong>
+                    <ul>
+                        <li>Additive Identity: $a + 0 = a$</li>
+                        <li>Multiplicative Identity: $a \times 1 = a$</li>
+                    </ul>
+                </li>
+                <li><strong>Inverse Elements:</strong>
+                    <ul>
+                        <li>Additive Inverse: $a + (-a) = 0$</li>
+                        <li>Multiplicative Inverse: $a \times \frac{1}{a} = 1$ (if $a \neq 0$)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h3>1.3 Representation of Rational Numbers on Number Line</h3>
+        <p>Every rational number can be represented as a point on the number line. Between any two rational numbers, there exist infinitely many rational numbers.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Finding Rational Numbers Between Two Numbers</span>
+            <p><strong>Method 1:</strong> To find $n$ rational numbers between $a$ and $b$:</p>
+            $$\text{Rational number} = \frac{a + b}{2}, \frac{a + \frac{a+b}{2}}{2}, \ldots$$
+            <p><strong>Method 2:</strong> Multiply and divide both numbers by $(n+1)$:</p>
+            $$\text{Between } a \text{ and } b: \frac{a(n+1)}{(n+1)}, \frac{a(n+1)+1}{(n+1)}, \ldots, \frac{b(n+1)}{(n+1)}$$
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 1</span>
+            <p><strong>Question:</strong> Find five rational numbers between $\frac{3}{5}$ and $\frac{4}{5}$.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Multiply both numerator and denominator by 6 (since we need 5 numbers, use $n+1 = 6$):
+                $$\frac{3}{5} = \frac{3 \times 6}{5 \times 6} = \frac{18}{30}$$
+                $$\frac{4}{5} = \frac{4 \times 6}{5 \times 6} = \frac{24}{30}$$
+                Five rational numbers between them are:
+                $$\mathbf{\frac{19}{30}, \frac{20}{30}, \frac{21}{30}, \frac{22}{30}, \frac{23}{30}}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 2: LCM AND HCF
+        ======================================== -->
+        <h2>Chapter 2: LCM and HCF</h2>
+
+        <h3>2.1 Factors and Multiples</h3>
+        <div class="blue-box">
+            <span class="box-label">Basic Definitions</span>
+            <ul>
+                <li><strong>Factor:</strong> A number $a$ is a factor of $b$ if $b$ is exactly divisible by $a$ (remainder = 0).</li>
+                <li><strong>Multiple:</strong> A number $b$ is a multiple of $a$ if $b = a \times k$ for some integer $k$.</li>
+                <li><strong>Prime Number:</strong> A natural number greater than 1 that has exactly two factors: 1 and itself.</li>
+                <li><strong>Composite Number:</strong> A natural number greater than 1 that has more than two factors.</li>
+                <li><strong>Co-prime Numbers:</strong> Two numbers whose HCF is 1.</li>
+            </ul>
+        </div>
+
+        <h3>2.2 Prime Factorization</h3>
+        <p><strong>Prime Factorization</strong> is expressing a composite number as a product of prime numbers.</p>
+        <p><strong>Methods:</strong></p>
+        <ul>
+            <li><strong>Factor Tree Method:</strong> Break down the number into prime factors step by step.</li>
+            <li><strong>Division Method:</strong> Divide the number by smallest prime repeatedly until quotient becomes 1.</li>
+        </ul>
+
+        <h3>2.3 Highest Common Factor (HCF)</h3>
+        <div class="green-box">
+            <span class="box-label">HCF Definition & Methods</span>
+            <p><strong>HCF (Highest Common Factor) / GCD (Greatest Common Divisor):</strong> The largest number that divides all given numbers without leaving a remainder.</p>
+            <p><strong>Methods to Find HCF:</strong></p>
+            <ul>
+                <li><strong>Prime Factorization Method:</strong> HCF = Product of smallest power of each common prime factor.</li>
+                <li><strong>Division Method (Euclid's Algorithm):</strong>
+                    $$\text{HCF}(a, b) = \text{HCF}(b, a \mod b)$$
+                    Continue until remainder becomes 0. The last non-zero remainder is the HCF.
+                </li>
+            </ul>
+        </div>
+
+        <h3>2.4 Lowest Common Multiple (LCM)</h3>
+        <div class="green-box">
+            <span class="box-label">LCM Definition & Methods</span>
+            <p><strong>LCM (Lowest Common Multiple):</strong> The smallest positive number that is a multiple of all given numbers.</p>
+            <p><strong>Methods to Find LCM:</strong></p>
+            <ul>
+                <li><strong>Prime Factorization Method:</strong> LCM = Product of highest power of each prime factor present in the numbers.</li>
+                <li><strong>Division Method:</strong> Divide by common prime factors and multiply all divisors and remaining numbers.</li>
+            </ul>
+        </div>
+
+        <h3>2.5 Relationship Between HCF and LCM</h3>
+        <div class="yellow-box">
+            <span class="box-label">Master Formula</span>
+            <p>For any two numbers $a$ and $b$:</p>
+            $$\mathbf{\text{HCF}(a,b) \times \text{LCM}(a,b) = a \times b}$$
+            <p>This formula is extremely useful for finding one value when the other three are known.</p>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 2</span>
+            <p><strong>Question:</strong> Find the HCF and LCM of 12, 15, and 21 using prime factorization.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Prime factorization:
+                $$12 = 2^2 \times 3$$
+                $$15 = 3 \times 5$$
+                $$21 = 3 \times 7$$
+                <strong>HCF:</strong> Product of smallest power of common prime factors
+                $$\text{Common prime factor} = 3^1$$
+                $$\mathbf{\text{HCF} = 3}$$
+                <strong>LCM:</strong> Product of highest power of all prime factors
+                $$\text{LCM} = 2^2 \times 3 \times 5 \times 7 = 4 \times 3 \times 5 \times 7 = \mathbf{420}$$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 3</span>
+            <p><strong>Question:</strong> The HCF of two numbers is 16 and their product is 3072. Find their LCM.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Using the formula:
+                $$\text{HCF} \times \text{LCM} = \text{Product of numbers}$$
+                $$16 \times \text{LCM} = 3072$$
+                $$\text{LCM} = \frac{3072}{16} = \mathbf{192}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 3: SQUARE AND CUBE ROOTS
+        ======================================== -->
+        <h2>Chapter 3: Square and Cube Roots</h2>
+
+        <h3>3.1 Perfect Squares</h3>
+        <div class="blue-box">
+            <span class="box-label">Square Number Properties</span>
+            <ul>
+                <li><strong>Perfect Square:</strong> A number obtained by squaring a natural number. Example: $1, 4, 9, 16, 25, 36, \ldots$</li>
+                <li><strong>Properties of Perfect Squares:</strong>
+                    <ul>
+                        <li>Perfect squares end in 0, 1, 4, 5, 6, or 9 (never end in 2, 3, 7, or 8)</li>
+                        <li>Number of zeros at the end is always even</li>
+                        <li>If a number ends in odd number of zeros, it is NOT a perfect square</li>
+                        <li>In prime factorization, all prime factors appear in even powers</li>
+                    </ul>
+                </li>
+                <li><strong>Sum of First $n$ Odd Numbers:</strong>
+                    $$1 + 3 + 5 + 7 + \ldots + (2n-1) = n^2$$
+                </li>
+                <li><strong>Pythagorean Triplets:</strong> Three natural numbers $a, b, c$ such that $a^2 + b^2 = c^2$
+                    <br>General form: For any $m > 1$: $(2m, m^2-1, m^2+1)$
+                </li>
+            </ul>
+        </div>
+
+        <h3>3.2 Finding Square Root</h3>
+        <div class="green-box">
+            <span class="box-label">Methods to Find Square Root</span>
+            <p><strong>Method 1: Prime Factorization</strong></p>
+            <ul>
+                <li>Express the number as product of prime factors</li>
+                <li>Make pairs of equal factors</li>
+                <li>Take one factor from each pair and multiply</li>
+            </ul>
+            <p><strong>Method 2: Long Division Method</strong></p>
+            <ol>
+                <li>Group digits in pairs from right to left</li>
+                <li>Find largest number whose square ≤ first group</li>
+                <li>Subtract and bring down next pair</li>
+                <li>Double the quotient, find suitable digit for divisor</li>
+                <li>Repeat until all pairs are exhausted</li>
+            </ol>
+        </div>
+
+        <h3>3.3 Perfect Cubes</h3>
+        <div class="blue-box">
+            <span class="box-label">Cube Number Properties</span>
+            <ul>
+                <li><strong>Perfect Cube:</strong> A number obtained by cubing a natural number. Example: $1, 8, 27, 64, 125, \ldots$</li>
+                <li><strong>Properties of Perfect Cubes:</strong>
+                    <ul>
+                        <li>In prime factorization, all prime factors appear in multiples of 3</li>
+                        <li>Cube of even number is even, cube of odd number is odd</li>
+                        <li>Sum of cubes: $1^3 + 2^3 + 3^3 + \ldots + n^3 = \left[\frac{n(n+1)}{2}\right]^2$</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h3>3.4 Finding Cube Root</h3>
+        <div class="green-box">
+            <span class="box-label">Method: Prime Factorization</span>
+            <ul>
+                <li>Express the number as product of prime factors</li>
+                <li>Make groups of three identical factors</li>
+                <li>Take one factor from each group and multiply</li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 4</span>
+            <p><strong>Question:</strong> Find the smallest number by which 2560 must be multiplied to make it a perfect square.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Prime factorization of 2560:
+                $$2560 = 2^9 \times 5$$
+                For perfect square, all prime powers must be even:
+                <ul>
+                    <li>$2^9$ has odd power, needs one more 2</li>
+                    <li>$5^1$ has odd power, needs one more 5</li>
+                </ul>
+                $$\text{Number to multiply} = 2 \times 5 = \mathbf{10}$$
+                $$2560 \times 10 = 25600 = (160)^2$$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 5</span>
+            <p><strong>Question:</strong> Find the cube root of 13824 by prime factorization.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Prime factorization:
+                $$13824 = 2^9 \times 3^3 = (2^3)^3 \times 3^3 = (8)^3 \times (3)^3 = (8 \times 3)^3 = 24^3$$
+                $$\sqrt[3]{13824} = \mathbf{24}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 4: EXPONENTS AND POWERS
+        ======================================== -->
+        <h2>Chapter 4: Exponents and Powers</h2>
+
+        <h3>4.1 Laws of Exponents</h3>
+        <div class="blue-box">
+            <span class="box-label">Fundamental Laws</span>
+            <p>For any non-zero integers $a$ and $b$, and integers $m$ and $n$:</p>
+            <ol>
+                <li><strong>Product Law:</strong> $a^m \times a^n = a^{m+n}$</li>
+                <li><strong>Quotient Law:</strong> $\frac{a^m}{a^n} = a^{m-n}$ (if $m > n$) or $\frac{1}{a^{n-m}}$ (if $n > m$)</li>
+                <li><strong>Power of Power:</strong> $(a^m)^n = a^{mn}$</li>
+                <li><strong>Power of Product:</strong> $(ab)^m = a^m b^m$</li>
+                <li><strong>Power of Quotient:</strong> $\left(\frac{a}{b}\right)^m = \frac{a^m}{b^m}$</li>
+                <li><strong>Zero Exponent:</strong> $a^0 = 1$ (if $a \neq 0$)</li>
+                <li><strong>Negative Exponent:</strong> $a^{-m} = \frac{1}{a^m}$</li>
+            </ol>
+        </div>
+
+        <h3>4.2 Standard Form (Scientific Notation)</h3>
+        <div class="green-box">
+            <span class="box-label">Scientific Notation</span>
+            <p>Any number can be expressed in the form:</p>
+            $$\mathbf{N = a \times 10^n}$$
+            <p>where $1 \leq a &lt; 10$ and $n$ is an integer.</p>
+            <p><strong>Examples:</strong></p>
+            <ul>
+                <li>$5430 = 5.43 \times 10^3$</li>
+                <li>$0.00256 = 2.56 \times 10^{-3}$</li>
+                <li>Mass of Earth $= 5.97 \times 10^{24}$ kg</li>
+                <li>Mass of electron $= 9.11 \times 10^{-31}$ kg</li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 6</span>
+            <p><strong>Question:</strong> Simplify and express in exponential form: $\frac{2^5 \times 3^4 \times 4}{3 \times 32}$</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                $$\frac{2^5 \times 3^4 \times 4}{3 \times 32} = \frac{2^5 \times 3^4 \times 2^2}{3 \times 2^5}$$
+                $$= \frac{2^{5+2} \times 3^4}{3 \times 2^5} = \frac{2^7 \times 3^4}{3 \times 2^5}$$
+                $$= 2^{7-5} \times 3^{4-1} = 2^2 \times 3^3$$
+                $$= \mathbf{4 \times 27 = 108}$$
+                In exponential form: $\mathbf{2^2 \times 3^3}$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 7</span>
+            <p><strong>Question:</strong> Express 0.000000564 in standard form.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Move decimal 7 places to the right:
+                $$0.000000564 = \mathbf{5.64 \times 10^{-7}}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 5: AVERAGE
+        ======================================== -->
+        <h2>Chapter 5: Average</h2>
+
+        <h3>5.1 Concept of Average</h3>
+        <div class="blue-box">
+            <span class="box-label">Average Definition</span>
+            <p><strong>Average (Arithmetic Mean):</strong> The sum of all observations divided by the number of observations.</p>
+            $$\mathbf{\text{Average} = \frac{\text{Sum of all observations}}{\text{Number of observations}}}$$
+            <p><strong>Important Formula:</strong></p>
+            $$\text{Sum of observations} = \text{Average} \times \text{Number of observations}$$
+        </div>
+
+        <h3>5.2 Properties of Average</h3>
+        <div class="green-box">
+            <span class="box-label">Key Properties</span>
+            <ul>
+                <li>Average of $n$ consecutive numbers $= \frac{\text{First number} + \text{Last number}}{2}$</li>
+                <li>Average of first $n$ natural numbers $= \frac{n+1}{2}$</li>
+                <li>Average of first $n$ even numbers $= n + 1$</li>
+                <li>Average of first $n$ odd numbers $= n$</li>
+                <li>If average of $n$ numbers is $x$, and one number $a$ is added, new average $= \frac{nx + a}{n+1}$</li>
+                <li>If average of $n$ numbers is $x$, and one number $a$ is removed, new average $= \frac{nx - a}{n-1}$</li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 8</span>
+            <p><strong>Question:</strong> The average of 5 numbers is 27. If one number is excluded, the average becomes 25. Find the excluded number.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Sum of 5 numbers:
+                $$\text{Sum} = 27 \times 5 = 135$$
+                Sum of 4 numbers (after exclusion):
+                $$\text{Sum} = 25 \times 4 = 100$$
+                Excluded number:
+                $$\text{Excluded number} = 135 - 100 = \mathbf{35}$$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 9</span>
+            <p><strong>Question:</strong> Find the average of first 20 multiples of 7.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                First 20 multiples of 7: $7, 14, 21, \ldots, 140$<br>
+                This is an AP with $a = 7$, $d = 7$, $n = 20$
+                $$\text{Average} = \frac{\text{First term} + \text{Last term}}{2}$$
+                $$= \frac{7 + 140}{2} = \frac{147}{2} = \mathbf{73.5}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 6: PERCENTAGE
+        ======================================== -->
+        <h2>Chapter 6: Percentage</h2>
+
+        <h3>6.1 Basic Concept</h3>
+        <div class="blue-box">
+            <span class="box-label">Percentage Fundamentals</span>
+            <p><strong>Percentage:</strong> A fraction with denominator 100. The symbol % means "per hundred".</p>
+            $$\mathbf{x\% = \frac{x}{100}}$$
+            <p><strong>Converting Fraction to Percentage:</strong></p>
+            $$\frac{a}{b} = \frac{a}{b} \times 100\%$$
+            <p><strong>Converting Percentage to Fraction:</strong></p>
+            $$x\% = \frac{x}{100}$$
+        </div>
+
+        <h3>6.2 Important Percentage Formulas</h3>
+        <div class="green-box">
+            <span class="box-label">Master Formulas</span>
+            <ul>
+                <li><strong>Finding percentage of a number:</strong>
+                    $$x\% \text{ of } N = \frac{x}{100} \times N$$
+                </li>
+                <li><strong>What percent is A of B?</strong>
+                    $$\frac{A}{B} \times 100\%$$
+                </li>
+                <li><strong>Increase/Decrease Formulas:</strong>
+                    <ul>
+                        <li>If $A$ is $x\%$ more than $B$: $A = B \times \frac{100+x}{100}$</li>
+                        <li>If $A$ is $x\%$ less than $B$: $A = B \times \frac{100-x}{100}$</li>
+                    </ul>
+                </li>
+                <li><strong>Percentage Change:</strong>
+                    $$\text{Percentage change} = \frac{\text{Change}}{\text{Original value}} \times 100\%$$
+                </li>
+            </ul>
+        </div>
+
+        <h3>6.3 Common Fraction-Percentage Conversions</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fraction</th>
+                    <th>Percentage</th>
+                    <th>Fraction</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>$\frac{1}{2}$</td><td>50%</td><td>$\frac{1}{4}$</td><td>25%</td></tr>
+                <tr><td>$\frac{1}{3}$</td><td>33.33%</td><td>$\frac{2}{3}$</td><td>66.67%</td></tr>
+                <tr><td>$\frac{1}{5}$</td><td>20%</td><td>$\frac{1}{8}$</td><td>12.5%</td></tr>
+                <tr><td>$\frac{3}{4}$</td><td>75%</td><td>$\frac{1}{10}$</td><td>10%</td></tr>
+            </tbody>
+        </table>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 10</span>
+            <p><strong>Question:</strong> A student scored 432 marks out of 600. What is his percentage score?</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                $$\text{Percentage} = \frac{\text{Marks obtained}}{\text{Total marks}} \times 100$$
+                $$= \frac{432}{600} \times 100 = \frac{432}{6} = \mathbf{72\%}$$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 11</span>
+            <p><strong>Question:</strong> The price of a shirt is increased from ₹500 to ₹625. Find the percentage increase.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Increase in price:
+                $$\text{Increase} = 625 - 500 = 125$$
+                Percentage increase:
+                $$\text{Percentage increase} = \frac{125}{500} \times 100 = \mathbf{25\%}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 7: PROFIT AND LOSS
+        ======================================== -->
+        <h2>Chapter 7: Profit and Loss</h2>
+
+        <h3>7.1 Basic Terms</h3>
+        <div class="blue-box">
+            <span class="box-label">Fundamental Definitions</span>
+            <ul>
+                <li><strong>Cost Price (CP):</strong> The price at which an article is purchased.</li>
+                <li><strong>Selling Price (SP):</strong> The price at which an article is sold.</li>
+                <li><strong>Profit:</strong> If SP > CP, then Profit = SP - CP</li>
+                <li><strong>Loss:</strong> If CP > SP, then Loss = CP - SP</li>
+                <li><strong>Marked Price (MP):</strong> The price printed on the article (list price).</li>
+                <li><strong>Discount:</strong> Reduction given on Marked Price. Discount = MP - SP</li>
+            </ul>
+        </div>
+
+        <h3>7.2 Profit and Loss Formulas</h3>
+        <div class="green-box">
+            <span class="box-label">Essential Formulas</span>
+            <ul>
+                <li><strong>Profit Percentage:</strong>
+                    $$\mathbf{\text{Profit}\% = \frac{\text{Profit}}{\text{CP}} \times 100 = \frac{\text{SP} - \text{CP}}{\text{CP}} \times 100}$$
+                </li>
+                <li><strong>Loss Percentage:</strong>
+                    $$\mathbf{\text{Loss}\% = \frac{\text{Loss}}{\text{CP}} \times 100 = \frac{\text{CP} - \text{SP}}{\text{CP}} \times 100}$$
+                </li>
+                <li><strong>SP when Profit% is given:</strong>
+                    $$\mathbf{\text{SP} = \text{CP} \times \frac{100 + \text{Profit}\%}{100}}$$
+                </li>
+                <li><strong>SP when Loss% is given:</strong>
+                    $$\mathbf{\text{SP} = \text{CP} \times \frac{100 - \text{Loss}\%}{100}}$$
+                </li>
+                <li><strong>CP when Profit% is given:</strong>
+                    $$\mathbf{\text{CP} = \text{SP} \times \frac{100}{100 + \text{Profit}\%}}$$
+                </li>
+                <li><strong>CP when Loss% is given:</strong>
+                    $$\mathbf{\text{CP} = \text{SP} \times \frac{100}{100 - \text{Loss}\%}}$$
+                </li>
+            </ul>
+        </div>
+
+        <h3>7.3 Discount Formulas</h3>
+        <div class="yellow-box">
+            <span class="box-label">Discount Calculations</span>
+            <ul>
+                <li><strong>Discount Percentage:</strong>
+                    $$\mathbf{\text{Discount}\% = \frac{\text{Discount}}{\text{MP}} \times 100}$$
+                </li>
+                <li><strong>SP after Discount:</strong>
+                    $$\mathbf{\text{SP} = \text{MP} \times \frac{100 - \text{Discount}\%}{100}}$$
+                </li>
+                <li><strong>Successive Discounts:</strong> If two successive discounts of $a\%$ and $b\%$ are given:
+                    $$\text{Single equivalent discount} = \left(a + b - \frac{ab}{100}\right)\%$$
+                </li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 12</span>
+            <p><strong>Question:</strong> A shopkeeper bought a watch for ₹800 and sold it for ₹920. Find his profit percentage.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                CP = ₹800, SP = ₹920<br>
+                Profit = SP - CP = 920 - 800 = ₹120
+                $$\text{Profit}\% = \frac{120}{800} \times 100 = \frac{120}{8} = \mathbf{15\%}$$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 13</span>
+            <p><strong>Question:</strong> A shirt with marked price ₹1500 is sold at a discount of 20%. Find the selling price and discount amount.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                MP = ₹1500, Discount% = 20%
+                $$\text{Discount} = \frac{20}{100} \times 1500 = \mathbf{\text{Rs.}\,300}$$
+                $$\text{SP} = \text{MP} - \text{Discount} = 1500 - 300 = \mathbf{\text{Rs.}\,1200}$$
+                <strong>Alternatively:</strong>
+                $$\text{SP} = 1500 \times \frac{100-20}{100} = 1500 \times \frac{80}{100} = \mathbf{\text{Rs.}\,1200}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 8: SIMPLE INTEREST
+        ======================================== -->
+        <h2>Chapter 8: Simple Interest</h2>
+
+        <h3>8.1 Basic Concepts</h3>
+        <div class="blue-box">
+            <span class="box-label">Fundamental Terms</span>
+            <ul>
+                <li><strong>Principal (P):</strong> The original sum of money borrowed or invested.</li>
+                <li><strong>Rate (R):</strong> The percentage at which interest is charged per annum.</li>
+                <li><strong>Time (T):</strong> The duration for which money is borrowed or invested (in years).</li>
+                <li><strong>Simple Interest (SI):</strong> Interest calculated on the original principal only.</li>
+                <li><strong>Amount (A):</strong> Total money = Principal + Interest</li>
+            </ul>
+        </div>
+
+        <h3>8.2 Simple Interest Formulas</h3>
+        <div class="green-box">
+            <span class="box-label">Master SI Formulas</span>
+            <ul>
+                <li><strong>Simple Interest:</strong>
+                    $$\mathbf{\text{SI} = \frac{P \times R \times T}{100}}$$
+                </li>
+                <li><strong>Amount:</strong>
+                    $$\mathbf{A = P + \text{SI} = P + \frac{P \times R \times T}{100} = P\left(1 + \frac{RT}{100}\right)}$$
+                </li>
+                <li><strong>Principal:</strong>
+                    $$\mathbf{P = \frac{\text{SI} \times 100}{R \times T}}$$
+                </li>
+                <li><strong>Rate:</strong>
+                    $$\mathbf{R = \frac{\text{SI} \times 100}{P \times T}}$$
+                </li>
+                <li><strong>Time:</strong>
+                    $$\mathbf{T = \frac{\text{SI} \times 100}{P \times R}}$$
+                </li>
+            </ul>
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important Notes</span>
+            <ul>
+                <li>Time must always be in years. Convert months to years: $\text{Months}/12$</li>
+                <li>Convert days to years: $\text{Days}/365$</li>
+                <li>If P, R, T are same, then SI remains constant</li>
+                <li>SI is directly proportional to P, R, and T</li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 14</span>
+            <p><strong>Question:</strong> Find the simple interest on ₹5000 at 8% per annum for 3 years.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                P = ₹5000, R = 8%, T = 3 years
+                $$\text{SI} = \frac{P \times R \times T}{100}$$
+                $$= \frac{5000 \times 8 \times 3}{100} = \frac{120000}{100} = \mathbf{\text{Rs.}\,1200}$$
+                Amount:
+                $$A = P + \text{SI} = 5000 + 1200 = \mathbf{\text{Rs.}\,6200}$$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 15</span>
+            <p><strong>Question:</strong> At what rate percent per annum will ₹4000 amount to ₹5200 in 2.5 years?</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                P = ₹4000, A = ₹5200, T = 2.5 years<br>
+                SI = A - P = 5200 - 4000 = ₹1200
+                $$R = \frac{\text{SI} \times 100}{P \times T}$$
+                $$= \frac{1200 \times 100}{4000 \times 2.5} = \frac{120000}{10000} = \mathbf{12\%}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 9: COMPOUND INTEREST
+        ======================================== -->
+        <h2>Chapter 9: Compound Interest</h2>
+
+        <h3>9.1 Concept of Compound Interest</h3>
+        <div class="blue-box">
+            <span class="box-label">CI vs SI</span>
+            <p><strong>Compound Interest (CI):</strong> Interest calculated on both principal and accumulated interest from previous periods.</p>
+            <p><strong>Key Difference:</strong></p>
+            <ul>
+                <li><strong>Simple Interest:</strong> Calculated on original principal only</li>
+                <li><strong>Compound Interest:</strong> Interest is added to principal after each period, and next interest is calculated on new principal</li>
+            </ul>
+        </div>
+
+        <h3>9.2 Compound Interest Formulas</h3>
+        <div class="green-box">
+            <span class="box-label">Master CI Formulas</span>
+            <ul>
+                <li><strong>Amount (Compounded Annually):</strong>
+                    $$\mathbf{A = P\left(1 + \frac{R}{100}\right)^n}$$
+                    where $n$ = number of years
+                </li>
+                <li><strong>Compound Interest:</strong>
+                    $$\mathbf{\text{CI} = A - P = P\left[\left(1 + \frac{R}{100}\right)^n - 1\right]}$$
+                </li>
+                <li><strong>When compounded Half-Yearly:</strong>
+                    $$\mathbf{A = P\left(1 + \frac{R/2}{100}\right)^{2n}}$$
+                    Rate becomes $R/2$ and time becomes $2n$
+                </li>
+                <li><strong>When compounded Quarterly:</strong>
+                    $$\mathbf{A = P\left(1 + \frac{R/4}{100}\right)^{4n}}$$
+                    Rate becomes $R/4$ and time becomes $4n$
+                </li>
+                <li><strong>When rates are different for different years:</strong>
+                    $$\mathbf{A = P\left(1 + \frac{R_1}{100}\right)\left(1 + \frac{R_2}{100}\right)\left(1 + \frac{R_3}{100}\right)\ldots}$$
+                </li>
+            </ul>
+        </div>
+
+        <h3>9.3 Growth and Depreciation</h3>
+        <div class="yellow-box">
+            <span class="box-label">Application Formulas</span>
+            <ul>
+                <li><strong>Population Growth:</strong>
+                    $$\text{Population after } n \text{ years} = P\left(1 + \frac{R}{100}\right)^n$$
+                </li>
+                <li><strong>Depreciation (Decrease in Value):</strong>
+                    $$\text{Value after } n \text{ years} = P\left(1 - \frac{R}{100}\right)^n$$
+                </li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 16</span>
+            <p><strong>Question:</strong> Find the compound interest on ₹8000 at 10% per annum for 2 years compounded annually.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                P = ₹8000, R = 10%, n = 2 years
+                $$A = P\left(1 + \frac{R}{100}\right)^n$$
+                $$= 8000\left(1 + \frac{10}{100}\right)^2$$
+                $$= 8000 \times (1.1)^2 = 8000 \times 1.21 = \text{Rs.}\,9680$$
+                $$\text{CI} = A - P = 9680 - 8000 = \mathbf{\text{Rs.}\,1680}$$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 17</span>
+            <p><strong>Question:</strong> The population of a town is 125000. If it increases at 8% per annum, what will be the population after 2 years?</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                P = 125000, R = 8%, n = 2 years
+                $$\text{Population after 2 years} = P\left(1 + \frac{R}{100}\right)^n$$
+                $$= 125000\left(1 + \frac{8}{100}\right)^2$$
+                $$= 125000 \times (1.08)^2 = 125000 \times 1.1664$$
+                $$= \mathbf{145800}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 10: RATIO AND PROPORTION
+        ======================================== -->
+        <h2>Chapter 10: Ratio and Proportion</h2>
+
+        <h3>10.1 Ratio</h3>
+        <div class="blue-box">
+            <span class="box-label">Ratio Fundamentals</span>
+            <p><strong>Ratio:</strong> Comparison of two quantities of same kind. Written as $a:b$ or $\frac{a}{b}$.</p>
+            <p><strong>Properties:</strong></p>
+            <ul>
+                <li>Ratio has no units</li>
+                <li>Ratio remains same if both terms are multiplied or divided by same number</li>
+                <li>Order is important: $a:b \neq b:a$</li>
+                <li><strong>Simplest Form:</strong> When terms have no common factor except 1</li>
+            </ul>
+            <p><strong>Important Terms:</strong></p>
+            <ul>
+                <li><strong>Antecedent:</strong> First term of ratio ($a$ in $a:b$)</li>
+                <li><strong>Consequent:</strong> Second term of ratio ($b$ in $a:b$)</li>
+                <li><strong>Compounded Ratio:</strong> $a:b$ and $c:d$ gives $ac:bd$</li>
+                <li><strong>Duplicate Ratio:</strong> $a:b$ gives $a^2:b^2$</li>
+                <li><strong>Triplicate Ratio:</strong> $a:b$ gives $a^3:b^3$</li>
+                <li><strong>Inverse Ratio:</strong> $a:b$ gives $b:a$ or $\frac{1}{a}:\frac{1}{b}$</li>
+            </ul>
+        </div>
+
+        <h3>10.2 Proportion</h3>
+        <div class="green-box">
+            <span class="box-label">Proportion Fundamentals</span>
+            <p><strong>Proportion:</strong> Equality of two ratios. If $a:b = c:d$, then $a, b, c, d$ are in proportion.</p>
+            $$\mathbf{\frac{a}{b} = \frac{c}{d} \text{ or } a:b::c:d}$$
+            <p><strong>Properties:</strong></p>
+            <ul>
+                <li><strong>Product of Extremes = Product of Means:</strong>
+                    $$a \times d = b \times c$$
+                </li>
+                <li><strong>Mean Proportional:</strong> If $a:x = x:b$, then $x = \sqrt{ab}$</li>
+                <li><strong>Third Proportional:</strong> If $a:b = b:c$, then $c = \frac{b^2}{a}$</li>
+                <li><strong>Fourth Proportional:</strong> If $a:b = c:d$, then $d = \frac{bc}{a}$</li>
+            </ul>
+        </div>
+
+        <h3>10.3 Direct and Inverse Proportion</h3>
+        <div class="yellow-box">
+            <span class="box-label">Variation Types</span>
+            <ul>
+                <li><strong>Direct Proportion:</strong> When one quantity increases, the other also increases proportionally.
+                    $$\frac{x_1}{x_2} = \frac{y_1}{y_2}$$
+                </li>
+                <li><strong>Inverse Proportion:</strong> When one quantity increases, the other decreases proportionally.
+                    $$x_1 \times y_1 = x_2 \times y_2$$
+                </li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 18</span>
+            <p><strong>Question:</strong> Divide ₹3600 among A, B, C in the ratio 2:3:4.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Ratio = 2:3:4<br>
+                Sum of ratio parts = 2 + 3 + 4 = 9
+                $$\text{A's share} = \frac{2}{9} \times 3600 = \mathbf{\text{Rs.}\,800}$$
+                $$\text{B's share} = \frac{3}{9} \times 3600 = \mathbf{\text{Rs.}\,1200}$$
+                $$\text{C's share} = \frac{4}{9} \times 3600 = \mathbf{\text{Rs.}\,1600}$$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 19</span>
+            <p><strong>Question:</strong> 15 workers can complete a work in 20 days. How many days will 25 workers take to complete the same work?</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                This is <strong>inverse proportion</strong> (more workers → less days)<br>
+                Let required days = $x$
+                $$15 \times 20 = 25 \times x$$
+                $$x = \frac{15 \times 20}{25} = \frac{300}{25} = \mathbf{12 \text{ days}}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 11: SPEED, TIME AND DISTANCE
+        ======================================== -->
+        <h2>Chapter 11: Speed, Time and Distance</h2>
+
+        <h3>11.1 Basic Formulas</h3>
+        <div class="blue-box">
+            <span class="box-label">Fundamental Relations</span>
+            <ul>
+                <li><strong>Speed:</strong> Distance covered per unit time
+                    $$\mathbf{\text{Speed} = \frac{\text{Distance}}{\text{Time}}}$$
+                </li>
+                <li><strong>Distance:</strong>
+                    $$\mathbf{\text{Distance} = \text{Speed} \times \text{Time}}$$
+                </li>
+                <li><strong>Time:</strong>
+                    $$\mathbf{\text{Time} = \frac{\text{Distance}}{\text{Speed}}}$$
+                </li>
+                <li><strong>Units:</strong>
+                    <ul>
+                        <li>Speed: km/h, m/s, m/min</li>
+                        <li>Distance: km, m, cm</li>
+                        <li>Time: hours, minutes, seconds</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h3>11.2 Unit Conversions</h3>
+        <div class="green-box">
+            <span class="box-label">Essential Conversions</span>
+            <ul>
+                <li><strong>km/h to m/s:</strong>
+                    $$\mathbf{x \text{ km/h} = x \times \frac{5}{18} \text{ m/s}}$$
+                </li>
+                <li><strong>m/s to km/h:</strong>
+                    $$\mathbf{x \text{ m/s} = x \times \frac{18}{5} \text{ km/h}}$$
+                </li>
+            </ul>
+        </div>
+
+        <h3>11.3 Average Speed</h3>
+        <div class="yellow-box">
+            <span class="box-label">Average Speed Formulas</span>
+            <ul>
+                <li><strong>General Formula:</strong>
+                    $$\mathbf{\text{Average Speed} = \frac{\text{Total Distance}}{\text{Total Time}}}$$
+                </li>
+                <li><strong>When same distance covered at two different speeds $v_1$ and $v_2$:</strong>
+                    $$\mathbf{\text{Average Speed} = \frac{2v_1 v_2}{v_1 + v_2}}$$
+                </li>
+            </ul>
+        </div>
+
+        <h3>11.4 Relative Speed</h3>
+        <div class="pink-box">
+            <span class="box-label">Relative Motion</span>
+            <ul>
+                <li><strong>Moving in SAME direction:</strong>
+                    $$\text{Relative Speed} = |v_1 - v_2|$$
+                </li>
+                <li><strong>Moving in OPPOSITE directions:</strong>
+                    $$\text{Relative Speed} = v_1 + v_2$$
+                </li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 20</span>
+            <p><strong>Question:</strong> A car travels 120 km in 2 hours. Find its speed in km/h and m/s.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Distance = 120 km, Time = 2 hours
+                $$\text{Speed} = \frac{120}{2} = \mathbf{60 \text{ km/h}}$$
+                Converting to m/s:
+                $$60 \times \frac{5}{18} = \frac{300}{18} = \mathbf{16.67 \text{ m/s}}$$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 21</span>
+            <p><strong>Question:</strong> A person covers half distance at 40 km/h and remaining half at 60 km/h. Find average speed.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Using average speed formula for equal distances:
+                $$\text{Average Speed} = \frac{2 \times v_1 \times v_2}{v_1 + v_2}$$
+                $$= \frac{2 \times 40 \times 60}{40 + 60} = \frac{4800}{100} = \mathbf{48 \text{ km/h}}$$
+            </div>
+        </div>
+
+        <!-- ========================================
+             CHAPTER 12: ALGEBRAIC EXPRESSIONS AND IDENTITIES
+        ======================================== -->
+        <h2>Chapter 12: Algebraic Expressions and Identities</h2>
+
+        <h3>12.1 Algebraic Expressions</h3>
+        <div class="blue-box">
+            <span class="box-label">Terms and Definitions</span>
+            <ul>
+                <li><strong>Algebraic Expression:</strong> Combination of constants and variables connected by +, -, ×, ÷</li>
+                <li><strong>Term:</strong> Parts of expression separated by + or -</li>
+                <li><strong>Coefficient:</strong> Numerical factor of a term</li>
+                <li><strong>Like Terms:</strong> Terms with same variables and powers</li>
+                <li><strong>Unlike Terms:</strong> Terms with different variables or powers</li>
+                <li><strong>Monomial:</strong> Expression with one term (e.g., $5x$)</li>
+                <li><strong>Binomial:</strong> Expression with two terms (e.g., $3x + 2y$)</li>
+                <li><strong>Trinomial:</strong> Expression with three terms (e.g., $x^2 + 2x + 1$)</li>
+                <li><strong>Polynomial:</strong> Expression with one or more terms</li>
+            </ul>
+        </div>
+
+        <h3>12.2 Standard Algebraic Identities</h3>
+        <div class="green-box">
+            <span class="box-label">Master Identity List</span>
+            <ol>
+                <li>$(a + b)^2 = a^2 + 2ab + b^2$</li>
+                <li>$(a - b)^2 = a^2 - 2ab + b^2$</li>
+                <li>$a^2 - b^2 = (a + b)(a - b)$</li>
+                <li>$(a + b)^3 = a^3 + b^3 + 3ab(a + b) = a^3 + 3a^2b + 3ab^2 + b^3$</li>
+                <li>$(a - b)^3 = a^3 - b^3 - 3ab(a - b) = a^3 - 3a^2b + 3ab^2 - b^3$</li>
+                <li>$a^3 + b^3 = (a + b)(a^2 - ab + b^2)$</li>
+                <li>$a^3 - b^3 = (a - b)(a^2 + ab + b^2)$</li>
+                <li>$(x + a)(x + b) = x^2 + (a + b)x + ab$</li>
+            </ol>
+        </div>
+
+        <h3>12.3 Useful Derived Identities</h3>
+        <div class="yellow-box">
+            <span class="box-label">Additional Important Identities</span>
+            <ul>
+                <li>$(a + b)^2 + (a - b)^2 = 2(a^2 + b^2)$</li>
+                <li>$(a + b)^2 - (a - b)^2 = 4ab$</li>
+                <li>$a^2 + b^2 = (a + b)^2 - 2ab$</li>
+                <li>$a^2 + b^2 = (a - b)^2 + 2ab$</li>
+                <li>$2(a^2 + b^2) = (a + b)^2 + (a - b)^2$</li>
+                <li>$4ab = (a + b)^2 - (a - b)^2$</li>
+                <li>$ab = \frac{(a+b)^2 - (a-b)^2}{4}$</li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 22</span>
+            <p><strong>Question:</strong> Expand $(3x + 4y)^2$ using identity.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Using identity $(a + b)^2 = a^2 + 2ab + b^2$<br>
+                Here $a = 3x$, $b = 4y$
+                $$(3x + 4y)^2 = (3x)^2 + 2(3x)(4y) + (4y)^2$$
+                $$= 9x^2 + 24xy + 16y^2$$
+                $$= \mathbf{9x^2 + 24xy + 16y^2}$$
+            </div>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 23</span>
+            <p><strong>Question:</strong> Factorize: $x^2 - 25$</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Using identity $a^2 - b^2 = (a + b)(a - b)$<br>
+                Here $a = x$, $b = 5$
+                $$x^2 - 25 = x^2 - 5^2$$
+                $$= (x + 5)(x - 5)$$
+                $$= \mathbf{(x + 5)(x - 5)}$$
+            </div>
+        </div>
+
+        <!-- Due to character limit, I'll continue with remaining chapters in structured format -->
+
+        <h2>Chapter 13: Factorization</h2>
+        <h3>13.1 Methods of Factorization</h3>
+        <div class="blue-box">
+            <span class="box-label">Factorization Methods</span>
+            <ul>
+                <li><strong>Method 1: Common Factor Method</strong> - Take out common factors</li>
+                <li><strong>Method 2: Grouping Method</strong> - Group terms and factorize</li>
+                <li><strong>Method 3: Using Identities</strong> - Apply standard identities</li>
+                <li><strong>Method 4: Middle Term Splitting</strong> - For expressions like $ax^2 + bx + c$</li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 24</span>
+            <p><strong>Question:</strong> Factorize: $x^2 + 7x + 12$</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                Find two numbers whose product = 12 and sum = 7<br>
+                Numbers are 3 and 4
+                $$x^2 + 7x + 12 = x^2 + 3x + 4x + 12$$
+                $$= x(x + 3) + 4(x + 3)$$
+                $$= \mathbf{(x + 3)(x + 4)}$$
+            </div>
+        </div>
+
+        <h2>Chapter 14: Linear Equations in One Variable</h2>
+        <h3>14.1 Linear Equation Basics</h3>
+        <div class="blue-box">
+            <span class="box-label">Linear Equation Definition</span>
+            <p><strong>Linear Equation:</strong> Equation of the form $ax + b = 0$ where $a \neq 0$</p>
+            <p><strong>Solution:</strong> Value of variable that satisfies the equation</p>
+            $$x = -\frac{b}{a}$$
+        </div>
+
+        <h3>14.2 Solving Linear Equations</h3>
+        <div class="green-box">
+            <span class="box-label">Steps to Solve</span>
+            <ol>
+                <li>Simplify both sides by removing brackets</li>
+                <li>Collect all terms with variable on one side</li>
+                <li>Collect all constant terms on other side</li>
+                <li>Simplify and solve for variable</li>
+            </ol>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 25</span>
+            <p><strong>Question:</strong> Solve: $\frac{2x-3}{4} - \frac{x-1}{3} = 1$</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                LCM of 4 and 3 = 12<br>
+                Multiply throughout by 12:
+                $$3(2x-3) - 4(x-1) = 12$$
+                $$6x - 9 - 4x + 4 = 12$$
+                $$2x - 5 = 12$$
+                $$2x = 17$$
+                $$\mathbf{x = \frac{17}{2} = 8.5}$$
+            </div>
+        </div>
+
+        <h2>Chapter 15: Probability</h2>
+        <div class="blue-box">
+            <span class="box-label">Chance and Events</span>
+            <ul>
+                <li><strong>Experiment:</strong> An action with a clearly defined result, such as tossing a coin or rolling a die.</li>
+                <li><strong>Outcome:</strong> A possible result of an experiment. A die has outcomes $1,2,3,4,5,6$.</li>
+                <li><strong>Sample space:</strong> The set of all possible outcomes, written as $S$.</li>
+                <li><strong>Event:</strong> A collection of one or more outcomes, for example, getting an even number on a die.</li>
+            </ul>
+            $$\mathbf{P(E)=\frac{\text{Number of favourable outcomes}}{\text{Total number of equally likely outcomes}}}$$
+            <p>For any event, $0 \leq P(E) \leq 1$. An impossible event has probability $0$ and a certain event has probability $1$.</p>
+        </div>
+        <div class="practice-box"><span class="box-label">Practice Problem 27</span>
+            <p><strong>Question:</strong> A bag contains 5 red, 3 blue and 2 green balls. Find the probability of drawing a blue ball.</p>
+            <div class="solution"><strong>Solution:</strong> Total balls $=10$ and favourable balls $=3$.
+                $$P(\text{blue})=\frac{3}{10}$$</div>
+        </div>
+
+        <h2>Chapter 16: Geometry and Mensuration</h2>
+        <div class="green-box">
+            <span class="box-label">Lines, Angles and Polygons</span>
+            <ul>
+                <li><strong>Complementary angles:</strong> Their sum is $90^\circ$.</li>
+                <li><strong>Supplementary angles:</strong> Their sum is $180^\circ$.</li>
+                <li><strong>Linear pair:</strong> Adjacent angles whose sum is $180^\circ$.</li>
+                <li><strong>Vertically opposite angles:</strong> They are equal.</li>
+                <li><strong>Parallel lines:</strong> Corresponding angles and alternate interior angles are equal; co-interior angles are supplementary.</li>
+                <li><strong>Triangle:</strong> Sum of interior angles is $180^\circ$; an exterior angle equals the sum of the two opposite interior angles.</li>
+                <li><strong>Quadrilateral:</strong> Sum of interior angles is $360^\circ$.</li>
+                <li><strong>Polygon:</strong> Sum of interior angles of an $n$-sided polygon is $(n-2)\times180^\circ$.</li>
+            </ul>
+        </div>
+        <div class="yellow-box">
+            <span class="box-label">Perimeter and Area Formula Sheet</span>
+            <table><thead><tr><th>Shape</th><th>Perimeter / Circumference</th><th>Area</th></tr></thead><tbody>
+                <tr><td>Rectangle</td><td>$2(l+b)$</td><td>$lb$</td></tr>
+                <tr><td>Square</td><td>$4a$</td><td>$a^2$</td></tr>
+                <tr><td>Triangle</td><td>Sum of sides</td><td>$\frac12 bh$</td></tr>
+                <tr><td>Parallelogram</td><td>$2(a+b)$</td><td>$bh$</td></tr>
+                <tr><td>Circle</td><td>$2\pi r$</td><td>$\pi r^2$</td></tr>
+            </tbody></table>
+            <p>Use $\pi=\frac{22}{7}$ when appropriate; otherwise $\pi=3.14$ may be used.</p>
+        </div>
+        <div class="practice-box"><span class="box-label">Practice Problem 28</span>
+            <p><strong>Question:</strong> Find the area and perimeter of a rectangle of length 18 cm and breadth 11 cm.</p>
+            <div class="solution"><strong>Solution:</strong>
+                $$\text{Area}=18\times11=\mathbf{198\text{ cm}^2}$$
+                $$\text{Perimeter}=2(18+11)=\mathbf{58\text{ cm}}$$</div>
+        </div>
+
+        <h2>Chapter 17: Coordinate Geometry</h2>
+        <div class="blue-box">
+            <span class="box-label">The Cartesian Plane</span>
+            <ul>
+                <li>The horizontal line is the <strong>x-axis</strong>; the vertical line is the <strong>y-axis</strong>. They meet at the origin $(0,0)$.</li>
+                <li>A point is written as $(x,y)$: $x$ is the abscissa and $y$ is the ordinate.</li>
+                <li>Quadrants: I $(+,+)$, II $(-,+)$, III $(-,-)$ and IV $(+,-)$.</li>
+                <li>Points on the x-axis have $y=0$; points on the y-axis have $x=0$.</li>
+            </ul>
+        </div>
+        <div class="practice-box"><span class="box-label">Practice Problem 29</span>
+            <p><strong>Question:</strong> State the quadrant of $A(-4,3)$, $B(5,-2)$ and $C(-6,-1)$.</p>
+            <div class="solution"><strong>Solution:</strong> $A$ lies in II, $B$ lies in IV and $C$ lies in III.</div>
+        </div>
+
+        <h2>Chapter 18: Data Handling and Statistics</h2>
+        <div class="green-box">
+            <span class="box-label">Organising Data</span>
+            <ul>
+                <li><strong>Raw data:</strong> Information collected in its original form.</li>
+                <li><strong>Frequency:</strong> Number of times an observation occurs.</li>
+                <li><strong>Range:</strong> Highest observation minus lowest observation.</li>
+                <li><strong>Mean:</strong> $\frac{\text{sum of observations}}{\text{number of observations}}$.</li>
+                <li><strong>Median:</strong> Middle value after arranging data. For an even number of observations, average the two middle values.</li>
+                <li><strong>Mode:</strong> Observation occurring most frequently.</li>
+                <li>Bar graphs compare categories; histograms show continuous intervals; pie charts show parts of a whole.</li>
+            </ul>
+        </div>
+        <div class="practice-box"><span class="box-label">Practice Problem 30</span>
+            <p><strong>Question:</strong> Find the mean, median, mode and range of $3,5,5,7,10$.</p>
+            <div class="solution"><strong>Solution:</strong> Mean $=6$; median $=5$; mode $=5$; range $=7$.</div>
+        </div>
+
+        <h2>Chapter 19: Mixed Mathematics Revision</h2>
+        <div class="practice-box"><span class="box-label">Exam Practice Set</span>
+            <ol>
+                <li>Find the HCF and LCM of 36 and 84.</li>
+                <li>Simplify $\frac{3^4\times3^2}{3^3}$.</li>
+                <li>A number is increased by 20% and becomes 360. Find the original number.</li>
+                <li>Find the amount and compound interest on ₹4,000 at 5% per annum for 2 years.</li>
+                <li>Solve $5x-7=3x+11$.</li>
+                <li>A train travels 270 km in 4.5 hours. Find its speed.</li>
+                <li>Find the area of a triangle with base 16 cm and height 9 cm.</li>
+                <li>A die is rolled once. Find the probability of getting a prime number.</li>
+            </ol>
+            <p><strong>Answer key:</strong> 1. HCF $=12$, LCM $=252$; 2. $27$; 3. $300$; 4. Amount ₹4,410, CI ₹410; 5. $x=9$; 6. 60 km/h; 7. 72 cm²; 8. $1/2$.</p>
+        </div>
+
+        <h2>Chapter 20: Visualising Solid Shapes</h2>
+        <div class="blue-box"><span class="box-label">Three-Dimensional Thinking</span><ul>
+            <li><strong>Faces:</strong> Flat surfaces; <strong>edges:</strong> line segments where faces meet; <strong>vertices:</strong> corner points.</li>
+            <li>A cuboid has 6 faces, 12 edges and 8 vertices. A cube has 6 square faces, 12 equal edges and 8 vertices.</li>
+            <li>Different views of a solid show its front, side or top appearance. Nets are flat patterns that can be folded to form solids.</li>
+            <li><strong>Volume:</strong> Cuboid $=l\times b\times h$; cube $=a^3$. <strong>Total surface area:</strong> Cuboid $=2(lb+bh+hl)$; cube $=6a^2$.</li>
+        </ul></div>
+        <div class="practice-box"><span class="box-label">Practice Problem 31</span><p><strong>Question:</strong> Find the volume and total surface area of a cube of side 5 cm.</p><div class="solution"><strong>Solution:</strong> Volume $=5^3=125\text{ cm}^3$; total surface area $=6(5^2)=150\text{ cm}^2$.</div></div>
+
+        <!-- ========================================
+             PART B: SCIENCE
+        ======================================== -->
+        <h1 style="margin-top: 60px;">PART B: SCIENCE</h1>
+
+        <!-- PHYSICS SECTION -->
+        <h2>Chapter 1: Force and Pressure</h2>
+        <h3>1.1 Force</h3>
+        <div class="blue-box">
+            <span class="box-label">Force Fundamentals</span>
+            <ul>
+                <li><strong>Force:</strong> Push or pull acting on an object</li>
+                <li><strong>Effects of Force:</strong>
+                    <ul>
+                        <li>Change state of motion (start, stop, change speed)</li>
+                        <li>Change direction of motion</li>
+                        <li>Change shape and size of object</li>
+                    </ul>
+                </li>
+                <li><strong>SI Unit:</strong> Newton (N)</li>
+                <li><strong>Types of Forces:</strong>
+                    <ul>
+                        <li>Muscular Force</li>
+                        <li>Gravitational Force</li>
+                        <li>Electrostatic Force</li>
+                        <li>Magnetic Force</li>
+                        <li>Frictional Force</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h3>1.2 Pressure</h3>
+        <div class="green-box">
+            <span class="box-label">Pressure Concept</span>
+            <p><strong>Pressure:</strong> Force acting per unit area</p>
+            $$\mathbf{P = \frac{F}{A}}$$
+            <ul>
+                <li><strong>SI Unit:</strong> Pascal (Pa) = N/m²</li>
+                <li>Pressure increases when area decreases (same force)</li>
+                <li>Pressure decreases when area increases (same force)</li>
+            </ul>
+        </div>
+
+        <h3>1.3 Atmospheric Pressure</h3>
+        <div class="yellow-box">
+            <span class="box-label">Key Facts</span>
+            <ul>
+                <li>Atmospheric pressure = Weight of air column above</li>
+                <li>Standard atmospheric pressure = 101325 Pa ≈ 1 atm</li>
+                <li>Decreases with altitude</li>
+                <li>Measured by barometer</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 2: Friction</h2>
+        <h3>2.1 Friction Basics</h3>
+        <div class="blue-box">
+            <span class="box-label">Friction Definition</span>
+            <p><strong>Friction:</strong> Force that opposes relative motion between two surfaces in contact</p>
+            <p><strong>Types:</strong></p>
+            <ul>
+                <li><strong>Static Friction:</strong> Prevents motion from starting</li>
+                <li><strong>Kinetic/Sliding Friction:</strong> Acts when object is moving</li>
+                <li><strong>Rolling Friction:</strong> Acts when object rolls</li>
+            </ul>
+        </div>
+
+        <h3>2.2 Factors Affecting Friction</h3>
+        <div class="green-box">
+            <span class="box-label">Important Factors</span>
+            <ul>
+                <li><strong>Nature of surfaces:</strong> Rougher surfaces → more friction</li>
+                <li><strong>Weight/Normal force:</strong> Heavier objects → more friction</li>
+                <li>Friction does NOT depend on area of contact</li>
+            </ul>
+        </div>
+
+        <h3>2.3 Advantages and Disadvantages</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Advantages</th>
+                    <th>Disadvantages</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Walking possible</td>
+                    <td>Causes wear and tear</td>
+                </tr>
+                <tr>
+                    <td>Writing possible</td>
+                    <td>Produces heat</td>
+                </tr>
+                <tr>
+                    <td>Brakes work</td>
+                    <td>Reduces efficiency</td>
+                </tr>
+                <tr>
+                    <td>Holding objects</td>
+                    <td>Wastes energy</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Chapter 3: Sound</h2>
+        <h3>3.1 Production and Propagation</h3>
+        <div class="blue-box">
+            <span class="box-label">Sound Basics</span>
+            <ul>
+                <li><strong>Sound:</strong> Form of energy produced by vibrating objects</li>
+                <li><strong>Medium Required:</strong> Sound needs material medium (solid, liquid, gas)</li>
+                <li><strong>Cannot travel in vacuum</strong></li>
+                <li><strong>Speed in different media:</strong>
+                    <ul>
+                        <li>Fastest in solids</li>
+                        <li>Slower in liquids</li>
+                        <li>Slowest in gases</li>
+                        <li>Speed in air ≈ 340 m/s at room temperature</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h3>3.2 Characteristics of Sound</h3>
+        <div class="green-box">
+            <span class="box-label">Sound Properties</span>
+            <ul>
+                <li><strong>Pitch/Frequency:</strong> How high or low sound is
+                    <ul>
+                        <li>Measured in Hertz (Hz)</li>
+                        <li>Audible range for humans: 20 Hz to 20,000 Hz</li>
+                        <li>Infrasonic: &lt; 20 Hz</li>
+                        <li>Ultrasonic: > 20,000 Hz</li>
+                    </ul>
+                </li>
+                <li><strong>Loudness:</strong> Depends on amplitude
+                    <ul>
+                        <li>Measured in decibels (dB)</li>
+                        <li>Greater amplitude → Louder sound</li>
+                    </ul>
+                </li>
+                <li><strong>Quality/Timbre:</strong> Distinguishes sounds of same pitch and loudness</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 4: Light</h2>
+        <h3>4.1 Reflection of Light</h3>
+        <div class="blue-box">
+            <span class="box-label">Laws of Reflection</span>
+            <ol>
+                <li><strong>First Law:</strong> Incident ray, reflected ray, and normal lie in same plane</li>
+                <li><strong>Second Law:</strong> Angle of incidence = Angle of reflection ($\angle i = \angle r$)</li>
+            </ol>
+            <p><strong>Types of Reflection:</strong></p>
+            <ul>
+                <li><strong>Regular Reflection:</strong> From smooth surfaces (mirror)</li>
+                <li><strong>Diffused Reflection:</strong> From rough surfaces</li>
+            </ul>
+        </div>
+
+        <h3>4.2 Spherical Mirrors</h3>
+        <div class="green-box">
+            <span class="box-label">Mirror Formula and Sign Convention</span>
+            <p><strong>Mirror Formula:</strong></p>
+            $$\mathbf{\frac{1}{f} = \frac{1}{v} + \frac{1}{u}}$$
+            <p>where $f$ = focal length, $v$ = image distance, $u$ = object distance</p>
+            <p><strong>Magnification:</strong></p>
+            $$\mathbf{m = \frac{h_i}{h_o} = -\frac{v}{u}}$$
+        </div>
+
+        <h3>4.3 Refraction of Light</h3>
+        <div class="yellow-box">
+            <span class="box-label">Laws of Refraction</span>
+            <ol>
+                <li>Incident ray, refracted ray, and normal lie in same plane</li>
+                <li><strong>Snell's Law:</strong>
+                    $$\mathbf{\frac{\sin i}{\sin r} = \text{constant} = n_{21}}$$
+                </li>
+            </ol>
+            <p><strong>Refractive Index:</strong></p>
+            $$\mathbf{n = \frac{\text{Speed of light in vacuum}}{\text{Speed of light in medium}} = \frac{c}{v}}$$
+        </div>
+
+        <h3>4.4 Dispersion of Light</h3>
+        <div class="pink-box"><span class="box-label">White Light and Colours</span>
+            <ul>
+                <li><strong>Dispersion:</strong> Splitting of white light into its constituent colours when it passes through a prism.</li>
+                <li>The visible spectrum is VIBGYOR: violet, indigo, blue, green, yellow, orange and red. Violet deviates most and red deviates least in glass.</li>
+                <li>A rainbow forms when sunlight is dispersed, internally reflected and refracted by water droplets. A spectrum can be recombined into white light.</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 5: Current Electricity</h2>
+        <h3>5.1 Electric Current</h3>
+        <div class="blue-box">
+            <span class="box-label">Current Fundamentals</span>
+            <p><strong>Electric Current:</strong> Rate of flow of electric charge</p>
+            $$\mathbf{I = \frac{Q}{t}}$$
+            <ul>
+                <li><strong>SI Unit:</strong> Ampere (A)</li>
+                <li><strong>Direction:</strong> Conventional current flows from positive to negative terminal</li>
+            </ul>
+        </div>
+
+        <h3>5.2 Ohm's Law</h3>
+        <div class="green-box">
+            <span class="box-label">Ohm's Law</span>
+            <p><strong>Statement:</strong> At constant temperature, current through conductor is directly proportional to potential difference</p>
+            $$\mathbf{V = IR}$$
+            <p>where $V$ = Potential difference (Volt), $I$ = Current (Ampere), $R$ = Resistance (Ohm, $\Omega$)</p>
+        </div>
+
+        <h3>5.3 Resistance in Series and Parallel</h3>
+        <div class="yellow-box">
+            <span class="box-label">Combination Formulas</span>
+            <ul>
+                <li><strong>Series Combination:</strong>
+                    $$\mathbf{R_s = R_1 + R_2 + R_3 + \ldots}$$
+                    <ul>
+                        <li>Same current through all resistors</li>
+                        <li>Voltage divides</li>
+                    </ul>
+                </li>
+                <li><strong>Parallel Combination:</strong>
+                    $$\mathbf{\frac{1}{R_p} = \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3} + \ldots}$$
+                    <ul>
+                        <li>Same voltage across all resistors</li>
+                        <li>Current divides</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h3>5.4 Effects of Electric Current</h3>
+        <div class="pink-box"><span class="box-label">Heating, Magnetic and Chemical Effects</span>
+            <ul>
+                <li><strong>Heating effect:</strong> Current produces heat in a resistance. It is used in heaters, irons, toasters, kettles, fuses and incandescent bulbs. A fuse melts when current is dangerously high.</li>
+                <li><strong>Magnetic effect:</strong> Current-carrying wire behaves like a magnet. An electromagnet is made by winding insulated wire around soft iron; it is used in bells, relays, cranes and motors.</li>
+                <li><strong>Chemical effect:</strong> Current through a conducting liquid can cause chemical reactions, such as deposition of a metal during electroplating.</li>
+                <li>Use correct fuses, earthing and insulated wires. Never touch electrical appliances with wet hands or overload a socket.</li>
+            </ul>
+        </div>
+
+        <div class="practice-box">
+            <span class="box-label">Practice Problem 26</span>
+            <p><strong>Question:</strong> A current of 0.5 A flows through a conductor for 2 minutes. Calculate the charge transferred.</p>
+            <div class="solution">
+                <strong>Solution:</strong><br>
+                $I = 0.5$ A, $t = 2$ min $= 120$ s<br>
+                Using $Q = I \times t$:
+                $$Q = 0.5 \times 120 = \mathbf{60 \text{ C}}$$
+            </div>
+        </div>
+
+        <h2>Chapter 6: Stars and the Solar System</h2>
+        <div class="blue-box"><span class="box-label">Space Neighbours</span>
+            <ul>
+                <li><strong>Star:</strong> A huge, hot body that produces its own light and heat. The Sun is the nearest star to Earth.</li>
+                <li><strong>Planet:</strong> A body that revolves around a star and does not produce its own light. The eight planets are Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune.</li>
+                <li><strong>Rotation:</strong> Spinning on an axis; Earth completes one rotation in about 24 hours and this causes day and night.</li>
+                <li><strong>Revolution:</strong> Motion around the Sun; Earth takes about 365 days and 6 hours. Its tilted axis and revolution cause seasons.</li>
+                <li><strong>Moon:</strong> Earth’s natural satellite. Its phases are caused by the changing portion illuminated by the Sun.</li>
+                <li><strong>Asteroids:</strong> Rocky objects mainly between Mars and Jupiter. <strong>Comets</strong> have an icy nucleus and a tail near the Sun. <strong>Meteoroids</strong> are small rocky bodies; a meteor glows in the atmosphere and a meteorite reaches the ground.</li>
+            </ul>
+        </div>
+        <div class="practice-box"><span class="box-label">Science Check 1</span><p>Why does the Moon appear bright although it is not a star?</p><div class="solution"><strong>Answer:</strong> It reflects sunlight falling on its surface.</div></div>
+
+        <h2>Chapter 7: Natural Phenomena</h2>
+        <div class="yellow-box"><span class="box-label">Lightning and Earthquakes</span>
+            <ul>
+                <li><strong>Lightning:</strong> A sudden electric discharge between oppositely charged clouds or between a cloud and Earth. Tall buildings and trees are unsafe during a storm.</li>
+                <li><strong>Earthing:</strong> A lightning conductor gives electric charge a safe path into the ground. It is a pointed metal rod fixed to the highest part of a building and connected to a buried metal plate.</li>
+                <li><strong>Earthquake:</strong> Sudden shaking caused by movements in the Earth’s crust. The underground origin is the focus and the point above it is the epicentre.</li>
+                <li>During an earthquake, take shelter under a sturdy table, stay away from windows, do not use lifts, and move to an open area after shaking stops.</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 8: Combustion and Flame</h2>
+        <div class="green-box"><span class="box-label">Burning and Fuels</span>
+            <ul>
+                <li><strong>Combustion:</strong> A chemical process in which a substance reacts with oxygen and produces heat, usually with light.</li>
+                <li><strong>Conditions:</strong> A combustible substance, oxygen (air), and temperature at or above its ignition temperature.</li>
+                <li><strong>Rapid combustion:</strong> Burns quickly with heat and light. <strong>Spontaneous combustion:</strong> Begins without an external flame. <strong>Explosion:</strong> Very rapid combustion with heat, light, sound and gases.</li>
+                <li><strong>Flame zones:</strong> The innermost dark zone has unburnt vapours, the middle yellow luminous zone has partial combustion, and the outer blue zone has complete combustion and is hottest.</li>
+                <li><strong>Calorific value:</strong> Heat produced by complete burning of 1 kg of fuel, measured in kJ/kg. A good fuel has high calorific value, moderate ignition temperature, low smoke, and is easy to store and transport.</li>
+                <li>Carbon monoxide from incomplete combustion is poisonous. Never burn fuels in a closed room.</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 9: Metals and Non-metals</h2>
+        <div class="blue-box"><span class="box-label">Physical and Chemical Properties</span>
+            <table><thead><tr><th>Metals</th><th>Non-metals</th></tr></thead><tbody>
+                <tr><td>Lustrous, generally hard and sonorous</td><td>Generally dull and not sonorous</td></tr>
+                <tr><td>Malleable and ductile; good conductors</td><td>Generally brittle; poor conductors</td></tr>
+                <tr><td>Form basic oxides; lose electrons to form cations</td><td>Form acidic or neutral oxides; gain or share electrons</td></tr>
+            </tbody></table>
+            <ul><li><strong>Exception:</strong> Mercury is liquid; graphite is a conducting non-metal; iodine is lustrous.</li><li>Metals react with oxygen to form metal oxides. Some metals react with acids to release hydrogen. More reactive metals displace less reactive metals from their salt solutions.</li><li>Rusting of iron needs oxygen and water; painting, oiling, galvanising and alloying prevent it.</li></ul>
+        </div>
+
+        <h2>Chapter 10: Coal, Petroleum and Fossil Fuels</h2>
+        <div class="green-box"><span class="box-label">Exhaustible Resources</span>
+            <ul>
+                <li><strong>Fossil fuels:</strong> Coal, petroleum and natural gas formed from buried organisms over millions of years. They are exhaustible and non-renewable.</li>
+                <li><strong>Coal products:</strong> Coke is almost pure carbon; coal tar is a source of many chemicals; coal gas is a fuel.</li>
+                <li><strong>Petroleum refining:</strong> Fractional distillation separates petroleum into petroleum gas, petrol, kerosene, diesel, lubricating oil, paraffin wax and bitumen.</li>
+                <li>Burning fossil fuels releases carbon dioxide, sulphur dioxide and nitrogen oxides, causing air pollution, acid rain and global warming. Save fuel, use public transport and prefer renewable energy.</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 11: Synthetic Fibres and Plastics</h2>
+        <div class="yellow-box"><span class="box-label">Polymers in Daily Life</span>
+            <ul>
+                <li><strong>Synthetic fibre:</strong> Fibre made by chemical processing of petrochemicals. A polymer is a long chain made of repeating small units called monomers.</li>
+                <li><strong>Rayon:</strong> Made from cellulose; resembles silk. <strong>Nylon:</strong> Strong, elastic and light. <strong>Polyester:</strong> Does not wrinkle easily. <strong>Acrylic:</strong> Warm and wool-like.</li>
+                <li><strong>Thermoplastics</strong> soften on heating and can be reshaped; <strong>thermosetting plastics</strong> set permanently and cannot be reshaped.</li>
+                <li>Plastic is durable but non-biodegradable. Follow the 4Rs: refuse unnecessary plastic, reduce use, reuse items and recycle safely.</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 12: Cell Structure and Functions</h2>
+        <div class="blue-box"><span class="box-label">The Basic Unit of Life</span>
+            <ul>
+                <li><strong>Cell membrane:</strong> Selectively permeable boundary. <strong>Cytoplasm:</strong> Jelly-like region where reactions occur. <strong>Nucleus:</strong> Controls activities and contains chromosomes.</li>
+                <li><strong>Mitochondria:</strong> Release energy. <strong>Vacuoles:</strong> Store materials. <strong>Endoplasmic reticulum:</strong> Transports substances. <strong>Golgi apparatus:</strong> Packages materials.</li>
+                <li>Plant cells additionally have a cellulose cell wall, chloroplasts for photosynthesis, and a large central vacuole. Animal cells lack a cell wall and chloroplasts.</li>
+                <li><strong>Unicellular organisms</strong> have one cell; <strong>multicellular organisms</strong> have many specialised cells.</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 13: Microorganisms</h2>
+        <div class="green-box"><span class="box-label">Useful and Harmful Microbes</span>
+            <ul>
+                <li>Bacteria, fungi, protozoa and microscopic algae are microorganisms; viruses reproduce only inside living cells.</li>
+                <li><strong>Useful:</strong> Lactobacillus makes curd, yeast makes bread and alcohol, and microbes decompose waste and fix nitrogen.</li>
+                <li><strong>Diseases:</strong> Cholera and tuberculosis are bacterial; common cold and polio are viral; malaria is caused by a protozoan and spreads through female Anopheles mosquitoes.</li>
+                <li><strong>Food preservation:</strong> Salting, sugaring, oiling, drying, pasteurisation and refrigeration slow microbial growth. Antibiotics work against bacteria and must be taken only on medical advice.</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 14: Reproduction in Plants and Animals</h2>
+        <div class="yellow-box"><span class="box-label">Continuity of Life</span>
+            <ul>
+                <li><strong>Asexual reproduction:</strong> One parent; offspring are usually similar. Methods include budding in yeast, binary fission in Amoeba, fragmentation in Spirogyra and vegetative propagation by roots, stems or leaves.</li>
+                <li><strong>Sexual reproduction in plants:</strong> The stamen produces pollen and the pistil contains stigma, style and ovary. Pollination transfers pollen to the stigma; fertilisation forms a zygote, the ovule becomes a seed and the ovary becomes a fruit.</li>
+                <li><strong>Animals:</strong> Internal fertilisation occurs inside the body; external fertilisation occurs outside, often in water. Oviparous animals lay eggs; viviparous animals give birth to young ones.</li>
+                <li>Metamorphosis is a major change in body form, as in a frog. Adolescence is the period of changes caused by sex hormones.</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 15: Endocrine Glands and Hormones</h2>
+        <div class="blue-box"><span class="box-label">Chemical Messengers</span>
+            <ul>
+                <li>Endocrine glands release hormones directly into blood. Hormones coordinate growth, metabolism, reproduction and responses to stress.</li>
+                <li><strong>Pituitary:</strong> Growth and control of other glands. <strong>Thyroid:</strong> Thyroxine controls metabolism; iodine is needed to make it. <strong>Adrenal:</strong> Adrenaline prepares the body for emergencies.</li>
+                <li><strong>Pancreas:</strong> Insulin helps control blood glucose. <strong>Testes:</strong> Testosterone. <strong>Ovaries:</strong> Oestrogen and progesterone.</li>
+                <li>Balanced nutrition, exercise and medical advice help maintain hormonal health. Do not take hormone medicines without a doctor.</li>
+            </ul>
+        </div>
+
+        <h2>Chapter 16: Agriculture Practices</h2>
+        <div class="green-box"><span class="box-label">From Seed to Storage</span>
+            <ol><li><strong>Preparation:</strong> Ploughing, levelling and manuring loosen and enrich soil.</li><li><strong>Sowing:</strong> Use healthy seeds at proper depth and spacing; a seed drill gives uniform sowing.</li><li><strong>Irrigation:</strong> Supply water through wells, canals, sprinklers or drip systems.</li><li><strong>Protection:</strong> Remove weeds by hand, hoeing or safe weedicides; protect crops from pests.</li><li><strong>Harvesting:</strong> Cutting mature crops; threshing separates grain from chaff.</li><li><strong>Storage:</strong> Dry grains properly and store them in silos, granaries or airtight containers.</li></ol>
+            <p>Manure improves soil texture and humus; fertilisers are concentrated nutrient salts. Crop rotation and organic practices protect soil fertility.</p>
+        </div>
+
+        <h2>Chapter 17: Conservation and Pollution</h2>
+        <div class="yellow-box"><span class="box-label">Protecting Life and Water</span>
+            <ul><li><strong>Conservation:</strong> Protecting biodiversity and habitats. Deforestation causes soil erosion, floods, reduced rainfall and loss of wildlife. Afforestation, protected areas, recycling and sustainable use help.</li><li><strong>Air pollution:</strong> Smoke, dust and harmful gases from vehicles and industries cause respiratory disease, smog, acid rain and climate change. Use clean fuels, public transport and filters.</li><li><strong>Water pollution:</strong> Sewage, chemicals, plastics and fertilisers reduce water quality and oxygen. Treat wastewater, avoid dumping waste and conserve water.</li><li><strong>Three Rs:</strong> Reduce consumption, reuse useful items and recycle materials. Segregate wet and dry waste at source.</li></ul>
+        </div>
+        <div class="practice-box"><span class="box-label">Science Revision</span><ol><li>Why is the outer zone of a flame hottest?</li><li>Differentiate thermoplastics and thermosetting plastics.</li><li>What are the functions of the cell wall and nucleus?</li><li>Why should antibiotics not be taken without advice?</li><li>Name two methods of water conservation.</li></ol><p><strong>Answer points:</strong> Complete combustion; reshaping versus permanent setting; support and control; misuse causes resistance and side effects; rainwater harvesting and drip irrigation.</p></div>
+
+        <!-- ========================================
+             PART C: SOCIAL SCIENCE
+        ======================================== -->
+        <h1 style="margin-top: 60px;">PART C: SOCIAL SCIENCE</h1>
+
+        <h2>Geography</h2>
+        <h3>1. Geographical Diversity of India</h3>
+        <div class="blue-box"><span class="box-label">Physical Divisions</span><ul>
+            <li><strong>Himalayas:</strong> Young fold mountains with the Himadri, Himachal and Shiwalik ranges. They block cold winds and help cause monsoon rainfall.</li>
+            <li><strong>Northern Plains:</strong> Fertile alluvial plains formed by the Indus, Ganga and Brahmaputra systems; densely populated and suited to farming.</li>
+            <li><strong>Peninsular Plateau:</strong> Ancient hard rocks, divided into the Central Highlands and Deccan Plateau; rich in minerals.</li>
+            <li><strong>Indian Desert:</strong> The Thar lies mainly in Rajasthan and has low rainfall, sandy soil and thorny vegetation.</li>
+            <li><strong>Coastal plains:</strong> The Western Coastal Plain is narrow; the Eastern Coastal Plain is wider and has large river deltas.</li>
+            <li><strong>Islands:</strong> Lakshadweep is coral-based in the Arabian Sea; Andaman and Nicobar are larger islands in the Bay of Bengal.</li>
+        </ul></div>
+        <h3>2. Landforms and Locating Places</h3>
+        <div class="green-box"><span class="box-label">Maps and Earth</span><ul>
+            <li>Mountains, plateaus, plains, valleys, deserts and coastal features are landforms shaped by internal forces and erosion.</li>
+            <li>Earth has a crust, mantle and core. Rotation causes day and night; revolution and axial tilt cause seasons.</li>
+            <li>The Equator is $0^\circ$ latitude; the Prime Meridian is $0^\circ$ longitude. Latitudes run east-west and longitudes run north-south.</li>
+            <li>Latitude and longitude together give the exact location of a place. India extends approximately from $8^\circ4'$N to $37^\circ6'$N and $68^\circ7'$E to $97^\circ25'$E.</li>
+            <li>The four major oceans are Pacific, Atlantic, Indian and Arctic; Antarctica is surrounded by the Southern Ocean. The seven continents are Asia, Africa, Europe, North America, South America, Australia and Antarctica.</li>
+        </ul></div>
+        <h3>3. Resources, Weather and Climate</h3>
+        <div class="yellow-box"><span class="box-label">Using Earth Wisely</span><ul>
+            <li><strong>Resource:</strong> Anything with utility, value and technology available to use. Resources may be natural, human-made or human; renewable or non-renewable.</li>
+            <li>Soil, water, forests, wildlife, minerals, sunlight and wind are natural resources. Conservation means planned and careful use for present and future generations.</li>
+            <li><strong>Weather</strong> is the day-to-day condition of air; <strong>climate</strong> is the average weather pattern over a long period. Temperature, pressure, wind, humidity and rainfall describe weather.</li>
+            <li>The Indian monsoon is seasonal reversal of winds. Relief, distance from sea, altitude and latitude influence climate.</li>
+        </ul></div>
+
+        <h2>History</h2>
+        <h3>1. Beginning of Indian Civilisation</h3>
+        <div class="blue-box"><span class="box-label">From Villages to Cities</span><ul>
+            <li>Early people used stone tools, learned farming and domesticated animals. Permanent settlements grew near rivers because water and fertile soil supported life.</li>
+            <li><strong>Harappan civilisation:</strong> Planned cities such as Harappa, Mohenjo-daro, Dholavira and Lothal had brick houses, drainage, wells, granaries and craft production. Trade, seals and undeciphered script are important evidence.</li>
+            <li>The later Vedic period saw iron tools, agriculture, territorial kingdoms and the growth of towns. Mahajanapadas were large states; Magadha became powerful.</li>
+        </ul></div>
+        <h3>2. New Cities, States and the Rise of Empires</h3>
+        <div class="green-box"><span class="box-label">Rulers to Rules</span><ul>
+            <li>Janapadas developed into mahajanapadas. Taxes, armies, forts and officials helped rulers control larger territories.</li>
+            <li><strong>Mauryan Empire:</strong> Chandragupta Maurya established a large empire; Ashoka expanded it and after the Kalinga war promoted dhamma, welfare and non-violence. Edicts on rocks and pillars are primary sources.</li>
+            <li><strong>Gupta era:</strong> Samudragupta and Chandragupta II strengthened north India. Mathematics, astronomy, literature, art and temple architecture flourished; “Golden Age” is useful shorthand but achievements were not equal for every group.</li>
+            <li>After the Guptas, regional kingdoms and new political centres developed. The Cholas are remembered for irrigation, temples and local assemblies.</li>
+        </ul></div>
+        <h3>3. Reorganisation and the Rise of the Marathas</h3>
+        <div class="yellow-box"><span class="box-label">Medieval Political Map</span><ul>
+            <li>New dynasties reorganised power through land revenue, forts, alliances and military service. The Delhi Sultanate and Mughal Empire connected large regions but local rulers remained important.</li>
+            <li><strong>Marathas:</strong> Shivaji built a strong kingdom using forts, a disciplined army and effective administration. The Ashtapradhan council and revenue arrangements supported the state; later the Peshwas expanded Maratha influence.</li>
+            <li>History should be read through inscriptions, coins, buildings, literary records, travellers’ accounts and archaeological remains, while considering who created each source.</li>
+        </ul></div>
+        <h3>4. Colonial Raj, Indian Culture and Routes</h3>
+        <div class="blue-box"><span class="box-label">Colonialism and Change</span><ul>
+            <li>The English East India Company came for trade and gradually gained political power through wars, diplomacy, revenue systems and alliances. The Revolt of 1857 had many causes, leaders and regional forms; after it, the British Crown ruled India.</li>
+            <li>Colonial policies changed agriculture, industries, forests, education and transport. Railways, ports and roads helped administration and trade but often served colonial economic interests.</li>
+            <li>Indian resistance included tribal, peasant, reform, cultural and nationalist movements. The freedom struggle grew through mass participation and ended with independence in 1947.</li>
+            <li>India’s culture includes many languages, faiths, art forms, music, dance, literature, architecture, food and festivals. Land routes and sea routes carried goods, technologies, ideas and religions across Asia, Africa and Europe.</li>
+        </ul></div>
+
+        <h2>Civics</h2>
+        <h3>1. Constitution and Universal Franchise</h3>
+        <div class="green-box"><span class="box-label">Democratic Framework</span><ul>
+            <li>The Constitution was adopted on 26 November 1949 and came into force on 26 January 1950. It establishes India as a sovereign, socialist, secular, democratic republic with a parliamentary system.</li>
+            <li>Its values include justice, liberty, equality and fraternity. Fundamental Rights protect dignity and freedom; Directive Principles guide welfare; Fundamental Duties encourage responsible citizenship.</li>
+            <li><strong>Universal adult franchise:</strong> Every citizen aged 18 or above can vote without discrimination based on religion, caste, gender, wealth or education, subject to legal disqualifications.</li>
+        </ul></div>
+        <h3>2. India’s Electoral and Parliamentary System</h3>
+        <div class="blue-box"><span class="box-label">Representation and Accountability</span><ul>
+            <li>The Election Commission conducts elections, prepares electoral rolls and enforces election rules. Constituencies elect representatives; the candidate with the most votes wins in a first-past-the-post contest.</li>
+            <li>Parliament consists of the President, Lok Sabha and Rajya Sabha. The Lok Sabha is directly elected; the Rajya Sabha represents states and union territories.</li>
+            <li>The legislature makes laws, discusses public issues, approves taxation and checks the executive. The executive implements laws: the President is the constitutional head, while the Prime Minister and Council of Ministers exercise real executive authority.</li>
+            <li>Courts interpret the Constitution and protect rights. Separation of functions, questions, debates, committees and elections help limit misuse of power.</li>
+        </ul></div>
+        <h3>3. Grassroot Democracy and Local Self-Government</h3>
+        <div class="yellow-box"><span class="box-label">Power Near the People</span><ul>
+            <li><strong>Rural:</strong> Gram Sabha includes village voters; Gram Panchayat works at village level, Panchayat Samiti at block level and Zila Parishad at district level.</li>
+            <li><strong>Urban:</strong> Municipalities and municipal corporations provide water, sanitation, roads, public health and waste management.</li>
+            <li>Local government encourages participation, plans local development and makes leaders accountable. Seats are reserved for women and disadvantaged groups under constitutional provisions.</li>
+        </ul></div>
+        <h3>4. Economy: Barter, Money and Activities Around Us</h3>
+        <div class="green-box"><span class="box-label">How People Earn and Exchange</span><ul>
+            <li><strong>Barter system:</strong> Direct exchange of goods for goods. It requires double coincidence of wants and makes common measurement and storing value difficult.</li>
+            <li><strong>Money:</strong> Accepted medium of exchange, unit of account and store of value. Notes and coins are currency; banks keep deposits, provide loans and enable digital payments.</li>
+            <li>Economic activities include <strong>primary</strong> agriculture, fishing and mining; <strong>secondary</strong> manufacturing and construction; and <strong>tertiary</strong> transport, trade, education, health and communication.</li>
+            <li>People also perform unpaid household and community work. Markets connect producers and consumers; fair wages, safe work, consumer awareness and sustainable use matter.</li>
+        </ul></div>
+        <div class="practice-box"><span class="box-label">Social Science Practice</span><ol>
+            <li>Distinguish weather from climate.</li><li>Why did early cities grow near rivers?</li><li>Name two sources used by historians.</li><li>What is universal adult franchise?</li><li>State one difficulty of barter and one function of money.</li><li>Differentiate the legislature and executive.</li><li>Write one function of a Gram Panchayat.</li><li>Name the three sectors of economic activity with one example each.</li>
+        </ol><p><strong>Answer points:</strong> daily versus long-term pattern; water and fertile soil; coins, inscriptions, buildings, texts or archaeology; voting rights for adult citizens; double coincidence and medium of exchange; law-making versus implementation; local services; primary, secondary and tertiary.</p></div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <style>
+                .dark-mode .vardaan-logo {
+                    filter: invert(1);
+                }
+
+                .dark-mode .powered-by-brand {
+                    color: #ffffff !important;
+                }
+            </style>
+            <div class="created-by">Created by Team Vardaan with <span class="heart-red" aria-hidden="true">&hearts;</span></div>
+            <div class="powered-by" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px;">
+                <span class="powered-by-label">Powered by</span>
+                <a href="https://vardaancomet.com" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1783346988/Vardaan_Comet_bg_removed_hpjuhv.png" alt="Vardaan Comet Logo" class="vardaan-logo" style="height: 24px; width: auto;">
+                    <span class="powered-by-brand">VARDAAN COMET</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark-mode');
+            localStorage.setItem('dark-mode', isDark);
+        }
+        if (localStorage.getItem('dark-mode') === 'true') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+</body>
+</html>

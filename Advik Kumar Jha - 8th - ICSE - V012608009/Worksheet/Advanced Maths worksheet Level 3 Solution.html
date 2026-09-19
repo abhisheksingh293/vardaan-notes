@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Level 3 Solutions Key</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 10mm; }
+        
+        :root {
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        html.dark-mode {
+            --primary-color: #ef5350;   
+            --bg-color: #2c1a1a;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.2; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { width: 100%; max-width: 210mm; margin: 0 auto; padding: 10px; box-sizing: border-box;}
+
+        .header { text-align: center; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 10px; }
+        .institute-name { font-size: 20pt; font-weight: bold; text-transform: uppercase; margin: 0; color: var(--primary-color); }
+        .tagline { font-size: 11pt; font-weight: bold; margin-bottom: 6px; margin-top: 3px; color: var(--text-secondary); }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { font-size: 13pt; font-weight: bold; text-decoration: underline; margin-top: 2px; color: var(--text-secondary); }
+        .meta-info { 
+            display: flex; justify-content: space-between; font-weight: bold; margin-top: 8px; 
+            font-size: 10pt; background-color: var(--bg-color); padding: 6px 10px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 4px 8px; margin-top: 12px; margin-bottom: 8px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: 10.5pt; text-transform: uppercase; page-break-after: avoid; 
+        }
+        
+        .questions-container { 
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px 8px;
+        }
+        
+        @media (min-width: 768px) { .questions-container { grid-template-columns: repeat(4, 1fr); } }
+        @media (min-width: 1024px) { .questions-container { grid-template-columns: repeat(6, 1fr); } }
+
+        .question-item { display: flex; align-items: baseline; margin-bottom: 2px; font-size: 9.5pt; page-break-inside: avoid; text-align: left; }
+        .q-num { font-weight: bold; margin-right: 4px; min-width: 20px; color: var(--primary-color); }
+        .q-content { flex: 1; }
+        .ans-label { font-weight: bold; color: var(--primary-color); margin-right: 3px; display: none; }
+
+        .footer { margin-top: 20px; padding-top: 6px; border-top: 2px solid var(--primary-color); text-align: center; font-size: 8pt; font-weight: bold; color: var(--primary-color); }
+        .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+        
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center;
+        }
+        html.dark-mode .theme-toggle { filter: invert(1) hue-rotate(180deg); background: #e0e0e0; }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* ULTRA-DENSE PRINT CSS FOR SOLUTIONS */
+        @media print { 
+            @page { margin: 6mm; }
+            body { font-size: 8.5pt; }
+            .theme-toggle { display: none; }
+            .header { padding-bottom: 4px; margin-bottom: 4px; }
+            .institute-name { font-size: 14pt; }
+            .worksheet-title { font-size: 10pt; }
+            .chapter-header { 
+                background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; 
+                -webkit-print-color-adjust: exact; print-color-adjust: exact; 
+                margin-top: 6px; margin-bottom: 4px; padding: 2px 4px; font-size: 9pt;
+            }
+            .meta-info { 
+                background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; 
+                padding: 3px 6px; font-size: 8pt; margin-top: 4px;
+            }
+            .questions-container { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px 4px; }
+            .question-item { font-size: 8pt; margin-bottom: 0px; }
+            .footer { margin-top: 10px; font-size: 7pt; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">SOLUTION KEY: Level 3 Challenger</div>
+            <div class="meta-info">
+                <span>Student Name: __________________________</span> 
+                <span>Class: ____</span>
+                <span>Subject: Mathematics Solutions</span>
+            </div>
+        </div>
+
+        <div class="chapter-header">Section A: Rational Numbers</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">$-1/8$</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">$1$</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">$-2/3$</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">$1$</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">$1$</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">$1$</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">$15/4 \text{ or } 3\frac{3}{4}$</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">$1$</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">$17/90$</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">$-13/12$</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">$77/60$</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">$1/8$</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">$1$</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">$1/2$</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">$-1$</div></div>
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">$-3/2$</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">$1/12$</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">$3/4$</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">$7/8$</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">$-3/2$</div></div>
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">$40$</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">$5/12$</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">$12$</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">$1/3$</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">$-1/2$</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">$2.1$</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">$0.7$</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">$7/6$</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">$1$</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">$0$</div></div>
+        </div>
+
+        <div class="chapter-header">Section B: Algebra</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">$9x^2 - 24xy + 16y^2$</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">$4a^2 - 25b^2$</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">$x^2 + \frac{1}{x^2} + 2$</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">$4y^2 + \frac{1}{4y^2} - 2$</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">$9991$</div></div>
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">$9900.25$</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">$4xy$</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">$14$</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">$11$</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">$(4x+9y)(4x-9y)$</div></div>
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">$(a^2+b^2)(a+b)(a-b)$</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">$(5+x+y)(5-x-y)$</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">$(x+3)(x+4)$</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">$(y-5)(y+4)$</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">$(a-5)(a-6)$</div></div>
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">$(p+7)(p-5)$</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">$(2x+5)(x+1)$</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">$(3y-4)(y-2)$</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">$(2m+3)(2m+1)$</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">$(x-7)^2$</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">$(a+x)(b+c)$</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">$(m-n)(x-y)$</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">$(x+3)$</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">$(4x+3)$</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">$4x^2+9$</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">$x^3-3x^2-10x+24$</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">$x(x-2)(x+2)$</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">$3ab(a-4b)$</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">$37$</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">$\pm 3$</div></div>
+        </div>
+
+        <div class="chapter-header">Section C: Linear Equations</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">61.</span><div class="q-content">$x=6$</div></div>
+            <div class="question-item"><span class="q-num">62.</span><div class="q-content">$y=-10$</div></div>
+            <div class="question-item"><span class="q-num">63.</span><div class="q-content">$m=5$</div></div>
+            <div class="question-item"><span class="q-num">64.</span><div class="q-content">$p=4$</div></div>
+            <div class="question-item"><span class="q-num">65.</span><div class="q-content">$x=2.7$</div></div>
+            <div class="question-item"><span class="q-num">66.</span><div class="q-content">$x=1$</div></div>
+            <div class="question-item"><span class="q-num">67.</span><div class="q-content">$y=2$</div></div>
+            <div class="question-item"><span class="q-num">68.</span><div class="q-content">$a=2$</div></div>
+            <div class="question-item"><span class="q-num">69.</span><div class="q-content">$x=5$</div></div>
+            <div class="question-item"><span class="q-num">70.</span><div class="q-content">$x=2.8$</div></div>
+            <div class="question-item"><span class="q-num">71.</span><div class="q-content">$x=8.5$</div></div>
+            <div class="question-item"><span class="q-num">72.</span><div class="q-content">$x=13$</div></div>
+            <div class="question-item"><span class="q-num">73.</span><div class="q-content">No Solution</div></div>
+            <div class="question-item"><span class="q-num">74.</span><div class="q-content">$x=2$</div></div>
+            <div class="question-item"><span class="q-num">75.</span><div class="q-content">$x=8$</div></div>
+            <div class="question-item"><span class="q-num">76.</span><div class="q-content">$14, 16, 18$</div></div>
+            <div class="question-item"><span class="q-num">77.</span><div class="q-content">$3/6 \rightarrow 1/2$</div></div>
+            <div class="question-item"><span class="q-num">78.</span><div class="q-content">$20$ yrs</div></div>
+            <div class="question-item"><span class="q-num">79.</span><div class="q-content">$96\text{cm}^2$</div></div>
+            <div class="question-item"><span class="q-num">80.</span><div class="q-content">$24, 40$</div></div>
+            <div class="question-item"><span class="q-num">81.</span><div class="q-content">$x=12$</div></div>
+            <div class="question-item"><span class="q-num">82.</span><div class="q-content">$x=11$</div></div>
+            <div class="question-item"><span class="q-num">83.</span><div class="q-content">$x=1.33$</div></div>
+            <div class="question-item"><span class="q-num">84.</span><div class="q-content">$x=-2$</div></div>
+            <div class="question-item"><span class="q-num">85.</span><div class="q-content">$36$</div></div>
+            <div class="question-item"><span class="q-num">86.</span><div class="q-content">$y=10$</div></div>
+            <div class="question-item"><span class="q-num">87.</span><div class="q-content">$x=0.6$</div></div>
+            <div class="question-item"><span class="q-num">88.</span><div class="q-content">$m=12$</div></div>
+            <div class="question-item"><span class="q-num">89.</span><div class="q-content">₹8.12</div></div>
+            <div class="question-item"><span class="q-num">90.</span><div class="q-content">$x=12$</div></div>
+        </div>
+
+        <div class="chapter-header">Section D: Exponents</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">91.</span><div class="q-content">$144/25$</div></div>
+            <div class="question-item"><span class="q-num">92.</span><div class="q-content">$-27/8$</div></div>
+            <div class="question-item"><span class="q-num">93.</span><div class="q-content">$x=2$</div></div>
+            <div class="question-item"><span class="q-num">94.</span><div class="q-content">$y=2$</div></div>
+            <div class="question-item"><span class="q-num">95.</span><div class="q-content">$m=4$</div></div>
+            <div class="question-item"><span class="q-num">96.</span><div class="q-content">$9/4$</div></div>
+            <div class="question-item"><span class="q-num">97.</span><div class="q-content">$8$</div></div>
+            <div class="question-item"><span class="q-num">98.</span><div class="q-content">$x^{a^2-b^2}$</div></div>
+            <div class="question-item"><span class="q-num">99.</span><div class="q-content">$1/4$</div></div>
+            <div class="question-item"><span class="q-num">100.</span><div class="q-content">$x=-1$</div></div>
+            <div class="question-item"><span class="q-num">101.</span><div class="q-content">$312.5 t^4$</div></div>
+            <div class="question-item"><span class="q-num">102.</span><div class="q-content">$0$</div></div>
+            <div class="question-item"><span class="q-num">103.</span><div class="q-content">$4.25 \times 10^{-8}$</div></div>
+            <div class="question-item"><span class="q-num">104.</span><div class="q-content">$0.00000302$</div></div>
+            <div class="question-item"><span class="q-num">105.</span><div class="q-content">$x=-3$</div></div>
+            <div class="question-item"><span class="q-num">106.</span><div class="q-content">$m=1$</div></div>
+            <div class="question-item"><span class="q-num">107.</span><div class="q-content">$1/36$</div></div>
+            <div class="question-item"><span class="q-num">108.</span><div class="q-content">$1/16$</div></div>
+            <div class="question-item"><span class="q-num">109.</span><div class="q-content">$80605$</div></div>
+            <div class="question-item"><span class="q-num">110.</span><div class="q-content">$b^{12} / a^8$</div></div>
+            <div class="question-item"><span class="q-num">111.</span><div class="q-content">$7.5$</div></div>
+            <div class="question-item"><span class="q-num">112.</span><div class="q-content">$x=2$</div></div>
+            <div class="question-item"><span class="q-num">113.</span><div class="q-content">$10$</div></div>
+            <div class="question-item"><span class="q-num">114.</span><div class="q-content">$9$</div></div>
+            <div class="question-item"><span class="q-num">115.</span><div class="q-content">$1/8$</div></div>
+            <div class="question-item"><span class="q-num">116.</span><div class="q-content">$1/2$</div></div>
+            <div class="question-item"><span class="q-num">117.</span><div class="q-content">$-4$</div></div>
+            <div class="question-item"><span class="q-num">118.</span><div class="q-content">$40/27$</div></div>
+            <div class="question-item"><span class="q-num">119.</span><div class="q-content">$x=1.5$</div></div>
+            <div class="question-item"><span class="q-num">120.</span><div class="q-content">$24/5$</div></div>
+        </div>
+
+        <div class="chapter-header">Section E: Commercial Math</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">121.</span><div class="q-content">$28\%$</div></div>
+            <div class="question-item"><span class="q-num">122.</span><div class="q-content">$20\%$</div></div>
+            <div class="question-item"><span class="q-num">123.</span><div class="q-content">₹990</div></div>
+            <div class="question-item"><span class="q-num">124.</span><div class="q-content">₹1320</div></div>
+            <div class="question-item"><span class="q-num">125.</span><div class="q-content">₹1000</div></div>
+            <div class="question-item"><span class="q-num">126.</span><div class="q-content">₹5000</div></div>
+            <div class="question-item"><span class="q-num">127.</span><div class="q-content">₹1050</div></div>
+            <div class="question-item"><span class="q-num">128.</span><div class="q-content">₹4410</div></div>
+            <div class="question-item"><span class="q-num">129.</span><div class="q-content">₹10</div></div>
+            <div class="question-item"><span class="q-num">130.</span><div class="q-content">$12.5\%$</div></div>
+            <div class="question-item"><span class="q-num">131.</span><div class="q-content">$12100$</div></div>
+            <div class="question-item"><span class="q-num">132.</span><div class="q-content">₹6400</div></div>
+            <div class="question-item"><span class="q-num">133.</span><div class="q-content">$44\%$</div></div>
+            <div class="question-item"><span class="q-num">134.</span><div class="q-content">₹820</div></div>
+            <div class="question-item"><span class="q-num">135.</span><div class="q-content">₹4000</div></div>
+            <div class="question-item"><span class="q-num">136.</span><div class="q-content">$33.33\%$</div></div>
+            <div class="question-item"><span class="q-num">137.</span><div class="q-content">$4\%$ decrease</div></div>
+            <div class="question-item"><span class="q-num">138.</span><div class="q-content">$2000$</div></div>
+            <div class="question-item"><span class="q-num">139.</span><div class="q-content">$400$</div></div>
+            <div class="question-item"><span class="q-num">140.</span><div class="q-content">$12.5\text{kg}$</div></div>
+            <div class="question-item"><span class="q-num">141.</span><div class="q-content">$6$ days</div></div>
+            <div class="question-item"><span class="q-num">142.</span><div class="q-content">$15$ days</div></div>
+            <div class="question-item"><span class="q-num">143.</span><div class="q-content">$2.4\text{hr}$</div></div>
+            <div class="question-item"><span class="q-num">144.</span><div class="q-content">$20\text{m/s}$</div></div>
+            <div class="question-item"><span class="q-num">145.</span><div class="q-content">$36\text{km/hr}$</div></div>
+            <div class="question-item"><span class="q-num">146.</span><div class="q-content">$30$ days</div></div>
+            <div class="question-item"><span class="q-num">147.</span><div class="q-content">₹56</div></div>
+            <div class="question-item"><span class="q-num">148.</span><div class="q-content">$2$</div></div>
+            <div class="question-item"><span class="q-num">149.</span><div class="q-content">$20\text{km}$</div></div>
+            <div class="question-item"><span class="q-num">150.</span><div class="q-content">$25$</div></div>
+        </div>
+
+        <div class="chapter-header">Section F: Geometry</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">151.</span><div class="q-content">$60$</div></div>
+            <div class="question-item"><span class="q-num">152.</span><div class="q-content">$96$</div></div>
+            <div class="question-item"><span class="q-num">153.</span><div class="q-content">$40$</div></div>
+            <div class="question-item"><span class="q-num">154.</span><div class="q-content">$748$</div></div>
+            <div class="question-item"><span class="q-num">155.</span><div class="q-content">$1540$</div></div>
+            <div class="question-item"><span class="q-num">156.</span><div class="q-content">$440$</div></div>
+            <div class="question-item"><span class="q-num">157.</span><div class="q-content">$384$</div></div>
+            <div class="question-item"><span class="q-num">158.</span><div class="q-content">$120$</div></div>
+            <div class="question-item"><span class="q-num">159.</span><div class="q-content">$10\sqrt{2} \approx 14.1$</div></div>
+            <div class="question-item"><span class="q-num">160.</span><div class="q-content">$150\text{m}$</div></div>
+            <div class="question-item"><span class="q-num">161.</span><div class="q-content">$616$</div></div>
+            <div class="question-item"><span class="q-num">162.</span><div class="q-content">$1100\text{m}$</div></div>
+            <div class="question-item"><span class="q-num">163.</span><div class="q-content">$462$</div></div>
+            <div class="question-item"><span class="q-num">164.</span><div class="q-content">$1080^\circ$</div></div>
+            <div class="question-item"><span class="q-num">165.</span><div class="q-content">$36^\circ$</div></div>
+            <div class="question-item"><span class="q-num">166.</span><div class="q-content">$9$</div></div>
+            <div class="question-item"><span class="q-num">167.</span><div class="q-content">$10$</div></div>
+            <div class="question-item"><span class="q-num">168.</span><div class="q-content">$110^\circ$</div></div>
+            <div class="question-item"><span class="q-num">169.</span><div class="q-content">$3$</div></div>
+            <div class="question-item"><span class="q-num">170.</span><div class="q-content">$6$</div></div>
+            <div class="question-item"><span class="q-num">171.</span><div class="q-content">$120^\circ$</div></div>
+            <div class="question-item"><span class="q-num">172.</span><div class="q-content">$24$</div></div>
+            <div class="question-item"><span class="q-num">173.</span><div class="q-content">$2\sqrt{3}$</div></div>
+            <div class="question-item"><span class="q-num">174.</span><div class="q-content">$108^\circ, 72^\circ$</div></div>
+            <div class="question-item"><span class="q-num">175.</span><div class="q-content">₹940</div></div>
+            <div class="question-item"><span class="q-num">176.</span><div class="q-content">$502.4$</div></div>
+            <div class="question-item"><span class="q-num">177.</span><div class="q-content">$125$</div></div>
+            <div class="question-item"><span class="q-num">178.</span><div class="q-content">$7$</div></div>
+            <div class="question-item"><span class="q-num">179.</span><div class="q-content">$8$</div></div>
+            <div class="question-item"><span class="q-num">180.</span><div class="q-content">$8$</div></div>
+        </div>
+
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Solutions - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px; /* Changed from mm for better mobile rendering */
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Tablet Adjustments */
+        @media (min-width: 768px) {
+             .paper-sheet {
+                padding: 40px;
+            }
+        }
+        
+        /* Desktop/Laptop Adjustments */
+        @media (min-width: 1024px) {
+             .paper-sheet {
+                padding: 20mm;
+            }
+        }
+
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: clamp(1.5rem, 5vw, 2.2rem); /* Responsive font size */
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: clamp(0.9rem, 3vw, 1.1rem); /* Responsive font size */
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: clamp(1.8rem, 6vw, 2.2rem);
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: clamp(1.3rem, 5vw, 1.6rem);
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: clamp(0.95rem, 3vw, 1.05rem);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+        
+        /* Mobile specific padding for lists */
+        @media (max-width: 767px) {
+             ul, ol {
+                 padding-left: 15px;
+             }
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+        
+        .qa-container {
+             margin-bottom: 25px;
+        }
+        
+        .question {
+             font-weight: bold;
+             color: var(--blue-border);
+             margin-bottom: 5px;
+        }
+        
+        .answer {
+             margin-left: 15px;
+             border-left: 2px solid var(--toggle-border);
+             padding-left: 10px;
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute; /* Changed to fixed for better mobile experience */
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile specific positioning for toggle */
+        @media (max-width: 767px) {
+             .theme-toggle {
+                  top: 10px;
+                  right: 10px;
+                  width: 36px;
+                  height: 36px;
+             }
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer should be visible per request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+            
+            /* FORCE SHOW Footer in Print (Overriding base template to ensure it shows) */
+            .branding-footer {
+                display: block !important;
+                margin-top: 30px !important;
+                border-top: 1px solid #ccc !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+        @page {
+            size: A4;
+            margin: 2cm;
+            
+            @bottom-left { content: none; }
+            @bottom-right { content: none; }
+
+            /* The Pink Disc */
+            @bottom-center {
+                content: counter(page);
+                display: block;
+                width: 30px;
+                height: 30px;
+                background-color: #d81b60; 
+                color: #ffffff;
+                border-radius: 50%;
+                font-family: 'Comic Sans MS', cursive, sans-serif;
+                font-size: 11pt;
+                font-weight: bold;
+                text-align: center;
+                line-height: 30px;
+                margin: 0 auto;
+            }
+        }
+        
+        /* Ensure text colors are printer friendly */
+            h1, h2, h3, .institute-name {
+                 color: #000 !important;
+            }
+            
+            strong {
+                 color: #000 !important;
+                 font-weight: bold;
+            }
+            
+            .blue-box, .green-box, .yellow-box {
+                 border: 1px solid #000 !important;
+                 background-color: transparent !important;
+            }
+            
+            .box-label {
+                 color: #000 !important;
+                 border-color: #000 !important;
+            }
+            
+            .question {
+                 color: #000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Science</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Chemical Substances and Processes</h1>
+        
+        <h2>D. Answer the following questions in brief.</h2>
+        
+        <div class="qa-container">
+            <div class="question">1. What are elements?</div>
+            <div class="answer">
+                <p>An element is a pure substance made up of only <strong>one kind of atom</strong>. It cannot be broken down into simpler substances by chemical means.</p>
+            </div>
+        </div>
+
+        <div class="qa-container">
+            <div class="question">2. Give the chemical symbol of iron and chlorine.</div>
+            <div class="answer">
+                <ul>
+                    <li><strong>Iron:</strong> Fe</li>
+                    <li><strong>Chlorine:</strong> Cl</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="qa-container">
+            <div class="question">3. Write the chemical formulae of the following compounds: (a) Aluminium oxide (b) Zinc acetate</div>
+            <div class="answer">
+                <ul>
+                    <li>(a) Aluminium oxide: <strong>Al₂O₃</strong></li>
+                    <li>(b) Zinc acetate: <strong>Zn(CH₃COO)₂</strong></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>Always write the valency correctly while forming chemical formulae. For Aluminium Oxide, Al is +3 and O is -2, cross-multiplying gives Al₂O₃.</p>
+        </div>
+
+        <div class="qa-container">
+            <div class="question">4. Balance the following equation: Ca(OH)₂ + HCl ⟶ CaCl₂ + H₂O</div>
+            <div class="answer">
+                <p>The balanced equation is: <br> <strong>Ca(OH)₂ + 2HCl ⟶ CaCl₂ + 2H₂O</strong></p>
+            </div>
+        </div>
+
+        <div class="qa-container">
+            <div class="question">5. What does a chemical equation represent?</div>
+            <div class="answer">
+                <p>A chemical equation represents a <strong>chemical reaction</strong> using symbols and formulae of the substances involved.</p>
+            </div>
+        </div>
+
+        <div class="qa-container">
+            <div class="question">6. What are reactants and products in a chemical equation?</div>
+            <div class="answer">
+                <ul>
+                    <li><strong>Reactants:</strong> The substances that take part in a chemical reaction (written on the left side).</li>
+                    <li><strong>Products:</strong> The new substances formed as a result of the reaction (written on the right side).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="qa-container">
+            <div class="question">7. Give one example of a combination reaction.</div>
+            <div class="answer">
+                <p>Burning of carbon in oxygen to form carbon dioxide.<br> <strong>C + O₂ ⟶ CO₂</strong></p>
+            </div>
+        </div>
+
+        <h2>E. Answer the following questions.</h2>
+
+        <div class="qa-container">
+            <div class="question">1. Write the steps involved in writing the chemical formula of calcium phosphate.</div>
+            <div class="answer">
+                <ol>
+                    <li>Write the symbols of positive and negative radicals: Ca and PO₄.</li>
+                    <li>Write their valencies on the top right: Ca²⁺ and PO₄³⁻.</li>
+                    <li>Cross-multiply the valencies and write them as subscripts: <strong>Ca₃(PO₄)₂</strong>.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="qa-container">
+            <div class="question">2. How is a chemical change different from a physical change?</div>
+            <div class="answer">
+                <p>In a <strong>physical change</strong>, only the physical properties change, and no new substance is formed (e.g., melting of ice). In a <strong>chemical change</strong>, a new substance with entirely different properties is formed, and it is usually irreversible (e.g., rusting of iron).</p>
+            </div>
+        </div>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>Chemical changes are permanent and involve the absorption or release of energy.</p>
+        </div>
+
+        <div class="qa-container">
+            <div class="question">3. 'Neutralisation reaction is a chemical change.' Justify this statement with the help of an example.</div>
+            <div class="answer">
+                <p>Yes, it is a chemical change because <strong>new substances (salt and water)</strong> are formed with completely different properties from the reacting acid and base. <br> Example: NaOH (base) + HCl (acid) ⟶ <strong>NaCl (salt) + H₂O (water)</strong>.</p>
+            </div>
+        </div>
+
+        <div class="qa-container">
+            <div class="question">4. Define a decomposition reaction and give an example of the same.</div>
+            <div class="answer">
+                <p>A reaction in which a single compound breaks down into two or more simpler substances is called a <strong>decomposition reaction</strong>.<br> Example: Heating of Calcium Carbonate.<br> <strong>CaCO₃ ⟶ CaO + CO₂</strong> (on heating)</p>
+            </div>
+        </div>
+
+        <div class="qa-container">
+            <div class="question">5. Classify the following reactions into different types, giving reason.</div>
+            <div class="answer">
+                <ul>
+                    <li><strong>(a) CaO(s) + SiO₂(g) ⟶ CaSiO₃(s)</strong><br> <strong>Combination Reaction:</strong> Two simpler substances combine to form a single product.</li>
+                    <li><strong>(b) KOH(aq) + HCl(aq) ⟶ KCl(aq) + H₂O(l)</strong><br> <strong>Neutralisation (Double Displacement) Reaction:</strong> An acid and a base react to form salt and water.</li>
+                    <li><strong>(c) Cu(s) + 2AgNO₃(aq) ⟶ Cu(NO₃)₂(aq) + 2Ag(s)</strong><br> <strong>Displacement Reaction:</strong> A more reactive metal (Cu) displaces a less reactive metal (Ag) from its salt solution.</li>
+                    <li><strong>(d) BaCO₃(s) (heat) ⟶ BaO(s) + CO₂(g)</strong><br> <strong>Decomposition Reaction:</strong> A single compound breaks down into simpler substances upon heating.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

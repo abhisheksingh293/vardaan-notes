@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Human Resources - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        /* Responsive adjustments for Paper Sheet */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+        }
+        @media (max-width: 480px) {
+            .paper-sheet {
+                padding: 5mm;
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        /* Responsive adjustments for Header */
+        @media (max-width: 768px) {
+            .institute-name {
+                font-size: 1.8rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .institute-name {
+                font-size: 1.4rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+        
+        /* Responsive adjustments for H1 */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+        
+        /* Responsive adjustments for H2 */
+        @media (max-width: 768px) {
+            h2 { font-size: 1.4rem; }
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+        
+        /* Responsive adjustments for H3 */
+        @media (max-width: 768px) {
+            h3 { font-size: 1.2rem; }
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 480px) {
+            p, li { font-size: 1rem; }
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 480px) {
+             .theme-toggle {
+                 top: 10px;
+                 right: 10px;
+                 width: 36px;
+                 height: 36px;
+             }
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            /* SHOW BRANDING FOOTER IN PRINT AS PER INSTRUCTIONS */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+                display: block !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Geography • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Human Resources</h1>
+
+        <h2>1. Humans as a Resource</h2>
+        <p>Human beings engaged in useful activities are called <strong>human resources</strong>. Human resources include the population as well as the physical and mental abilities of the people like health, education, and skill.</p>
+        
+        <ul>
+            <li>Humans are the <strong>most important</strong> of all resources because natural substances acquire resource value only when used by us.</li>
+            <li>The <strong>quality</strong> along with the <strong>quantity</strong> of the population of a nation determines the level of utilization of natural resources.</li>
+            <li>The economic development of a region or a country depends heavily on the development of its human resources.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Human Resource Development:</strong> The responsibility of honing the skills of the people lies with its nation. The nation should ensure proper provision of nutritious food, healthcare facilities, and basic education. Adequate training to improve skills and employment opportunities must be provided.</p>
+        </div>
+
+        <h3>Impact of Population Growth</h3>
+        <p>The growth of population is directly proportional to the economic development of a country. A healthy and educated population is the wealth of a nation.</p>
+        <ul>
+            <li><strong>Developing Nations:</strong> Have a high growth rate but often face challenges like a lower standard of living, scarcity of food, and lack of infrastructural, healthcare, and educational facilities.</li>
+            <li><strong>Developed Nations:</strong> Generally have a lower growth rate and a higher standard of living.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>The <strong>Human Development Index (HDI)</strong> is a composite index used to rank countries into four tiers of human development. It uses indicators like life expectancy, education, and per capita income.</p>
+        </div>
+
+        <h2>2. Distribution of Population in India</h2>
+        <p>Asia is the most populous continent, and India is highly populated. The total population of India is estimated to be <strong>1.38 billion</strong>, constituting about <strong>17.8%</strong> of the world's population.</p>
+
+        <h3>Geographical Distribution</h3>
+        <p>The population is not evenly distributed across the country.</p>
+        <ul>
+            <li><strong>Top 5 Most Populous States:</strong> Almost half of India's population lives in just five states: <strong>Uttar Pradesh, Maharashtra, Bihar, West Bengal, and Madhya Pradesh</strong>.</li>
+            <li><strong>Uttar Pradesh</strong> is the most populous state (243 million).</li>
+            <li><strong>Sikkim</strong> has the least population among states (0.7 million).</li>
+            <li>Among Union Territories, <strong>Delhi</strong> and <strong>Jammu & Kashmir</strong> are highly populated, while <strong>Lakshadweep</strong> has the minimum.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Density of Population:</strong> This is the number of persons living in a unit area. According to the 2011 Census, India's population density is <strong>382 persons per sq km</strong>. <strong>Bihar</strong> has the highest density (1102 per sq km), while <strong>Arunachal Pradesh</strong> has the lowest (17 per sq km).</p>
+        </div>
+
+        <h3>Categories of Population Density</h3>
+        <ul>
+            <li><strong>Densely Populated States:</strong> Northern Plains (UP, Bihar, West Bengal, Punjab, Haryana) and coastal states (Kerala, Tamil Nadu). Reasons: flat plains, fertile soil, and abundant rainfall.</li>
+            <li><strong>Moderately Populated States:</strong> Gujarat, Maharashtra, Madhya Pradesh, Jharkhand, Odisha, Assam, etc. Reasons: rocky/undulating terrain, less fertile soil, moderate/low rainfall.</li>
+            <li><strong>Sparsely Populated Regions:</strong> Jammu & Kashmir, Himachal Pradesh, Uttarakhand, Rajasthan, Chhattisgarh, and North-East states. Reasons: rugged relief and inhospitable climatic conditions.</li>
+        </ul>
+
+        <h3>Sex Ratio</h3>
+        <p>The sex ratio is a critical demographic indicator.</p>
+        <ul>
+            <li>According to the National Family Health Survey-5, India achieved a favorable sex ratio for the first time: <strong>1020 females for every 1000 males</strong>.</li>
+            <li>Reasons for improvement: High literacy, increasing employment among women, and high awareness.</li>
+            <li><strong>Haryana</strong> has the most unfavorable sex ratio (877 females per 1000 males), primarily due to female infanticide, female foeticide, and lack of awareness.</li>
+        </ul>
+
+        <h3>Rural-Urban Distribution</h3>
+        <ul>
+            <li>According to the 2011 Census, around <strong>37.7%</strong> of India's population is urban.</li>
+            <li><strong>Goa</strong> has the maximum percentage of urban population (62%), followed by Mizoram, Tamil Nadu, and Kerala.</li>
+            <li><strong>Himachal Pradesh</strong> has the maximum percentage of rural population (89%), followed closely by Bihar, Assam, and Odisha.</li>
+        </ul>
+
+        <h2>3. Role of Health and Education</h2>
+        <p>A country's development takes into account not only its total production or per capita income but also the health status and education levels of its people.</p>
+
+        <h3>Healthcare</h3>
+        <p>A healthy workforce is a nation's asset. The government must ensure a balanced diet, adequate sanitation, and health facilities for all.</p>
+        <ul>
+            <li>In India, death rates declined from 25 per 1000 (1951) to about 7.3 per 1000 (2016).</li>
+            <li>Life expectancy increased from 36.7 years (1951) to 68.35 years (2015).</li>
+            <li>This improvement is due to better public health, hygiene, prevention of infectious diseases, and modern medical methods.</li>
+        </ul>
+
+        <h3>Education</h3>
+        <p>Education equips people with skills, prepares them for the job market, and aids mental and spiritual development. The <strong>Right to Education</strong> provides free and compulsory education to all children below 14 years.</p>
+
+        <h2>4. Skilled and Unskilled Human Resource</h2>
+        
+        <h3>Skilled Human Resource</h3>
+        <p>Refers to people who have specialized training or a specific skill-set to perform a task. They have thorough knowledge and can work independently.</p>
+        <ul>
+            <li><strong>Examples:</strong> Physicians, mechanics, electricians, carpenters, tailors, chefs, computer programmers.</li>
+        </ul>
+
+        <h3>Unskilled Human Resource</h3>
+        <p>Refers to people who do not have any special training or skill-set. They perform simple functions requiring no previous experience or independent decision-making.</p>
+        <ul>
+            <li><strong>Examples:</strong> Agricultural laborers, sweepers, cleaners, domestic maids, peons.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Impact on Socio-Economic Development:</strong> Skilled human resources make a significant positive impact on the economy. They help in the optimum use of resources, increase productivity, generate income, and positively influence birth rates and general health.</p>
+        </div>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>The <strong>Skill India Programme</strong> was launched in 2015 to train youth based on their knowledge and ability. It estimated training over 40 crore people by 2022 to reduce unemployment and contribute to industrial growth.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

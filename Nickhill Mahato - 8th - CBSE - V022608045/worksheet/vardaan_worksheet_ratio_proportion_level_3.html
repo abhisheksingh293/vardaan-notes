@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @page { size: A4; margin: 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* DYNAMIC LEVEL COLORS (Level 3: Advanced/Challenger) */
+            --primary-color: #b71c1c; 
+            --bg-color: #ffebee;
+            
+            /* Light Mode Defaults */
+            --body-bg: #fff;
+            --text-main: #000;
+            --text-secondary: #333;
+            --text-muted: #555;
+            --border-color: #ccc;
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #ef5350;   
+            --bg-color: #2c1a1a;        
+            --body-bg: #121212;         
+            --text-main: #e0e0e0;       
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #444;
+        }
+
+        /* Base Styles */
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.4; margin: 0; padding: 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        /* Mobile responsive container adjustment */
+        .container { width: 95%; max-width: 210mm; margin: 0 auto; padding: 10px 0; }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        /* Responsive font sizes for header */
+        .institute-name { 
+            font-size: clamp(18pt, 4vw, 24pt); font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+        }
+        .tagline { 
+            font-size: clamp(10pt, 2vw, 14pt); 
+            font-weight: bold; margin-bottom: 10px; margin-top: 5px;
+            color: var(--text-secondary); 
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: clamp(12pt, 2.5vw, 16pt); font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        /* Flex-wrap added for mobile responsiveness */
+        .meta-info { 
+            display: flex; flex-wrap: wrap; justify-content: space-between; font-weight: bold; margin-top: 15px; 
+            font-size: clamp(9pt, 2vw, 11pt); background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 5px; border: 1px solid var(--primary-color); color: var(--primary-color); gap: 10px;
+        }
+        @media (max-width: 600px) {
+            .meta-info span { width: 100%; text-align: left; }
+        }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 10px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: clamp(11pt, 2vw, 13pt); text-transform: uppercase; page-break-after: avoid; 
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 14px; }
+        .question-item { 
+            display: flex; align-items: baseline; margin-bottom: 5px; 
+            font-size: clamp(10pt, 2vw, 11pt); page-break-inside: avoid; text-align: left; 
+        }
+        .q-num { font-weight: bold; margin-right: 10px; min-width: 25px; color: var(--primary-color); }
+        .q-content { flex: 1; word-wrap: break-word; overflow-wrap: break-word; }
+        
+        .sub-questions { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; padding-left: 5px; }
+        .sub-q-item { display: flex; align-items: baseline; word-wrap: break-word; }
+        .sub-q-num { font-weight: bold; margin-right: 8px; flex-shrink: 0; }
+
+        /* --- ANSWER KEY STYLING --- */
+        .answer-key {
+            margin-top: 40px; padding: 20px;
+            border-top: 3px double var(--primary-color);
+            background-color: var(--bg-color); border-radius: 8px;
+            font-size: 9.5pt; page-break-before: always;
+        }
+        .answer-key h2 {
+            text-align: center; color: var(--primary-color);
+            font-size: 14pt; margin-top: 0; margin-bottom: 15px; text-transform: uppercase;
+        }
+        .answer-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 15px;
+        }
+        .ans-item { display: flex; align-items: flex-start; }
+        .ans-num { font-weight: bold; color: var(--primary-color); margin-right: 6px; flex-shrink: 0; min-width: 20px; }
+        .ans-text { word-break: break-word; flex: 1; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 10px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: 9pt; font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 70%; opacity: 0.08; z-index: -1; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark {
+            filter: invert(1); 
+            opacity: 0.05;     
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: #f0f0f0; border: none; cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        html.dark-mode .theme-toggle {
+            filter: invert(1) hue-rotate(180deg); background: #e0e0e0;
+        }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.5s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        @media print { 
+            .theme-toggle { display: none; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+<!-- Theme Toggle -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+</button>
+<script>function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }</script>
+
+<img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+
+<div class="container">
+    <div class="header">
+        <h1 class="institute-name">Vardaan Learning Institute</h1>
+        <div class="tagline">
+            <a href="https://vardaanlearning.com">vardaanlearning.com</a> | 9508841336
+        </div>
+        <div class="worksheet-title">Mathematics Practice Worksheet: Ratio & Proportion (Level 3)</div>
+        <div class="meta-info">
+            <span>Student Name: ____________________________________</span>
+            <span>Class: 8</span>
+            <span>Subject: Mathematics (ICSE)</span>
+        </div>
+    </div>
+
+    <div class="chapter-header">Section A: Advanced Algebraic Ratios</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">1.</span><div class="q-content">If $a:b = \frac{1}{3}:\frac{1}{4}$ and $b:c = \frac{1}{2}:\frac{1}{5}$, find the continuous ratio $a:b:c$ in its simplest form.</div></div>
+        <div class="question-item"><span class="q-num">2.</span><div class="q-content">Two numbers are in the ratio $5:7$. If $9$ is subtracted from each of them, their new ratio becomes $7:11$. Find the difference between the original numbers.</div></div>
+        <div class="question-item"><span class="q-num">3.</span><div class="q-content">What quantity must be added to each term of the ratio $7:11$ to make it exactly equal to $3:4$?</div></div>
+        <div class="question-item"><span class="q-num">4.</span><div class="q-content">If the ratio $(3x - 5y) : (2x + y) = 1 : 4$, calculate the numerical value of $x : y$.</div></div>
+        <div class="question-item"><span class="q-num">5.</span><div class="q-content">Divide an amount of ₹ 3450 among three persons A, B, and C such that A receives $\frac{2}{3}$ of what B receives, and B receives $\frac{1}{4}$ of what C receives. Determine C's share.</div></div>
+        <div class="question-item"><span class="q-num">6.</span><div class="q-content">If $(4x^2 - 3y^2) : (2x^2 + 5y^2) = 12 : 19$, determine the ratio of $x : y$. (Assume $x$ and $y$ are positive integers).</div></div>
+        <div class="question-item"><span class="q-num">7.</span><div class="q-content">Derive a generalized formula for the quantity that must be subtracted from each term of the ratio $x:y$ so that it becomes equal to $c:d$.</div></div>
+    </div>
+
+    <div class="chapter-header">Section B: Proportion & Continued Proportion</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">8.</span><div class="q-content">Calculate the exact fourth proportional to the decimal values $0.2$, $0.12$, and $0.3$.</div></div>
+        <div class="question-item"><span class="q-num">9.</span><div class="q-content">Find the algebraic mean proportional between the expressions $a^3b$ and $ab^3$.</div></div>
+        <div class="question-item"><span class="q-num">10.</span><div class="q-content">Find the third proportional to the algebraic expressions $(a^2 - b^2)$ and $(a + b)$.</div></div>
+        <div class="question-item"><span class="q-num">11.</span><div class="q-content">If the numbers $8$, $x$, and $50$ are in continued proportion, determine the positive numerical value of $x$.</div></div>
+        <div class="question-item"><span class="q-num">12.</span><div class="q-content">What specific number must be logically added to each of the distinct numbers $5, 11, 19,$ and $37$ so that the resulting sums are in proportion?</div></div>
+        <div class="question-item"><span class="q-num">13.</span><div class="q-content">What number must be subtracted from each of the numbers $17, 25, 31,$ and $47$ so that the remainders form a perfect proportion?</div></div>
+        <div class="question-item"><span class="q-num">14.</span><div class="q-content">If $\frac{a}{b} = \frac{c}{d} = \frac{e}{f} = \frac{1}{3}$, evaluate the expression $\frac{2a + 3c - 4e}{2b + 3d - 4f}$ using the properties of equal ratios.</div></div>
+    </div>
+
+    <div class="chapter-header">Section C: Commercial Application & Word Problems</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">15.</span><div class="q-content">The monthly incomes of A and B are in the ratio $3:2$ and their monthly expenditures are in the ratio $5:3$. If each person successfully saves ₹ 1000 per month, determine A's monthly income.</div></div>
+        <div class="question-item"><span class="q-num">16.</span><div class="q-content">A bag contains ₹ 1, 50p, and 25p coins stacked in the ratio $5:6:8$ respectively. If the total monetary value in the bag is ₹ 420, calculate the exact number of 50p coins.</div></div>
+        <div class="question-item"><span class="q-num">17.</span><div class="q-content">The present ages of two individuals, A and B, are in the ratio $4:5$. Exactly eight years from now, the ratio of their ages will transition to $5:6$. Find their present ages.</div></div>
+        <div class="question-item"><span class="q-num">18.</span><div class="q-content">A certain sum of money is divided meticulously among P, Q, and R such that for every ₹ 1 that P receives, Q receives 75p and R receives 50p. If P gets ₹ 250 more than R, calculate the total sum divided.</div></div>
+        <div class="question-item"><span class="q-num">19.</span><div class="q-content">In a co-educational school, the ratio of boys to girls is initially $4:3$. If 20 more girls enroll in the school, the ratio perfectly balances to $1:1$. Find the initial number of boys.</div></div>
+        <div class="question-item"><span class="q-num">20.</span><div class="q-content">The ratio of the original prices of two bicycles was $16:23$. Two years later, the price of the first bicycle increased by $10\%$ and the second by ₹ 477. The new ratio of their prices became $11:20$. Find the original price of the first bicycle.</div></div>
+        <div class="question-item"><span class="q-num">21.</span><div class="q-content">The operational expenses of a hotel are partly fixed and partly varying directly with the number of guests. For 20 guests, the total expense is ₹ 3000. For 40 guests, it is ₹ 5000. Find the total expense for hosting 50 guests.</div></div>
+    </div>
+
+    <div class="chapter-header">Section D: Mixtures and Alloys</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">22.</span><div class="q-content">Two identical casks contain liquid mixtures of water and wine in the ratios $2:3$ and $3:4$ respectively. If equal volumetric quantities are extracted from both and mixed into a new container, find the ratio of water to wine in this new mixture.</div></div>
+        <div class="question-item"><span class="q-num">23.</span><div class="q-content">A large tank contains 80 liters of a milk and water solution comprising exactly 10% water. How many liters of pure water must be added to this solution to increase the water concentration to 20%?</div></div>
+        <div class="question-item"><span class="q-num">24.</span><div class="q-content">Zinc and copper are melted down together to form an alloy in the ratio $9:11$. What is the total combined weight of the melted mixture if exactly 28.8 kg of pure zinc has been consumed in its creation?</div></div>
+        <div class="question-item"><span class="q-num">25.</span><div class="q-content">Two distinct vessels contain mixtures of milk and water in the ratios $7:2$ and $5:1$ respectively. In what strict proportion should the two fluid mixtures be combined to obtain a final composite containing milk and water in the ratio $9:2$?</div></div>
+    </div>
+
+    <div class="chapter-header">Section E: Variation & Advanced Unitary Method</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">26.</span><div class="q-content">A military garrison consisting of 1200 men is heavily provisioned for 60 days. After 15 days, 300 men are redeployed and leave the garrison. How long will the remaining food provisions last for the reduced personnel?</div></div>
+        <div class="question-item"><span class="q-num">27.</span><div class="q-content">A team of 45 men can manually dig a canal 15 km long in a span of 20 days. How many capable men are required to dig a similar 9 km long canal in just 15 days?</div></div>
+        <div class="question-item"><span class="q-num">28.</span><div class="q-content">An express train travels a distance of 280 km uniformly in 4 hours. How much time (in hours) will it take to smoothly cover a distance of 420 km maintaining the exact same speed?</div></div>
+        <div class="question-item"><span class="q-num">29.</span><div class="q-content">12 professional typists working intensely for 8 hours a day can complete typing a full manuscript in 15 days. How many days will it take for a team of 10 typists working 9 hours a day to complete the identical task?</div></div>
+        <div class="question-item"><span class="q-num">30.</span><div class="q-content">If 5 exceptionally quick spiders can catch 5 flies in precisely 5 minutes, how many flies can 100 identical spiders theoretically catch in 100 minutes?</div></div>
+        <div class="question-item"><span class="q-num">31.</span><div class="q-content">A master contractor undertook to complete a massive infrastructure project in 150 days and immediately employed 80 men. After 90 days of work, he inspected and found only $\frac{1}{4}$ of the work was done. How many extra men must he employ immediately to guarantee the work finishes exactly on the original deadline?</div></div>
+        <div class="question-item"><span class="q-num">32.</span><div class="q-content">A physical quantity $P$ varies directly as $Q$ and inversely as the square of another quantity $R$. If $P = 10$ when $Q = 5$ and $R = 2$, find the numerical value of $P$ when $Q = 10$ and $R = 4$.</div></div>
+    </div>
+
+    <div class="chapter-header">Section F: Properties Challenge Questions</div>
+    <div class="questions-container">
+        <div class="question-item"><span class="q-num">33.</span><div class="q-content">The four interior angles of an irregular quadrilateral are strictly in the ratio $2:3:5:8$. Find the precise geometric measure of the largest interior angle in degrees.</div></div>
+        <div class="question-item"><span class="q-num">34.</span><div class="q-content">Given that $a:b = 3:4$ and $b:c = 8:9$, calculate the exact numerical value of the fractional expression $\frac{a+b}{b+c}$.</div></div>
+        <div class="question-item"><span class="q-num">35.</span><div class="q-content">If $x = \frac{2ab}{a+b}$, deeply evaluate the expression $\frac{x+a}{x-a} + \frac{x+b}{x-b}$ without substituting random numbers. (Assume $a \neq b$).</div></div>
+    </div>
+
+    <!-- COMPACT ANSWER KEY -->
+    <div class="answer-key">
+        <h2>Answer Key</h2>
+        <div class="answer-grid">
+            <div class="ans-item"><span class="ans-num">1.</span><span class="ans-text">20 : 15 : 6</span></div>
+            <div class="ans-item"><span class="ans-num">2.</span><span class="ans-text">12</span></div>
+            <div class="ans-item"><span class="ans-num">3.</span><span class="ans-text">5</span></div>
+            <div class="ans-item"><span class="ans-num">4.</span><span class="ans-text">21 : 10</span></div>
+            <div class="ans-item"><span class="ans-num">5.</span><span class="ans-text">₹ 2400</span></div>
+            <div class="ans-item"><span class="ans-num">6.</span><span class="ans-text">3 : 2</span></div>
+            <div class="ans-item"><span class="ans-num">7.</span><span class="ans-text">$\frac{cy - dx}{c - d}$</span></div>
+            <div class="ans-item"><span class="ans-num">8.</span><span class="ans-text">0.18</span></div>
+            <div class="ans-item"><span class="ans-num">9.</span><span class="ans-text">$a^2b^2$</span></div>
+            <div class="ans-item"><span class="ans-num">10.</span><span class="ans-text">$\frac{a+b}{a-b}$</span></div>
+            <div class="ans-item"><span class="ans-num">11.</span><span class="ans-text">20</span></div>
+            <div class="ans-item"><span class="ans-num">12.</span><span class="ans-text">2</span></div>
+            <div class="ans-item"><span class="ans-num">13.</span><span class="ans-text">3</span></div>
+            <div class="ans-item"><span class="ans-num">14.</span><span class="ans-text">$\frac{1}{3}$</span></div>
+            <div class="ans-item"><span class="ans-num">15.</span><span class="ans-text">₹ 6000</span></div>
+            <div class="ans-item"><span class="ans-num">16.</span><span class="ans-text">252 coins</span></div>
+            <div class="ans-item"><span class="ans-num">17.</span><span class="ans-text">32 yrs and 40 yrs</span></div>
+            <div class="ans-item"><span class="ans-num">18.</span><span class="ans-text">₹ 1125</span></div>
+            <div class="ans-item"><span class="ans-num">19.</span><span class="ans-text">80 boys</span></div>
+            <div class="ans-item"><span class="ans-num">20.</span><span class="ans-text">₹ 848</span></div>
+            <div class="ans-item"><span class="ans-num">21.</span><span class="ans-text">₹ 6000</span></div>
+            <div class="ans-item"><span class="ans-num">22.</span><span class="ans-text">29 : 41</span></div>
+            <div class="ans-item"><span class="ans-num">23.</span><span class="ans-text">10 liters</span></div>
+            <div class="ans-item"><span class="ans-num">24.</span><span class="ans-text">64 kg</span></div>
+            <div class="ans-item"><span class="ans-num">25.</span><span class="ans-text">3 : 8</span></div>
+            <div class="ans-item"><span class="ans-num">26.</span><span class="ans-text">60 days</span></div>
+            <div class="ans-item"><span class="ans-num">27.</span><span class="ans-text">36 men</span></div>
+            <div class="ans-item"><span class="ans-num">28.</span><span class="ans-text">6 hours</span></div>
+            <div class="ans-item"><span class="ans-num">29.</span><span class="ans-text">16 days</span></div>
+            <div class="ans-item"><span class="ans-num">30.</span><span class="ans-text">2000 flies</span></div>
+            <div class="ans-item"><span class="ans-num">31.</span><span class="ans-text">280 extra men</span></div>
+            <div class="ans-item"><span class="ans-num">32.</span><span class="ans-text">5</span></div>
+            <div class="ans-item"><span class="ans-num">33.</span><span class="ans-text">160°</span></div>
+            <div class="ans-item"><span class="ans-num">34.</span><span class="ans-text">14 : 17</span></div>
+            <div class="ans-item"><span class="ans-num">35.</span><span class="ans-text">2</span></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by Team Vardaan | Powered by Vardaan Comet<br>
+        Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+    </div>
+</div>
+
+</body>
+</html>
