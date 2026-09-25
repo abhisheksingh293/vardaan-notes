@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Colonial Era in India - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive adjustments for mobile/tablet to maintain usability while keeping paper look */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm 5mm; /* Reduce padding on smaller screens */
+            }
+            .institute-name {
+                font-size: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer is shown per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* Display Footer Text in Print */
+            .branding-footer {
+                display: block !important; 
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class VIII Social Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>The Colonial Era in India</h1>
+        
+        <h2>1. Overview of European Colonialism</h2>
+        <p>From the late 1400s onward, European powers such as Spain, Portugal, Holland, Britain, and France began sailing across the oceans to establish trade connections. This commercial exchange gradually turned into political domination, marking the beginning of the <strong>Colonial Era</strong>.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Colonialism</strong> is a system in which a powerful country takes control of another region and imposes its political, economic, and cultural systems on it. The conquered region becomes a source of raw materials, a market for manufactured goods, and a politically dependent territory.
+        </div>
+
+        <h3>Why Did Europeans Colonize?</h3>
+        <ul>
+            <li><strong>Trade and Wealth:</strong> Fierce competition among European nations to control global trade (especially spices, cotton, and silk).</li>
+            <li><strong>Resources:</strong> Seeking new natural resources like sandalwood and teak wood.</li>
+            <li><strong>Civilizing Mission:</strong> European powers often claimed a duty to "civilize" societies they falsely believed were savage, using this as justification for exploitation.</li>
+        </ul>
+
+        <h2>2. Arrival of Europeans in India</h2>
+        <p>Before the mid-15th century, Europe traded with India via old land routes. However, after the fall of Constantinople in 1453, these land routes became unsafe and expensive, pushing Europeans to find new sea routes.</p>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>1498 CE:</strong> The Portuguese sailor <strong>Vasco da Gama</strong> arrived at Calicut (Kozhikode). This established the first direct sea route between Europe and India, altering world history.
+        </div>
+
+        <h3>The Portuguese, Dutch, and French</h3>
+        <ul>
+            <li><strong>Portuguese:</strong> Established their capital at <strong>Goa in 1510</strong>. They used a strong navy and the <strong>Cartaz (pass) system</strong> to monopolize the spice trade. Their rule was often harsh, marked by the Goa Inquisition.</li>
+            <li><strong>Dutch:</strong> Arrived in the 17th century focusing purely on trade. Their power declined after the <strong>Battle of Colachel (1741)</strong> where they were defeated by the forces of Travancore led by King Marthanda Varma.</li>
+            <li><strong>French:</strong> Arrived later, establishing their main centre at <strong>Pondicherry in 1674</strong>. Their Governor-General, <strong>Dupleix</strong>, introduced the strategy of intervening in local politics, leading to the Carnatic Wars with the British.</li>
+        </ul>
+
+        <h2>3. The British East India Company: From Trade to Control</h2>
+        <p>The English East India Company arrived as traders, setting up outposts called "factories" at Surat, Madras, Bombay, and Calcutta. Eventually, their trade ambitions transformed into political conquests.</p>
+
+        <h3>Key Strategies of British Expansion</h3>
+        <ul>
+            <li><strong>Divide and Rule:</strong> The Company exploited rivalries and succession disputes among Indian rulers, offering protection to one side to gradually seize political power.</li>
+            <li><strong>The Battle of Plassey (1757):</strong> A turning point in history where Robert Clive defeated Siraj-ud-Daulah (Nawab of Bengal) with the help of a traitor, <strong>Mir Jafar</strong>. This marked the beginning of British territorial control.</li>
+            <li><strong>Subsidiary Alliance:</strong> Introduced by Lord Wellesley. Indian rulers were forced to keep British troops in their territory, pay for their maintenance, and surrender foreign relations control to the British.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Doctrine of Lapse:</strong> Introduced by Governor-General <strong>Lord Dalhousie</strong> in the mid-19th century. If an Indian ruler died without a natural biological son, his kingdom was automatically taken over by the British, ignoring the traditional practice of adopting an heir. (e.g., Jhansi, Satara, Nagpur).
+        </div>
+
+        <h2>4. India's Sufferings Under British Control</h2>
+        <p>Once known as the "Golden Bird" for its wealth, India was systematically impoverished by British policies. The focus shifted entirely to extracting revenue and resources for Britain's benefit.</p>
+
+        <h3>A Century of Devastating Famines</h3>
+        <p>While famines occurred naturally before, British policies made them catastrophic due to heavy land taxes, export of food grains even during shortages, and refusal to provide adequate relief.</p>
+        <ul>
+            <li><strong>Bengal Famine (1770-1772):</strong> Nearly 10 million people (one-third of Bengal's population) died. The Company continued to increase land revenue despite the crisis.</li>
+            <li><strong>Deccan Famine (1876-1878):</strong> Around 5 million died. The Viceroy, Lord Lytton, organized a lavish Delhi Durbar while exporting a million tonnes of wheat to Britain.</li>
+            <li><strong>Bengal Famine (1943):</strong> Wartime policies and mismanagement led to horrifying starvation and death across the province.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Historians and economists estimate that between <strong>50 to 100 million Indians died</strong> in famines during the colonial period.
+        </div>
+
+        <h3>The Drain of Wealth</h3>
+        <p>Early nationalist leaders like <strong>Dadabhai Naoroji</strong> and <strong>Romesh Chunder Dutt</strong> exposed how British policies drained India's wealth. Taxes collected in India were used to buy raw materials cheaply and fund British administration, military expeditions, and the Industrial Revolution in Europe.</p>
+
+        <h2>5. Changing Landscapes Under Colonial Rule</h2>
+        <ul>
+            <li><strong>Destruction of Industries:</strong> India's world-famous textile industry was destroyed by heavy import duties in Britain and a flood of cheap, machine-made British goods into India. </li>
+            <li><strong>Dismantling Local Governance:</strong> Traditional village councils (panchayats) were replaced by a centralized British bureaucracy and rigid colonial courts.</li>
+            <li><strong>Transforming Education:</strong> <strong>Thomas Macaulay’s Minute (1835)</strong> shifted education strictly to English. The goal was to create a class of Indians "Indian in blood and colour, but English in taste, opinions, in morals, and in intellect" to serve the colonial administration.</li>
+            <li><strong>Infrastructure:</strong> Railways and telegraphs were built primarily to serve British interests—transporting troops swiftly and moving raw materials to ports.</li>
+        </ul>
+
+        <h2>6. Early Resistance Movements</h2>
+        <p>Indians fiercely opposed exploitative policies long before the organized national movement.</p>
+        <ul>
+            <li><strong>Sannyasi and Fakir Rebellion:</strong> Triggered by British restrictions on the movement of ascetics and devastating land policies after the 1770 famine.</li>
+            <li><strong>Tribal Uprisings:</strong> As the British took over forest lands and imposed cash taxes, tribes revolted. Notable examples include the <strong>Kol Uprising (1831)</strong> and the <strong>Santhal Rebellion (1855)</strong> led by brothers Sidhu and Kanhu.</li>
+            <li><strong>Peasant Revolts:</strong> The <strong>Indigo Revolt (1859)</strong> in Bengal, where peasants united and refused to grow indigo under cruel plantation systems, forcing the government to intervene.</li>
+        </ul>
+
+        <h2>7. The Great Rebellion of 1857</h2>
+        <p>Often called the First War of Independence, this was a massive uprising involving sepoys, peasants, and ordinary civilians against colonial oppression.</p>
+        
+        <h3>Causes and Events</h3>
+        <p>Resentment had built up due to economic hardship, the Doctrine of Lapse, and religious interference. The immediate trigger was the introduction of new Enfield rifle cartridges rumored to be greased with cow and pig fat. The revolt started in Meerut and quickly spread to Delhi, Kanpur, and Lucknow.</p>
+        
+        <h3>Key Leaders</h3>
+        <ul>
+            <li><strong>Bahadur Shah Zafar:</strong> Declared the symbolic leader of the revolt.</li>
+            <li><strong>Rani Lakshmibai:</strong> Led the defense of Jhansi after her kingdom was annexed via the Doctrine of Lapse.</li>
+            <li><strong>Begum Hazrat Mahal:</strong> Organized fierce resistance in Awadh.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            Though suppressed, the revolt ended the rule of the East India Company. In <strong>1858</strong>, the British Crown took direct control of India, fundamentally altering military and administrative policies.
+        </div>
+
+        <h2>8. The Legacy of European Colonialism</h2>
+        <p>While colonial rule resulted in deep economic exploitation and cultural loss, it left an undeniable imprint on modern India.</p>
+        <ul>
+            <li><strong>Surveys and Documentation:</strong> The British created detailed geographical surveys, census records, and botanical studies of India.</li>
+            <li><strong>Archaeology:</strong> Important monuments were restored, establishing archaeology as a formal discipline, though many precious artifacts were taken to European museums.</li>
+            <li><strong>Global Cultural Exchange:</strong> Translations of texts like the <em>Bhagavad Gita</em> introduced Indian philosophy to the West, deeply influencing global intellectual thought.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Circulatory System - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+                width: 100%;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY (Modified for User Request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* USER REQUEST: Show footer text during print */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print (USER REQUEST: Always show) */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Biology • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>THE CIRCULATORY SYSTEM</h1>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Circulatory System:</strong> The transport system that circulates blood throughout the body. It helps in the transport of nutrients and oxygen, and the removal of metabolic wastes (like carbon dioxide) from the body.</p>
+        </div>
+
+        <h2>1. Introduction to the Circulatory System</h2>
+        <p>Both animals and humans require food and oxygen to survive. As the body functions, it produces metabolic wastes. The transport of these essential nutrients and the removal of wastes are carried out by the <strong>blood</strong> and the <strong>lymph</strong>.</p>
+        <ul>
+            <li><strong>Closed Vascular System:</strong> Blood circulates continuously within enclosed blood vessels (e.g., humans). The flow is regulated by the heart.</li>
+            <li><strong>Open Vascular System:</strong> Blood flows from the heart directly into open body spaces or cavities without vessels (e.g., insects).</li>
+        </ul>
+
+        <h2>2. Principal Fluids in Our Body</h2>
+        <p>There are three main fluids involved in transportation within the human body:</p>
+        <ul>
+            <li><strong>Blood:</strong> Contained within the heart and the blood vessels (arteries, veins, and capillaries).</li>
+            <li><strong>Tissue Fluid:</strong> Also known as <strong>interstitial fluid</strong>. It occupies the spaces between individual cells in the body.</li>
+            <li><strong>Lymph:</strong> Contained strictly within lymph vessels and lymphatic organs.</li>
+        </ul>
+
+        <h2>3. The Heart - The Pumping Organ</h2>
+        <p>The heart is a muscular organ made up of specialized <strong>cardiac muscles</strong> that continuously contract and relax throughout a person's life.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>The human heart is roughly the size of one's folded fist, weighs about <strong>225-340 grams</strong>, and beats approximately <strong>72 times per minute</strong> under normal conditions.</p>
+        </div>
+
+        <ul>
+            <li><strong>Location:</strong> In the center of the chest cavity, with its tip slightly tilted to the left.</li>
+            <li><strong>Pericardium:</strong> A protective double-layered membrane enclosing the heart. The space between membranes is filled with <strong>pericardial fluid</strong>, which protects the heart from mechanical shocks and jerks.</li>
+        </ul>
+
+        <h3>Chambers of the Heart</h3>
+        <p>The heart is vertically divided into a left and right portion by a membrane called a <strong>septum</strong>. It has <strong>four chambers</strong> in total:</p>
+        <ul>
+            <li><strong>Atria (Auricles):</strong> The two upper "receiving chambers." They receive blood from different body parts. They have relatively thin walls.</li>
+            <li><strong>Ventricles:</strong> The two lower "distributing chambers." They pump blood out to the lungs and the rest of the body. They are larger and have <strong>thick, elastic, muscular walls</strong> to efficiently pump blood under high pressure.</li>
+        </ul>
+
+        <h3>Valves of the Heart</h3>
+        <p>Valves regulate the flow of blood, ensuring it only travels in one direction.</p>
+        <ul>
+            <li><strong>Tricuspid Valve:</strong> Guards the opening between the right atrium and right ventricle. It has three flaps (cusps).</li>
+            <li><strong>Bicuspid Valve:</strong> Guards the opening between the left atrium and left ventricle. It has two flaps.</li>
+            <li><strong>Semi-lunar Valves:</strong> Half-moon-shaped valves located at the openings where the pulmonary artery leaves the right ventricle, and the aorta leaves the left ventricle. They prevent backflow of blood into the ventricles.</li>
+        </ul>
+
+        <h3>The Pacemaker</h3>
+        <p>The rhythmic contraction and relaxation (heartbeat) are triggered by electrical impulses.</p>
+        <ul>
+            <li><strong>Sinoatrial Node (SA Node):</strong> Located in the upper right corner of the right atrium. It originates the electrical impulse and sets the heart's rhythm. It is called the <strong>"natural pacemaker"</strong>.</li>
+        </ul>
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>If the SA node gets damaged or fails to function correctly, a mechanical device called an <strong>artificial pacemaker</strong> must be surgically implanted to regulate the heartbeat.</p>
+        </div>
+
+        <h2>4. Blood Vessels</h2>
+        <p>Blood vessels are conducting tubes that form a complex network throughout the body.</p>
+        <ul>
+            <li><strong>Arteries:</strong> Carry blood <strong>away</strong> from the heart. They carry oxygenated blood (except the pulmonary artery), flow at high speed under high pressure, have thick walls, lack valves, and are deep-seated.</li>
+            <li><strong>Veins:</strong> Carry blood <strong>towards</strong> the heart. They carry deoxygenated blood (except the pulmonary vein), flow at low speed under low pressure, have thin walls, possess valves to prevent backflow, and are superficial.</li>
+            <li><strong>Capillaries:</strong> The finest blood vessels connecting arteries and veins. They are the primary sites for the exchange of oxygen, nutrients, and waste between blood and tissues.</li>
+        </ul>
+
+        <h3>Major Blood Vessels of the Heart</h3>
+        <ul>
+            <li><strong>Vena Cavae:</strong> Two large veins bringing deoxygenated blood to the right atrium (Superior Vena Cava from the upper body; Inferior Vena Cava from the lower body).</li>
+            <li><strong>Pulmonary Trunk/Artery:</strong> Arises from the right ventricle to carry deoxygenated blood to the lungs.</li>
+            <li><strong>Pulmonary Veins:</strong> Bring oxygenated blood from the lungs into the left atrium.</li>
+            <li><strong>Aorta:</strong> The largest artery, leaving the left ventricle to carry oxygenated blood to all body parts.</li>
+            <li><strong>Coronary Artery & Vein:</strong> The artery supplies oxygenated blood to the heart's own walls; the vein brings deoxygenated blood back from the heart muscles.</li>
+        </ul>
+
+        <h2>5. Blood Circulation</h2>
+        <p>The flow of blood follows a specific, continuous cycle:</p>
+        <ul>
+            <li>Deoxygenated blood enters the <strong>right atrium</strong> while oxygen-rich blood enters the <strong>left atrium</strong>.</li>
+            <li>The atria contract, pushing blood into the ventricles. The <strong>atrio-ventricular valves</strong> close with a sound.</li>
+            <li>The ventricles contract. Deoxygenated blood is pushed into the pulmonary artery (to the lungs), and oxygenated blood is pushed into the aorta (to the body).</li>
+            <li>The <strong>semi-lunar valves</strong> close with a sound.</li>
+        </ul>
+        <p><em>Note: The right half of the heart handles only deoxygenated blood, and the left half handles only oxygenated blood. They never mix.</em></p>
+
+        <h3>Double Circulation</h3>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Double Circulation:</strong> A system where blood passes through the heart <strong>twice</strong> to complete one full circuit throughout the body.</p>
+        </div>
+        <ul>
+            <li><strong>Pulmonary Circulation:</strong> Blood flows from the right side of the heart to the lungs for oxygenation, and returns to the left side of the heart.</li>
+            <li><strong>Systemic Circulation:</strong> Blood flows from the left side of the heart to all body parts and returns deoxygenated to the right side of the heart.</li>
+        </ul>
+
+        <h2>6. Tissue Fluid and Lymphatic System</h2>
+        <p>As blood flows through tissue capillaries, plasma and leukocytes "leak out" to bathe the cells. This is <strong>tissue fluid</strong>. Some re-enters the blood, but most enters minute channels called lymph vessels, becoming <strong>lymph</strong>.</p>
+        <ul>
+            <li><strong>Composition of Lymph:</strong> Contains leukocytes (mostly lymphocytes) and blood plasma (water, proteins, fats) but <strong>no Red Blood Cells (RBCs) or platelets</strong>. It is pale yellow.</li>
+            <li><strong>Lymphatic Organs:</strong> Includes structures like the spleen and tonsils.</li>
+        </ul>
+        
+        <h3>Functions of Lymph</h3>
+        <ul>
+            <li><strong>Nutritive:</strong> Supplies oxygen and nutrition to areas blood cannot reach.</li>
+            <li><strong>Drainage:</strong> Drains excess tissue fluid and returns proteins to the blood.</li>
+            <li><strong>Absorption:</strong> Absorbs fats from the intestine.</li>
+            <li><strong>Defence:</strong> Lymphocytes protect the body by removing bacteria. Swollen lymph nodes (e.g., during an infection) are a sign of the body localizing and fighting disease.</li>
+        </ul>
+
+        <h2>7. Blood Groups</h2>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Karl Landsteiner</strong> identified the different blood types in humans in 1900 based on the presence of specific proteins called <strong>antigens</strong> (A and B) on the surface of Red Blood Cells.</p>
+        </div>
+        
+        <p>There are four main blood groups in the ABO system:</p>
+        <ul>
+            <li><strong>Blood Group A:</strong> Contains Antigen A.</li>
+            <li><strong>Blood Group B:</strong> Contains Antigen B.</li>
+            <li><strong>Blood Group AB:</strong> Contains both Antigens A and B.</li>
+            <li><strong>Blood Group O:</strong> Contains neither Antigen A nor B.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Universal Donor:</strong> A person with blood group <strong>O</strong> can donate blood to any other group.<br>
+            <strong>Universal Recipient:</strong> A person with blood group <strong>AB</strong> can receive blood from any other group.</p>
+        </div>
+
+        <p><strong>Blood Donation:</strong> A voluntary procedure where a healthy donor gives blood (typically a pint, or 420 mL). This blood is stored in a <strong>Blood Bank</strong> until needed for transfusions.</p>
+
+        <h2>8. Heart-Related Conditions</h2>
+        <ul>
+            <li><strong>Palpitations:</strong> Experiencing the heart beating too hard, fast, or skipping a beat. Often caused by stress or anxiety, rarely serious unless accompanied by chest pain.</li>
+            <li><strong>Hypertension:</strong> High blood pressure. Blood flows with a force greater than normal, straining the heart and damaging vessels.</li>
+            <li><strong>Heart Attack:</strong> A sudden interruption of blood supply to the heart muscles, usually due to a blood clot. A part of the cardiac muscle dies, but the heart continues pumping. Symptoms include severe chest pressure and pain radiating to the arms or jaw.</li>
+            <li><strong>Cardiac Arrest:</strong> The heart <strong>suddenly stops pumping blood</strong> entirely. The person loses consciousness and stops breathing. Without immediate first aid (like CPR) and medical help, it results in death.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Difference between Heart Attack and Cardiac Arrest:</strong> In a heart attack, blood flow to the heart muscle is blocked, but the heart keeps pumping. In a cardiac arrest, the heart completely stops pumping blood to the body.</p>
+        </div>
+
+        <h3>Keeping the Heart Healthy</h3>
+        <ul>
+            <li>Avoid oily, fried, and fast foods that cause fat buildup.</li>
+            <li>Eat plenty of fiber (whole grains, oats) and fresh fruits/vegetables.</li>
+            <li>Limit excessive sugar to prevent obesity.</li>
+            <li>Engage in regular outdoor physical activities like walking, jogging, or cycling.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

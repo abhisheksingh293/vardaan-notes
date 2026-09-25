@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Learning Institute - Detailed Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-yellow: #fbc02d;
+            --text-main: #000000;
+        }
+        body { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 30px 20px; 
+            font-family: Arial, Helvetica, sans-serif; 
+            font-size: 11pt; 
+            line-height: 1.6; 
+            color: var(--text-main); 
+            background-color: white; 
+            position: relative; 
+        }
+        .watermark { 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 70%; 
+            opacity: 0.05; 
+            z-index: -1; 
+            pointer-events: none; 
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 30px; 
+            border-top: 3px solid var(--primary-yellow);
+            border-bottom: 3px solid var(--primary-yellow); 
+            padding: 15px 0; 
+        }
+        .institute-name { 
+            font-size: 22pt; 
+            font-weight: bold; 
+            margin: 0; 
+            letter-spacing: 1px; 
+        }
+        .solution-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .solution-block { 
+            border-bottom: 1.5px dashed var(--primary-yellow); 
+            padding-bottom: 15px; 
+            margin-bottom: 20px; 
+        }
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .q-text {
+            font-weight: bold;
+            flex-grow: 1;
+            padding-right: 15px;
+        }
+        .marks-badge {
+            background-color: var(--primary-yellow);
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 10pt;
+            white-space: nowrap;
+        }
+        .correct-answer {
+            color: #2e7d32; 
+            background-color: #e8f5e9; 
+            padding: 6px 10px; 
+            margin: 5px 0 8px 0; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            display: inline-block;
+        }
+        .answer-content {
+            margin-left: 10px;
+            padding-top: 5px;
+        }
+        .sub-part {
+            margin-bottom: 15px;
+        }
+        .math-scroll {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 5px 0;
+            display: block;
+        }
+        .section-title {
+            font-size: 16pt;
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0 15px 0;
+            color: #d32f2f;
+            text-decoration: underline;
+        }
+        @media screen and (max-width: 768px) {
+            body { padding: 15px 10px; }
+            .institute-name { font-size: 18pt; }
+            .q-header { flex-direction: column; }
+            .marks-badge { margin-top: 5px; align-self: flex-start; }
+            .answer-content { margin-left: 0px; }
+        }
+    </style>
+</head>
+<body>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Watermark" class="watermark">
+    
+    <div class="header">
+        <h1 class="institute-name">VARDAAN LEARNING INSTITUTE</h1>
+        <div class="solution-title">DETAILED SOLUTIONS: Mathematics Mock Test 01 (Class 8 CBSE)</div>
+    </div>
+
+    <div class="section-title">SECTION A</div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">Q1-Q3: Square & Square Roots</div>
+            <div class="marks-badge">[1 Mark Each]</div>
+        </div>
+        <div class="sub-part">
+            <strong>1. Which of the following is a Pythagorean triplet?</strong>
+            <div class="correct-answer">Answer: (b) (5, 12, 13)</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> A triplet \( (a, b, c) \) is Pythagorean if \( a^2 + b^2 = c^2 \).<br>
+                For (5, 12, 13): \( 5^2 + 12^2 = 25 + 144 = 169 \). And \( 13^2 = 169 \). Hence, LHS = RHS.
+            </div>
+        </div>
+        <div class="sub-part">
+            <strong>2. The number of non-square numbers lying between \( 15^2 \) and \( 16^2 \) is:</strong>
+            <div class="correct-answer">Answer: (a) 30</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> The number of non-square numbers between \( n^2 \) and \( (n+1)^2 \) is \( 2n \).<br>
+                Here, \( n = 15 \). Therefore, numbers = \( 2 \times 15 = 30 \).
+            </div>
+        </div>
+        <div class="sub-part">
+            <strong>3. The value of \( \sqrt{0.0004} \) is:</strong>
+            <div class="correct-answer">Answer: (a) 0.02</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> \( \sqrt{0.0004} = \sqrt{\frac{4}{10000}} = \frac{2}{100} = 0.02 \).
+            </div>
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">Q4-Q6: Cube & Cube Roots</div>
+            <div class="marks-badge">[1 Mark Each]</div>
+        </div>
+        <div class="sub-part">
+            <strong>4. The smallest number by which 256 must be divided to obtain a perfect cube is:</strong>
+            <div class="correct-answer">Answer: (b) 4</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> Prime factorization of 256 = \( 2 \times 2 \times 2 \times 2 \times 2 \times 2 \times 2 \times 2 \).<br>
+                Grouping in triples: \( (2 \times 2 \times 2) \times (2 \times 2 \times 2) \times 2 \times 2 \). <br>
+                The leftover is \( 2 \times 2 = 4 \). To make it a perfect cube, we divide by 4.
+            </div>
+        </div>
+        <div class="sub-part">
+            <strong>5. Find the value of \( \sqrt[3]{-\frac{64}{343}} \).</strong>
+            <div class="correct-answer">Answer: (b) \( -\frac{4}{7} \)</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> \( \sqrt[3]{-64} = -4 \) and \( \sqrt[3]{343} = 7 \). Thus, the answer is \( -\frac{4}{7} \).
+            </div>
+        </div>
+        <div class="sub-part">
+            <strong>6. If the volume of a cube is \( 512 \text{ cm}^3 \), its edge length is:</strong>
+            <div class="correct-answer">Answer: (c) 8 cm</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> Volume = \( a^3 = 512 \). Edge \( a = \sqrt[3]{512} = 8 \text{ cm} \).
+            </div>
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">Q7-Q9: Exponents & Radicals</div>
+            <div class="marks-badge">[1 Mark Each]</div>
+        </div>
+        <div class="sub-part">
+            <strong>7. The value of \( (81)^{-3/4} \) is:</strong>
+            <div class="correct-answer">Answer: (b) \( \frac{1}{27} \)</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> \( (81)^{-3/4} = (3^4)^{-3/4} = 3^{(4 \times -3/4)} = 3^{-3} = \frac{1}{3^3} = \frac{1}{27} \).
+            </div>
+        </div>
+        <div class="sub-part">
+            <strong>8. Solve for \( x \): \( 2^{3x-1} = 1 \)</strong>
+            <div class="correct-answer">Answer: (c) \( \frac{1}{3} \)</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> We know \( 2^0 = 1 \). Thus, \( 2^{3x-1} = 2^0 \Rightarrow 3x - 1 = 0 \Rightarrow 3x = 1 \Rightarrow x = \frac{1}{3} \).
+            </div>
+        </div>
+        <div class="sub-part">
+            <strong>9. In standard form, the number 0.000000078 is written as:</strong>
+            <div class="correct-answer">Answer: (b) \( 7.8 \times 10^{-8} \)</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> Moving the decimal 8 places to the right gives \( 7.8 \times 10^{-8} \).
+            </div>
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">Q10-Q11: Direct & Indirect Variation</div>
+            <div class="marks-badge">[1 Mark Each]</div>
+        </div>
+        <div class="sub-part">
+            <strong>10. Which of the following represents an inverse variation?</strong>
+            <div class="correct-answer">Answer: (b) \( xy = k \)</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> In inverse variation, the product of the two variables remains constant.
+            </div>
+        </div>
+        <div class="sub-part">
+            <strong>11. If 15 workers build a wall in 48 hrs, how many required for 30 hrs?</strong>
+            <div class="correct-answer">Answer: (b) 24</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> Inverse variation: \( x_1 y_1 = x_2 y_2 \Rightarrow 15 \times 48 = x_2 \times 30 \Rightarrow x_2 = \frac{15 \times 48}{30} = 24 \).
+            </div>
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">Q12-Q13: Algebraic Identities</div>
+            <div class="marks-badge">[1 Mark Each]</div>
+        </div>
+        <div class="sub-part">
+            <strong>12. Value of \( 103 \times 97 \) is:</strong>
+            <div class="correct-answer">Answer: (a) 9991</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> \( (100+3)(100-3) = 100^2 - 3^2 = 10000 - 9 = 9991 \).
+            </div>
+        </div>
+        <div class="sub-part">
+            <strong>13. Expansion of \( (2a - 3b)^2 \) is:</strong>
+            <div class="correct-answer">Answer: (b) \( 4a^2 + 9b^2 - 12ab \)</div>
+            <div class="answer-content">
+                <strong>Explanation:</strong> Using \( (x-y)^2 = x^2 + y^2 - 2xy \): \( (2a)^2 + (3b)^2 - 2(2a)(3b) = 4a^2 + 9b^2 - 12ab \).
+            </div>
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">Q14-Q20: Miscellaneous (1 Mark Each)</div>
+            <div class="marks-badge">[1 Mark Each]</div>
+        </div>
+        <div class="sub-part">
+            <strong>14. Profit Loss: SP for CP=₹500, Profit=12%</strong>
+            <div class="correct-answer">Answer: (a) ₹ 560</div>
+            <div class="answer-content">Profit = 12% of 500 = ₹ 60. SP = CP + Profit = 500 + 60 = 560.</div>
+        </div>
+        <div class="sub-part">
+            <strong>15. Polynomials: Degree of \( 4x^3 y^2 - 5x^4 y^3 + 3 \)</strong>
+            <div class="correct-answer">Answer: (b) 7</div>
+            <div class="answer-content">Degree of 1st term = 3+2=5. Degree of 2nd term = 4+3=7. Highest degree is 7.</div>
+        </div>
+        <div class="sub-part">
+            <strong>16. Linear Eqn: Solution of \( \frac{x}{2} - \frac{1}{5} = \frac{x}{3} + \frac{1}{4} \)</strong>
+            <div class="correct-answer">Answer: (b) \( \frac{27}{10} \) or 2.7</div>
+            <div class="answer-content">\( \frac{x}{2} - \frac{x}{3} = \frac{1}{4} + \frac{1}{5} \Rightarrow \frac{x}{6} = \frac{9}{20} \Rightarrow x = \frac{54}{20} = \frac{27}{10} \).</div>
+        </div>
+        <div class="sub-part">
+            <strong>17. Linear Eqn: Sum of 3 consecutive odd numbers is 51.</strong>
+            <div class="correct-answer">Answer: (c) 19</div>
+            <div class="answer-content">\( (x) + (x+2) + (x+4) = 51 \Rightarrow 3x+6=51 \Rightarrow 3x=45 \Rightarrow x=15 \). The largest is \( 15+4=19 \).</div>
+        </div>
+        <div class="sub-part">
+            <strong>18. Parallel Lines: Consecutive interior angles are:</strong>
+            <div class="correct-answer">Answer: (b) Supplementary</div>
+        </div>
+        <div class="sub-part">
+            <strong>19. Parallel Lines: Alternate interior angle to \( 65^\circ \):</strong>
+            <div class="correct-answer">Answer: (b) \( 65^\circ \)</div>
+            <div class="answer-content">Alternate interior angles are equal.</div>
+        </div>
+        <div class="sub-part">
+            <strong>20. Graphs: Point with x=0 lies on:</strong>
+            <div class="correct-answer">Answer: (b) y-axis</div>
+        </div>
+    </div>
+
+    <div class="section-title">SECTION B (Very Short Answer)</div>
+    
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">21. Smallest number added to 1300 for perfect square.</div>
+            <div class="marks-badge">[2 Marks]</div>
+        </div>
+        <div class="answer-content">
+            Let's find the square root of 1300 by long division.<br>
+            \( 36^2 = 1296 \) (which is less than 1300).<br>
+            The next integer is 37. <br>
+            \( 37^2 = 1369 \).<br>
+            Number to be added = \( 1369 - 1300 = 69 \).
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">22. Time taken at 80 km/hr.</div>
+            <div class="marks-badge">[2 Marks]</div>
+        </div>
+        <div class="answer-content">
+            This is a case of inverse variation (more speed, less time).<br>
+            \( s_1 \times t_1 = s_2 \times t_2 \)<br>
+            \( 60 \times 2 = 80 \times t_2 \)<br>
+            \( 120 = 80 \times t_2 \Rightarrow t_2 = \frac{120}{80} = 1.5 \text{ hours} \).
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">23. Evaluate: \( (3x + 4y)^2 - (3x - 4y)^2 \)</div>
+            <div class="marks-badge">[2 Marks]</div>
+        </div>
+        <div class="answer-content">
+            Using identity: \( (A+B)^2 - (A-B)^2 = 4AB \)<br>
+            Here \( A = 3x \) and \( B = 4y \).<br>
+            \( 4 \times (3x) \times (4y) = 48xy \).
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">24. Divide \( 15x^3 y^2 - 5x^2 y^3 \) by \( 5x^2 y^2 \)</div>
+            <div class="marks-badge">[2 Marks]</div>
+        </div>
+        <div class="answer-content">
+            <div class="math-scroll">
+                \[ \frac{15x^3 y^2 - 5x^2 y^3}{5x^2 y^2} = \frac{15x^3 y^2}{5x^2 y^2} - \frac{5x^2 y^3}{5x^2 y^2} \]
+                \[ = 3x - y \]
+            </div>
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">25. Parallel Lines: Find x.</div>
+            <div class="marks-badge">[2 Marks]</div>
+        </div>
+        <div class="answer-content">
+            Interior angles on the same side of transversal are supplementary.<br>
+            \( (2x - 10) + (3x + 15) = 180 \)<br>
+            \( 5x + 5 = 180 \Rightarrow 5x = 175 \Rightarrow x = 35 \).
+        </div>
+    </div>
+
+    <div class="section-title">SECTION C (Short Answer)</div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">26. Evaluate cube roots.</div>
+            <div class="marks-badge">[3 Marks]</div>
+        </div>
+        <div class="answer-content">
+            \( \sqrt[3]{27} = 3 \)<br>
+            \( \sqrt[3]{0.008} = \sqrt[3]{\frac{8}{1000}} = \frac{2}{10} = 0.2 \)<br>
+            \( \sqrt[3]{0.064} = \sqrt[3]{\frac{64}{1000}} = \frac{4}{10} = 0.4 \)<br>
+            Total = \( 3 + 0.2 + 0.4 = 3.6 \).
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">27. Simplify exponents.</div>
+            <div class="marks-badge">[3 Marks]</div>
+        </div>
+        <div class="answer-content">
+            Expression: \( (1/3)^{-2} \div (1/3)^{-4} \times (1/3)^{-1} \)<br>
+            Using laws of exponents (\( a^m \div a^n = a^{m-n} \) and \( a^m \times a^n = a^{m+n} \)):<br>
+            \( = (1/3)^{-2 - (-4)} \times (1/3)^{-1} \)<br>
+            \( = (1/3)^{2} \times (1/3)^{-1} \)<br>
+            \( = (1/3)^{2 + (-1)} = (1/3)^1 = \frac{1}{3} \).
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">28. Profit and Discount problem.</div>
+            <div class="marks-badge">[3 Marks]</div>
+        </div>
+        <div class="answer-content">
+            Let Cost Price (CP) = ₹ 100.<br>
+            Marked Price (MP) = 20% above CP = ₹ 120.<br>
+            Discount = 10% on MP = \( \frac{10}{100} \times 120 = \text{₹ } 12 \).<br>
+            Selling Price (SP) = MP - Discount = 120 - 12 = ₹ 108.<br>
+            Gain = SP - CP = 108 - 100 = ₹ 8.<br>
+            Gain Percentage = \( \frac{\text{Gain}}{\text{CP}} \times 100 = \frac{8}{100} \times 100 = 8\% \).
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">29. Polynomial Subtraction and Evaluation.</div>
+            <div class="marks-badge">[3 Marks]</div>
+        </div>
+        <div class="answer-content">
+            Subtract \( (2a^2 - 3ab + 5b^2) \) from \( (5a^2 + 2ab - 3b^2) \):<br>
+            \( = (5a^2 + 2ab - 3b^2) - (2a^2 - 3ab + 5b^2) \)<br>
+            \( = 5a^2 + 2ab - 3b^2 - 2a^2 + 3ab - 5b^2 \)<br>
+            \( = 3a^2 + 5ab - 8b^2 \) (This is the resulting expression) [1.5 Marks]<br><br>
+            Put \( a = 2, b = -1 \):<br>
+            \( 3(2)^2 + 5(2)(-1) - 8(-1)^2 \)<br>
+            \( = 3(4) - 10 - 8(1) \)<br>
+            \( = 12 - 10 - 8 = -6 \). [1.5 Marks]
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">30. Solve Linear Equation.</div>
+            <div class="marks-badge">[3 Marks]</div>
+        </div>
+        <div class="answer-content">
+            <div class="math-scroll">
+                \[ \frac{2x + 7}{5} - \frac{3x + 11}{2} = \frac{2x + 8}{3} - 5 \]
+                LCM of denominators (5, 2, 3) is 30. Multiplying entire equation by 30:<br>
+                \[ 6(2x + 7) - 15(3x + 11) = 10(2x + 8) - 150 \]
+                \[ 12x + 42 - 45x - 165 = 20x + 80 - 150 \]
+                \[ -33x - 123 = 20x - 70 \]
+                \[ -33x - 20x = -70 + 123 \]
+                \[ -53x = 53 \Rightarrow x = -1 \]
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">SECTION D (Long Answer)</div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">32. Square root of 152.5225 by long division.</div>
+            <div class="marks-badge">[5 Marks]</div>
+        </div>
+        <div class="answer-content">
+            Pairing from the decimal point: \( \overline{1} \overline{52} . \overline{52} \overline{25} \)<br>
+            <ul>
+                <li>Step 1: Largest square \( \le 1 \) is \( 1^2=1 \). Remainder = 0. Bring down 52. Divisor becomes 2_ .</li>
+                <li>Step 2: \( 22 \times 2 = 44 \). \( 52 - 44 = 8 \). Bring down 52. Divisor becomes 24_ . Put decimal in quotient.</li>
+                <li>Step 3: \( 243 \times 3 = 729 \). \( 852 - 729 = 123 \). Bring down 25. Divisor becomes 246_ .</li>
+                <li>Step 4: \( 2465 \times 5 = 12325 \). Remainder = 0.</li>
+            </ul>
+            <strong>Ans:</strong> \( \sqrt{152.5225} = 12.35 \)
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">33. Provision variation problem.</div>
+            <div class="marks-badge">[5 Marks]</div>
+        </div>
+        <div class="answer-content">
+            <strong>Part 1: 300 more men join immediately</strong><br>
+            Total men = \( 1200 + 300 = 1500 \).<br>
+            Inverse variation: \( M_1 D_1 = M_2 D_2 \)<br>
+            \( 1200 \times 15 = 1500 \times D_2 \)<br>
+            \( D_2 = \frac{1200 \times 15}{1500} = 12 \text{ days} \). [2.5 Marks]<br><br>
+            
+            <strong>Part 2: 200 men leave after 5 days</strong><br>
+            After 5 days, food left is sufficient for 1200 men for \( (15 - 5) = 10 \text{ days} \).<br>
+            Remaining men = \( 1200 - 200 = 1000 \).<br>
+            \( M_1 D_1 = M_2 D_2 \) (for the remaining food)<br>
+            \( 1200 \times 10 = 1000 \times D_2 \)<br>
+            \( D_2 = \frac{12000}{1000} = 12 \text{ days} \).<br>
+            The remaining food will last for 12 days. [2.5 Marks]
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">34. Algebraic Identities.</div>
+            <div class="marks-badge">[5 Marks]</div>
+        </div>
+        <div class="answer-content">
+            Given \( x + \frac{1}{x} = 5 \)<br>
+            <strong>(i) Find \( x^2 + \frac{1}{x^2} \):</strong><br>
+            Squaring both sides: \( (x + \frac{1}{x})^2 = 5^2 \)<br>
+            \( x^2 + \frac{1}{x^2} + 2(x)(\frac{1}{x}) = 25 \)<br>
+            \( x^2 + \frac{1}{x^2} + 2 = 25 \Rightarrow x^2 + \frac{1}{x^2} = 23 \). [2.5 Marks]<br><br>
+            
+            <strong>(ii) Find \( x^4 + \frac{1}{x^4} \):</strong><br>
+            Squaring the result from (i): \( (x^2 + \frac{1}{x^2})^2 = 23^2 \)<br>
+            \( x^4 + \frac{1}{x^4} + 2(x^2)(\frac{1}{x^2}) = 529 \)<br>
+            \( x^4 + \frac{1}{x^4} + 2 = 529 \Rightarrow x^4 + \frac{1}{x^4} = 527 \). [2.5 Marks]
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">35. Coordinate Geometry / Graphs.</div>
+            <div class="marks-badge">[5 Marks]</div>
+        </div>
+        <div class="answer-content">
+            Plotting the points: A(2,3), B(6,3) form a horizontal line of length 4 units. C(6,7) is vertically above B by 4 units. D(2,7) is vertically above A by 4 units.<br>
+            <strong>(i) Name of figure:</strong> The figure is a <strong>Square</strong> (all sides are equal to 4 units, and interior angles are \( 90^\circ \) since sides are parallel to axes). [3 Marks - including plotting concept]<br>
+            <strong>(ii) Area:</strong> Side = 4 units. Area = \( \text{Side} \times \text{Side} = 4 \times 4 = 16 \text{ sq. units} \). [2 Marks]
+        </div>
+    </div>
+
+    <div class="section-title">SECTION E (Case Based)</div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">36. Case Study 1: Electronics Sale</div>
+            <div class="marks-badge">[4 Marks]</div>
+        </div>
+        <div class="answer-content">
+            (i) 1st Discount = 10% of 50000 = ₹ 5000. Price after 1st discount = 50000 - 5000 = <strong>₹ 45,000</strong>.<br>
+            (ii) 2nd Discount = 5% of 45000 = ₹ 2250. Final SP before GST = 45000 - 2250 = <strong>₹ 42,750</strong>.<br>
+            (iii) GST = 18% of 42750 = \( \frac{18}{100} \times 42750 \) = <strong>₹ 7,695</strong>.<br>
+            (iv) Total Bill = 42750 + 7695 = <strong>₹ 50,445</strong>.
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">37. Case Study 2: School Garden</div>
+            <div class="marks-badge">[4 Marks]</div>
+        </div>
+        <div class="answer-content">
+            (i) Perimeter = \( 2(L + B) = 2[(3x + 4) + (2x - 3)] = 2(5x + 1) = \mathbf{10x + 2} \) meters.<br>
+            (ii) Area = \( L \times B = (3x + 4)(2x - 3) = 6x^2 - 9x + 8x - 12 = \mathbf{6x^2 - x - 12} \) sq. meters.<br>
+            (iii) If \( x = 5 \), Perimeter = \( 10(5) + 2 = 50 + 2 = \mathbf{52} \) meters.
+        </div>
+    </div>
+
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">38. Case Study 3: School Picnic</div>
+            <div class="marks-badge">[4 Marks]</div>
+        </div>
+        <div class="answer-content">
+            (i) Let girls = \( y \). Boys = \( 2y + 6 \). Total students = Girls + Boys = \( y + (2y + 6) \). Eqn: <strong>\( 3y + 6 = 60 \)</strong>.<br>
+            (ii) Solving: \( 3y = 60 - 6 \Rightarrow 3y = 54 \Rightarrow y = \mathbf{18} \) (Number of girls).<br>
+            (iii) Number of boys = \( 60 - 18 = \mathbf{42} \) (or \( 2(18) + 6 = 42 \)).<br>
+            (iv) Total collection from boys = \( 42 \times 250 = \mathbf{₹ 10,500} \).
+        </div>
+    </div>
+
+</body>
+</html>

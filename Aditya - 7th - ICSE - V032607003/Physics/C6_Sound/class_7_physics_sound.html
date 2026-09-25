@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVENESS FOR MOBILE & TABLET --- */
+        @media (max-width: 768px) {
+            .paper-sheet { padding: 15mm; }
+            .institute-name { font-size: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; }
+        }
+
+        @media (max-width: 480px) {
+            .paper-sheet { padding: 8mm; }
+            .institute-name { font-size: 1.5rem; }
+            .system-name { font-size: 0.9rem; letter-spacing: 1px; }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; }
+            h3 { font-size: 1.1rem; }
+            p, li { font-size: 0.95rem; }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (As per user request to SHOW footer) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Physics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>SOUND</h1>
+        
+        <h2>1. Sound, its Production and Propagation</h2>
+        <p>Sound is a fascinating form of energy that we experience daily. We recognize sounds produced by living beings and non-living things even without seeing them.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Longitudinal Wave:</strong> When the particles of a medium oscillate in the same direction in which the wave is being propagated, the wave formed is called a longitudinal wave.</p>
+            <p>Sound waves produced in air are an example of a longitudinal wave. As sound propagates, it forms alternating regions of compressions and rarefactions.</p>
+        </div>
+
+        <h3>Vibrations are the Cause of Sound</h3>
+        <p>When a particle (or body) moves to and fro about its mean position, it is said to <strong>vibrate</strong>. <strong>Every source of sound is a vibrating body.</strong></p>
+
+        <h2>2. Sources of Sound</h2>
+        <ul>
+            <li><strong>Tuning Fork:</strong> A U-shaped fork of steel provided with a steel handle. The two arms are called prongs. It is a convenient source of producing pure sound in a laboratory.</li>
+            <li><strong>Human Beings:</strong> Humans produce sound when <strong>vocal cords</strong> stretch across the voice box (larynx) and vibrate as air from the lungs passes through a narrow slit between them.</li>
+        </ul>
+
+        <h3>Musical Instruments</h3>
+        <ul>
+            <li><strong>Wind Instruments:</strong> Flute, trumpet. Sound is produced by the vibration of an enclosed <strong>column of air</strong>.</li>
+            <li><strong>Reed Instruments:</strong> Harmonium, mouth organ. Sound is produced by thin metal strips called <strong>reeds</strong> vibrating.</li>
+            <li><strong>Stringed Instruments:</strong> Guitar, violin, sitar. Sound is produced by the vibrations of <strong>stretched strings</strong> on plucking or bowing.</li>
+            <li><strong>Percussion Instruments:</strong> Drum, tabla. Sound is produced when a stretched leather <strong>membrane</strong> is made to vibrate by striking.</li>
+        </ul>
+
+        <h2>3. Propagation of Sound</h2>
+        <p>For sound to be heard, three conditions are necessary:</p>
+        <ol>
+            <li>A <strong>vibrating body</strong> to produce sound.</li>
+            <li>A <strong>material medium</strong> (solid, liquid, or gas) to transmit the vibrations.</li>
+            <li>A <strong>receiver</strong> (such as a human ear) to interpret the sound.</li>
+        </ol>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Sound Needs a Medium:</strong> Sound <strong>cannot travel through a vacuum</strong>. The Bell Jar experiment proves that as air is withdrawn from a glass jar containing an electric bell, the sound fades away completely.</p>
+        </div>
+
+        <h3>Speed of Sound in Different Mediums</h3>
+        <p>Sound travels fastest in solids, slower in liquids, and slowest in gases. For example:</p>
+        <ul>
+            <li><strong>Air (Gas):</strong> ~346 m/s at 25°C</li>
+            <li><strong>Water (Liquid):</strong> ~1498 m/s</li>
+            <li><strong>Steel/Iron (Solid):</strong> ~5100 to 5950 m/s</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Lightning vs Thunder:</strong> Light travels extremely fast (3 × 10⁸ m/s), while sound travels slowly in air (~330 m/s). This is why a lightning flash is seen instantly, but the crack of thunder is heard a few seconds later.</p>
+        </div>
+
+        <h2>4. Characteristics of a Sound Wave</h2>
+        <p>The three most important characteristics of vibrations are:</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Definitions</span>
+            <ul>
+                <li><strong>Amplitude:</strong> The maximum displacement of a vibrating body from its mean position. Its SI unit is the <strong>metre (m)</strong>.</li>
+                <li><strong>Frequency:</strong> The number of vibrations of the vibrating body in one second. Its SI unit is <strong>hertz (Hz)</strong>.</li>
+                <li><strong>Time Period:</strong> The time taken by the vibrating body to complete one vibration. Its SI unit is the <strong>second (s)</strong>.</li>
+            </ul>
+        </div>
+        <p><em>Relation:</em> Frequency (v) is inversely proportional to Time Period (T): <strong>v = 1/T</strong></p>
+
+        <h2>5. Range of Hearing</h2>
+        <p>Our ears are sensitive to a specific range of frequencies:</p>
+        <ul>
+            <li><strong>Audible Sound:</strong> Between 20 Hz to 20,000 Hz.</li>
+            <li><strong>Infrasonic (Subsonic) Sound:</strong> Less than 20 Hz (Inaudible to humans).</li>
+            <li><strong>Ultrasonic Sound:</strong> Higher than 20,000 Hz (Inaudible to humans).</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Applications</span>
+            <p><strong>Uses of Ultrasonic Waves:</strong></p>
+            <ul>
+                <li><strong>SONAR:</strong> (Sound Navigation and Ranging) Used in ships to detect submarines, icebergs, and map the depth of ocean beds.</li>
+                <li><strong>Animals:</strong> Bats use echoes of ultrasonic sound to navigate in the dark. Dogs can hear up to 40,000 Hz (trained using a Galton's whistle). Dolphins use ultrasonic squeaks to find prey.</li>
+            </ul>
+        </div>
+
+        <h2>6. Reflection and Absorption of Sound</h2>
+        <p>Sound energy bounces off hard surfaces, obeying the same laws of reflection as light. However, materials with a loose or porous texture (like wool, carpets, and gunny bags) <strong>absorb sound</strong>. This principle is used to design sound-proof rooms or cinema halls to prevent echoing.</p>
+
+        <h3>Echo</h3>
+        <p>The repetition of sound reflected from a high building or distant object is called an <strong>echo</strong>.</p>
+        <p>Because the sensation of sound persists in our ear for <strong>1/10th of a second</strong>, an echo can only be heard if the reflecting body is at a minimum distance of <strong>17 metres</strong> from the source.</p>
+
+        <h2>7. Loudness, Pitch, and Quality</h2>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Loudness vs Pitch</strong></p>
+            <ul>
+                <li><strong>Loudness</strong> depends upon the <strong>amplitude</strong> of the vibrating body. Larger amplitude = Louder sound. Loudness decreases as distance increases. It is measured in <strong>decibels (dB)</strong>.</li>
+                <li><strong>Pitch</strong> depends upon the <strong>frequency</strong>. Higher frequency produces a <em>shrill</em> sound (high pitch, like a child's voice). Lower frequency produces a <em>bass/flat</em> sound (low pitch).</li>
+            </ul>
+        </div>
+
+        <h3>Quality (Timbre)</h3>
+        <p><strong>Timbre</strong> is the property that allows us to distinguish between two sounds of the same pitch and loudness coming from different instruments (e.g., a guitar and a piano). It depends on the <strong>waveform</strong>.</p>
+        <ul>
+            <li><strong>Tone:</strong> A pure sound of a single frequency.</li>
+            <li><strong>Note:</strong> A sound produced by a mixture of multiple frequencies (pleasant to hear).</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

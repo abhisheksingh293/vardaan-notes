@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Light: Mirrors and Lenses - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            /* Changed to fixed so it's always accessible */
+            position: fixed; 
+            bottom: 20px; /* Moved to bottom right to avoid header overlap on mobile */
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (User specifically requested footer to show) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            /* Ensure branding footer is visible during print as requested */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+        
+        /* --- RESPONSIVE DESIGN (Mobile & Tablet) --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 15px; /* Reduced padding for mobile */
+                width: 100%;
+            }
+
+            .institute-name {
+                font-size: 1.6rem;
+            }
+
+            .system-name {
+                font-size: 0.9rem;
+                letter-spacing: 1px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+                margin-top: 30px;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            p, li {
+                font-size: 1rem;
+            }
+
+            .blue-box, .green-box, .yellow-box {
+                padding: 15px;
+                margin: 20px 0;
+            }
+            
+            /* Ensure info boxes don't overflow on small screens */
+            .box-label {
+                font-size: 0.7rem;
+                padding: 2px 6px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Light: Mirrors and Lenses</h1>
+        
+        <h2>1. Introduction to Light and Reflection</h2>
+        <p>Light is a form of energy that enables us to see the world around us. When light falls on an object, some of it is absorbed, and some bounces back. This bouncing back of light rays from a surface is called reflection.</p>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <ul>
+                <li><strong>Incident Ray:</strong> The ray of light that falls on the reflecting surface.</li>
+                <li><strong>Reflected Ray:</strong> The ray of light that bounces back from the reflecting surface.</li>
+                <li><strong>Normal:</strong> An imaginary line drawn perpendicular (at a 90-degree angle) to the reflecting surface at the point of incidence.</li>
+                <li><strong>Angle of Incidence (∠i):</strong> The angle between the incident ray and the normal.</li>
+                <li><strong>Angle of Reflection (∠r):</strong> The angle between the reflected ray and the normal.</li>
+            </ul>
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <h3>Laws of Reflection</h3>
+            <p>Reflection of light always obeys two fundamental laws:</p>
+            <ol>
+                <li>The angle of incidence is always equal to the angle of reflection (<strong>∠i = ∠r</strong>).</li>
+                <li>The incident ray, the reflected ray, and the normal at the point of incidence all lie in the <strong>same plane</strong>.</li>
+            </ol>
+        </div>
+
+        <h2>2. Spherical Mirrors</h2>
+        <p>A spherical mirror is a mirror whose reflecting surface is a part of a hollow sphere of glass. There are two main types of spherical mirrors depending on which side of the spherical surface is polished.</p>
+
+        <h3>Types of Spherical Mirrors</h3>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <ul>
+                <li><strong>Concave Mirror:</strong> A spherical mirror whose <strong>inner</strong> curved surface is the reflecting surface. (Think of the inside of a spoon). It is also called a <strong>converging mirror</strong> because it brings parallel light rays together at a point.</li>
+                <li><strong>Convex Mirror:</strong> A spherical mirror whose <strong>outer</strong> bulging surface is the reflecting surface. (Think of the back of a spoon). It is also called a <strong>diverging mirror</strong> because it spreads parallel light rays apart.</li>
+            </ul>
+        </div>
+
+        <h3>Important Terms Related to Spherical Mirrors</h3>
+        <ul>
+            <li><strong>Pole (P):</strong> The geometric center of the reflecting surface of a spherical mirror.</li>
+            <li><strong>Center of Curvature (C):</strong> The center of the hollow glass sphere of which the mirror is a part.</li>
+            <li><strong>Radius of Curvature (R):</strong> The radius of the hollow glass sphere of which the mirror is a part. It is the distance between the pole and the center of curvature.</li>
+            <li><strong>Principal Axis:</strong> The imaginary straight line passing through the pole and the center of curvature of a spherical mirror.</li>
+            <li><strong>Principal Focus (F):</strong> A point on the principal axis where rays of light parallel to the principal axis meet (in a concave mirror) or appear to meet (in a convex mirror) after reflection.</li>
+            <li><strong>Focal Length (f):</strong> The distance between the pole and the principal focus. It is half the radius of curvature (<strong>f = R/2</strong>).</li>
+        </ul>
+
+        <h2>3. Images Formed by Mirrors</h2>
+        <p>An image is formed when reflected light rays actually meet or appear to meet. There are two types of images.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <ul>
+                <li><strong>Real Image:</strong> An image formed when reflected light rays <strong>actually intersect</strong>. It can be captured on a screen and is always <strong>inverted</strong> (upside down).</li>
+                <li><strong>Virtual Image:</strong> An image formed when reflected light rays <strong>appear to diverge</strong> from a point behind the mirror. It cannot be captured on a screen and is always <strong>erect</strong> (upright).</li>
+            </ul>
+        </div>
+
+        <h3>Images Formed by a Plane Mirror</h3>
+        <p>The image formed by a regular flat mirror (plane mirror) has the following characteristics:</p>
+        <ul>
+            <li>It is always <strong>virtual and erect</strong>.</li>
+            <li>It is of the <strong>same size</strong> as the object.</li>
+            <li>The distance of the image behind the mirror is equal to the distance of the object in front of it.</li>
+            <li>It is <strong>laterally inverted</strong> (the left side of the object appears as the right side of the image, and vice versa).</li>
+        </ul>
+
+        <h3>Images Formed by Concave Mirrors</h3>
+        <p>A concave mirror can form both real and virtual images, depending on the position of the object.</p>
+        <ul>
+            <li>When the object is placed <strong>far away or beyond the focus</strong>, the image formed is generally <strong>real and inverted</strong>. The size can be diminished, same size, or magnified.</li>
+            <li>When the object is placed <strong>very close to the mirror (between the pole and the focus)</strong>, the image formed is <strong>virtual, erect, and magnified</strong>. (This is why concave mirrors are used as shaving or makeup mirrors).</li>
+        </ul>
+
+        <h3>Images Formed by Convex Mirrors</h3>
+        <p>A convex mirror <strong>always</strong> forms a <strong>virtual, erect, and diminished</strong> (smaller) image, regardless of where the object is placed.</p>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <h3>Uses of Mirrors</h3>
+            <p><strong>Concave Mirrors:</strong> Used by dentists to see larger images of teeth, as reflectors in car headlights and torches to get a strong parallel beam of light, and as shaving mirrors.</p>
+            <p><strong>Convex Mirrors:</strong> Used as rear-view mirrors in vehicles because they always give an erect image and have a wider field of view, allowing the driver to see a larger area behind them. Also used as security mirrors in shops.</p>
+        </div>
+
+        <h2>4. Lenses</h2>
+        <p>A lens is a piece of transparent material (like glass or plastic) bound by two surfaces, of which at least one is curved. Lenses work on the principle of <strong>refraction</strong> (the bending of light as it passes from one medium to another).</p>
+
+        <h3>Types of Lenses</h3>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <ul>
+                <li><strong>Convex Lens (Converging Lens):</strong> A lens that is thicker in the middle and thinner at the edges. It converges (brings together) parallel rays of light falling on it.</li>
+                <li><strong>Concave Lens (Diverging Lens):</strong> A lens that is thinner in the middle and thicker at the edges. It diverges (spreads out) parallel rays of light falling on it.</li>
+            </ul>
+        </div>
+
+        <h3>Images Formed by Lenses</h3>
+        <ul>
+            <li><strong>Convex Lens:</strong> Like a concave mirror, a convex lens can form both real and virtual images. It usually forms real, inverted images. However, when the object is placed very close to the lens, it forms a virtual, erect, and magnified image. (This is how a simple magnifying glass works).</li>
+            <li><strong>Concave Lens:</strong> Like a convex mirror, a concave lens <strong>always</strong> forms a <strong>virtual, erect, and diminished</strong> image, no matter where the object is placed.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <h3>Sunlight and Colors</h3>
+            <p>White light from the sun is actually a mixture of seven colors. This can be seen when light passes through a glass prism, splitting into a band of seven colors: Red, Orange, Yellow, Green, Blue, Indigo, and Violet (<strong>VIBGYOR</strong>). This phenomenon is called <strong>dispersion of light</strong>. A rainbow is a natural example of dispersion caused by water droplets in the atmosphere acting like tiny prisms.</p>
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

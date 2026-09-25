@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Learning Institute - Question Paper 02</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @page { size: A4; margin: 20mm; }
+        :root {
+            --primary-yellow: #fbc02d;
+            --text-main: #000000;
+        }
+        body { 
+            width: 210mm; 
+            min-height: 297mm; 
+            margin: 0 auto; 
+            padding: 20mm; 
+            box-sizing: border-box; 
+            font-family: "Times New Roman", Times, serif; 
+            font-size: 12pt; 
+            line-height: 1.5; 
+            color: var(--text-main); 
+            background-color: white; 
+            position: relative; 
+        }
+        .watermark { 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 70%; 
+            opacity: 0.05; 
+            z-index: -1; 
+            pointer-events: none; 
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            border-top: 3px solid var(--primary-yellow);
+            border-bottom: 3px solid var(--primary-yellow); 
+            padding: 15px 0; 
+        }
+        .institute-name { 
+            font-size: 24pt; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            margin: 0; 
+            letter-spacing: 1px; 
+        }
+        .test-name { 
+            font-size: 14pt; 
+            font-weight: bold; 
+            margin-top: 5px; 
+            text-decoration: underline; 
+        }
+        .exam-details { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-top: 15px; 
+            font-weight: bold; 
+            font-size: 11pt; 
+            padding: 5px 0; 
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+        }
+        .instructions { 
+            margin-top: 15px; 
+            font-size: 10pt; 
+            font-style: italic; 
+            text-align: left;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fafafa;
+        }
+        .instructions ul { 
+            margin: 5px 0 0 0; 
+            padding-left: 20px; 
+        }
+        .section-header { 
+            text-align: center; 
+            font-weight: bold; 
+            margin-top: 25px; 
+            margin-bottom: 15px; 
+            text-decoration: underline; 
+            font-size: 13pt; 
+        }
+        .marks-info { 
+            font-size: 10pt; 
+            font-weight: normal; 
+            font-style: italic; 
+            display: block; 
+            margin-top: 2px; 
+        }
+        .question-container { 
+            margin-bottom: 15px; 
+            display: flex;
+            page-break-inside: avoid;
+        }
+        .q-num { 
+            font-weight: bold; 
+            width: 35px; 
+            flex-shrink: 0; 
+        }
+        .q-content { 
+            flex-grow: 1; 
+        }
+        .mcq-container {
+            column-count: 2;
+            column-gap: 40px;
+            column-rule: 1.5px solid var(--primary-yellow);
+            margin-top: 10px;
+        }
+        .question-block {
+            break-inside: avoid;
+            margin-bottom: 18px;
+            display: flex;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 10px;
+            padding-left: 25px;
+            margin-top: 5px;
+            width: 100%;
+        }
+        .case-study-text {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-left: 4px solid var(--primary-yellow);
+            margin-bottom: 15px;
+            font-size: 11pt;
+        }
+        .sub-part {
+            display: flex;
+            margin-bottom: 8px;
+            margin-left: 15px;
+        }
+        .marks-right {
+             float: right;
+             font-weight: bold;
+        }
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        table.data-table th, table.data-table td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+        }
+        .footer { 
+            margin-top: 40px; 
+            text-align: center; 
+            font-size: 10pt; 
+            font-weight: bold; 
+            border-top: 1px solid #ccc; 
+            padding-top: 10px; 
+            color: #555; 
+        }
+        @media screen and (max-width: 1024px) {
+            body { width: 90%; padding: 15mm; margin: 20px auto; min-height: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+            .institute-name { font-size: 20pt; }
+        }
+        @media screen and (max-width: 768px) {
+            body { width: 95%; padding: 10mm; font-size: 11pt; }
+            .exam-details { flex-direction: column; align-items: center; gap: 5px; }
+            .institute-name { font-size: 18pt; }
+            .watermark { width: 90%; }
+            .mcq-container { column-count: 1; column-rule: none; }
+            .options-grid { grid-template-columns: 1fr; }
+        }
+        @media screen and (max-width: 480px) {
+            body { width: 100%; padding: 10px; margin: 0; box-shadow: none; border-radius: 0; font-size: 11pt;}
+            .institute-name { font-size: 16pt; }
+            .math { overflow-x: auto; display: block; }
+        }
+        @media print { 
+            body { width: 100%; margin: 0; padding: 0; -webkit-print-color-adjust: exact; box-shadow: none; } 
+            .watermark { opacity: 0.12 !important; }
+            .mcq-container { column-count: 2; }
+        }
+    </style>
+</head>
+<body>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Watermark" class="watermark">
+    
+    <div class="header">
+        <h1 class="institute-name">VARDAAN LEARNING INSTITUTE</h1>
+        <div class="test-name">Mathematics Mock Test 02 (DAV Pattern)</div>
+        <div class="exam-details">
+            <span>Class: 8 CBSE</span>
+            <span>Subject: Mathematics</span>
+            <span>Time: 2 Hours</span>
+            <span>Max. Marks: 80</span>
+        </div>
+        <div class="instructions">
+            <strong>General Instructions:</strong>
+            <ul>
+                <li>The question paper consists of 38 questions divided into 5 sections: A, B, C, D, and E.</li>
+                <li><strong>Section A:</strong> Q.1 to Q.20 are MCQs carrying 1 mark each.</li>
+                <li><strong>Section B:</strong> Q.21 to Q.25 are Very Short Answer type questions carrying 2 marks each.</li>
+                <li><strong>Section C:</strong> Q.26 to Q.31 are Short Answer type questions carrying 3 marks each.</li>
+                <li><strong>Section D:</strong> Q.32 to Q.35 are Long Answer type questions carrying 5 marks each.</li>
+                <li><strong>Section E:</strong> Q.36 to Q.38 are Case-Based questions carrying 4 marks each.</li>
+                <li>All questions are compulsory. Use of calculators is not permitted.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-header">SECTION A (20 Marks)<span class="marks-info">(Multiple Choice Questions - 1 Mark Each)</span></div>
+    
+    <div class="mcq-container">
+        <!-- Ch1: Square & Square Roots (3 Qs) -->
+        <div class="question-block">
+            <div class="q-num">1.</div>
+            <div class="q-content">
+                Which of the following numbers would end with digit 1?
+                <div class="options-grid">
+                    <div>(a) \( 123^2 \)</div>
+                    <div>(b) \( 77^2 \)</div>
+                    <div>(c) \( 82^2 \)</div>
+                    <div>(d) \( 109^2 \)</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-block">
+            <div class="q-num">2.</div>
+            <div class="q-content">
+                The square root of \( 12.96 \) is:
+                <div class="options-grid">
+                    <div>(a) 3.6</div>
+                    <div>(b) 3.4</div>
+                    <div>(c) 0.36</div>
+                    <div>(d) 36</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-block">
+            <div class="q-num">3.</div>
+            <div class="q-content">
+                How many non-square natural numbers lie between \( 99^2 \) and \( 100^2 \)?
+                <div class="options-grid">
+                    <div>(a) 199</div>
+                    <div>(b) 198</div>
+                    <div>(c) 100</div>
+                    <div>(d) 99</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch2: Cube & Cube Roots (3 Qs) -->
+        <div class="question-block">
+            <div class="q-num">4.</div>
+            <div class="q-content">
+                The ones digit of the cube of 23 is:
+                <div class="options-grid">
+                    <div>(a) 3</div>
+                    <div>(b) 9</div>
+                    <div>(c) 7</div>
+                    <div>(d) 1</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-block">
+            <div class="q-num">5.</div>
+            <div class="q-content">
+                The value of \( \sqrt[3]{-1000} \) is:
+                <div class="options-grid">
+                    <div>(a) 10</div>
+                    <div>(b) -10</div>
+                    <div>(c) 100</div>
+                    <div>(d) -100</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-block">
+            <div class="q-num">6.</div>
+            <div class="q-content">
+                Which of the following numbers is a perfect cube?
+                <div class="options-grid">
+                    <div>(a) 12500</div>
+                    <div>(b) 3430</div>
+                    <div>(c) 8000</div>
+                    <div>(d) 900</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch3: Exponent & Radicals (3 Qs) -->
+        <div class="question-block">
+            <div class="q-num">7.</div>
+            <div class="q-content">
+                The value of \( (2^0 + 3^0) \times 4^0 \) is:
+                <div class="options-grid">
+                    <div>(a) 0</div>
+                    <div>(b) 1</div>
+                    <div>(c) 2</div>
+                    <div>(d) 5</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-block">
+            <div class="q-num">8.</div>
+            <div class="q-content">
+                The value of \( (64)^{-1/3} \) is:
+                <div class="options-grid">
+                    <div>(a) 4</div>
+                    <div>(b) \( \frac{1}{4} \)</div>
+                    <div>(c) -4</div>
+                    <div>(d) \( -\frac{1}{4} \)</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-block">
+            <div class="q-num">9.</div>
+            <div class="q-content">
+                In standard form, the number \( 0.0000564 \) is written as:
+                <div class="options-grid">
+                    <div>(a) \( 5.64 \times 10^5 \)</div>
+                    <div>(b) \( 5.64 \times 10^{-5} \)</div>
+                    <div>(c) \( 56.4 \times 10^{-6} \)</div>
+                    <div>(d) \( 0.564 \times 10^{-4} \)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch4: Direct & Indirect Variation (2 Qs) -->
+        <div class="question-block">
+            <div class="q-num">10.</div>
+            <div class="q-content">
+                If \( x \) and \( y \) vary directly, and \( x = 10 \) when \( y = 15 \). What is \( x \) when \( y = 30 \)?
+                <div class="options-grid">
+                    <div>(a) 20</div>
+                    <div>(b) 15</div>
+                    <div>(c) 5</div>
+                    <div>(d) 45</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-block">
+            <div class="q-num">11.</div>
+            <div class="q-content">
+                If 12 workers can build a wall in 50 hours, how many hours will 15 workers take to build the same wall?
+                <div class="options-grid">
+                    <div>(a) 40</div>
+                    <div>(b) 62.5</div>
+                    <div>(c) 30</div>
+                    <div>(d) 50</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch5: Algebraic Identities (2 Qs) -->
+        <div class="question-block">
+            <div class="q-num">12.</div>
+            <div class="q-content">
+                The value of \( (x+5)(x-5) \) is:
+                <div class="options-grid">
+                    <div>(a) \( x^2 - 25 \)</div>
+                    <div>(b) \( x^2 + 25 \)</div>
+                    <div>(c) \( x^2 - 10 \)</div>
+                    <div>(d) \( x^2 + 10x + 25 \)</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-block">
+            <div class="q-num">13.</div>
+            <div class="q-content">
+                The coefficient of \( x \) in the expansion of \( (x-3)^2 \) is:
+                <div class="options-grid">
+                    <div>(a) -3</div>
+                    <div>(b) 6</div>
+                    <div>(c) -6</div>
+                    <div>(d) 9</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch6: Profit Loss (1 Q) -->
+        <div class="question-block">
+            <div class="q-num">14.</div>
+            <div class="q-content">
+                An item marked at ₹ 840 is sold for ₹ 714. The discount percentage is:
+                <div class="options-grid">
+                    <div>(a) 15%</div>
+                    <div>(b) 10%</div>
+                    <div>(c) 12%</div>
+                    <div>(d) 20%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch7: Polynomials (1 Q) -->
+        <div class="question-block">
+            <div class="q-num">15.</div>
+            <div class="q-content">
+                The degree of the polynomial \( 3x^2y - 4x^3y^2 + 5 \) is:
+                <div class="options-grid">
+                    <div>(a) 3</div>
+                    <div>(b) 4</div>
+                    <div>(c) 5</div>
+                    <div>(d) 6</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch8: Linear Eqn in 1 variable (2 Qs) -->
+        <div class="question-block">
+            <div class="q-num">16.</div>
+            <div class="q-content">
+                The solution of the equation \( 3x - 5 = x + 7 \) is:
+                <div class="options-grid">
+                    <div>(a) 5</div>
+                    <div>(b) 6</div>
+                    <div>(c) 7</div>
+                    <div>(d) 4</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-block">
+            <div class="q-num">17.</div>
+            <div class="q-content">
+                Two numbers are in the ratio 5:3. If they differ by 18, what are the numbers?
+                <div class="options-grid">
+                    <div>(a) 45, 27</div>
+                    <div>(b) 50, 32</div>
+                    <div>(c) 40, 22</div>
+                    <div>(d) 25, 7</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch9: Parallel Lines (2 Qs) -->
+        <div class="question-block">
+            <div class="q-num">18.</div>
+            <div class="q-content">
+                Two parallel lines are intersected by a transversal. If one interior angle is \( 72^\circ \), its consecutive interior angle is:
+                <div class="options-grid">
+                    <div>(a) \( 72^\circ \)</div>
+                    <div>(b) \( 108^\circ \)</div>
+                    <div>(c) \( 18^\circ \)</div>
+                    <div>(d) \( 90^\circ \)</div>
+                </div>
+            </div>
+        </div>
+        <div class="question-block">
+            <div class="q-num">19.</div>
+            <div class="q-content">
+                When a transversal cuts two parallel lines, the alternate exterior angles are always:
+                <div class="options-grid">
+                    <div>(a) Supplementary</div>
+                    <div>(b) Complementary</div>
+                    <div>(c) Equal</div>
+                    <div>(d) None of these</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch10: Introduction to graphs (1 Q) -->
+        <div class="question-block">
+            <div class="q-num">20.</div>
+            <div class="q-content">
+                The coordinates of a point on the x-axis at a distance of 4 units to the left of the origin are:
+                <div class="options-grid">
+                    <div>(a) (4, 0)</div>
+                    <div>(b) (0, -4)</div>
+                    <div>(c) (-4, 0)</div>
+                    <div>(d) (0, 4)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">SECTION B (10 Marks)<span class="marks-info">(Very Short Answer Type - 2 Marks Each)</span></div>
+    
+    <div class="question-container">
+        <div class="q-num">21.</div>
+        <div class="q-content">Find the least number by which 252 must be multiplied to get a perfect square.</div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">22.</div>
+        <div class="q-content">A car takes 1.5 hours to reach a destination by traveling at the speed of \( 80 \text{ km/h} \). How long will it take when the car travels at the speed of \( 60 \text{ km/h} \)?</div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">23.</div>
+        <div class="q-content">Evaluate \( (104)^2 \) without actual multiplication, using a suitable algebraic identity.</div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">24.</div>
+        <div class="q-content">Divide the polynomial \( 8x^3y^2 - 6x^2y^3 \) by the monomial \( -2x^2y \).</div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">25.</div>
+        <div class="q-content">In a figure, lines \( l \) and \( m \) are parallel and intersected by a transversal \( t \). If a pair of corresponding angles are \( (3x - 10)^\circ \) and \( (2x + 15)^\circ \), find the value of \( x \).</div>
+    </div>
+
+    <div class="section-header">SECTION C (18 Marks)<span class="marks-info">(Short Answer Type - 3 Marks Each)</span></div>
+
+    <div class="question-container">
+        <div class="q-num">26.</div>
+        <div class="q-content">Find the cube root of 13824 by the prime factorization method.</div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">27.</div>
+        <div class="q-content">Simplify and express the result with a positive exponent: 
+            <br> \( \displaystyle \frac{3^{-5} \times 10^{-5} \times 125}{5^{-7} \times 6^{-5}} \)
+        </div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">28.</div>
+        <div class="q-content">A shopkeeper buys an article for ₹ 1200. He marks it 25% above the cost price and allows a discount of 10% on it. Find the marked price, the selling price, and his profit percentage.</div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">29.</div>
+        <div class="q-content">Simplify the algebraic expression: \( (3x - 4y)(2x + 5y) - (x - y)(x + y) \).</div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">30.</div>
+        <div class="q-content">The denominator of a rational number is greater than its numerator by 8. If the numerator is increased by 17 and the denominator is decreased by 1, the number obtained is \( \frac{3}{2} \). Find the original rational number.</div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">31.</div>
+        <div class="q-content">Two parallel lines are intersected by a transversal. If the interior angles on the same side of the transversal are in the ratio 2 : 3, find the measure of each of these angles.</div>
+    </div>
+
+    <div class="section-header">SECTION D (20 Marks)<span class="marks-info">(Long Answer Type - 5 Marks Each)</span></div>
+
+    <div class="question-container">
+        <div class="q-num">32.</div>
+        <div class="q-content">Find the greatest 4-digit number which is a perfect square. Also, find the square root of this perfect square number.</div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">33.</div>
+        <div class="q-content">A hostel has enough food for 125 students for 24 days. <br>
+            (i) How long will the food last if 25 more students join the hostel?<br>
+            (ii) If instead 25 students leave the hostel, how long would the food last?
+        </div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">34.</div>
+        <div class="q-content">If \( \displaystyle a - \frac{1}{a} = 7 \), find the value of:
+            <div style="margin-top: 5px;">(i) \( \displaystyle a^2 + \frac{1}{a^2} \)</div>
+            <div style="margin-top: 5px;">(ii) \( \displaystyle a^4 + \frac{1}{a^4} \)</div>
+        </div>
+    </div>
+    <div class="question-container">
+        <div class="q-num">35.</div>
+        <div class="q-content">Draw the distance-time graph for the following table of values, with suitable scales on the axes.
+            <table class="data-table">
+                <tr>
+                    <th>Time (in hours)</th>
+                    <td>7:00 am</td>
+                    <td>8:00 am</td>
+                    <td>9:00 am</td>
+                    <td>10:00 am</td>
+                </tr>
+                <tr>
+                    <th>Distance (in km)</th>
+                    <td>40</td>
+                    <td>80</td>
+                    <td>120</td>
+                    <td>160</td>
+                </tr>
+            </table>
+            From the graph (or logically analyzing the table), answer the following:
+            <br>(i) How much distance did the car cover during the period 7:30 am to 8:30 am?
+            <br>(ii) What was the time when the car had covered a distance of 100 km since its start?
+        </div>
+    </div>
+
+    <div class="section-header">SECTION E (12 Marks)<span class="marks-info">(Case-Based Questions - 4 Marks Each)</span></div>
+
+    <div class="question-container">
+        <div class="q-num">36.</div>
+        <div class="q-content">
+            <strong>Case Study 1: Supermarket Sale</strong>
+            <div class="case-study-text">
+                Rahul goes to an electronics supermarket to buy a new Smart TV. The marked price of the TV is ₹ 40,000. To attract customers during the festival season, the supermarket offers two successive discounts of 15% and 10% on the marked price.
+            </div>
+            <div class="sub-part">
+                <span style="width: 25px;">(i)</span>
+                <span>Calculate the price of the TV after the first discount of 15%. (1 Mark)</span>
+            </div>
+            <div class="sub-part">
+                <span style="width: 25px;">(ii)</span>
+                <span>Calculate the final selling price that Rahul pays after the second discount. (2 Marks)</span>
+            </div>
+            <div class="sub-part">
+                <span style="width: 25px;">(iii)</span>
+                <span>If the shopkeeper had offered a single flat discount of 25% instead of successive discounts, would Rahul pay more or less? By how much? (1 Mark)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">37.</div>
+        <div class="q-content">
+            <strong>Case Study 2: Designing a Rectangular Park</strong>
+            <div class="case-study-text">
+                A community is designing a new rectangular park in their locality. The dimensions of the park are given in terms of a variable \( x \) to allow for flexible planning. The length of the park is \( (4x + 3) \) meters and its breadth is \( (3x - 2) \) meters. 
+            </div>
+            <div class="sub-part">
+                <span style="width: 25px;">(i)</span>
+                <span>Write the polynomial expression representing the total area of the park. (2 Marks)</span>
+            </div>
+            <div class="sub-part">
+                <span style="width: 25px;">(ii)</span>
+                <span>Write the polynomial expression representing the perimeter of the park. (1 Mark)</span>
+            </div>
+            <div class="sub-part">
+                <span style="width: 25px;">(iii)</span>
+                <span>If the final plan fixes the value of \( x \) as 10, find the numerical value of the perimeter in meters. (1 Mark)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">38.</div>
+        <div class="q-content">
+            <strong>Case Study 3: Savings and Coins</strong>
+            <div class="case-study-text">
+                Reema has a piggy bank containing a total of ₹ 300 in coins of denominations ₹ 1, ₹ 2, and ₹ 5. She counts her coins and realizes that the number of ₹ 2 coins is exactly 3 times the number of ₹ 5 coins. The total number of coins in the piggy bank is 160. Let the number of ₹ 5 coins be denoted by \( x \).
+            </div>
+            <div class="sub-part">
+                <span style="width: 25px;">(i)</span>
+                <span>Express the number of ₹ 2 coins and ₹ 1 coins in terms of \( x \). (1 Mark)</span>
+            </div>
+            <div class="sub-part">
+                <span style="width: 25px;">(ii)</span>
+                <span>Form the linear equation that represents the total monetary value of the coins. (1 Mark)</span>
+            </div>
+            <div class="sub-part">
+                <span style="width: 25px;">(iii)</span>
+                <span>Solve the equation to find the exact number of ₹ 5 coins Reema has. (2 Marks)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">Created by Team Vardaan | Senior Academics Division (Mathematics)</div>
+</body>
+</html>
