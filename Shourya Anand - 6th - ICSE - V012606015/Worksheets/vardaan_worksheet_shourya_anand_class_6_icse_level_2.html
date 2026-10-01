@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet (Level 2)</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* --- PAGE SETUP FOR A4 PRINTING --- */
+        @page { size: A4; margin: 12mm 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* Level 2 Medium / Standard Colors */
+            --primary-color: #1565c0; 
+            --bg-color: #e3f2fd;
+            
+            /* Light Mode Defaults */
+            --body-bg: #f8f9fa;
+            --container-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-secondary: #1565c0;
+            --text-muted: #555555;
+            --border-color: #90caf9;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #64b5f6;   
+            --bg-color: #1e2a38;        
+            --body-bg: #0f172a;         
+            --container-bg: #1e293b;
+            --text-main: #f1f5f9;       
+            --text-secondary: #90caf9;
+            --text-muted: #94a3b8;
+            --border-color: #1565c0;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Base Styles */
+        * { box-sizing: border-box; }
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.5; margin: 0; padding: 15px 10px; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { 
+            width: 100%; max-width: 210mm; margin: 0 auto; 
+            background-color: var(--container-bg);
+            padding: 25px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: clamp(18pt, 4vw, 24pt); font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+            line-height: 1.2;
+        }
+        .tagline { 
+            font-size: clamp(11pt, 2.5vw, 14pt); font-weight: bold; margin-bottom: 10px; margin-top: 6px;
+            color: var(--text-secondary); 
+            word-break: break-word;
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: clamp(12pt, 3vw, 16pt); font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font-weight: bold; margin-top: 15px; 
+            font-size: clamp(9pt, 2vw, 11pt); background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 6px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+        .meta-info span { flex: 1 1 auto; text-align: center; }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 12px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: clamp(11pt, 2.5vw, 13pt); text-transform: uppercase; page-break-after: avoid; 
+            border-radius: 0 4px 4px 0;
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: flex-start; margin-bottom: 4px; 
+            font-size: clamp(10pt, 2vw, 11pt); page-break-inside: avoid; text-align: left; 
+            line-height: 1.5;
+        }
+        .q-num { font-weight: bold; margin-right: 8px; min-width: 28px; color: var(--primary-color); flex-shrink: 0; }
+        .q-content { flex: 1; overflow-x: auto; }
+
+        /* --- TABLE STYLING FOR COMPACT ANSWER KEYS --- */
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; -webkit-overflow-scrolling: touch; }
+        .answer-table { width: 100%; border-collapse: collapse; font-size: clamp(8pt, 1.8vw, 10pt); text-align: center; }
+        .answer-table th, .answer-table td { border: 1px solid var(--border-color); padding: 6px 8px; }
+        .answer-table th { background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 12px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: clamp(8pt, 1.8vw, 9pt); font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: clamp(250px, 60vw, 500px); opacity: 0.08; z-index: 0; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 15px; right: 15px; width: 42px; height: 42px;
+            border-radius: 50%; background: var(--container-bg); border: 1px solid var(--border-color); cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 8px var(--shadow-color); transition: transform 0.2s ease;
+        }
+        .theme-toggle:active { transform: scale(0.92); }
+        html.dark-mode .theme-toggle { filter: invert(1) hue-rotate(180deg); background: #e0e0e0; }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.4s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* Responsive Breakpoints */
+        @media screen and (max-width: 600px) {
+            body { padding: 5px; }
+            .container { padding: 15px 10px; border-radius: 0; }
+            .meta-info { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .meta-info span { text-align: left; }
+            .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+        }
+
+        @media print { 
+            body { background-color: #ffffff !important; color: #000000 !important; padding: 0 !important; }
+            .container { box-shadow: none !important; padding: 0 !important; max-width: 100% !important; background-color: transparent !important; }
+            .theme-toggle { display: none !important; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .answer-table th { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+
+    <script>
+        function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }
+    </script>
+
+    <!-- Watermark -->
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com" target="_blank" rel="noopener">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Level 2 (Standard / Medium) Mathematics Practice Worksheet</div>
+            <div class="meta-info">
+                <span>Especially designed for: Shourya Anand</span>
+                <span>Class: 6 ICSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- SECTION A -->
+        <div class="chapter-header">Section A: Sets (20 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">Convert the Set-Builder Form $A = \{x : x \in \mathbb{N}, 3 < x \le 10\}$ into Roster Form.</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">If Universal set $U = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\}$ and $A = \{2, 4, 6, 8, 10\}$, find complement set $A'$.</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">If $P = \{a, b, c, d\}$ and $Q = \{c, d, e, f\}$, find the intersection set $P \cap Q$.</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">For the sets $P = \{a, b, c, d\}$ and $Q = \{c, d, e, f\}$, find the union set $P \cup Q$.</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">Find the set difference $A - B$ given $A = \{1, 3, 5, 7, 9\}$ and $B = \{3, 7, 11\}$.</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">Write the set of prime factors of $60$ in Roster Form.</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">State whether the sets $X = \{x : x \text{ is a letter in "CAT"}\}$ and $Y = \{y : y \text{ is a letter in "ACT"}\}$ are equal or equivalent sets.</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">Find the cardinal number of $A \cup B$ if $A = \{1, 2, 3\}$ and $B = \{4, 5, 6\}$.</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">Write all subsets of the set $M = \{x, y\}$.</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">If $n(A) = 15$ and $A$ is a finite set, what is the cardinal number of its power set's subsets count?</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">State whether $E = \{x : x \in \mathbb{W}, x^2 = 25\}$ is a singleton set or empty set.</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">Express the set $S = \{1, 4, 9, 16, 25\}$ in Set-Builder Form.</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">Given $A = \{2, 3, 5, 7, 11\}$, state true or false with reason: $\{2, 3\} \in A$.</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">If $P$ and $Q$ are disjoint sets, what is $n(P \cap Q)$?</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">If $U = \{x : x \text{ is a digit in the decimal system}\}$ and $B = \{0, 2, 4, 6, 8\}$, find $n(B')$.</div></div>
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">Find $x$ if $\{2x + 1, 7\} = \{11, 7\}$.</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">State whether the sets $\{x : x \text{ is an even number}\}$ and $\{y : y \text{ is an odd number}\}$ are overlapping or disjoint.</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">If $A = \{x : x \text{ is a factor of 12}\}$ and $B = \{y : y \text{ is a factor of 18}\}$, write $A \cap B$.</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">Write the cardinal number of the set $K = \{x : x \in \mathbb{Z}, -3 \le x < 4\}$.</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">If $A \subset B$ and $n(B) = 10$, what is the maximum possible value of $n(A)$?</div></div>
+        </div>
+
+        <!-- SECTION B -->
+        <div class="chapter-header">Section B: Ratio and Proportion (20 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">Express the ratio of $2.5\text{ kg}$ to $750\text{ g}$ in simplest integer form.</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">Divide an amount of $\text{Rs } 1,500$ among Shourya, Rohan, and Amit in the ratio $2 : 3 : 5$.</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">Find the compound ratio of $2 : 3$ and $4 : 5$.</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">Find the value of $x$ if the numbers $x, 12, 8, 32$ are in proportion.</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">Find the mean proportional between $9$ and $25$.</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">Find the third proportional to $12$ and $18$.</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">Two numbers are in the ratio $3 : 4$. If their sum is $140$, find both numbers.</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">If $15$ men can complete a job in $20\text{ days}$, how many days will $12$ men take to complete the same job?</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">On a map drawn to a scale of $1 : 100,000$, the distance between two towns is $5\text{ cm}$. Calculate actual distance in km.</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">The present age of a father is $42\text{ years}$ and his son is $14\text{ years}$. Find the ratio of father's age to son's age $7\text{ years}$ ago.</div></div>
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">Compare the two ratios $\frac{5}{8}$ and $\frac{7}{12}$ by making denominators equal. State which is greater.</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">If $A : B = 2 : 3$ and $B : C = 4 : 5$, find the continued ratio $A : B : C$.</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">Solve for $x$: $(2x + 3) : (3x + 1) = 3 : 4$.</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">A car travels $240\text{ km}$ on $15\text{ liters}$ of petrol. How far can it travel on $22\text{ liters}$ of petrol?</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">Find the ratio of the perimeter of a square of side $6\text{ cm}$ to the perimeter of an equilateral triangle of side $8\text{ cm}$.</div></div>
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">A line segment of length $48\text{ cm}$ is divided into two parts in the ratio $5 : 7$. Calculate the length of the longer part.</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">In a mixture of $45\text{ liters}$, the ratio of milk to water is $4 : 1$. How many liters of water are in the mixture?</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">If $3A = 4B = 5C$, find $A : B : C$.</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">Check whether $6, 18, 12, 36$ are in proportion.</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">Find $x$ in the proportion $x : 15 :: 14 : 35$.</div></div>
+        </div>
+
+        <!-- SECTION C -->
+        <div class="chapter-header">Section C: Construction of Angles & Geometry (20 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">Construct an angle of $75^\circ$ using compasses and ruler by bisecting the angle between $60^\circ$ and $90^\circ$.</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">Construct an angle of $105^\circ$ using compasses and ruler.</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">Construct an angle of $135^\circ$ using compasses and ruler by bisecting between $90^\circ$ and $180^\circ$.</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">Draw $\angle ABC = 110^\circ$ using a protractor and construct its angle bisector $BD$ using compasses.</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">Two complementary angles are in the ratio $4 : 5$. Find the measure of both angles.</div></div>
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">Two supplementary angles differ by $40^\circ$. Calculate the measures of both angles.</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">If an angle is $30^\circ$ less than twice its complement, find the measure of the angle.</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">Construct a perpendicular line from an external point $P$ to a given line segment $AB$ using compasses.</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">Draw a line segment $AB = 7.5\text{ cm}$ and construct its perpendicular bisector using a pair of compasses.</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">Find the measure of an angle which is equal to $\frac{1}{3}$ of its supplementary angle.</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">Two adjacent angles on a straight line are $(2x + 10)^\circ$ and $(3x - 20)^\circ$. Find the value of $x$.</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">Construct an equilateral triangle $\triangle ABC$ of side $5\text{ cm}$ using ruler and compasses only.</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">Two vertically opposite angles measure $(4x - 15)^\circ$ and $(2x + 25)^\circ$. Find $x$ and the measure of each angle.</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">Two angles form a linear pair. If one angle is $65^\circ$, calculate the measure of the other angle.</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">Construct an angle of $15^\circ$ by bisecting an angle of $30^\circ$ using ruler and compasses.</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">In a pair of parallel lines cut by a transversal, two interior angles on the same side are $(3x)^\circ$ and $(2x + 30)^\circ$. Calculate $x$.</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">Find the reflex angle corresponding to an interior angle of $125^\circ$.</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">Three angles meeting around a point are in the ratio $1 : 2 : 3$. Find all three angles.</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">Write the step-by-step procedure to construct a line parallel to $AB$ passing through an external point $P$.</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">Calculate the acute angle formed between the hour hand and minute hand of a clock at 3:30.</div></div>
+        </div>
+
+        <!-- SECTION D: ANSWERS -->
+        <div class="chapter-header">Section D: Concise Answer Key</div>
+        <div class="table-responsive">
+            <table class="answer-table">
+                <thead>
+                    <tr>
+                        <th>Q#</th>
+                        <th>Section A (Sets)</th>
+                        <th>Section B (Ratio & Prop.)</th>
+                        <th>Section C (Construction)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1 / 21 / 41</td><td>$\{4, 5, 6, 7, 8, 9, 10\}$</td><td>$10 : 3$</td><td>Bisect arc $60^\circ$ & $90^\circ$</td></tr>
+                    <tr><td>2 / 22 / 42</td><td>$A' = \{1, 3, 5, 7, 9\}$</td><td>Shourya: $300$, R: $450$, A: $750$</td><td>Bisect arc $90^\circ$ & $120^\circ$</td></tr>
+                    <tr><td>3 / 23 / 43</td><td>$\{c, d\}$</td><td>$8 : 15$</td><td>Bisect arc $90^\circ$ & $180^\circ$</td></tr>
+                    <tr><td>4 / 24 / 44</td><td>$\{a, b, c, d, e, f\}$</td><td>$x = 3$</td><td>Each half = $55^\circ$</td></tr>
+                    <tr><td>5 / 25 / 45</td><td>$\{1, 5, 9\}$</td><td>$15$</td><td>$40^\circ$ and $50^\circ$</td></tr>
+                    <tr><td>6 / 26 / 46</td><td>$\{2, 3, 5\}$</td><td>$27$</td><td>$70^\circ$ and $110^\circ$</td></tr>
+                    <tr><td>7 / 27 / 47</td><td>Equal sets ($X = Y$)</td><td>$60$ and $80$</td><td>$50^\circ$</td></tr>
+                    <tr><td>8 / 28 / 48</td><td>$n(A \cup B) = 6$</td><td>$25\text{ days}$</td><td>Arc construction from P</td></tr>
+                    <tr><td>9 / 29 / 49</td><td>$\varnothing, \{x\}, \{y\}, \{x, y\}$</td><td>$5\text{ km}$</td><td>Perpendicular bisector line</td></tr>
+                    <tr><td>10 / 30 / 50</td><td>$2^{15} = 32768$</td><td>$5 : 1$</td><td>$45^\circ$</td></tr>
+                    <tr><td>11 / 31 / 51</td><td>Singleton set ($\{5\}$)</td><td>$\frac{5}{8}$ is greater</td><td>$x = 38^\circ$</td></tr>
+                    <tr><td>12 / 32 / 52</td><td>$\{x : x = n^2, n \in \mathbb{N}, n \le 5\}$</td><td>$8 : 12 : 15$</td><td>Triangle side $5\text{ cm}$</td></tr>
+                    <tr><td>13 / 33 / 53</td><td>False ($\{2, 3\} \subset A$)</td><td>$x = 9$</td><td>$x = 20^\circ$, angle $65^\circ$</td></tr>
+                    <tr><td>14 / 34 / 54</td><td>$0$</td><td>$352\text{ km}$</td><td>$115^\circ$</td></tr>
+                    <tr><td>15 / 35 / 55</td><td>$n(B') = 5$</td><td>$1 : 1$</td><td>Bisect $30^\circ$ arc</td></tr>
+                    <tr><td>16 / 36 / 56</td><td>$x = 5$</td><td>$28\text{ cm}$</td><td>$x = 30^\circ$</td></tr>
+                    <tr><td>17 / 37 / 57</td><td>Disjoint sets</td><td>$9\text{ liters}$</td><td>$235^\circ$</td></tr>
+                    <tr><td>18 / 38 / 58</td><td>$\{1, 2, 3, 6\}$</td><td>$20 : 15 : 12$</td><td>$60^\circ, 120^\circ, 180^\circ$</td></tr>
+                    <tr><td>19 / 39 / 59</td><td>$n(K) = 7$</td><td>Yes ($6 \times 36 = 18 \times 12$)</td><td>Alternate interior arcs method</td></tr>
+                    <tr><td>20 / 40 / 60</td><td>$10$</td><td>$x = 6$</td><td>$75^\circ$</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+
+</body>
+</html>

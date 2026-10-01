@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nervous System - Class 8 ICSE Biology - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.12;
+            max-width: 75%;
+            max-height: 75%;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* --- CONTACT INFO --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: none;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.55rem;
+            color: var(--pink-border);
+            margin-top: 35px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 14px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            color: var(--accent-purple);
+            margin-top: 22px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.65;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 24px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { 
+            background-color: var(--blue-bg); 
+            border: 2px solid var(--blue-border); 
+            border-radius: 8px; 
+            padding: 20px; 
+            margin: 25px 0; 
+            position: relative; 
+        }
+        .green-box { 
+            background-color: var(--green-bg); 
+            border: 2px solid var(--green-border); 
+            border-radius: 8px; 
+            padding: 20px; 
+            margin: 25px 0; 
+            position: relative; 
+        }
+        .yellow-box { 
+            background-color: var(--yellow-bg); 
+            border: 2px solid var(--yellow-border); 
+            border-radius: 8px; 
+            padding: 20px; 
+            margin: 25px 0; 
+            position: relative; 
+        }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- COMPARISON TABLE --- */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+        }
+
+        table, th, td {
+            border: 1px solid var(--toggle-border);
+        }
+
+        th, td {
+            padding: 10px 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+            font-weight: 700;
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE MEDIA QUERIES (MOBILE, TABLET, LAPTOP) --- */
+        @media screen and (max-width: 1024px) {
+            .paper-sheet {
+                padding: 15mm;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 18px 14px;
+                width: 100%;
+            }
+
+            .institute-name {
+                font-size: 1.65rem;
+                letter-spacing: 0.5px;
+            }
+
+            .system-name {
+                font-size: 0.95rem;
+                letter-spacing: 1.5px;
+            }
+
+            h1 {
+                font-size: 1.65rem;
+            }
+
+            h2 {
+                font-size: 1.35rem;
+                padding-left: 10px;
+            }
+
+            h3 {
+                font-size: 1.15rem;
+            }
+
+            p, li {
+                font-size: 0.98rem;
+                line-height: 1.55;
+            }
+
+            .blue-box, .green-box, .yellow-box {
+                padding: 16px 12px;
+                margin: 20px 0;
+            }
+
+            .theme-toggle {
+                top: 12px;
+                right: 12px;
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .institute-name {
+                font-size: 1.4rem;
+            }
+
+            .system-name {
+                font-size: 0.82rem;
+                letter-spacing: 1px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            ul {
+                padding-left: 18px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* Hide Theme Toggle Only */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* Show Contact Info in Print */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* Show Footer Text in Print */
+            .branding-footer {
+                display: block !important;
+                page-break-inside: avoid;
+                margin-top: 40px !important;
+                border-top: 1px solid #ccc !important;
+            }
+
+            /* Show Watermark on Every Page in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.12 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 75% !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 1.8cm 1.5cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Active on Screen & Print) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 ICSE • Biology • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Nervous System</h1>
+
+        <h2>1. Introduction to Coordination</h2>
+        <p>The human body carries out various vital life processes like digestion, respiration, circulation, and excretion. These processes do not function in isolation; they are closely inter-linked and work synchronously according to the immediate needs of the body.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Coordination</strong> is the process of interlinking and harmonising different bodily activities so that all systems work together smoothly as per internal and external demands.</p>
+        </div>
+
+        <h3>Types of Coordination</h3>
+        <ul>
+            <li><strong>Nervous Coordination:</strong> Brought about rapidly through electrical impulses traveling along the nervous system (brain, spinal cord, nerves, and sense organs).</li>
+            <li><strong>Chemical Coordination:</strong> Slower, long-lasting coordination brought about by chemical messengers called <strong>hormones</strong> secreted directly into the bloodstream by endocrine glands (e.g., adrenaline release during sudden danger).</li>
+        </ul>
+
+        <h2>2. Major Functions of the Nervous System</h2>
+        <ul>
+            <li><strong>Environmental Awareness:</strong> Gathers real-time sensory information about the external world through the five sense organs (eyes, ears, nose, tongue, skin).</li>
+            <li><strong>Higher Cognitive Abilities:</strong> Serves as the biological seat of memory, thinking, learning, and reasoning.</li>
+            <li><strong>Voluntary Motor Control:</strong> Regulates and harmonises conscious muscular activities such as writing, speaking, walking, or holding an object.</li>
+            <li><strong>Involuntary Regulation:</strong> Seamlessly coordinates autonomous, vital life processes like heartbeat, respiration, and peristalsis without conscious thought.</li>
+        </ul>
+
+        <h2>3. Structural and Functional Unit: The Neuron</h2>
+        <p>The entire nervous system is constructed of specialized conducting cells called <strong>neurons</strong> (nerve cells). A neuron is incapable of dividing post-differentiation and possesses high sensitivity.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>The human cerebrum alone accommodates approximately <strong>9 to 10 billion neurons</strong>, and an individual axon can vary from a few millimetres up to <strong>1 metre</strong> in length!</p>
+        </div>
+
+        <h3>Structure of a Typical Neuron</h3>
+        <ul>
+            <li><strong>Cyton (Cell Body / Perikaryon):</strong> The main central segment containing a conspicuous nucleus, neuroplasm, and metabolic organelles.</li>
+            <li><strong>Dendrites:</strong> Short, highly-branched cytoplasmic extensions arising from the cyton that pick up incoming stimuli and convey impulses <em>toward</em> the cell body.</li>
+            <li><strong>Axon:</strong> A single, long, cylindrical process that transmits nerve impulses <em>away</em> from the cyton to target tissues or succeeding neurons.</li>
+            <li><strong>Myelin Sheath:</strong> An insulating fatty layer enveloping the axon that accelerates impulse speed and prevents cross-leakage of electrical signals between adjacent fibres.</li>
+            <li><strong>Nodes of Ranvier:</strong> Microscopic periodic gaps along the myelin sheath where the axon membrane remains exposed.</li>
+            <li><strong>Terminal Branches (Axon Terminals):</strong> Fine terminal arborizations ending in swollen synaptic knobs that release chemical messengers.</li>
+        </ul>
+
+        <h3>Types of Neurons (Functional Classification)</h3>
+        <ul>
+            <li><strong>Sensory Neurons:</strong> Conduct incoming impulses from sense organs/receptors to the brain or spinal cord.</li>
+            <li><strong>Motor Neurons:</strong> Conduct outgoing motor commands from the brain or spinal cord to effector organs (muscles or glands).</li>
+            <li><strong>Association Neurons (Relay / Interneurons):</strong> Located within the central nervous system to link sensory and motor pathways together.</li>
+        </ul>
+
+        <h3>The Synapse and Neurotransmitters</h3>
+        <p>Neurons do not come into physical contact with one another. The microscopic functional junction between the axon terminal of one neuron and the dendrite of the next is called a <strong>synapse</strong>.</p>
+        <p>When an electrical impulse reaches the terminal knob, it stimulates the exocytosis of chemical messengers called <strong>neurotransmitters</strong> (e.g., acetylcholine) into the synaptic cleft. This chemical trigger generates an electrical potential in the next dendrite, ensuring strictly <strong>unidirectional conduction</strong> of impulses.</p>
+
+        <h2>4. Structure and Classification of Nerves</h2>
+        <p>A <strong>nerve</strong> is a cord-like structure composed of a bundle of individual axons (nerve fibres) wrapped together within a common protective tubular sheath (medullary sheath) like an insulated multi-core electric wire.</p>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type of Nerve</th>
+                        <th>Nature of Nerve Fibres</th>
+                        <th>Key Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Sensory Nerve</strong></td>
+                        <td>Composed entirely of sensory nerve fibres. Transmits sensation from receptors to CNS.</td>
+                        <td><strong>Optic Nerve</strong> (from retina of the eye), Olfactory Nerve (nose).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Motor Nerve</strong></td>
+                        <td>Composed exclusively of motor nerve fibres. Transmits motor signals from CNS to effectors.</td>
+                        <td>Nerves innervating the <strong>extrinsic eyeball muscles</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mixed Nerve</strong></td>
+                        <td>Contains both sensory and motor nerve fibres bundled together in the same nerve trunk.</td>
+                        <td>Nerve supplying the <strong>tongue</strong>; all <strong>31 pairs of spinal nerves</strong>.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>5. Divisions of the Human Nervous System</h2>
+        <p>The human nervous system is structurally grouped into two primary divisions:</p>
+        <ul>
+            <li><strong>Central Nervous System (CNS):</strong> Comprises the brain and spinal cord, serving as the central processing unit.</li>
+            <li><strong>Peripheral Nervous System (PNS):</strong> All nerves branching out from the CNS throughout peripheral body tissues.</li>
+        </ul>
+
+        <h3>I. The Central Nervous System (CNS)</h3>
+        <p>The CNS is the master control center that integrates, interprets, and initiates responses.</p>
+
+        <h3>1. The Brain</h3>
+        <p>The human brain is delicately housed within the bony cranium (skull). It is divided into three prominent regions:</p>
+        <ul>
+            <li><strong>Cerebrum:</strong> The largest, topmost segment. Divided along the midline into right and left <strong>cerebral hemispheres</strong>. Its convoluted surface displays ridges (gyri) and grooves (sulci) to maximize surface area.
+                <ul>
+                    <li><em>Outer Cortex (Grey Matter):</em> Packed with cytons/cell bodies of billions of neurons.</li>
+                    <li><em>Inner Region (White Matter):</em> Formed primarily of myelinated axon bundles.</li>
+                    <li><em>Function:</em> Seat of intelligence, conscious thought, reasoning, voluntary muscle command, and sensory perception.</li>
+                </ul>
+            </li>
+            <li><strong>Cerebellum ("Little Brain"):</strong> Positioned posteriorly below the cerebrum.
+                <ul>
+                    <li><em>Function:</em> Coordinates complex voluntary muscular actions and preserves postural equilibrium and balance. While the cerebrum initiates motor intent, the cerebellum executes smooth, precise coordination.</li>
+                </ul>
+            </li>
+            <li><strong>Medulla Oblongata:</strong> The lowest, cone-shaped segment continuing downward into the spinal cord.
+                <ul>
+                    <li><em>Function:</em> Regulates critical involuntary visceral activities: heartbeat rate, respiration, peristalsis, and vascular tone.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Clinical & Exam Points:</strong><br>
+            • Consumed alcohol impairs the <strong>cerebellum</strong>, leading to loss of muscular coordination and unsteady, staggered walking.<br>
+            • Damage or traumatic injury to the <strong>medulla oblongata</strong> often causes instantaneous cessation of breathing and heartbeat, leading directly to fatal outcomes.</p>
+        </div>
+
+        <h3>2. The Spinal Cord</h3>
+        <p>The spinal cord extends downwards from the medulla oblongata through the vertebral column (backbone). In contrast to the brain, the tissue distribution is completely inverted:</p>
+        <ul>
+            <li><strong>Outer Region:</strong> White matter (longitudinal axon tracts).</li>
+            <li><strong>Inner Region:</strong> Butterfly/H-shaped Grey matter (neuronal cytons).</li>
+        </ul>
+        <p><strong>Primary Functions of the Spinal Cord:</strong></p>
+        <ul>
+            <li>Governs autonomous <strong>reflex actions</strong> occurring below the neck level.</li>
+            <li>Conducts sensory impulses originating from skin and peripheral organs upward to the brain.</li>
+            <li>Dispatches descending motor directives from the brain downward toward limbs and trunk muscles.</li>
+        </ul>
+
+        <h3>II. The Peripheral Nervous System (PNS)</h3>
+        <p>Consists of nerves extending outward to connect the CNS with all bodily organs:</p>
+        <ul>
+            <li><strong>Somatic Nervous System (SNS):</strong> Consists of cranial and spinal nerves relaying voluntary motor signals to skeletal muscles and sensory feedback back to the CNS.
+                <ul>
+                    <li><strong>Cranial Nerves:</strong> <strong>12 pairs</strong> arising directly from the brain (sensory, motor, and mixed).</li>
+                    <li><strong>Spinal Nerves:</strong> <strong>31 pairs</strong> originating bilaterally from the spinal cord (every spinal nerve is a mixed nerve).</li>
+                </ul>
+            </li>
+            <li><strong>Autonomic Nervous System (ANS):</strong> A paired longitudinal chain of ganglia and nerves flanking the vertebral column that autonomically governs smooth muscle, cardiac tissue, and visceral glands. It operates via two mutually antagonistic systems:
+                <ul>
+                    <li><strong>Sympathetic System:</strong> Prepares the body for "fight-or-flight" emergency responses (dilates pupils, increases heartbeat, constricts peripheral blood vessels).</li>
+                    <li><strong>Parasympathetic System:</strong> Restores equilibrium and "rest-and-digest" conditions (constricts pupils, decreases heartbeat, dilates cutaneous vessels).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>6. Reflex Actions and the Reflex Arc</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>A <strong>Reflex Action</strong> is a rapid, involuntary, automatic, and instantaneous response to a stimulus executed via the spinal cord without the initial conscious involvement of the brain.</p>
+        </div>
+
+        <p>The shortest anatomical path traversed by a nerve impulse from receptor organ to effector organ is designated as the <strong>Reflex Arc</strong>.</p>
+
+        <h3>Sequential Flow of the Reflex Arc:</h3>
+        <p><strong>Stimulus</strong> (e.g., hot object) &rarr; <strong>Receptor</strong> (sensory receptors in skin) &rarr; <strong>Sensory Neuron</strong> (conducts impulse along spinal nerve) &rarr; <strong>Spinal Cord / Relay Neuron</strong> (interneuron processes signal in grey matter) &rarr; <strong>Motor Neuron</strong> (carries motor command outward) &rarr; <strong>Effector Organ</strong> (biceps muscle contracts) &rarr; <strong>Response</strong> (immediate arm withdrawal).</p>
+
+        <h3>Types of Reflexes</h3>
+        <ul>
+            <li><strong>Natural (Inborn / Unconditioned) Reflexes:</strong> Genetically inherited and present since birth. They necessitate no prior learning or experience.
+                <ul>
+                    <li><em>Protective Reflexes:</em> Blinking of the eyes, sneezing, coughing, vomiting.</li>
+                    <li><em>Functional Reflexes:</em> Swallowing, peristalsis, salivation upon food intake.</li>
+                </ul>
+            </li>
+            <li><strong>Conditioned (Acquired) Reflexes:</strong> Acquired and refined throughout an individual's lifetime via habitual practice, associative memory, and learning.
+                <ul>
+                    <li><em>Examples:</em> Salivation solely at the sight or aroma of favorite food; typing seamlessly on a computer keyboard without glancing at keys; playing musical instruments; cycling.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>7. Fundamental Terminology Quick-Review</h2>
+        <ul>
+            <li><strong>Stimulus:</strong> Any detectable change in the internal or external environment provoking a physiological response.</li>
+            <li><strong>Response:</strong> The resulting muscular or glandular activity displayed by the organism due to a perceived stimulus.</li>
+            <li><strong>Impulse:</strong> A self-propagating wave of electrochemical disturbance travelling along a neuron membrane.</li>
+            <li><strong>Receptor:</strong> Specialized sensory cells or organs (eye, ear, skin) designated to detect specific stimuli.</li>
+            <li><strong>Effector:</strong> A responsive muscle or secretory gland that translates neural directives into action.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

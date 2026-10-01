@@ -1,27 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-    (function() {
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const urlTheme = params.get('theme');
-        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
-        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          document.documentElement.classList.add('dark-mode', 'dark');
-        } else if (urlTheme === 'light') {
-          document.documentElement.setAttribute('data-theme', 'light');
-          document.documentElement.classList.remove('dark-mode', 'dark');
-        }
-        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
-      } catch(e) {}
-    })();
-  </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- FORMAT: Chapter Name - Subject -->
-    <title>The Vedic Age - History - Vardaan Learning Institute</title>
+    <title>Social Reformers - Vardaan Learning Institute</title>
     <style>
         /* --- CSS VARIABLES (Vardaan Theming) --- */
         :root {
@@ -112,18 +94,31 @@
         /* --- PAPER SHEET CONTAINER --- */
         .paper-sheet {
             background-color: var(--paper-bg);
-            width: 210mm;
+            width: 210mm; /* A4 width */
             max-width: 100%;
             margin: 0 auto;
-            padding: 5vw; /* Responsive padding for mobile/tablet */
+            padding: 20mm;
             box-sizing: border-box;
             border: none;
             transition: background-color 0.3s ease;
         }
         
-        @media (min-width: 768px) {
+        @media (max-width: 768px) {
+             .paper-sheet {
+                 padding: 10mm; /* Reduce padding on smaller screens */
+                 width: 100%;
+             }
+        }
+
+        @media (max-width: 480px) {
             .paper-sheet {
-                padding: 20mm; /* Standard desktop padding */
+                 padding: 5mm; /* Further reduce padding for mobile */
+            }
+             h1 {
+                font-size: 1.8rem;
+            }
+            .institute-name {
+                font-size: 1.6rem;
             }
         }
 
@@ -136,7 +131,7 @@
         }
 
         .institute-name {
-            font-size: clamp(1.5rem, 4vw, 2.2rem); /* Fluid typography */
+            font-size: 2.2rem;
             font-weight: 800;
             color: var(--blue-border);
             text-transform: uppercase;
@@ -145,7 +140,7 @@
         }
 
         .system-name {
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-size: 1.1rem;
             color: var(--meta-text);
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -166,7 +161,6 @@
             justify-content: center;
             gap: 20px;
             align-items: center;
-            flex-wrap: wrap; /* Responsive wrap */
         }
 
         .contact-info a {
@@ -197,7 +191,7 @@
 
         /* --- TYPOGRAPHY & ELEMENTS --- */
         h1 {
-            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            font-size: 2.2rem;
             color: var(--blue-border);
             text-align: center;
             
@@ -211,7 +205,7 @@
         }
 
         h2 {
-            font-size: clamp(1.3rem, 4vw, 1.6rem);
+            font-size: 1.6rem;
             color: var(--pink-border);
             margin-top: 40px;
             border-left: 5px solid var(--pink-border);
@@ -220,7 +214,7 @@
         }
 
         h3 {
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-size: 1.3rem;
             color: var(--accent-purple);
             margin-top: 25px;
             margin-bottom: 10px;
@@ -313,9 +307,14 @@
                 box-shadow: none !important;
             }
 
-            /* 2. FORCE HIDE Toggle ONLY (Modified to keep footer visible per user request) */
+            /* 2. FORCE HIDE Toggle */
             .theme-toggle {
                 display: none !important;
+            }
+            
+            /* The prompt requested the branding footer to be visible during print */
+            .branding-footer {
+                 display: block !important;
             }
 
             /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
@@ -367,51 +366,6 @@
                 }
             }
         }
-    
-    /* Vardaan App Dark Mode Compatibility */
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        color-scheme: dark;
-      }
-      html:not([data-theme="light"]) {
-        --paper-bg: #121212;
-        --text-main: #e0e0e0;
-        --meta-text: #aaaaaa;
-        --yellow-bg: #3f3a00;
-        --yellow-border: #fdd835;
-        --green-bg: #0f2e13;
-        --green-border: #81c784;
-        --blue-bg: #0d1b2a;
-        --blue-border: #64b5f6;
-        --pink-bg: #300815;
-        --pink-border: #f06292;
-        --example-bg: rgba(255,255,255,0.1);
-        --example-text: #cccccc;
-        --toggle-bg: #333;
-        --toggle-border: #555;
-        --icon-fill: #fff;
-      }
-    }
-    [data-theme="dark"], html.dark-mode {
-      color-scheme: dark;
-      --paper-bg: #121212;
-      --text-main: #e0e0e0;
-      --meta-text: #aaaaaa;
-      --yellow-bg: #3f3a00;
-      --yellow-border: #fdd835;
-      --green-bg: #0f2e13;
-      --green-border: #81c784;
-      --blue-bg: #0d1b2a;
-      --blue-border: #64b5f6;
-      --pink-bg: #300815;
-      --pink-border: #f06292;
-      --example-bg: rgba(255,255,255,0.1);
-      --example-text: #cccccc;
-      --toggle-bg: #333;
-      --toggle-border: #555;
-      --icon-fill: #fff;
-    }
-
     </style>
 </head>
 <body>
@@ -447,7 +401,7 @@
         <!-- BRANDING HEADER (MANDATORY) -->
         <div class="branding-header">
             <div class="institute-name">Vardaan Learning Institute</div>
-            <div class="system-name">Class 6 History • Chapter Notes</div>
+            <div class="system-name">Class 8 History • Chapter Notes</div>
             
             <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
             <div class="contact-info">
@@ -457,105 +411,96 @@
         </div>
 
         <!-- DYNAMIC CONTENT STARTS HERE -->
-        <h1>The Vedic Age</h1>
+        <h1>Social Reformers</h1>
         
-        <h2>1. Introduction</h2>
-        <p>The <strong>Vedic Age</strong> refers to the foundational period in Indian history when the Vedas and other ancient scriptures were composed. It spanned a significant timeframe and laid the foundations for the emergence of Hinduism, encompassing profound social, political, and cultural shifts.</p>
+        <p>The 19th century in India was a period of social and cultural revival and regeneration. The people of India, subjected to economic and political distress under British rule, lacked political rights. Western education brought awareness among the educated Indians, making them realize the critical need for political rights and social reforms. This era saw the rise of numerous social reformers who challenged existing orthodoxies and worked tirelessly to eradicate social evils.</p>
+
+        <h2>1. Reform Movements in Bengal</h2>
+        <p>Bengal was the epicentre of the early social reform movements, spearheaded by visionary leaders.</p>
+
+        <h3>Raja Rammohan Roy and the Brahmo Samaj</h3>
+        <p>Raja Rammohan Roy, born in a Bengali Brahmin family in 1772, was a pioneer of social reform. He was a scholar of multiple languages including Sanskrit, Arabic, Persian, English, Greek, Hebrew, Latin, and French. Rabindranath Tagore referred to him as the <strong>Father of the Indian Renaissance</strong> and the Prophet of Indian Nationalism.</p>
         <ul>
-            <li><strong>Time Period:</strong> The Vedic Age flourished between <strong>1500 BCE and 600 BCE</strong>.</li>
-            <li><strong>Geography:</strong> The civilization expanded across the <strong>Indo-Gangetic plains</strong> of the Indian subcontinent.</li>
-        </ul>
-
-        <h2>2. Sources of Information</h2>
-        <h3>Literary Sources</h3>
-        <p>The primary source of information for this period derives from texts composed in <strong>Vedic Sanskrit</strong>. Collectively, these texts form the Vedic literature, which was passed down orally for generations before being written down.</p>
-        
-        <div class="blue-box">
-            <span class="box-label">Concept</span>
-            <p><strong>The Word "Veda":</strong> Derived from the Sanskrit root word <em>'vid'</em>, which means <strong>"knowledge"</strong>. The Vedas are considered <em>Shrutis</em> (meaning "that which is heard"), believed to have been imparted directly by the Gods to sages.</p>
-        </div>
-
-        <p>The four primary Vedas are:</p>
-        <ul>
-            <li><strong>Rig Veda:</strong> The oldest text containing 1028 hymns (suktas) composed in praise of deities like Indra, Agni, and Varuna. It includes the famous Gayatri Mantra.</li>
-            <li><strong>Sama Veda:</strong> Known as the book of chants and melodies, containing instructions on how hymns should be sung.</li>
-            <li><strong>Yajur Veda:</strong> The book of sacrificial formulas and guidelines for rituals.</li>
-            <li><strong>Atharva Veda:</strong> Also called the wisdom of the brahmins, it includes spells and charms to ward off evil spirits.</li>
-        </ul>
-        <p>Other essential texts include the <strong>Brahmanas</strong> (prose explanations of the Vedas), <strong>Upanishads</strong> (philosophical teachings, also known as Vedanta), the <strong>Puranas</strong>, and the two great epics: the <strong>Mahabharata</strong> and the <strong>Ramayana</strong>.</p>
-
-        <h3>Archaeological Sources</h3>
-        <p>Excavations at sites like Hastinapur and Atranjikhera in Uttar Pradesh provide material evidence. The distinct <strong>Painted Grey Ware (PGW)</strong> pottery is heavily associated with Vedic people.</p>
-
-        <h2>3. The Aryans</h2>
-        <p>The people of the Vedic Age are widely known as the <strong>Aryans</strong>. </p>
-        <ul>
-            <li><strong>Origin:</strong> Originally semi-nomadic pastoralists from the Steppes (stretching from southern Russia to Central Asia).</li>
-            <li><strong>Settlement:</strong> A group migrated to north-west India (Indo-Aryans). They initially settled in a region called <strong>Sapta Sindhu</strong> (Land of Seven Rivers), which they proudly named <em>Brahmavarta</em> (Land of the Gods).</li>
-            <li>They faced resistance from local inhabitants whom they termed <em>Dasas</em> or <em>Dasyus</em>.</li>
-        </ul>
-
-        <h2>4. The Early Vedic Age (1500 BCE - 1000 BCE)</h2>
-        <p>Also known as the <strong>Rig Vedic Age</strong> because our understanding is derived predominantly from the Rig Veda.</p>
-
-        <h3>Political Life</h3>
-        <p>Society was organized into tribes called <strong>Janas</strong>. The tribe was ruled by a king called the <strong>Rajan</strong>, whose primary duty was to protect the tribe during wars. Crucially, kingship was <strong>not hereditary</strong> at this stage.</p>
-        <p>The King was assisted by:</p>
-        <ul>
-            <li><strong>Purohita:</strong> The chief priest who advised on religious matters.</li>
-            <li><strong>Senani:</strong> The commander of the army.</li>
-            <li><strong>Gramani:</strong> The village headman.</li>
+            <li>He vehemently opposed idol worship and rituals, aiming to rid the Hindu religion of these practices.</li>
+            <li>He believed in the basic unity of all religions.</li>
+            <li>He was a strong advocate for the upliftment of women through education and worked towards the abolition of polygamy and child marriage.</li>
+            <li>He founded the <strong>Brahmo Sabha in 1828</strong>, which later evolved into the Brahmo Samaj, an important organisation for religious reform.</li>
         </ul>
 
         <div class="green-box">
             <span class="box-label">Fact</span>
-            <p><strong>Democratic Assemblies:</strong> The King's power was checked by tribal councils. The <strong>Sabha</strong> was a small, select group of elders (like an advisory council). The <strong>Samiti</strong> was a larger assembly consisting of all the people of the tribe, where anyone could speak.</p>
+            <p>One of Raja Rammohan Roy's greatest achievements was his successful campaign to <strong>abolish the Sati system in 1829</strong>, with the crucial help of the Governor-General, Lord William Bentinck.</p>
         </div>
 
-        <h3>Social and Family Life</h3>
-        <p>The fundamental unit of society was the family (<em>kula</em>). Multiple families formed a village (<em>grama</em>), and several villages made a clan (<em>vish</em>).</p>
+        <h3>Ishwar Chandra Vidyasagar</h3>
+        <p>Born in a poor Brahmin family in 1820, Ishwar Chandra Vidyasagar was another prominent reformer from Bengal. The Sanskrit College of Calcutta conferred upon him the title of <em>Vidyasagar</em> (ocean of learning).</p>
         <ul>
-            <li><strong>Patriarchal System:</strong> Families lived jointly, ruled by the eldest male member called the <strong>Grihapati</strong>.</li>
-            <li><strong>Position of Women:</strong> Women held a highly <strong>honorable place</strong>. They received education, attended assemblies, and chose their husbands (<em>Swayamvara</em>). Great women scholars of this era included <strong>Gargi</strong>, <strong>Maitreyi</strong>, and <strong>Lopamudra</strong>. Evils like child marriage and Sati were completely absent.</li>
-            <li><strong>Social Division:</strong> Society was divided into four classes: Brahmans (priests), Kshatriyas (warriors), Vaishyas (merchants/farmers), and Shudras (laborers). This division was flexible and based purely on <strong>occupation</strong>, not birth.</li>
+            <li>He challenged the caste system by enrolling students from lower castes to study Sanskrit, a privilege previously reserved for Brahmins.</li>
+            <li>He made significant contributions to the Bengali language, writing a Bengali primer, <em>Barna Parichaya</em>, which is still in use today.</li>
         </ul>
-
-        <h3>Economic and Religious Life</h3>
-        <p>Cattle-rearing and agriculture were primary occupations. The <strong>cow</strong> was considered a measure of wealth and prestige. The barter system facilitated trade.</p>
-        <p>Religiously, they worshipped the <strong>forces of nature</strong> (Sun, Rain, Thunder). There were no temples or idols. <strong>Indra</strong> (God of rain/storm) was the most prominent deity, alongside Agni (Fire) and Varuna (Sky).</p>
-
-        <h2>5. The Later Vedic Age (1000 BCE - 600 BCE)</h2>
-        <p>As the Aryans migrated further into the fertile Gangetic plains, they called their new home <strong>Aryavarta</strong>. This period is also called the <strong>Epic Age</strong>.</p>
-
-        <h3>Political Life Transitions</h3>
-        <p>Kingdoms grew larger and more powerful. The power of the King increased exponentially, and kingship became strictly <strong>hereditary</strong>. The assemblies (Sabha and Samiti) lost their significance.</p>
 
         <div class="yellow-box">
             <span class="box-label">Important</span>
-            <p><strong>Rise of Sacrifices:</strong> To prove their supreme power, kings performed elaborate rituals. The <strong>Ashvamedha Yajna</strong> (Horse Sacrifice) expanded their territory, while the <strong>Rajasuya Yajna</strong> granted them supreme earthly power.</p>
+            <p>His greatest contribution was championing the cause of widow remarriage and women's education. It was due to his relentless efforts that the <strong>Widow Remarriage Act was passed in 1856</strong>, making widow remarriage legal in India.</p>
         </div>
 
-        <h3>Social Rigidities and Ashramas</h3>
-        <p>The social structure underwent drastic, restrictive changes:</p>
+        <h3>Ramakrishna Paramhansa and Swami Vivekananda</h3>
+        <p>Ramakrishna Paramhansa (1836-86) was a saintly figure who lived at the Dakshineswar temple near Calcutta. His simplicity and profound wisdom attracted many followers. He emphasized that the best way to serve God was through serving humanity.</p>
+        
+        <p>His most famous disciple was Narendra Nath Dutta, widely known as <strong>Swami Vivekananda</strong>. Swami Vivekananda carried his guru's message forward and founded the <strong>Ramakrishna Mission in 1897</strong>. The motto of the mission was to serve mankind, leading to the establishment of schools, colleges, hospitals, and relief efforts during natural disasters.</p>
+
+        <h2>2. Reform Movements in Northern India</h2>
+        <p>The wave of social reform also swept through northern India, significantly led by Swami Dayanand Saraswati.</p>
+
+        <h3>Swami Dayanand Saraswati and the Arya Samaj</h3>
+        <p>Born in Kathiawar in 1824 and originally named Mool Shankar, Swami Dayanand Saraswati became an ascetic at a young age. He started preaching in 1863, with a central message emphasizing a return to the roots of Hindu philosophy.</p>
         <ul>
-            <li><strong>Position of Women Declined:</strong> Women were restricted to domestic duties, barred from inheriting property, and forbidden from attending assemblies or studying Vedas.</li>
-            <li><strong>Rigid Caste System:</strong> The four varnas became entirely hereditary, based strictly on <strong>birth</strong>. Inter-caste mobility ceased.</li>
-            <li><strong>The Four Ashramas:</strong> An Aryan man's life was strictly divided into four stages:
-                <ol>
-                    <li><strong>Brahmacharya:</strong> Student life in Gurukuls attaining knowledge.</li>
-                    <li><strong>Grihastha:</strong> Householder phase (marriage and family).</li>
-                    <li><strong>Vanaprastha:</strong> Retirement to the forest for meditation.</li>
-                    <li><strong>Sanyasa:</strong> Complete renunciation of worldly ties.</li>
-                </ol>
-            </li>
+            <li>He propagated the motto <strong>"Back to the Vedas,"</strong> asserting that the Vedas contained all essential knowledge.</li>
+            <li>He published his views in Hindi, making his teachings accessible to the masses. His most important work is the <em>Satyarth Prakash</em>.</li>
+            <li>He founded the <strong>Arya Samaj in Bombay in 1875</strong>.</li>
         </ul>
 
-        <h3>Gurukul Education System</h3>
-        <p>Education was imparted orally in secluded ashramas called <strong>Gurukuls</strong>. Students learned Vedas, mathematics, grammar, and medicine while serving their Guru. Upon completion, they offered voluntary tribute known as <strong>Guru Dakshina</strong>.</p>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>The Arya Samaj was guided by ten principles. Its members strongly <strong>opposed child marriage</strong> and actively <strong>encouraged widow remarriage</strong>. They also established a network of Dayanand Anglo-Vedic (DAV) Schools and colleges to promote education.</p>
+        </div>
 
-        <h3>Economic and Religious Shifts</h3>
-        <p><strong>Agriculture</strong> replaced cattle rearing as the primary occupation, drastically improved by the discovery and use of <strong>Iron</strong> tools and ploughs. Elaborate guilds were formed for trade.</p>
-        <p>Nature gods lost their prominence. A new trinity emerged: <strong>Brahma</strong> (The Creator), <strong>Vishnu</strong> (The Preserver), and <strong>Shiva</strong> (The Destroyer). Rituals and sacrifices became complex, highly expensive, and strictly controlled by the priestly class, leading to a strong belief in the cycle of <strong>Karma</strong> (action) and the pursuit of <strong>Moksha</strong> (salvation).</p>
+        <h2>3. Reform Movements in Western India</h2>
+        <p>Western India saw the emergence of influential reformers who fought against deep-rooted caste and gender inequalities.</p>
+
+        <h3>Jyotiba Phule and the Satyashodhak Samaj</h3>
+        <p>Jyotirao Govindrao Phule, commonly known as Jyotiba, played a critical role in bringing about social reforms in Maharashtra.</p>
+        <ul>
+            <li>In 1851, he started a school specifically for girls from lower castes. He even educated his own wife so she could teach in that school.</li>
+            <li>In <strong>1873</strong>, he founded the <strong>Satyashodhak Samaj</strong> (Truth Seekers' Society), an association open to people of all castes and religions.</li>
+            <li>He vehemently opposed the domination of Brahmins and challenged orthodox practices, including the necessity of Brahmin priests for marriage ceremonies and idol worship.</li>
+        </ul>
+
+        <h3>The Prarthana Samaj</h3>
+        <p>The <strong>Prarthana Samaj</strong> was founded in Bombay in 1867 by leaders like Mahadev Govind Ranade and Ramakrishna Bhandarkar. They strongly condemned the caste system and the practice of untouchability, advocating for the upliftment of women and widow remarriage.</p>
+
+        <h2>4. Reform Movements among Muslims</h2>
+        <p>The reform spirit also influenced the Muslim community, with leaders striving to modernize thoughts and practices.</p>
+
+        <h3>Sir Syed Ahmed Khan and the Aligarh Movement</h3>
+        <p>The most prominent social reformer among the Muslims was Sir Syed Ahmed Khan (1817-98). He believed that the progress of the Muslim community lay in embracing modern education while maintaining good relations with the British rulers.</p>
+        <ul>
+            <li>In 1864, he founded the Scientific Society to translate English books on science and other subjects into Urdu.</li>
+            <li>In <strong>1875</strong>, he established the <strong>Mohammedan Anglo-Oriental College at Aligarh</strong>, which later evolved into the Aligarh Muslim University (AMU) in 1920.</li>
+            <li>He advocated for raising the status of women, abolishing the <em>purdah</em> system, spreading education among women, and condemning polygamy.</li>
+        </ul>
+        <p>This organized effort to modernize the Muslim community came to be known as the <strong>Aligarh Movement</strong>.</p>
+
+        <h2>5. Impact of the Reform Movements</h2>
+        <p>The social reformers of the 19th century had a profound and lasting impact on Indian society. Their collective efforts led to significant changes:</p>
+        <ul>
+            <li>The practice of Sati and female infanticide were banned.</li>
+            <li>The Widow Remarriage Act of 1856 was passed.</li>
+            <li>Education for girls was popularized and expanded.</li>
+            <li>The marriageable age for girls was raised, culminating later in acts like the Sharda Act of 1929.</li>
+            <li>The rigidities of the caste system were challenged and weakened.</li>
+            <li>The adoption of western education brought modern, democratic, and nationalistic ideas to the forefront, paving the way for the Indian national movement.</li>
+        </ul>
 
         <!-- BRANDING FOOTER (MANDATORY) -->
         <div class="branding-footer">

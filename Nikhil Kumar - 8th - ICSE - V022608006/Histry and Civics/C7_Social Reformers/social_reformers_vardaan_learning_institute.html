@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- FORMAT: Chapter Name - Subject -->
-    <title>Nervous System - Vardaan Learning Institute</title>
+    <title>Social Reformers - Vardaan Learning Institute</title>
     <style>
         /* --- CSS VARIABLES (Vardaan Theming) --- */
         :root {
@@ -95,13 +94,32 @@
         /* --- PAPER SHEET CONTAINER --- */
         .paper-sheet {
             background-color: var(--paper-bg);
-            width: 210mm;
+            width: 210mm; /* A4 width */
             max-width: 100%;
             margin: 0 auto;
             padding: 20mm;
             box-sizing: border-box;
             border: none;
             transition: background-color 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+             .paper-sheet {
+                 padding: 10mm; /* Reduce padding on smaller screens */
+                 width: 100%;
+             }
+        }
+
+        @media (max-width: 480px) {
+            .paper-sheet {
+                 padding: 5mm; /* Further reduce padding for mobile */
+            }
+             h1 {
+                font-size: 1.8rem;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
         }
 
         /* --- BRANDING HEADER --- */
@@ -272,34 +290,6 @@
         html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
         html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
 
-        /* --- RESPONSIVE DESIGN (Mobile & Tablet) --- */
-        @media screen and (max-width: 768px) {
-            .paper-sheet {
-                padding: 10mm;
-            }
-            .institute-name {
-                font-size: 1.8rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            h2 {
-                font-size: 1.4rem;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .paper-sheet {
-                padding: 5mm;
-            }
-            .institute-name {
-                font-size: 1.5rem;
-            }
-            .system-name {
-                font-size: 0.9rem;
-            }
-        }
-
         /* --- STRICT PRINT CONFIGURATION --- */
         @media print {
             /* 1. Reset Colors to Clean White/Black */
@@ -317,13 +307,14 @@
                 box-shadow: none !important;
             }
 
-            /* 2. FORCE HIDE Toggle ONLY (Footer visible as per request) */
+            /* 2. FORCE HIDE Toggle */
             .theme-toggle {
                 display: none !important;
             }
             
+            /* The prompt requested the branding footer to be visible during print */
             .branding-footer {
-                display: block !important;
+                 display: block !important;
             }
 
             /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
@@ -410,7 +401,7 @@
         <!-- BRANDING HEADER (MANDATORY) -->
         <div class="branding-header">
             <div class="institute-name">Vardaan Learning Institute</div>
-            <div class="system-name">Class 7 Science • Chapter Notes</div>
+            <div class="system-name">Class 8 History • Chapter Notes</div>
             
             <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
             <div class="contact-info">
@@ -420,87 +411,96 @@
         </div>
 
         <!-- DYNAMIC CONTENT STARTS HERE -->
-        <h1>NERVOUS SYSTEM</h1>
+        <h1>Social Reformers</h1>
         
-        <h2>1. Introduction to Coordination</h2>
-        <p>Inside our body, millions of cells, tissues, and organs do not work independently. They work in harmony, meaning their activities are coordinated. <strong>Coordination</strong> means that body parts work together at the correct speed and sequence to fulfill the body's needs.</p>
-        
-        <div class="yellow-box">
-            <span class="box-label">Important</span>
-            <h3>Stimulus & Response</h3>
-            <ul>
-                <li><strong>Stimulus:</strong> Any change in the internal or external environment of an organism intense enough to evoke a response. (e.g., A hot plate, sunlight, or internal hormone secretion).</li>
-                <li><strong>Response:</strong> The behavior or action caused by the stimulus. (e.g., Pulling your hand away from a hot plate).</li>
-            </ul>
-        </div>
-        
-        <p>Our body detects stimuli using <strong>receptors</strong> (sense organs like eyes, ears, skin). The message is sent to the brain/spinal cord, which then sends commands to the <strong>effectors</strong> (muscles) to carry out the response.</p>
-        
-        <h2>2. The Nervous System</h2>
-        <p>The nervous system controls and coordinates our actions. It performs several vital functions:</p>
+        <p>The 19th century in India was a period of social and cultural revival and regeneration. The people of India, subjected to economic and political distress under British rule, lacked political rights. Western education brought awareness among the educated Indians, making them realize the critical need for political rights and social reforms. This era saw the rise of numerous social reformers who challenged existing orthodoxies and worked tirelessly to eradicate social evils.</p>
+
+        <h2>1. Reform Movements in Bengal</h2>
+        <p>Bengal was the epicentre of the early social reform movements, spearheaded by visionary leaders.</p>
+
+        <h3>Raja Rammohan Roy and the Brahmo Samaj</h3>
+        <p>Raja Rammohan Roy, born in a Bengali Brahmin family in 1772, was a pioneer of social reform. He was a scholar of multiple languages including Sanskrit, Arabic, Persian, English, Greek, Hebrew, Latin, and French. Rabindranath Tagore referred to him as the <strong>Father of the Indian Renaissance</strong> and the Prophet of Indian Nationalism.</p>
         <ul>
-            <li>Coordinates voluntary muscles for activities like walking, writing, and smiling.</li>
-            <li>Coordinates involuntary actions we don't think about, like swallowing, blinking, and breathing.</li>
-            <li>Controls the overall working of the body and responses to external stimuli.</li>
+            <li>He vehemently opposed idol worship and rituals, aiming to rid the Hindu religion of these practices.</li>
+            <li>He believed in the basic unity of all religions.</li>
+            <li>He was a strong advocate for the upliftment of women through education and worked towards the abolition of polygamy and child marriage.</li>
+            <li>He founded the <strong>Brahmo Sabha in 1828</strong>, which later evolved into the Brahmo Samaj, an important organisation for religious reform.</li>
         </ul>
 
-        <h3>Basic Unit: The Neuron (Nerve Cell)</h3>
-        <p>The basic structural and functional unit of the nervous system is the <strong>Neuron</strong> (or nerve cell). A neuron consists of three main parts:</p>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>One of Raja Rammohan Roy's greatest achievements was his successful campaign to <strong>abolish the Sati system in 1829</strong>, with the crucial help of the Governor-General, Lord William Bentinck.</p>
+        </div>
+
+        <h3>Ishwar Chandra Vidyasagar</h3>
+        <p>Born in a poor Brahmin family in 1820, Ishwar Chandra Vidyasagar was another prominent reformer from Bengal. The Sanskrit College of Calcutta conferred upon him the title of <em>Vidyasagar</em> (ocean of learning).</p>
         <ul>
-            <li><strong>Cyton:</strong> The cell body containing the nucleus and cytoplasm.</li>
-            <li><strong>Dendrites:</strong> Short, branching structures arising from the cell body that receive signals.</li>
-            <li><strong>Axon:</strong> A long, tube-like tail with fine terminal nerve endings. It is enveloped in a protective covering called the <strong>myelin sheath</strong>.</li>
+            <li>He challenged the caste system by enrolling students from lower castes to study Sanskrit, a privilege previously reserved for Brahmins.</li>
+            <li>He made significant contributions to the Bengali language, writing a Bengali primer, <em>Barna Parichaya</em>, which is still in use today.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>His greatest contribution was championing the cause of widow remarriage and women's education. It was due to his relentless efforts that the <strong>Widow Remarriage Act was passed in 1856</strong>, making widow remarriage legal in India.</p>
+        </div>
+
+        <h3>Ramakrishna Paramhansa and Swami Vivekananda</h3>
+        <p>Ramakrishna Paramhansa (1836-86) was a saintly figure who lived at the Dakshineswar temple near Calcutta. His simplicity and profound wisdom attracted many followers. He emphasized that the best way to serve God was through serving humanity.</p>
+        
+        <p>His most famous disciple was Narendra Nath Dutta, widely known as <strong>Swami Vivekananda</strong>. Swami Vivekananda carried his guru's message forward and founded the <strong>Ramakrishna Mission in 1897</strong>. The motto of the mission was to serve mankind, leading to the establishment of schools, colleges, hospitals, and relief efforts during natural disasters.</p>
+
+        <h2>2. Reform Movements in Northern India</h2>
+        <p>The wave of social reform also swept through northern India, significantly led by Swami Dayanand Saraswati.</p>
+
+        <h3>Swami Dayanand Saraswati and the Arya Samaj</h3>
+        <p>Born in Kathiawar in 1824 and originally named Mool Shankar, Swami Dayanand Saraswati became an ascetic at a young age. He started preaching in 1863, with a central message emphasizing a return to the roots of Hindu philosophy.</p>
+        <ul>
+            <li>He propagated the motto <strong>"Back to the Vedas,"</strong> asserting that the Vedas contained all essential knowledge.</li>
+            <li>He published his views in Hindi, making his teachings accessible to the masses. His most important work is the <em>Satyarth Prakash</em>.</li>
+            <li>He founded the <strong>Arya Samaj in Bombay in 1875</strong>.</li>
         </ul>
 
         <div class="blue-box">
             <span class="box-label">Concept</span>
-            <h3>Nerve Impulse & Nerves</h3>
-            <p>The message that travels along a neuron is called a <strong>nerve impulse</strong>. When millions of nerve fibres (axon parts) bundle together in a tubular sheath, they form a <strong>Nerve</strong>.</p>
+            <p>The Arya Samaj was guided by ten principles. Its members strongly <strong>opposed child marriage</strong> and actively <strong>encouraged widow remarriage</strong>. They also established a network of Dayanand Anglo-Vedic (DAV) Schools and colleges to promote education.</p>
         </div>
 
-        <h3>Types of Neurons</h3>
+        <h2>3. Reform Movements in Western India</h2>
+        <p>Western India saw the emergence of influential reformers who fought against deep-rooted caste and gender inequalities.</p>
+
+        <h3>Jyotiba Phule and the Satyashodhak Samaj</h3>
+        <p>Jyotirao Govindrao Phule, commonly known as Jyotiba, played a critical role in bringing about social reforms in Maharashtra.</p>
         <ul>
-            <li><strong>Sensory (Afferent) Neurons:</strong> Carry impulses from body parts to the spinal cord or brain.</li>
-            <li><strong>Motor (Efferent) Neurons:</strong> Carry commands from the brain or spinal cord back to the body parts/muscles.</li>
-            <li><strong>Mixed Neurons:</strong> Carry impulses in both directions.</li>
+            <li>In 1851, he started a school specifically for girls from lower castes. He even educated his own wife so she could teach in that school.</li>
+            <li>In <strong>1873</strong>, he founded the <strong>Satyashodhak Samaj</strong> (Truth Seekers' Society), an association open to people of all castes and religions.</li>
+            <li>He vehemently opposed the domination of Brahmins and challenged orthodox practices, including the necessity of Brahmin priests for marriage ceremonies and idol worship.</li>
         </ul>
 
-        <h2>3. Nervous System of Humans</h2>
-        <p>The human nervous system is broadly divided into two main parts: The Central Nervous System and the Peripheral Nervous System.</p>
+        <h3>The Prarthana Samaj</h3>
+        <p>The <strong>Prarthana Samaj</strong> was founded in Bombay in 1867 by leaders like Mahadev Govind Ranade and Ramakrishna Bhandarkar. They strongly condemned the caste system and the practice of untouchability, advocating for the upliftment of women and widow remarriage.</p>
 
-        <h3>A. Central Nervous System (CNS)</h3>
-        <p>The CNS consists of the Brain and the Spinal Cord.</p>
-        
-        <p><strong>1. The Brain:</strong> The main control center, protected inside the bony skull (cranium). It has three main parts:</p>
+        <h2>4. Reform Movements among Muslims</h2>
+        <p>The reform spirit also influenced the Muslim community, with leaders striving to modernize thoughts and practices.</p>
+
+        <h3>Sir Syed Ahmed Khan and the Aligarh Movement</h3>
+        <p>The most prominent social reformer among the Muslims was Sir Syed Ahmed Khan (1817-98). He believed that the progress of the Muslim community lay in embracing modern education while maintaining good relations with the British rulers.</p>
         <ul>
-            <li><strong>Cerebrum:</strong> The largest part. It is the center for intelligence, memory, thinking, reasoning, and controls all <strong>voluntary actions</strong>. It also perceives pain, sound, touch, etc.</li>
-            <li><strong>Cerebellum:</strong> Located at the back of the head. It maintains the balance of the body and coordinates muscular activity.</li>
-            <li><strong>Medulla Oblongata (Brain Stem):</strong> The lowest part that joins the brain to the spinal cord. It controls internal organs, heartbeat, breathing, and digestion.</li>
+            <li>In 1864, he founded the Scientific Society to translate English books on science and other subjects into Urdu.</li>
+            <li>In <strong>1875</strong>, he established the <strong>Mohammedan Anglo-Oriental College at Aligarh</strong>, which later evolved into the Aligarh Muslim University (AMU) in 1920.</li>
+            <li>He advocated for raising the status of women, abolishing the <em>purdah</em> system, spreading education among women, and condemning polygamy.</li>
         </ul>
+        <p>This organized effort to modernize the Muslim community came to be known as the <strong>Aligarh Movement</strong>.</p>
 
-        <p><strong>2. The Spinal Cord:</strong></p>
-        <p>Extends from the medulla and runs through the vertebral column. It has a central canal containing cerebrospinal fluid, surrounded by H-shaped <strong>grey matter</strong> (cell bodies) and outer <strong>white matter</strong> (nerve fibers). It conducts messages to and from the brain and controls reflexes below the neck.</p>
-
-        <h3>B. Peripheral Nervous System (PNS)</h3>
-        <p>The PNS connects the CNS with various body organs using nerves.</p>
-        
-        <div class="green-box">
-            <span class="box-label">Fact</span>
-            <p><strong>Cranial Nerves:</strong> 12 pairs of nerves that emerge directly from the brain.<br>
-            <strong>Spinal Nerves:</strong> 31 pairs of nerves that emerge from the spinal cord.</p>
-        </div>
-
-        <h2>4. Voluntary and Reflex Actions</h2>
-        
-        <p>Actions performed by our body generally fall into two categories:</p>
+        <h2>5. Impact of the Reform Movements</h2>
+        <p>The social reformers of the 19th century had a profound and lasting impact on Indian society. Their collective efforts led to significant changes:</p>
         <ul>
-            <li><strong>Voluntary Actions:</strong> Actions under the control of the brain (cerebrum). These involve thinking and are relatively slower. <em>Example: Riding a bicycle or reading a book.</em></li>
-            <li><strong>Reflex Actions:</strong> Quick, automatic responses to a stimulus without the involvement of the brain. They are primarily controlled by the <strong>spinal cord</strong>. <em>Example: Instantly pulling your hand away from a hot object.</em></li>
+            <li>The practice of Sati and female infanticide were banned.</li>
+            <li>The Widow Remarriage Act of 1856 was passed.</li>
+            <li>Education for girls was popularized and expanded.</li>
+            <li>The marriageable age for girls was raised, culminating later in acts like the Sharda Act of 1929.</li>
+            <li>The rigidities of the caste system were challenged and weakened.</li>
+            <li>The adoption of western education brought modern, democratic, and nationalistic ideas to the forefront, paving the way for the Indian national movement.</li>
         </ul>
-
-        <h3>The Reflex Arc</h3>
-        <p>The specific pathway that a nerve impulse takes during a reflex action is called a <strong>Reflex Arc</strong>. The path is as follows:</p>
-        <p><strong>Stimulus</strong> ➔ <strong>Receptor Organ</strong> (Skin) ➔ <strong>Sensory Neuron</strong> ➔ <strong>Spinal Cord</strong> ➔ <strong>Motor Neuron</strong> ➔ <strong>Effector Muscle</strong> ➔ <strong>Response</strong></p>
 
         <!-- BRANDING FOOTER (MANDATORY) -->
         <div class="branding-footer">

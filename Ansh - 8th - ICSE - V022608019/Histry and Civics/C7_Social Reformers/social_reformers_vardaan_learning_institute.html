@@ -1,27 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-    (function() {
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const urlTheme = params.get('theme');
-        const isDark = urlTheme === 'dark' || (!urlTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || localStorage.getItem('vardaan_theme') === 'dark';
-        if (urlTheme === 'dark' || (urlTheme !== 'light' && isDark)) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          document.documentElement.classList.add('dark-mode', 'dark');
-        } else if (urlTheme === 'light') {
-          document.documentElement.setAttribute('data-theme', 'light');
-          document.documentElement.classList.remove('dark-mode', 'dark');
-        }
-        if (urlTheme) localStorage.setItem('vardaan_theme', urlTheme);
-      } catch(e) {}
-    })();
-  </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- FORMAT: Chapter Name - Subject -->
-    <title>Light Energy - Vardaan Learning Institute</title>
+    <title>Social Reformers - Vardaan Learning Institute</title>
     <style>
         /* --- CSS VARIABLES (Vardaan Theming) --- */
         :root {
@@ -112,13 +94,32 @@
         /* --- PAPER SHEET CONTAINER --- */
         .paper-sheet {
             background-color: var(--paper-bg);
-            width: 210mm;
+            width: 210mm; /* A4 width */
             max-width: 100%;
             margin: 0 auto;
             padding: 20mm;
             box-sizing: border-box;
             border: none;
             transition: background-color 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+             .paper-sheet {
+                 padding: 10mm; /* Reduce padding on smaller screens */
+                 width: 100%;
+             }
+        }
+
+        @media (max-width: 480px) {
+            .paper-sheet {
+                 padding: 5mm; /* Further reduce padding for mobile */
+            }
+             h1 {
+                font-size: 1.8rem;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
         }
 
         /* --- BRANDING HEADER --- */
@@ -289,34 +290,6 @@
         html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
         html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
 
-        /* --- RESPONSIVE DESIGN (Mobiles, Tablets, Laptops) --- */
-        @media screen and (max-width: 768px) {
-            .paper-sheet {
-                padding: 10mm;
-            }
-            .institute-name {
-                font-size: 1.6rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            h2 {
-                font-size: 1.3rem;
-            }
-            p, li {
-                font-size: 1rem;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .institute-name {
-                font-size: 1.3rem;
-            }
-            .system-name {
-                font-size: 0.9rem;
-            }
-        }
-
         /* --- STRICT PRINT CONFIGURATION --- */
         @media print {
             /* 1. Reset Colors to Clean White/Black */
@@ -338,10 +311,13 @@
             .theme-toggle {
                 display: none !important;
             }
+            
+            /* The prompt requested the branding footer to be visible during print */
+            .branding-footer {
+                 display: block !important;
+            }
 
-            /* Note: .branding-footer is NO LONGER hidden here as per user request */
-
-            /* 3. FORCE SHOW Contact Info in Print */
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
             .contact-info {
                 display: flex !important;
             }
@@ -390,51 +366,6 @@
                 }
             }
         }
-    
-    /* Vardaan App Dark Mode Compatibility */
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        color-scheme: dark;
-      }
-      html:not([data-theme="light"]) {
-        --paper-bg: #121212;
-        --text-main: #e0e0e0;
-        --meta-text: #aaaaaa;
-        --yellow-bg: #3f3a00;
-        --yellow-border: #fdd835;
-        --green-bg: #0f2e13;
-        --green-border: #81c784;
-        --blue-bg: #0d1b2a;
-        --blue-border: #64b5f6;
-        --pink-bg: #300815;
-        --pink-border: #f06292;
-        --example-bg: rgba(255,255,255,0.1);
-        --example-text: #cccccc;
-        --toggle-bg: #333;
-        --toggle-border: #555;
-        --icon-fill: #fff;
-      }
-    }
-    [data-theme="dark"], html.dark-mode {
-      color-scheme: dark;
-      --paper-bg: #121212;
-      --text-main: #e0e0e0;
-      --meta-text: #aaaaaa;
-      --yellow-bg: #3f3a00;
-      --yellow-border: #fdd835;
-      --green-bg: #0f2e13;
-      --green-border: #81c784;
-      --blue-bg: #0d1b2a;
-      --blue-border: #64b5f6;
-      --pink-bg: #300815;
-      --pink-border: #f06292;
-      --example-bg: rgba(255,255,255,0.1);
-      --example-text: #cccccc;
-      --toggle-bg: #333;
-      --toggle-border: #555;
-      --icon-fill: #fff;
-    }
-
     </style>
 </head>
 <body>
@@ -470,7 +401,7 @@
         <!-- BRANDING HEADER (MANDATORY) -->
         <div class="branding-header">
             <div class="institute-name">Vardaan Learning Institute</div>
-            <div class="system-name">Class 7 Physics • Chapter Notes</div>
+            <div class="system-name">Class 8 History • Chapter Notes</div>
             
             <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
             <div class="contact-info">
@@ -480,125 +411,96 @@
         </div>
 
         <!-- DYNAMIC CONTENT STARTS HERE -->
-        <h1>LIGHT ENERGY</h1>
+        <h1>Social Reformers</h1>
         
-        <p>The world around us has beautiful objects that can only be admired when light shines on them. Without light, we cannot see anything. When light falls on an object, it is reflected from it and reaches our eyes, enabling us to see.</p>
+        <p>The 19th century in India was a period of social and cultural revival and regeneration. The people of India, subjected to economic and political distress under British rule, lacked political rights. Western education brought awareness among the educated Indians, making them realize the critical need for political rights and social reforms. This era saw the rise of numerous social reformers who challenged existing orthodoxies and worked tirelessly to eradicate social evils.</p>
 
-        <div class="blue-box">
-            <span class="box-label">Concept</span>
-            <p><strong>Reflection of Light:</strong> When light falls on the surface of an object, the object sends the light back. The bouncing back of light into its original medium after striking a surface is called <strong>reflection of light</strong>.</p>
-        </div>
+        <h2>1. Reform Movements in Bengal</h2>
+        <p>Bengal was the epicentre of the early social reform movements, spearheaded by visionary leaders.</p>
 
-        <h2>1. Behavior of Objects Towards Light</h2>
+        <h3>Raja Rammohan Roy and the Brahmo Samaj</h3>
+        <p>Raja Rammohan Roy, born in a Bengali Brahmin family in 1772, was a pioneer of social reform. He was a scholar of multiple languages including Sanskrit, Arabic, Persian, English, Greek, Hebrew, Latin, and French. Rabindranath Tagore referred to him as the <strong>Father of the Indian Renaissance</strong> and the Prophet of Indian Nationalism.</p>
         <ul>
-            <li><strong>Opaque Objects:</strong> Objects which block the light falling on them completely.</li>
-            <li><strong>Transparent Objects:</strong> Objects which transmit the light falling on them completely.</li>
-            <li><strong>Translucent Objects:</strong> Objects which allow partial transmission of light and block it partially.</li>
-        </ul>
-
-        <h2>2. Types of Reflection</h2>
-        <p>Reflection depends upon the nature of the reflecting surface:</p>
-        <h3>Regular Reflection</h3>
-        <ul>
-            <li>Occurs when a beam of light falls on a <strong>smooth and highly polished surface</strong> (like a mirror or still water).</li>
-            <li>Almost the entire light gets reflected in a definite direction (reflected rays travel parallel to each other).</li>
-            <li>Results in the formation of <strong>clear images</strong>.</li>
-        </ul>
-
-        <h3>Irregular (Diffused) Reflection</h3>
-        <ul>
-            <li>Occurs when a beam of light falls on a <strong>rough and uneven surface</strong>.</li>
-            <li>Light gets reflected in different directions (scattered).</li>
-            <li>Results in <strong>blurred or hazy images</strong>. Remember, most daily objects are visible due to diffused reflection!</li>
-        </ul>
-
-        <h2>3. Terms Related to Reflection of Light</h2>
-        <div class="blue-box">
-            <span class="box-label">Definitions</span>
-            <ul>
-                <li><strong>Incident ray:</strong> A ray of light falling on a reflecting surface.</li>
-                <li><strong>Reflected ray:</strong> The ray of light that bounces off the reflecting surface.</li>
-                <li><strong>Point of incidence:</strong> The point on the reflecting surface where the incident ray strikes.</li>
-                <li><strong>Normal:</strong> An imaginary line drawn perpendicular to the reflecting surface at the point of incidence.</li>
-                <li><strong>Angle of incidence (i):</strong> The angle between the incident ray and the normal.</li>
-                <li><strong>Angle of reflection (r):</strong> The angle between the reflected ray and the normal.</li>
-            </ul>
-        </div>
-
-        <div class="yellow-box">
-            <span class="box-label">Important</span>
-            <p><strong>Laws of Reflection:</strong></p>
-            <ol>
-                <li>The angle of incidence is always equal to the angle of reflection (<strong>∠i = ∠r</strong>).</li>
-                <li>The incident ray, the reflected ray, and the normal all lie in the <strong>same plane</strong>.</li>
-            </ol>
-            <p><em>Note: These laws hold true for ALL types of mirrors (plane or curved).</em></p>
-        </div>
-
-        <h2>4. Mirrors and Types of Images</h2>
-        <p>A mirror is a smooth polished surface that reflects light completely. They are broadly classified into <strong>Plane Mirrors</strong> (flat surface) and <strong>Curved Mirrors</strong> (spherical, either concave or convex).</p>
-        
-        <h3>Real vs. Virtual Image</h3>
-        <ul>
-            <li><strong>Real Image:</strong> An image that <strong>can</strong> be obtained on a screen. It is formed when reflected rays actually meet. Real images are always <strong>inverted</strong>. (e.g., Cinema screen images).</li>
-            <li><strong>Virtual Image:</strong> An image that <strong>cannot</strong> be obtained on a screen. It is formed when reflected rays appear to meet when produced backwards. Virtual images are always <strong>erect (upright)</strong>. (e.g., Our image in a dressing mirror).</li>
+            <li>He vehemently opposed idol worship and rituals, aiming to rid the Hindu religion of these practices.</li>
+            <li>He believed in the basic unity of all religions.</li>
+            <li>He was a strong advocate for the upliftment of women through education and worked towards the abolition of polygamy and child marriage.</li>
+            <li>He founded the <strong>Brahmo Sabha in 1828</strong>, which later evolved into the Brahmo Samaj, an important organisation for religious reform.</li>
         </ul>
 
         <div class="green-box">
             <span class="box-label">Fact</span>
-            <p><strong>Characteristics of an Image Formed by a Plane Mirror:</strong></p>
-            <ul>
-                <li>The image is <strong>upright (erect)</strong> and <strong>virtual</strong> (cannot be formed on a screen).</li>
-                <li>The image is of the <strong>same size</strong> as the object.</li>
-                <li>The image is formed <strong>as far behind the mirror</strong> as the object is in front of it.</li>
-                <li>The image is <strong>laterally inverted</strong> (the left side of the object appears as the right side of the image, e.g., the word AMBULANCE written backwards on vehicles).</li>
-            </ul>
+            <p>One of Raja Rammohan Roy's greatest achievements was his successful campaign to <strong>abolish the Sati system in 1829</strong>, with the crucial help of the Governor-General, Lord William Bentinck.</p>
         </div>
 
-        <h3>Uses of Plane Mirrors</h3>
+        <h3>Ishwar Chandra Vidyasagar</h3>
+        <p>Born in a poor Brahmin family in 1820, Ishwar Chandra Vidyasagar was another prominent reformer from Bengal. The Sanskrit College of Calcutta conferred upon him the title of <em>Vidyasagar</em> (ocean of learning).</p>
         <ul>
-            <li>As looking glasses and dressing mirrors.</li>
-            <li>By barbers to show the backside of a customer's head.</li>
-            <li>In solar cookers for reflecting the sun's rays into the interior.</li>
-            <li>In optical instruments like <strong>periscopes</strong> and <strong>kaleidoscopes</strong>.</li>
-            <li>In an optician's room to double the effective length of the testing room.</li>
-        </ul>
-
-        <h2>5. Speed of Light</h2>
-        <p>Light travels incredibly fast. The speed of light depends on the nature of the medium it passes through.</p>
-        <div class="green-box">
-            <span class="box-label">Fact Data</span>
-            <ul>
-                <li>Speed of light in <strong>Vacuum or Air:</strong> 3 × 10⁸ m/s (3,00,000 km/s).</li>
-                <li>Speed of light in <strong>Water:</strong> 2.25 × 10⁸ m/s.</li>
-                <li>Speed of light in <strong>Glass:</strong> 2.0 × 10⁸ m/s.</li>
-            </ul>
-        </div>
-
-        <h2>6. Colours of Light</h2>
-        <p>The light emitted by the sun is <strong>white light</strong>. When white light passes through a glass prism, it splits into its seven constituent colours. This process is called <strong>dispersion of white light</strong>.</p>
-        <p>The seven colours are Violet, Indigo, Blue, Green, Yellow, Orange, and Red (<strong>VIBGYOR</strong>). A <strong>rainbow</strong> is formed due to the dispersion of sunlight by small water drops hanging in the sky.</p>
-
-        <h3>Primary and Secondary Colours</h3>
-        <ul>
-            <li><strong>Primary Colours:</strong> Red, Green, and Blue. They cannot be formed by combining other colours, but combining these three produces white light.</li>
-            <li><strong>Secondary Colours (Colour Addition):</strong> Colours obtained by mixing two primary colours.
-                <ul>
-                    <li>Blue + Red = <strong>Magenta</strong> (Purple)</li>
-                    <li>Green + Red = <strong>Yellow</strong></li>
-                    <li>Blue + Green = <strong>Cyan</strong> (Peacock Blue)</li>
-                </ul>
-            </li>
+            <li>He challenged the caste system by enrolling students from lower castes to study Sanskrit, a privilege previously reserved for Brahmins.</li>
+            <li>He made significant contributions to the Bengali language, writing a Bengali primer, <em>Barna Parichaya</em>, which is still in use today.</li>
         </ul>
 
         <div class="yellow-box">
-            <span class="box-label">Important Note</span>
-            <p><strong>How we see the colour of an object:</strong></p>
-            <ul>
-                <li><strong>Opaque Objects:</strong> An opaque object appears to be the colour of the light it reflects (absorbing the rest). A red object reflects red and absorbs all other colours. A black object absorbs all colours, and a white object reflects all colours.</li>
-                <li><strong>Transparent Objects:</strong> A transparent object appears to be the colour of the light it allows to pass through it (transmits).</li>
-            </ul>
+            <span class="box-label">Important</span>
+            <p>His greatest contribution was championing the cause of widow remarriage and women's education. It was due to his relentless efforts that the <strong>Widow Remarriage Act was passed in 1856</strong>, making widow remarriage legal in India.</p>
         </div>
+
+        <h3>Ramakrishna Paramhansa and Swami Vivekananda</h3>
+        <p>Ramakrishna Paramhansa (1836-86) was a saintly figure who lived at the Dakshineswar temple near Calcutta. His simplicity and profound wisdom attracted many followers. He emphasized that the best way to serve God was through serving humanity.</p>
+        
+        <p>His most famous disciple was Narendra Nath Dutta, widely known as <strong>Swami Vivekananda</strong>. Swami Vivekananda carried his guru's message forward and founded the <strong>Ramakrishna Mission in 1897</strong>. The motto of the mission was to serve mankind, leading to the establishment of schools, colleges, hospitals, and relief efforts during natural disasters.</p>
+
+        <h2>2. Reform Movements in Northern India</h2>
+        <p>The wave of social reform also swept through northern India, significantly led by Swami Dayanand Saraswati.</p>
+
+        <h3>Swami Dayanand Saraswati and the Arya Samaj</h3>
+        <p>Born in Kathiawar in 1824 and originally named Mool Shankar, Swami Dayanand Saraswati became an ascetic at a young age. He started preaching in 1863, with a central message emphasizing a return to the roots of Hindu philosophy.</p>
+        <ul>
+            <li>He propagated the motto <strong>"Back to the Vedas,"</strong> asserting that the Vedas contained all essential knowledge.</li>
+            <li>He published his views in Hindi, making his teachings accessible to the masses. His most important work is the <em>Satyarth Prakash</em>.</li>
+            <li>He founded the <strong>Arya Samaj in Bombay in 1875</strong>.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p>The Arya Samaj was guided by ten principles. Its members strongly <strong>opposed child marriage</strong> and actively <strong>encouraged widow remarriage</strong>. They also established a network of Dayanand Anglo-Vedic (DAV) Schools and colleges to promote education.</p>
+        </div>
+
+        <h2>3. Reform Movements in Western India</h2>
+        <p>Western India saw the emergence of influential reformers who fought against deep-rooted caste and gender inequalities.</p>
+
+        <h3>Jyotiba Phule and the Satyashodhak Samaj</h3>
+        <p>Jyotirao Govindrao Phule, commonly known as Jyotiba, played a critical role in bringing about social reforms in Maharashtra.</p>
+        <ul>
+            <li>In 1851, he started a school specifically for girls from lower castes. He even educated his own wife so she could teach in that school.</li>
+            <li>In <strong>1873</strong>, he founded the <strong>Satyashodhak Samaj</strong> (Truth Seekers' Society), an association open to people of all castes and religions.</li>
+            <li>He vehemently opposed the domination of Brahmins and challenged orthodox practices, including the necessity of Brahmin priests for marriage ceremonies and idol worship.</li>
+        </ul>
+
+        <h3>The Prarthana Samaj</h3>
+        <p>The <strong>Prarthana Samaj</strong> was founded in Bombay in 1867 by leaders like Mahadev Govind Ranade and Ramakrishna Bhandarkar. They strongly condemned the caste system and the practice of untouchability, advocating for the upliftment of women and widow remarriage.</p>
+
+        <h2>4. Reform Movements among Muslims</h2>
+        <p>The reform spirit also influenced the Muslim community, with leaders striving to modernize thoughts and practices.</p>
+
+        <h3>Sir Syed Ahmed Khan and the Aligarh Movement</h3>
+        <p>The most prominent social reformer among the Muslims was Sir Syed Ahmed Khan (1817-98). He believed that the progress of the Muslim community lay in embracing modern education while maintaining good relations with the British rulers.</p>
+        <ul>
+            <li>In 1864, he founded the Scientific Society to translate English books on science and other subjects into Urdu.</li>
+            <li>In <strong>1875</strong>, he established the <strong>Mohammedan Anglo-Oriental College at Aligarh</strong>, which later evolved into the Aligarh Muslim University (AMU) in 1920.</li>
+            <li>He advocated for raising the status of women, abolishing the <em>purdah</em> system, spreading education among women, and condemning polygamy.</li>
+        </ul>
+        <p>This organized effort to modernize the Muslim community came to be known as the <strong>Aligarh Movement</strong>.</p>
+
+        <h2>5. Impact of the Reform Movements</h2>
+        <p>The social reformers of the 19th century had a profound and lasting impact on Indian society. Their collective efforts led to significant changes:</p>
+        <ul>
+            <li>The practice of Sati and female infanticide were banned.</li>
+            <li>The Widow Remarriage Act of 1856 was passed.</li>
+            <li>Education for girls was popularized and expanded.</li>
+            <li>The marriageable age for girls was raised, culminating later in acts like the Sharda Act of 1929.</li>
+            <li>The rigidities of the caste system were challenged and weakened.</li>
+            <li>The adoption of western education brought modern, democratic, and nationalistic ideas to the forefront, paving the way for the Indian national movement.</li>
+        </ul>
 
         <!-- BRANDING FOOTER (MANDATORY) -->
         <div class="branding-footer">

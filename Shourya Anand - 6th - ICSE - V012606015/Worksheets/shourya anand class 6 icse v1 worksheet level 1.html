@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Institute - Mathematics Worksheet</title>
+    <!-- MathJax -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* --- PAGE SETUP FOR A4 PRINTING --- */
+        @page { size: A4; margin: 12mm 15mm; }
+        
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* Level 1 Foundation Colors */
+            --primary-color: #2e7d32; 
+            --bg-color: #e8f5e9;
+            
+            /* Light Mode Defaults */
+            --body-bg: #f8f9fa;
+            --container-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-secondary: #2e7d32;
+            --text-muted: #555555;
+            --border-color: #c8e6c9;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* DARK MODE OVERRIDES */
+        html.dark-mode {
+            --primary-color: #81c784;   
+            --bg-color: #1b3820;        
+            --body-bg: #0f172a;         
+            --container-bg: #1e293b;
+            --text-main: #f1f5f9;       
+            --text-secondary: #a5d6a7;
+            --text-muted: #94a3b8;
+            --border-color: #2e7d32;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Base Styles */
+        * { box-sizing: border-box; }
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main);
+            line-height: 1.5; margin: 0; padding: 15px 10px; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { 
+            width: 100%; max-width: 210mm; margin: 0 auto; 
+            background-color: var(--container-bg);
+            padding: 25px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        /* --- HEADER STYLING --- */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; margin-bottom: 20px; 
+            position: relative; 
+        }
+        .institute-name { 
+            font-size: clamp(18pt, 4vw, 24pt); font-weight: bold; text-transform: uppercase; 
+            letter-spacing: 1px; margin: 0; color: var(--primary-color); 
+            line-height: 1.2;
+        }
+        .tagline { 
+            font-size: clamp(11pt, 2.5vw, 14pt); font-weight: bold; margin-bottom: 10px; margin-top: 6px;
+            color: var(--text-secondary); 
+            word-break: break-word;
+        }
+        .tagline a { text-decoration: none; color: inherit; }
+        .worksheet-title { 
+            font-size: clamp(12pt, 3vw, 16pt); font-weight: bold; text-decoration: underline; 
+            margin-top: 5px; color: var(--text-secondary); 
+        }
+        .meta-info { 
+            display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font-weight: bold; margin-top: 15px; 
+            font-size: clamp(9pt, 2vw, 11pt); background-color: var(--bg-color); padding: 10px 15px; 
+            border-radius: 6px; border: 1px solid var(--primary-color); color: var(--primary-color); 
+        }
+        .meta-info span { flex: 1 1 auto; text-align: center; }
+
+        /* --- CONTENT STYLING --- */
+        .chapter-header { 
+            background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; 
+            padding: 8px 12px; margin-top: 25px; margin-bottom: 15px; 
+            border-left: 5px solid var(--primary-color); border-bottom: 1px solid var(--border-color); 
+            font-size: clamp(11pt, 2.5vw, 13pt); text-transform: uppercase; page-break-after: avoid; 
+            border-radius: 0 4px 4px 0;
+        }
+        .questions-container { display: flex; flex-direction: column; gap: 12px; }
+        .question-item { 
+            display: flex; align-items: flex-start; margin-bottom: 4px; 
+            font-size: clamp(10pt, 2vw, 11pt); page-break-inside: avoid; text-align: left; 
+            line-height: 1.5;
+        }
+        .q-num { font-weight: bold; margin-right: 8px; min-width: 28px; color: var(--primary-color); flex-shrink: 0; }
+        .q-content { flex: 1; overflow-x: auto; }
+
+        /* --- TABLE STYLING FOR COMPACT ANSWER KEYS --- */
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; -webkit-overflow-scrolling: touch; }
+        .answer-table { width: 100%; border-collapse: collapse; font-size: clamp(8pt, 1.8vw, 10pt); text-align: center; }
+        .answer-table th, .answer-table td { border: 1px solid var(--border-color); padding: 6px 8px; }
+        .answer-table th { background-color: var(--bg-color); color: var(--primary-color); font-weight: bold; }
+
+        /* --- FOOTER STYLING --- */
+        .footer { 
+            margin-top: 40px; padding-top: 12px; border-top: 2px solid var(--primary-color); 
+            text-align: center; font-size: clamp(8pt, 1.8vw, 9pt); font-weight: bold; color: var(--primary-color); 
+            page-break-before: auto; line-height: 1.6;
+        }
+
+        /* --- WATERMARK & DARK MODE FIX --- */
+        .watermark { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: clamp(250px, 60vw, 500px); opacity: 0.08; z-index: 0; pointer-events: none; 
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .watermark { filter: invert(1); opacity: 0.05; }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            position: fixed; top: 15px; right: 15px; width: 42px; height: 42px;
+            border-radius: 50%; background: var(--container-bg); border: 1px solid var(--border-color); cursor: pointer;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 8px var(--shadow-color); transition: transform 0.2s ease;
+        }
+        .theme-toggle:active { transform: scale(0.92); }
+        html.dark-mode .theme-toggle { filter: invert(1) hue-rotate(180deg); background: #e0e0e0; }
+        .icon-sun, .icon-moon { position: absolute; transition: all 0.4s ease; color: #333; }
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+        /* Responsive Breakpoints */
+        @media screen and (max-width: 600px) {
+            body { padding: 5px; }
+            .container { padding: 15px 10px; border-radius: 0; }
+            .meta-info { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .meta-info span { text-align: left; }
+            .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+        }
+
+        @media print { 
+            body { background-color: #ffffff !important; color: #000000 !important; padding: 0 !important; }
+            .container { box-shadow: none !important; padding: 0 !important; max-width: 100% !important; background-color: transparent !important; }
+            .theme-toggle { display: none !important; }
+            .chapter-header { background-color: var(--bg-color) !important; border-left-color: var(--primary-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .meta-info { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .answer-table th { background-color: var(--bg-color) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+
+    <script>
+        function toggleTheme() { document.documentElement.classList.toggle('dark-mode'); }
+    </script>
+
+    <!-- Watermark -->
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" class="watermark" alt="Watermark">
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="institute-name">Vardaan Learning Institute</h1>
+            <div class="tagline">
+                <a href="https://vardaanlearning.com" target="_blank" rel="noopener">vardaanlearning.com</a> | 9508841336
+            </div>
+            <div class="worksheet-title">Level 1 (Foundation) Mathematics Worksheet</div>
+            <div class="meta-info">
+                <span>Especially designed for: Saurya Anand</span>
+                <span>Class: 6 ICSE</span>
+                <span>Subject: Mathematics</span>
+            </div>
+        </div>
+
+        <!-- SECTION A -->
+        <div class="chapter-header">Section A: Sets (20 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">1.</span><div class="q-content">State whether the collection of all intelligent students in Class 6 is a well-defined set or not.</div></div>
+            <div class="question-item"><span class="q-num">2.</span><div class="q-content">Write the set $A$ of all vowels in the English alphabet using Roster Form.</div></div>
+            <div class="question-item"><span class="q-num">3.</span><div class="q-content">If $B = \{2, 4, 6, 8, 10\}$, find the cardinal number $n(B)$.</div></div>
+            <div class="question-item"><span class="q-num">4.</span><div class="q-content">State whether the set $C = \{x : x \text{ is a counting number less than } 1\}$ is an Empty set or Finite set.</div></div>
+            <div class="question-item"><span class="q-num">5.</span><div class="q-content">Insert the symbol $\in$ or $\notin$: $7$ _____ $\{1, 3, 5, 7, 9\}$.</div></div>
+            <div class="question-item"><span class="q-num">6.</span><div class="q-content">Convert the Roster Form $D = \{1, 2, 3, 4, 5\}$ into Set-Builder Form.</div></div>
+            <div class="question-item"><span class="q-num">7.</span><div class="q-content">Identify if $E = \{x : x \text{ is a multiple of } 5\}$ is a finite or infinite set.</div></div>
+            <div class="question-item"><span class="q-num">8.</span><div class="q-content">Write the set of letters in the word $\text{“MATHEMATICS”}$ in Roster Form.</div></div>
+            <div class="question-item"><span class="q-num">9.</span><div class="q-content">Are the sets $P = \{a, b, c\}$ and $Q = \{1, 2, 3\}$ equivalent sets or equal sets?</div></div>
+            <div class="question-item"><span class="q-num">10.</span><div class="q-content">If $X = \{5, 10, 15\}$ and $Y = \{15, 10, 5\}$, state true or false: $X = Y$.</div></div>
+            <div class="question-item"><span class="q-num">11.</span><div class="q-content">Find the cardinal number $n(S)$ for $S = \{x : x \text{ is a primary color}\}$.</div></div>
+            <div class="question-item"><span class="q-num">12.</span><div class="q-content">Write the set of prime numbers less than $10$ in Roster form.</div></div>
+            <div class="question-item"><span class="q-num">13.</span><div class="q-content">Insert $\in$ or $\notin$: $0$ _____ $\{x : x \text{ is a natural number}\}$.</div></div>
+            <div class="question-item"><span class="q-num">14.</span><div class="q-content">State whether $\{x : x \text{ is a month having 32 days}\}$ is a singleton set or a null set.</div></div>
+            <div class="question-item"><span class="q-num">15.</span><div class="q-content">Express in description method: $M = \{\text{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}\}$.</div></div>
+            <div class="question-item"><span class="q-num">16.</span><div class="q-content">If $A = \{12, 14, 16, 18\}$, write all elements $x$ such that $x > 15$.</div></div>
+            <div class="question-item"><span class="q-num">17.</span><div class="q-content">Are $\{0\}$ and $\varnothing$ same? Explain briefly in one word.</div></div>
+            <div class="question-item"><span class="q-num">18.</span><div class="q-content">Find $n(K)$ where $K = \{x : x \text{ is an even prime number}\}$.</div></div>
+            <div class="question-item"><span class="q-num">19.</span><div class="q-content">Write the cardinal number of an empty set.</div></div>
+            <div class="question-item"><span class="q-num">20.</span><div class="q-content">State whether the collection of all natural numbers between $15$ and $20$ is a finite set.</div></div>
+        </div>
+
+        <!-- SECTION B -->
+        <div class="chapter-header">Section B: Ratio and Proportion (20 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">21.</span><div class="q-content">Express the ratio $15 : 25$ in its simplest form.</div></div>
+            <div class="question-item"><span class="q-num">22.</span><div class="q-content">Find the ratio of $50\text{ paise}$ to $\text{Rs } 2$.</div></div>
+            <div class="question-item"><span class="q-num">23.</span><div class="q-content">Find the ratio of $75\text{ cm}$ to $1.5\text{ m}$.</div></div>
+            <div class="question-item"><span class="q-num">24.</span><div class="q-content">Are the numbers $2, 4, 6, 12$ in proportion?</div></div>
+            <div class="question-item"><span class="q-num">25.</span><div class="q-content">Find the value of $x$ if $3 : 5 :: 9 : x$.</div></div>
+            <div class="question-item"><span class="q-num">26.</span><div class="q-content">Divide $\text{Rs } 120$ between Saurya and Rohan in the ratio $2 : 3$.</div></div>
+            <div class="question-item"><span class="q-num">27.</span><div class="q-content">Write two equivalent ratios for $3 : 4$.</div></div>
+            <div class="question-item"><span class="q-num">28.</span><div class="q-content">If $8$ pens cost $\text{Rs } 96$, find the cost of $1$ pen using the unitary method.</div></div>
+            <div class="question-item"><span class="q-num">29.</span><div class="q-content">Find the cost of $5$ notebooks if $12$ notebooks cost $\text{Rs } 240$.</div></div>
+            <div class="question-item"><span class="q-num">30.</span><div class="q-content">Find the ratio of $40\text{ minutes}$ to $2\text{ hours}$.</div></div>
+            <div class="question-item"><span class="q-num">31.</span><div class="q-content">Which ratio is greater: $3 : 4$ or $5 : 6$?</div></div>
+            <div class="question-item"><span class="q-num">32.</span><div class="q-content">Check if $10, 20, 30, 60$ form a valid proportion.</div></div>
+            <div class="question-item"><span class="q-num">33.</span><div class="q-content">Find the missing term: $4 : 7 = 12 : \text{\_\_\_}$.</div></div>
+            <div class="question-item"><span class="q-num">34.</span><div class="q-content">The ratio of boys to girls in a class is $4 : 5$. If there are $20$ boys, how many girls are there?</div></div>
+            <div class="question-item"><span class="q-num">35.</span><div class="q-content">Express $500\text{ g}$ to $2\text{ kg}$ as a ratio in lowest terms.</div></div>
+            <div class="question-item"><span class="q-num">36.</span><div class="q-content">If $x : 12 = 5 : 6$, determine $x$.</div></div>
+            <div class="question-item"><span class="q-num">37.</span><div class="q-content">Find the ratio of $150\text{ ml}$ to $1\text{ liter}$.</div></div>
+            <div class="question-item"><span class="q-num">38.</span><div class="q-content">A car travels $180\text{ km}$ in $3\text{ hours}$. Find its speed in $\text{km/h}$ using unitary method.</div></div>
+            <div class="question-item"><span class="q-num">39.</span><div class="q-content">If Extreme terms are $4$ and $15$, and Middle terms are $x$ and $6$, find $x$.</div></div>
+            <div class="question-item"><span class="q-num">40.</span><div class="q-content">Divide $35\text{ apples}$ into two parts in the ratio $3 : 4$.</div></div>
+        </div>
+
+        <!-- SECTION C -->
+        <div class="chapter-header">Section C: Construction of Angles & Geometry (20 Questions)</div>
+        <div class="questions-container">
+            <div class="question-item"><span class="q-num">41.</span><div class="q-content">Name the geometrical instrument used to measure the degree measure of an angle.</div></div>
+            <div class="question-item"><span class="q-num">42.</span><div class="q-content">Identify the type of angle whose measure is exactly $90^\circ$.</div></div>
+            <div class="question-item"><span class="q-num">43.</span><div class="q-content">State the steps to construct an angle of $60^\circ$ using a pair of compasses and ruler.</div></div>
+            <div class="question-item"><span class="q-num">44.</span><div class="q-content">What angle is formed by bisecting a $90^\circ$ right angle?</div></div>
+            <div class="question-item"><span class="q-num">45.</span><div class="q-content">Name the angle whose measure is greater than $90^\circ$ but less than $180^\circ$.</div></div>
+            <div class="question-item"><span class="q-num">46.</span><div class="q-content">How many rays are needed to form an angle? Name their common point.</div></div>
+            <div class="question-item"><span class="q-num">47.</span><div class="q-content">Construct a ray $AB$ and draw an angle $\angle ABC = 45^\circ$ using a protractor.</div></div>
+            <div class="question-item"><span class="q-num">48.</span><div class="q-content">If an angle measures $180^\circ$, what special type of angle is it called?</div></div>
+            <div class="question-item"><span class="q-num">49.</span><div class="q-content">Can an angle of $120^\circ$ be constructed by doubling a $60^\circ$ arc with compasses? (Yes/No).</div></div>
+            <div class="question-item"><span class="q-num">50.</span><div class="q-content">What instrument is strictly used along with a ruler to bisect an angle without protractor?</div></div>
+            <div class="question-item"><span class="q-num">51.</span><div class="q-content">Find the measure of the angle supplementary to $70^\circ$.</div></div>
+            <div class="question-item"><span class="q-num">52.</span><div class="q-content">Find the complement of an angle measuring $35^\circ$.</div></div>
+            <div class="question-item"><span class="q-num">53.</span><div class="q-content">Classify an angle measuring $240^\circ$.</div></div>
+            <div class="question-item"><span class="q-num">54.</span><div class="q-content">How many right angles make a complete angle ($360^\circ$)?</div></div>
+            <div class="question-item"><span class="q-num">55.</span><div class="q-content">Draw a line segment $PQ = 6\text{ cm}$ and construct its perpendicular bisector using compasses.</div></div>
+            <div class="question-item"><span class="q-num">56.</span><div class="q-content">What is the angle measure of a complete rotation around a point?</div></div>
+            <div class="question-item"><span class="q-num">57.</span><div class="q-content">True or False: A protractor has two sets of degree readings running in opposite directions.</div></div>
+            <div class="question-item"><span class="q-num">58.</span><div class="q-content">Name the line that divides an angle into two equal halves.</div></div>
+            <div class="question-item"><span class="q-num">59.</span><div class="q-content">Construct an angle of $30^\circ$ by bisecting an angle of $60^\circ$.</div></div>
+            <div class="question-item"><span class="q-num">60.</span><div class="q-content">Write the degree measure of an acute angle formed between the clock hands at 3:00 o'clock.</div></div>
+        </div>
+
+        <!-- SECTION D: ANSWERS -->
+        <div class="chapter-header">Section D: Concise Answer Key</div>
+        <div class="table-responsive">
+            <table class="answer-table">
+                <thead>
+                    <tr>
+                        <th>Q#</th>
+                        <th>Section A (Sets)</th>
+                        <th>Section B (Ratio & Prop.)</th>
+                        <th>Section C (Construction)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1 / 21 / 41</td><td>Not well-defined</td><td>$3 : 5$</td><td>Protractor</td></tr>
+                    <tr><td>2 / 22 / 42</td><td>$\{a, e, i, o, u\}$</td><td>$1 : 4$</td><td>Right Angle</td></tr>
+                    <tr><td>3 / 23 / 43</td><td>$n(B) = 5$</td><td>$1 : 2$</td><td>Draw arc at $60^\circ$</td></tr>
+                    <tr><td>4 / 24 / 44</td><td>Empty set ($\varnothing$)</td><td>Yes ($2 \times 12 = 4 \times 6$)</td><td>$45^\circ$</td></tr>
+                    <tr><td>5 / 25 / 45</td><td>$\in$</td><td>$x = 15$</td><td>Obtuse Angle</td></tr>
+                    <tr><td>6 / 26 / 46</td><td>$\{x : x \in \mathbb{N}, x \le 5\}$</td><td>Saurya: $\text{Rs } 48$, Rohan: $\text{Rs } 72$</td><td>2 rays, Vertex</td></tr>
+                    <tr><td>7 / 27 / 47</td><td>Infinite set</td><td>$6 : 8$, $9 : 12$</td><td>Geometrical Construction</td></tr>
+                    <tr><td>8 / 28 / 48</td><td>$\{M, A, T, H, E, I, C, S\}$</td><td>$\text{Rs } 12$ per pen</td><td>Straight Angle</td></tr>
+                    <tr><td>9 / 29 / 49</td><td>Equivalent sets</td><td>$\text{Rs } 100$</td><td>Yes</td></tr>
+                    <tr><td>10 / 30 / 50</td><td>True</td><td>$1 : 3$</td><td>Compasses</td></tr>
+                    <tr><td>11 / 31 / 51</td><td>$n(S) = 3$</td><td>$5 : 6$ is greater</td><td>$110^\circ$</td></tr>
+                    <tr><td>12 / 32 / 52</td><td>$\{2, 3, 5, 7\}$</td><td>Yes ($10 \times 60 = 20 \times 30$)</td><td>$55^\circ$</td></tr>
+                    <tr><td>13 / 33 / 53</td><td>$\notin$</td><td>$21$</td><td>Reflex Angle</td></tr>
+                    <tr><td>14 / 34 / 54</td><td>Null set</td><td>$25\text{ girls}$</td><td>$4$ right angles</td></tr>
+                    <tr><td>15 / 35 / 55</td><td>Set of days of the week</td><td>$1 : 4$</td><td>Geometrical Line Construction</td></tr>
+                    <tr><td>16 / 36 / 56</td><td>$\{16, 18\}$</td><td>$x = 10$</td><td>$360^\circ$</td></tr>
+                    <tr><td>17 / 37 / 57</td><td>No ($\{0\}$ has cardinal 1)</td><td>$3 : 20$</td><td>True</td></tr>
+                    <tr><td>18 / 38 / 58</td><td>$n(K) = 1$</td><td>$60\text{ km/h}$</td><td>Angle Bisector</td></tr>
+                    <tr><td>19 / 39 / 59</td><td>$0$</td><td>$x = 10$</td><td>Bisect $60^\circ$ Arc</td></tr>
+                    <tr><td>20 / 40 / 60</td><td>Yes (Finite)</td><td>$15$ and $20$ apples</td><td>$90^\circ$</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            Created by Team Vardaan | Powered by Vardaan Comet<br>
+            Vardaan Learning Institute &copy; 2026 - All Rights Reserved
+        </div>
+    </div>
+
+</body>
+</html>

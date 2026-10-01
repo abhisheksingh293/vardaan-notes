@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Local Self-Government in Rural Areas - Civics - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE DESIGN (Mobile, Tablet, Laptop) --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .paper-sheet {
+                padding: 5mm;
+            }
+            .institute-name {
+                font-size: 1.3rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer is shown as per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info & Footer in Print */
+            .contact-info,
+            .branding-footer {
+                display: flex !important;
+            }
+            
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print (As requested) */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Civics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Local Self-Government In Rural Areas</h1>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Panchayat</strong> is derived from the Sanskrit words <em>pancha</em> meaning "five" and <em>ayat</em> meaning "assembly". Historically, a panchayat was a council of five village elders who settled disputes. Today, it forms the basis of rural self-governance in India.</p>
+        </div>
+
+        <h2>1. Need for Local Self-Government</h2>
+        <p>India is a massive country with a population of over one billion people, divided into 28 states. While the Central Government sits in New Delhi and handles national issues (like defense and foreign policy), it cannot fully understand or manage every local issue. This is why <strong>local self-governments</strong> were created.</p>
+        
+        <p><strong>Advantages of Local Self-Government:</strong></p>
+        <ul>
+            <li><strong>Local Knowledge:</strong> Local representatives understand their own problems best (e.g., where a well is needed or which roads require repair).</li>
+            <li><strong>Active Participation:</strong> Villagers participate in their own development by helping with tasks like cleaning ponds, building canals, and making decisions.</li>
+            <li><strong>Leadership Training:</strong> Local bodies train people in administration, preparing them for higher offices.</li>
+            <li><strong>Reduced Burden:</strong> They drastically reduce the workload of the state and central governments by addressing local issues efficiently and quickly.</li>
+        </ul>
+
+        <h2>2. The Panchayati Raj System</h2>
+        <p>After India's independence, leaders like Mahatma Gandhi strongly advocated for the revival of panchayats to involve the common man in governance. Based on the recommendations of the <strong>Balwant Rai Mehta Committee (1956)</strong>, India adopted a clear three-tier system:</p>
+        <ul>
+            <li><strong>Village Level:</strong> Gram Panchayat</li>
+            <li><strong>Block Level:</strong> Panchayat Samiti</li>
+            <li><strong>District Level:</strong> Zila Parishad</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>In 1992, the Constitution of India made it mandatory to strengthen panchayats by passing two critical Acts. These Acts ensured regular elections and reserved <strong>one-third of all seats for women</strong>, as well as proportionate seats for <strong>Scheduled Castes (SC)</strong> and <strong>Scheduled Tribes (ST)</strong>.</p>
+        </div>
+
+        <h2>3. The Village Level</h2>
+        
+        <h3>The Gram Sabha</h3>
+        <p>The Gram Sabha acts as the general assembly of the village. It meets at least twice a year to discuss village development.</p>
+        <ul>
+            <li><strong>Membership:</strong> All adult residents of the village who are <strong>18 years and above</strong> are automatic members.</li>
+            <li><strong>Role:</strong> It elects the members of the Gram Panchayat and actively supervises their day-to-day functioning.</li>
+            <li><strong>Accountability:</strong> It reviews the Panchayat's accounts and has the power to remove non-performing members through a <strong>vote of no confidence</strong>.</li>
+        </ul>
+
+        <h3>The Gram Panchayat</h3>
+        <p>The Gram Panchayat is the executive committee of the village, elected by the Gram Sabha for a term of <strong>five years</strong>. It usually consists of 5 to 30 members depending on the village population.</p>
+        <ul>
+            <li><strong>Pradhan / Sarpanch:</strong> The elected head who calls for and leads the Panchayat meetings. The Up-Pradhan acts as the deputy in their absence.</li>
+            <li><strong>Panchayat Secretary (Sevak):</strong> A permanent, salaried government employee who maintains official records and keeps account of the expenditures.</li>
+        </ul>
+
+        <p><strong>Key Functions of the Gram Panchayat:</strong></p>
+        <ul>
+            <li><strong>Civic Amenities:</strong> Supplying clean drinking water, running primary health centers, maintaining public wells, tanks, and tubewells.</li>
+            <li><strong>Agricultural Support:</strong> Aiding farmers by supplying quality seeds and fertilizers, treating cattle, and managing irrigation facilities.</li>
+            <li><strong>Administrative Duties:</strong> Keeping records of births and deaths, supervising primary schools, and reporting complaints to higher authorities.</li>
+            <li><strong>Optional Functions (If funds permit):</strong> Organising fairs, running libraries, and managing local village markets.</li>
+        </ul>
+
+        <p><strong>Sources of Income:</strong> Taxes on houses, shops, fairs, and markets; fees collected from the sale and purchase of cattle; and crucial <strong>grants and loans</strong> from the State Government.</p>
+
+        <h3>The Nyaya Panchayat</h3>
+        <p>The Nyaya Panchayat acts as a local village court. Usually, one Nyaya Panchayat covers three or four villages.</p>
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p>The primary purpose of the <strong>Nyaya Panchayat</strong> is to provide quick and inexpensive justice. It only hears minor civil and criminal cases. If a villager is unhappy with the verdict, they can appeal to higher authorities like the District Court or Sessions Court.</p>
+        </div>
+
+        <h2>4. The Block Level (Panchayat Samiti)</h2>
+        <p>The second tier of the Panchayati Raj system is the <strong>Panchayat Samiti</strong> (or Block Samiti). A block is formed by grouping together several neighboring villages (typically around 100 villages).</p>
+        <ul>
+            <li><strong>Composition:</strong> It is not directly elected by the people. Members include the Sarpanchs of all villages in the block, local MPs and MLAs, and specially reserved representatives for women, SC, and ST.</li>
+            <li><strong>Leadership:</strong> The members elect a <strong>Block Pramukh</strong> (Chairperson) and a Vice-Chairperson for a five-year term.</li>
+            <li><strong>Executive Officer:</strong> The State Government appoints a <strong>Block Development Officer (BDO)</strong> to oversee the executive functioning of the block.</li>
+        </ul>
+        <p><strong>Functions:</strong> They execute development programs across villages in the block, promote small-scale industries, encourage literacy and education, and obtain funds from the state government for block-level projects.</p>
+
+        <h2>5. The District Level (Zila Parishad)</h2>
+        <p>The <strong>Zila Parishad</strong> is the third and highest tier of the Panchayati Raj. It supervises and coordinates the activities of the Gram Panchayats and Block Samitis under its jurisdiction.</p>
+        <ul>
+            <li><strong>Composition:</strong> Consists of the Chairpersons of all Block Samitis in the district, local MPs, MLAs, MLCs, and representatives from cooperative societies.</li>
+            <li><strong>Administration:</strong> The government appoints a <strong>Deputy Commissioner</strong> to look after the Zila Parishad's overall working, along with a permanent Secretary to maintain records.</li>
+        </ul>
+        <p><strong>Functions:</strong> The Zila Parishad prepares a comprehensive development plan for the entire district. It implements the <strong>Five Year Plans</strong> at the district level, coordinates state grants among block samitis, and takes steps to increase agricultural yields.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

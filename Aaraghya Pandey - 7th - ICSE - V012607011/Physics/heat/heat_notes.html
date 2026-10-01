@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Heat - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE DESIGN (Mobile & Tablet) --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet { padding: 15mm 10mm; }
+            .institute-name { font-size: 1.6rem; }
+            .system-name { font-size: 0.9rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; }
+            p, li { font-size: 1rem; }
+        }
+
+        @media screen and (max-width: 480px) {
+            .paper-sheet { padding: 10mm 5mm; }
+            .institute-name { font-size: 1.4rem; }
+            h1 { font-size: 1.5rem; }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle (Web Footer is kept visible per request) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            .branding-footer {
+                display: block !important; 
+                page-break-inside: avoid;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Physics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Heat</h1>
+        
+        <h2>1. Introduction to Heat</h2>
+        <p>In our everyday life, we frequently use the terms hot and cold. When we stand in front of sun rays or sit near a fire, we feel hot. If we touch a lump of ice, we feel cold. <strong>Heat</strong> is a form of energy that flows from a body at a higher temperature to a body at a lower temperature.</p>
+        
+        <p>As heat is a form of energy, it can be transformed. For example, rubbing our hands converts kinetic energy into heat energy. In electric appliances (like a geyser or heater), electrical energy is transformed into heat energy.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Heat vs. Temperature:</strong></p>
+            <ul>
+                <li><strong>Heat:</strong> The form of energy which flows due to a temperature difference. It is the combined energy of all molecules moving inside a body.</li>
+                <li><strong>Temperature:</strong> The measurement of the amount of heat present in an object. It represents the degree of hotness or coldness of a body. Temperature determines the direction of the flow of heat.</li>
+            </ul>
+        </div>
+
+        <h3>Units of Heat</h3>
+        <p>Since heat is a form of energy, its Standard International (SI) unit is the <strong>Joule (J)</strong>.</p>
+        <ul>
+            <li><strong>Calorie (cal):</strong> A commonly used unit of heat energy. One calorie is the amount of heat energy absorbed or released when the temperature of one gram of water is raised or lowered by 1°C.</li>
+            <li><strong>Kilocalorie (kcal):</strong> A multiple of a calorie. 1 kcal = 1000 calories.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Relation between Joule and Calorie:</strong><br>
+            Experimentally, it has been determined that:<br>
+            <strong>1 calorie = 4.186 J</strong> (approximately 4.2 J).<br>
+            Therefore, 4.2 J of heat can raise the temperature of 1 g of water by 1°C.</p>
+        </div>
+
+        <h2>2. Temperature and Thermometers</h2>
+        <p>Ordinarily, we distinguish hot bodies from cold ones by our sense of touch, but it is not reliable or safe for extreme temperatures. A device used for accurately measuring the temperature of different objects is called a <strong>thermometer</strong>.</p>
+        
+        <h3>Types of Thermometers</h3>
+        <ul>
+            <li><strong>Laboratory Thermometer:</strong> Used for general laboratory purposes. Mercury is usually preferred as it expands uniformly, does not stick to glass, and is a good conductor of heat.</li>
+            <li><strong>Clinical Thermometer:</strong> Specifically designed to measure human body temperature. The normal temperature of a healthy person is <strong>98.6°F</strong> (or 37°C). It has a slight kink near the bulb to prevent the mercury level from falling on its own once taken out of the mouth.</li>
+        </ul>
+
+        <h3>Standard Points on a Thermometer</h3>
+        <p>To create a thermometer scale, two fixed standard points are chosen:</p>
+        <ol>
+            <li><strong>Lower Fixed Point (Ice Point):</strong> The melting point of pure ice at standard atmospheric pressure. (0°C on the Celsius scale).</li>
+            <li><strong>Upper Fixed Point (Steam Point):</strong> The boiling point of pure water at standard atmospheric pressure. (100°C on the Celsius scale).</li>
+        </ol>
+
+        <h3>Temperature Scales & Interconversion</h3>
+        <p>There are three common thermometric scales for measuring temperature:</p>
+        <ul>
+            <li><strong>Celsius Scale (°C):</strong> Lower point is 0°C, upper point is 100°C. Divided into 100 equal parts.</li>
+            <li><strong>Fahrenheit Scale (°F):</strong> Lower point is 32°F, upper point is 212°F. Divided into 180 equal parts.</li>
+            <li><strong>Kelvin Scale (K):</strong> The SI unit of temperature. Lower point is 273 K, upper point is 373 K. Divided into 100 equal parts.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Interconversion Formulas:</strong></p>
+            <ul>
+                <li>To convert Celsius to Fahrenheit: <strong>°F = (°C × 9/5) + 32</strong></li>
+                <li>To convert Fahrenheit to Celsius: <strong>°C = (°F - 32) × 5/9</strong></li>
+                <li>To convert Celsius to Kelvin: <strong>K = °C + 273</strong></li>
+            </ul>
+        </div>
+
+        <h2>3. Effects of Heat</h2>
+        <p>Heat energy causes a number of distinct effects on matter. Some important effects include:</p>
+
+        <h3>1. Change in Temperature</h3>
+        <p>Whenever a substance is supplied with heat energy, its temperature rises. If a hot substance loses heat, its temperature falls. The extent of change depends on the amount of heat supplied, the mass of the object, and the nature of the material.</p>
+
+        <h3>2. Thermal Expansion and Contraction (Change in Size)</h3>
+        <p>The process of expansion of a substance upon supplying heat energy is called <strong>thermal expansion</strong>. Most substances expand on heating and contract on cooling. Thermal expansion is categorized into three types:</p>
+        <ul>
+            <li><strong>Linear Expansion:</strong> The increase in the length of a solid when heated.</li>
+            <li><strong>Superficial Expansion:</strong> The increase in the area of a solid when heated.</li>
+            <li><strong>Cubical Expansion:</strong> The increase in the volume of a substance (solid, liquid, or gas) when heated.</li>
+        </ul>
+        <p><em>Example:</em> Railway tracks have small gaps left between joints to allow for thermal expansion during the summer without deforming the track.</p>
+
+        <h3>3. Change in State</h3>
+        <p>Heat can bring about a change in the physical state of a substance:</p>
+        <ul>
+            <li><strong>Melting (Fusion):</strong> Change from a solid to a liquid state upon absorbing heat at a fixed temperature (melting point).</li>
+            <li><strong>Boiling (Vaporisation):</strong> Change from a liquid to a gaseous state upon absorbing heat at a fixed temperature (boiling point).</li>
+            <li><strong>Freezing (Solidification):</strong> Change from a liquid to a solid state upon releasing heat.</li>
+            <li><strong>Condensation:</strong> Change from a gaseous state to a liquid state upon releasing heat.</li>
+            <li><strong>Sublimation:</strong> The direct conversion of a solid into a gas without passing through the liquid state (e.g., Camphor, Naphthalene).</li>
+        </ul>
+
+        <h3>4. Chemical Change</h3>
+        <p>Heat can break the bonds between elements and initiate chemical reactions. For instance, burning a substance in the presence of oxygen (combustion) releases a large amount of heat and light.</p>
+
+        <h2>4. Transfer of Heat</h2>
+        <p>Whenever two bodies with different temperatures come in contact, heat energy flows from the hotter body to the colder body. The flow continues until thermal equilibrium is reached. Heat can be transferred in three distinct ways:</p>
+
+        <h3>I. Conduction</h3>
+        <p><strong>Conduction</strong> is the process of transfer of heat from the hotter end to the colder end of a solid without actual visible movement of the material particles.</p>
+        <ul>
+            <li><strong>Conductors:</strong> Materials that allow heat energy to pass easily through them (e.g., Copper, Silver, Aluminium, Iron). Used for making cooking utensils.</li>
+            <li><strong>Insulators:</strong> Materials that do not allow heat energy to pass easily through them (e.g., Wood, Plastic, Air, Glass, Pure Water). Handles of cooking utensils are made of insulators. Air trapped in woollen clothes acts as an insulator, keeping us warm in winter.</li>
+        </ul>
+
+        <h3>II. Convection</h3>
+        <p><strong>Convection</strong> is the mode of transfer of heat in fluids (liquids and gases) wherein the molecules actually move from the hotter part of the fluid to the colder part. The continuous cyclical movement of these molecules is called a <strong>convection current</strong>.</p>
+        <p><em>Applications of Convection:</em></p>
+        <ul>
+            <li><strong>Sea Breeze:</strong> During the daytime, land heats up faster than water. Hot air above the land rises, and cooler air from the sea rushes in to take its place.</li>
+            <li><strong>Land Breeze:</strong> At night, land cools down faster than water. Hot air above the sea rises, and cooler air from the land blows towards the sea.</li>
+            <li><strong>Ventilation:</strong> Ventilators are placed high on walls because warm, exhaled air is lighter and rises, escaping through the top, while fresh, cooler air enters through windows and doors.</li>
+        </ul>
+
+        <h3>III. Radiation</h3>
+        <p><strong>Radiation</strong> is the process of heat transfer from a hot body to a cold body directly, without needing any material medium in between. Heat from the Sun reaches Earth via radiation.</p>
+        <ul>
+            <li>It is the fastest mode of heat transfer (travels at the speed of light: 3 × 10<sup>8</sup> m/s).</li>
+            <li><strong>Black & Dark Bodies:</strong> Good absorbers and good radiators of radiant heat. (This is why cooking vessels have blackened bottoms).</li>
+            <li><strong>White & Shining Bodies:</strong> Poor absorbers and poor radiators of radiant heat. (This is why we wear light-coloured clothes in the summer).</li>
+        </ul>
+
+        <h2>5. Thermos Flask (Dewar Flask)</h2>
+        <p>A thermos flask is a specially designed insulated flask that keeps a hot liquid hot and a cold liquid cold for several hours. It prevents heat loss through all three modes of heat transfer:</p>
+        <ul>
+            <li><strong>Vacuum between double walls:</strong> Minimizes heat loss by both <em>conduction</em> and <em>convection</em>, as neither can occur in a vacuum.</li>
+            <li><strong>Silvered inner walls:</strong> Act as reflectors to minimize heat loss by <em>radiation</em>.</li>
+            <li><strong>Plastic/Cork Stopper:</strong> Being an insulator, it minimizes heat loss by <em>conduction</em> from the mouth of the flask.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
