@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Language of Chemistry - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive padding for mobile & tablets */
+        @media (max-width: 768px) {
+            .paper-sheet { padding: 10mm; }
+            .institute-name { font-size: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            .institute-name { font-size: 1.5rem; }
+            h1 { font-size: 1.5rem; }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--example-bg);
+            color: var(--text-main);
+        }
+
+        th, td {
+            border: 1px solid var(--meta-text);
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+            font-weight: bold;
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer is explicitly shown per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 ICSE Chemistry • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>LANGUAGE OF CHEMISTRY</h1>
+
+        <h2>1. Introduction</h2>
+        <p>Chemical changes are represented by chemical reactions. Symbols and formulas help make learning chemical reactions easier and faster.</p>
+
+        <h2>2. Symbol of Elements</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            A <strong>Symbol</strong> is the short form or abbreviation used to represent an element.
+        </div>
+        <p>The symbol of an element represents one atom of that element.</p>
+
+        <h3>Representation of a Symbol</h3>
+        <ul>
+            <li>Usually, the first letter of the English name of the element is taken as its symbol. (e.g., Hydrogen = H, Carbon = C).</li>
+            <li>If two or more elements have the same first letter, then the first letter along with another significant letter of the name is used. The first letter is written in capital, and the second letter is written in small. (e.g., Calcium = Ca, Chlorine = Cl).</li>
+            <li>Some symbols are derived from the Latin names of the elements.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Examples of Symbols from Latin Names:</strong><br>
+            Sodium (Natrium) = Na<br>
+            Potassium (Kalium) = K<br>
+            Iron (Ferrum) = Fe<br>
+            Copper (Cuprum) = Cu<br>
+            Silver (Argentum) = Ag<br>
+            Gold (Aurum) = Au
+        </div>
+
+        <h2>3. Valency</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Valency</strong> is the combining capacity of an element. It is the number of electrons an atom can lose, gain, or share to attain a stable electronic configuration.
+        </div>
+        <ul>
+            <li>The valency of hydrogen is taken as 1. The valency of other elements is determined by comparing their combining capacity with hydrogen.</li>
+            <li>For example, in water (H<sub>2</sub>O), one atom of oxygen combines with two atoms of hydrogen, so the valency of oxygen is 2.</li>
+        </ul>
+
+        <h3>Variable Valency</h3>
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            Some elements exhibit more than one valency. This is called <strong>variable valency</strong>.
+        </div>
+        <p>When naming compounds with variable valencies:</p>
+        <ul>
+            <li>The suffix <strong>"-ous"</strong> is used for the lower valency.</li>
+            <li>The suffix <strong>"-ic"</strong> is used for the higher valency.</li>
+            <li>Alternatively, Roman numerals (I, II, III) are written in brackets after the name of the metal to indicate its valency (e.g., Iron(II) chloride or Iron(III) chloride).</li>
+        </ul>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Examples of Variable Valency:</strong><br>
+            Copper (Cu): Cu<sup>+1</sup> (Cuprous / Copper(I)), Cu<sup>+2</sup> (Cupric / Copper(II))<br>
+            Iron (Fe): Fe<sup>+2</sup> (Ferrous / Iron(II)), Fe<sup>+3</sup> (Ferric / Iron(III))
+        </div>
+
+        <h2>4. Radicals</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            A <strong>Radical</strong> is an atom or a group of atoms of different elements that behaves as a single unit with a positive or negative charge.
+        </div>
+        
+        <h3>Types of Radicals</h3>
+        <ol>
+            <li><strong>Acid Radicals (Negative Radicals):</strong> Formed when an acid loses its hydrogen ions (H<sup>+</sup>). They carry a negative charge. Examples: Chloride (Cl<sup>-</sup>), Sulphate (SO<sub>4</sub><sup>2-</sup>), Carbonate (CO<sub>3</sub><sup>2-</sup>).</li>
+            <li><strong>Basic Radicals (Positive Radicals):</strong> Formed when a base loses its hydroxide ions (OH<sup>-</sup>). They carry a positive charge. Most metallic ions are basic radicals. Example: Ammonium (NH<sub>4</sub><sup>+</sup>), Sodium (Na<sup>+</sup>).</li>
+        </ol>
+
+        <h2>5. Chemical Formula</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            A <strong>Chemical Formula</strong> is the symbolic representation of the composition of a molecule of a substance.
+        </div>
+        <p>It indicates the elements present in the compound and the number of atoms of each element.</p>
+
+        <h3>Writing the Chemical Formula (Criss-Cross Method)</h3>
+        <ol>
+            <li>Write the symbols of the positive radical (metal) on the left and the negative radical (non-metal/acid radical) on the right.</li>
+            <li>Write the valency of each radical at the top of its symbol.</li>
+            <li>Divide the valencies by their highest common factor (if any) to get simple whole numbers.</li>
+            <li>Interchange the valencies (criss-cross) and write them as subscripts to the lower right of the respective symbols. (Valency '1' is omitted).</li>
+            <li>If a polyatomic radical needs a subscript greater than 1, enclose it in brackets.</li>
+        </ol>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Example: Formula of Magnesium Chloride</strong><br>
+            Symbols: Mg (left), Cl (right)<br>
+            Valencies: Mg<sup>2+</sup>, Cl<sup>1-</sup><br>
+            Criss-cross: Mg gets subscript 1, Cl gets subscript 2.<br>
+            Formula: <strong>MgCl<sub>2</sub></strong>
+        </div>
+
+        <h2>6. Chemical Equation</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            A <strong>Chemical Equation</strong> is the shorthand representation of a chemical reaction using the symbols and formulae of the reactants and products.
+        </div>
+        <ul>
+            <li><strong>Reactants:</strong> The substances that take part in a chemical reaction (written on the left side).</li>
+            <li><strong>Products:</strong> The new substances formed as a result of the reaction (written on the right side).</li>
+            <li>An arrow (→) points from reactants to products, showing the direction of the reaction.</li>
+        </ul>
+
+        <h3>Writing a Chemical Equation</h3>
+        <ol>
+            <li><strong>Word Equation:</strong> Write the reaction in words (e.g., Magnesium + Oxygen → Magnesium oxide).</li>
+            <li><strong>Skeletal Equation:</strong> Replace words with symbols and formulae (e.g., Mg + O<sub>2</sub> → MgO).</li>
+            <li><strong>Balanced Equation:</strong> Balance the number of atoms of each element on both sides.</li>
+        </ol>
+
+        <h2>7. Balancing of Chemical Equations</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            A <strong>Balanced Chemical Equation</strong> has an equal number of atoms of each element on both the reactant and product sides.
+        </div>
+        <p>Equations must be balanced to satisfy the <strong>Law of Conservation of Mass</strong>, which states that matter can neither be created nor destroyed in a chemical reaction.</p>
+
+        <h3>Steps to Balance an Equation (Hit and Trial Method)</h3>
+        <ul>
+            <li>Count the number of atoms of each element on both sides.</li>
+            <li>Start balancing the element that appears least often.</li>
+            <li>Multiply the formula containing that element by a suitable coefficient to make the number of atoms equal on both sides.</li>
+            <li>Repeat the process for other elements until all atoms are balanced.</li>
+            <li><strong>Note:</strong> Never change the subscripts in a chemical formula while balancing.</li>
+        </ul>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Example of Balancing:</strong><br>
+            Unbalanced: H<sub>2</sub> + O<sub>2</sub> → H<sub>2</sub>O (2 O atoms on left, 1 on right)<br>
+            Balanced: <strong>2</strong>H<sub>2</sub> + O<sub>2</sub> → <strong>2</strong>H<sub>2</sub>O (4 H and 2 O on both sides)
+        </div>
+
+        <h2>8. Information Conveyed by a Chemical Equation</h2>
+        <p>A balanced chemical equation tells us:</p>
+        <ul>
+            <li>Which substances are participating in the reaction (reactants) and what is formed (products).</li>
+            <li>The symbols and formulae of all reactants and products.</li>
+            <li>The number of molecules/atoms of each substance involved.</li>
+            <li>The physical states of reactants and products can be indicated using symbols: (s) for solid, (l) for liquid, (g) for gas, and (aq) for aqueous solution.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Limitations of a Chemical Equation:</strong><br>
+            It does not normally tell us the conditions required (temperature, pressure, catalyst), the speed of the reaction, or whether heat is absorbed or evolved (unless specifically mentioned over the arrow or alongside the products).
+        </div>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

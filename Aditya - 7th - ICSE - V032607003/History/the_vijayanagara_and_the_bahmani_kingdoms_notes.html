@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>The Vijayanagara and the Bahmani Kingdoms - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Mobile & Tablet Responsiveness Adjustments */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm; /* Reduced padding for smaller screens */
+            }
+            .institute-name {
+                font-size: 1.8rem !important;
+            }
+            h1 {
+                font-size: 1.8rem !important;
+            }
+            h2 {
+                font-size: 1.4rem !important;
+            }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+        
+        /* Table styles */
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            overflow-x: auto;
+            display: block;
+        }
+        .content-table th, .content-table td {
+            border: 1px solid var(--toggle-border);
+            padding: 10px;
+            text-align: left;
+        }
+        .content-table th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            .branding-footer {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 History • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>THE VIJAYANAGARA AND THE BAHMANI KINGDOMS</h1>
+        
+        <p>The Delhi Sultanate reached its peak of territorial expansion during the reign of <strong>Muhammad-bin-Tughlaq</strong>. However, internal weaknesses and external invasions led to its decline, paving the way for the rise of powerful regional kingdoms, most notably in South India.</p>
+
+        <h2>1. Decline of the Delhi Sultanate</h2>
+        <p>The disintegration of the Turko-Afghan empire started during the reign of the Tughlaqs. The primary reasons for this decline include:</p>
+        
+        <ul>
+            <li><strong>Absence of Popular Support:</strong> The empire relied on military strength, not goodwill. Weakening military power led generals to revolt.</li>
+            <li><strong>Inherent Weaknesses:</strong> Built on the power of the sword, it lacked the foundation of public goodwill.</li>
+            <li><strong>Absence of Strong Rulers:</strong> After Firoz Shah Tughlaq, a succession of weak and inefficient kings hastened the decline.</li>
+            <li><strong>Unenlightened Policy:</strong> Orthodox and intolerant views alienated the Hindu majority, depriving the government of moral support.</li>
+            <li><strong>Mistakes of Muhammad-bin-Tughlaq:</strong> His foolish projects plunged the country into chaos.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Invasion of Timur:</strong> The final blow that shattered the disintegrating Turko-Afghan empire was the devastating invasion by Timur.
+        </div>
+
+        <h2>2. Rise of Regional Kingdoms</h2>
+        <p>As the Delhi Sultanate weakened, several independent regional kingdoms emerged across the subcontinent:</p>
+        <ul>
+            <li><strong>Malwa:</strong> Dilawar Khan Ghori declared independence in 1401-1402. Hoshang Shah was a powerful later ruler.</li>
+            <li><strong>Jaunpur:</strong> Malik Sarwar established the Sharqi dynasty. It was eventually annexed by Bahlul Lodi in 1483-1484.</li>
+            <li><strong>Bengal:</strong> Ruled by the Ilyas Shahi and Husain Shahi dynasties. Later conquered by Sher Shah Suri and Humayun.</li>
+            <li><strong>Kashmir:</strong> Zain-ul-Abidin was a liberal, enlightened ruler, often called the "Akbar of Kashmir." Akbar annexed it in 1586.</li>
+            <li><strong>Mewar (Rajput State):</strong> Rana Kumbha and Rana Sanga were powerful rulers. Rana Sanga was later defeated by Babur at the Battle of Khanua.</li>
+            <li><strong>Marwar (Rajput State):</strong> Ruled by the Rathore dynasty. Rao Jodha founded Jodhpur; Maldeva was a significant ruler.</li>
+            <li><strong>Gujarat:</strong> Zafar Khan established an independent kingdom (Muzaffar Shah). Notable rulers include Ahmad Shah and Mahmud Begarha. Annexed by Akbar.</li>
+            <li><strong>Khandesh:</strong> Malik Raja declared independence from the Tughlaqs. It was later annexed by Akbar.</li>
+        </ul>
+
+        <h2>3. Rise of the Vijayanagara Kingdom</h2>
+        <p>In the 14th century, two powerful kingdoms arose in South India: the Bahmani Sultanate and the Vijayanagara Empire.</p>
+
+        <p>The Vijayanagara kingdom was established in <strong>1336</strong> by two brothers, <strong>Harihara and Bukka</strong>, who had previously served in Muhammad-bin-Tughlaq's army. They founded their capital, <strong>Vijayanagara</strong> (City of Victory), on the banks of the river Tungabhadra. Their dynasty was known as the <strong>Sangama dynasty</strong>.</p>
+        
+        <p>Harihara I took the title of <em>chief</em> rather than <em>king</em> initially to avoid angering Muslim Sultans. He was succeeded by Bukka. They constantly battled neighboring kingdoms like the Hoysalas and the Bahmani rulers.</p>
+
+        <h3>Dynasties in Vijayanagara (1336 - 1565+)</h3>
+        <ul>
+            <li><strong>Sangama:</strong> In power till 1485.</li>
+            <li><strong>Saluva:</strong> In power till 1505.</li>
+            <li><strong>Tuluva:</strong> In power till 1565.</li>
+            <li><strong>Aravidu:</strong> Ruled till the seventeenth century.</li>
+        </ul>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Many foreign travellers, including Nicolo Conti, Fernao Nuniz, Domingo Paes, Duarte Barbosa, and Abdur Razzaq, visited Vijayanagara and wrote extensively about its immense magnificence and wealth.
+        </div>
+
+        <h2>4. Krishnadeva Raya (1509-1530): A Case Study</h2>
+        <p><strong>Krishnadeva Raya</strong> was the greatest ruler of the Vijayanagara Empire, belonging to the <strong>Tuluva dynasty</strong>. He was a brilliant commander and efficient administrator.</p>
+
+        <ul>
+            <li><strong>Military Campaigns:</strong> He shattered the Adil Shahi forces of Bijapur, attacked Gulbarga, and defeated independent kingdoms that arose from the Bahmani ruins. He took the title <em>Yavanarajyasthapanacharya</em>.</li>
+            <li><strong>Administration:</strong> Maintained strict law and order, promoted agriculture by building tanks and dams, and encouraged foreign trade with the Portuguese, English, and Dutch.</li>
+            <li><strong>Literature:</strong> A great scholar, he wrote the Telugu poem <em>Amuktamalyada</em> and the Sanskrit play <em>Jambavati Kalyana</em>. His court featured eight eminent Telugu scholars known as the <strong>Ashtadiggajas</strong> (one of whom was Tenali Rama).</li>
+            <li><strong>Architecture:</strong> Founded a township called Nagalapuram. Built the famous <strong>Vittalaswami temple</strong> and <strong>Hazara Rama temple</strong> in Hampi. Added impressive <em>gopurams</em> to many South Indian temples, including Tirupati.</li>
+        </ul>
+
+        <h2>5. Achievements of the Vijayanagara Empire</h2>
+
+        <h3>Administration & Revenue</h3>
+        <ul>
+            <li><strong>Centralized System:</strong> The king was supreme, assisted by a council of ministers (<em>mantriparishad</em>) and a secretariat (<em>sachivalaya</em>).</li>
+            <li><strong>Provincial Division:</strong> Empire divided into <strong>Mandalams</strong> (provinces ruled by royal princes), <em>Rajyas</em>, <em>Nadu</em> (districts), and <em>Grama</em> (villages).</li>
+            <li><strong>Nayankar System:</strong> A feudal system where administrative posts became hereditary, and the king grew dependent on feudal lords.</li>
+            <li><strong>Revenue:</strong> Land revenue was the main source (1/6 to 1/8 of produce). Taxes on trade, crafts, property, and even marriages were imposed. (Widow remarriage was tax-free to encourage it).</li>
+        </ul>
+
+        <h3>Art, Architecture & Literature</h3>
+        <p>The rulers produced a new architectural style called the <strong>Vijayanagara style</strong> or <strong>Dravida style</strong>.</p>
+        <ul>
+            <li><strong>Features:</strong> Elaborately sculptured pillars (often depicting horses), the <em>Kalyana Mandapam</em> (open pavilion), and massive <em>Raya Gopurams</em> (towers).</li>
+            <li><strong>Capital:</strong> Hampi was the magnificent capital, boasting temples where the central deity was installed in the <em>Garbhagriha</em> (sanctum).</li>
+            <li><strong>Literature:</strong> Patronized works in Sanskrit, Telugu, Kannada, and Tamil. Krishnadeva Raya was known as <em>Andhra Bhoja</em>.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Decline of Vijayanagara:</strong> After Krishnadeva Raya's death, the empire weakened. In <strong>1565</strong>, at the <strong>Battle of Talikota</strong>, the combined forces of the Deccan Sultanates (Ahmadnagar, Bijapur, Golconda, Bidar) defeated and killed Rama Raya. Vijayanagara was pillaged and ruined.
+        </div>
+
+        <h2>6. The Bahmani Kingdom (1347-1527)</h2>
+        <p>Conflicts between Deccan officers and the Delhi Sultanate led to the establishment of the independent Bahmani state in 1347, initially with its capital at <strong>Gulbarga</strong>.</p>
+        <p>Its founder was Hasan Gangu, who assumed the title <strong>Ala-ud-din Hasan Bahman Shah</strong>.</p>
+
+        <h3>Important Rulers</h3>
+        <ul>
+            <li><strong>Firoz Shah Bahmani (1397-1422):</strong> Defeated the Vijayanagara king Deva Raya I (though later lost to him). Built an astronomical observatory in Daulatabad. Made the Deccan a cultural center. Shifted capital to <strong>Bidar</strong>.</li>
+            <li><strong>Mahmud Gawan (1463-1481):</strong> An Iranian trader who became the Prime Minister (<em>wazir</em>). He managed the kingdom for 18 years, expanding its borders. A scholar himself, he built a famous <em>madrasa</em> in Bidar.</li>
+        </ul>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Deccani vs. Pardesi Conflict:</strong> The Bahmani nobility was divided into <em>Deccanis</em> (older immigrant Muslims settled in Deccan) and <em>Pardesis</em> (recent immigrants from Central Asia/Iran). This constant feud weakened the state. Mahmud Gawan (a Pardesi) was executed due to this internal conspiracy.
+        </div>
+
+        <h2>7. Achievements of the Bahmani Empire</h2>
+        <ul>
+            <li><strong>Administration:</strong> Divided into provinces called <strong>Tarafs</strong>, governed by <em>Tarafdars</em> who had vast civil and military powers. Senior officials included the <em>wazir</em> (prime minister), <em>amir-i-jumla</em> (finance), and <em>wazir-i-ashraf</em> (foreign affairs).</li>
+            <li><strong>Architecture:</strong> Built many forts (Gulbarga, Daulatabad, Bidar). Famous structures include the Jama Masjid, Bala Hisar, and Mahmud Gawan's madrasa. Their exquisite tombs featured flat domes and enameled tile work. The <strong>Gol Gumbaz</strong> in Bijapur and <strong>Charminar</strong> in Hyderabad are world-famous later examples of this architectural lineage.</li>
+        </ul>
+
+        <h2>8. Decline of the Bahmani Kingdom</h2>
+        <p>After the unjust execution of Mahmud Gawan, the empire weakened under incompetent rulers. By 1527, it disintegrated into five independent Deccan Sultanates:</p>
+        <ol>
+            <li><strong>Ahmadnagar</strong> (Nizam Shahis)</li>
+            <li><strong>Bijapur</strong> (Adil Shahis)</li>
+            <li><strong>Golconda</strong> (Qutb Shahis)</li>
+            <li><strong>Berar</strong> (Imad Shahis)</li>
+            <li><strong>Bidar</strong> (Barid Shahis)</li>
+        </ol>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

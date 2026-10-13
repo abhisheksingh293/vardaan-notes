@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Metals and Nonmetals - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: fixed; /* Changed to fixed for better mobile experience */
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVE DESIGN FOR MOBILE & TABLETS --- */
+        @media screen and (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm 5mm;
+                margin: 10px auto;
+                width: 100%;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Note: Branding footer is kept per user instruction) */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info & Footer in Print */
+            .contact-info {
+                display: flex !important;
+            }
+            
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>METALS AND NONMETALS</h1>
+        
+        <p>Everything around us falls into the broad category of either metals or nonmetals. Understanding their distinct physical and chemical properties is essential for grasping how materials interact in our world.</p>
+
+        <h2>1. Physical Properties of Metals</h2>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Metals</strong> are a class of elements that are typically solid, shiny, and good conductors of heat and electricity. They are easily recognizable by their physical characteristics.</p>
+        </div>
+
+        <p>Metals exhibit several unique physical properties:</p>
+        <ul>
+            <li><strong>Lustre:</strong> Metals have a shiny appearance. For example, gold and silver are highly lustrous.</li>
+            <li><strong>Hardness:</strong> Most metals are hard and difficult to break, though there are exceptions like sodium and potassium, which can be cut with a knife.</li>
+            <li><strong>Malleability:</strong> The property by which metals can be beaten into thin sheets. Aluminium foil is a common example.</li>
+            <li><strong>Ductility:</strong> The property by which metals can be drawn into thin wires. Copper and aluminium wires are widely used.</li>
+            <li><strong>Sonority:</strong> Metals produce a ringing sound when struck. This is why bells are made of metals.</li>
+            <li><strong>Conductivity:</strong> Metals are excellent conductors of both heat (high thermal conductivity) and electricity (high electrical conductivity).</li>
+            <li><strong>Physical State:</strong> Most metals are solid at room temperature, except mercury, which is a liquid.</li>
+        </ul>
+
+        <h2>2. Physical Properties of Nonmetals</h2>
+        
+        <p>Nonmetals generally have properties that are opposite to those of metals.</p>
+        
+        <ul>
+            <li><strong>Appearance:</strong> Nonmetals generally have a dull appearance and lack lustre (except iodine and graphite).</li>
+            <li><strong>Brittleness:</strong> Solid nonmetals are soft and brittle, meaning they break easily into pieces when struck (e.g., sulphur and coal).</li>
+            <li><strong>Non-malleable and Non-ductile:</strong> They cannot be beaten into sheets or drawn into wires.</li>
+            <li><strong>Non-sonorous:</strong> They do not produce a ringing sound when struck.</li>
+            <li><strong>Poor Conductors:</strong> They are generally poor conductors of heat and electricity (insulators), with the exception of graphite, which conducts electricity.</li>
+            <li><strong>Physical State:</strong> Nonmetals can exist as solids, liquids, or gases at room temperature.</li>
+        </ul>
+
+        <h2>3. Chemical Properties</h2>
+        
+        <h3>a) Reaction with Oxygen</h3>
+        <p>Both metals and nonmetals react with oxygen, but the nature of the oxides formed differs.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Metals</strong> react with oxygen to form <strong>metallic oxides</strong>, which are basic in nature (they turn red litmus blue).<br>
+            <em>Example:</em> Magnesium burns in air to form magnesium oxide.<br>
+            2Mg + O₂ → 2MgO</p>
+        </div>
+        
+        <p><strong>Nonmetals</strong> react with oxygen to form <strong>non-metallic oxides</strong>, which are generally acidic in nature (they turn blue litmus red).<br>
+        <em>Example:</em> Sulphur reacts with oxygen to form sulphur dioxide.<br>
+        S + O₂ → SO₂</p>
+
+        <h3>b) Reaction with Water</h3>
+        <ul>
+            <li><strong>Metals:</strong> Some metals react vigorously with water (like sodium) to form metal hydroxides and release hydrogen gas. Others react slowly.</li>
+            <li><strong>Nonmetals:</strong> Generally, nonmetals do not react with water, though they may be very reactive in air (e.g., phosphorus is stored in water to prevent it from catching fire).</li>
+        </ul>
+
+        <h3>c) Rusting and Its Prevention</h3>
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Rusting</strong> is a chemical process where iron reacts with oxygen and moisture in the air to form a reddish-brown flaky substance called rust (iron oxide). It weakens the metal.</p>
+        </div>
+        <p>Methods to prevent rusting include:</p>
+        <ul>
+            <li><strong>Painting, Oiling, or Greasing:</strong> Applying a protective layer over the metal surface.</li>
+            <li><strong>Galvanization:</strong> Coating iron with a thin layer of a more reactive metal like zinc.</li>
+            <li><strong>Alloying:</strong> Mixing iron with other metals or nonmetals to make it rust-resistant (e.g., stainless steel).</li>
+        </ul>
+
+        <h2>4. Uses of Metals and Nonmetals</h2>
+        
+        <h3>Uses of Metals:</h3>
+        <ul>
+            <li><strong>Copper and Aluminium:</strong> Used for making electrical wires and cooking utensils.</li>
+            <li><strong>Gold and Silver:</strong> Used extensively in making jewellery.</li>
+            <li><strong>Iron:</strong> Used in construction, bridges, automobiles, and machinery.</li>
+            <li><strong>Zinc:</strong> Used for galvanizing iron to prevent rusting.</li>
+            <li><strong>Mercury:</strong> Used in thermometers.</li>
+        </ul>
+
+        <h3>Uses of Nonmetals:</h3>
+        <ul>
+            <li><strong>Oxygen:</strong> Essential for respiration in living beings and for combustion.</li>
+            <li><strong>Nitrogen:</strong> Used in fertilizers to enhance plant growth and in food packaging to preserve freshness.</li>
+            <li><strong>Chlorine:</strong> Used in water purification processes.</li>
+            <li><strong>Iodine:</strong> Used as an antiseptic (tincture of iodine) applied on wounds.</li>
+            <li><strong>Carbon:</strong> Used in the form of graphite in pencils and batteries, and as diamond in jewellery.</li>
+        </ul>
+
+        <h2>5. Metalloids and Alloys</h2>
+        
+        <p><strong>Metalloids</strong> are elements that possess properties intermediate between those of metals and nonmetals. They are useful as semiconductors.<br>
+        <em>Examples:</em> Silicon (used in computer chips and solar cells), Germanium, and Antimony.</p>
+
+        <p>An <strong>Alloy</strong> is a homogeneous mixture of two or more metals, or a metal and a nonmetal, designed to improve the properties of the base metal (like increased strength or resistance to corrosion).<br>
+        <em>Examples:</em> Brass, Bronze, and Stainless Steel.</p>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

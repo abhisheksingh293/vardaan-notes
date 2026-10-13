@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Water - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- RESPONSIVENESS (Mobile & Tablet) --- */
+        @media (max-width: 768px) {
+            .paper-sheet {
+                padding: 10mm;
+            }
+            .institute-name {
+                font-size: 1.6rem;
+            }
+            .system-name {
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle ONLY (Footer shown as per user request) */
+            .theme-toggle {
+                display: none !important;
+            }
+            
+            /* FORCE SHOW Footer for print (User Override) */
+            .branding-footer {
+                display: block !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 6 Science • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>Water</h1>
+        
+        <h2>1. Importance and Distribution of Water</h2>
+        <p>Water is a wonderful liquid present almost everywhere on Earth and is essential for all living things to survive, grow, and function properly.</p>
+        <ul>
+            <li>About <strong>three-fourths</strong> of the Earth's surface is covered with water.</li>
+            <li>Humans need water for drinking, cooking, washing, bathing, flushing, and agricultural purposes.</li>
+            <li>Plants need water to prepare their food and germinate seeds.</li>
+        </ul>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p>Only about <strong>0.3%</strong> of the Earth's total water is available as freshwater (lakes, rivers, groundwater). About 97% is found in oceans and is too saline for direct use, while the rest is trapped in glaciers and polar ice caps.</p>
+        </div>
+
+        <h2>2. Forms and Sources of Water</h2>
+        <p>Water on Earth is found in all three states of matter:</p>
+        <ul>
+            <li><strong>Solid:</strong> Ice and snow on high mountains and glaciers.</li>
+            <li><strong>Liquid:</strong> Oceans, rivers, seas, lakes, and ponds.</li>
+            <li><strong>Gas:</strong> Water vapour present in the air.</li>
+        </ul>
+        
+        <h3>Sources of Water</h3>
+        <ul>
+            <li><strong>Rainwater:</strong> Considered the purest form of naturally occurring water.</li>
+            <li><strong>Surface Water:</strong> Exists as snow, river water, lake water, and sea water. Rainwater dissolves land salts and minerals, carrying them to the seas, making sea water highly saline.</li>
+            <li><strong>Groundwater:</strong> Water that seeps through the soil and collects beneath the Earth's surface.</li>
+        </ul>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Acid Rain:</strong> Harmful gases like sulphur dioxide and nitrogen dioxide from factories mix with rainwater to form acid rain. It damages crops, aquatic life, soil fertility, and marble monuments like the Taj Mahal.</p>
+        </div>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Infiltration:</strong> The process of seeping of water into the ground.<br>
+            <strong>Aquifer:</strong> Seeped water that collects between layers of hard rocks underground.<br>
+            <strong>Water Table:</strong> The level of water under the ground.</p>
+        </div>
+
+        <h2>3. The Water Cycle</h2>
+        <p>The continuous circulation of water from the Earth's surface to the air and back to the Earth's surface is called the <strong>Water Cycle</strong>. It maintains the supply of freshwater on land.</p>
+        <ul>
+            <li><strong>Evaporation:</strong> Water from water bodies turns into water vapour due to the Sun's heat.</li>
+            <li><strong>Transpiration:</strong> The process of loss of water by plants through their leaves in the form of water vapour.</li>
+            <li><strong>Condensation:</strong> As water vapour rises, it cools and condenses into tiny water droplets, forming clouds.</li>
+            <li><strong>Precipitation:</strong> When drops become too heavy, they fall back to Earth as rain, hail, or snow.</li>
+        </ul>
+
+        <h2>4. Potable Water and Town Water Supply</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Potable Water:</strong> Water that is completely fit and safe for drinking. It is colourless, odourless, free from disease-causing germs, and contains small amounts of useful dissolved minerals.</p>
+        </div>
+        <p>Water can be made safe for drinking through boiling, filtering, chlorination (adding chlorine tablets), and distillation.</p>
+
+        <h3>Town Water Supply System</h3>
+        <p>Water from rivers and lakes contains impurities and must pass through a treatment plant before reaching homes:</p>
+        <ul>
+            <li><strong>Loading Tank:</strong> Alum is added to make lighter suspended particles heavy so they settle down easily.</li>
+            <li><strong>Sedimentation Tank:</strong> Water stands still; heavy impurities settle at the bottom.</li>
+            <li><strong>Filtration Tank:</strong> Water passes through layers of sand and gravel to remove remaining impurities.</li>
+            <li><strong>Chlorination Tank:</strong> Chlorine gas is bubbled through to kill all harmful germs.</li>
+            <li><strong>Storage Tank:</strong> Purified water is stored and piped to homes.</li>
+        </ul>
+
+        <h2>5. Solutions and Solvents</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <p><strong>Solute:</strong> A substance that dissolves in a liquid (e.g., sugar, salt).<br>
+            <strong>Solvent:</strong> The liquid in which a solute dissolves (e.g., water).<br>
+            <strong>Solution:</strong> A homogeneous mixture composed of a solute and a solvent.</p>
+        </div>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <p><strong>Universal Solvent:</strong> Water is known as a universal solvent because it has the unique ability to dissolve more substances (solids, liquids, and gases) than any other liquid.</p>
+        </div>
+
+        <h2>6. Water Pollution and Prevention</h2>
+        <p>The mixing of harmful and unwanted substances with water bodies is called <strong>water pollution</strong>. These contaminants are called water pollutants.</p>
+        
+        <h3>Major Causes of Water Pollution</h3>
+        <ul>
+            <li><strong>Untreated Sewage:</strong> Discharging domestic waste directly into rivers causes waterborne diseases like cholera and typhoid.</li>
+            <li><strong>Toxic Wastes:</strong> Factories release chemicals like lead and mercury, killing aquatic life.</li>
+            <li><strong>Agricultural Chemicals:</strong> Excess fertilizers and pesticides get washed into water bodies.</li>
+        </ul>
+        
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <p><strong>Algal Bloom:</strong> Fertilizers in water act as nutrients for algae, causing them to grow rapidly and cover the water surface. This blocks sunlight and uses up dissolved oxygen, killing fish and aquatic plants.</p>
+        </div>
+
+        <h2>7. Water as a Disaster: Floods and Droughts</h2>
+        <ul>
+            <li><strong>Floods:</strong> Caused by heavy, continuous rainfall. Floods damage crops, drown livestock, destroy property, and lead to epidemics of waterborne diseases.</li>
+            <li><strong>Drought:</strong> An extended period with no or very little rainfall. Droughts dry up the soil, cause severe food and fodder shortages, and lead to malnutrition and dehydration.</li>
+        </ul>
+
+        <h2>8. Conservation of Water</h2>
+        <p>Because the demand for water is increasing rapidly due to population growth, it is crucial to protect and conserve water by reducing wastage, reusing, and recycling.</p>
+        <ul>
+            <li>Use a bucket instead of a hose for bathing or washing vehicles.</li>
+            <li>Turn off the tap immediately after brushing or washing.</li>
+            <li>Repair leaking taps and pipes instantly.</li>
+        </ul>
+
+        <h3>Rainwater Harvesting</h3>
+        <p>This is a technique of collecting and storing rainwater from rooftops and land surfaces for future use instead of letting it run off into drains.</p>
+        <ul>
+            <li><strong>Groundwater Recharge:</strong> Directing rainwater underground through deep pipes to raise the water table.</li>
+            <li><strong>Rooftop Harvesting:</strong> Collecting rainwater from roofs into storage tanks (must be covered tightly and filtered before use).</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

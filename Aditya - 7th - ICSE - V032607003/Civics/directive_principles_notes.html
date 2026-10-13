@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Chapter Name - Subject -->
+    <title>Directive Principles of State Policy - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 7 Civics • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>DIRECTIVE PRINCIPLES OF STATE POLICY</h1>
+        
+        <p>Under British rule, India was not a welfare state; the government was focused on protecting British interests. When India attained independence, it faced massive challenges like poverty, illiteracy, and inequality. To address these issues and promote the general welfare of the people, the Constitution makers envisioned India as a <strong>Welfare State</strong>.</p>
+
+        <h2>1. The Concept of a Welfare State</h2>
+        <p>The makers of the Indian Constitution realized they had to include specific ideals to strive for the general well-being of all citizens, particularly the vulnerable sections like women and children.</p>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Welfare State:</strong> A state in which the government plays a key role in protecting and promoting the economic and social well-being of its citizens. It is based on the principles of equality of opportunity and equal distribution of wealth.
+        </div>
+
+        <h3>Key Features of a Welfare State:</h3>
+        <ul>
+            <li>Regards all individuals on an <strong>equal footing</strong> irrespective of their social and economic status.</li>
+            <li>Takes the responsibility for the well-being of all its citizens.</li>
+            <li>Takes steps to <strong>abolish illiteracy, poverty, and unemployment</strong>.</li>
+            <li>Establishes schools, hospitals, and other institutions to meet the needs of the people.</li>
+            <li>Provides jobs, maternity benefits, old-age pensions, and other social benefits.</li>
+        </ul>
+
+        <h2>2. What are Directive Principles?</h2>
+        <p>The Constitution provides two specific mechanisms to ensure the social and economic welfare of the people: Fundamental Rights and the <strong>Directive Principles of State Policy</strong>.</p>
+        <p>Directive Principles are guidelines for the Central and State governments of India. The governments must keep these principles in mind while framing their laws and policies to ensure legal, economic, and social justice for every individual.</p>
+
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            The Directive Principles of State Policy are listed in <strong>Part IV</strong> of our Constitution, covering <strong>Articles 36 to 51</strong>. These principles were deeply inspired by the Constitution of <strong>Ireland</strong> as well as Gandhian philosophy.
+        </div>
+
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            <strong>Non-Justiciable Nature:</strong> Directive Principles are <strong>non-justiciable</strong>. This means they are not enforceable in any court of law. However, they are considered fundamental in the governance of the country.
+        </div>
+
+        <h2>3. Types of Directive Principles</h2>
+        <p>The Constitution does not explicitly classify them, but based on their content, they are generally divided into three main categories:</p>
+
+        <h3>A. Principles Promoting Social and Economic Equality</h3>
+        <p>These principles aim to create a fair and equal society for all citizens:</p>
+        <ul>
+            <li>Ensure all people have <strong>adequate means of livelihood</strong>.</li>
+            <li>Ensure fair distribution and control of material resources for the common good.</li>
+            <li>Distribute wealth so that it is <strong>not concentrated in a few hands</strong>.</li>
+            <li>Ensure <strong>equal pay for equal work</strong> for both men and women.</li>
+            <li>Impart compulsory and free education to children up to the age of 14 years.</li>
+            <li>Secure the participation of workers in the management of factories.</li>
+            <li>Ensure men, women, and children are not forced to do jobs unsuited to their age or strength.</li>
+            <li>Provide the right to work, education, and state assistance in cases of unemployment, old age, sickness, and disablement.</li>
+            <li>Secure <strong>just and humane conditions</strong> of work and maternity relief for women.</li>
+            <li>Ensure that children and youth are not exploited.</li>
+        </ul>
+
+        <h3>B. Principles Related to Gandhian Philosophy</h3>
+        <p>Based on Gandhi's ideals of <em>Swaraj</em>, <em>Sarvodaya</em> (welfare for all), and <em>Swavalamban</em> (self-reliance), these include:</p>
+        <ul>
+            <li>Promote the educational and economic interests of the weaker sections, particularly the <strong>Scheduled Castes and Scheduled Tribes</strong>.</li>
+            <li>Give <strong>Village Panchayats</strong> the power and authority to function as units of self-government.</li>
+            <li>Prevent the consumption of alcoholic drinks and other harmful drugs.</li>
+            <li>Promote <strong>cottage industries</strong> in rural areas.</li>
+            <li>Improve the quality of livestock and promote modern agriculture and animal husbandry.</li>
+            <li>Improve the standard of living and public health.</li>
+        </ul>
+
+        <h3>C. General Principles</h3>
+        <p>These principles focus on law, heritage, and international relations:</p>
+        <ul>
+            <li>Protect historical monuments and places of national importance.</li>
+            <li>Establish a <strong>uniform civil code</strong> for all citizens throughout the country.</li>
+            <li>Ensure equal right to seek justice and make civil courts available to all citizens.</li>
+            <li>Promote <strong>international peace and security</strong>, and maintain just relations with other nations.</li>
+            <li>Foster respect for international laws and treaties.</li>
+            <li>Encourage settlement of international disputes by arbitration or mutual agreement.</li>
+        </ul>
+
+        <h2>4. Impact of Directive Principles</h2>
+        <p>Since independence, the government has used these principles as a roadmap to implement various welfare schemes and laws:</p>
+        <ul>
+            <li>Seats have been reserved for <strong>Scheduled Castes, Scheduled Tribes, and Other Backward Classes</strong>.</li>
+            <li>To promote rural employment (Article 43), boards like the Village Industries Board, Silk Board, and Coir Board have been established.</li>
+            <li>Primary education has been made compulsory up to age 14 (e.g., through <strong>Sarva Shiksha Abhiyan</strong>).</li>
+            <li>The practice of <strong>Untouchability</strong> has been made a punishable offense.</li>
+            <li>The Zamindari system was abolished, and surplus land was distributed among the landless poor.</li>
+            <li>Launch of rural development programs like the Community Development Programme, Integrated Rural Development Programme, and <strong>Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA)</strong>.</li>
+            <li>Health programs like National Rural Health Mission (NRHM) and mid-day meal schemes have been implemented.</li>
+        </ul>
+
+        <h2>5. Differences Between Directive Principles and Fundamental Rights</h2>
+        <p>While both aim to establish a welfare state, they differ in their legal standing and purpose. However, they are not contradictory but <strong>complementary to each other</strong>.</p>
+        
+        <ul>
+            <li><strong>Enforceability:</strong> Directive Principles are <strong>non-justiciable</strong> (cannot be enforced in court). Fundamental Rights are <strong>justiciable</strong> and enforceable by the Supreme Court and High Courts.</li>
+            <li><strong>Nature:</strong> Directive Principles are instructions/guidelines for the state to frame policies. Fundamental Rights are natural human rights guaranteed by the Constitution to protect citizens.</li>
+            <li><strong>Type of Democracy:</strong> Directive Principles help establish <strong>social and economic democracy</strong>. Fundamental Rights help strengthen <strong>political democracy</strong>.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

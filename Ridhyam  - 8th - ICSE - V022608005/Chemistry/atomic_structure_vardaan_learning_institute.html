@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORMAT: Atomic Structure - Class 8 ICSE Chemistry -->
+    <title>Atomic Structure - Vardaan Learning Institute</title>
+    <style>
+        /* --- CSS VARIABLES (Vardaan Theming) --- */
+        :root {
+            /* Light Mode Palette */
+            --yellow-bg: #fff9c4;
+            --yellow-border: #fbc02d;
+            --green-bg: #e8f5e9;
+            --green-border: #43a047;
+            --blue-bg: #e3f2fd;
+            --blue-border: #1e88e5;
+            --pink-bg: #fce4ec;
+            --pink-border: #d81b60;
+            --text-main: #000000;
+            --paper-bg: #ffffff;
+            --accent-purple: #7e57c2;
+            --meta-text: #666666;
+            --example-bg: rgba(255,255,255,0.6);
+            --example-text: #444444;
+            --toggle-bg: #eee;
+            --toggle-border: #ccc;
+            --icon-fill: #000;
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        html.dark-mode {
+            --yellow-bg: #3f3a00;
+            --yellow-border: #fdd835;
+            --green-bg: #0f2e13;
+            --green-border: #81c784;
+            --blue-bg: #0d1b2a;
+            --blue-border: #64b5f6;
+            --pink-bg: #300815;
+            --pink-border: #f06292;
+            --text-main: #e0e0e0;
+            --paper-bg: #121212;
+            --accent-purple: #d1c4e9;
+            --meta-text: #aaaaaa;
+            --example-bg: rgba(255,255,255,0.1);
+            --example-text: #cccccc;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --icon-fill: #fff;
+        }
+
+        /* --- GLOBAL LAYOUT --- */
+        body {
+            background-color: var(--paper-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- WATERMARK OVERLAY --- */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: multiply;
+        }
+
+        .watermark-image {
+            opacity: 0.1;
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Watermark Logic */
+        html.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; 
+        }
+
+        html.dark-mode .watermark-image {
+            filter: invert(1); 
+            opacity: 0.15;
+        }
+
+        /* --- PAPER SHEET CONTAINER --- */
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive padding for mobile & tablets */
+        @media (max-width: 768px) {
+            .paper-sheet { padding: 10mm; }
+            .institute-name { font-size: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            .institute-name { font-size: 1.5rem; }
+            h1 { font-size: 1.5rem; }
+        }
+
+        /* --- BRANDING HEADER --- */
+        .branding-header {
+            text-align: center;
+            margin-bottom: 5px; /* TIGHTENED LAYOUT */
+            border-bottom: 3px double var(--blue-border);
+            padding-bottom: 15px;
+        }
+
+        .institute-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--blue-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            color: var(--meta-text);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT INFO (Updated V2.2) --- */
+        .contact-info {
+            font-size: 0.9rem;
+            color: #666666; 
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* DEFAULT STATE: Hidden on screen */
+            display: none;
+            
+            /* Layout properties (active when visible) */
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- BRANDING FOOTER --- */
+        .branding-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--toggle-border);
+            color: var(--meta-text);
+        }
+
+        .created-by {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .powered-by {
+            font-size: 0.9rem;
+            color: var(--pink-border);
+            font-style: italic;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--blue-border);
+            text-align: center;
+            
+            /* TIGHTENED LAYOUT */
+            margin-top: 5px; 
+            
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--blue-border);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--pink-border);
+            margin-top: 40px;
+            border-left: 5px solid var(--pink-border);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-purple);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        strong {
+            color: var(--pink-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--example-bg);
+            color: var(--text-main);
+        }
+
+        th, td {
+            border: 1px solid var(--meta-text);
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--blue-bg);
+            color: var(--blue-border);
+            font-weight: bold;
+        }
+
+        /* --- INFO BOXES --- */
+        .blue-box { background-color: var(--blue-bg); border: 2px solid var(--blue-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .green-box { background-color: var(--green-bg); border: 2px solid var(--green-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+        .yellow-box { background-color: var(--yellow-bg); border: 2px solid var(--yellow-border); border-radius: 8px; padding: 20px; margin: 25px 0; position: relative; }
+
+        .box-label {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--paper-bg);
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        .blue-box .box-label { color: var(--blue-border); border-color: var(--blue-border); }
+        .green-box .box-label { color: var(--green-border); border-color: var(--green-border); }
+        .yellow-box .box-label { color: #f9a825; border-color: var(--yellow-border); }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .icon-sun, .icon-moon {
+            position: absolute;
+            transition: all 0.5s ease;
+            stroke: var(--icon-fill);
+        }
+
+        .icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+        html.dark-mode .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+        html.dark-mode .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* --- STRICT PRINT CONFIGURATION --- */
+        @media print {
+            /* 1. Reset Colors to Clean White/Black */
+            body { 
+                background-color: #ffffff !important; 
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            
+            .paper-sheet { 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important;
+            }
+
+            /* 2. FORCE HIDE Toggle & Web Footer ONLY */
+            .theme-toggle, 
+            .branding-footer {
+                display: none !important;
+            }
+
+            /* 3. FORCE SHOW Contact Info in Print (Updated V2.2) */
+            .contact-info {
+                display: flex !important;
+            }
+
+            /* 4. Force Watermark Visibility in Print */
+            .watermark-overlay {
+                display: flex !important;
+                position: fixed !important;
+                z-index: -1 !important;
+                opacity: 0.1 !important;
+                mix-blend-mode: normal !important; 
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+
+            .watermark-image {
+                filter: none !important; 
+                max-width: 80% !important;
+            }
+
+            /* 5. Configure PDF/Print Page Numbers */
+            @page {
+                size: A4;
+                margin: 2cm;
+                
+                @bottom-left { content: none; }
+                @bottom-right { content: none; }
+
+                /* The Pink Disc */
+                @bottom-center {
+                    content: counter(page);
+                    display: block;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #d81b60; 
+                    color: #ffffff;
+                    border-radius: 50%;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 11pt;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 30px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COMPONENT: Watermark (Do Not Modify URL) -->
+    <div class="watermark-overlay">
+        <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Vardaan Watermark" class="watermark-image">
+    </div>
+
+    <!-- COMPONENT: Dark Mode Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTAINER -->
+    <div class="paper-sheet">
+        
+        <!-- BRANDING HEADER (MANDATORY) -->
+        <div class="branding-header">
+            <div class="institute-name">Vardaan Learning Institute</div>
+            <div class="system-name">Class 8 Chemistry • Chapter Notes</div>
+            
+            <!-- CONTACT INFO ROW (Hidden on Screen, Visible on Print) -->
+            <div class="contact-info">
+                <span>🌐 vardaanlearning.com</span>
+                <span>📞 9508841336</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC CONTENT STARTS HERE -->
+        <h1>ATOMIC STRUCTURE</h1>
+        
+        <h2>1. Introduction</h2>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            An <strong>Atom</strong> is the fundamental building block of matter. Initially, it was considered indivisible and the smallest unit of matter that takes part in a chemical reaction.
+        </div>
+        <p>The concept that matter is composed of tiny, indivisible particles was first proposed by Indian and Greek philosophers.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Indian philosopher <strong>Maharshi Kanad</strong> proposed that all matter is made of very small particles called <strong>'Parmanu'</strong>.
+        </div>
+
+        <h2>2. Dalton's Atomic Theory of Matter</h2>
+        <p>In 1808, John Dalton published his atomic theory, which served as the foundation for modern chemistry. The main postulates are:</p>
+        <ul>
+            <li>Elements are made of extremely small particles called <strong>atoms</strong>.</li>
+            <li>Atoms of a given element are identical in mass and other properties.</li>
+            <li>Atoms of different elements vary in mass and other properties.</li>
+            <li>Atoms cannot be subdivided, created, or destroyed.</li>
+            <li>Atoms of different elements combine in simple whole-number ratios to form <strong>chemical compounds</strong> (e.g., two atoms of hydrogen combine with one atom of oxygen to form water, H<sub>2</sub>O).</li>
+            <li>In chemical reactions, atoms are combined, separated, or rearranged.</li>
+        </ul>
+
+        <h2>3. Discovery of Subatomic Particles</h2>
+        <p>Contrary to Dalton's theory, atoms are not indivisible. They consist of smaller particles known as <strong>subatomic particles</strong>: electrons, protons, and neutrons.</p>
+
+        <h3>Discovery of Electrons (Cathode Rays)</h3>
+        <p>In 1879, William Crookes observed that when electricity is passed through a discharge tube containing gas at very low pressure, blue rays are emitted from the cathode. These were called <strong>cathode rays</strong>.</p>
+        
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>J.J. Thomson</strong> (1897) discovered that cathode rays consist of negatively charged particles, which were later named <strong>electrons</strong>.
+        </div>
+        <ul>
+            <li><strong>Charge:</strong> Negatively charged (-1).</li>
+            <li><strong>Mass:</strong> Approximately 1/1837 of the mass of a hydrogen atom (considered negligible).</li>
+            <li><strong>Location:</strong> Revolve around the nucleus.</li>
+            <li><strong>Symbol:</strong> e<sup>-</sup></li>
+        </ul>
+
+        <h3>Discovery of Protons (Canal Rays)</h3>
+        <p>In 1886, Eugen Goldstein discovered positively charged rays in a discharge tube, moving in the opposite direction to cathode rays. These were called Canal Rays or Positive Rays, consisting of positively charged particles called <strong>protons</strong>.</p>
+        <ul>
+            <li><strong>Charge:</strong> Positively charged (+1).</li>
+            <li><strong>Mass:</strong> 1 amu (equal to the mass of a hydrogen atom).</li>
+            <li><strong>Location:</strong> Inside the nucleus.</li>
+            <li><strong>Symbol:</strong> p<sup>+</sup></li>
+        </ul>
+
+        <h3>Discovery of Nucleus</h3>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Ernest Rutherford</strong> conducted the <strong>Alpha Particle Scattering Experiment</strong> by bombarding a thin gold foil with fast-moving alpha particles.
+        </div>
+        <p><strong>Observations & Conclusions:</strong></p>
+        <ul>
+            <li>Most alpha particles passed straight through the foil, indicating that <strong>most of the space inside an atom is empty</strong>.</li>
+            <li>A few particles were deflected by small angles, showing the presence of a <strong>positively charged center</strong>.</li>
+            <li>A very small number of particles bounced back, indicating that the positively charged mass is concentrated in a tiny, dense, and heavy central core called the <strong>nucleus</strong>.</li>
+        </ul>
+
+        <h3>Discovery of Neutrons</h3>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            In 1932, <strong>James Chadwick</strong> discovered a new subatomic particle with no charge but a mass nearly equal to that of a proton. He named it the <strong>neutron</strong>.
+        </div>
+        <ul>
+            <li><strong>Charge:</strong> Neutral (no charge).</li>
+            <li><strong>Mass:</strong> 1 amu (almost equal to the mass of a proton).</li>
+            <li><strong>Location:</strong> Inside the nucleus.</li>
+            <li><strong>Symbol:</strong> n</li>
+        </ul>
+
+        <h2>4. Atomic Models</h2>
+        
+        <h3>J.J. Thomson's Model</h3>
+        <p>Proposed in 1904, it is also known as the <strong>"plum pudding" model</strong>. It states that an atom is a positively charged sphere with electrons embedded in it, like plums in a pudding. The total positive charge equals the total negative charge, making the atom electrically neutral.</p>
+
+        <h3>Rutherford's Nuclear Model</h3>
+        <p>Based on his scattering experiment, Rutherford proposed that an atom consists of a tiny, dense, positively charged nucleus at the center, with electrons revolving around it at high speeds in circular paths. The radius of the nucleus is about 10<sup>5</sup> times less than the radius of the atom.</p>
+
+        <h3>Bohr's Atomic Model</h3>
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Niels Bohr</strong> proposed that electrons revolve around the nucleus in fixed circular paths called <strong>orbits</strong> or <strong>shells</strong>, without radiating energy.
+        </div>
+        <ul>
+            <li>The shells are denoted by letters <strong>K, L, M, N...</strong> or numbers n = 1, 2, 3, 4... starting from the nucleus.</li>
+        </ul>
+        <div class="yellow-box">
+            <span class="box-label">Important</span>
+            The maximum number of electrons that can be accommodated in a shell is given by the formula <strong>2n<sup>2</sup></strong>, where 'n' is the shell number.
+            <br><br>
+            For K shell (n=1): 2(1)<sup>2</sup> = 2 electrons<br>
+            For L shell (n=2): 2(2)<sup>2</sup> = 8 electrons<br>
+            For M shell (n=3): 2(3)<sup>2</sup> = 18 electrons
+        </div>
+
+        <h2>5. Atomic Number and Mass Number</h2>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Atomic Number (Z)</strong> is the number of protons present in the nucleus of an atom. <br>
+            <strong>Mass Number (A)</strong> is the total number of protons and neutrons present in the nucleus.
+        </div>
+        <ul>
+            <li>In a neutral atom: Number of Protons = Number of Electrons = Atomic Number (Z).</li>
+            <li><strong>Mass Number (A) = Number of Protons (p) + Number of Neutrons (n)</strong></li>
+            <li>Number of Neutrons (n) = Mass Number (A) - Atomic Number (Z)</li>
+        </ul>
+        <p><strong>Symbolic Representation:</strong> An element is represented as <strong><sup>A</sup><sub>Z</sub>X</strong>, where X is the symbol of the element, Z is the atomic number, and A is the mass number.</p>
+
+        <h2>6. Electronic Configuration</h2>
+        <p>The systematic arrangement of electrons in different orbits or shells around the nucleus of an atom is called its <strong>electronic configuration</strong>.</p>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            Example: Sodium (Na) has an atomic number of 11. Its 11 electrons are arranged as:<br>
+            K shell = 2, L shell = 8, M shell = 1.<br>
+            Electronic Configuration = <strong>2, 8, 1</strong>.
+        </div>
+
+        <h2>7. Isotopes and Isobars</h2>
+        
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Isotopes</strong> are atoms of the same element having the same atomic number but different mass numbers (due to a different number of neutrons).
+        </div>
+        <ul>
+            <li>Because they have the same number of electrons and protons, isotopes have <strong>identical chemical properties</strong> but <strong>different physical properties</strong> (like mass and density).</li>
+        </ul>
+        <div class="green-box">
+            <span class="box-label">Fact</span>
+            <strong>Examples of Isotopes:</strong><br>
+            Hydrogen has three isotopes: Protium (<sup>1</sup><sub>1</sub>H), Deuterium (<sup>2</sup><sub>1</sub>H), and Tritium (<sup>3</sup><sub>1</sub>H).<br>
+            Carbon has isotopes: <sup>12</sup><sub>6</sub>C and <sup>14</sup><sub>6</sub>C.
+        </div>
+
+        <div class="blue-box">
+            <span class="box-label">Concept</span>
+            <strong>Isobars</strong> are atoms of different elements having the same mass number but different atomic numbers.
+        </div>
+        <ul>
+            <li>Because they are atoms of different elements, they have <strong>different physical and chemical properties</strong>.</li>
+            <li>Example: Argon (<sup>40</sup><sub>18</sub>Ar) and Calcium (<sup>40</sup><sub>20</sub>Ca) both have a mass number of 40 but different atomic numbers.</li>
+        </ul>
+
+        <!-- BRANDING FOOTER (MANDATORY) -->
+        <div class="branding-footer">
+            <p class="created-by">Created by Team Vardaan ❤️</p>
+            <p class="powered-by">Powered by Vardaan Comet</p>
+        </div>
+
+    </div>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
