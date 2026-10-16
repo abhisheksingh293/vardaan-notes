@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Learning Institute - Detailed Solutions Mock Test 01</title>
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script type="text/javascript" id="mathjax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <style>
+        :root {
+            --primary-yellow: #fbc02d;
+            --light-yellow: #fffde7;
+            --text-main: #111111;
+            --correct-green: #2e7d32;
+            --correct-bg: #e8f5e9;
+            --border-color: #000000;
+        }
+
+        @page { 
+            size: A4; 
+            margin: 15mm; 
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body { 
+            width: 100%;
+            max-width: 210mm; 
+            min-height: 297mm; 
+            margin: 0 auto; 
+            padding: 20mm; 
+            font-family: "Times New Roman", Times, serif; 
+            font-size: 11pt; 
+            line-height: 1.5; 
+            color: var(--text-main); 
+            background-color: white; 
+            position: relative; 
+        }
+
+        .watermark { 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 75%; 
+            opacity: 0.08; 
+            z-index: -1; 
+            pointer-events: none; 
+        }
+
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            border-top: 3px solid var(--primary-yellow);
+            border-bottom: 3px solid var(--primary-yellow); 
+            padding: 10px 0; 
+        }
+
+        .institute-name { 
+            font-size: 22pt; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            margin: 0; 
+            letter-spacing: 1px; 
+        }
+
+        .test-name { 
+            font-size: 13pt; 
+            font-weight: bold; 
+            margin-top: 4px; 
+            text-decoration: underline; 
+            text-transform: uppercase;
+        }
+
+        .exam-details { 
+            display: flex; 
+            justify-content: space-between; 
+            flex-wrap: wrap;
+            margin-top: 12px; 
+            font-weight: bold; 
+            font-size: 10.5pt; 
+            border-top: 1px solid var(--border-color); 
+            border-bottom: 1px solid var(--border-color); 
+            padding: 6px 0; 
+        }
+
+        .exam-details span {
+            margin: 2px 5px;
+        }
+
+        .section-header { 
+            text-align: left; 
+            font-weight: bold; 
+            margin-top: 22px; 
+            margin-bottom: 15px; 
+            border-bottom: 2px solid var(--primary-yellow);
+            padding-bottom: 4px;
+            font-size: 12.5pt; 
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            background-color: var(--light-yellow);
+            padding: 6px 10px;
+        }
+
+        .solution-block { 
+            border-bottom: 1px dashed #ccc; 
+            padding-bottom: 14px; 
+            margin-bottom: 18px; 
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .q-text {
+            flex-grow: 1;
+            padding-right: 15px;
+        }
+
+        .marks-badge {
+            background-color: var(--primary-yellow);
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 9pt;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .correct-answer {
+            color: var(--correct-green);
+            background-color: var(--correct-bg);
+            padding: 5px 10px;
+            margin: 6px 0 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            border: 1px solid #c8e6c9;
+        }
+
+        .explanation {
+            margin-left: 5px;
+            font-size: 10.5pt;
+            overflow-x: auto;
+        }
+
+        .step {
+            margin-bottom: 4px;
+        }
+
+        .footer { 
+            margin-top: 35px; 
+            text-align: center; 
+            font-size: 9.5pt; 
+            font-weight: bold; 
+            border-top: 1px solid #ccc; 
+            padding-top: 10px; 
+            color: #555; 
+        }
+
+        /* Responsive Equation Chunking & Mobile Layout */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 12px;
+                font-size: 10pt;
+            }
+
+            .institute-name {
+                font-size: 16pt;
+            }
+
+            .test-name {
+                font-size: 11pt;
+            }
+
+            .exam-details {
+                font-size: 9pt;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .q-header {
+                flex-direction: column;
+            }
+
+            .marks-badge {
+                margin-top: 4px;
+                align-self: flex-start;
+            }
+
+            .explanation {
+                margin-left: 0;
+            }
+
+            .MathJax {
+                font-size: 95% !important;
+            }
+        }
+
+        @media print { 
+            body { 
+                width: 100%; 
+                margin: 0; 
+                padding: 10mm; 
+                -webkit-print-color-adjust: exact; 
+            } 
+        }
+    </style>
+</head>
+<body>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Watermark" class="watermark">
+    
+    <div class="header">
+        <h1 class="institute-name">VARDAAN LEARNING INSTITUTE</h1>
+        <div class="test-name">DETAILED SOLUTIONS &bull; SECOND TERM MOCK TEST 01 (2026 - 27)</div>
+        <div class="exam-details">
+            <span>STD: VIII (ICSE)</span>
+            <span>SUBJECT: MATHEMATICS</span>
+            <span>TIME: 1 HOUR</span>
+            <span>F.M.: 40</span>
+        </div>
+    </div>
+
+    <!-- Section A Solutions -->
+    <div class="section-header">
+        <span>SECTION A</span>
+        <span>(8 Marks)</span>
+    </div>
+
+    <!-- Q(i) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(i) The value of $(105 \times 95)$ evaluated using algebraic identity is:</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div><span class="correct-answer">Correct Option: (a) 9975</span></div>
+        <div class="explanation">
+            <div class="step"><strong>Step-by-step Solution:</strong></div>
+            <div class="step">We can express $105$ as $(100 + 5)$ and $95$ as $(100 - 5)$.</div>
+            <div class="step">Using the algebraic identity $(a + b)(a - b) = a^2 - b^2$:</div>
+            <div class="step">$$105 \times 95 = (100 + 5)(100 - 5)$$</div>
+            <div class="step">$$= 100^2 - 5^2$$</div>
+            <div class="step">$$= 10000 - 25 = 9975$$</div>
+        </div>
+    </div>
+
+    <!-- Q(ii) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(ii) What percent of $120$ is $30$?</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div><span class="correct-answer">Correct Option: (c) 25%</span></div>
+        <div class="explanation">
+            <div class="step"><strong>Step-by-step Solution:</strong></div>
+            <div class="step">Let $x\%$ of $120 = 30$.</div>
+            <div class="step">$$\dfrac{x}{100} \times 120 = 30$$</div>
+            <div class="step">$$x = \dfrac{30 \times 100}{120} = \dfrac{300}{12} = 25\%$$</div>
+        </div>
+    </div>
+
+    <!-- Q(iii) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(iii) A length measured as $5.0\text{ cm}$ is incorrectly recorded as $5.25\text{ cm}$. The percentage error is:</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div><span class="correct-answer">Correct Option: (b) 5%</span></div>
+        <div class="explanation">
+            <div class="step"><strong>Step-by-step Solution:</strong></div>
+            <div class="step">$$\text{Error} = \text{Recorded value} - \text{True value} = 5.25\text{ cm} - 5.0\text{ cm} = 0.25\text{ cm}$$</div>
+            <div class="step">$$\text{Percentage Error} = \left( \dfrac{\text{Error}}{\text{True Value}} \right) \times 100\%$$</div>
+            <div class="step">$$\text{Percentage Error} = \left( \dfrac{0.25}{5.0} \right) \times 100\% = 0.05 \times 100\% = 5\%$$</div>
+        </div>
+    </div>
+
+    <!-- Q(iv) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(iv) Discount in commercial transactions is always calculated on the:</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div><span class="correct-answer">Correct Option: (c) Marked Price</span></div>
+        <div class="explanation">
+            <div class="step"><strong>Concept Explanation:</strong></div>
+            <div class="step">Discount is the concession granted by a seller to the buyer on the printed list price, which is known as the <strong>Marked Price (MP)</strong>. Hence, Discount = Marked Price &minus; Selling Price.</div>
+        </div>
+    </div>
+
+    <!-- Q(v) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(v) For the linear equation $15 - 2(x - 3) = x + 3$, the value of $x$ is:</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div><span class="correct-answer">Correct Option: (a) 6</span></div>
+        <div class="explanation">
+            <div class="step"><strong>Step-by-step Solution:</strong></div>
+            <div class="step">Given equation: $15 - 2(x - 3) = x + 3$</div>
+            <div class="step">$$15 - 2x + 6 = x + 3$$</div>
+            <div class="step">$$21 - 2x = x + 3$$</div>
+            <div class="step">Transposing variable terms to LHS and constants to RHS:</div>
+            <div class="step">$$-2x - x = 3 - 21$$</div>
+            <div class="step">$$-3x = -18 \implies x = \dfrac{-18}{-3} = 6$$</div>
+        </div>
+    </div>
+
+    <!-- Q(vi) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(vi) The expansion of $(2a - 3b)^2$ is:</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div><span class="correct-answer">Correct Option: (b) $4a^2 - 12ab + 9b^2$</span></div>
+        <div class="explanation">
+            <div class="step"><strong>Step-by-step Solution:</strong></div>
+            <div class="step">Using standard algebraic identity $(x - y)^2 = x^2 - 2xy + y^2$:</div>
+            <div class="step">Here $x = 2a$ and $y = 3b$.</div>
+            <div class="step">$$(2a - 3b)^2 = (2a)^2 - 2(2a)(3b) + (3b)^2$$</div>
+            <div class="step">$$= 4a^2 - 12ab + 9b^2$$</div>
+        </div>
+    </div>
+
+    <!-- Q(vii) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(vii) In any rhombus, the diagonals intersect each other at an angle of:</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div><span class="correct-answer">Correct Option: (c) $90^\circ$</span></div>
+        <div class="explanation">
+            <div class="step"><strong>Geometric Property:</strong></div>
+            <div class="step">A fundamental property of a rhombus states that its diagonals bisect each other at right angles ($90^\circ$).</div>
+        </div>
+    </div>
+
+    <!-- Q(viii) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(viii) Assertion &amp; Reason on Parallelogram and Rectangle:</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div><span class="correct-answer">Correct Option: (b) Both A and R are correct but R is NOT the correct explanation of A.</span></div>
+        <div class="explanation">
+            <div class="step"><strong>Explanation:</strong></div>
+            <div class="step"><strong>Assertion (A):</strong> If one angle of a parallelogram is $90^\circ$, adjacent angles are supplementary ($180^\circ - 90^\circ = 90^\circ$), so all four angles become $90^\circ$, forming a rectangle. Thus, A is <strong>True</strong>.</div>
+            <div class="step"><strong>Reason (R):</strong> Opposite sides of a parallelogram are equal and parallel. This is a general property of parallelograms and is <strong>True</strong>.</div>
+            <div class="step">However, R is not the reason why a parallelogram becomes a rectangle (which depends on angle properties). Hence, R is NOT the correct explanation of A.</div>
+        </div>
+    </div>
+
+    <!-- Section B Solutions -->
+    <div class="section-header">
+        <span>SECTION B</span>
+        <span>(8 Marks)</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">1. In a rhombus $ABCD$, if $\angle A = 72^\circ$, find the measures of $\angle B$ and $\angle C$.</div>
+            <span class="marks-badge">[2 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Solution:</strong></div>
+            <div class="step">In rhombus $ABCD$:</div>
+            <div class="step">1. Opposite angles are equal:</div>
+            <div class="step">$$\angle C = \angle A = 72^\circ$$</div>
+            <div class="step">2. Adjacent angles are supplementary ($\angle A + \angle B = 180^\circ$):</div>
+            <div class="step">$$72^\circ + \angle B = 180^\circ$$</div>
+            <div class="step">$$\angle B = 180^\circ - 72^\circ = 108^\circ$$</div>
+            <div class="step"><strong>Final Answer:</strong> $\angle B = 108^\circ$ and $\angle C = 72^\circ$.</div>
+        </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">2. Solve for $x$: $\dfrac{x - 5}{3} = \dfrac{x - 9}{5}$</div>
+            <span class="marks-badge">[2 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Solution:</strong></div>
+            <div class="step">Cross-multiplying both sides:</div>
+            <div class="step">$$5(x - 5) = 3(x - 9)$$</div>
+            <div class="step">$$5x - 25 = 3x - 27$$</div>
+            <div class="step">Rearranging terms:</div>
+            <div class="step">$$5x - 3x = -27 + 25$$</div>
+            <div class="step">$$2x = -2$$</div>
+            <div class="step">$$x = \dfrac{-2}{2} = -1$$</div>
+            <div class="step"><strong>Final Answer:</strong> $x = -1$.</div>
+        </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">3. Find the value using standard algebraic identity: $(0.8)^2 - (0.2)^2$.</div>
+            <span class="marks-badge">[2 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Solution:</strong></div>
+            <div class="step">Using the identity $a^2 - b^2 = (a + b)(a - b)$:</div>
+            <div class="step">Here, $a = 0.8$ and $b = 0.2$.</div>
+            <div class="step">$$(0.8)^2 - (0.2)^2 = (0.8 + 0.2)(0.8 - 0.2)$$</div>
+            <div class="step">$$= (1.0) \times (0.6) = 0.6$$</div>
+            <div class="step"><strong>Final Answer:</strong> $0.6$.</div>
+        </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">4. Evaluate: $15\%$ of $240 - 20\%$ of $95 + 12\%$ of $400$.</div>
+            <span class="marks-badge">[2 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Solution:</strong></div>
+            <div class="step">Evaluating each term individually:</div>
+            <div class="step">$$15\% \text{ of } 240 = \dfrac{15}{100} \times 240 = 36$$</div>
+            <div class="step">$$20\% \text{ of } 95 = \dfrac{20}{100} \times 95 = 19$$</div>
+            <div class="step">$$12\% \text{ of } 400 = \dfrac{12}{100} \times 400 = 48$$</div>
+            <div class="step">Now substituting values back into the expression:</div>
+            <div class="step">$$\text{Expression} = 36 - 19 + 48 = 17 + 48 = 65$$</div>
+            <div class="step"><strong>Final Answer:</strong> $65$.</div>
+        </div>
+    </div>
+
+    <!-- Section C Solutions -->
+    <div class="section-header">
+        <span>SECTION C</span>
+        <span>(12 Marks)</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">1. A number is first increased by $20\%$ and then this increased number is decreased by $20\%$. Find the net percentage change in the number.</div>
+            <span class="marks-badge">[3 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Solution:</strong></div>
+            <div class="step">Let the original number be $100$.</div>
+            <div class="step"><strong>Step 1:</strong> Increase the number by $20\%$:</div>
+            <div class="step">$$\text{Increased value} = 100 + \left(\dfrac{20}{100} \times 100\right) = 120$$</div>
+            <div class="step"><strong>Step 2:</strong> Decrease the new number ($120$) by $20\%$:</div>
+            <div class="step">$$\text{Decrease amount} = \dfrac{20}{100} \times 120 = 24$$</div>
+            <div class="step">$$\text{Final value} = 120 - 24 = 96$$</div>
+            <div class="step"><strong>Step 3:</strong> Net percentage change:</div>
+            <div class="step">$$\text{Net Decrease} = 100 - 96 = 4$$</div>
+            <div class="step">$$\text{Net Percentage Decrease} = \left(\dfrac{4}{100}\right) \times 100\% = 4\%$$</div>
+            <div class="step"><strong>Final Answer:</strong> Net percentage change is a <strong>$4\%$ decrease</strong>.</div>
+        </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">2. A man sells a watch for ₹$1,320$ and gains $10\%$. At what price should he sell another watch of the same kind to gain $15\%$?</div>
+            <span class="marks-badge">[3 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Solution:</strong></div>
+            <div class="step"><strong>Case 1:</strong> Find the Cost Price ($\text{CP}$) of the watch.</div>
+            <div class="step">Given: $\text{Selling Price (SP}_1\text{)} = \text{₹}1,320$, $\text{Gain} = 10\%$</div>
+            <div class="step">$$\text{CP} = \dfrac{\text{SP} \times 100}{100 + \text{Gain}\%} = \dfrac{1320 \times 100}{100 + 10} = \dfrac{1320 \times 100}{110} = 12 \times 100 = \text{₹}1,200$$</div>
+            <div class="step"><strong>Case 2:</strong> Find the required Selling Price ($\text{SP}_2$) to gain $15\%$.</div>
+            <div class="step">Given: $\text{CP} = \text{₹}1,200$, Desired $\text{Gain} = 15\%$</div>
+            <div class="step">$$\text{SP}_2 = \text{CP} \times \left(\dfrac{100 + \text{Gain}\%}{100}\right) = 1200 \times \dfrac{115}{100} = 12 \times 115 = \text{₹}1,380$$</div>
+            <div class="step"><strong>Final Answer:</strong> He should sell the watch for <strong>₹$1,380$</strong>.</div>
+        </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">3. Factorise completely:</div>
+            <span class="marks-badge">[6 Marks]</span>
+        </div>
+        <div class="explanation">
+            <!-- Part a -->
+            <div class="step" style="margin-top: 6px;"><strong>a) $x^3 - x^2 - xy + x + y - 1$</strong> <span style="float: right; color: #666;">[2 Marks]</span></div>
+            <div class="step">Grouping terms effectively:</div>
+            <div class="step">$$= (x^3 - x^2) - (xy - y) + (x - 1)$$</div>
+            <div class="step">$$= x^2(x - 1) - y(x - 1) + 1(x - 1)$$</div>
+            <div class="step">Taking $(x - 1)$ common:</div>
+            <div class="step">$$= (x - 1)(x^2 - y + 1)$$</div>
+
+            <!-- Part b -->
+            <div class="step" style="margin-top: 12px;"><strong>b) $a^2 + 6ab + 9b^2 - 16c^2$</strong> <span style="float: right; color: #666;">[2 Marks]</span></div>
+            <div class="step">Grouping first three terms as a perfect square:</div>
+            <div class="step">$$= \left(a^2 + 2(a)(3b) + (3b)^2\right) - (4c)^2$$</div>
+            <div class="step">$$= (a + 3b)^2 - (4c)^2$$</div>
+            <div class="step">Applying $x^2 - y^2 = (x + y)(x - y)$:</div>
+            <div class="step">$$= (a + 3b + 4c)(a + 3b - 4c)$$</div>
+
+            <!-- Part c -->
+            <div class="step" style="margin-top: 12px;"><strong>c) $(6y^2 - 54) \div (y - 3)$</strong> <span style="float: right; color: #666;">[2 Marks]</span></div>
+            <div class="step">Factorising the numerator:</div>
+            <div class="step">$$6y^2 - 54 = 6(y^2 - 9) = 6(y^2 - 3^2) = 6(y + 3)(y - 3)$$</div>
+            <div class="step">Dividing by $(y - 3)$:</div>
+            <div class="step">$$\dfrac{6(y + 3)(y - 3)}{y - 3} = 6(y + 3) = 6y + 18$$</div>
+        </div>
+    </div>
+
+    <!-- Section D Solutions -->
+    <div class="section-header">
+        <span>SECTION D</span>
+        <span>(12 Marks)</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">1. A mother is $28$ years older than her daughter. In $4$ years, the mother's age will be three times the age of her daughter. Find their present ages.</div>
+            <span class="marks-badge">[4 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Solution:</strong></div>
+            <div class="step">Let the present age of the daughter be $x$ years.</div>
+            <div class="step">Then, the present age of the mother $= (x + 28)$ years.</div>
+            <div class="step"><strong>Ages after $4$ years:</strong></div>
+            <div class="step">$$\text{Daughter's age} = (x + 4) \text{ years}$$</div>
+            <div class="step">$$\text{Mother's age} = (x + 28) + 4 = (x + 32) \text{ years}$$</div>
+            <div class="step"><strong>According to the given condition:</strong></div>
+            <div class="step">$$\text{Mother's age} = 3 \times (\text{Daughter's age})$$</div>
+            <div class="step">$$x + 32 = 3(x + 4)$$</div>
+            <div class="step">$$x + 32 = 3x + 12$$</div>
+            <div class="step">$$32 - 12 = 3x - x$$</div>
+            <div class="step">$$20 = 2x \implies x = 10$$</div>
+            <div class="step"><strong>Present Ages:</strong></div>
+            <div class="step">$$\text{Daughter's present age} = x = 10 \text{ years}$$</div>
+            <div class="step">$$\text{Mother's present age} = 10 + 28 = 38 \text{ years}$$</div>
+            <div class="step"><strong>Final Answer:</strong> Daughter is <strong>$10$ years old</strong> and Mother is <strong>$38$ years old</strong>.</div>
+        </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">2. $PQRS$ is a parallelogram whose diagonals intersect at point $O$. If $\angle POS = 60^\circ$, $\angle QSR = 28^\circ$, and $\angle SQR = 32^\circ$, find: (i) $\angle RPS$, (ii) $\angle PRS$.</div>
+            <span class="marks-badge">[4 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Solution:</strong></div>
+            <div class="step">Given: $PQRS$ is a parallelogram with diagonals intersecting at $O$.</div>
+            <div class="step">$\angle POS = 60^\circ$, $\angle QSR = 28^\circ$, $\angle SQR = 32^\circ$.</div>
+            
+            <div class="step" style="margin-top: 8px;"><strong>(i) To find $\angle RPS$:</strong></div>
+            <div class="step">Since $PQ \parallel SR$ and $QS$ is a transversal, alternate interior angles are equal:</div>
+            <div class="step">$$\angle PSQ = \angle SQR = 32^\circ$$</div>
+            <div class="step">In $\triangle POS$, the sum of interior angles is $180^\circ$:</div>
+            <div class="step">$$\angle OPS + \angle POS + \angle PSO = 180^\circ$$</div>
+            <div class="step">$$\angle RPS + 60^\circ + 32^\circ = 180^\circ$$</div>
+            <div class="step">$$\angle RPS + 92^\circ = 180^\circ \implies \angle RPS = 180^\circ - 92^\circ = 88^\circ$$</div>
+
+            <div class="step" style="margin-top: 8px;"><strong>(ii) To find $\angle PRS$:</strong></div>
+            <div class="step">$\angle SOR$ and $\angle POS$ form a linear pair along diagonal $PR$:</div>
+            <div class="step">$$\angle SOR = 180^\circ - \angle POS = 180^\circ - 60^\circ = 120^\circ$$</div>
+            <div class="step">In $\triangle OSR$, applying angle sum property:</div>
+            <div class="step">$$\angle SRO + \angle SOR + \angle OSR = 180^\circ$$</div>
+            <div class="step">$$\angle PRS + 120^\circ + 28^\circ = 180^\circ$$</div>
+            <div class="step">$$\angle PRS + 148^\circ = 180^\circ \implies \angle PRS = 180^\circ - 148^\circ = 32^\circ$$</div>
+
+            <div class="step" style="margin-top: 6px;"><strong>Final Answer:</strong> (i) $\angle RPS = 88^\circ$, (ii) $\angle PRS = 32^\circ$.</div>
+        </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">3. A shopkeeper marks his goods at $25\%$ above the cost price and then allows a discount of $12\%$ on the marked price. Find his overall gain or loss percentage.</div>
+            <span class="marks-badge">[4 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Solution:</strong></div>
+            <div class="step">Let the Cost Price ($\text{CP}$) = ₹$100$.</div>
+            <div class="step"><strong>Step 1:</strong> Calculate Marked Price ($\text{MP}$):</div>
+            <div class="step">$$\text{MP} = 100 + 25\% \text{ of } 100 = 100 + 25 = \text{₹}125$$</div>
+            <div class="step"><strong>Step 2:</strong> Calculate Discount ($12\%$ on $\text{MP}$):</div>
+            <div class="step">$$\text{Discount Amount} = \dfrac{12}{100} \times 125 = \dfrac{3}{25} \times 125 = 3 \times 5 = \text{₹}15$$</div>
+            <div class="step"><strong>Step 3:</strong> Calculate Selling Price ($\text{SP}$):</div>
+            <div class="step">$$\text{SP} = \text{MP} - \text{Discount} = 125 - 15 = \text{₹}110$$</div>
+            <div class="step"><strong>Step 4:</strong> Determine overall Gain/Loss:</div>
+            <div class="step">Since $\text{SP} (\text{₹}110) > \text{CP} (\text{₹}100)$, there is a gain.</div>
+            <div class="step">$$\text{Gain Amount} = \text{SP} - \text{CP} = 110 - 100 = \text{₹}10$$</div>
+            <div class="step">$$\text{Gain Percentage} = \left(\dfrac{\text{Gain}}{\text{CP}}\right) \times 100\% = \left(\dfrac{10}{100}\right) \times 100\% = 10\%$$</div>
+            <div class="step"><strong>Final Answer:</strong> Overall <strong>Gain = $10\%$</strong>.</div>
+        </div>
+    </div>
+
+    <div class="footer">Created by Team Vardaan &bull; All Rights Reserved</div>
+</body>
+</html>

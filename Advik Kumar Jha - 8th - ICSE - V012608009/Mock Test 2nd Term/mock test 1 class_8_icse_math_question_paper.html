@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Learning Institute - Mock Test 01 Question Paper</title>
+    <!-- MathJax for rendering Mathematical Equations -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script type="text/javascript" id="mathjax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <style>
+        :root {
+            --primary-yellow: #fbc02d;
+            --text-main: #000000;
+            --border-color: #000000;
+        }
+
+        @page { 
+            size: A4; 
+            margin: 15mm; 
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body { 
+            width: 100%;
+            max-width: 210mm; 
+            min-height: 297mm; 
+            margin: 0 auto; 
+            padding: 20mm; 
+            font-family: "Times New Roman", Times, serif; 
+            font-size: 11pt; 
+            line-height: 1.4; 
+            color: var(--text-main); 
+            background-color: white; 
+            position: relative; 
+        }
+
+        .watermark { 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 75%; 
+            opacity: 0.08; 
+            z-index: -1; 
+            pointer-events: none; 
+        }
+
+        .header { 
+            text-align: center; 
+            margin-bottom: 15px; 
+            border-top: 3px solid var(--primary-yellow);
+            border-bottom: 3px solid var(--primary-yellow); 
+            padding: 10px 0; 
+        }
+
+        .institute-name { 
+            font-size: 22pt; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            margin: 0; 
+            letter-spacing: 1px; 
+            color: #111;
+        }
+
+        .test-name { 
+            font-size: 13pt; 
+            font-weight: bold; 
+            margin-top: 4px; 
+            text-decoration: underline; 
+            text-transform: uppercase;
+        }
+
+        .exam-details { 
+            display: flex; 
+            justify-content: space-between; 
+            flex-wrap: wrap;
+            margin-top: 12px; 
+            font-weight: bold; 
+            font-size: 10.5pt; 
+            border-top: 1px solid var(--border-color); 
+            border-bottom: 1px solid var(--border-color); 
+            padding: 6px 0; 
+        }
+
+        .exam-details span {
+            margin: 2px 5px;
+        }
+
+        .instructions { 
+            margin-top: 8px; 
+            font-size: 9.5pt; 
+            font-style: italic; 
+            text-align: left;
+        }
+
+        .instructions ul { 
+            margin: 3px 0; 
+            padding-left: 20px; 
+        }
+
+        .section-header { 
+            text-align: left; 
+            font-weight: bold; 
+            margin-top: 18px; 
+            margin-bottom: 10px; 
+            border-bottom: 1.5px solid var(--primary-yellow);
+            padding-bottom: 3px;
+            font-size: 12pt; 
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .marks-info { 
+            font-size: 9.5pt; 
+            font-weight: normal; 
+            font-style: italic; 
+        }
+
+        .question-container { 
+            margin-bottom: 12px; 
+            display: flex; 
+            align-items: flex-start;
+        }
+
+        .q-num { 
+            font-weight: bold; 
+            width: 32px; 
+            flex-shrink: 0; 
+        }
+
+        .q-content { 
+            flex-grow: 1; 
+            overflow-x: auto;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 15px;
+            margin-top: 5px;
+            padding-left: 5px;
+        }
+
+        .sub-question { 
+            margin-left: 15px; 
+            margin-top: 4px; 
+        }
+
+        .footer { 
+            margin-top: 30px; 
+            text-align: center; 
+            font-size: 9.5pt; 
+            font-weight: bold; 
+            border-top: 1px solid #ccc; 
+            padding-top: 8px; 
+            color: #555; 
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 15px;
+                font-size: 10.5pt;
+            }
+
+            .institute-name {
+                font-size: 16pt;
+            }
+
+            .test-name {
+                font-size: 11pt;
+            }
+
+            .exam-details {
+                font-size: 9.5pt;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media print { 
+            body { 
+                width: 100%; 
+                margin: 0; 
+                padding: 10mm; 
+                -webkit-print-color-adjust: exact; 
+            } 
+        }
+    </style>
+</head>
+<body>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Watermark" class="watermark">
+    
+    <div class="header">
+        <h1 class="institute-name">VARDAAN LEARNING INSTITUTE</h1>
+        <div class="test-name">SECOND TERM MOCK TEST 01 (2026 - 27)</div>
+        <div class="exam-details">
+            <span>STD: VIII (ICSE)</span>
+            <span>SUBJECT: MATHEMATICS</span>
+            <span>TIME: 1 HOUR</span>
+            <span>F.M.: 40</span>
+        </div>
+        <div class="instructions">
+            <strong>General Instructions:</strong>
+            <ul>
+                <li>Answers to this paper must be written neatly on the answer sheet provided separately.</li>
+                <li>The paper is divided into four sections: A, B, C, and D.</li>
+                <li>All working, including rough work, must be clearly shown.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Section A -->
+    <div class="section-header">
+        <span>SECTION A</span>
+        <span class="marks-info">(1 &times; 8 = 8 Marks)</span>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">(i)</div>
+        <div class="q-content">
+            The value of $(105 \times 95)$ evaluated using algebraic identity is:
+            <div class="options-grid">
+                <div>(a) 9975</div>
+                <div>(b) 9985</div>
+                <div>(c) 9995</div>
+                <div>(d) 10025</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">(ii)</div>
+        <div class="q-content">
+            What percent of $120$ is $30$?
+            <div class="options-grid">
+                <div>(a) $15\%$</div>
+                <div>(b) $20\%$</div>
+                <div>(c) $25\%$</div>
+                <div>(d) $30\%$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">(iii)</div>
+        <div class="q-content">
+            A length measured as $5.0\text{ cm}$ is incorrectly recorded as $5.25\text{ cm}$. The percentage error is:
+            <div class="options-grid">
+                <div>(a) $2.5\%$</div>
+                <div>(b) $5\%$</div>
+                <div>(c) $0.5\%$</div>
+                <div>(d) $10\%$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">(iv)</div>
+        <div class="q-content">
+            Discount in commercial transactions is always calculated on the:
+            <div class="options-grid">
+                <div>(a) Cost Price</div>
+                <div>(b) Selling Price</div>
+                <div>(c) Marked Price</div>
+                <div>(d) Profit Amount</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">(v)</div>
+        <div class="q-content">
+            For the linear equation $15 - 2(x - 3) = x + 3$, the value of $x$ is:
+            <div class="options-grid">
+                <div>(a) $6$</div>
+                <div>(b) $4$</div>
+                <div>(c) $3$</div>
+                <div>(d) $-6$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">(vi)</div>
+        <div class="q-content">
+            The expansion of $(2a - 3b)^2$ is:
+            <div class="options-grid">
+                <div>(a) $4a^2 - 9b^2$</div>
+                <div>(b) $4a^2 - 12ab + 9b^2$</div>
+                <div>(c) $4a^2 + 12ab + 9b^2$</div>
+                <div>(d) $4a^2 - 6ab + 9b^2$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">(vii)</div>
+        <div class="q-content">
+            In any rhombus, the diagonals intersect each other at an angle of:
+            <div class="options-grid">
+                <div>(a) $45^\circ$</div>
+                <div>(b) $60^\circ$</div>
+                <div>(c) $90^\circ$</div>
+                <div>(d) $180^\circ$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">(viii)</div>
+        <div class="q-content">
+            Mark as per the following instruction:<br>
+            <strong>Assertion (A):</strong> If one interior angle of a parallelogram measures $90^\circ$, the parallelogram is a rectangle.<br>
+            <strong>Reason (R):</strong> Opposite sides of a parallelogram are equal and parallel.
+            <div class="options-grid" style="grid-template-columns: 1fr;">
+                <div>(a) Both A and R are correct and R is the correct explanation of A.</div>
+                <div>(b) Both A and R are correct but R is NOT the correct explanation of A.</div>
+                <div>(c) A is true, but R is false.</div>
+                <div>(d) A is false, but R is true.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section B -->
+    <div class="section-header">
+        <span>SECTION B</span>
+        <span class="marks-info">(2 &times; 4 = 8 Marks)</span>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">1.</div>
+        <div class="q-content">In a rhombus $ABCD$, if $\angle A = 72^\circ$, find the measures of $\angle B$ and $\angle C$.</div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">2.</div>
+        <div class="q-content">Solve for $x$: $\dfrac{x - 5}{3} = \dfrac{x - 9}{5}$</div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">3.</div>
+        <div class="q-content">Find the value using standard algebraic identity: $(0.8)^2 - (0.2)^2$.</div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">4.</div>
+        <div class="q-content">Evaluate: $15\%$ of $240 - 20\%$ of $95 + 12\%$ of $400$.</div>
+    </div>
+
+    <!-- Section C -->
+    <div class="section-header">
+        <span>SECTION C</span>
+        <span class="marks-info">(3 + 3 + 6 = 12 Marks)</span>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">1.</div>
+        <div class="q-content">A number is first increased by $20\%$ and then this increased number is decreased by $20\%$. Find the net percentage change in the number. <span style="float: right;"><strong>[3]</strong></span></div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">2.</div>
+        <div class="q-content">A man sells a watch for ₹$1,320$ and gains $10\%$. At what price should he sell another watch of the same kind to gain $15\%$? <span style="float: right;"><strong>[3]</strong></span></div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">3.</div>
+        <div class="q-content">
+            Factorise completely: <span style="float: right;"><strong>(2 &times; 3 = 6)</strong></span>
+            <div class="sub-question">a) $x^3 - x^2 - xy + x + y - 1$</div>
+            <div class="sub-question">b) $a^2 + 6ab + 9b^2 - 16c^2$</div>
+            <div class="sub-question">c) $(6y^2 - 54) \div (y - 3)$</div>
+        </div>
+    </div>
+
+    <!-- Section D -->
+    <div class="section-header">
+        <span>SECTION D</span>
+        <span class="marks-info">(4 &times; 3 = 12 Marks)</span>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">1.</div>
+        <div class="q-content">A mother is $28$ years older than her daughter. In $4$ years, the mother's age will be three times the age of her daughter. Find their present ages.</div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">2.</div>
+        <div class="q-content">
+            $PQRS$ is a parallelogram whose diagonals intersect at point $O$. If $\angle POS = 60^\circ$, $\angle QSR = 28^\circ$, and $\angle SQR = 32^\circ$, find:
+            <div class="sub-question">(i) $\angle RPS$</div>
+            <div class="sub-question">(ii) $\angle PRS$</div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="q-num">3.</div>
+        <div class="q-content">A shopkeeper marks his goods at $25\%$ above the cost price and then allows a discount of $12\%$ on the marked price. Find his overall gain or loss percentage.</div>
+    </div>
+
+    <div class="footer">Created by Team Vardaan &bull; All Rights Reserved</div>
+</body>
+</html>

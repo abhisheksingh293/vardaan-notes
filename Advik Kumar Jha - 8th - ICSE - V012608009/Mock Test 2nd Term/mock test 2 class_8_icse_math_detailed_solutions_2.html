@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardaan Learning Institute - Detailed Solutions Mock Test 02</title>
+    <!-- MathJax for rendering Mathematical Equations -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script type="text/javascript" id="mathjax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <style>
+        :root {
+            --primary-yellow: #fbc02d;
+            --text-main: #000000;
+            --border-color: #000000;
+            --badge-bg: #fff8e1;
+            --badge-border: #fbc02d;
+            --correct-bg: #e8f5e9;
+            --correct-text: #2e7d32;
+        }
+
+        @page { 
+            size: A4; 
+            margin: 15mm; 
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body { 
+            width: 100%;
+            max-width: 210mm; 
+            min-height: 297mm; 
+            margin: 0 auto; 
+            padding: 20mm; 
+            font-family: "Times New Roman", Times, serif; 
+            font-size: 11pt; 
+            line-height: 1.5; 
+            color: var(--text-main); 
+            background-color: white; 
+            position: relative; 
+        }
+
+        .watermark { 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 75%; 
+            opacity: 0.08; 
+            z-index: -1; 
+            pointer-events: none; 
+        }
+
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            border-top: 3px solid var(--primary-yellow);
+            border-bottom: 3px solid var(--primary-yellow); 
+            padding: 10px 0; 
+        }
+
+        .institute-name { 
+            font-size: 22pt; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            margin: 0; 
+            letter-spacing: 1px; 
+            color: #111;
+        }
+
+        .test-name { 
+            font-size: 13pt; 
+            font-weight: bold; 
+            margin-top: 4px; 
+            text-decoration: underline; 
+            text-transform: uppercase;
+        }
+
+        .exam-details { 
+            display: flex; 
+            justify-content: space-between; 
+            flex-wrap: wrap;
+            margin-top: 12px; 
+            font-weight: bold; 
+            font-size: 10.5pt; 
+            border-top: 1px solid var(--border-color); 
+            border-bottom: 1px solid var(--border-color); 
+            padding: 6px 0; 
+        }
+
+        .section-header { 
+            text-align: left; 
+            font-weight: bold; 
+            margin-top: 22px; 
+            margin-bottom: 12px; 
+            border-bottom: 1.5px solid var(--primary-yellow);
+            padding-bottom: 4px;
+            font-size: 12pt; 
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .solution-block {
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .q-text {
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+
+        .marks-badge {
+            background-color: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            color: #333;
+            font-size: 9pt;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .correct-ans {
+            background-color: var(--correct-bg);
+            color: var(--correct-text);
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 4px 0 8px 0;
+            font-size: 10.5pt;
+        }
+
+        .explanation {
+            margin-top: 6px;
+            padding-left: 5px;
+        }
+
+        .step {
+            margin-bottom: 4px;
+            overflow-x: auto;
+        }
+
+        .footer { 
+            margin-top: 30px; 
+            text-align: center; 
+            font-size: 9.5pt; 
+            font-weight: bold; 
+            border-top: 1px solid #ccc; 
+            padding-top: 8px; 
+            color: #555; 
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 15px;
+                font-size: 10.5pt;
+            }
+
+            .institute-name {
+                font-size: 16pt;
+            }
+
+            .test-name {
+                font-size: 11pt;
+            }
+
+            .q-header {
+                flex-direction: column;
+            }
+
+            .marks-badge {
+                margin-top: 4px;
+                align-self: flex-start;
+            }
+        }
+
+        @media print { 
+            body { 
+                width: 100%; 
+                margin: 0; 
+                padding: 10mm; 
+                -webkit-print-color-adjust: exact; 
+            } 
+        }
+    </style>
+</head>
+<body>
+    <img src="https://res.cloudinary.com/dxwszplz7/image/upload/v1765105606/VARDAAN_watermark_jxdqqb.jpg" alt="Watermark" class="watermark">
+    
+    <div class="header">
+        <h1 class="institute-name">VARDAAN LEARNING INSTITUTE</h1>
+        <div class="test-name">DETAILED SOLUTIONS: SECOND TERM MOCK TEST 02</div>
+        <div class="exam-details">
+            <span>STD: VIII (ICSE)</span>
+            <span>SUBJECT: MATHEMATICS</span>
+            <span>TIME: 1 HOUR</span>
+            <span>F.M.: 40</span>
+        </div>
+    </div>
+
+    <!-- SECTION A SOLUTIONS -->
+    <div class="section-header">
+        <span>SECTION A — SOLUTIONS</span>
+        <span>(8 Marks)</span>
+    </div>
+
+    <!-- (i) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(i) Value of $(104 \times 96)$ using algebraic identity.</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div class="correct-ans">Correct Option: (a) 9984</div>
+        <div class="explanation">
+            <div class="step">We can express $104 \times 96$ as $(100 + 4)(100 - 4)$.</div>
+            <div class="step">Using identity $(a + b)(a - b) = a^2 - b^2$:</div>
+            <div class="step">$$\begin{aligned} (100 + 4)(100 - 4) &= 100^2 - 4^2 \\ &= 10000 - 16 \\ &= 9984 \end{aligned}$$</div>
+        </div>
+    </div>
+
+    <!-- (ii) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(ii) What percent of $150$ is $45$?</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div class="correct-ans">Correct Option: (c) 30%</div>
+        <div class="explanation">
+            <div class="step">Required Percentage $= \left( \dfrac{\text{Given Value}}{\text{Total Value}} \times 100 \right)\%$</div>
+            <div class="step">$$= \left( \dfrac{45}{150} \times 100 \right)\% = \left( \dfrac{3}{10} \times 100 \right)\% = 30\%$$</div>
+        </div>
+    </div>
+
+    <!-- (iii) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(iii) Measured length $= 5.25\text{ cm}$, Actual length $= 5.0\text{ cm}$. Percentage Error?</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div class="correct-ans">Correct Option: (b) 2.5%</div>
+        <div class="explanation">
+            <div class="step">Error $= |8.2\text{ cm} - 8.0\text{ cm}| = 0.2\text{ cm}$</div>
+            <div class="step">Percentage Error $= \left( \dfrac{\text{Error}}{\text{Actual Value}} \times 100 \right)\%$</div>
+            <div class="step">$$= \left( \dfrac{0.2}{8.0} \times 100 \right)\% = \dfrac{20}{8}\% = 2.5\%$$</div>
+        </div>
+    </div>
+
+    <!-- (iv) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(iv) Profit or Loss percentage is always calculated on:</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div class="correct-ans">Correct Option: (c) Cost Price</div>
+        <div class="explanation">
+            <div class="step">By commercial rules, Profit or Loss percentage is always evaluated taking Cost Price (C.P.) as the base.</div>
+        </div>
+    </div>
+
+    <!-- (v) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(v) Solve $12 - 3(x - 2) = 2x + 3$.</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div class="correct-ans">Correct Option: (a) 3</div>
+        <div class="explanation">
+            <div class="step">$$12 - 3x + 6 = 2x + 3$$</div>
+            <div class="step">$$18 - 3x = 2x + 3$$</div>
+            <div class="step">$$18 - 3 = 2x + 3x \implies 5x = 15 \implies x = 3$$</div>
+        </div>
+    </div>
+
+    <!-- (vi) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(vi) Expansion of $(3a - 2b)^2$.</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div class="correct-ans">Correct Option: (b) $9a^2 - 12ab + 4b^2$</div>
+        <div class="explanation">
+            <div class="step">Using identity $(x - y)^2 = x^2 - 2xy + y^2$:</div>
+            <div class="step">$$(3a - 2b)^2 = (3a)^2 - 2(3a)(2b) + (2b)^2 = 9a^2 - 12ab + 4b^2$$</div>
+        </div>
+    </div>
+
+    <!-- (vii) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(vii) Adjacent angles in a parallelogram are:</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div class="correct-ans">Correct Option: (b) Supplementary</div>
+        <div class="explanation">
+            <div class="step">Consecutive (adjacent) interior angles between two parallel lines sum up to $180^\circ$ (supplementary).</div>
+        </div>
+    </div>
+
+    <!-- (viii) -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">(viii) Assertion (A) &amp; Reason (R) on Square and Rhombus.</div>
+            <span class="marks-badge">[1 Mark]</span>
+        </div>
+        <div class="correct-ans">Correct Option: (a) Both A and R are correct and R is the correct explanation of A.</div>
+        <div class="explanation">
+            <div class="step">A square satisfies all properties of a rhombus (all sides equal and perpendicular diagonals), making it a special rhombus with right angles.</div>
+        </div>
+    </div>
+
+    <!-- SECTION B SOLUTIONS -->
+    <div class="section-header">
+        <span>SECTION B — SOLUTIONS</span>
+        <span>(8 Marks)</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">1. Parallelogram $ABCD$ with $\angle A = (2x + 10)^\circ$ and $\angle B = (3x - 10)^\circ$. Find $x$ and all angles.</div>
+            <span class="marks-badge">[2 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Step 1:</strong> Adjacent angles of a parallelogram are supplementary.</div>
+            <div class="step">$$\angle A + \angle B = 180^\circ$$</div>
+            <div class="step">$$(2x + 10) + (3x - 10) = 180 \implies 5x = 180 \implies x = 36^\circ$$</div>
+            <div class="step"><strong>Step 2:</strong> Calculate the angle measures:</div>
+            <div class="step">$$\angle A = 2(36) + 10 = 82^\circ$$</div>
+            <div class="step">$$\angle B = 3(36) - 10 = 98^\circ$$</div>
+            <div class="step">Since opposite angles are equal: $\angle C = \angle A = 82^\circ$ and $\angle D = \angle B = 98^\circ$.</div>
+            <div class="step"><strong>Ans:</strong> $x = 36^\circ$; $\angle A = 82^\circ, \angle B = 98^\circ, \angle C = 82^\circ, \angle D = 98^\circ$.</div>
+        </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">2. Solve for $x$: $\dfrac{2x - 3}{4} = \dfrac{x + 1}{3}$</div>
+            <span class="marks-badge">[2 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step">Cross-multiplying both sides:</div>
+            <div class="step">$$3(2x - 3) = 4(x + 1)$$</div>
+            <div class="step">$$6x - 9 = 4x + 4$$</div>
+            <div class="step">$$6x - 4x = 4 + 9 \implies 2x = 13 \implies x = \dfrac{13}{2} = 6.5$$</div>
+            <div class="step"><strong>Ans:</strong> $x = \dfrac{13}{2} \text{ or } 6.5$.</div>
+        </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">3. Evaluate using identity: $(1.2)^2 - (0.8)^2$.</div>
+            <span class="marks-badge">[2 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step">Using identity $a^2 - b^2 = (a - b)(a + b)$ where $a = 1.2$ and $b = 0.8$:</div>
+            <div class="step">$$(1.2)^2 - (0.8)^2 = (1.2 - 0.8)(1.2 + 0.8)$$</div>
+            <div class="step">$$= (0.4) \times (2.0) = 0.8$$</div>
+            <div class="step"><strong>Ans:</strong> $0.8$.</div>
+        </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">4. Evaluate: $20\%$ of $350 + 15\%$ of $180 - 25\%$ of $120$.</div>
+            <span class="marks-badge">[2 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step">$$\text{Term 1} = \dfrac{20}{100} \times 350 = 70$$</div>
+            <div class="step">$$\text{Term 2} = \dfrac{15}{100} \times 180 = 27$$</div>
+            <div class="step">$$\text{Term 3} = \dfrac{25}{100} \times 120 = 30$$</div>
+            <div class="step">$$\text{Final Value} = 70 + 27 - 30 = 67$$</div>
+            <div class="step"><strong>Ans:</strong> $67$.</div>
+        </div>
+    </div>
+
+    <!-- SECTION C SOLUTIONS -->
+    <div class="section-header">
+        <span>SECTION C — SOLUTIONS</span>
+        <span>(12 Marks)</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">1. Net percentage change in salary when increased by $10\%$ and then decreased by $10\%$.</div>
+            <span class="marks-badge">[3 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step">Let the original salary $= \text{₹}100$.</div>
+            <div class="step"><strong>Increase of 10%:</strong> New salary $= 100 + \left(\dfrac{10}{100} \times 100\right) = \text{₹}110$.</div>
+            <div class="step"><strong>Decrease of 10%:</strong> Final salary $= 110 - \left(\dfrac{10}{100} \times 110\right) = 110 - 11 = \text{₹}99$.</div>
+            <div class="step">Net decrease $= 100 - 99 = \text{₹}1$.</div>
+            <div class="step">$$\text{Net Percentage Change} = \left(\dfrac{1}{100} \times 100\right)\% = 1\% \text{ decrease.}$$</div>
+            <div class="step"><strong>Ans:</strong> Net salary decreases by $1\%$.</div>
+        </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">2. S.P. $= \text{₹}2,850$ gives $14\%$ gain. Find S.P. to gain $8\%$.</div>
+            <span class="marks-badge">[3 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>Step 1:</strong> Find Cost Price (C.P.)</div>
+            <div class="step">$$\text{C.P.} = \dfrac{\text{S.P.} \times 100}{100 + \text{Gain}\%} = \dfrac{2850 \times 100}{114} = \text{₹}2,500$$</div>
+            <div class="step"><strong>Step 2:</strong> Find new S.P. for $8\%$ gain</div>
+            <div class="step">$$\text{New S.P.} = \text{C.P.} \times \left(\dfrac{100 + \text{New Gain}\%}{100}\right)$$</div>
+            <div class="step">$$\text{New S.P.} = 2500 \times \dfrac{108}{100} = 25 \times 108 = \text{₹}2,700$$</div>
+            <div class="step"><strong>Ans:</strong> ₹$2,700$.</div>
+        </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">3. Factorise completely:</div>
+            <span class="marks-badge">[6 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>a) $x^3 - 3x^2 - x + 3$</strong> [2 Marks]</div>
+            <div class="step">Grouping in pairs:</div>
+            <div class="step">$$= x^2(x - 3) - 1(x - 3) = (x - 3)(x^2 - 1)$$</div>
+            <div class="step">$$= (x - 3)(x - 1)(x + 1)$$</div>
+
+            <div class="step" style="margin-top: 10px;"><strong>b) $4a^2 - 12ab + 9b^2 - 25c^2$</strong> [2 Marks]</div>
+            <div class="step">Recognising perfect square in first 3 terms:</div>
+            <div class="step">$$= (2a - 3b)^2 - (5c)^2$$</div>
+            <div class="step">Using $X^2 - Y^2 = (X - Y)(X + Y)$:</div>
+            <div class="step">$$= (2a - 3b - 5c)(2a - 3b + 5c)$$</div>
+
+            <div class="step" style="margin-top: 10px;"><strong>c) $(8y^2 - 32) \div (2y + 4)$</strong> [2 Marks]</div>
+            <div class="step">$$= \dfrac{8(y^2 - 4)}{2(y + 2)} = \dfrac{8(y - 2)(y + 2)}{2(y + 2)}$$</div>
+            <div class="step">Cancelling $(y + 2)$ and simplifying $\dfrac{8}{2} = 4$:</div>
+            <div class="step">$$= 4(y - 2) \text{ or } 4y - 8$$</div>
+        </div>
+    </div>
+
+    <!-- SECTION D SOLUTIONS -->
+    <div class="section-header">
+        <span>SECTION D — SOLUTIONS</span>
+        <span>(12 Marks)</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">1. Age Problem: Father is 3 times as old as son. In 12 years, father will be twice son's age.</div>
+            <span class="marks-badge">[4 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step">Let present age of son $= x$ years.</div>
+            <div class="step">Present age of father $= 3x$ years.</div>
+            <div class="step"><strong>After 12 years:</strong></div>
+            <div class="step">Son's age $= x + 12$</div>
+            <div class="step">Father's age $= 3x + 12$</div>
+            <div class="step"><strong>According to question:</strong></div>
+            <div class="step">$$3x + 12 = 2(x + 12)$$</div>
+            <div class="step">$$3x + 12 = 2x + 24 \implies 3x - 2x = 24 - 12 \implies x = 12$$</div>
+            <div class="step">Present age of son $= 12$ years.</div>
+            <div class="step">Present age of father $= 3 \times 12 = 36$ years.</div>
+            <div class="step"><strong>Ans:</strong> Son's age $= 12$ years, Father's age $= 36$ years.</div>
+        </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">2. Rhombus $ABCD$ with $\angle OAB = 35^\circ$. Find $\angle ABO, \angle ADC, \angle BCD$.</div>
+            <span class="marks-badge">[4 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step"><strong>(i) Find $\angle ABO$:</strong></div>
+            <div class="step">Diagonals of a rhombus intersect at $90^\circ$, so $\angle AOB = 90^\circ$.</div>
+            <div class="step">In $\triangle AOB$: $\angle ABO = 180^\circ - (90^\circ + 35^\circ) = 55^\circ$.</div>
+            
+            <div class="step" style="margin-top: 6px;"><strong>(ii) Find $\angle ADC$:</strong></div>
+            <div class="step">Diagonals bisect vertex angles, so $\angle ABC = 2 \times \angle ABO = 2 \times 55^\circ = 110^\circ$.</div>
+            <div class="step">Opposite angles are equal: $\angle ADC = \angle ABC = 110^\circ$.</div>
+
+            <div class="step" style="margin-top: 6px;"><strong>(iii) Find $\angle BCD$:</strong></div>
+            <div class="step">Adjacent angles are supplementary: $\angle BCD = 180^\circ - 110^\circ = 70^\circ$.</div>
+            <div class="step"><strong>Ans:</strong> (i) $55^\circ$, (ii) $110^\circ$, (iii) $70^\circ$.</div>
+        </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="solution-block">
+        <div class="q-header">
+            <div class="q-text">3. Goods marked $30\%$ above C.P. and $15\%$ discount allowed. Overall gain/loss percentage?</div>
+            <span class="marks-badge">[4 Marks]</span>
+        </div>
+        <div class="explanation">
+            <div class="step">Let Cost Price (C.P.) $= \text{₹}100$.</div>
+            <div class="step">Marked Price (M.P.) $= 100 + 30\% \text{ of } 100 = \text{₹}130$.</div>
+            <div class="step">$$\text{Discount} = 15\% \text{ of M.P.} = \dfrac{15}{100} \times 130 = \text{₹}19.50$$</div>
+            <div class="step">$$\text{Selling Price (S.P.)} = 130 - 19.50 = \text{₹}110.50$$</div>
+            <div class="step">$$\text{Profit} = \text{S.P.} - \text{C.P.} = 110.50 - 100 = \text{₹}10.50$$</div>
+            <div class="step">$$\text{Gain Percentage} = \left(\dfrac{10.50}{100} \times 100\right)\% = 10.5\% \text{ or } 10\frac{1}{2}\%$$</div>
+            <div class="step"><strong>Ans:</strong> Overall Gain $= 10.5\%$.</div>
+        </div>
+    </div>
+
+    <div class="footer">Created by Team Vardaan &bull; All Rights Reserved</div>
+</body>
+</html>
